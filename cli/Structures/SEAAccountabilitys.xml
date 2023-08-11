@@ -1,9 +1,0 @@
-
-<SEAAccountabilitys xmlns="http://www.sifassociation.org/datamodel/na/4.x">
-  <SEAAccountability RefId="" SEAInfoRefId="">
-    <HighSchoolGraduationRateIndicatorStatus Codeset=""/>
-  </SEAAccountability>
-  <SEAAccountability RefId="" SEAInfoRefId="">
-    <HighSchoolGraduationRateIndicatorStatus Codeset=""/>
-  </SEAAccountability>
-</SEAAccountabilitys>
