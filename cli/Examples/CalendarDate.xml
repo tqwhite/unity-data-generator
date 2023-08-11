@@ -1,0 +1,36 @@
+<CalendarDate xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f8f937a0-37b3-11ee-8111-c942f4d9d9b9">
+  <CalendarDateType>
+    <Code>EmergencyDay</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </CalendarDateType>
+  <CalendarDateNumber/>
+  <StudentAttendance>
+    <CountsTowardAttendance/>
+    <AttendanceValue/>
+  </StudentAttendance>
+  <TeacherAttendance>
+    <CountsTowardAttendance/>
+    <AttendanceValue/>
+  </TeacherAttendance>
+  <AdministratorAttendance>
+    <CountsTowardAttendance/>
+    <AttendanceValue/>
+  </AdministratorAttendance>
+  <BellScheduleDayList>
+    <BellScheduleDay>
+      <BellScheduleRefId/>
+      <TimetableDayIdentifier/>
+    </BellScheduleDay>
+    <BellScheduleDay>
+      <BellScheduleRefId/>
+      <TimetableDayIdentifier/>
+    </BellScheduleDay>
+  </BellScheduleDayList>
+  <InstructionalDeliveryModeList>
+    <InstructionalDeliveryMode/>
+    <InstructionalDeliveryMode/>
+  </InstructionalDeliveryModeList>
+</CalendarDate>

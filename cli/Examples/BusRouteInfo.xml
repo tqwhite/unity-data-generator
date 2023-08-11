@@ -1,0 +1,21 @@
+<BusRouteInfo xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f8f8c270-37b3-11ee-8111-c942f4d9d9b9">
+  <BusInfoRefId/>
+  <RouteNumber/>
+  <RouteType/>
+  <MaximumLoad/>
+  <Description/>
+  <Name>
+    <Prefix/>
+    <LastName/>
+    <FirstName/>
+    <MiddleName/>
+    <Suffix/>
+    <PreferredName/>
+    <SortName/>
+    <FullName/>
+  </Name>
+  <RouteDurationLoaded/>
+  <RouteDurationTotal/>
+  <RouteDistanceLoaded/>
+  <RouteDistanceTotal/>
+</BusRouteInfo>

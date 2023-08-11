@@ -1,0 +1,16 @@
+<StudentScoreSet xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f91f5d40-37b3-11ee-8111-c942f4d9d9b9" ScoreMetric="00512">
+  <Scores>
+    <Score>
+      <ScoreValue/>
+      <DiagnosticStatement/>
+      <Description>Proficient</Description>
+      <NumberOfResponses/>
+    </Score>
+    <Score>
+      <ScoreValue/>
+      <DiagnosticStatement/>
+      <Description>Proficient</Description>
+      <NumberOfResponses/>
+    </Score>
+  </Scores>
+</StudentScoreSet>

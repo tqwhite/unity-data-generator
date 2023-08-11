@@ -1,0 +1,21 @@
+<LearningStandardAssociation xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f9091620-37b3-11ee-8111-c942f4d9d9b9">
+  <RefURI/>
+  <LearningStandardRefId ObjectType="LearningStandardItem"/>
+  <TargetObjects>
+    <TargetObject>
+      <SIF_RefId/>
+      <AssociationStrength/>
+      <AssociationType/>
+    </TargetObject>
+    <TargetObject>
+      <SIF_RefId/>
+      <AssociationStrength/>
+      <AssociationType/>
+    </TargetObject>
+  </TargetObjects>
+  <StartDate/>
+  <EndDate/>
+  <AuthoritativeSource/>
+  <Creator/>
+  <CreationDate/>
+</LearningStandardAssociation>

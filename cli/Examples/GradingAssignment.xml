@@ -1,0 +1,16 @@
+<GradingAssignment xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f905bac0-37b3-11ee-8111-c942f4d9d9b9">
+  <Description/>
+  <PointsPossible/>
+  <CreateDate/>
+  <DueDate/>
+  <Weight/>
+  <DetailedDescription/>
+  <LearningStandardItemList>
+    <LearningStandardItem>
+      <LearningStandardRefId ObjectType="LearningStandardItem"/>
+    </LearningStandardItem>
+    <LearningStandardItem>
+      <LearningStandardRefId ObjectType="LearningStandardItem"/>
+    </LearningStandardItem>
+  </LearningStandardItemList>
+</GradingAssignment>

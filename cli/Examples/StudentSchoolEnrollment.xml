@@ -1,0 +1,95 @@
+<StudentSchoolEnrollment xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f91f0f20-37b3-11ee-8111-c942f4d9d9b9">
+  <EntryDate/>
+  <EntryType>
+    <Code>01821</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </EntryType>
+  <GradeLevel>
+    <Code>IT</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </GradeLevel>
+  <Homeroom/>
+  <Advisor/>
+  <Counselor/>
+  <Calendar/>
+  <ExitDate/>
+  <ExitStatus>
+    <Code>Permanent</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ExitStatus>
+  <ExitType>
+    <Code>01907</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ExitType>
+  <ExitGradeLevel>
+    <Code>IT</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ExitGradeLevel>
+  <RecordClosureReason/>
+  <PromotionInfo>
+    <Promotion>
+      <PromotionStatus/>
+      <Code>AcceleratedPromotion</Code>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </Promotion>
+    <Nonpromotion>
+      <Code>FailedTestingRequirements</Code>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </Nonpromotion>
+  </PromotionInfo>
+  <FTE/>
+  <FTPTStatus/>
+  <ResidencyStatus>
+    <Code>01652</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ResidencyStatus>
+  <NonResidentAttendReason/>
+  <ResponsableSchoolList>
+    <ResponsableSchool>
+      <SchoolInfoRefId/>
+      <Id/>
+      <Type>Accountability</Type>
+    </ResponsableSchool>
+    <ResponsableSchool>
+      <SchoolInfoRefId/>
+      <Id/>
+      <Type>Accountability</Type>
+    </ResponsableSchool>
+  </ResponsableSchoolList>
+  <ResponsableLEAList>
+    <ResponsableLEA>
+      <LEAInfoRefId/>
+      <Id/>
+      <Type>Accountability</Type>
+    </ResponsableLEA>
+    <ResponsableLEA>
+      <LEAInfoRefId/>
+      <Id/>
+      <Type>Accountability</Type>
+    </ResponsableLEA>
+  </ResponsableLEAList>
+</StudentSchoolEnrollment>

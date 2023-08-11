@@ -1,0 +1,16 @@
+<GradingAssignmentScore xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f9056ca0-37b3-11ee-8111-c942f4d9d9b9">
+  <ScorePoints/>
+  <ScorePointsFloat/>
+  <ScorePercent/>
+  <ScoreLetter/>
+  <ScoreEmptyReason>abandoned</ScoreEmptyReason>
+  <ScoreDescription/>
+  <LearningStandardItemList>
+    <LearningStandardItem>
+      <LearningStandardRefId ObjectType="LearningStandardItem"/>
+    </LearningStandardItem>
+    <LearningStandardItem>
+      <LearningStandardRefId ObjectType="LearningStandardItem"/>
+    </LearningStandardItem>
+  </LearningStandardItemList>
+</GradingAssignmentScore>

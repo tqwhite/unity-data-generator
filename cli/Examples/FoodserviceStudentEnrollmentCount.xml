@@ -1,0 +1,35 @@
+<FoodserviceStudentEnrollmentCount xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f9040d10-37b3-11ee-8111-c942f4d9d9b9">
+  <Program/>
+  <Counts>
+    <Count>
+      <MealStatus>
+        <StartDate/>
+        <EndDate/>
+        <SchoolYear/>
+      </MealStatus>
+      <EarnedStatus>
+        <StartDate/>
+        <EndDate/>
+      </EarnedStatus>
+      <MealType/>
+      <Amount/>
+      <Tax/>
+      <Value/>
+    </Count>
+    <Count>
+      <MealStatus>
+        <StartDate/>
+        <EndDate/>
+        <SchoolYear/>
+      </MealStatus>
+      <EarnedStatus>
+        <StartDate/>
+        <EndDate/>
+      </EarnedStatus>
+      <MealType/>
+      <Amount/>
+      <Tax/>
+      <Value/>
+    </Count>
+  </Counts>
+</FoodserviceStudentEnrollmentCount>

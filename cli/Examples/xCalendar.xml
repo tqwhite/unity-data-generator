@@ -1,0 +1,26 @@
+<xCalendar xmlns="http://www.sifassociation.org/datamodel/na/4.x" refId="f9243f41-37b3-11ee-8111-c942f4d9d9b9">
+  <schoolRefId/>
+  <schoolYear/>
+  <sessions>
+    <session>
+      <sessionType>FullSchoolYear</sessionType>
+      <sessionCode/>
+      <description/>
+      <markingTerm>Yes</markingTerm>
+      <schedulingTerm>Yes</schedulingTerm>
+      <linkedSessionCode/>
+      <startDate/>
+      <endDate/>
+    </session>
+    <session>
+      <sessionType>FullSchoolYear</sessionType>
+      <sessionCode/>
+      <description/>
+      <markingTerm>Yes</markingTerm>
+      <schedulingTerm>Yes</schedulingTerm>
+      <linkedSessionCode/>
+      <startDate/>
+      <endDate/>
+    </session>
+  </sessions>
+</xCalendar>

@@ -1,0 +1,11 @@
+<SchoolAccountability xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f90fa5d0-37b3-11ee-8111-c942f4d9d9b9">
+  <GunFreeSchoolsActReportingStatus>YesReportingOffenses</GunFreeSchoolsActReportingStatus>
+  <HighSchoolGraduationRateIndicatorStatus/>
+  <PersistentlyDangerousStatus/>
+  <ProficiencyTargetStatusForMath/>
+  <ProficiencyTargetStatusForReadingAndLanguageArts/>
+  <SchoolOperationalStatus/>
+  <ReconstitutedStatus/>
+  <SchoolImprovementExitDate/>
+  <SchoolImprovementFundsStatus/>
+</SchoolAccountability>

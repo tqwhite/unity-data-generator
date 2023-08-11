@@ -1,0 +1,213 @@
+<DisciplineIncident xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f8fabe40-37b3-11ee-8111-c942f4d9d9b9">
+  <AgencyReporting SIF_RefObject="SchoolInfo"/>
+  <IncidentNumber/>
+  <IncidentDate/>
+  <IncidentTime/>
+  <IncidentLocation>03011</IncidentLocation>
+  <IncidentLocationRefId SIF_RefObject="SchoolInfo"/>
+  <IncidentCost/>
+  <IncidentReporter Type="00126">
+    <Name>
+      <Prefix/>
+      <LastName/>
+      <FirstName/>
+      <MiddleName/>
+      <Suffix/>
+      <PreferredName/>
+      <SortName/>
+      <FullName/>
+    </Name>
+    <SIF_RefId SIF_RefObject="StudentPersonal"/>
+  </IncidentReporter>
+  <RelatedToList>
+    <RelatedTo>04618</RelatedTo>
+    <RelatedTo>04618</RelatedTo>
+  </RelatedToList>
+  <WeaponTypeList>
+    <WeaponType>Handguns</WeaponType>
+    <WeaponType>Handguns</WeaponType>
+  </WeaponTypeList>
+  <IncidentCategory>
+    <Code>DrugRelated</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+    <CodeComment/>
+  </IncidentCategory>
+  <OffenderList>
+    <Offender>
+      <Name>
+        <Prefix/>
+        <LastName/>
+        <FirstName/>
+        <MiddleName/>
+        <Suffix/>
+        <PreferredName/>
+        <SortName/>
+        <FullName/>
+      </Name>
+      <SIF_RefId SIF_RefObject="StudentPersonal"/>
+      <Injury>MajorInjury</Injury>
+      <ManifestationDetermination>
+        <MeetingHeld/>
+        <MeetingDate/>
+        <DueToDisability/>
+        <MeetingOutcome/>
+      </ManifestationDetermination>
+      <ActionList>
+        <Action>
+          <Code>03071</Code>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+          <StartDate/>
+          <EndDate/>
+          <Duration/>
+          <ZeroTolerance/>
+          <FullYearExpulsion/>
+          <ShortenedExpulsion/>
+          <PoliceNotification/>
+          <Arrest/>
+          <AlternativeEducation/>
+        </Action>
+        <Action>
+          <Code>03071</Code>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+          <StartDate/>
+          <EndDate/>
+          <Duration/>
+          <ZeroTolerance/>
+          <FullYearExpulsion/>
+          <ShortenedExpulsion/>
+          <PoliceNotification/>
+          <Arrest/>
+          <AlternativeEducation/>
+        </Action>
+      </ActionList>
+      <WeaponTypeList>
+        <WeaponType>Handguns</WeaponType>
+        <WeaponType>Handguns</WeaponType>
+      </WeaponTypeList>
+      <RelatedToList>
+        <RelatedTo>04618</RelatedTo>
+        <RelatedTo>04618</RelatedTo>
+      </RelatedToList>
+    </Offender>
+    <Offender>
+      <Name>
+        <Prefix/>
+        <LastName/>
+        <FirstName/>
+        <MiddleName/>
+        <Suffix/>
+        <PreferredName/>
+        <SortName/>
+        <FullName/>
+      </Name>
+      <SIF_RefId SIF_RefObject="StudentPersonal"/>
+      <Injury>MajorInjury</Injury>
+      <ManifestationDetermination>
+        <MeetingHeld/>
+        <MeetingDate/>
+        <DueToDisability/>
+        <MeetingOutcome/>
+      </ManifestationDetermination>
+      <ActionList>
+        <Action>
+          <Code>03071</Code>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+          <StartDate/>
+          <EndDate/>
+          <Duration/>
+          <ZeroTolerance/>
+          <FullYearExpulsion/>
+          <ShortenedExpulsion/>
+          <PoliceNotification/>
+          <Arrest/>
+          <AlternativeEducation/>
+        </Action>
+        <Action>
+          <Code>03071</Code>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+          <StartDate/>
+          <EndDate/>
+          <Duration/>
+          <ZeroTolerance/>
+          <FullYearExpulsion/>
+          <ShortenedExpulsion/>
+          <PoliceNotification/>
+          <Arrest/>
+          <AlternativeEducation/>
+        </Action>
+      </ActionList>
+      <WeaponTypeList>
+        <WeaponType>Handguns</WeaponType>
+        <WeaponType>Handguns</WeaponType>
+      </WeaponTypeList>
+      <RelatedToList>
+        <RelatedTo>04618</RelatedTo>
+        <RelatedTo>04618</RelatedTo>
+      </RelatedToList>
+    </Offender>
+  </OffenderList>
+  <VictimList>
+    <Victim>
+      <Name>
+        <Prefix/>
+        <LastName/>
+        <FirstName/>
+        <MiddleName/>
+        <Suffix/>
+        <PreferredName/>
+        <SortName/>
+        <FullName/>
+      </Name>
+      <SIF_RefId SIF_RefObject="StudentPersonal"/>
+      <Injury/>
+    </Victim>
+    <Victim>
+      <Name>
+        <Prefix/>
+        <LastName/>
+        <FirstName/>
+        <MiddleName/>
+        <Suffix/>
+        <PreferredName/>
+        <SortName/>
+        <FullName/>
+      </Name>
+      <SIF_RefId SIF_RefObject="StudentPersonal"/>
+      <Injury/>
+    </Victim>
+  </VictimList>
+  <IncidentDescription/>
+  <IncidentActionList>
+    <IncidentAction>
+      <StartDate/>
+      <EndDate/>
+      <Duration/>
+      <ZeroTolerance>Yes</ZeroTolerance>
+      <PoliceNotification/>
+      <Arrest/>
+    </IncidentAction>
+    <IncidentAction>
+      <StartDate/>
+      <EndDate/>
+      <Duration/>
+      <ZeroTolerance>Yes</ZeroTolerance>
+      <PoliceNotification/>
+      <Arrest/>
+    </IncidentAction>
+  </IncidentActionList>
+</DisciplineIncident>

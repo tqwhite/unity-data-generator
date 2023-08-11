@@ -1,0 +1,46 @@
+<StudentLEARelationship xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f91b8cb0-37b3-11ee-8111-c942f4d9d9b9">
+  <MembershipType/>
+  <LEARelationshipType>
+    <ResidencyStatus>
+      <Code>01652</Code>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </ResidencyStatus>
+    <ProvidingInstruction/>
+    <ProvidingServices/>
+    <FinanciallyResponsible/>
+  </LEARelationshipType>
+  <EntryDate/>
+  <EntryType>
+    <Code>01821</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </EntryType>
+  <ExitDate/>
+  <ExitType>
+    <Code>01907</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ExitType>
+  <ExitStatus>
+    <Code>Permanent</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ExitStatus>
+  <NonResidentAttendReason/>
+  <GradeLevel>
+    <Code>IT</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </GradeLevel>
+</StudentLEARelationship>

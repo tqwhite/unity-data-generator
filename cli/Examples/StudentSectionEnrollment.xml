@@ -1,0 +1,37 @@
+<StudentSectionEnrollment xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f91fab60-37b3-11ee-8111-c942f4d9d9b9">
+  <EntryDate/>
+  <ExitDate/>
+  <ScheduleInfoOverrideList>
+    <ScheduleInfoOverride>
+      <MeetingTimeList>
+        <MeetingTime>
+          <TimetableDay/>
+          <TimetablePeriod/>
+        </MeetingTime>
+        <MeetingTime>
+          <TimetableDay/>
+          <TimetablePeriod/>
+        </MeetingTime>
+      </MeetingTimeList>
+    </ScheduleInfoOverride>
+    <ScheduleInfoOverride>
+      <MeetingTimeList>
+        <MeetingTime>
+          <TimetableDay/>
+          <TimetablePeriod/>
+        </MeetingTime>
+        <MeetingTime>
+          <TimetableDay/>
+          <TimetablePeriod/>
+        </MeetingTime>
+      </MeetingTimeList>
+    </ScheduleInfoOverride>
+  </ScheduleInfoOverrideList>
+  <InstructionalDeliveryModeList>
+    <InstructionalDeliveryMode/>
+    <InstructionalDeliveryMode/>
+  </InstructionalDeliveryModeList>
+  <CreditsAttempted Type="NewEnrollment"/>
+  <DualCredit/>
+  <CTEConcentrator/>
+</StudentSectionEnrollment>

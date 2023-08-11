@@ -1,0 +1,168 @@
+<EmployeePersonal xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="f8fce120-37b3-11ee-8111-c942f4d9d9b9">
+  <StateProvinceId/>
+  <OtherIdList>
+    <OtherId/>
+    <OtherId/>
+  </OtherIdList>
+  <Name>
+    <Prefix/>
+    <LastName/>
+    <FirstName/>
+    <MiddleName/>
+    <Suffix/>
+    <PreferredName/>
+    <SortName/>
+    <FullName/>
+  </Name>
+  <Demographics>
+    <RaceList>
+      <Race>
+        <Code>AmericanIndianOrAlaskaNative</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+        <Proportion/>
+      </Race>
+      <Race>
+        <Code>AmericanIndianOrAlaskaNative</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+        <Proportion/>
+      </Race>
+    </RaceList>
+    <HispanicLatino>Yes</HispanicLatino>
+    <RaceEthnicityDeclined>Yes</RaceEthnicityDeclined>
+    <Gender/>
+    <BirthDate/>
+    <BirthDateVerification/>
+    <PlaceOfBirth/>
+    <CountyOfBirth>AF</CountyOfBirth>
+    <StateOfBirth>AK</StateOfBirth>
+    <CountryOfBirth/>
+    <CountriesOfCitizenship>
+      <CountryOfCitizenship/>
+      <CountryOfCitizenship/>
+    </CountriesOfCitizenship>
+    <CountriesOfResidency>
+      <CountryOfResidency/>
+      <CountryOfResidency/>
+    </CountriesOfResidency>
+    <CountryArrivalDate/>
+    <CitizenshipStatus/>
+    <EnglishProficiency>
+      <Code>Yes</Code>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </EnglishProficiency>
+    <LanguageList>
+      <Language>
+        <Code>abk</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+        <LanguageType/>
+        <Dialect/>
+      </Language>
+      <Language>
+        <Code>abk</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+        <LanguageType/>
+        <Dialect/>
+      </Language>
+    </LanguageList>
+    <DwellingArrangement>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </DwellingArrangement>
+    <MaritalStatus/>
+    <MilitaryConnectedStudent>NotMilitaryConnected</MilitaryConnectedStudent>
+  </Demographics>
+  <AddressList>
+    <Address Type="Mailing">
+      <Street>
+        <Line1/>
+        <Line2/>
+        <Line3/>
+        <Complex/>
+        <StreetNumber/>
+        <StreetPrefix/>
+        <StreetName/>
+        <StreetType/>
+        <StreetSuffix/>
+        <ApartmentType/>
+        <ApartmentNumberPrefix/>
+        <ApartmentNumber/>
+        <ApartmentNumberSuffix/>
+      </Street>
+      <City/>
+      <County/>
+      <StateProvince>AK</StateProvince>
+      <StateANSICode>01</StateANSICode>
+      <Country/>
+      <PostalCode/>
+      <GridLocation>
+        <Latitude/>
+        <Longitude/>
+      </GridLocation>
+      <AddressRefId/>
+    </Address>
+    <Address Type="Mailing">
+      <Street>
+        <Line1/>
+        <Line2/>
+        <Line3/>
+        <Complex/>
+        <StreetNumber/>
+        <StreetPrefix/>
+        <StreetName/>
+        <StreetType/>
+        <StreetSuffix/>
+        <ApartmentType/>
+        <ApartmentNumberPrefix/>
+        <ApartmentNumber/>
+        <ApartmentNumberSuffix/>
+      </Street>
+      <City/>
+      <County/>
+      <StateProvince>AK</StateProvince>
+      <StateANSICode>01</StateANSICode>
+      <Country/>
+      <PostalCode/>
+      <GridLocation>
+        <Latitude/>
+        <Longitude/>
+      </GridLocation>
+      <AddressRefId/>
+    </Address>
+  </AddressList>
+  <PhoneNumberList>
+    <PhoneNumber Type="Home">
+      <Number/>
+      <Extension/>
+      <ListedStatus/>
+    </PhoneNumber>
+    <PhoneNumber Type="Home">
+      <Number/>
+      <Extension/>
+      <ListedStatus/>
+    </PhoneNumber>
+  </PhoneNumberList>
+  <EmailList>
+    <Email Type="Home"/>
+    <Email Type="Home"/>
+  </EmailList>
+  <BenefitEligible>Y</BenefitEligible>
+  <ReemployedRetiree>Y</ReemployedRetiree>
+</EmployeePersonal>
