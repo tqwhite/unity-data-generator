@@ -29,7 +29,7 @@ const moduleFunction = function() {
 		if (silent) {
 			return;
 		}
-		outputFunction(message);
+		console.log(message);
 	};
 
 	const status = message => {

@@ -9,6 +9,8 @@ const qt = require('qtools-functional-library'); //qt.help({printOutput:true, qu
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function(error, { getConfig, commandLineParameters }) {
+	const {xLog}=process.global;
+
 	const localConfig = getConfig('SYSTEM');
 
 	const {
@@ -41,7 +43,7 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 	try {
 		const workbook = xlsx.readFile(spreadsheetPath);
 		const worksheetNames = workbook.SheetNames;
-		console.log('Worksheets found:', spreadsheetPath);
+		xLog.status(`Worksheets found: ${spreadsheetPath}`);
 		worksheetNames.forEach((name, index) => {
 			// So we have the contents of the worksheet optimized for lookup by XPath.
 			const sheet = workbook.Sheets[name];
@@ -51,25 +53,25 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 				// So we have an XML template to fill in.
 				const structurePath = structuresPath + name + '.xml';
 				if (!fs.existsSync(structurePath)) {
-					console.log('File not found:', structurePath);
+					xLog.status(`File not found: ${structurePath}`);
 					process.exit(1);
 				} else {
-					console.log('File found:', structurePath);
+					xLog.status(`File found: ${structurePath}`);
 					let xmlString = '';
 					try {
 						xmlString = fs.readFileSync(structurePath, 'utf8');
 					} catch (error) {
-						console.error('Error reading the file:', error.message);
+						xLog.error(`Error reading the file: ${error.message}`);
 						process.exit(1);
 					}
 					xml2js.parseString(xmlString, (err, result) => {
 						if (err) {
-							console.error('Error parsing the XML:', err.message);
+							xLog.error(`Error parsing the XML: ${err.message}`);
 							process.exit(1);
 						}
 
-						//console.log('\nXML Contents:');  // Debug
-						//console.log(removeFirstLine(xmlString));  // Debug
+						//xLog.status('\nXML Contents:');  // Debug
+						//xLog.status(removeFirstLine(xmlString));  // Debug
 
 						const xmlCollection = result;
 						// So we have an object, not a collection.
@@ -82,48 +84,48 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 							template.$.xmlns = xmlnsDeclaration;
 						}
 						template = { [objectName]: template };
-						//console.log(JSON.stringify(template, null, 2));  // Debug
-						//console.log(template);  // Debug
+						//xLog.status(JSON.stringify(template, null, 2));  // Debug
+						//xLog.status(template);  // Debug
 						let xmlInput = createXmlString(template);
 						xmlInput = removeFirstLine(xmlInput);
-						//console.log('\nInput XML:');
-						//console.log(xmlInput);
+						//xLog.status('\nInput XML:');
+						//xLog.status(xmlInput);
 
 						// So we can prompt for random valid human friend data at any place in the object.
 						let xmlObject = {};
-						//console.log('\nTraversal with XPath:');
+						//xLog.status('\nTraversal with XPath:');
 						children = [];
 						traverseXML(template, xmlObject, fields);
 
 						// So we see our results and can keep fruit of our labor (as XML)l.
-						//console.log(JSON.stringify(xmlObject, null, 2));  // Debug
-						//console.log(xmlObject);  // Debug
+						//xLog.status(JSON.stringify(xmlObject, null, 2));  // Debug
+						//xLog.status(xmlObject);  // Debug
 						let xmlOutput = createXmlString(xmlObject);
 						xmlOutput = removeFirstLine(xmlOutput);
 						//validateXMLAgainstXSD(xmlOutput, strictXSD);
 						//           validateXMLAgainstXSD(xmlOutput, strictXSD)
 						//             .then((validationResult) => {
 						//               if (validationResult.isValid) {
-						//                 console.log('XML is valid.');
+						//                 xLog.status('XML is valid.');
 						//               } else {
-						//                 console.log('XML is not valid. Errors:');
-						//                 console.log(validationResult.errors);
+						//                 xLog.status('XML is not valid. Errors:');
+						//                 xLog.status(validationResult.errors);
 						//               }
 						//             })
 						//             .catch((err) => {
-						//               console.error('Error during XML validation:', err);
+						//               xLog.error(`Error during XML validation: ${err}`);
 						//             });
 						if (true) {
-							console.log('\nGenerated XML:');
-							console.log(xmlOutput);
-							console.log('\n'); // Whitespace
+							xLog.status('\nGenerated XML:');
+							xLog.result(xmlOutput);
+							xLog.status('\n'); // Whitespace
 						}
 						const outputPath = outputsPath + objectName + '.xml';
 						try {
 							fs.writeFileSync(outputPath, xmlOutput, { encoding: 'utf-8' });
 						} catch (error) {
-							console.error('Error writing:', outputPath);
-							console.error(error.message);
+							xLog.error(`Error writing: ${outputPath}`);
+							xLog.error(error.message);
 							process.exit(1);
 						}
 					});
@@ -131,7 +133,7 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 			}
 		});
 	} catch (error) {
-		console.error('Error:', error.message);
+		xLog.error(`Error: ${error.message}`);
 		process.exit(1);
 	}
 
@@ -287,10 +289,10 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 		const sourceKey = Object.keys(source)[0];
 		const destinationKey = Object.keys(destination)[0];
 		if (sourceKey != destinationKey) {
-			console.log(
+			xLog.status(
 				'Warning:  Source and destination mismatch, copying children anyway!'
 			);
-			console.log('Source:', sourceKey, 'Destination:', destinationKey);
+			xLog.status(`Source: ${sourceKey}, 'Destination:', ${destinationKey}`);
 		}
 		// So we copy attributes (without removing existing ones).
 		const attributeKeys = Object.keys(source[sourceKey].$);
@@ -402,7 +404,7 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 
 				let groupingTag = true;
 				let group = null;
-				//console.log('XPath:', currentXPath);
+				//xLog.status(`XPath: ${currentXPath}`);
 				// Root!
 				if (isEmpty(xmlObject)) {
 					// So we start with the root and add it to the tree by reference.
@@ -438,9 +440,19 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 					currentIPath,
 					ignore
 				);
+// ===================================================================================
+// TQii refactor Jina to her own module
 
-				//console.log('XPath:', currentXPath);
-const {callJina}=require('./lib/call-jina')({addXmlElement, getFieldValue, createXmlElement, knownIds, createUUID});
+				//xLog.status(`XPath: ${currentXPath}`);
+				const { callJina } = require('./lib/call-jina')({
+					addXmlElement,
+					getFieldValue,
+					createXmlElement,
+					knownIds,
+					createUUID
+				});
+				
+// ===================================================================================
 
 				// Tail:  So we can do things on the way back up!
 				if (xor(index, attribute)) {
@@ -450,7 +462,7 @@ const {callJina}=require('./lib/call-jina')({addXmlElement, getFieldValue, creat
 					const parentXPath = currentParts.slice(0, -1).join('/');
 					if (!ignore) {
 						if (!hasFieldsRow(currentXPath, fields)) {
-							//console.log('Group XPath:', currentXPath);
+							//xLog.status(`Group XPath: ${currentXPath}`);
 							// Since the root namespace declaration is special.
 							if (xmlObject == parent && '@xmlns' == currentKey) {
 								const rootKey = currentParts[1];
@@ -469,7 +481,7 @@ const {callJina}=require('./lib/call-jina')({addXmlElement, getFieldValue, creat
 								copyXmlChildren(child, group);
 							}
 						} else {
-							//console.log('Leaf XPath:', currentXPath);
+							//xLog.status(`Leaf XPath: ${currentXPath}`);
 							children.push(currentXPath);
 						}
 					}
@@ -504,7 +516,6 @@ process.global.applicationBasePath = path.join(
 	'..'
 );
 process.global.xLog = xLog;
-
 
 require('./lib/assemble-configuration-show-help-maybe-exit')({
 	configSegmentName: 'SYSTEM',
