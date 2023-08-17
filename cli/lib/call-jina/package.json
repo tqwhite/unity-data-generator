@@ -1,0 +1,11 @@
+{
+  "name": "call-jina",
+  "version": "1.0.0",
+  "description": "interface to Jina for creating XML testing data",
+  "main": "call-jina.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}

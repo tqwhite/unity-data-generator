@@ -1,0 +1,14 @@
+{
+  "name": "jina-core",
+  "version": "1.0.0",
+  "description": "A complex thinking tool",
+  "main": "jina-core.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC",
+  "dependencies": {
+    "qtools-asynchronous-pipe-plus": "^1.0.2"
+  }
+}

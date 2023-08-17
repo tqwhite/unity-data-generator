@@ -39,9 +39,11 @@ const moduleFunction = function({ configSegmentName, callback }) {
 	// get systemParameters.ini
 
 	taskList.push((args, next) => {
-		const localCallback = (err, { config, allConfigs }) => {
+		const localCallback = (err, args) => {
+		const { config, allConfigs }=args;
 			const getConfigActual = allConfigs => segmentName =>
-				allConfigs[segmentName];
+				({...allConfigs[segmentName], _segmentName:segmentName});
+				
 			const getConfig = getConfigActual({
 				...allConfigs,
 				commandLineParameters
@@ -67,7 +69,7 @@ const moduleFunction = function({ configSegmentName, callback }) {
 			next('skipRestOfPipe');
 			return;
 		}
-		xLog.status(`Using config file: ${configFilePath}\n`);
+		xLog.status(`Using config file: ${configFilePath}`);
 
 		findConfigFile.getConfig(
 			{
@@ -132,15 +134,14 @@ const moduleFunction = function({ configSegmentName, callback }) {
 	// show config data if requested
 
 	taskList.push((args, next) => {
-		const { moduleConfig, configFilePath } = args;
+		const { allConfigs, moduleConfig, configFilePath } = args;
 
 		const localCallback = err => {
 			next(err, args);
 		};
 
 		if (commandLineParameters.switches.showConfig) {
-			moduleConfig.qtDump({ noSuffix: true });
-			process.stdout.write(JSON.stringify(moduleConfig, '', '\t'));
+			allConfigs.qtSelectProperties(['_meta', '_substitutions'], {excludeMode:true}).qtDump({ noSuffix: true });
 			process.exit(); //EXIT ==================================================
 			//next('skipRestOfPipe');
 			//return;

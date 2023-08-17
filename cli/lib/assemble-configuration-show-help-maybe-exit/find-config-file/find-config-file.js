@@ -45,8 +45,6 @@ const moduleFunction = function() {
 				xLog.error(message);
 				throw message;
 			}
-			config._meta = allConfigs._meta;
-			config._meta.configurationSegmentName = configSegmentName;
 
 			callback('', {config, allConfigs});
 		}

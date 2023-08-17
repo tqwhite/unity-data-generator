@@ -8,8 +8,12 @@ const qt = require('qtools-functional-library'); //qt.help({printOutput:true, qu
 
 //START OF moduleFunction() ============================================================
 
-const moduleFunction = function(error, { getConfig, commandLineParameters }) {
-	const {xLog}=process.global;
+const moduleFunction = async function(
+	error,
+	{ getConfig, commandLineParameters }
+) {
+	const { xLog } = process.global;
+	process.global.getConfig=getConfig;
 
 	const localConfig = getConfig('SYSTEM');
 
@@ -30,6 +34,10 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 	const Ajv = require('ajv');
 	const { v1, v4 } = require('uuid');
 	
+	const jinaCore = require('./lib/jina-core')({thoughtProcess:'unityGenerator'});
+	
+	const callJinaGen = require('./lib/call-jina');
+	
 	var xmlnsDeclaration = '';
 	var children = [];
 
@@ -43,8 +51,11 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 	try {
 		const workbook = xlsx.readFile(spreadsheetPath);
 		const worksheetNames = workbook.SheetNames;
-		xLog.status(`Worksheets found: ${spreadsheetPath}`);
-		worksheetNames.forEach((name, index) => {
+		xLog.status(`Using data model spec file: ${spreadsheetPath}`);
+
+		//revised from forEach() by tqii to help async/await
+		for (var index = 0, len = worksheetNames.length; index < len; index++) {
+			var name = worksheetNames[index];
 			// So we have the contents of the worksheet optimized for lookup by XPath.
 			const sheet = workbook.Sheets[name];
 			const fields = createWorksheetFields(sheet);
@@ -53,18 +64,20 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 				// So we have an XML template to fill in.
 				const structurePath = structuresPath + name + '.xml';
 				if (!fs.existsSync(structurePath)) {
-					xLog.status(`File not found: ${structurePath}`);
+					xLog.status(`XML not found: ${structurePath}`);
 					process.exit(1);
 				} else {
-					xLog.status(`File found: ${structurePath}`);
+					xLog.status(`XML found: ${structurePath}`);
 					let xmlString = '';
 					try {
 						xmlString = fs.readFileSync(structurePath, 'utf8');
 					} catch (error) {
-						xLog.error(`Error reading the file: ${error.message}`);
+						xLog.error(`Error reading XML file: ${error.message}`);
 						process.exit(1);
 					}
-					xml2js.parseString(xmlString, (err, result) => {
+					
+					
+					const parseStringCallback=async (err, result) => {
 						if (err) {
 							xLog.error(`Error parsing the XML: ${err.message}`);
 							process.exit(1);
@@ -95,7 +108,8 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 						let xmlObject = {};
 						//xLog.status('\nTraversal with XPath:');
 						children = [];
-						traverseXML(template, xmlObject, fields);
+						
+						await traverseXML(template, xmlObject, fields);
 
 						// So we see our results and can keep fruit of our labor (as XML)l.
 						//xLog.status(JSON.stringify(xmlObject, null, 2));  // Debug
@@ -117,7 +131,7 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 						//             });
 						if (true) {
 							xLog.status('\nGenerated XML:');
-							xLog.result(xmlOutput);
+							//						xLog.result(xmlOutput);
 							xLog.status('\n'); // Whitespace
 						}
 						const outputPath = outputsPath + objectName + '.xml';
@@ -128,10 +142,16 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 							xLog.error(error.message);
 							process.exit(1);
 						}
-					});
+					}
+					
+					
+					
+					
+					
+					await xml2js.parseString(xmlString, parseStringCallback);
 				}
 			}
-		});
+		}
 	} catch (error) {
 		xLog.error(`Error: ${error.message}`);
 		process.exit(1);
@@ -357,8 +377,10 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 		return (a || b) && !(a && b);
 	}
 
+	
+
 	// Function to recursively traverse the XML object
-	function traverseXML(
+	async function traverseXML(
 		template,
 		xmlObject,
 		fields,
@@ -431,7 +453,7 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 					newParent = group;
 				}
 				// Recurse:  So we keep going.
-				traverseXML(
+				await traverseXML(
 					template[key],
 					xmlObject,
 					fields,
@@ -440,22 +462,21 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 					currentIPath,
 					ignore
 				);
-// ===================================================================================
-// TQii refactor Jina to her own module
+				// ===================================================================================
+				// TQii refactor Jina to her own module
 
-				//xLog.status(`XPath: ${currentXPath}`);
-				const { callJina } = require('./lib/call-jina')({
+				const { callJina } = callJinaGen({
 					addXmlElement,
 					getFieldValue,
 					createXmlElement,
 					knownIds,
-					createUUID
+					createUUID,
+					jinaCore
 				});
-				
-// ===================================================================================
 
-				// Tail:  So we can do things on the way back up!
-				if (xor(index, attribute)) {
+				// ===================================================================================
+
+				const wrapItUp = async () => {
 					const currentParts = currentXPath.split('/');
 					const objectName = currentParts[1];
 					const currentKey = currentParts[currentParts.length - 1];
@@ -473,10 +494,10 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 								// Process the immediate parents leaves.
 								// This must be done before the group to maintain the proper order.
 								const groupPeers = reduceChildren(parentXPath);
-								let peer = callJina(parentXPath, groupPeers, fields);
+								let peer = await callJina(parentXPath, groupPeers, fields);
 								copyXmlChildren(peer, parent);
 								// Process the group.
-								let child = callJina(currentXPath, groupChildren, fields);
+								let child = await callJina(currentXPath, groupChildren, fields);
 								addXmlElement(group, parent);
 								copyXmlChildren(child, group);
 							}
@@ -493,10 +514,14 @@ const moduleFunction = function(error, { getConfig, commandLineParameters }) {
 						// So we ensure we have generated the entire example.
 						if (objectName == currentKey) {
 							const groupChildren = reduceChildren(currentXPath);
-							let child = callJina(currentXPath, groupChildren, fields);
+							let child = await callJina(currentXPath, groupChildren, fields);
 							copyXmlChildren(child, group);
 						}
 					}
+				};
+				// Tail:  So we can do things on the way back up!
+				if (xor(index, attribute)) {
+					await wrapItUp();
 				}
 			}
 		}
