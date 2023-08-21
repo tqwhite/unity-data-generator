@@ -34,7 +34,8 @@ const moduleFunction = async function(
 	const Ajv = require('ajv');
 	const { v1, v4 } = require('uuid');
 	
-	const jinaCore = require('./lib/jina-core')({thoughtProcess:'unityGenerator'});
+	const jinaCore = require('./lib/jina-core')
+	jinaCore.configureJina({thoughtProcess:'unityGenerator'});
 	
 	const callJinaGen = require('./lib/call-jina');
 	

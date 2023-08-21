@@ -9,6 +9,7 @@
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
+    "openai": "^4.0.0",
     "qtools-asynchronous-pipe-plus": "^1.0.2"
   }
 }
