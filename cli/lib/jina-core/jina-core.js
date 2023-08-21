@@ -24,7 +24,7 @@ const moduleFunction = function() {
 
 	const askSmartyPants=parameters=>require('./lib/main_processes/ask-smarty-pants')({...parameters, smartyPantsChooser});
 
-	return {configureJina, askSmartyPants}
+	return askSmartyPants
 };
 
 //END OF moduleFunction() ============================================================

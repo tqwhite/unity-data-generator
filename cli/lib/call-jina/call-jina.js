@@ -53,7 +53,7 @@ const moduleFunction = function({
 		
 		return async function generatePrompt(leafXPath, fields) {
 			
-			const {askSmartyPants}=jinaCore;
+			const {getResponse}=jinaCore;
 
 			const specObj = {};
 
@@ -71,7 +71,7 @@ const moduleFunction = function({
 			}
 
 			const neuronalTransmission=promptGeneration.updatePrompt({requestNumber:requestNumber++, specObj, currentXml:xmlVersionStack.qtLast()});
-			const wisdom=await askSmartyPants(neuronalTransmission, {})
+			const wisdom=await getResponse(neuronalTransmission, {})
 			specObj.jina=wisdom.response.message; //ignoring wisdom.responseObj containing specs and history
 			xmlVersionStack.push(specObj.jina);
 
