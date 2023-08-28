@@ -16,15 +16,15 @@ const moduleFunction = function() {
 	const { xLog, getConfig } = process.global;
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
 	
-	const smartyPantsChooser=require('./lib/smarty-pants-chooser')()
-	
-	const configureJina=()=>{
-	
-	};
+	const smartyPantsChooser=require('./lib/smarty-pants-chooser')(); //reserving the right to have overarching controls
 
-	const askSmartyPants=parameters=>require('./lib/main_processes/ask-smarty-pants')({...parameters, smartyPantsChooser});
 
-	return askSmartyPants
+	const conversationGenerator=({thoughtProcess})=>require('./lib/main_processes/conversation-generator')({thoughtProcess, smartyPantsChooser});
+	
+	const embedGenerator=()=>{someModule:'Not Yet Implemented'}
+	const fileUploader=()=>{someModule:'Not Yet Implemented'}
+
+	return {conversationGenerator, embedGenerator, fileUploader}
 };
 
 //END OF moduleFunction() ============================================================

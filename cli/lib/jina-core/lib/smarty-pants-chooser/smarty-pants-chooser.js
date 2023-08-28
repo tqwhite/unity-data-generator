@@ -6,7 +6,7 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); 
 
 const qt = require('qtools-functional-library'); //qt.help({printOutput:true, queryString:'.*', sendJson:false});
 
-console.error(`HELLO FROM: ${__filename}`);
+	const { Configuration, OpenAIApi } = require('openai');
 
 //npm i qtools-functional-library
 //npm i qtools-config-file-processor
@@ -23,19 +23,20 @@ console.error(`HELLO FROM: ${__filename}`);
 
 //START OF moduleFunction() ============================================================
 
-const moduleFunction = function(args = {}) {
-// 	process.global = {};
-// 	process.global.xLog = xLog;
-// 	const { getConfig } = args;
- 	const localConfig = {}; //getConfig(`${moduleName}`);
+//NOTENOTENOTENOTENOTE: this is actually used by conversation-generator.js
 
-	const workingFunctionActual = instanceArgs => operatingArgs => {
-		return 'hello';
+const moduleFunction = function() {
+	const { xLog, getConfig } = process.global;
+	const {smartyPantsList} = getConfig(moduleName); //getConfig(`${moduleName}`);
+
+	const smartyPantsFactory = ({smartyPantsName}) => {
+		const {moduleName, accessParms}=smartyPantsList[smartyPantsName];
+		const smartyPants=require(`./lib/${moduleName}`)({accessParms})
+		return smartyPants;
 	};
 
-	const workingFunction = workingFunctionActual({ ...localConfig, ...args });
 
-	return { workingFunction };
+	return smartyPantsFactory;
 };
 
 //END OF moduleFunction() ============================================================

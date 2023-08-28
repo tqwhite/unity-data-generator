@@ -7,7 +7,8 @@ const commandLineParameters = commandLineParser.getParameters();
 const qt = require('qtools-functional-library');
 //console.dir(qt.help());
 
-const chalk=require('chalk');
+const chalk = require('chalk');
+const util=require('util');
 
 //START OF moduleFunction() ============================================================
 
@@ -16,45 +17,90 @@ const moduleFunction = function() {
 
 	const { silent, quiet, verbose } = commandLineParameters.switches; //flags used here need to be added to assemble-configuration-show-help-maybe-exit.js
 	
-	const outputFunction=console.error;
-	const color='writing to file'===true?new chalk.Instance({level: 0}):chalk; //wanted to figure out how I could write clean messages to files if I ever want to
+	const outputFunction = console.error;
+	const color =
+		'writing to file' === true ? new chalk.Instance({ level: 0 }) : chalk; //wanted to figure out how I could write clean messages to files if I ever want to
+	
+	const stringify = (message, options={}) => {
+		if (typeof message == 'object') {
+			const defaults={
+				showHidden: false, // if true, the object's non-enumerable and symbol properties will be shown
+				depth:4, // the recursion depth. Use null for unlimited depth
+				colors: true, // if true, the output will be styled with ANSI color codes
+				customInspect: true, // if false, custom inspect() functions defined on the objects being inspected won't be called
+				showProxy: false, // if true, then objects created with `Proxy` are shown as they are
+				maxArrayLength: 100, // specifies the maximum number of Array and TypedArray elements to include. Use null for unlimited
+				breakLength: 60, // the length at which object properties will break onto new lines. Set to Infinity to format the object into a single line
+				compact: false, // if false, every property of an object is put onto a new line
+				sorted: false, // if true, object properties are sorted, can also be a compare function
+				getters: false // if true, getters are going to be inspected as well, can be 'get' or 'set' to only inspect one kind
+				
+			};
+			const parms={...defaults, ...options};
+			return util.inspect(message, parms);
+		}
 
-	const error = message => {
+		return message;
+		
+	};
+
+	const error = (message, options={}) => {
+		message=stringify(message, options);
 		if (silent) {
 			return;
 		}
 		outputFunction(color.red(message));
 	};
-	const result = message => {
+	const result = (message, options={}) => {
+		message=stringify(message, options);;
 		if (silent) {
 			return;
 		}
 		console.log(message);
 	};
 
-	const status = message => {
+	const status = (message, options={}) => {
+		message=stringify(message, options);;
+		if (silent || quiet) {
+			return;
+		}
+		outputFunction(message);
+	};
+
+	const debug = (message, options={}) => {
+		message=stringify(message, options);;
 		if (silent || quiet) {
 			return;
 		}
 		outputFunction(message);
 	};
 	
-	const emphatic = message => {
+	const emphatic = (message, options={}) => {
+		message=stringify(message, options);;
 		if (silent || quiet) {
 			return;
 		}
 		outputFunction(color.bgBlack.yellow(message));
 	};
 
-	const verboseFunction = message => {
+	const verboseFunction = (message, options={}) => {
+		message=stringify(message, options);;
 		if (silent || !verbose) {
 			return;
 		}
-		
+
 		outputFunction(message);
 	};
 
-	return { annotation, error, result, status, emphatic, verbose:verboseFunction };
+	return {
+		annotation,
+		error,
+		result,
+		status,
+		debug,
+		emphatic,
+		verbose: verboseFunction
+	};
 };
 
 //END OF moduleFunction() ============================================================

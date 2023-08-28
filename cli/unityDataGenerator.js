@@ -12,7 +12,13 @@ const moduleFunction = async function(
 	error,
 	{ getConfig, commandLineParameters }
 ) {
+	//remember, this has init at the end of the file
 	const { xLog } = process.global;
+	if(error){
+		xLog.error(error);
+		process.exit(1);
+	}
+		
 	process.global.getConfig=getConfig;
 
 	const localConfig = getConfig('SYSTEM');
@@ -34,7 +40,7 @@ const moduleFunction = async function(
 	const Ajv = require('ajv');
 	const { v1, v4 } = require('uuid');
 	
-	const jinaCore = require('./lib/jina-core')({thoughtProcess:'unityGenerator'});
+	const jinaCore = require('./lib/jina-core').conversationGenerator({thoughtProcess:'unityGenerator'});
 	
 	const callJinaGen = require('./lib/call-jina');
 	
@@ -49,6 +55,7 @@ const moduleFunction = async function(
 	}
 
 	try {
+		const startTime = performance.now(); //milliseconds
 		const workbook = xlsx.readFile(spreadsheetPath);
 		const worksheetNames = workbook.SheetNames;
 		xLog.status(`Using data model spec file: ${spreadsheetPath}`);
@@ -152,6 +159,13 @@ const moduleFunction = async function(
 				}
 			}
 		}
+		const endTime = performance.now();
+		const duration=(
+					(endTime - startTime) /
+					1000
+				).toFixed(2);
+			
+		xLog.status(`Processing time: ${duration} seconds`)
 	} catch (error) {
 		xLog.error(`Error: ${error.message}`);
 		process.exit(1);
@@ -378,6 +392,24 @@ const moduleFunction = async function(
 	}
 
 	
+	// ===================================================================================
+	// TQii refactor Jina to her own module
+	
+	const xmlVersionStack=['First pass. No XML']; //this probably needs to be moved to a callJina() link, the one for the beginning of a new element
+	
+	const { callJina } = callJinaGen({
+		addXmlElement,
+		getFieldValue,
+		createXmlElement,
+		knownIds,
+		createUUID,
+		jinaCore,
+		xmlVersionStack,
+		commandLineParameters
+	});
+
+	// ===================================================================================
+
 
 	// Function to recursively traverse the XML object
 	async function traverseXML(
@@ -462,20 +494,8 @@ const moduleFunction = async function(
 					currentIPath,
 					ignore
 				);
-				// ===================================================================================
-				// TQii refactor Jina to her own module
-
-				const { callJina } = callJinaGen({
-					addXmlElement,
-					getFieldValue,
-					createXmlElement,
-					knownIds,
-					createUUID,
-					jinaCore
-				});
-
-				// ===================================================================================
-
+				
+				
 				const wrapItUp = async () => {
 					const currentParts = currentXPath.split('/');
 					const objectName = currentParts[1];
@@ -494,10 +514,10 @@ const moduleFunction = async function(
 								// Process the immediate parents leaves.
 								// This must be done before the group to maintain the proper order.
 								const groupPeers = reduceChildren(parentXPath);
-								let peer = await callJina(parentXPath, groupPeers, fields);
+								let peer = await callJina(parentXPath, groupPeers, fields); //CALL JINA ============================
 								copyXmlChildren(peer, parent);
 								// Process the group.
-								let child = await callJina(currentXPath, groupChildren, fields);
+								let child = await callJina(currentXPath, groupChildren, fields); //CALL JINA ============================
 								addXmlElement(group, parent);
 								copyXmlChildren(child, group);
 							}
@@ -514,7 +534,7 @@ const moduleFunction = async function(
 						// So we ensure we have generated the entire example.
 						if (objectName == currentKey) {
 							const groupChildren = reduceChildren(currentXPath);
-							let child = await callJina(currentXPath, groupChildren, fields);
+							let child = await callJina(currentXPath, groupChildren, fields); //CALL JINA ============================
 							copyXmlChildren(child, group);
 						}
 					}

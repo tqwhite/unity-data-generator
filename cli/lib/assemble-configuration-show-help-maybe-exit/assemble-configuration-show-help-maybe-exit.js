@@ -27,6 +27,7 @@ const moduleFunction = function({ configSegmentName, callback }) {
 		'-verbose',
 		'-noColor',
 		'-showConfig',
+		'-outFile',
 		'--overrideConfigPath'
 	];
 
