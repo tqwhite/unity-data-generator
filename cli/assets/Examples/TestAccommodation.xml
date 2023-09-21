@@ -1,0 +1,121 @@
+<TestAccommodation xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2cc48190-3857-11ee-b8c2-375fcdb1402b">
+  <StudentPersonalRefId/>
+  <Name>
+    <Prefix/>
+    <LastName/>
+    <FirstName/>
+    <MiddleName/>
+    <Suffix/>
+    <PreferredName/>
+    <SortName/>
+    <FullName/>
+  </Name>
+  <LocalId/>
+  <StateProvinceId/>
+  <StateDistrictId/>
+  <LEAInfoRefId/>
+  <SchoolInfoRefId/>
+  <StateSchoolId/>
+  <GradeLevel>
+    <Code>IT</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </GradeLevel>
+  <AssessmentRegistrationRefId>IT</AssessmentRegistrationRefId>
+  <TestAdministration/>
+  <TestSubjectArea/>
+  <TestGradeLevel/>
+  <TestAdministrationDateRange/>
+  <PlannedTestAdministrationDate/>
+  <TestType/>
+  <AuthorizedActual/>
+  <ActualTestAdministrationDate/>
+  <StudentProgramAccommodations>
+    <StudentProgramAccommodation>
+      <StudentParticipationRefId/>
+      <StudentProgramType>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </StudentProgramType>
+      <Accommodations>
+        <Accommodation>
+          <Code>Scheduling</Code>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+          <AccommodationCategory>
+            <Code/>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </AccommodationCategory>
+          <SpecialMaterials/>
+        </Accommodation>
+        <Accommodation>
+          <Code>Scheduling</Code>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+          <AccommodationCategory>
+            <Code/>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </AccommodationCategory>
+          <SpecialMaterials/>
+        </Accommodation>
+      </Accommodations>
+    </StudentProgramAccommodation>
+    <StudentProgramAccommodation>
+      <StudentParticipationRefId/>
+      <StudentProgramType>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </StudentProgramType>
+      <Accommodations>
+        <Accommodation>
+          <Code>Scheduling</Code>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+          <AccommodationCategory>
+            <Code/>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </AccommodationCategory>
+          <SpecialMaterials/>
+        </Accommodation>
+        <Accommodation>
+          <Code>Scheduling</Code>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+          <AccommodationCategory>
+            <Code/>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </AccommodationCategory>
+          <SpecialMaterials/>
+        </Accommodation>
+      </Accommodations>
+    </StudentProgramAccommodation>
+  </StudentProgramAccommodations>
+</TestAccommodation>

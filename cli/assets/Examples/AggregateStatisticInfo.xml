@@ -1,0 +1,18 @@
+<AggregateStatisticInfo xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c39a6b0-3857-11ee-b8c2-375fcdb1402b">
+  <StatisticName/>
+  <CalculationRule/>
+  <ApprovalDate/>
+  <ExpirationDate/>
+  <ExclusionRules>
+    <ExclusionRule/>
+    <ExclusionRule/>
+  </ExclusionRules>
+  <Source/>
+  <EffectiveDate/>
+  <DiscontinueDate/>
+  <Location>
+    <LocationName/>
+    <LocationRefId SIF_RefObject="SchoolInfo"/>
+  </Location>
+  <Measure/>
+</AggregateStatisticInfo>

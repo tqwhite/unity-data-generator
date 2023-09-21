@@ -1,0 +1,1231 @@
+
+<StudentDemographicRecords xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+  <StudentDemographicRecord RefId="" SIF_RefId="" SIF_RefObject="" SIF_RefObjectCodeset="">
+    <ReportingDate/>
+    <StudentPersonalData>
+      <LocalId/>
+      <StateProvinceId/>
+      <SSN/>
+      <OtherIdList>
+        <OtherId Type="" TypeCodeset=""/>
+        <OtherId Type="" TypeCodeset=""/>
+      </OtherIdList>
+      <Name Type="" TypeCodeset="">
+        <Prefix/>
+        <LastName/>
+        <FirstName/>
+        <MiddleName/>
+        <Suffix/>
+        <PreferredName/>
+        <SortName/>
+        <FullName/>
+      </Name>
+      <OtherNames>
+        <Name SIF_Action="" Type="" TypeCodeset="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <Name SIF_Action="" Type="" TypeCodeset="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+      </OtherNames>
+      <DemographicsData>
+        <RaceList>
+          <Race>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <Proportion/>
+          </Race>
+          <Race>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <Proportion/>
+          </Race>
+        </RaceList>
+        <Gender Codeset=""/>
+        <BirthDate/>
+        <EnglishProficiency>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </EnglishProficiency>
+        <LanguageList>
+          <Language>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <LanguageType Codeset=""/>
+            <Dialect/>
+          </Language>
+          <Language>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <LanguageType Codeset=""/>
+            <Dialect/>
+          </Language>
+        </LanguageList>
+        <HispanicLatino Codeset=""/>
+        <CountryOfBirth Codeset=""/>
+        <DwellingArrangement>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </DwellingArrangement>
+      </DemographicsData>
+      <AddressList>
+        <Address SIF_Action="" Type="" TypeCodeset="">
+          <Street>
+            <Line1/>
+            <Line2/>
+            <Line3/>
+            <Complex/>
+            <StreetNumber/>
+            <StreetPrefix/>
+            <StreetName/>
+            <StreetType/>
+            <StreetSuffix/>
+            <ApartmentType/>
+            <ApartmentNumberPrefix/>
+            <ApartmentNumber/>
+            <ApartmentNumberSuffix/>
+          </Street>
+          <City/>
+          <County/>
+          <StateProvince Codeset=""/>
+          <StateANSICode Codeset=""/>
+          <Country Codeset=""/>
+          <PostalCode/>
+          <GridLocation>
+            <Latitude/>
+            <Longitude/>
+          </GridLocation>
+          <AddressRefId/>
+        </Address>
+        <Address SIF_Action="" Type="" TypeCodeset="">
+          <Street>
+            <Line1/>
+            <Line2/>
+            <Line3/>
+            <Complex/>
+            <StreetNumber/>
+            <StreetPrefix/>
+            <StreetName/>
+            <StreetType/>
+            <StreetSuffix/>
+            <ApartmentType/>
+            <ApartmentNumberPrefix/>
+            <ApartmentNumber/>
+            <ApartmentNumberSuffix/>
+          </Street>
+          <City/>
+          <County/>
+          <StateProvince Codeset=""/>
+          <StateANSICode Codeset=""/>
+          <Country Codeset=""/>
+          <PostalCode/>
+          <GridLocation>
+            <Latitude/>
+            <Longitude/>
+          </GridLocation>
+          <AddressRefId/>
+        </Address>
+      </AddressList>
+      <PhoneNumberList>
+        <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+          <Number/>
+          <Extension/>
+          <ListedStatus/>
+        </PhoneNumber>
+        <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+          <Number/>
+          <Extension/>
+          <ListedStatus/>
+        </PhoneNumber>
+      </PhoneNumberList>
+      <IDEA Codeset=""/>
+      <Migrant Codeset=""/>
+      <Title1 Codeset=""/>
+      <GiftedTalented Codeset=""/>
+      <EconomicDisadvantage Codeset=""/>
+      <ELL Codeset=""/>
+      <Homeless Codeset=""/>
+      <Section504 Codeset=""/>
+      <VocationalConcentrator Codeset=""/>
+      <Immigrant Codeset=""/>
+      <NeglectedDelinquent Codeset=""/>
+    </StudentPersonalData>
+    <StudentContactsSummary>
+      <ParentGuardian1>
+        <Name Type="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <PhoneNumberList>
+          <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+          <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+        </PhoneNumberList>
+        <AddressList>
+          <Address SIF_Action="" Type="" TypeCodeset="">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince Codeset=""/>
+            <StateANSICode Codeset=""/>
+            <Country Codeset=""/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+          <Address SIF_Action="" Type="" TypeCodeset="">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince Codeset=""/>
+            <StateANSICode Codeset=""/>
+            <Country Codeset=""/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+        </AddressList>
+      </ParentGuardian1>
+      <ParentGuardian2>
+        <Name Type="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <PhoneNumberList>
+          <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+          <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+        </PhoneNumberList>
+        <AddressList>
+          <Address SIF_Action="" Type="" TypeCodeset="">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince Codeset=""/>
+            <StateANSICode Codeset=""/>
+            <Country Codeset=""/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+          <Address SIF_Action="" Type="" TypeCodeset="">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince Codeset=""/>
+            <StateANSICode Codeset=""/>
+            <Country Codeset=""/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+        </AddressList>
+      </ParentGuardian2>
+    </StudentContactsSummary>
+    <SIF_Metadata>
+      <TimeElements>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+      </TimeElements>
+      <LifeCycle>
+        <Created>
+          <DateTime/>
+          <Creators>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+          </Creators>
+        </Created>
+        <ModificationHistory>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+        </ModificationHistory>
+        <TimeElements>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+        </TimeElements>
+      </LifeCycle>
+      <RightsElements>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+      </RightsElements>
+      <EducationFilter>
+        <MediaTypes>
+          <MediaType/>
+          <MediaType/>
+        </MediaTypes>
+        <GradeLevels>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+        </GradeLevels>
+        <SubjectAreas>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+        </SubjectAreas>
+        <InterestLevels>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+        </InterestLevels>
+        <LearningStandardItems>
+          <LearningStandardItemRefId/>
+          <LearningStandardItemRefId/>
+        </LearningStandardItems>
+        <BloomsTaxonomyLevels>
+          <BloomsTaxonomyLevel Codeset=""/>
+          <BloomsTaxonomyLevel Codeset=""/>
+        </BloomsTaxonomyLevels>
+        <MultipleIntelligences>
+          <MultipleIntelligence Codeset=""/>
+          <MultipleIntelligence Codeset=""/>
+        </MultipleIntelligences>
+        <InstructionalStrategies>
+          <InstructionalStrategy Codeset=""/>
+          <InstructionalStrategy Codeset=""/>
+        </InstructionalStrategies>
+        <Title/>
+        <Summary/>
+        <LearningObjectives>
+          <LearningObjective/>
+          <LearningObjective/>
+        </LearningObjectives>
+        <ResourceTypes>
+          <ResourceType Codeset=""/>
+          <ResourceType Codeset=""/>
+        </ResourceTypes>
+      </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+    </SIF_ExtendedElements>
+  </StudentDemographicRecord>
+  <StudentDemographicRecord RefId="" SIF_RefId="" SIF_RefObject="" SIF_RefObjectCodeset="">
+    <ReportingDate/>
+    <StudentPersonalData>
+      <LocalId/>
+      <StateProvinceId/>
+      <SSN/>
+      <OtherIdList>
+        <OtherId Type="" TypeCodeset=""/>
+        <OtherId Type="" TypeCodeset=""/>
+      </OtherIdList>
+      <Name Type="" TypeCodeset="">
+        <Prefix/>
+        <LastName/>
+        <FirstName/>
+        <MiddleName/>
+        <Suffix/>
+        <PreferredName/>
+        <SortName/>
+        <FullName/>
+      </Name>
+      <OtherNames>
+        <Name SIF_Action="" Type="" TypeCodeset="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <Name SIF_Action="" Type="" TypeCodeset="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+      </OtherNames>
+      <DemographicsData>
+        <RaceList>
+          <Race>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <Proportion/>
+          </Race>
+          <Race>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <Proportion/>
+          </Race>
+        </RaceList>
+        <Gender Codeset=""/>
+        <BirthDate/>
+        <EnglishProficiency>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </EnglishProficiency>
+        <LanguageList>
+          <Language>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <LanguageType Codeset=""/>
+            <Dialect/>
+          </Language>
+          <Language>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <LanguageType Codeset=""/>
+            <Dialect/>
+          </Language>
+        </LanguageList>
+        <HispanicLatino Codeset=""/>
+        <CountryOfBirth Codeset=""/>
+        <DwellingArrangement>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </DwellingArrangement>
+      </DemographicsData>
+      <AddressList>
+        <Address SIF_Action="" Type="" TypeCodeset="">
+          <Street>
+            <Line1/>
+            <Line2/>
+            <Line3/>
+            <Complex/>
+            <StreetNumber/>
+            <StreetPrefix/>
+            <StreetName/>
+            <StreetType/>
+            <StreetSuffix/>
+            <ApartmentType/>
+            <ApartmentNumberPrefix/>
+            <ApartmentNumber/>
+            <ApartmentNumberSuffix/>
+          </Street>
+          <City/>
+          <County/>
+          <StateProvince Codeset=""/>
+          <StateANSICode Codeset=""/>
+          <Country Codeset=""/>
+          <PostalCode/>
+          <GridLocation>
+            <Latitude/>
+            <Longitude/>
+          </GridLocation>
+          <AddressRefId/>
+        </Address>
+        <Address SIF_Action="" Type="" TypeCodeset="">
+          <Street>
+            <Line1/>
+            <Line2/>
+            <Line3/>
+            <Complex/>
+            <StreetNumber/>
+            <StreetPrefix/>
+            <StreetName/>
+            <StreetType/>
+            <StreetSuffix/>
+            <ApartmentType/>
+            <ApartmentNumberPrefix/>
+            <ApartmentNumber/>
+            <ApartmentNumberSuffix/>
+          </Street>
+          <City/>
+          <County/>
+          <StateProvince Codeset=""/>
+          <StateANSICode Codeset=""/>
+          <Country Codeset=""/>
+          <PostalCode/>
+          <GridLocation>
+            <Latitude/>
+            <Longitude/>
+          </GridLocation>
+          <AddressRefId/>
+        </Address>
+      </AddressList>
+      <PhoneNumberList>
+        <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+          <Number/>
+          <Extension/>
+          <ListedStatus/>
+        </PhoneNumber>
+        <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+          <Number/>
+          <Extension/>
+          <ListedStatus/>
+        </PhoneNumber>
+      </PhoneNumberList>
+      <IDEA Codeset=""/>
+      <Migrant Codeset=""/>
+      <Title1 Codeset=""/>
+      <GiftedTalented Codeset=""/>
+      <EconomicDisadvantage Codeset=""/>
+      <ELL Codeset=""/>
+      <Homeless Codeset=""/>
+      <Section504 Codeset=""/>
+      <VocationalConcentrator Codeset=""/>
+      <Immigrant Codeset=""/>
+      <NeglectedDelinquent Codeset=""/>
+    </StudentPersonalData>
+    <StudentContactsSummary>
+      <ParentGuardian1>
+        <Name Type="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <PhoneNumberList>
+          <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+          <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+        </PhoneNumberList>
+        <AddressList>
+          <Address SIF_Action="" Type="" TypeCodeset="">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince Codeset=""/>
+            <StateANSICode Codeset=""/>
+            <Country Codeset=""/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+          <Address SIF_Action="" Type="" TypeCodeset="">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince Codeset=""/>
+            <StateANSICode Codeset=""/>
+            <Country Codeset=""/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+        </AddressList>
+      </ParentGuardian1>
+      <ParentGuardian2>
+        <Name Type="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <PhoneNumberList>
+          <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+          <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+        </PhoneNumberList>
+        <AddressList>
+          <Address SIF_Action="" Type="" TypeCodeset="">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince Codeset=""/>
+            <StateANSICode Codeset=""/>
+            <Country Codeset=""/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+          <Address SIF_Action="" Type="" TypeCodeset="">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince Codeset=""/>
+            <StateANSICode Codeset=""/>
+            <Country Codeset=""/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+        </AddressList>
+      </ParentGuardian2>
+    </StudentContactsSummary>
+    <SIF_Metadata>
+      <TimeElements>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+      </TimeElements>
+      <LifeCycle>
+        <Created>
+          <DateTime/>
+          <Creators>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+          </Creators>
+        </Created>
+        <ModificationHistory>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+        </ModificationHistory>
+        <TimeElements>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+        </TimeElements>
+      </LifeCycle>
+      <RightsElements>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+      </RightsElements>
+      <EducationFilter>
+        <MediaTypes>
+          <MediaType/>
+          <MediaType/>
+        </MediaTypes>
+        <GradeLevels>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+        </GradeLevels>
+        <SubjectAreas>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+        </SubjectAreas>
+        <InterestLevels>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+        </InterestLevels>
+        <LearningStandardItems>
+          <LearningStandardItemRefId/>
+          <LearningStandardItemRefId/>
+        </LearningStandardItems>
+        <BloomsTaxonomyLevels>
+          <BloomsTaxonomyLevel Codeset=""/>
+          <BloomsTaxonomyLevel Codeset=""/>
+        </BloomsTaxonomyLevels>
+        <MultipleIntelligences>
+          <MultipleIntelligence Codeset=""/>
+          <MultipleIntelligence Codeset=""/>
+        </MultipleIntelligences>
+        <InstructionalStrategies>
+          <InstructionalStrategy Codeset=""/>
+          <InstructionalStrategy Codeset=""/>
+        </InstructionalStrategies>
+        <Title/>
+        <Summary/>
+        <LearningObjectives>
+          <LearningObjective/>
+          <LearningObjective/>
+        </LearningObjectives>
+        <ResourceTypes>
+          <ResourceType Codeset=""/>
+          <ResourceType Codeset=""/>
+        </ResourceTypes>
+      </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+    </SIF_ExtendedElements>
+  </StudentDemographicRecord>
+</StudentDemographicRecords>

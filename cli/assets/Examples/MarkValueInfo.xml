@@ -1,0 +1,29 @@
+<MarkValueInfo xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c81d340-3857-11ee-b8c2-375fcdb1402b">
+  <SchoolYear/>
+  <Name/>
+  <Percentage>
+    <Minimum/>
+    <Maximum/>
+  </Percentage>
+  <Numeric>
+    <Precision/>
+    <Scale/>
+    <Low/>
+    <High/>
+  </Numeric>
+  <Letter>
+    <ValidMark>
+      <Code/>
+      <NumericEquivalent/>
+      <Description/>
+    </ValidMark>
+    <ValidMark>
+      <Code/>
+      <NumericEquivalent/>
+      <Description/>
+    </ValidMark>
+  </Letter>
+  <Narrative>
+    <MaximumSize/>
+  </Narrative>
+</MarkValueInfo>

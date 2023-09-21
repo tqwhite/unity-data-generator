@@ -1,0 +1,33 @@
+<xLea xmlns="http://www.sifassociation.org/datamodel/na/4.x" refId="2cd26440-3857-11ee-b8c2-375fcdb1402b">
+  <localId/>
+  <leaRefId/>
+  <stateProvinceId/>
+  <ncesId/>
+  <leaName/>
+  <address>
+    <addressType>Mailing</addressType>
+    <line1/>
+    <line2/>
+    <city/>
+    <stateProvince>AK</stateProvince>
+    <countryCode>AF</countryCode>
+    <postalCode/>
+  </address>
+  <phoneNumber>
+    <phoneNumberType>Home</phoneNumberType>
+    <number/>
+    <primaryIndicator>Yes</primaryIndicator>
+  </phoneNumber>
+  <otherPhoneNumbers>
+    <phoneNumber>
+      <phoneNumberType>Home</phoneNumberType>
+      <number/>
+      <primaryIndicator>Yes</primaryIndicator>
+    </phoneNumber>
+    <phoneNumber>
+      <phoneNumberType>Home</phoneNumberType>
+      <number/>
+      <primaryIndicator>Yes</primaryIndicator>
+    </phoneNumber>
+  </otherPhoneNumbers>
+</xLea>

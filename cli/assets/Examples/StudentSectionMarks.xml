@@ -1,0 +1,17 @@
+<StudentSectionMarks xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2cb98510-3857-11ee-b8c2-375fcdb1402b">
+  <IsFinal/>
+  <MarkList>
+    <Mark>
+      <Percentage/>
+      <Numeric/>
+      <Letter/>
+      <Narrative/>
+    </Mark>
+    <Mark>
+      <Percentage/>
+      <Numeric/>
+      <Letter/>
+      <Narrative/>
+    </Mark>
+  </MarkList>
+</StudentSectionMarks>

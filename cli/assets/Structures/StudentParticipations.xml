@@ -1,0 +1,883 @@
+
+<StudentParticipations xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+  <StudentParticipation RefId="" StudentPersonalRefId="">
+    <StudentParticipationAsOfDate/>
+    <ProgramType>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </ProgramType>
+    <ProgramIdentifier/>
+    <ProgramName/>
+    <ProgramFundingSources>
+      <ProgramFundingSource>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </ProgramFundingSource>
+      <ProgramFundingSource>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </ProgramFundingSource>
+    </ProgramFundingSources>
+    <ManagingPublicAgency SIF_RefObject=""/>
+    <ManagingSchool SIF_RefObject=""/>
+    <PartCTransitionMeetingNotHeldReasons>
+      <PartCTransitionMeetingNotHeldReason>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </PartCTransitionMeetingNotHeldReason>
+      <PartCTransitionMeetingNotHeldReason>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </PartCTransitionMeetingNotHeldReason>
+    </PartCTransitionMeetingNotHeldReasons>
+    <PartCTransitionMeetingDate/>
+    <PartCTransitionMeetingOutcomes>
+      <PartCTransitionMeetingOutcome>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </PartCTransitionMeetingOutcome>
+      <PartCTransitionMeetingOutcome>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </PartCTransitionMeetingOutcome>
+    </PartCTransitionMeetingOutcomes>
+    <ReferralDate/>
+    <ReferralSource>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </ReferralSource>
+    <ProgramStatus>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </ProgramStatus>
+    <GiftedEligibilityCriteria/>
+    <EvaluationParentalConsentDate/>
+    <EvaluationDate/>
+    <EvaluationExtensionDate/>
+    <ExtensionComments/>
+    <ReevaluationDate/>
+    <ExceptionalityCategories>
+      <ExceptionalityCategory>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+        <ExceptionalityPriority/>
+      </ExceptionalityCategory>
+      <ExceptionalityCategory>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+        <ExceptionalityPriority/>
+      </ExceptionalityCategory>
+    </ExceptionalityCategories>
+    <ProgramEligibilityDate/>
+    <ProgramPlanType>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </ProgramPlanType>
+    <ProgramPlanDate/>
+    <ProgramPlanEffectiveDate/>
+    <NOREPDate/>
+    <PlacementParentalConsentDate/>
+    <ProgramPlacementDate/>
+    <ProgramPlacementReason/>
+    <LeastRestrictiveEnvironment>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </LeastRestrictiveEnvironment>
+    <ExtendedSchoolYear/>
+    <ExtendedDay/>
+    <ProgramAvailability>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </ProgramAvailability>
+    <PrivateNotPlacedByPublic/>
+    <ProgramReviewDate/>
+    <FBADate/>
+    <BIPDate/>
+    <ProgramExitDate/>
+    <ProgramExitReason>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </ProgramExitReason>
+    <ProjectedExitDate/>
+    <ProjectedExitReason Codeset=""/>
+    <PlannedAssessmentParticipation Codeset=""/>
+    <TransitionPlanning Codeset=""/>
+    <StudentSpecialEducationFTE/>
+    <EntryPerson/>
+    <ParticipationContact/>
+    <AdditionalProgramAvailabilityList>
+      <ProgramAvailability>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </ProgramAvailability>
+      <ProgramAvailability>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </ProgramAvailability>
+    </AdditionalProgramAvailabilityList>
+    <CaseManager/>
+    <FreeAndReducedStatus/>
+    <CertifiedLunchProgram Codeset=""/>
+    <PerkinsLEPStatus Codeset=""/>
+    <TitleIIIAccountabilityProgressStatus Codeset=""/>
+    <TitleIIIImmigrantParticipationStatus Codeset=""/>
+    <NeglectedOrDelinquentAchievementIndicator Codeset=""/>
+    <NeglectedOrDelinquentAcademicOutcomeIndicator Codeset=""/>
+    <SIF_Metadata>
+      <TimeElements>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+      </TimeElements>
+      <LifeCycle>
+        <Created>
+          <DateTime/>
+          <Creators>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+          </Creators>
+        </Created>
+        <ModificationHistory>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+        </ModificationHistory>
+        <TimeElements>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+        </TimeElements>
+      </LifeCycle>
+      <RightsElements>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+      </RightsElements>
+      <EducationFilter>
+        <MediaTypes>
+          <MediaType/>
+          <MediaType/>
+        </MediaTypes>
+        <GradeLevels>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+        </GradeLevels>
+        <SubjectAreas>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+        </SubjectAreas>
+        <InterestLevels>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+        </InterestLevels>
+        <LearningStandardItems>
+          <LearningStandardItemRefId/>
+          <LearningStandardItemRefId/>
+        </LearningStandardItems>
+        <BloomsTaxonomyLevels>
+          <BloomsTaxonomyLevel Codeset=""/>
+          <BloomsTaxonomyLevel Codeset=""/>
+        </BloomsTaxonomyLevels>
+        <MultipleIntelligences>
+          <MultipleIntelligence Codeset=""/>
+          <MultipleIntelligence Codeset=""/>
+        </MultipleIntelligences>
+        <InstructionalStrategies>
+          <InstructionalStrategy Codeset=""/>
+          <InstructionalStrategy Codeset=""/>
+        </InstructionalStrategies>
+        <Title/>
+        <Summary/>
+        <LearningObjectives>
+          <LearningObjective/>
+          <LearningObjective/>
+        </LearningObjectives>
+        <ResourceTypes>
+          <ResourceType Codeset=""/>
+          <ResourceType Codeset=""/>
+        </ResourceTypes>
+      </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+    </SIF_ExtendedElements>
+  </StudentParticipation>
+  <StudentParticipation RefId="" StudentPersonalRefId="">
+    <StudentParticipationAsOfDate/>
+    <ProgramType>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </ProgramType>
+    <ProgramIdentifier/>
+    <ProgramName/>
+    <ProgramFundingSources>
+      <ProgramFundingSource>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </ProgramFundingSource>
+      <ProgramFundingSource>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </ProgramFundingSource>
+    </ProgramFundingSources>
+    <ManagingPublicAgency SIF_RefObject=""/>
+    <ManagingSchool SIF_RefObject=""/>
+    <PartCTransitionMeetingNotHeldReasons>
+      <PartCTransitionMeetingNotHeldReason>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </PartCTransitionMeetingNotHeldReason>
+      <PartCTransitionMeetingNotHeldReason>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </PartCTransitionMeetingNotHeldReason>
+    </PartCTransitionMeetingNotHeldReasons>
+    <PartCTransitionMeetingDate/>
+    <PartCTransitionMeetingOutcomes>
+      <PartCTransitionMeetingOutcome>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </PartCTransitionMeetingOutcome>
+      <PartCTransitionMeetingOutcome>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </PartCTransitionMeetingOutcome>
+    </PartCTransitionMeetingOutcomes>
+    <ReferralDate/>
+    <ReferralSource>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </ReferralSource>
+    <ProgramStatus>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </ProgramStatus>
+    <GiftedEligibilityCriteria/>
+    <EvaluationParentalConsentDate/>
+    <EvaluationDate/>
+    <EvaluationExtensionDate/>
+    <ExtensionComments/>
+    <ReevaluationDate/>
+    <ExceptionalityCategories>
+      <ExceptionalityCategory>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+        <ExceptionalityPriority/>
+      </ExceptionalityCategory>
+      <ExceptionalityCategory>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+        <ExceptionalityPriority/>
+      </ExceptionalityCategory>
+    </ExceptionalityCategories>
+    <ProgramEligibilityDate/>
+    <ProgramPlanType>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </ProgramPlanType>
+    <ProgramPlanDate/>
+    <ProgramPlanEffectiveDate/>
+    <NOREPDate/>
+    <PlacementParentalConsentDate/>
+    <ProgramPlacementDate/>
+    <ProgramPlacementReason/>
+    <LeastRestrictiveEnvironment>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </LeastRestrictiveEnvironment>
+    <ExtendedSchoolYear/>
+    <ExtendedDay/>
+    <ProgramAvailability>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </ProgramAvailability>
+    <PrivateNotPlacedByPublic/>
+    <ProgramReviewDate/>
+    <FBADate/>
+    <BIPDate/>
+    <ProgramExitDate/>
+    <ProgramExitReason>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+    </ProgramExitReason>
+    <ProjectedExitDate/>
+    <ProjectedExitReason Codeset=""/>
+    <PlannedAssessmentParticipation Codeset=""/>
+    <TransitionPlanning Codeset=""/>
+    <StudentSpecialEducationFTE/>
+    <EntryPerson/>
+    <ParticipationContact/>
+    <AdditionalProgramAvailabilityList>
+      <ProgramAvailability>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </ProgramAvailability>
+      <ProgramAvailability>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </ProgramAvailability>
+    </AdditionalProgramAvailabilityList>
+    <CaseManager/>
+    <FreeAndReducedStatus/>
+    <CertifiedLunchProgram Codeset=""/>
+    <PerkinsLEPStatus Codeset=""/>
+    <TitleIIIAccountabilityProgressStatus Codeset=""/>
+    <TitleIIIImmigrantParticipationStatus Codeset=""/>
+    <NeglectedOrDelinquentAchievementIndicator Codeset=""/>
+    <NeglectedOrDelinquentAcademicOutcomeIndicator Codeset=""/>
+    <SIF_Metadata>
+      <TimeElements>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+      </TimeElements>
+      <LifeCycle>
+        <Created>
+          <DateTime/>
+          <Creators>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+          </Creators>
+        </Created>
+        <ModificationHistory>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+        </ModificationHistory>
+        <TimeElements>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+        </TimeElements>
+      </LifeCycle>
+      <RightsElements>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+      </RightsElements>
+      <EducationFilter>
+        <MediaTypes>
+          <MediaType/>
+          <MediaType/>
+        </MediaTypes>
+        <GradeLevels>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+        </GradeLevels>
+        <SubjectAreas>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+        </SubjectAreas>
+        <InterestLevels>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+        </InterestLevels>
+        <LearningStandardItems>
+          <LearningStandardItemRefId/>
+          <LearningStandardItemRefId/>
+        </LearningStandardItems>
+        <BloomsTaxonomyLevels>
+          <BloomsTaxonomyLevel Codeset=""/>
+          <BloomsTaxonomyLevel Codeset=""/>
+        </BloomsTaxonomyLevels>
+        <MultipleIntelligences>
+          <MultipleIntelligence Codeset=""/>
+          <MultipleIntelligence Codeset=""/>
+        </MultipleIntelligences>
+        <InstructionalStrategies>
+          <InstructionalStrategy Codeset=""/>
+          <InstructionalStrategy Codeset=""/>
+        </InstructionalStrategies>
+        <Title/>
+        <Summary/>
+        <LearningObjectives>
+          <LearningObjective/>
+          <LearningObjective/>
+        </LearningObjectives>
+        <ResourceTypes>
+          <ResourceType Codeset=""/>
+          <ResourceType Codeset=""/>
+        </ResourceTypes>
+      </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+    </SIF_ExtendedElements>
+  </StudentParticipation>
+</StudentParticipations>

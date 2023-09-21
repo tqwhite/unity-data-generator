@@ -1,0 +1,231 @@
+<StudentSpecialEducationSummary xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2cbf2a60-3857-11ee-b8c2-375fcdb1402b">
+  <StudentSpecialEducationFTE/>
+  <PrimaryDisabilityCode/>
+  <SpecificDisabilityIdentified>Yes</SpecificDisabilityIdentified>
+  <EnvironmentForSchoolAge/>
+  <EnvironmentForEarlyChildhood/>
+  <NeglectedOrDelinquentParticipationList>
+    <NeglectedOrDelinquentParticipation>
+      <Type/>
+      <TotalDayCount/>
+      <ConsecutiveDayCount/>
+    </NeglectedOrDelinquentParticipation>
+    <NeglectedOrDelinquentParticipation>
+      <Type/>
+      <TotalDayCount/>
+      <ConsecutiveDayCount/>
+    </NeglectedOrDelinquentParticipation>
+  </NeglectedOrDelinquentParticipationList>
+  <StudentParticipationList>
+    <StudentParticipationData>
+      <ProgramType>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </ProgramType>
+      <ProgramFundingSources>
+        <ProgramFundingSource>
+          <Code/>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+        </ProgramFundingSource>
+        <ProgramFundingSource>
+          <Code/>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+        </ProgramFundingSource>
+      </ProgramFundingSources>
+      <ManagingPublicAgency/>
+      <ManagingSchool/>
+      <ReferralDate/>
+      <ProgramStatus>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </ProgramStatus>
+      <GiftedEligibilityCriteria>Yes</GiftedEligibilityCriteria>
+      <EvaluationDate/>
+      <ReevaluationDate/>
+      <ExceptionalityCategories>
+        <ExceptionalityCategory>
+          <Code>AUT</Code>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+          <ExceptionalityPriority/>
+        </ExceptionalityCategory>
+        <ExceptionalityCategory>
+          <Code>AUT</Code>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+          <ExceptionalityPriority/>
+        </ExceptionalityCategory>
+      </ExceptionalityCategories>
+      <ProgramPlanDate/>
+      <ProgramPlanEffectiveDate/>
+      <PlannedAssessmentParticipation Codeset="StateProvince"/>
+      <DaysInParticipation/>
+    </StudentParticipationData>
+    <StudentParticipationData>
+      <ProgramType>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </ProgramType>
+      <ProgramFundingSources>
+        <ProgramFundingSource>
+          <Code/>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+        </ProgramFundingSource>
+        <ProgramFundingSource>
+          <Code/>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+        </ProgramFundingSource>
+      </ProgramFundingSources>
+      <ManagingPublicAgency/>
+      <ManagingSchool/>
+      <ReferralDate/>
+      <ProgramStatus>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </ProgramStatus>
+      <GiftedEligibilityCriteria>Yes</GiftedEligibilityCriteria>
+      <EvaluationDate/>
+      <ReevaluationDate/>
+      <ExceptionalityCategories>
+        <ExceptionalityCategory>
+          <Code>AUT</Code>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+          <ExceptionalityPriority/>
+        </ExceptionalityCategory>
+        <ExceptionalityCategory>
+          <Code>AUT</Code>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+          <ExceptionalityPriority/>
+        </ExceptionalityCategory>
+      </ExceptionalityCategories>
+      <ProgramPlanDate/>
+      <ProgramPlanEffectiveDate/>
+      <PlannedAssessmentParticipation Codeset="StateProvince"/>
+      <DaysInParticipation/>
+    </StudentParticipationData>
+  </StudentParticipationList>
+  <StudentPlacementList>
+    <StudentPlacementData>
+      <Service>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </Service>
+      <ServiceCategory/>
+      <ServiceFundingSources>
+        <ServiceFundingSource>
+          <Code/>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+        </ServiceFundingSource>
+        <ServiceFundingSource>
+          <Code/>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+        </ServiceFundingSource>
+      </ServiceFundingSources>
+      <ServicingPublicAgency/>
+      <ServicingSchool/>
+      <SchoolWhereServiceDelivered/>
+      <ServiceProviderType>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </ServiceProviderType>
+      <AgencyType/>
+      <FrequencyTime>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </FrequencyTime>
+    </StudentPlacementData>
+    <StudentPlacementData>
+      <Service>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </Service>
+      <ServiceCategory/>
+      <ServiceFundingSources>
+        <ServiceFundingSource>
+          <Code/>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+        </ServiceFundingSource>
+        <ServiceFundingSource>
+          <Code/>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+        </ServiceFundingSource>
+      </ServiceFundingSources>
+      <ServicingPublicAgency/>
+      <ServicingSchool/>
+      <SchoolWhereServiceDelivered/>
+      <ServiceProviderType>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </ServiceProviderType>
+      <AgencyType/>
+      <FrequencyTime>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </FrequencyTime>
+    </StudentPlacementData>
+  </StudentPlacementList>
+</StudentSpecialEducationSummary>

@@ -1,0 +1,635 @@
+
+<EnergyUsages xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+  <EnergyUsage RefId="">
+    <UsageLocationInfo>
+      <SchoolId/>
+      <Building/>
+      <EnergyZone>
+        <Type>
+          <Facility Codeset=""/>
+          <Description/>
+        </Type>
+        <EnergyZoneName/>
+        <TagList>
+          <Tag>
+            <Name/>
+            <Value/>
+          </Tag>
+          <Tag>
+            <Name/>
+            <Value/>
+          </Tag>
+        </TagList>
+      </EnergyZone>
+    </UsageLocationInfo>
+    <DataSource>
+      <System/>
+      <StartTime/>
+      <ReadingDataList>
+        <ReadingData>
+          <Measurement Codeset=""/>
+          <SensorId/>
+          <Interval/>
+          <EnergyUnits Codeset=""/>
+          <ReadingName/>
+          <ReadingList>
+            <Reading IntervalIndex=""/>
+            <Reading IntervalIndex=""/>
+          </ReadingList>
+        </ReadingData>
+        <ReadingData>
+          <Measurement Codeset=""/>
+          <SensorId/>
+          <Interval/>
+          <EnergyUnits Codeset=""/>
+          <ReadingName/>
+          <ReadingList>
+            <Reading IntervalIndex=""/>
+            <Reading IntervalIndex=""/>
+          </ReadingList>
+        </ReadingData>
+      </ReadingDataList>
+    </DataSource>
+    <SIF_Metadata>
+      <TimeElements>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+      </TimeElements>
+      <LifeCycle>
+        <Created>
+          <DateTime/>
+          <Creators>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+          </Creators>
+        </Created>
+        <ModificationHistory>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+        </ModificationHistory>
+        <TimeElements>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+        </TimeElements>
+      </LifeCycle>
+      <RightsElements>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+      </RightsElements>
+      <EducationFilter>
+        <MediaTypes>
+          <MediaType/>
+          <MediaType/>
+        </MediaTypes>
+        <GradeLevels>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+        </GradeLevels>
+        <SubjectAreas>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+        </SubjectAreas>
+        <InterestLevels>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+        </InterestLevels>
+        <LearningStandardItems>
+          <LearningStandardItemRefId/>
+          <LearningStandardItemRefId/>
+        </LearningStandardItems>
+        <BloomsTaxonomyLevels>
+          <BloomsTaxonomyLevel Codeset=""/>
+          <BloomsTaxonomyLevel Codeset=""/>
+        </BloomsTaxonomyLevels>
+        <MultipleIntelligences>
+          <MultipleIntelligence Codeset=""/>
+          <MultipleIntelligence Codeset=""/>
+        </MultipleIntelligences>
+        <InstructionalStrategies>
+          <InstructionalStrategy Codeset=""/>
+          <InstructionalStrategy Codeset=""/>
+        </InstructionalStrategies>
+        <Title/>
+        <Summary/>
+        <LearningObjectives>
+          <LearningObjective/>
+          <LearningObjective/>
+        </LearningObjectives>
+        <ResourceTypes>
+          <ResourceType Codeset=""/>
+          <ResourceType Codeset=""/>
+        </ResourceTypes>
+      </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+    </SIF_ExtendedElements>
+  </EnergyUsage>
+  <EnergyUsage RefId="">
+    <UsageLocationInfo>
+      <SchoolId/>
+      <Building/>
+      <EnergyZone>
+        <Type>
+          <Facility Codeset=""/>
+          <Description/>
+        </Type>
+        <EnergyZoneName/>
+        <TagList>
+          <Tag>
+            <Name/>
+            <Value/>
+          </Tag>
+          <Tag>
+            <Name/>
+            <Value/>
+          </Tag>
+        </TagList>
+      </EnergyZone>
+    </UsageLocationInfo>
+    <DataSource>
+      <System/>
+      <StartTime/>
+      <ReadingDataList>
+        <ReadingData>
+          <Measurement Codeset=""/>
+          <SensorId/>
+          <Interval/>
+          <EnergyUnits Codeset=""/>
+          <ReadingName/>
+          <ReadingList>
+            <Reading IntervalIndex=""/>
+            <Reading IntervalIndex=""/>
+          </ReadingList>
+        </ReadingData>
+        <ReadingData>
+          <Measurement Codeset=""/>
+          <SensorId/>
+          <Interval/>
+          <EnergyUnits Codeset=""/>
+          <ReadingName/>
+          <ReadingList>
+            <Reading IntervalIndex=""/>
+            <Reading IntervalIndex=""/>
+          </ReadingList>
+        </ReadingData>
+      </ReadingDataList>
+    </DataSource>
+    <SIF_Metadata>
+      <TimeElements>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+      </TimeElements>
+      <LifeCycle>
+        <Created>
+          <DateTime/>
+          <Creators>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+          </Creators>
+        </Created>
+        <ModificationHistory>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+        </ModificationHistory>
+        <TimeElements>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+        </TimeElements>
+      </LifeCycle>
+      <RightsElements>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+      </RightsElements>
+      <EducationFilter>
+        <MediaTypes>
+          <MediaType/>
+          <MediaType/>
+        </MediaTypes>
+        <GradeLevels>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+        </GradeLevels>
+        <SubjectAreas>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+        </SubjectAreas>
+        <InterestLevels>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+        </InterestLevels>
+        <LearningStandardItems>
+          <LearningStandardItemRefId/>
+          <LearningStandardItemRefId/>
+        </LearningStandardItems>
+        <BloomsTaxonomyLevels>
+          <BloomsTaxonomyLevel Codeset=""/>
+          <BloomsTaxonomyLevel Codeset=""/>
+        </BloomsTaxonomyLevels>
+        <MultipleIntelligences>
+          <MultipleIntelligence Codeset=""/>
+          <MultipleIntelligence Codeset=""/>
+        </MultipleIntelligences>
+        <InstructionalStrategies>
+          <InstructionalStrategy Codeset=""/>
+          <InstructionalStrategy Codeset=""/>
+        </InstructionalStrategies>
+        <Title/>
+        <Summary/>
+        <LearningObjectives>
+          <LearningObjective/>
+          <LearningObjective/>
+        </LearningObjectives>
+        <ResourceTypes>
+          <ResourceType Codeset=""/>
+          <ResourceType Codeset=""/>
+        </ResourceTypes>
+      </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+    </SIF_ExtendedElements>
+  </EnergyUsage>
+</EnergyUsages>

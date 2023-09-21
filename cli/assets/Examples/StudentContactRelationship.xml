@@ -1,0 +1,21 @@
+<StudentContactRelationship xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2ca5fd10-3857-11ee-b8c2-375fcdb1402b">
+  <Relationship>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </Relationship>
+  <ContactFlags>
+    <ParentLegalGuardian/>
+    <PickupRights/>
+    <LivesWith/>
+    <AccessToRecords/>
+    <EmergencyContact/>
+    <HasCustody/>
+    <DisciplinaryContact/>
+    <PrimaryCareProvider/>
+    <Other/>
+  </ContactFlags>
+  <ContactSequence/>
+</StudentContactRelationship>

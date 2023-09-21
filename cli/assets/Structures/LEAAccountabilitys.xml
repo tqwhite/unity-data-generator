@@ -1,0 +1,9 @@
+
+<LEAAccountabilitys xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+  <LEAAccountability RefId="" LEAInfoRefId="">
+    <GunFreeSchoolsActReportingStatus Codeset=""/>
+  </LEAAccountability>
+  <LEAAccountability RefId="" LEAInfoRefId="">
+    <GunFreeSchoolsActReportingStatus Codeset=""/>
+  </LEAAccountability>
+</LEAAccountabilitys>

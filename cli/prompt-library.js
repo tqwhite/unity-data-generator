@@ -3,7 +3,6 @@
 
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
 
-console.log(`HELLO FROM ${__dirname}/${moduleName}`);
 
 //START OF moduleFunction() ============================================================
 

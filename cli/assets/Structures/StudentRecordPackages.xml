@@ -1,0 +1,19 @@
+
+<StudentRecordPackages xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+  <StudentRecordPackage RefId="" SIF_RefId="" SIF_RefObject="">
+    <XMLData Description=""/>
+    <TextData MIMEType="" FileName="" Description=""/>
+    <BinaryData MIMEType="" FileName="" Description=""/>
+    <Reference MIMEType="" Description="">
+      <URL/>
+    </Reference>
+  </StudentRecordPackage>
+  <StudentRecordPackage RefId="" SIF_RefId="" SIF_RefObject="">
+    <XMLData Description=""/>
+    <TextData MIMEType="" FileName="" Description=""/>
+    <BinaryData MIMEType="" FileName="" Description=""/>
+    <Reference MIMEType="" Description="">
+      <URL/>
+    </Reference>
+  </StudentRecordPackage>
+</StudentRecordPackages>

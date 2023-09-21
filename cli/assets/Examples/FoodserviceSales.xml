@@ -1,0 +1,9 @@
+<FoodserviceSales xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c721bd0-3857-11ee-b8c2-375fcdb1402b">
+  <SchoolInfoRefId/>
+  <Date/>
+  <Program/>
+  <SalesAmounts>
+    <SalesAmount/>
+    <SalesAmount/>
+  </SalesAmounts>
+</FoodserviceSales>

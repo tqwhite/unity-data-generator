@@ -1,0 +1,45 @@
+<xStaff xmlns="http://www.sifassociation.org/datamodel/na/4.x" refId="2cd4fc50-3857-11ee-b8c2-375fcdb1402b">
+  <name>
+    <type>Alias</type>
+    <prefix/>
+    <familyName/>
+    <givenName/>
+    <middleName/>
+    <suffix/>
+  </name>
+  <localId/>
+  <loginId/>
+  <stateProvinceId/>
+  <otherIds>
+    <otherId>
+      <type>Alias</type>
+      <id/>
+    </otherId>
+    <otherId>
+      <type>Alias</type>
+      <id/>
+    </otherId>
+  </otherIds>
+  <sex>Male</sex>
+  <email>
+    <emailType>Home</emailType>
+    <emailAddress/>
+  </email>
+  <primaryAssignment>
+    <leaRefId/>
+    <schoolRefId/>
+    <jobFunction>Administrative Support Staff</jobFunction>
+  </primaryAssignment>
+  <otherAssignments>
+    <staffPersonAssignment>
+      <leaRefId/>
+      <schoolRefId/>
+      <jobFunction>Administrative Support Staff</jobFunction>
+    </staffPersonAssignment>
+    <staffPersonAssignment>
+      <leaRefId/>
+      <schoolRefId/>
+      <jobFunction>Administrative Support Staff</jobFunction>
+    </staffPersonAssignment>
+  </otherAssignments>
+</xStaff>

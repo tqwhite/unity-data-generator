@@ -51,9 +51,11 @@ const moduleFunction = async function(
 	
 	// So we have the metadata for engineering prompts (we start with the spreadsheet).
 	if (!fs.existsSync(spreadsheetPath)) {
+		xLog.error(`No specifications found. ${spreadsheetPath} does not exists`);
 		process.exit(1);
 	}
 
+	
 	try {
 		const startTime = performance.now(); //milliseconds
 		const workbook = xlsx.readFile(spreadsheetPath);
@@ -81,14 +83,16 @@ const moduleFunction = async function(
 					} catch (error) {
 						xLog.error(`Error reading XML file: ${error.message}`);
 						process.exit(1);
-					}
-					
-					
+					}					
 					const parseStringCallback=async (err, result) => {
 						if (err) {
 							xLog.error(`Error parsing the XML: ${err.message}`);
 							process.exit(1);
 						}
+					
+						fs.mkdirSync(structuresPath, {recursive:true});
+						xLog.status(`Writing to output directory: ${structuresPath}`);
+
 
 						//xLog.status('\nXML Contents:');  // Debug
 						//xLog.status(removeFirstLine(xmlString));  // Debug

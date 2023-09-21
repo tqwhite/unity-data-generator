@@ -1,0 +1,65 @@
+
+<Addresss xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+  <Address RefId="">
+    <GridLocation>
+      <Latitude/>
+      <Longitude/>
+    </GridLocation>
+    <AddressType Codeset=""/>
+    <LocalId>
+      <IdType Codeset=""/>
+      <IdValue/>
+    </LocalId>
+    <Street>
+      <Line1/>
+      <Line2/>
+      <Line3/>
+      <Complex/>
+      <StreetNumber/>
+      <StreetPrefix/>
+      <StreetName/>
+      <StreetType/>
+      <StreetSuffix/>
+      <ApartmentType/>
+      <ApartmentNumberPrefix/>
+      <ApartmentNumber/>
+      <ApartmentNumberSuffix/>
+    </Street>
+    <City/>
+    <Subregion Codeset=""/>
+    <StateProvince Codeset=""/>
+    <Country Codeset=""/>
+    <PostalCode/>
+  </Address>
+  <Address RefId="">
+    <GridLocation>
+      <Latitude/>
+      <Longitude/>
+    </GridLocation>
+    <AddressType Codeset=""/>
+    <LocalId>
+      <IdType Codeset=""/>
+      <IdValue/>
+    </LocalId>
+    <Street>
+      <Line1/>
+      <Line2/>
+      <Line3/>
+      <Complex/>
+      <StreetNumber/>
+      <StreetPrefix/>
+      <StreetName/>
+      <StreetType/>
+      <StreetSuffix/>
+      <ApartmentType/>
+      <ApartmentNumberPrefix/>
+      <ApartmentNumber/>
+      <ApartmentNumberSuffix/>
+    </Street>
+    <City/>
+    <Subregion Codeset=""/>
+    <StateProvince Codeset=""/>
+    <Country Codeset=""/>
+    <PostalCode/>
+  </Address>
+</Addresss>

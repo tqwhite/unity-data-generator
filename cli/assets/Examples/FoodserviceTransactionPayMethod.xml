@@ -1,0 +1,17 @@
+<FoodserviceTransactionPayMethod xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c755020-3857-11ee-b8c2-375fcdb1402b">
+  <FoodserviceTransactionRefId/>
+  <TransactionPayMethods>
+    <TransactionPayMethod>
+      <Amounts>
+        <Amount/>
+        <Amount/>
+      </Amounts>
+    </TransactionPayMethod>
+    <TransactionPayMethod>
+      <Amounts>
+        <Amount/>
+        <Amount/>
+      </Amounts>
+    </TransactionPayMethod>
+  </TransactionPayMethods>
+</FoodserviceTransactionPayMethod>

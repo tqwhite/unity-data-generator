@@ -1,0 +1,959 @@
+
+<DisciplineIncidents xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+  <DisciplineIncident RefId="" SchoolYear="">
+    <AgencyReporting SIF_RefObject=""/>
+    <IncidentNumber/>
+    <IncidentDate/>
+    <IncidentTime Type="" TypeCodeset=""/>
+    <IncidentLocation Type="" TypeCodeset=""/>
+    <IncidentLocationRefId SIF_RefObject=""/>
+    <IncidentCost/>
+    <IncidentReporter Type="" TypeCodeset="">
+      <Name Type="">
+        <Prefix/>
+        <LastName/>
+        <FirstName/>
+        <MiddleName/>
+        <Suffix/>
+        <PreferredName/>
+        <SortName/>
+        <FullName/>
+      </Name>
+      <SIF_RefId SIF_RefObject=""/>
+    </IncidentReporter>
+    <RelatedToList>
+      <RelatedTo Codeset=""/>
+      <RelatedTo Codeset=""/>
+    </RelatedToList>
+    <WeaponTypeList>
+      <WeaponType Codeset=""/>
+      <WeaponType Codeset=""/>
+    </WeaponTypeList>
+    <IncidentCategory>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+      <CodeComment/>
+    </IncidentCategory>
+    <OffenderList>
+      <Offender Type="" TypeCodeset="">
+        <Name Type="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <SIF_RefId SIF_RefObject=""/>
+        <Injury Codeset=""/>
+        <ManifestationDetermination>
+          <MeetingHeld Codeset=""/>
+          <MeetingDate/>
+          <DueToDisability Codeset=""/>
+          <MeetingOutcome/>
+        </ManifestationDetermination>
+        <ActionList>
+          <Action>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <StartDate/>
+            <EndDate/>
+            <Duration/>
+            <ZeroTolerance Codeset=""/>
+            <FullYearExpulsion Codeset=""/>
+            <ShortenedExpulsion Codeset=""/>
+            <PoliceNotification Codeset=""/>
+            <Arrest Codeset=""/>
+            <AlternativeEducation Codeset=""/>
+          </Action>
+          <Action>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <StartDate/>
+            <EndDate/>
+            <Duration/>
+            <ZeroTolerance Codeset=""/>
+            <FullYearExpulsion Codeset=""/>
+            <ShortenedExpulsion Codeset=""/>
+            <PoliceNotification Codeset=""/>
+            <Arrest Codeset=""/>
+            <AlternativeEducation Codeset=""/>
+          </Action>
+        </ActionList>
+        <WeaponTypeList>
+          <WeaponType Codeset=""/>
+          <WeaponType Codeset=""/>
+        </WeaponTypeList>
+        <RelatedToList>
+          <RelatedTo Codeset=""/>
+          <RelatedTo Codeset=""/>
+        </RelatedToList>
+      </Offender>
+      <Offender Type="" TypeCodeset="">
+        <Name Type="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <SIF_RefId SIF_RefObject=""/>
+        <Injury Codeset=""/>
+        <ManifestationDetermination>
+          <MeetingHeld Codeset=""/>
+          <MeetingDate/>
+          <DueToDisability Codeset=""/>
+          <MeetingOutcome/>
+        </ManifestationDetermination>
+        <ActionList>
+          <Action>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <StartDate/>
+            <EndDate/>
+            <Duration/>
+            <ZeroTolerance Codeset=""/>
+            <FullYearExpulsion Codeset=""/>
+            <ShortenedExpulsion Codeset=""/>
+            <PoliceNotification Codeset=""/>
+            <Arrest Codeset=""/>
+            <AlternativeEducation Codeset=""/>
+          </Action>
+          <Action>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <StartDate/>
+            <EndDate/>
+            <Duration/>
+            <ZeroTolerance Codeset=""/>
+            <FullYearExpulsion Codeset=""/>
+            <ShortenedExpulsion Codeset=""/>
+            <PoliceNotification Codeset=""/>
+            <Arrest Codeset=""/>
+            <AlternativeEducation Codeset=""/>
+          </Action>
+        </ActionList>
+        <WeaponTypeList>
+          <WeaponType Codeset=""/>
+          <WeaponType Codeset=""/>
+        </WeaponTypeList>
+        <RelatedToList>
+          <RelatedTo Codeset=""/>
+          <RelatedTo Codeset=""/>
+        </RelatedToList>
+      </Offender>
+    </OffenderList>
+    <VictimList>
+      <Victim Type="" TypeCodeset="">
+        <Name Type="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <SIF_RefId SIF_RefObject=""/>
+        <Injury Codeset=""/>
+      </Victim>
+      <Victim Type="" TypeCodeset="">
+        <Name Type="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <SIF_RefId SIF_RefObject=""/>
+        <Injury Codeset=""/>
+      </Victim>
+    </VictimList>
+    <IncidentDescription/>
+    <IncidentActionList>
+      <IncidentAction>
+        <StartDate/>
+        <EndDate/>
+        <Duration/>
+        <ZeroTolerance Codeset=""/>
+        <PoliceNotification Codeset=""/>
+        <Arrest Codeset=""/>
+      </IncidentAction>
+      <IncidentAction>
+        <StartDate/>
+        <EndDate/>
+        <Duration/>
+        <ZeroTolerance Codeset=""/>
+        <PoliceNotification Codeset=""/>
+        <Arrest Codeset=""/>
+      </IncidentAction>
+    </IncidentActionList>
+    <SIF_Metadata>
+      <TimeElements>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+      </TimeElements>
+      <LifeCycle>
+        <Created>
+          <DateTime/>
+          <Creators>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+          </Creators>
+        </Created>
+        <ModificationHistory>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+        </ModificationHistory>
+        <TimeElements>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+        </TimeElements>
+      </LifeCycle>
+      <RightsElements>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+      </RightsElements>
+      <EducationFilter>
+        <MediaTypes>
+          <MediaType/>
+          <MediaType/>
+        </MediaTypes>
+        <GradeLevels>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+        </GradeLevels>
+        <SubjectAreas>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+        </SubjectAreas>
+        <InterestLevels>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+        </InterestLevels>
+        <LearningStandardItems>
+          <LearningStandardItemRefId/>
+          <LearningStandardItemRefId/>
+        </LearningStandardItems>
+        <BloomsTaxonomyLevels>
+          <BloomsTaxonomyLevel Codeset=""/>
+          <BloomsTaxonomyLevel Codeset=""/>
+        </BloomsTaxonomyLevels>
+        <MultipleIntelligences>
+          <MultipleIntelligence Codeset=""/>
+          <MultipleIntelligence Codeset=""/>
+        </MultipleIntelligences>
+        <InstructionalStrategies>
+          <InstructionalStrategy Codeset=""/>
+          <InstructionalStrategy Codeset=""/>
+        </InstructionalStrategies>
+        <Title/>
+        <Summary/>
+        <LearningObjectives>
+          <LearningObjective/>
+          <LearningObjective/>
+        </LearningObjectives>
+        <ResourceTypes>
+          <ResourceType Codeset=""/>
+          <ResourceType Codeset=""/>
+        </ResourceTypes>
+      </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+    </SIF_ExtendedElements>
+  </DisciplineIncident>
+  <DisciplineIncident RefId="" SchoolYear="">
+    <AgencyReporting SIF_RefObject=""/>
+    <IncidentNumber/>
+    <IncidentDate/>
+    <IncidentTime Type="" TypeCodeset=""/>
+    <IncidentLocation Type="" TypeCodeset=""/>
+    <IncidentLocationRefId SIF_RefObject=""/>
+    <IncidentCost/>
+    <IncidentReporter Type="" TypeCodeset="">
+      <Name Type="">
+        <Prefix/>
+        <LastName/>
+        <FirstName/>
+        <MiddleName/>
+        <Suffix/>
+        <PreferredName/>
+        <SortName/>
+        <FullName/>
+      </Name>
+      <SIF_RefId SIF_RefObject=""/>
+    </IncidentReporter>
+    <RelatedToList>
+      <RelatedTo Codeset=""/>
+      <RelatedTo Codeset=""/>
+    </RelatedToList>
+    <WeaponTypeList>
+      <WeaponType Codeset=""/>
+      <WeaponType Codeset=""/>
+    </WeaponTypeList>
+    <IncidentCategory>
+      <Code Codeset=""/>
+      <OtherCodeList>
+        <OtherCode Codeset=""/>
+        <OtherCode Codeset=""/>
+      </OtherCodeList>
+      <CodeComment/>
+    </IncidentCategory>
+    <OffenderList>
+      <Offender Type="" TypeCodeset="">
+        <Name Type="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <SIF_RefId SIF_RefObject=""/>
+        <Injury Codeset=""/>
+        <ManifestationDetermination>
+          <MeetingHeld Codeset=""/>
+          <MeetingDate/>
+          <DueToDisability Codeset=""/>
+          <MeetingOutcome/>
+        </ManifestationDetermination>
+        <ActionList>
+          <Action>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <StartDate/>
+            <EndDate/>
+            <Duration/>
+            <ZeroTolerance Codeset=""/>
+            <FullYearExpulsion Codeset=""/>
+            <ShortenedExpulsion Codeset=""/>
+            <PoliceNotification Codeset=""/>
+            <Arrest Codeset=""/>
+            <AlternativeEducation Codeset=""/>
+          </Action>
+          <Action>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <StartDate/>
+            <EndDate/>
+            <Duration/>
+            <ZeroTolerance Codeset=""/>
+            <FullYearExpulsion Codeset=""/>
+            <ShortenedExpulsion Codeset=""/>
+            <PoliceNotification Codeset=""/>
+            <Arrest Codeset=""/>
+            <AlternativeEducation Codeset=""/>
+          </Action>
+        </ActionList>
+        <WeaponTypeList>
+          <WeaponType Codeset=""/>
+          <WeaponType Codeset=""/>
+        </WeaponTypeList>
+        <RelatedToList>
+          <RelatedTo Codeset=""/>
+          <RelatedTo Codeset=""/>
+        </RelatedToList>
+      </Offender>
+      <Offender Type="" TypeCodeset="">
+        <Name Type="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <SIF_RefId SIF_RefObject=""/>
+        <Injury Codeset=""/>
+        <ManifestationDetermination>
+          <MeetingHeld Codeset=""/>
+          <MeetingDate/>
+          <DueToDisability Codeset=""/>
+          <MeetingOutcome/>
+        </ManifestationDetermination>
+        <ActionList>
+          <Action>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <StartDate/>
+            <EndDate/>
+            <Duration/>
+            <ZeroTolerance Codeset=""/>
+            <FullYearExpulsion Codeset=""/>
+            <ShortenedExpulsion Codeset=""/>
+            <PoliceNotification Codeset=""/>
+            <Arrest Codeset=""/>
+            <AlternativeEducation Codeset=""/>
+          </Action>
+          <Action>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+            <StartDate/>
+            <EndDate/>
+            <Duration/>
+            <ZeroTolerance Codeset=""/>
+            <FullYearExpulsion Codeset=""/>
+            <ShortenedExpulsion Codeset=""/>
+            <PoliceNotification Codeset=""/>
+            <Arrest Codeset=""/>
+            <AlternativeEducation Codeset=""/>
+          </Action>
+        </ActionList>
+        <WeaponTypeList>
+          <WeaponType Codeset=""/>
+          <WeaponType Codeset=""/>
+        </WeaponTypeList>
+        <RelatedToList>
+          <RelatedTo Codeset=""/>
+          <RelatedTo Codeset=""/>
+        </RelatedToList>
+      </Offender>
+    </OffenderList>
+    <VictimList>
+      <Victim Type="" TypeCodeset="">
+        <Name Type="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <SIF_RefId SIF_RefObject=""/>
+        <Injury Codeset=""/>
+      </Victim>
+      <Victim Type="" TypeCodeset="">
+        <Name Type="">
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <SIF_RefId SIF_RefObject=""/>
+        <Injury Codeset=""/>
+      </Victim>
+    </VictimList>
+    <IncidentDescription/>
+    <IncidentActionList>
+      <IncidentAction>
+        <StartDate/>
+        <EndDate/>
+        <Duration/>
+        <ZeroTolerance Codeset=""/>
+        <PoliceNotification Codeset=""/>
+        <Arrest Codeset=""/>
+      </IncidentAction>
+      <IncidentAction>
+        <StartDate/>
+        <EndDate/>
+        <Duration/>
+        <ZeroTolerance Codeset=""/>
+        <PoliceNotification Codeset=""/>
+        <Arrest Codeset=""/>
+      </IncidentAction>
+    </IncidentActionList>
+    <SIF_Metadata>
+      <TimeElements>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+      </TimeElements>
+      <LifeCycle>
+        <Created>
+          <DateTime/>
+          <Creators>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+          </Creators>
+        </Created>
+        <ModificationHistory>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+        </ModificationHistory>
+        <TimeElements>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+        </TimeElements>
+      </LifeCycle>
+      <RightsElements>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+      </RightsElements>
+      <EducationFilter>
+        <MediaTypes>
+          <MediaType/>
+          <MediaType/>
+        </MediaTypes>
+        <GradeLevels>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+        </GradeLevels>
+        <SubjectAreas>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+        </SubjectAreas>
+        <InterestLevels>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+        </InterestLevels>
+        <LearningStandardItems>
+          <LearningStandardItemRefId/>
+          <LearningStandardItemRefId/>
+        </LearningStandardItems>
+        <BloomsTaxonomyLevels>
+          <BloomsTaxonomyLevel Codeset=""/>
+          <BloomsTaxonomyLevel Codeset=""/>
+        </BloomsTaxonomyLevels>
+        <MultipleIntelligences>
+          <MultipleIntelligence Codeset=""/>
+          <MultipleIntelligence Codeset=""/>
+        </MultipleIntelligences>
+        <InstructionalStrategies>
+          <InstructionalStrategy Codeset=""/>
+          <InstructionalStrategy Codeset=""/>
+        </InstructionalStrategies>
+        <Title/>
+        <Summary/>
+        <LearningObjectives>
+          <LearningObjective/>
+          <LearningObjective/>
+        </LearningObjectives>
+        <ResourceTypes>
+          <ResourceType Codeset=""/>
+          <ResourceType Codeset=""/>
+        </ResourceTypes>
+      </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+    </SIF_ExtendedElements>
+  </DisciplineIncident>
+</DisciplineIncidents>

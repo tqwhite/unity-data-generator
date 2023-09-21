@@ -1,0 +1,70 @@
+<StudentPlacement xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2cb120a0-3857-11ee-b8c2-375fcdb1402b">
+  <StudentPlacementAsOfDate/>
+  <Service>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </Service>
+  <ServiceCategory/>
+  <ServiceFundingSources>
+    <ServiceFundingSource>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </ServiceFundingSource>
+    <ServiceFundingSource>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </ServiceFundingSource>
+  </ServiceFundingSources>
+  <ServicingPublicAgency/>
+  <ServicingSchool/>
+  <SchoolWhereServiceDelivered/>
+  <ServiceProviderType>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ServiceProviderType>
+  <AgencyType/>
+  <ServiceProviderName/>
+  <ServiceSetting>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ServiceSetting>
+  <WhenServiceProvided>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </WhenServiceProvided>
+  <LatestStartDate/>
+  <StartDate/>
+  <EndDate/>
+  <FrequencyTime>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </FrequencyTime>
+  <DirectTime/>
+  <IndirectTime/>
+  <TotalServiceDuration/>
+  <IncludedInSpecialEducationFTE/>
+  <SpecialNeedsTransportation/>
+  <AssistiveTechnology/>
+  <EntryPerson/>
+</StudentPlacement>

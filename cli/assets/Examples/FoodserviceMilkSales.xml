@@ -1,0 +1,27 @@
+<FoodserviceMilkSales xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c709530-3857-11ee-b8c2-375fcdb1402b">
+  <SchoolInfoRefId/>
+  <Date/>
+  <Program/>
+  <SaleQuantities>
+    <SaleQuantity>
+      <Value/>
+      <MealStatus>
+        <StartDate/>
+        <EndDate/>
+        <SchoolYear/>
+      </MealStatus>
+      <SaleUnit/>
+      <ChargeToChild/>
+    </SaleQuantity>
+    <SaleQuantity>
+      <Value/>
+      <MealStatus>
+        <StartDate/>
+        <EndDate/>
+        <SchoolYear/>
+      </MealStatus>
+      <SaleUnit/>
+      <ChargeToChild/>
+    </SaleQuantity>
+  </SaleQuantities>
+</FoodserviceMilkSales>

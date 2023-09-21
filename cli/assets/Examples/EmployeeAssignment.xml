@@ -1,0 +1,49 @@
+<EmployeeAssignment xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c601a70-3857-11ee-b8c2-375fcdb1402b">
+  <Description/>
+  <PrimaryAssignment>Yes</PrimaryAssignment>
+  <LocationInfoRefId/>
+  <JobStartDate/>
+  <JobEndDate/>
+  <JobFTE/>
+  <JobClassification>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </JobClassification>
+  <ProgramType>
+    <Code>73056</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ProgramType>
+  <FundingSource>
+    <Code>Yes</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </FundingSource>
+  <SpecialEducation>
+    <AgeGroupList>
+      <AgeGroup>
+        <AgeGroup>3TO5</AgeGroup>
+      </AgeGroup>
+      <AgeGroup>
+        <AgeGroup>3TO5</AgeGroup>
+      </AgeGroup>
+    </AgeGroupList>
+    <TitleList>
+      <TitleList>
+        <Title>PSYCH</Title>
+      </TitleList>
+      <TitleList>
+        <Title>PSYCH</Title>
+      </TitleList>
+    </TitleList>
+  </SpecialEducation>
+  <TeacherInexperiencedStatus>TCHEXPRNCD</TeacherInexperiencedStatus>
+  <TeacherOutOfFieldStatus>TCHOUTFLD</TeacherOutOfFieldStatus>
+</EmployeeAssignment>

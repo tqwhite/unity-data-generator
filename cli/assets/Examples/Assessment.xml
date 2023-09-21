@@ -1,0 +1,14 @@
+<Assessment xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c49ac40-3857-11ee-b8c2-375fcdb1402b">
+  <Name/>
+  <ShortName/>
+  <AssessmentId/>
+  <AssessmentIdSystem>School</AssessmentIdSystem>
+  <AssessmentPackageRefId/>
+  <AssessmentDescriptors>
+    <AssessmentDescriptor>AchievementTest</AssessmentDescriptor>
+    <AssessmentDescriptor>AchievementTest</AssessmentDescriptor>
+  </AssessmentDescriptors>
+  <AssessmentPurpose>00050</AssessmentPurpose>
+  <AssessmentFamilyTitle/>
+  <AssessmentFamilyShortName/>
+</Assessment>

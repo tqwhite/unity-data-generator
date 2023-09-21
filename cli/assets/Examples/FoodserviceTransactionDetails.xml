@@ -1,0 +1,8 @@
+<FoodserviceTransactionDetails xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c74b3e0-3857-11ee-b8c2-375fcdb1402b">
+  <FoodserviceTransactionRefId/>
+  <Amounts>
+    <Amount/>
+    <Amount/>
+  </Amounts>
+  <Description/>
+</FoodserviceTransactionDetails>

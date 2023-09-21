@@ -1,0 +1,1765 @@
+<StudentAcademicRecord xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c9422c0-3857-11ee-b8c2-375fcdb1402b">
+  <ReportingDate/>
+  <StudentSchoolEnrollmentData SchoolAttendedRefId="School">
+    <GradeLevel>
+      <Code>IT</Code>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </GradeLevel>
+    <Advisor>
+      <StaffPersonalData>
+        <Name>
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <Title/>
+        <AddressList>
+          <Address Type="Mailing">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince>AK</StateProvince>
+            <StateANSICode>01</StateANSICode>
+            <Country/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+          <Address Type="Mailing">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince>AK</StateProvince>
+            <StateANSICode>01</StateANSICode>
+            <Country/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+        </AddressList>
+        <PhoneNumberList>
+          <PhoneNumber Type="Home">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+          <PhoneNumber Type="Home">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+        </PhoneNumberList>
+      </StaffPersonalData>
+    </Advisor>
+    <Counselor>
+      <StaffPersonalData>
+        <Name>
+          <Prefix/>
+          <LastName/>
+          <FirstName/>
+          <MiddleName/>
+          <Suffix/>
+          <PreferredName/>
+          <SortName/>
+          <FullName/>
+        </Name>
+        <Title/>
+        <AddressList>
+          <Address Type="Mailing">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince>AK</StateProvince>
+            <StateANSICode>01</StateANSICode>
+            <Country/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+          <Address Type="Mailing">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince>AK</StateProvince>
+            <StateANSICode>01</StateANSICode>
+            <Country/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+        </AddressList>
+        <PhoneNumberList>
+          <PhoneNumber Type="Home">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+          <PhoneNumber Type="Home">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+        </PhoneNumberList>
+      </StaffPersonalData>
+    </Counselor>
+  </StudentSchoolEnrollmentData>
+  <DistrictEntryDate/>
+  <SchoolAttendanceHistory>
+    <SchoolAttended RefId="2c9422c1-3857-11ee-b8c2-375fcdb1402b">
+      <LEAInfoData>
+        <LocalId/>
+        <StateProvinceId/>
+        <NCESId/>
+        <LEAName/>
+      </LEAInfoData>
+      <SchoolInfoData>
+        <LocalId/>
+        <StateProvinceId/>
+        <NCESId/>
+        <SchoolName/>
+        <SchoolURL/>
+        <SchoolContactList>
+          <SchoolContact>
+            <PublishInDirectory/>
+            <ContactInfo>
+              <Name>
+                <Prefix/>
+                <LastName/>
+                <FirstName/>
+                <MiddleName/>
+                <Suffix/>
+                <PreferredName/>
+                <SortName/>
+                <FullName/>
+              </Name>
+              <PositionTitle/>
+              <Role/>
+              <Address Type="Mailing">
+                <Street>
+                  <Line1/>
+                  <Line2/>
+                  <Line3/>
+                  <Complex/>
+                  <StreetNumber/>
+                  <StreetPrefix/>
+                  <StreetName/>
+                  <StreetType/>
+                  <StreetSuffix/>
+                  <ApartmentType/>
+                  <ApartmentNumberPrefix/>
+                  <ApartmentNumber/>
+                  <ApartmentNumberSuffix/>
+                </Street>
+                <City/>
+                <County/>
+                <StateProvince>AK</StateProvince>
+                <StateANSICode>01</StateANSICode>
+                <Country/>
+                <PostalCode/>
+                <GridLocation>
+                  <Latitude/>
+                  <Longitude/>
+                </GridLocation>
+                <AddressRefId/>
+              </Address>
+              <AddressRefId/>
+              <EmailList>
+                <Email Type="Home"/>
+                <Email Type="Home"/>
+              </EmailList>
+              <PhoneNumberList>
+                <PhoneNumber Type="Home">
+                  <Number/>
+                  <Extension/>
+                  <ListedStatus/>
+                </PhoneNumber>
+                <PhoneNumber Type="Home">
+                  <Number/>
+                  <Extension/>
+                  <ListedStatus/>
+                </PhoneNumber>
+              </PhoneNumberList>
+            </ContactInfo>
+          </SchoolContact>
+          <SchoolContact>
+            <PublishInDirectory/>
+            <ContactInfo>
+              <Name>
+                <Prefix/>
+                <LastName/>
+                <FirstName/>
+                <MiddleName/>
+                <Suffix/>
+                <PreferredName/>
+                <SortName/>
+                <FullName/>
+              </Name>
+              <PositionTitle/>
+              <Role/>
+              <Address Type="Mailing">
+                <Street>
+                  <Line1/>
+                  <Line2/>
+                  <Line3/>
+                  <Complex/>
+                  <StreetNumber/>
+                  <StreetPrefix/>
+                  <StreetName/>
+                  <StreetType/>
+                  <StreetSuffix/>
+                  <ApartmentType/>
+                  <ApartmentNumberPrefix/>
+                  <ApartmentNumber/>
+                  <ApartmentNumberSuffix/>
+                </Street>
+                <City/>
+                <County/>
+                <StateProvince>AK</StateProvince>
+                <StateANSICode>01</StateANSICode>
+                <Country/>
+                <PostalCode/>
+                <GridLocation>
+                  <Latitude/>
+                  <Longitude/>
+                </GridLocation>
+                <AddressRefId/>
+              </Address>
+              <AddressRefId/>
+              <EmailList>
+                <Email Type="Home"/>
+                <Email Type="Home"/>
+              </EmailList>
+              <PhoneNumberList>
+                <PhoneNumber Type="Home">
+                  <Number/>
+                  <Extension/>
+                  <ListedStatus/>
+                </PhoneNumber>
+                <PhoneNumber Type="Home">
+                  <Number/>
+                  <Extension/>
+                  <ListedStatus/>
+                </PhoneNumber>
+              </PhoneNumberList>
+            </ContactInfo>
+          </SchoolContact>
+        </SchoolContactList>
+        <AddressList>
+          <Address Type="Mailing">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince>AK</StateProvince>
+            <StateANSICode>01</StateANSICode>
+            <Country/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+          <Address Type="Mailing">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince>AK</StateProvince>
+            <StateANSICode>01</StateANSICode>
+            <Country/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+        </AddressList>
+        <PhoneNumberList>
+          <PhoneNumber Type="Home">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+          <PhoneNumber Type="Home">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+        </PhoneNumberList>
+        <IdentificationInfoList>
+          <IdentificationInfo Code="School"/>
+          <IdentificationInfo Code="School"/>
+        </IdentificationInfoList>
+        <GradeLevels>
+          <GradeLevel>
+            <Code>IT</Code>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </GradeLevel>
+          <GradeLevel>
+            <Code>IT</Code>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </GradeLevel>
+        </GradeLevels>
+      </SchoolInfoData>
+      <AccreditingBody/>
+      <MarkingSystems>
+        <MarkValueInfoData RefId="2c9497f0-3857-11ee-b8c2-375fcdb1402b">
+          <Name/>
+          <Percentage>
+            <Minimum/>
+            <Maximum/>
+          </Percentage>
+          <Numeric>
+            <Precision/>
+            <Scale/>
+            <Low/>
+            <High/>
+          </Numeric>
+          <Letter>
+            <ValidMark>
+              <Code/>
+              <NumericEquivalent/>
+              <Description/>
+            </ValidMark>
+            <ValidMark>
+              <Code/>
+              <NumericEquivalent/>
+              <Description/>
+            </ValidMark>
+          </Letter>
+          <Narrative>
+            <MaximumSize/>
+          </Narrative>
+        </MarkValueInfoData>
+        <MarkValueInfoData RefId="2c9497f1-3857-11ee-b8c2-375fcdb1402b">
+          <Name/>
+          <Percentage>
+            <Minimum/>
+            <Maximum/>
+          </Percentage>
+          <Numeric>
+            <Precision/>
+            <Scale/>
+            <Low/>
+            <High/>
+          </Numeric>
+          <Letter>
+            <ValidMark>
+              <Code/>
+              <NumericEquivalent/>
+              <Description/>
+            </ValidMark>
+            <ValidMark>
+              <Code/>
+              <NumericEquivalent/>
+              <Description/>
+            </ValidMark>
+          </Letter>
+          <Narrative>
+            <MaximumSize/>
+          </Narrative>
+        </MarkValueInfoData>
+      </MarkingSystems>
+    </SchoolAttended>
+    <SchoolAttended RefId="2c9497f2-3857-11ee-b8c2-375fcdb1402b">
+      <LEAInfoData>
+        <LocalId/>
+        <StateProvinceId/>
+        <NCESId/>
+        <LEAName/>
+      </LEAInfoData>
+      <SchoolInfoData>
+        <LocalId/>
+        <StateProvinceId/>
+        <NCESId/>
+        <SchoolName/>
+        <SchoolURL/>
+        <SchoolContactList>
+          <SchoolContact>
+            <PublishInDirectory/>
+            <ContactInfo>
+              <Name>
+                <Prefix/>
+                <LastName/>
+                <FirstName/>
+                <MiddleName/>
+                <Suffix/>
+                <PreferredName/>
+                <SortName/>
+                <FullName/>
+              </Name>
+              <PositionTitle/>
+              <Role/>
+              <Address Type="Mailing">
+                <Street>
+                  <Line1/>
+                  <Line2/>
+                  <Line3/>
+                  <Complex/>
+                  <StreetNumber/>
+                  <StreetPrefix/>
+                  <StreetName/>
+                  <StreetType/>
+                  <StreetSuffix/>
+                  <ApartmentType/>
+                  <ApartmentNumberPrefix/>
+                  <ApartmentNumber/>
+                  <ApartmentNumberSuffix/>
+                </Street>
+                <City/>
+                <County/>
+                <StateProvince>AK</StateProvince>
+                <StateANSICode>01</StateANSICode>
+                <Country/>
+                <PostalCode/>
+                <GridLocation>
+                  <Latitude/>
+                  <Longitude/>
+                </GridLocation>
+                <AddressRefId/>
+              </Address>
+              <AddressRefId/>
+              <EmailList>
+                <Email Type="Home"/>
+                <Email Type="Home"/>
+              </EmailList>
+              <PhoneNumberList>
+                <PhoneNumber Type="Home">
+                  <Number/>
+                  <Extension/>
+                  <ListedStatus/>
+                </PhoneNumber>
+                <PhoneNumber Type="Home">
+                  <Number/>
+                  <Extension/>
+                  <ListedStatus/>
+                </PhoneNumber>
+              </PhoneNumberList>
+            </ContactInfo>
+          </SchoolContact>
+          <SchoolContact>
+            <PublishInDirectory/>
+            <ContactInfo>
+              <Name>
+                <Prefix/>
+                <LastName/>
+                <FirstName/>
+                <MiddleName/>
+                <Suffix/>
+                <PreferredName/>
+                <SortName/>
+                <FullName/>
+              </Name>
+              <PositionTitle/>
+              <Role/>
+              <Address Type="Mailing">
+                <Street>
+                  <Line1/>
+                  <Line2/>
+                  <Line3/>
+                  <Complex/>
+                  <StreetNumber/>
+                  <StreetPrefix/>
+                  <StreetName/>
+                  <StreetType/>
+                  <StreetSuffix/>
+                  <ApartmentType/>
+                  <ApartmentNumberPrefix/>
+                  <ApartmentNumber/>
+                  <ApartmentNumberSuffix/>
+                </Street>
+                <City/>
+                <County/>
+                <StateProvince>AK</StateProvince>
+                <StateANSICode>01</StateANSICode>
+                <Country/>
+                <PostalCode/>
+                <GridLocation>
+                  <Latitude/>
+                  <Longitude/>
+                </GridLocation>
+                <AddressRefId/>
+              </Address>
+              <AddressRefId/>
+              <EmailList>
+                <Email Type="Home"/>
+                <Email Type="Home"/>
+              </EmailList>
+              <PhoneNumberList>
+                <PhoneNumber Type="Home">
+                  <Number/>
+                  <Extension/>
+                  <ListedStatus/>
+                </PhoneNumber>
+                <PhoneNumber Type="Home">
+                  <Number/>
+                  <Extension/>
+                  <ListedStatus/>
+                </PhoneNumber>
+              </PhoneNumberList>
+            </ContactInfo>
+          </SchoolContact>
+        </SchoolContactList>
+        <AddressList>
+          <Address Type="Mailing">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince>AK</StateProvince>
+            <StateANSICode>01</StateANSICode>
+            <Country/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+          <Address Type="Mailing">
+            <Street>
+              <Line1/>
+              <Line2/>
+              <Line3/>
+              <Complex/>
+              <StreetNumber/>
+              <StreetPrefix/>
+              <StreetName/>
+              <StreetType/>
+              <StreetSuffix/>
+              <ApartmentType/>
+              <ApartmentNumberPrefix/>
+              <ApartmentNumber/>
+              <ApartmentNumberSuffix/>
+            </Street>
+            <City/>
+            <County/>
+            <StateProvince>AK</StateProvince>
+            <StateANSICode>01</StateANSICode>
+            <Country/>
+            <PostalCode/>
+            <GridLocation>
+              <Latitude/>
+              <Longitude/>
+            </GridLocation>
+            <AddressRefId/>
+          </Address>
+        </AddressList>
+        <PhoneNumberList>
+          <PhoneNumber Type="Home">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+          <PhoneNumber Type="Home">
+            <Number/>
+            <Extension/>
+            <ListedStatus/>
+          </PhoneNumber>
+        </PhoneNumberList>
+        <IdentificationInfoList>
+          <IdentificationInfo Code="School"/>
+          <IdentificationInfo Code="School"/>
+        </IdentificationInfoList>
+        <GradeLevels>
+          <GradeLevel>
+            <Code>IT</Code>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </GradeLevel>
+          <GradeLevel>
+            <Code>IT</Code>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </GradeLevel>
+        </GradeLevels>
+      </SchoolInfoData>
+      <AccreditingBody/>
+      <MarkingSystems>
+        <MarkValueInfoData RefId="2c94e610-3857-11ee-b8c2-375fcdb1402b">
+          <Name/>
+          <Percentage>
+            <Minimum/>
+            <Maximum/>
+          </Percentage>
+          <Numeric>
+            <Precision/>
+            <Scale/>
+            <Low/>
+            <High/>
+          </Numeric>
+          <Letter>
+            <ValidMark>
+              <Code/>
+              <NumericEquivalent/>
+              <Description/>
+            </ValidMark>
+            <ValidMark>
+              <Code/>
+              <NumericEquivalent/>
+              <Description/>
+            </ValidMark>
+          </Letter>
+          <Narrative>
+            <MaximumSize/>
+          </Narrative>
+        </MarkValueInfoData>
+        <MarkValueInfoData RefId="2c94e611-3857-11ee-b8c2-375fcdb1402b">
+          <Name/>
+          <Percentage>
+            <Minimum/>
+            <Maximum/>
+          </Percentage>
+          <Numeric>
+            <Precision/>
+            <Scale/>
+            <Low/>
+            <High/>
+          </Numeric>
+          <Letter>
+            <ValidMark>
+              <Code/>
+              <NumericEquivalent/>
+              <Description/>
+            </ValidMark>
+            <ValidMark>
+              <Code/>
+              <NumericEquivalent/>
+              <Description/>
+            </ValidMark>
+          </Letter>
+          <Narrative>
+            <MaximumSize/>
+          </Narrative>
+        </MarkValueInfoData>
+      </MarkingSystems>
+    </SchoolAttended>
+  </SchoolAttendanceHistory>
+  <EnrollmentHistory>
+    <StudentSchoolEnrollmentData>
+      <SchoolYear/>
+      <EntryDate/>
+      <ExitDate/>
+      <EntryType>
+        <Code>01821</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </EntryType>
+      <GradeLevel>
+        <Code>IT</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </GradeLevel>
+      <ExitStatus>
+        <Code>Permanent</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </ExitStatus>
+      <ExitType>
+        <Code>01907</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </ExitType>
+      <StudentLEARelationship>
+        <MembershipType/>
+        <LEARelationshipType>
+          <ResidencyStatus>
+            <Code>01652</Code>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </ResidencyStatus>
+          <ProvidingInstruction/>
+          <ProvidingServices/>
+          <FinanciallyResponsible/>
+        </LEARelationshipType>
+      </StudentLEARelationship>
+      <StudentSchoolRelationship>
+        <MembershipType/>
+        <ResidencyStatus>
+          <Code/>
+        </ResidencyStatus>
+        <NonResidentAttendReason/>
+      </StudentSchoolRelationship>
+    </StudentSchoolEnrollmentData>
+    <StudentSchoolEnrollmentData>
+      <SchoolYear/>
+      <EntryDate/>
+      <ExitDate/>
+      <EntryType>
+        <Code>01821</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </EntryType>
+      <GradeLevel>
+        <Code>IT</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </GradeLevel>
+      <ExitStatus>
+        <Code>Permanent</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </ExitStatus>
+      <ExitType>
+        <Code>01907</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </ExitType>
+      <StudentLEARelationship>
+        <MembershipType/>
+        <LEARelationshipType>
+          <ResidencyStatus>
+            <Code>01652</Code>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </ResidencyStatus>
+          <ProvidingInstruction/>
+          <ProvidingServices/>
+          <FinanciallyResponsible/>
+        </LEARelationshipType>
+      </StudentLEARelationship>
+      <StudentSchoolRelationship>
+        <MembershipType/>
+        <ResidencyStatus>
+          <Code/>
+        </ResidencyStatus>
+        <NonResidentAttendReason/>
+      </StudentSchoolRelationship>
+    </StudentSchoolEnrollmentData>
+  </EnrollmentHistory>
+  <CurrentCourseActivity>
+    <TermInfoData>
+      <SchoolYear/>
+      <StartDate/>
+      <EndDate/>
+      <Description/>
+      <TermCode/>
+      <Track/>
+      <TermSpan>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </TermSpan>
+    </TermInfoData>
+    <Courses>
+      <Course>
+        <SchoolAttendedRefId/>
+        <SchoolCourseInfoData>
+          <CourseCode/>
+          <StateCourseCode/>
+          <DistrictCourseCode/>
+          <NationalCourseCode/>
+          <SubjectAreaList>
+            <SubjectArea>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </SubjectArea>
+            <SubjectArea>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </SubjectArea>
+          </SubjectAreaList>
+          <CourseTitle/>
+          <Description/>
+          <InstructionalLevel>
+            <Code/>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </InstructionalLevel>
+          <CoreAcademicCourse/>
+          <GraduationRequirement/>
+          <Department/>
+        </SchoolCourseInfoData>
+        <StartDate/>
+        <EndDate/>
+        <MarkingPeriod>
+          <TermInfoData>
+            <StartDate/>
+            <EndDate/>
+            <Description/>
+            <TermCode/>
+            <Track/>
+            <TermSpan>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </TermSpan>
+          </TermInfoData>
+          <GradeLevelWhenTaken>
+            <Code>IT</Code>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </GradeLevelWhenTaken>
+          <MarkData>
+            <Percentage/>
+            <Numeric/>
+            <NumericAsDecimal/>
+            <Letter/>
+            <Narrative/>
+          </MarkData>
+          <CourseCreditsAttempted/>
+        </MarkingPeriod>
+      </Course>
+      <Course>
+        <SchoolAttendedRefId/>
+        <SchoolCourseInfoData>
+          <CourseCode/>
+          <StateCourseCode/>
+          <DistrictCourseCode/>
+          <NationalCourseCode/>
+          <SubjectAreaList>
+            <SubjectArea>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </SubjectArea>
+            <SubjectArea>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </SubjectArea>
+          </SubjectAreaList>
+          <CourseTitle/>
+          <Description/>
+          <InstructionalLevel>
+            <Code/>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </InstructionalLevel>
+          <CoreAcademicCourse/>
+          <GraduationRequirement/>
+          <Department/>
+        </SchoolCourseInfoData>
+        <StartDate/>
+        <EndDate/>
+        <MarkingPeriod>
+          <TermInfoData>
+            <StartDate/>
+            <EndDate/>
+            <Description/>
+            <TermCode/>
+            <Track/>
+            <TermSpan>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </TermSpan>
+          </TermInfoData>
+          <GradeLevelWhenTaken>
+            <Code>IT</Code>
+            <OtherCodeList>
+              <OtherCode Codeset="StateProvince"/>
+              <OtherCode Codeset="StateProvince"/>
+            </OtherCodeList>
+          </GradeLevelWhenTaken>
+          <MarkData>
+            <Percentage/>
+            <Numeric/>
+            <NumericAsDecimal/>
+            <Letter/>
+            <Narrative/>
+          </MarkData>
+          <CourseCreditsAttempted/>
+        </MarkingPeriod>
+      </Course>
+    </Courses>
+  </CurrentCourseActivity>
+  <CourseHistory>
+    <Term>
+      <TermInfoData>
+        <SchoolYear/>
+        <StartDate/>
+        <EndDate/>
+        <Description/>
+        <TermCode/>
+        <Track/>
+        <TermSpan>
+          <Code/>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+        </TermSpan>
+      </TermInfoData>
+      <Courses>
+        <Course>
+          <SchoolAttendedRefId/>
+          <SchoolCourseInfoData>
+            <CourseCode/>
+            <StateCourseCode/>
+            <DistrictCourseCode/>
+            <NationalCourseCode/>
+            <SubjectAreaList>
+              <SubjectArea>
+                <Code/>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </SubjectArea>
+              <SubjectArea>
+                <Code/>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </SubjectArea>
+            </SubjectAreaList>
+            <CourseTitle/>
+            <Description/>
+            <InstructionalLevel>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </InstructionalLevel>
+            <CoreAcademicCourse/>
+            <GraduationRequirement/>
+            <Department/>
+          </SchoolCourseInfoData>
+          <StartDate/>
+          <EndDate/>
+          <MarkingPeriods>
+            <MarkingPeriod>
+              <SchoolAttendedRefId/>
+              <TermInfoData>
+                <StartDate/>
+                <EndDate/>
+                <Description/>
+                <TermCode/>
+                <Track/>
+                <TermSpan>
+                  <Code/>
+                  <OtherCodeList>
+                    <OtherCode Codeset="StateProvince"/>
+                    <OtherCode Codeset="StateProvince"/>
+                  </OtherCodeList>
+                </TermSpan>
+              </TermInfoData>
+              <GradeLevelWhenTaken>
+                <Code>IT</Code>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </GradeLevelWhenTaken>
+              <MarkData>
+                <Percentage/>
+                <Numeric/>
+                <NumericAsDecimal/>
+                <Letter/>
+                <Narrative/>
+              </MarkData>
+              <CourseCreditsAttempted/>
+              <CourseCreditsEarned/>
+              <CreditType>00585</CreditType>
+              <ExcessiveAbsenceIndicator/>
+              <DaysAbsent/>
+              <DaysPresent>13290</DaysPresent>
+            </MarkingPeriod>
+            <MarkingPeriod>
+              <SchoolAttendedRefId/>
+              <TermInfoData>
+                <StartDate/>
+                <EndDate/>
+                <Description/>
+                <TermCode/>
+                <Track/>
+                <TermSpan>
+                  <Code/>
+                  <OtherCodeList>
+                    <OtherCode Codeset="StateProvince"/>
+                    <OtherCode Codeset="StateProvince"/>
+                  </OtherCodeList>
+                </TermSpan>
+              </TermInfoData>
+              <GradeLevelWhenTaken>
+                <Code>IT</Code>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </GradeLevelWhenTaken>
+              <MarkData>
+                <Percentage/>
+                <Numeric/>
+                <NumericAsDecimal/>
+                <Letter/>
+                <Narrative/>
+              </MarkData>
+              <CourseCreditsAttempted/>
+              <CourseCreditsEarned/>
+              <CreditType>00585</CreditType>
+              <ExcessiveAbsenceIndicator/>
+              <DaysAbsent/>
+              <DaysPresent>13290</DaysPresent>
+            </MarkingPeriod>
+          </MarkingPeriods>
+          <SectionInfoData>
+            <MediumOfInstruction>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </MediumOfInstruction>
+          </SectionInfoData>
+        </Course>
+        <Course>
+          <SchoolAttendedRefId/>
+          <SchoolCourseInfoData>
+            <CourseCode/>
+            <StateCourseCode/>
+            <DistrictCourseCode/>
+            <NationalCourseCode/>
+            <SubjectAreaList>
+              <SubjectArea>
+                <Code/>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </SubjectArea>
+              <SubjectArea>
+                <Code/>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </SubjectArea>
+            </SubjectAreaList>
+            <CourseTitle/>
+            <Description/>
+            <InstructionalLevel>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </InstructionalLevel>
+            <CoreAcademicCourse/>
+            <GraduationRequirement/>
+            <Department/>
+          </SchoolCourseInfoData>
+          <StartDate/>
+          <EndDate/>
+          <MarkingPeriods>
+            <MarkingPeriod>
+              <SchoolAttendedRefId/>
+              <TermInfoData>
+                <StartDate/>
+                <EndDate/>
+                <Description/>
+                <TermCode/>
+                <Track/>
+                <TermSpan>
+                  <Code/>
+                  <OtherCodeList>
+                    <OtherCode Codeset="StateProvince"/>
+                    <OtherCode Codeset="StateProvince"/>
+                  </OtherCodeList>
+                </TermSpan>
+              </TermInfoData>
+              <GradeLevelWhenTaken>
+                <Code>IT</Code>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </GradeLevelWhenTaken>
+              <MarkData>
+                <Percentage/>
+                <Numeric/>
+                <NumericAsDecimal/>
+                <Letter/>
+                <Narrative/>
+              </MarkData>
+              <CourseCreditsAttempted/>
+              <CourseCreditsEarned/>
+              <CreditType>00585</CreditType>
+              <ExcessiveAbsenceIndicator/>
+              <DaysAbsent/>
+              <DaysPresent>13290</DaysPresent>
+            </MarkingPeriod>
+            <MarkingPeriod>
+              <SchoolAttendedRefId/>
+              <TermInfoData>
+                <StartDate/>
+                <EndDate/>
+                <Description/>
+                <TermCode/>
+                <Track/>
+                <TermSpan>
+                  <Code/>
+                  <OtherCodeList>
+                    <OtherCode Codeset="StateProvince"/>
+                    <OtherCode Codeset="StateProvince"/>
+                  </OtherCodeList>
+                </TermSpan>
+              </TermInfoData>
+              <GradeLevelWhenTaken>
+                <Code>IT</Code>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </GradeLevelWhenTaken>
+              <MarkData>
+                <Percentage/>
+                <Numeric/>
+                <NumericAsDecimal/>
+                <Letter/>
+                <Narrative/>
+              </MarkData>
+              <CourseCreditsAttempted/>
+              <CourseCreditsEarned/>
+              <CreditType>00585</CreditType>
+              <ExcessiveAbsenceIndicator/>
+              <DaysAbsent/>
+              <DaysPresent>13290</DaysPresent>
+            </MarkingPeriod>
+          </MarkingPeriods>
+          <SectionInfoData>
+            <MediumOfInstruction>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </MediumOfInstruction>
+          </SectionInfoData>
+        </Course>
+      </Courses>
+    </Term>
+    <Term>
+      <TermInfoData>
+        <SchoolYear/>
+        <StartDate/>
+        <EndDate/>
+        <Description/>
+        <TermCode/>
+        <Track/>
+        <TermSpan>
+          <Code/>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+        </TermSpan>
+      </TermInfoData>
+      <Courses>
+        <Course>
+          <SchoolAttendedRefId/>
+          <SchoolCourseInfoData>
+            <CourseCode/>
+            <StateCourseCode/>
+            <DistrictCourseCode/>
+            <NationalCourseCode/>
+            <SubjectAreaList>
+              <SubjectArea>
+                <Code/>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </SubjectArea>
+              <SubjectArea>
+                <Code/>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </SubjectArea>
+            </SubjectAreaList>
+            <CourseTitle/>
+            <Description/>
+            <InstructionalLevel>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </InstructionalLevel>
+            <CoreAcademicCourse/>
+            <GraduationRequirement/>
+            <Department/>
+          </SchoolCourseInfoData>
+          <StartDate/>
+          <EndDate/>
+          <MarkingPeriods>
+            <MarkingPeriod>
+              <SchoolAttendedRefId/>
+              <TermInfoData>
+                <StartDate/>
+                <EndDate/>
+                <Description/>
+                <TermCode/>
+                <Track/>
+                <TermSpan>
+                  <Code/>
+                  <OtherCodeList>
+                    <OtherCode Codeset="StateProvince"/>
+                    <OtherCode Codeset="StateProvince"/>
+                  </OtherCodeList>
+                </TermSpan>
+              </TermInfoData>
+              <GradeLevelWhenTaken>
+                <Code>IT</Code>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </GradeLevelWhenTaken>
+              <MarkData>
+                <Percentage/>
+                <Numeric/>
+                <NumericAsDecimal/>
+                <Letter/>
+                <Narrative/>
+              </MarkData>
+              <CourseCreditsAttempted/>
+              <CourseCreditsEarned/>
+              <CreditType>00585</CreditType>
+              <ExcessiveAbsenceIndicator/>
+              <DaysAbsent/>
+              <DaysPresent>13290</DaysPresent>
+            </MarkingPeriod>
+            <MarkingPeriod>
+              <SchoolAttendedRefId/>
+              <TermInfoData>
+                <StartDate/>
+                <EndDate/>
+                <Description/>
+                <TermCode/>
+                <Track/>
+                <TermSpan>
+                  <Code/>
+                  <OtherCodeList>
+                    <OtherCode Codeset="StateProvince"/>
+                    <OtherCode Codeset="StateProvince"/>
+                  </OtherCodeList>
+                </TermSpan>
+              </TermInfoData>
+              <GradeLevelWhenTaken>
+                <Code>IT</Code>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </GradeLevelWhenTaken>
+              <MarkData>
+                <Percentage/>
+                <Numeric/>
+                <NumericAsDecimal/>
+                <Letter/>
+                <Narrative/>
+              </MarkData>
+              <CourseCreditsAttempted/>
+              <CourseCreditsEarned/>
+              <CreditType>00585</CreditType>
+              <ExcessiveAbsenceIndicator/>
+              <DaysAbsent/>
+              <DaysPresent>13290</DaysPresent>
+            </MarkingPeriod>
+          </MarkingPeriods>
+          <SectionInfoData>
+            <MediumOfInstruction>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </MediumOfInstruction>
+          </SectionInfoData>
+        </Course>
+        <Course>
+          <SchoolAttendedRefId/>
+          <SchoolCourseInfoData>
+            <CourseCode/>
+            <StateCourseCode/>
+            <DistrictCourseCode/>
+            <NationalCourseCode/>
+            <SubjectAreaList>
+              <SubjectArea>
+                <Code/>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </SubjectArea>
+              <SubjectArea>
+                <Code/>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </SubjectArea>
+            </SubjectAreaList>
+            <CourseTitle/>
+            <Description/>
+            <InstructionalLevel>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </InstructionalLevel>
+            <CoreAcademicCourse/>
+            <GraduationRequirement/>
+            <Department/>
+          </SchoolCourseInfoData>
+          <StartDate/>
+          <EndDate/>
+          <MarkingPeriods>
+            <MarkingPeriod>
+              <SchoolAttendedRefId/>
+              <TermInfoData>
+                <StartDate/>
+                <EndDate/>
+                <Description/>
+                <TermCode/>
+                <Track/>
+                <TermSpan>
+                  <Code/>
+                  <OtherCodeList>
+                    <OtherCode Codeset="StateProvince"/>
+                    <OtherCode Codeset="StateProvince"/>
+                  </OtherCodeList>
+                </TermSpan>
+              </TermInfoData>
+              <GradeLevelWhenTaken>
+                <Code>IT</Code>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </GradeLevelWhenTaken>
+              <MarkData>
+                <Percentage/>
+                <Numeric/>
+                <NumericAsDecimal/>
+                <Letter/>
+                <Narrative/>
+              </MarkData>
+              <CourseCreditsAttempted/>
+              <CourseCreditsEarned/>
+              <CreditType>00585</CreditType>
+              <ExcessiveAbsenceIndicator/>
+              <DaysAbsent/>
+              <DaysPresent>13290</DaysPresent>
+            </MarkingPeriod>
+            <MarkingPeriod>
+              <SchoolAttendedRefId/>
+              <TermInfoData>
+                <StartDate/>
+                <EndDate/>
+                <Description/>
+                <TermCode/>
+                <Track/>
+                <TermSpan>
+                  <Code/>
+                  <OtherCodeList>
+                    <OtherCode Codeset="StateProvince"/>
+                    <OtherCode Codeset="StateProvince"/>
+                  </OtherCodeList>
+                </TermSpan>
+              </TermInfoData>
+              <GradeLevelWhenTaken>
+                <Code>IT</Code>
+                <OtherCodeList>
+                  <OtherCode Codeset="StateProvince"/>
+                  <OtherCode Codeset="StateProvince"/>
+                </OtherCodeList>
+              </GradeLevelWhenTaken>
+              <MarkData>
+                <Percentage/>
+                <Numeric/>
+                <NumericAsDecimal/>
+                <Letter/>
+                <Narrative/>
+              </MarkData>
+              <CourseCreditsAttempted/>
+              <CourseCreditsEarned/>
+              <CreditType>00585</CreditType>
+              <ExcessiveAbsenceIndicator/>
+              <DaysAbsent/>
+              <DaysPresent>13290</DaysPresent>
+            </MarkingPeriod>
+          </MarkingPeriods>
+          <SectionInfoData>
+            <MediumOfInstruction>
+              <Code/>
+              <OtherCodeList>
+                <OtherCode Codeset="StateProvince"/>
+                <OtherCode Codeset="StateProvince"/>
+              </OtherCodeList>
+            </MediumOfInstruction>
+          </SectionInfoData>
+        </Course>
+      </Courses>
+    </Term>
+  </CourseHistory>
+  <AcademicPerformanceHistory>
+    <TermPerformance>
+      <TermInfoData>
+        <SchoolYear/>
+        <StartDate/>
+        <EndDate/>
+        <Description/>
+        <TermCode/>
+        <Track/>
+        <TermSpan>
+          <Code/>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+        </TermSpan>
+      </TermInfoData>
+      <GradeLevelWhenTaken>
+        <Code>IT</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </GradeLevelWhenTaken>
+      <CreditsAttempted/>
+      <CreditsEarned/>
+      <GPACreditsAttempted/>
+      <GPACreditsEarned/>
+      <GPAGradePoints/>
+      <GPA/>
+      <WeightedGPA/>
+      <DaysAbsent/>
+      <DaysPresent/>
+      <ProgressLevel>NEGGRADE</ProgressLevel>
+    </TermPerformance>
+    <TermPerformance>
+      <TermInfoData>
+        <SchoolYear/>
+        <StartDate/>
+        <EndDate/>
+        <Description/>
+        <TermCode/>
+        <Track/>
+        <TermSpan>
+          <Code/>
+          <OtherCodeList>
+            <OtherCode Codeset="StateProvince"/>
+            <OtherCode Codeset="StateProvince"/>
+          </OtherCodeList>
+        </TermSpan>
+      </TermInfoData>
+      <GradeLevelWhenTaken>
+        <Code>IT</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </GradeLevelWhenTaken>
+      <CreditsAttempted/>
+      <CreditsEarned/>
+      <GPACreditsAttempted/>
+      <GPACreditsEarned/>
+      <GPAGradePoints/>
+      <GPA/>
+      <WeightedGPA/>
+      <DaysAbsent/>
+      <DaysPresent/>
+      <ProgressLevel>NEGGRADE</ProgressLevel>
+    </TermPerformance>
+  </AcademicPerformanceHistory>
+  <AcademicPerformanceSummary>
+    <TotalCreditsAttempted/>
+    <TotalCreditsEarned/>
+    <CumulativeGPACreditsEarned/>
+    <CumulativeGradePoints/>
+    <CumulativeGPA/>
+    <GPAType/>
+    <ClassRank/>
+    <ClassTotalNumber/>
+    <ClassRankingDate/>
+    <ProjectedGraduationDate/>
+    <GraduationDate/>
+    <GraduationDiplomaType>00806</GraduationDiplomaType>
+    <GraduationRateSurveyCohortYear/>
+    <GraduationRateSurveyIndicator>Yes</GraduationRateSurveyIndicator>
+    <AcademicTrack/>
+    <AcademicFoci>
+      <AcademicFocus>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </AcademicFocus>
+      <AcademicFocus>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </AcademicFocus>
+    </AcademicFoci>
+    <AcademicSubjects>
+      <AcademicSubject>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </AcademicSubject>
+      <AcademicSubject>
+        <Code/>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </AcademicSubject>
+    </AcademicSubjects>
+  </AcademicPerformanceSummary>
+  <AssessmentPerformanceHistory>
+    <Assessment>
+      <Name/>
+      <AdministrationDate/>
+      <Form/>
+      <Level/>
+      <StudentGradeLevelWhenAssessed>
+        <Code>IT</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </StudentGradeLevelWhenAssessed>
+      <SubtestCategory/>
+      <TestScoreType/>
+      <TestScore/>
+    </Assessment>
+    <Assessment>
+      <Name/>
+      <AdministrationDate/>
+      <Form/>
+      <Level/>
+      <StudentGradeLevelWhenAssessed>
+        <Code>IT</Code>
+        <OtherCodeList>
+          <OtherCode Codeset="StateProvince"/>
+          <OtherCode Codeset="StateProvince"/>
+        </OtherCodeList>
+      </StudentGradeLevelWhenAssessed>
+      <SubtestCategory/>
+      <TestScoreType/>
+      <TestScore/>
+    </Assessment>
+  </AssessmentPerformanceHistory>
+  <AdditionalGraduationRequirementPerformanceHistory>
+    <Requirement>
+      <Name/>
+      <Method/>
+      <Status/>
+      <StatusDeterminationDate/>
+    </Requirement>
+    <Requirement>
+      <Name/>
+      <Method/>
+      <Status/>
+      <StatusDeterminationDate/>
+    </Requirement>
+  </AdditionalGraduationRequirementPerformanceHistory>
+  <ActivityAwardHistory>
+    <ActivityAward>
+      <Name/>
+      <InvolvementCode/>
+      <InvolvementBeginningDate/>
+      <InvolvementEndingDate/>
+      <InvolvementAmount/>
+      <HonorsInformationCode/>
+      <HonorsDescription/>
+      <DiplomaCredentialHonorsCode/>
+      <DiplomaCredentialHonorsDescription>00737</DiplomaCredentialHonorsDescription>
+      <CredentialConferred/>
+    </ActivityAward>
+    <ActivityAward>
+      <Name/>
+      <InvolvementCode/>
+      <InvolvementBeginningDate/>
+      <InvolvementEndingDate/>
+      <InvolvementAmount/>
+      <HonorsInformationCode/>
+      <HonorsDescription/>
+      <DiplomaCredentialHonorsCode/>
+      <DiplomaCredentialHonorsDescription>00737</DiplomaCredentialHonorsDescription>
+      <CredentialConferred/>
+    </ActivityAward>
+  </ActivityAwardHistory>
+</StudentAcademicRecord>

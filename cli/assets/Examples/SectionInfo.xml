@@ -1,0 +1,97 @@
+<SectionInfo xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c8cf6d0-3857-11ee-b8c2-375fcdb1402b">
+  <LocalId/>
+  <Description/>
+  <ScheduleInfoList>
+    <ScheduleInfo>
+      <TeacherList>
+        <StaffPersonalRefId/>
+        <StaffPersonalRefId/>
+      </TeacherList>
+      <SectionRoomList>
+        <RoomInfoRefId/>
+        <RoomInfoRefId/>
+      </SectionRoomList>
+      <MeetingTimeList>
+        <MeetingTime>
+          <TimetableDay/>
+          <TimetablePeriod/>
+        </MeetingTime>
+        <MeetingTime>
+          <TimetableDay/>
+          <TimetablePeriod/>
+        </MeetingTime>
+      </MeetingTimeList>
+    </ScheduleInfo>
+    <ScheduleInfo>
+      <TeacherList>
+        <StaffPersonalRefId/>
+        <StaffPersonalRefId/>
+      </TeacherList>
+      <SectionRoomList>
+        <RoomInfoRefId/>
+        <RoomInfoRefId/>
+      </SectionRoomList>
+      <MeetingTimeList>
+        <MeetingTime>
+          <TimetableDay/>
+          <TimetablePeriod/>
+        </MeetingTime>
+        <MeetingTime>
+          <TimetableDay/>
+          <TimetablePeriod/>
+        </MeetingTime>
+      </MeetingTimeList>
+    </ScheduleInfo>
+  </ScheduleInfoList>
+  <MediumOfInstruction>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </MediumOfInstruction>
+  <InstructionalDeliveryModeList>
+    <InstructionalDeliveryMode/>
+    <InstructionalDeliveryMode/>
+  </InstructionalDeliveryModeList>
+  <LanguageOfInstruction>
+    <Code>abk</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </LanguageOfInstruction>
+  <LocationOfInstruction>
+    <Code>00997</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </LocationOfInstruction>
+  <SummerSchool/>
+  <SchoolCourseInfoOverride>
+    <CourseCode/>
+    <StateCourseCode/>
+    <DistrictCourseCode/>
+    <SubjectArea>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </SubjectArea>
+    <CourseTitle/>
+    <InstructionalLevel>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </InstructionalLevel>
+    <CourseCredits/>
+  </SchoolCourseInfoOverride>
+  <CourseSectionCode/>
+  <SectionCode/>
+  <CountForAttendance/>
+  <BellScheduleRefId/>
+</SectionInfo>

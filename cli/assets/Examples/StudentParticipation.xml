@@ -1,0 +1,175 @@
+<StudentParticipation xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2cadc540-3857-11ee-b8c2-375fcdb1402b">
+  <StudentParticipationAsOfDate/>
+  <ProgramType>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ProgramType>
+  <ProgramIdentifier/>
+  <ProgramName/>
+  <ProgramFundingSources>
+    <ProgramFundingSource>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </ProgramFundingSource>
+    <ProgramFundingSource>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </ProgramFundingSource>
+  </ProgramFundingSources>
+  <ManagingPublicAgency/>
+  <ManagingSchool/>
+  <PartCTransitionMeetingNotHeldReasons>
+    <PartCTransitionMeetingNotHeldReason>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </PartCTransitionMeetingNotHeldReason>
+    <PartCTransitionMeetingNotHeldReason>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </PartCTransitionMeetingNotHeldReason>
+  </PartCTransitionMeetingNotHeldReasons>
+  <PartCTransitionMeetingDate/>
+  <PartCTransitionMeetingOutcomes>
+    <PartCTransitionMeetingOutcome>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </PartCTransitionMeetingOutcome>
+    <PartCTransitionMeetingOutcome>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </PartCTransitionMeetingOutcome>
+  </PartCTransitionMeetingOutcomes>
+  <ReferralDate/>
+  <ReferralSource>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ReferralSource>
+  <ProgramStatus>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ProgramStatus>
+  <GiftedEligibilityCriteria/>
+  <EvaluationParentalConsentDate/>
+  <EvaluationDate/>
+  <EvaluationExtensionDate/>
+  <ExtensionComments/>
+  <ReevaluationDate/>
+  <ExceptionalityCategories>
+    <ExceptionalityCategory>
+      <Code>AUT</Code>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+      <ExceptionalityPriority/>
+    </ExceptionalityCategory>
+    <ExceptionalityCategory>
+      <Code>AUT</Code>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+      <ExceptionalityPriority/>
+    </ExceptionalityCategory>
+  </ExceptionalityCategories>
+  <ProgramEligibilityDate/>
+  <ProgramPlanType>
+    <Code>Yes</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ProgramPlanType>
+  <ProgramPlanDate/>
+  <ProgramPlanEffectiveDate/>
+  <NOREPDate/>
+  <PlacementParentalConsentDate/>
+  <ProgramPlacementDate/>
+  <ProgramPlacementReason/>
+  <LeastRestrictiveEnvironment>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </LeastRestrictiveEnvironment>
+  <ExtendedSchoolYear/>
+  <ExtendedDay/>
+  <ProgramAvailability>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ProgramAvailability>
+  <PrivateNotPlacedByPublic/>
+  <ProgramReviewDate/>
+  <FBADate/>
+  <BIPDate/>
+  <ProgramExitDate/>
+  <ProgramExitReason>
+    <Code>HighSchoolDiploma</Code>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </ProgramExitReason>
+  <ProjectedExitDate/>
+  <ProjectedExitReason Codeset="StateProvince">06262</ProjectedExitReason>
+  <PlannedAssessmentParticipation Codeset="StateProvince"/>
+  <TransitionPlanning Codeset="StateProvince"/>
+  <StudentSpecialEducationFTE/>
+  <EntryPerson/>
+  <ParticipationContact/>
+  <AdditionalProgramAvailabilityList>
+    <ProgramAvailability>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </ProgramAvailability>
+    <ProgramAvailability>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </ProgramAvailability>
+  </AdditionalProgramAvailabilityList>
+  <CaseManager/>
+  <FreeAndReducedStatus>Free</FreeAndReducedStatus>
+  <CertifiedLunchProgram>Yes</CertifiedLunchProgram>
+  <PerkinsLEPStatus/>
+  <TitleIIIAccountabilityProgressStatus/>
+  <TitleIIIImmigrantParticipationStatus/>
+  <NeglectedOrDelinquentAchievementIndicator/>
+  <NeglectedOrDelinquentAcademicOutcomeIndicator/>
+</StudentParticipation>

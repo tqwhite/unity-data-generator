@@ -1,0 +1,34 @@
+<StaffEvaluation xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c8e7d70-3857-11ee-b8c2-375fcdb1402b">
+  <StaffPersonalRefId/>
+  <SchoolInfoRefId/>
+  <NCESId/>
+  <EvaluatorStateProvinceId/>
+  <BargainingUnit/>
+  <EvaluationCycleName/>
+  <EvaluationPreconferenceDate/>
+  <ProjectedEvaluationDate/>
+  <EvaluationDate/>
+  <EvaluationPostconferenceDate/>
+  <EvaluationSystem/>
+  <EvaluationParts>
+    <EvaluationPart>
+      <Name/>
+      <Score/>
+      <Scale/>
+    </EvaluationPart>
+    <EvaluationPart>
+      <Name/>
+      <Score/>
+      <Scale/>
+    </EvaluationPart>
+  </EvaluationParts>
+  <EvaluationHolisticScore/>
+  <EvaluationHolisticScale/>
+  <EvaluationRecommendation>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </EvaluationRecommendation>
+</StaffEvaluation>

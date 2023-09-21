@@ -1,0 +1,4647 @@
+
+<StudentAcademicRecords xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+  <StudentAcademicRecord RefId="" SIF_RefId="" SIF_RefObject="" SIF_RefObjectCodeset="">
+    <ReportingDate/>
+    <StudentSchoolEnrollmentData SchoolAttendedRefId="">
+      <GradeLevel>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </GradeLevel>
+      <Advisor>
+        <StaffPersonalData>
+          <Name Type="">
+            <Prefix/>
+            <LastName/>
+            <FirstName/>
+            <MiddleName/>
+            <Suffix/>
+            <PreferredName/>
+            <SortName/>
+            <FullName/>
+          </Name>
+          <Title/>
+          <AddressList>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+          </AddressList>
+          <PhoneNumberList>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+          </PhoneNumberList>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </StaffPersonalData>
+      </Advisor>
+      <Counselor>
+        <StaffPersonalData>
+          <Name Type="">
+            <Prefix/>
+            <LastName/>
+            <FirstName/>
+            <MiddleName/>
+            <Suffix/>
+            <PreferredName/>
+            <SortName/>
+            <FullName/>
+          </Name>
+          <Title/>
+          <AddressList>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+          </AddressList>
+          <PhoneNumberList>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+          </PhoneNumberList>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </StaffPersonalData>
+      </Counselor>
+      <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="" SIF_Action=""/>
+        <SIF_ExtendedElement Name="" SIF_Action=""/>
+      </SIF_ExtendedElements>
+    </StudentSchoolEnrollmentData>
+    <DistrictEntryDate/>
+    <SchoolAttendanceHistory>
+      <SchoolAttended RefId="">
+        <LEAInfoData>
+          <LocalId/>
+          <StateProvinceId/>
+          <NCESId/>
+          <LEAName/>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </LEAInfoData>
+        <SchoolInfoData>
+          <LocalId/>
+          <StateProvinceId/>
+          <NCESId/>
+          <SchoolName/>
+          <SchoolURL/>
+          <SchoolContactList>
+            <SchoolContact>
+              <PublishInDirectory Codeset=""/>
+              <ContactInfo>
+                <Name Type="">
+                  <Prefix/>
+                  <LastName/>
+                  <FirstName/>
+                  <MiddleName/>
+                  <Suffix/>
+                  <PreferredName/>
+                  <SortName/>
+                  <FullName/>
+                </Name>
+                <PositionTitle/>
+                <Role/>
+                <Address Type="" TypeCodeset="">
+                  <Street>
+                    <Line1/>
+                    <Line2/>
+                    <Line3/>
+                    <Complex/>
+                    <StreetNumber/>
+                    <StreetPrefix/>
+                    <StreetName/>
+                    <StreetType/>
+                    <StreetSuffix/>
+                    <ApartmentType/>
+                    <ApartmentNumberPrefix/>
+                    <ApartmentNumber/>
+                    <ApartmentNumberSuffix/>
+                  </Street>
+                  <City/>
+                  <County/>
+                  <StateProvince Codeset=""/>
+                  <StateANSICode Codeset=""/>
+                  <Country Codeset=""/>
+                  <PostalCode/>
+                  <GridLocation>
+                    <Latitude/>
+                    <Longitude/>
+                  </GridLocation>
+                  <AddressRefId/>
+                </Address>
+                <AddressRefId/>
+                <EmailList>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                </EmailList>
+                <PhoneNumberList>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                </PhoneNumberList>
+              </ContactInfo>
+            </SchoolContact>
+            <SchoolContact>
+              <PublishInDirectory Codeset=""/>
+              <ContactInfo>
+                <Name Type="">
+                  <Prefix/>
+                  <LastName/>
+                  <FirstName/>
+                  <MiddleName/>
+                  <Suffix/>
+                  <PreferredName/>
+                  <SortName/>
+                  <FullName/>
+                </Name>
+                <PositionTitle/>
+                <Role/>
+                <Address Type="" TypeCodeset="">
+                  <Street>
+                    <Line1/>
+                    <Line2/>
+                    <Line3/>
+                    <Complex/>
+                    <StreetNumber/>
+                    <StreetPrefix/>
+                    <StreetName/>
+                    <StreetType/>
+                    <StreetSuffix/>
+                    <ApartmentType/>
+                    <ApartmentNumberPrefix/>
+                    <ApartmentNumber/>
+                    <ApartmentNumberSuffix/>
+                  </Street>
+                  <City/>
+                  <County/>
+                  <StateProvince Codeset=""/>
+                  <StateANSICode Codeset=""/>
+                  <Country Codeset=""/>
+                  <PostalCode/>
+                  <GridLocation>
+                    <Latitude/>
+                    <Longitude/>
+                  </GridLocation>
+                  <AddressRefId/>
+                </Address>
+                <AddressRefId/>
+                <EmailList>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                </EmailList>
+                <PhoneNumberList>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                </PhoneNumberList>
+              </ContactInfo>
+            </SchoolContact>
+          </SchoolContactList>
+          <AddressList>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+          </AddressList>
+          <PhoneNumberList>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+          </PhoneNumberList>
+          <IdentificationInfoList>
+            <IdentificationInfo Code="" CodeCodeset=""/>
+            <IdentificationInfo Code="" CodeCodeset=""/>
+          </IdentificationInfoList>
+          <GradeLevels>
+            <GradeLevel>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </GradeLevel>
+            <GradeLevel>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </GradeLevel>
+          </GradeLevels>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </SchoolInfoData>
+        <AccreditingBody/>
+        <MarkingSystems>
+          <MarkValueInfoData RefId="">
+            <Name/>
+            <Percentage>
+              <Minimum/>
+              <Maximum/>
+            </Percentage>
+            <Numeric>
+              <Precision/>
+              <Scale/>
+              <Low/>
+              <High/>
+            </Numeric>
+            <Letter>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+            </Letter>
+            <Narrative>
+              <MaximumSize/>
+            </Narrative>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </MarkValueInfoData>
+          <MarkValueInfoData RefId="">
+            <Name/>
+            <Percentage>
+              <Minimum/>
+              <Maximum/>
+            </Percentage>
+            <Numeric>
+              <Precision/>
+              <Scale/>
+              <Low/>
+              <High/>
+            </Numeric>
+            <Letter>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+            </Letter>
+            <Narrative>
+              <MaximumSize/>
+            </Narrative>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </MarkValueInfoData>
+        </MarkingSystems>
+      </SchoolAttended>
+      <SchoolAttended RefId="">
+        <LEAInfoData>
+          <LocalId/>
+          <StateProvinceId/>
+          <NCESId/>
+          <LEAName/>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </LEAInfoData>
+        <SchoolInfoData>
+          <LocalId/>
+          <StateProvinceId/>
+          <NCESId/>
+          <SchoolName/>
+          <SchoolURL/>
+          <SchoolContactList>
+            <SchoolContact>
+              <PublishInDirectory Codeset=""/>
+              <ContactInfo>
+                <Name Type="">
+                  <Prefix/>
+                  <LastName/>
+                  <FirstName/>
+                  <MiddleName/>
+                  <Suffix/>
+                  <PreferredName/>
+                  <SortName/>
+                  <FullName/>
+                </Name>
+                <PositionTitle/>
+                <Role/>
+                <Address Type="" TypeCodeset="">
+                  <Street>
+                    <Line1/>
+                    <Line2/>
+                    <Line3/>
+                    <Complex/>
+                    <StreetNumber/>
+                    <StreetPrefix/>
+                    <StreetName/>
+                    <StreetType/>
+                    <StreetSuffix/>
+                    <ApartmentType/>
+                    <ApartmentNumberPrefix/>
+                    <ApartmentNumber/>
+                    <ApartmentNumberSuffix/>
+                  </Street>
+                  <City/>
+                  <County/>
+                  <StateProvince Codeset=""/>
+                  <StateANSICode Codeset=""/>
+                  <Country Codeset=""/>
+                  <PostalCode/>
+                  <GridLocation>
+                    <Latitude/>
+                    <Longitude/>
+                  </GridLocation>
+                  <AddressRefId/>
+                </Address>
+                <AddressRefId/>
+                <EmailList>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                </EmailList>
+                <PhoneNumberList>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                </PhoneNumberList>
+              </ContactInfo>
+            </SchoolContact>
+            <SchoolContact>
+              <PublishInDirectory Codeset=""/>
+              <ContactInfo>
+                <Name Type="">
+                  <Prefix/>
+                  <LastName/>
+                  <FirstName/>
+                  <MiddleName/>
+                  <Suffix/>
+                  <PreferredName/>
+                  <SortName/>
+                  <FullName/>
+                </Name>
+                <PositionTitle/>
+                <Role/>
+                <Address Type="" TypeCodeset="">
+                  <Street>
+                    <Line1/>
+                    <Line2/>
+                    <Line3/>
+                    <Complex/>
+                    <StreetNumber/>
+                    <StreetPrefix/>
+                    <StreetName/>
+                    <StreetType/>
+                    <StreetSuffix/>
+                    <ApartmentType/>
+                    <ApartmentNumberPrefix/>
+                    <ApartmentNumber/>
+                    <ApartmentNumberSuffix/>
+                  </Street>
+                  <City/>
+                  <County/>
+                  <StateProvince Codeset=""/>
+                  <StateANSICode Codeset=""/>
+                  <Country Codeset=""/>
+                  <PostalCode/>
+                  <GridLocation>
+                    <Latitude/>
+                    <Longitude/>
+                  </GridLocation>
+                  <AddressRefId/>
+                </Address>
+                <AddressRefId/>
+                <EmailList>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                </EmailList>
+                <PhoneNumberList>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                </PhoneNumberList>
+              </ContactInfo>
+            </SchoolContact>
+          </SchoolContactList>
+          <AddressList>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+          </AddressList>
+          <PhoneNumberList>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+          </PhoneNumberList>
+          <IdentificationInfoList>
+            <IdentificationInfo Code="" CodeCodeset=""/>
+            <IdentificationInfo Code="" CodeCodeset=""/>
+          </IdentificationInfoList>
+          <GradeLevels>
+            <GradeLevel>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </GradeLevel>
+            <GradeLevel>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </GradeLevel>
+          </GradeLevels>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </SchoolInfoData>
+        <AccreditingBody/>
+        <MarkingSystems>
+          <MarkValueInfoData RefId="">
+            <Name/>
+            <Percentage>
+              <Minimum/>
+              <Maximum/>
+            </Percentage>
+            <Numeric>
+              <Precision/>
+              <Scale/>
+              <Low/>
+              <High/>
+            </Numeric>
+            <Letter>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+            </Letter>
+            <Narrative>
+              <MaximumSize/>
+            </Narrative>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </MarkValueInfoData>
+          <MarkValueInfoData RefId="">
+            <Name/>
+            <Percentage>
+              <Minimum/>
+              <Maximum/>
+            </Percentage>
+            <Numeric>
+              <Precision/>
+              <Scale/>
+              <Low/>
+              <High/>
+            </Numeric>
+            <Letter>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+            </Letter>
+            <Narrative>
+              <MaximumSize/>
+            </Narrative>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </MarkValueInfoData>
+        </MarkingSystems>
+      </SchoolAttended>
+    </SchoolAttendanceHistory>
+    <EnrollmentHistory>
+      <StudentSchoolEnrollmentData SchoolAttendedRefId="">
+        <SchoolYear/>
+        <EntryDate/>
+        <ExitDate/>
+        <EntryType>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </EntryType>
+        <GradeLevel>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </GradeLevel>
+        <ExitStatus>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </ExitStatus>
+        <ExitType>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </ExitType>
+        <StudentLEARelationship>
+          <MembershipType Codeset=""/>
+          <LEARelationshipType>
+            <ResidencyStatus>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </ResidencyStatus>
+            <ProvidingInstruction/>
+            <ProvidingServices/>
+            <FinanciallyResponsible/>
+          </LEARelationshipType>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </StudentLEARelationship>
+        <StudentSchoolRelationship>
+          <MembershipType Codeset=""/>
+          <ResidencyStatus>
+            <Code Codeset=""/>
+          </ResidencyStatus>
+          <NonResidentAttendReason Codeset=""/>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </StudentSchoolRelationship>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </StudentSchoolEnrollmentData>
+      <StudentSchoolEnrollmentData SchoolAttendedRefId="">
+        <SchoolYear/>
+        <EntryDate/>
+        <ExitDate/>
+        <EntryType>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </EntryType>
+        <GradeLevel>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </GradeLevel>
+        <ExitStatus>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </ExitStatus>
+        <ExitType>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </ExitType>
+        <StudentLEARelationship>
+          <MembershipType Codeset=""/>
+          <LEARelationshipType>
+            <ResidencyStatus>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </ResidencyStatus>
+            <ProvidingInstruction/>
+            <ProvidingServices/>
+            <FinanciallyResponsible/>
+          </LEARelationshipType>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </StudentLEARelationship>
+        <StudentSchoolRelationship>
+          <MembershipType Codeset=""/>
+          <ResidencyStatus>
+            <Code Codeset=""/>
+          </ResidencyStatus>
+          <NonResidentAttendReason Codeset=""/>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </StudentSchoolRelationship>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </StudentSchoolEnrollmentData>
+    </EnrollmentHistory>
+    <CurrentCourseActivity>
+      <TermInfoData SchoolAttendedRefId="">
+        <SchoolYear/>
+        <StartDate/>
+        <EndDate/>
+        <Description/>
+        <TermCode/>
+        <Track/>
+        <TermSpan>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </TermSpan>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </TermInfoData>
+      <Courses>
+        <Course>
+          <SchoolAttendedRefId/>
+          <SchoolCourseInfoData>
+            <CourseCode/>
+            <StateCourseCode/>
+            <DistrictCourseCode/>
+            <NationalCourseCode/>
+            <SubjectAreaList>
+              <SubjectArea>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </SubjectArea>
+              <SubjectArea>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </SubjectArea>
+            </SubjectAreaList>
+            <CourseTitle/>
+            <Description/>
+            <InstructionalLevel>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </InstructionalLevel>
+            <CoreAcademicCourse/>
+            <GraduationRequirement Codeset=""/>
+            <Department/>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </SchoolCourseInfoData>
+          <StartDate/>
+          <EndDate/>
+          <MarkingPeriod>
+            <TermInfoData>
+              <StartDate/>
+              <EndDate/>
+              <Description/>
+              <TermCode/>
+              <Track/>
+              <TermSpan>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </TermSpan>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </TermInfoData>
+            <GradeLevelWhenTaken>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </GradeLevelWhenTaken>
+            <MarkData MarkValueInfoDataRefId="">
+              <Percentage/>
+              <Numeric/>
+              <NumericAsDecimal/>
+              <Letter/>
+              <Narrative/>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </MarkData>
+            <CourseCreditsAttempted/>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </MarkingPeriod>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </Course>
+        <Course>
+          <SchoolAttendedRefId/>
+          <SchoolCourseInfoData>
+            <CourseCode/>
+            <StateCourseCode/>
+            <DistrictCourseCode/>
+            <NationalCourseCode/>
+            <SubjectAreaList>
+              <SubjectArea>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </SubjectArea>
+              <SubjectArea>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </SubjectArea>
+            </SubjectAreaList>
+            <CourseTitle/>
+            <Description/>
+            <InstructionalLevel>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </InstructionalLevel>
+            <CoreAcademicCourse/>
+            <GraduationRequirement Codeset=""/>
+            <Department/>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </SchoolCourseInfoData>
+          <StartDate/>
+          <EndDate/>
+          <MarkingPeriod>
+            <TermInfoData>
+              <StartDate/>
+              <EndDate/>
+              <Description/>
+              <TermCode/>
+              <Track/>
+              <TermSpan>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </TermSpan>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </TermInfoData>
+            <GradeLevelWhenTaken>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </GradeLevelWhenTaken>
+            <MarkData MarkValueInfoDataRefId="">
+              <Percentage/>
+              <Numeric/>
+              <NumericAsDecimal/>
+              <Letter/>
+              <Narrative/>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </MarkData>
+            <CourseCreditsAttempted/>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </MarkingPeriod>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </Course>
+      </Courses>
+    </CurrentCourseActivity>
+    <CourseHistory>
+      <Term>
+        <TermInfoData SchoolAttendedRefId="">
+          <SchoolYear/>
+          <StartDate/>
+          <EndDate/>
+          <Description/>
+          <TermCode/>
+          <Track/>
+          <TermSpan>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </TermSpan>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </TermInfoData>
+        <Courses>
+          <Course>
+            <SchoolAttendedRefId/>
+            <SchoolCourseInfoData>
+              <CourseCode/>
+              <StateCourseCode/>
+              <DistrictCourseCode/>
+              <NationalCourseCode/>
+              <SubjectAreaList>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+              </SubjectAreaList>
+              <CourseTitle/>
+              <Description/>
+              <InstructionalLevel>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </InstructionalLevel>
+              <CoreAcademicCourse/>
+              <GraduationRequirement Codeset=""/>
+              <Department/>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </SchoolCourseInfoData>
+            <StartDate/>
+            <EndDate/>
+            <MarkingPeriods>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+            </MarkingPeriods>
+            <SectionInfoData>
+              <MediumOfInstruction>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </MediumOfInstruction>
+            </SectionInfoData>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </Course>
+          <Course>
+            <SchoolAttendedRefId/>
+            <SchoolCourseInfoData>
+              <CourseCode/>
+              <StateCourseCode/>
+              <DistrictCourseCode/>
+              <NationalCourseCode/>
+              <SubjectAreaList>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+              </SubjectAreaList>
+              <CourseTitle/>
+              <Description/>
+              <InstructionalLevel>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </InstructionalLevel>
+              <CoreAcademicCourse/>
+              <GraduationRequirement Codeset=""/>
+              <Department/>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </SchoolCourseInfoData>
+            <StartDate/>
+            <EndDate/>
+            <MarkingPeriods>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+            </MarkingPeriods>
+            <SectionInfoData>
+              <MediumOfInstruction>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </MediumOfInstruction>
+            </SectionInfoData>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </Course>
+        </Courses>
+      </Term>
+      <Term>
+        <TermInfoData SchoolAttendedRefId="">
+          <SchoolYear/>
+          <StartDate/>
+          <EndDate/>
+          <Description/>
+          <TermCode/>
+          <Track/>
+          <TermSpan>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </TermSpan>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </TermInfoData>
+        <Courses>
+          <Course>
+            <SchoolAttendedRefId/>
+            <SchoolCourseInfoData>
+              <CourseCode/>
+              <StateCourseCode/>
+              <DistrictCourseCode/>
+              <NationalCourseCode/>
+              <SubjectAreaList>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+              </SubjectAreaList>
+              <CourseTitle/>
+              <Description/>
+              <InstructionalLevel>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </InstructionalLevel>
+              <CoreAcademicCourse/>
+              <GraduationRequirement Codeset=""/>
+              <Department/>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </SchoolCourseInfoData>
+            <StartDate/>
+            <EndDate/>
+            <MarkingPeriods>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+            </MarkingPeriods>
+            <SectionInfoData>
+              <MediumOfInstruction>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </MediumOfInstruction>
+            </SectionInfoData>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </Course>
+          <Course>
+            <SchoolAttendedRefId/>
+            <SchoolCourseInfoData>
+              <CourseCode/>
+              <StateCourseCode/>
+              <DistrictCourseCode/>
+              <NationalCourseCode/>
+              <SubjectAreaList>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+              </SubjectAreaList>
+              <CourseTitle/>
+              <Description/>
+              <InstructionalLevel>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </InstructionalLevel>
+              <CoreAcademicCourse/>
+              <GraduationRequirement Codeset=""/>
+              <Department/>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </SchoolCourseInfoData>
+            <StartDate/>
+            <EndDate/>
+            <MarkingPeriods>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+            </MarkingPeriods>
+            <SectionInfoData>
+              <MediumOfInstruction>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </MediumOfInstruction>
+            </SectionInfoData>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </Course>
+        </Courses>
+      </Term>
+    </CourseHistory>
+    <AcademicPerformanceHistory>
+      <TermPerformance>
+        <TermInfoData>
+          <SchoolYear/>
+          <StartDate/>
+          <EndDate/>
+          <Description/>
+          <TermCode/>
+          <Track/>
+          <TermSpan>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </TermSpan>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </TermInfoData>
+        <GradeLevelWhenTaken>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </GradeLevelWhenTaken>
+        <CreditsAttempted/>
+        <CreditsEarned/>
+        <GPACreditsAttempted/>
+        <GPACreditsEarned/>
+        <GPAGradePoints/>
+        <GPA/>
+        <WeightedGPA/>
+        <DaysAbsent/>
+        <DaysPresent/>
+        <ProgressLevel Codeset=""/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </TermPerformance>
+      <TermPerformance>
+        <TermInfoData>
+          <SchoolYear/>
+          <StartDate/>
+          <EndDate/>
+          <Description/>
+          <TermCode/>
+          <Track/>
+          <TermSpan>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </TermSpan>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </TermInfoData>
+        <GradeLevelWhenTaken>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </GradeLevelWhenTaken>
+        <CreditsAttempted/>
+        <CreditsEarned/>
+        <GPACreditsAttempted/>
+        <GPACreditsEarned/>
+        <GPAGradePoints/>
+        <GPA/>
+        <WeightedGPA/>
+        <DaysAbsent/>
+        <DaysPresent/>
+        <ProgressLevel Codeset=""/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </TermPerformance>
+    </AcademicPerformanceHistory>
+    <AcademicPerformanceSummary>
+      <TotalCreditsAttempted/>
+      <TotalCreditsEarned/>
+      <CumulativeGPACreditsEarned/>
+      <CumulativeGradePoints/>
+      <CumulativeGPA/>
+      <GPAType/>
+      <ClassRank/>
+      <ClassTotalNumber/>
+      <ClassRankingDate/>
+      <ProjectedGraduationDate/>
+      <GraduationDate/>
+      <GraduationDiplomaType/>
+      <GraduationRateSurveyCohortYear/>
+      <GraduationRateSurveyIndicator Codeset=""/>
+      <AcademicTrack Codeset=""/>
+      <AcademicFoci>
+        <AcademicFocus>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </AcademicFocus>
+        <AcademicFocus>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </AcademicFocus>
+      </AcademicFoci>
+      <AcademicSubjects>
+        <AcademicSubject>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </AcademicSubject>
+        <AcademicSubject>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </AcademicSubject>
+      </AcademicSubjects>
+      <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="" SIF_Action=""/>
+        <SIF_ExtendedElement Name="" SIF_Action=""/>
+      </SIF_ExtendedElements>
+    </AcademicPerformanceSummary>
+    <AssessmentPerformanceHistory>
+      <Assessment>
+        <Name/>
+        <AdministrationDate/>
+        <Form/>
+        <Level/>
+        <StudentGradeLevelWhenAssessed>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </StudentGradeLevelWhenAssessed>
+        <SubtestCategory/>
+        <TestScoreType Codeset=""/>
+        <TestScore/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </Assessment>
+      <Assessment>
+        <Name/>
+        <AdministrationDate/>
+        <Form/>
+        <Level/>
+        <StudentGradeLevelWhenAssessed>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </StudentGradeLevelWhenAssessed>
+        <SubtestCategory/>
+        <TestScoreType Codeset=""/>
+        <TestScore/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </Assessment>
+    </AssessmentPerformanceHistory>
+    <AdditionalGraduationRequirementPerformanceHistory>
+      <Requirement>
+        <Name/>
+        <Method/>
+        <Status Codeset=""/>
+        <StatusDeterminationDate/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </Requirement>
+      <Requirement>
+        <Name/>
+        <Method/>
+        <Status Codeset=""/>
+        <StatusDeterminationDate/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </Requirement>
+    </AdditionalGraduationRequirementPerformanceHistory>
+    <ActivityAwardHistory>
+      <ActivityAward>
+        <Name/>
+        <InvolvementCode Codeset=""/>
+        <InvolvementBeginningDate/>
+        <InvolvementEndingDate/>
+        <InvolvementAmount/>
+        <HonorsInformationCode Codeset=""/>
+        <HonorsDescription/>
+        <DiplomaCredentialHonorsCode Codeset=""/>
+        <DiplomaCredentialHonorsDescription/>
+        <CredentialConferred Codeset=""/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </ActivityAward>
+      <ActivityAward>
+        <Name/>
+        <InvolvementCode Codeset=""/>
+        <InvolvementBeginningDate/>
+        <InvolvementEndingDate/>
+        <InvolvementAmount/>
+        <HonorsInformationCode Codeset=""/>
+        <HonorsDescription/>
+        <DiplomaCredentialHonorsCode Codeset=""/>
+        <DiplomaCredentialHonorsDescription/>
+        <CredentialConferred Codeset=""/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </ActivityAward>
+    </ActivityAwardHistory>
+    <SIF_Metadata>
+      <TimeElements>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+      </TimeElements>
+      <LifeCycle>
+        <Created>
+          <DateTime/>
+          <Creators>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+          </Creators>
+        </Created>
+        <ModificationHistory>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+        </ModificationHistory>
+        <TimeElements>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+        </TimeElements>
+      </LifeCycle>
+      <RightsElements>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+      </RightsElements>
+      <EducationFilter>
+        <MediaTypes>
+          <MediaType/>
+          <MediaType/>
+        </MediaTypes>
+        <GradeLevels>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+        </GradeLevels>
+        <SubjectAreas>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+        </SubjectAreas>
+        <InterestLevels>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+        </InterestLevels>
+        <LearningStandardItems>
+          <LearningStandardItemRefId/>
+          <LearningStandardItemRefId/>
+        </LearningStandardItems>
+        <BloomsTaxonomyLevels>
+          <BloomsTaxonomyLevel Codeset=""/>
+          <BloomsTaxonomyLevel Codeset=""/>
+        </BloomsTaxonomyLevels>
+        <MultipleIntelligences>
+          <MultipleIntelligence Codeset=""/>
+          <MultipleIntelligence Codeset=""/>
+        </MultipleIntelligences>
+        <InstructionalStrategies>
+          <InstructionalStrategy Codeset=""/>
+          <InstructionalStrategy Codeset=""/>
+        </InstructionalStrategies>
+        <Title/>
+        <Summary/>
+        <LearningObjectives>
+          <LearningObjective/>
+          <LearningObjective/>
+        </LearningObjectives>
+        <ResourceTypes>
+          <ResourceType Codeset=""/>
+          <ResourceType Codeset=""/>
+        </ResourceTypes>
+      </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+    </SIF_ExtendedElements>
+  </StudentAcademicRecord>
+  <StudentAcademicRecord RefId="" SIF_RefId="" SIF_RefObject="" SIF_RefObjectCodeset="">
+    <ReportingDate/>
+    <StudentSchoolEnrollmentData SchoolAttendedRefId="">
+      <GradeLevel>
+        <Code Codeset=""/>
+        <OtherCodeList>
+          <OtherCode Codeset=""/>
+          <OtherCode Codeset=""/>
+        </OtherCodeList>
+      </GradeLevel>
+      <Advisor>
+        <StaffPersonalData>
+          <Name Type="">
+            <Prefix/>
+            <LastName/>
+            <FirstName/>
+            <MiddleName/>
+            <Suffix/>
+            <PreferredName/>
+            <SortName/>
+            <FullName/>
+          </Name>
+          <Title/>
+          <AddressList>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+          </AddressList>
+          <PhoneNumberList>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+          </PhoneNumberList>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </StaffPersonalData>
+      </Advisor>
+      <Counselor>
+        <StaffPersonalData>
+          <Name Type="">
+            <Prefix/>
+            <LastName/>
+            <FirstName/>
+            <MiddleName/>
+            <Suffix/>
+            <PreferredName/>
+            <SortName/>
+            <FullName/>
+          </Name>
+          <Title/>
+          <AddressList>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+          </AddressList>
+          <PhoneNumberList>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+          </PhoneNumberList>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </StaffPersonalData>
+      </Counselor>
+      <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="" SIF_Action=""/>
+        <SIF_ExtendedElement Name="" SIF_Action=""/>
+      </SIF_ExtendedElements>
+    </StudentSchoolEnrollmentData>
+    <DistrictEntryDate/>
+    <SchoolAttendanceHistory>
+      <SchoolAttended RefId="">
+        <LEAInfoData>
+          <LocalId/>
+          <StateProvinceId/>
+          <NCESId/>
+          <LEAName/>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </LEAInfoData>
+        <SchoolInfoData>
+          <LocalId/>
+          <StateProvinceId/>
+          <NCESId/>
+          <SchoolName/>
+          <SchoolURL/>
+          <SchoolContactList>
+            <SchoolContact>
+              <PublishInDirectory Codeset=""/>
+              <ContactInfo>
+                <Name Type="">
+                  <Prefix/>
+                  <LastName/>
+                  <FirstName/>
+                  <MiddleName/>
+                  <Suffix/>
+                  <PreferredName/>
+                  <SortName/>
+                  <FullName/>
+                </Name>
+                <PositionTitle/>
+                <Role/>
+                <Address Type="" TypeCodeset="">
+                  <Street>
+                    <Line1/>
+                    <Line2/>
+                    <Line3/>
+                    <Complex/>
+                    <StreetNumber/>
+                    <StreetPrefix/>
+                    <StreetName/>
+                    <StreetType/>
+                    <StreetSuffix/>
+                    <ApartmentType/>
+                    <ApartmentNumberPrefix/>
+                    <ApartmentNumber/>
+                    <ApartmentNumberSuffix/>
+                  </Street>
+                  <City/>
+                  <County/>
+                  <StateProvince Codeset=""/>
+                  <StateANSICode Codeset=""/>
+                  <Country Codeset=""/>
+                  <PostalCode/>
+                  <GridLocation>
+                    <Latitude/>
+                    <Longitude/>
+                  </GridLocation>
+                  <AddressRefId/>
+                </Address>
+                <AddressRefId/>
+                <EmailList>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                </EmailList>
+                <PhoneNumberList>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                </PhoneNumberList>
+              </ContactInfo>
+            </SchoolContact>
+            <SchoolContact>
+              <PublishInDirectory Codeset=""/>
+              <ContactInfo>
+                <Name Type="">
+                  <Prefix/>
+                  <LastName/>
+                  <FirstName/>
+                  <MiddleName/>
+                  <Suffix/>
+                  <PreferredName/>
+                  <SortName/>
+                  <FullName/>
+                </Name>
+                <PositionTitle/>
+                <Role/>
+                <Address Type="" TypeCodeset="">
+                  <Street>
+                    <Line1/>
+                    <Line2/>
+                    <Line3/>
+                    <Complex/>
+                    <StreetNumber/>
+                    <StreetPrefix/>
+                    <StreetName/>
+                    <StreetType/>
+                    <StreetSuffix/>
+                    <ApartmentType/>
+                    <ApartmentNumberPrefix/>
+                    <ApartmentNumber/>
+                    <ApartmentNumberSuffix/>
+                  </Street>
+                  <City/>
+                  <County/>
+                  <StateProvince Codeset=""/>
+                  <StateANSICode Codeset=""/>
+                  <Country Codeset=""/>
+                  <PostalCode/>
+                  <GridLocation>
+                    <Latitude/>
+                    <Longitude/>
+                  </GridLocation>
+                  <AddressRefId/>
+                </Address>
+                <AddressRefId/>
+                <EmailList>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                </EmailList>
+                <PhoneNumberList>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                </PhoneNumberList>
+              </ContactInfo>
+            </SchoolContact>
+          </SchoolContactList>
+          <AddressList>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+          </AddressList>
+          <PhoneNumberList>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+          </PhoneNumberList>
+          <IdentificationInfoList>
+            <IdentificationInfo Code="" CodeCodeset=""/>
+            <IdentificationInfo Code="" CodeCodeset=""/>
+          </IdentificationInfoList>
+          <GradeLevels>
+            <GradeLevel>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </GradeLevel>
+            <GradeLevel>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </GradeLevel>
+          </GradeLevels>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </SchoolInfoData>
+        <AccreditingBody/>
+        <MarkingSystems>
+          <MarkValueInfoData RefId="">
+            <Name/>
+            <Percentage>
+              <Minimum/>
+              <Maximum/>
+            </Percentage>
+            <Numeric>
+              <Precision/>
+              <Scale/>
+              <Low/>
+              <High/>
+            </Numeric>
+            <Letter>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+            </Letter>
+            <Narrative>
+              <MaximumSize/>
+            </Narrative>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </MarkValueInfoData>
+          <MarkValueInfoData RefId="">
+            <Name/>
+            <Percentage>
+              <Minimum/>
+              <Maximum/>
+            </Percentage>
+            <Numeric>
+              <Precision/>
+              <Scale/>
+              <Low/>
+              <High/>
+            </Numeric>
+            <Letter>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+            </Letter>
+            <Narrative>
+              <MaximumSize/>
+            </Narrative>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </MarkValueInfoData>
+        </MarkingSystems>
+      </SchoolAttended>
+      <SchoolAttended RefId="">
+        <LEAInfoData>
+          <LocalId/>
+          <StateProvinceId/>
+          <NCESId/>
+          <LEAName/>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </LEAInfoData>
+        <SchoolInfoData>
+          <LocalId/>
+          <StateProvinceId/>
+          <NCESId/>
+          <SchoolName/>
+          <SchoolURL/>
+          <SchoolContactList>
+            <SchoolContact>
+              <PublishInDirectory Codeset=""/>
+              <ContactInfo>
+                <Name Type="">
+                  <Prefix/>
+                  <LastName/>
+                  <FirstName/>
+                  <MiddleName/>
+                  <Suffix/>
+                  <PreferredName/>
+                  <SortName/>
+                  <FullName/>
+                </Name>
+                <PositionTitle/>
+                <Role/>
+                <Address Type="" TypeCodeset="">
+                  <Street>
+                    <Line1/>
+                    <Line2/>
+                    <Line3/>
+                    <Complex/>
+                    <StreetNumber/>
+                    <StreetPrefix/>
+                    <StreetName/>
+                    <StreetType/>
+                    <StreetSuffix/>
+                    <ApartmentType/>
+                    <ApartmentNumberPrefix/>
+                    <ApartmentNumber/>
+                    <ApartmentNumberSuffix/>
+                  </Street>
+                  <City/>
+                  <County/>
+                  <StateProvince Codeset=""/>
+                  <StateANSICode Codeset=""/>
+                  <Country Codeset=""/>
+                  <PostalCode/>
+                  <GridLocation>
+                    <Latitude/>
+                    <Longitude/>
+                  </GridLocation>
+                  <AddressRefId/>
+                </Address>
+                <AddressRefId/>
+                <EmailList>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                </EmailList>
+                <PhoneNumberList>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                </PhoneNumberList>
+              </ContactInfo>
+            </SchoolContact>
+            <SchoolContact>
+              <PublishInDirectory Codeset=""/>
+              <ContactInfo>
+                <Name Type="">
+                  <Prefix/>
+                  <LastName/>
+                  <FirstName/>
+                  <MiddleName/>
+                  <Suffix/>
+                  <PreferredName/>
+                  <SortName/>
+                  <FullName/>
+                </Name>
+                <PositionTitle/>
+                <Role/>
+                <Address Type="" TypeCodeset="">
+                  <Street>
+                    <Line1/>
+                    <Line2/>
+                    <Line3/>
+                    <Complex/>
+                    <StreetNumber/>
+                    <StreetPrefix/>
+                    <StreetName/>
+                    <StreetType/>
+                    <StreetSuffix/>
+                    <ApartmentType/>
+                    <ApartmentNumberPrefix/>
+                    <ApartmentNumber/>
+                    <ApartmentNumberSuffix/>
+                  </Street>
+                  <City/>
+                  <County/>
+                  <StateProvince Codeset=""/>
+                  <StateANSICode Codeset=""/>
+                  <Country Codeset=""/>
+                  <PostalCode/>
+                  <GridLocation>
+                    <Latitude/>
+                    <Longitude/>
+                  </GridLocation>
+                  <AddressRefId/>
+                </Address>
+                <AddressRefId/>
+                <EmailList>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                  <Email SIF_Action="" Type="" TypeCodeset=""/>
+                </EmailList>
+                <PhoneNumberList>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                  <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+                    <Number/>
+                    <Extension/>
+                    <ListedStatus/>
+                  </PhoneNumber>
+                </PhoneNumberList>
+              </ContactInfo>
+            </SchoolContact>
+          </SchoolContactList>
+          <AddressList>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+            <Address SIF_Action="" Type="" TypeCodeset="">
+              <Street>
+                <Line1/>
+                <Line2/>
+                <Line3/>
+                <Complex/>
+                <StreetNumber/>
+                <StreetPrefix/>
+                <StreetName/>
+                <StreetType/>
+                <StreetSuffix/>
+                <ApartmentType/>
+                <ApartmentNumberPrefix/>
+                <ApartmentNumber/>
+                <ApartmentNumberSuffix/>
+              </Street>
+              <City/>
+              <County/>
+              <StateProvince Codeset=""/>
+              <StateANSICode Codeset=""/>
+              <Country Codeset=""/>
+              <PostalCode/>
+              <GridLocation>
+                <Latitude/>
+                <Longitude/>
+              </GridLocation>
+              <AddressRefId/>
+            </Address>
+          </AddressList>
+          <PhoneNumberList>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+            <PhoneNumber SIF_Action="" Type="" TypeCodeset="">
+              <Number/>
+              <Extension/>
+              <ListedStatus/>
+            </PhoneNumber>
+          </PhoneNumberList>
+          <IdentificationInfoList>
+            <IdentificationInfo Code="" CodeCodeset=""/>
+            <IdentificationInfo Code="" CodeCodeset=""/>
+          </IdentificationInfoList>
+          <GradeLevels>
+            <GradeLevel>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </GradeLevel>
+            <GradeLevel>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </GradeLevel>
+          </GradeLevels>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </SchoolInfoData>
+        <AccreditingBody/>
+        <MarkingSystems>
+          <MarkValueInfoData RefId="">
+            <Name/>
+            <Percentage>
+              <Minimum/>
+              <Maximum/>
+            </Percentage>
+            <Numeric>
+              <Precision/>
+              <Scale/>
+              <Low/>
+              <High/>
+            </Numeric>
+            <Letter>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+            </Letter>
+            <Narrative>
+              <MaximumSize/>
+            </Narrative>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </MarkValueInfoData>
+          <MarkValueInfoData RefId="">
+            <Name/>
+            <Percentage>
+              <Minimum/>
+              <Maximum/>
+            </Percentage>
+            <Numeric>
+              <Precision/>
+              <Scale/>
+              <Low/>
+              <High/>
+            </Numeric>
+            <Letter>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+              <ValidMark>
+                <Code/>
+                <NumericEquivalent/>
+                <Description/>
+              </ValidMark>
+            </Letter>
+            <Narrative>
+              <MaximumSize/>
+            </Narrative>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </MarkValueInfoData>
+        </MarkingSystems>
+      </SchoolAttended>
+    </SchoolAttendanceHistory>
+    <EnrollmentHistory>
+      <StudentSchoolEnrollmentData SchoolAttendedRefId="">
+        <SchoolYear/>
+        <EntryDate/>
+        <ExitDate/>
+        <EntryType>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </EntryType>
+        <GradeLevel>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </GradeLevel>
+        <ExitStatus>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </ExitStatus>
+        <ExitType>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </ExitType>
+        <StudentLEARelationship>
+          <MembershipType Codeset=""/>
+          <LEARelationshipType>
+            <ResidencyStatus>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </ResidencyStatus>
+            <ProvidingInstruction/>
+            <ProvidingServices/>
+            <FinanciallyResponsible/>
+          </LEARelationshipType>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </StudentLEARelationship>
+        <StudentSchoolRelationship>
+          <MembershipType Codeset=""/>
+          <ResidencyStatus>
+            <Code Codeset=""/>
+          </ResidencyStatus>
+          <NonResidentAttendReason Codeset=""/>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </StudentSchoolRelationship>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </StudentSchoolEnrollmentData>
+      <StudentSchoolEnrollmentData SchoolAttendedRefId="">
+        <SchoolYear/>
+        <EntryDate/>
+        <ExitDate/>
+        <EntryType>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </EntryType>
+        <GradeLevel>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </GradeLevel>
+        <ExitStatus>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </ExitStatus>
+        <ExitType>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </ExitType>
+        <StudentLEARelationship>
+          <MembershipType Codeset=""/>
+          <LEARelationshipType>
+            <ResidencyStatus>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </ResidencyStatus>
+            <ProvidingInstruction/>
+            <ProvidingServices/>
+            <FinanciallyResponsible/>
+          </LEARelationshipType>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </StudentLEARelationship>
+        <StudentSchoolRelationship>
+          <MembershipType Codeset=""/>
+          <ResidencyStatus>
+            <Code Codeset=""/>
+          </ResidencyStatus>
+          <NonResidentAttendReason Codeset=""/>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </StudentSchoolRelationship>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </StudentSchoolEnrollmentData>
+    </EnrollmentHistory>
+    <CurrentCourseActivity>
+      <TermInfoData SchoolAttendedRefId="">
+        <SchoolYear/>
+        <StartDate/>
+        <EndDate/>
+        <Description/>
+        <TermCode/>
+        <Track/>
+        <TermSpan>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </TermSpan>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </TermInfoData>
+      <Courses>
+        <Course>
+          <SchoolAttendedRefId/>
+          <SchoolCourseInfoData>
+            <CourseCode/>
+            <StateCourseCode/>
+            <DistrictCourseCode/>
+            <NationalCourseCode/>
+            <SubjectAreaList>
+              <SubjectArea>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </SubjectArea>
+              <SubjectArea>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </SubjectArea>
+            </SubjectAreaList>
+            <CourseTitle/>
+            <Description/>
+            <InstructionalLevel>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </InstructionalLevel>
+            <CoreAcademicCourse/>
+            <GraduationRequirement Codeset=""/>
+            <Department/>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </SchoolCourseInfoData>
+          <StartDate/>
+          <EndDate/>
+          <MarkingPeriod>
+            <TermInfoData>
+              <StartDate/>
+              <EndDate/>
+              <Description/>
+              <TermCode/>
+              <Track/>
+              <TermSpan>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </TermSpan>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </TermInfoData>
+            <GradeLevelWhenTaken>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </GradeLevelWhenTaken>
+            <MarkData MarkValueInfoDataRefId="">
+              <Percentage/>
+              <Numeric/>
+              <NumericAsDecimal/>
+              <Letter/>
+              <Narrative/>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </MarkData>
+            <CourseCreditsAttempted/>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </MarkingPeriod>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </Course>
+        <Course>
+          <SchoolAttendedRefId/>
+          <SchoolCourseInfoData>
+            <CourseCode/>
+            <StateCourseCode/>
+            <DistrictCourseCode/>
+            <NationalCourseCode/>
+            <SubjectAreaList>
+              <SubjectArea>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </SubjectArea>
+              <SubjectArea>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </SubjectArea>
+            </SubjectAreaList>
+            <CourseTitle/>
+            <Description/>
+            <InstructionalLevel>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </InstructionalLevel>
+            <CoreAcademicCourse/>
+            <GraduationRequirement Codeset=""/>
+            <Department/>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </SchoolCourseInfoData>
+          <StartDate/>
+          <EndDate/>
+          <MarkingPeriod>
+            <TermInfoData>
+              <StartDate/>
+              <EndDate/>
+              <Description/>
+              <TermCode/>
+              <Track/>
+              <TermSpan>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </TermSpan>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </TermInfoData>
+            <GradeLevelWhenTaken>
+              <Code Codeset=""/>
+              <OtherCodeList>
+                <OtherCode Codeset=""/>
+                <OtherCode Codeset=""/>
+              </OtherCodeList>
+            </GradeLevelWhenTaken>
+            <MarkData MarkValueInfoDataRefId="">
+              <Percentage/>
+              <Numeric/>
+              <NumericAsDecimal/>
+              <Letter/>
+              <Narrative/>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </MarkData>
+            <CourseCreditsAttempted/>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </MarkingPeriod>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </Course>
+      </Courses>
+    </CurrentCourseActivity>
+    <CourseHistory>
+      <Term>
+        <TermInfoData SchoolAttendedRefId="">
+          <SchoolYear/>
+          <StartDate/>
+          <EndDate/>
+          <Description/>
+          <TermCode/>
+          <Track/>
+          <TermSpan>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </TermSpan>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </TermInfoData>
+        <Courses>
+          <Course>
+            <SchoolAttendedRefId/>
+            <SchoolCourseInfoData>
+              <CourseCode/>
+              <StateCourseCode/>
+              <DistrictCourseCode/>
+              <NationalCourseCode/>
+              <SubjectAreaList>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+              </SubjectAreaList>
+              <CourseTitle/>
+              <Description/>
+              <InstructionalLevel>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </InstructionalLevel>
+              <CoreAcademicCourse/>
+              <GraduationRequirement Codeset=""/>
+              <Department/>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </SchoolCourseInfoData>
+            <StartDate/>
+            <EndDate/>
+            <MarkingPeriods>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+            </MarkingPeriods>
+            <SectionInfoData>
+              <MediumOfInstruction>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </MediumOfInstruction>
+            </SectionInfoData>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </Course>
+          <Course>
+            <SchoolAttendedRefId/>
+            <SchoolCourseInfoData>
+              <CourseCode/>
+              <StateCourseCode/>
+              <DistrictCourseCode/>
+              <NationalCourseCode/>
+              <SubjectAreaList>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+              </SubjectAreaList>
+              <CourseTitle/>
+              <Description/>
+              <InstructionalLevel>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </InstructionalLevel>
+              <CoreAcademicCourse/>
+              <GraduationRequirement Codeset=""/>
+              <Department/>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </SchoolCourseInfoData>
+            <StartDate/>
+            <EndDate/>
+            <MarkingPeriods>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+            </MarkingPeriods>
+            <SectionInfoData>
+              <MediumOfInstruction>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </MediumOfInstruction>
+            </SectionInfoData>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </Course>
+        </Courses>
+      </Term>
+      <Term>
+        <TermInfoData SchoolAttendedRefId="">
+          <SchoolYear/>
+          <StartDate/>
+          <EndDate/>
+          <Description/>
+          <TermCode/>
+          <Track/>
+          <TermSpan>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </TermSpan>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </TermInfoData>
+        <Courses>
+          <Course>
+            <SchoolAttendedRefId/>
+            <SchoolCourseInfoData>
+              <CourseCode/>
+              <StateCourseCode/>
+              <DistrictCourseCode/>
+              <NationalCourseCode/>
+              <SubjectAreaList>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+              </SubjectAreaList>
+              <CourseTitle/>
+              <Description/>
+              <InstructionalLevel>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </InstructionalLevel>
+              <CoreAcademicCourse/>
+              <GraduationRequirement Codeset=""/>
+              <Department/>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </SchoolCourseInfoData>
+            <StartDate/>
+            <EndDate/>
+            <MarkingPeriods>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+            </MarkingPeriods>
+            <SectionInfoData>
+              <MediumOfInstruction>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </MediumOfInstruction>
+            </SectionInfoData>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </Course>
+          <Course>
+            <SchoolAttendedRefId/>
+            <SchoolCourseInfoData>
+              <CourseCode/>
+              <StateCourseCode/>
+              <DistrictCourseCode/>
+              <NationalCourseCode/>
+              <SubjectAreaList>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+                <SubjectArea>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </SubjectArea>
+              </SubjectAreaList>
+              <CourseTitle/>
+              <Description/>
+              <InstructionalLevel>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </InstructionalLevel>
+              <CoreAcademicCourse/>
+              <GraduationRequirement Codeset=""/>
+              <Department/>
+              <SIF_ExtendedElements>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+                <SIF_ExtendedElement Name="" SIF_Action=""/>
+              </SIF_ExtendedElements>
+            </SchoolCourseInfoData>
+            <StartDate/>
+            <EndDate/>
+            <MarkingPeriods>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+              <MarkingPeriod>
+                <SchoolAttendedRefId/>
+                <TermInfoData>
+                  <StartDate/>
+                  <EndDate/>
+                  <Description/>
+                  <TermCode/>
+                  <Track/>
+                  <TermSpan>
+                    <Code Codeset=""/>
+                    <OtherCodeList>
+                      <OtherCode Codeset=""/>
+                      <OtherCode Codeset=""/>
+                    </OtherCodeList>
+                  </TermSpan>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </TermInfoData>
+                <GradeLevelWhenTaken>
+                  <Code Codeset=""/>
+                  <OtherCodeList>
+                    <OtherCode Codeset=""/>
+                    <OtherCode Codeset=""/>
+                  </OtherCodeList>
+                </GradeLevelWhenTaken>
+                <MarkData MarkValueInfoDataRefId="">
+                  <Percentage/>
+                  <Numeric/>
+                  <NumericAsDecimal/>
+                  <Letter/>
+                  <Narrative/>
+                  <SIF_ExtendedElements>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                    <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  </SIF_ExtendedElements>
+                </MarkData>
+                <CourseCreditsAttempted/>
+                <CourseCreditsEarned/>
+                <CreditType Codeset=""/>
+                <ExcessiveAbsenceIndicator/>
+                <DaysAbsent/>
+                <DaysPresent/>
+                <SIF_ExtendedElements>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                  <SIF_ExtendedElement Name="" SIF_Action=""/>
+                </SIF_ExtendedElements>
+              </MarkingPeriod>
+            </MarkingPeriods>
+            <SectionInfoData>
+              <MediumOfInstruction>
+                <Code Codeset=""/>
+                <OtherCodeList>
+                  <OtherCode Codeset=""/>
+                  <OtherCode Codeset=""/>
+                </OtherCodeList>
+              </MediumOfInstruction>
+            </SectionInfoData>
+            <SIF_ExtendedElements>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+              <SIF_ExtendedElement Name="" SIF_Action=""/>
+            </SIF_ExtendedElements>
+          </Course>
+        </Courses>
+      </Term>
+    </CourseHistory>
+    <AcademicPerformanceHistory>
+      <TermPerformance>
+        <TermInfoData>
+          <SchoolYear/>
+          <StartDate/>
+          <EndDate/>
+          <Description/>
+          <TermCode/>
+          <Track/>
+          <TermSpan>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </TermSpan>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </TermInfoData>
+        <GradeLevelWhenTaken>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </GradeLevelWhenTaken>
+        <CreditsAttempted/>
+        <CreditsEarned/>
+        <GPACreditsAttempted/>
+        <GPACreditsEarned/>
+        <GPAGradePoints/>
+        <GPA/>
+        <WeightedGPA/>
+        <DaysAbsent/>
+        <DaysPresent/>
+        <ProgressLevel Codeset=""/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </TermPerformance>
+      <TermPerformance>
+        <TermInfoData>
+          <SchoolYear/>
+          <StartDate/>
+          <EndDate/>
+          <Description/>
+          <TermCode/>
+          <Track/>
+          <TermSpan>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </TermSpan>
+          <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+            <SIF_ExtendedElement Name="" SIF_Action=""/>
+          </SIF_ExtendedElements>
+        </TermInfoData>
+        <GradeLevelWhenTaken>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </GradeLevelWhenTaken>
+        <CreditsAttempted/>
+        <CreditsEarned/>
+        <GPACreditsAttempted/>
+        <GPACreditsEarned/>
+        <GPAGradePoints/>
+        <GPA/>
+        <WeightedGPA/>
+        <DaysAbsent/>
+        <DaysPresent/>
+        <ProgressLevel Codeset=""/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </TermPerformance>
+    </AcademicPerformanceHistory>
+    <AcademicPerformanceSummary>
+      <TotalCreditsAttempted/>
+      <TotalCreditsEarned/>
+      <CumulativeGPACreditsEarned/>
+      <CumulativeGradePoints/>
+      <CumulativeGPA/>
+      <GPAType/>
+      <ClassRank/>
+      <ClassTotalNumber/>
+      <ClassRankingDate/>
+      <ProjectedGraduationDate/>
+      <GraduationDate/>
+      <GraduationDiplomaType/>
+      <GraduationRateSurveyCohortYear/>
+      <GraduationRateSurveyIndicator Codeset=""/>
+      <AcademicTrack Codeset=""/>
+      <AcademicFoci>
+        <AcademicFocus>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </AcademicFocus>
+        <AcademicFocus>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </AcademicFocus>
+      </AcademicFoci>
+      <AcademicSubjects>
+        <AcademicSubject>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </AcademicSubject>
+        <AcademicSubject>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </AcademicSubject>
+      </AcademicSubjects>
+      <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="" SIF_Action=""/>
+        <SIF_ExtendedElement Name="" SIF_Action=""/>
+      </SIF_ExtendedElements>
+    </AcademicPerformanceSummary>
+    <AssessmentPerformanceHistory>
+      <Assessment>
+        <Name/>
+        <AdministrationDate/>
+        <Form/>
+        <Level/>
+        <StudentGradeLevelWhenAssessed>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </StudentGradeLevelWhenAssessed>
+        <SubtestCategory/>
+        <TestScoreType Codeset=""/>
+        <TestScore/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </Assessment>
+      <Assessment>
+        <Name/>
+        <AdministrationDate/>
+        <Form/>
+        <Level/>
+        <StudentGradeLevelWhenAssessed>
+          <Code Codeset=""/>
+          <OtherCodeList>
+            <OtherCode Codeset=""/>
+            <OtherCode Codeset=""/>
+          </OtherCodeList>
+        </StudentGradeLevelWhenAssessed>
+        <SubtestCategory/>
+        <TestScoreType Codeset=""/>
+        <TestScore/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </Assessment>
+    </AssessmentPerformanceHistory>
+    <AdditionalGraduationRequirementPerformanceHistory>
+      <Requirement>
+        <Name/>
+        <Method/>
+        <Status Codeset=""/>
+        <StatusDeterminationDate/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </Requirement>
+      <Requirement>
+        <Name/>
+        <Method/>
+        <Status Codeset=""/>
+        <StatusDeterminationDate/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </Requirement>
+    </AdditionalGraduationRequirementPerformanceHistory>
+    <ActivityAwardHistory>
+      <ActivityAward>
+        <Name/>
+        <InvolvementCode Codeset=""/>
+        <InvolvementBeginningDate/>
+        <InvolvementEndingDate/>
+        <InvolvementAmount/>
+        <HonorsInformationCode Codeset=""/>
+        <HonorsDescription/>
+        <DiplomaCredentialHonorsCode Codeset=""/>
+        <DiplomaCredentialHonorsDescription/>
+        <CredentialConferred Codeset=""/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </ActivityAward>
+      <ActivityAward>
+        <Name/>
+        <InvolvementCode Codeset=""/>
+        <InvolvementBeginningDate/>
+        <InvolvementEndingDate/>
+        <InvolvementAmount/>
+        <HonorsInformationCode Codeset=""/>
+        <HonorsDescription/>
+        <DiplomaCredentialHonorsCode Codeset=""/>
+        <DiplomaCredentialHonorsDescription/>
+        <CredentialConferred Codeset=""/>
+        <SIF_ExtendedElements>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+          <SIF_ExtendedElement Name="" SIF_Action=""/>
+        </SIF_ExtendedElements>
+      </ActivityAward>
+    </ActivityAwardHistory>
+    <SIF_Metadata>
+      <TimeElements>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+        <TimeElement>
+          <Type/>
+          <Code/>
+          <Name/>
+          <Value/>
+          <StartDateTime/>
+          <EndDateTime/>
+          <SpanGaps>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+            <SpanGap>
+              <Type/>
+              <Code/>
+              <Name/>
+              <Value/>
+              <StartDateTime/>
+              <EndDateTime/>
+            </SpanGap>
+          </SpanGaps>
+          <IsCurrent/>
+        </TimeElement>
+      </TimeElements>
+      <LifeCycle>
+        <Created>
+          <DateTime/>
+          <Creators>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+            <Creator>
+              <Name/>
+              <ID/>
+            </Creator>
+          </Creators>
+        </Created>
+        <ModificationHistory>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+          <Modified>
+            <By/>
+            <DateTime/>
+            <Description/>
+          </Modified>
+        </ModificationHistory>
+        <TimeElements>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+          <TimeElement>
+            <Type/>
+            <Code/>
+            <Name/>
+            <Value/>
+            <StartDateTime/>
+            <EndDateTime/>
+            <SpanGaps>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+              <SpanGap>
+                <Type/>
+                <Code/>
+                <Name/>
+                <Value/>
+                <StartDateTime/>
+                <EndDateTime/>
+              </SpanGap>
+            </SpanGaps>
+            <IsCurrent/>
+          </TimeElement>
+        </TimeElements>
+      </LifeCycle>
+      <RightsElements>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+        <RightsElement>
+          <Cost/>
+          <FeesForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+            <FeeForUse>
+              <UseType/>
+              <MeteringType/>
+              <MeteringURL/>
+              <PerUseCharge Currency="" CurrencyCodeset=""/>
+            </FeeForUse>
+          </FeesForUse>
+          <CopyrightStatement/>
+          <TermsOfUse/>
+        </RightsElement>
+      </RightsElements>
+      <EducationFilter>
+        <MediaTypes>
+          <MediaType/>
+          <MediaType/>
+        </MediaTypes>
+        <GradeLevels>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+          <GradeLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </GradeLevel>
+        </GradeLevels>
+        <SubjectAreas>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+          <SubjectArea>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </SubjectArea>
+        </SubjectAreas>
+        <InterestLevels>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+          <InterestLevel>
+            <Code Codeset=""/>
+            <OtherCodeList>
+              <OtherCode Codeset=""/>
+              <OtherCode Codeset=""/>
+            </OtherCodeList>
+          </InterestLevel>
+        </InterestLevels>
+        <LearningStandardItems>
+          <LearningStandardItemRefId/>
+          <LearningStandardItemRefId/>
+        </LearningStandardItems>
+        <BloomsTaxonomyLevels>
+          <BloomsTaxonomyLevel Codeset=""/>
+          <BloomsTaxonomyLevel Codeset=""/>
+        </BloomsTaxonomyLevels>
+        <MultipleIntelligences>
+          <MultipleIntelligence Codeset=""/>
+          <MultipleIntelligence Codeset=""/>
+        </MultipleIntelligences>
+        <InstructionalStrategies>
+          <InstructionalStrategy Codeset=""/>
+          <InstructionalStrategy Codeset=""/>
+        </InstructionalStrategies>
+        <Title/>
+        <Summary/>
+        <LearningObjectives>
+          <LearningObjective/>
+          <LearningObjective/>
+        </LearningObjectives>
+        <ResourceTypes>
+          <ResourceType Codeset=""/>
+          <ResourceType Codeset=""/>
+        </ResourceTypes>
+      </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+      <SIF_ExtendedElement Name="" SIF_Action=""/>
+    </SIF_ExtendedElements>
+  </StudentAcademicRecord>
+</StudentAcademicRecords>

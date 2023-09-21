@@ -1,0 +1,43 @@
+<SchoolCourseInfo xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="c4a55e70-385d-11ee-98ff-a5212e7085fd">
+  <CourseCode/>
+  <StateCourseCode/>
+  <DistrictCourseCode/>
+  <SubjectAreaList>
+    <SubjectArea>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </SubjectArea>
+    <SubjectArea>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </SubjectArea>
+  </SubjectAreaList>
+  <CourseTitle/>
+  <Description/>
+  <InstructionalLevel>
+    <Code/>
+    <OtherCodeList>
+      <OtherCode Codeset="StateProvince"/>
+      <OtherCode Codeset="StateProvince"/>
+    </OtherCodeList>
+  </InstructionalLevel>
+  <CourseCredits>Applicable</CourseCredits>
+  <CoreAcademicCourse>Yes</CoreAcademicCourse>
+  <GraduationRequirement/>
+  <Department/>
+  <SCEDCode>
+    <CourseDescription/>
+    <CourseLevel/>
+    <AvailableCredit/>
+    <SequenceNumber/>
+    <SequenceLimit/>
+  </SCEDCode>
+  <DualCredit/>
+  <CTEConcentrator/>
+</SchoolCourseInfo>

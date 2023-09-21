@@ -1,0 +1,35 @@
+<StudentTransportInfo xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2cc12630-3857-11ee-b8c2-375fcdb1402b">
+  <Eligibility/>
+  <HomeToSchoolDistance/>
+  <WalkToStopDistance/>
+  <StopToSchoolDistance/>
+  <OriginPoint>
+    <ArrivalTime/>
+    <RouteNumber/>
+    <RouteDescription/>
+    <VehicleNumber/>
+    <BusStopDescription/>
+  </OriginPoint>
+  <HomeBusRouteDetail/>
+  <TransferPoints>
+    <TransferPoint>
+      <EmbarkBusRouteDetail/>
+      <DisembarkBusRouteDetail/>
+    </TransferPoint>
+    <TransferPoint>
+      <EmbarkBusRouteDetail/>
+      <DisembarkBusRouteDetail/>
+    </TransferPoint>
+  </TransferPoints>
+  <SchoolBusRouteDetail/>
+  <DestinationPoint>
+    <ArrivalTime/>
+    <RouteNumber/>
+    <RouteDescription/>
+    <VehicleNumber/>
+    <BusStopDescription/>
+  </DestinationPoint>
+  <StateAidQualification/>
+  <TransportationStatus/>
+  <PublicExpense/>
+</StudentTransportInfo>

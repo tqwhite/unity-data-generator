@@ -1,0 +1,64 @@
+<LearningStandardDocument xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c7db490-3857-11ee-b8c2-375fcdb1402b">
+  <RefURI/>
+  <Title/>
+  <ShortName/>
+  <DocumentVersion/>
+  <Description/>
+  <Source/>
+  <Organizations>
+    <Organization/>
+    <Organization/>
+  </Organizations>
+  <Authors>
+    <Author/>
+    <Author/>
+  </Authors>
+  <OrganizationContactPoint/>
+  <SubjectAreas>
+    <SubjectArea>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </SubjectArea>
+    <SubjectArea>
+      <Code/>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </SubjectArea>
+  </SubjectAreas>
+  <DocumentStatus/>
+  <DocumentDate/>
+  <LocalAdoptionDate/>
+  <LocalArchiveDate/>
+  <EndOfLifeDate/>
+  <Copyright>
+    <Date/>
+    <Holder/>
+  </Copyright>
+  <GradeLevels>
+    <GradeLevel>
+      <Code>IT</Code>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </GradeLevel>
+    <GradeLevel>
+      <Code>IT</Code>
+      <OtherCodeList>
+        <OtherCode Codeset="StateProvince"/>
+        <OtherCode Codeset="StateProvince"/>
+      </OtherCodeList>
+    </GradeLevel>
+  </GradeLevels>
+  <RepositoryDate/>
+  <LearningStandardItemRefId/>
+  <RelatedLearningStandards>
+    <LearningStandardDocumentRefId/>
+    <LearningStandardDocumentRefId/>
+  </RelatedLearningStandards>
+</LearningStandardDocument>

@@ -1,0 +1,20 @@
+<StudentAttendanceSummary xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2ca3b320-3857-11ee-b8c2-375fcdb1402b">
+  <StartDate/>
+  <StartDay/>
+  <EndDate/>
+  <EndDay/>
+  <Resident/>
+  <FTE/>
+  <DaysAttended/>
+  <ExcusedAbsences/>
+  <UnexcusedAbsences>Yes</UnexcusedAbsences>
+  <DaysTardy/>
+  <DaysInMembership/>
+  <InstructionalDeliveryModeList>
+    <InstructionalDeliveryMode/>
+    <InstructionalDeliveryMode/>
+  </InstructionalDeliveryModeList>
+  <ExpectationsMets/>
+  <ExpectationsNotMets/>
+  <StudentSchoolEnrollmentRefId/>
+</StudentAttendanceSummary>

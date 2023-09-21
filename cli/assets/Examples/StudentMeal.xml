@@ -1,0 +1,25 @@
+<StudentMeal xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2cacb3d0-3857-11ee-b8c2-375fcdb1402b">
+  <MealStatus>
+    <StartDate/>
+    <EndDate/>
+    <SchoolYear/>
+  </MealStatus>
+  <HistoricalMealStatus>
+    <MealStatus>
+      <StartDate/>
+      <EndDate/>
+      <SchoolYear/>
+    </MealStatus>
+    <MealStatus>
+      <StartDate/>
+      <EndDate/>
+      <SchoolYear/>
+    </MealStatus>
+  </HistoricalMealStatus>
+  <LastBreakfastDate/>
+  <LastLunchDate/>
+  <Amounts>
+    <Amount/>
+    <Amount/>
+  </Amounts>
+</StudentMeal>

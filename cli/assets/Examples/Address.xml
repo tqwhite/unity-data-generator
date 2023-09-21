@@ -1,0 +1,31 @@
+<Address xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2c3560f0-3857-11ee-b8c2-375fcdb1402b">
+  <GridLocation>
+    <Latitude/>
+    <Longitude/>
+  </GridLocation>
+  <AddressType/>
+  <LocalId>
+    <IdType/>
+    <IdValue/>
+  </LocalId>
+  <Street>
+    <Line1/>
+    <Line2/>
+    <Line3/>
+    <Complex/>
+    <StreetNumber/>
+    <StreetPrefix/>
+    <StreetName/>
+    <StreetType/>
+    <StreetSuffix/>
+    <ApartmentType/>
+    <ApartmentNumberPrefix/>
+    <ApartmentNumber/>
+    <ApartmentNumberSuffix/>
+  </Street>
+  <City/>
+  <Subregion/>
+  <StateProvince/>
+  <Country/>
+  <PostalCode/>
+</Address>

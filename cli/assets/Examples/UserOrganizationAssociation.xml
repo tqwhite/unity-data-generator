@@ -1,0 +1,63 @@
+<UserOrganizationAssociation xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="&#xA;&lt;UserOrganizationAssociations xmlns:sif=&quot;http://www.sifassociation.org/datamodel/na/3.2&quot;>&#xA;  &lt;UserOrganizationAssociation>&#xA;    &lt;PersonRefId>123e4567-e89b-12d3-a456-426614174000&lt;/PersonRefId>&#xA;    &lt;OrganizationRefId>123e4567-e89b-12d3-a456-426614174001&lt;/OrganizationRefId>&#xA;    &lt;AssociationType>Member&lt;/AssociationType>&#xA;    &lt;AuthoritativeSourceId>550e8400-e29b-41d4-a716-446655440000&lt;/AuthoritativeSourceId>&#xA;    &lt;sif:StartDate>2022-09-01&lt;/sif:StartDate>&#xA;    &lt;EndDate>2022-05-30&lt;/EndDate>&#xA;  &lt;/UserOrganizationAssociation>&#xA;  &lt;UserOrganizationAssociation RefId=&quot;4aa59b0e-1c82-435c-8ff6-6d3965875a2f&quot;>&#xA;  &lt;/UserOrganizationAssociation>&#xA;&lt;/UserOrganizationAssociations>&#xA;">
+  <PersonRefId SIF_Object="&#xA;&lt;UserOrganizationAssociations xmlns:sif=&quot;http://www.sifassociation.org/datamodel/na/3.2&quot;>&#xA;  &lt;UserOrganizationAssociation>&#xA;    &lt;PersonRefId SIF_Object=&quot;8ae7e8b6-8eaf-447f-9a6d-6205c1f25871&quot;>123e4567-e89b-12d3-a456-426614174000&lt;/PersonRefId>&#xA;    &lt;OrganizationRefId>123e4567-e89b-12d3-a456-426614174001&lt;/OrganizationRefId>&#xA;    &lt;AssociationType>Member&lt;/AssociationType>&#xA;    &lt;AuthoritativeSourceId>550e8400-e29b-41d4-a716-446655440000&lt;/AuthoritativeSourceId>&#xA;    &lt;sif:StartDate>2022-09-01&lt;/sif:StartDate>&#xA;    &lt;EndDate>2022-05-30&lt;/EndDate>&#xA;  &lt;/UserOrganizationAssociation>&#xA;  &lt;UserOrganizationAssociation RefId=&quot;4aa59b0e-1c82-435c-8ff6-6d3965875a2f&quot;>&#xA;  &lt;/UserOrganizationAssociation>&#xA;  &lt;UserOrganizationAssociation>&#xA;    &lt;PersonRefId SIF_Object=&quot;8ae7e8b6-8eaf-447f-9a6d-6205c1f25871&quot; />&#xA;  &lt;/UserOrganizationAssociation>&#xA;&lt;/UserOrganizationAssociations>&#xA;">
+&lt;UserOrganizationAssociations&gt;
+  &lt;UserOrganizationAssociation&gt;
+    &lt;PersonRefId&gt;123e4567-e89b-12d3-a456-426614174000&lt;/PersonRefId&gt;
+  &lt;/UserOrganizationAssociation&gt;
+&lt;/UserOrganizationAssociations&gt;
+</PersonRefId>
+  <OrganizationRefId SIF_Object="&#xA;&lt;UserOrganizationAssociations xmlns:sif=&quot;http://www.sifassociation.org/datamodel/na/3.2&quot;>&#xA;  &lt;UserOrganizationAssociation>&#xA;    &lt;PersonRefId SIF_Object=&quot;8ae7e8b6-8eaf-447f-9a6d-6205c1f25871&quot;>123e4567-e89b-12d3-a456-426614174000&lt;/PersonRefId>&#xA;    &lt;OrganizationRefId>123e4567-e89b-12d3-a456-426614174001&lt;/OrganizationRefId>&#xA;    &lt;AssociationType>Member&lt;/AssociationType>&#xA;    &lt;AuthoritativeSourceId>550e8400-e29b-41d4-a716-446655440000&lt;/AuthoritativeSourceId>&#xA;    &lt;sif:StartDate>2022-09-01&lt;/sif:StartDate>&#xA;    &lt;EndDate>2022-05-30&lt;/EndDate>&#xA;  &lt;/UserOrganizationAssociation>&#xA;  &lt;UserOrganizationAssociation RefId=&quot;4aa59b0e-1c82-435c-8ff6-6d3965875a2f&quot;>&#xA;  &lt;/UserOrganizationAssociation>&#xA;  &lt;UserOrganizationAssociation>&#xA;    &lt;PersonRefId SIF_Object=&quot;8ae7e8b6-8eaf-447f-9a6d-6205c1f25871&quot; />&#xA;  &lt;/UserOrganizationAssociation>&#xA;  &lt;UserOrganizationAssociation>&#xA;    &lt;OrganizationRefId SIF_Object=&quot;9b9c5ad6-5973-4f7c-a9d4-adfd7db7a5b8&quot; />&#xA;  &lt;/UserOrganizationAssociation>&#xA;&lt;/UserOrganizationAssociations>&#xA;">
+&lt;UserOrganizationAssociations&gt;
+  &lt;UserOrganizationAssociation&gt;
+    &lt;PersonRefId&gt;123e4567-e89b-12d3-a456-426614174000&lt;/PersonRefId&gt;
+    &lt;OrganizationRefId&gt;123e4567-e89b-12d3-a456-426614174001&lt;/OrganizationRefId&gt;
+  &lt;/UserOrganizationAssociation&gt;
+&lt;/UserOrganizationAssociations&gt;
+</OrganizationRefId>
+  <AssociationType>
+&lt;UserOrganizationAssociations&gt;
+  &lt;UserOrganizationAssociation&gt;
+    &lt;PersonRefId&gt;123e4567-e89b-12d3-a456-426614174000&lt;/PersonRefId&gt;
+    &lt;OrganizationRefId&gt;123e4567-e89b-12d3-a456-426614174001&lt;/OrganizationRefId&gt;
+    &lt;AssociationType&gt;Member&lt;/AssociationType&gt;
+  &lt;/UserOrganizationAssociation&gt;
+&lt;/UserOrganizationAssociations&gt;
+</AssociationType>
+  <AuthoritativeSourceId>
+&lt;UserOrganizationAssociations&gt;
+  &lt;UserOrganizationAssociation&gt;
+    &lt;PersonRefId&gt;123e4567-e89b-12d3-a456-426614174000&lt;/PersonRefId&gt;
+    &lt;OrganizationRefId&gt;123e4567-e89b-12d3-a456-426614174001&lt;/OrganizationRefId&gt;
+    &lt;AssociationType&gt;Member&lt;/AssociationType&gt;
+    &lt;AuthoritativeSourceId&gt;550e8400-e29b-41d4-a716-446655440000&lt;/AuthoritativeSourceId&gt;
+  &lt;/UserOrganizationAssociation&gt;
+&lt;/UserOrganizationAssociations&gt;
+</AuthoritativeSourceId>
+  <StartDate>
+
+&lt;UserOrganizationAssociations xmlns:sif="http://www.sifassociation.org/datamodel/na/3.2"&gt;
+  &lt;UserOrganizationAssociation&gt;
+    &lt;PersonRefId&gt;123e4567-e89b-12d3-a456-426614174000&lt;/PersonRefId&gt;
+    &lt;OrganizationRefId&gt;123e4567-e89b-12d3-a456-426614174001&lt;/OrganizationRefId&gt;
+    &lt;AssociationType&gt;Member&lt;/AssociationType&gt;
+    &lt;AuthoritativeSourceId&gt;550e8400-e29b-41d4-a716-446655440000&lt;/AuthoritativeSourceId&gt;
+    &lt;sif:StartDate&gt;2022-09-01&lt;/sif:StartDate&gt;
+  &lt;/UserOrganizationAssociation&gt;
+&lt;/UserOrganizationAssociations&gt;
+
+</StartDate>
+  <EndDate>
+
+&lt;UserOrganizationAssociations xmlns:sif="http://www.sifassociation.org/datamodel/na/3.2"&gt;
+  &lt;UserOrganizationAssociation&gt;
+    &lt;PersonRefId&gt;123e4567-e89b-12d3-a456-426614174000&lt;/PersonRefId&gt;
+    &lt;OrganizationRefId&gt;123e4567-e89b-12d3-a456-426614174001&lt;/OrganizationRefId&gt;
+    &lt;AssociationType&gt;Member&lt;/AssociationType&gt;
+    &lt;AuthoritativeSourceId&gt;550e8400-e29b-41d4-a716-446655440000&lt;/AuthoritativeSourceId&gt;
+    &lt;sif:StartDate&gt;2022-09-01&lt;/sif:StartDate&gt;
+    &lt;EndDate&gt;2022-05-30&lt;/EndDate&gt;
+  &lt;/UserOrganizationAssociation&gt;
+&lt;/UserOrganizationAssociations&gt;
+
+</EndDate>
+</UserOrganizationAssociation>

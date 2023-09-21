@@ -7,7 +7,6 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); 
 const qt = require('qtools-functional-library'); //qt.help({printOutput:true, queryString:'.*', sendJson:false});
 const fs = require('fs');
 
-const prompts = require('./lib/prompts');  
  //START OF moduleFunction() ============================================================
 
 const moduleFunction = function({
@@ -20,6 +19,9 @@ const moduleFunction = function({
 	xmlVersionStack,
 	commandLineParameters
 }) {
+console.log(`\n=-=============   moduleFunction  ========================= [call-jina.js.moduleFunction]\n`);
+
+
 	const { xLog } = process.global;
 	// 	process.global = {};
 	// 	process.global.xLog = xLog;

@@ -1,0 +1,13 @@
+<StudentCareerTechnical xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="2ca44f60-3857-11ee-b8c2-375fcdb1402b">
+  <EducationCompleter>Yes</EducationCompleter>
+  <Concentrator/>
+  <Participant/>
+  <NontraditionalGenderStatus/>
+  <DisplacedHomemaker/>
+  <ProgramParticipationExitDate/>
+  <ProgramParticipationStartDate/>
+  <NeglectedOrDelinquentProgramType>NeglectedPrograms</NeglectedOrDelinquentProgramType>
+  <SingleParentOrSinglePregnantWoman/>
+  <OutcomeType>EARNGED</OutcomeType>
+  <OutcomeExitType>EARNGED</OutcomeExitType>
+</StudentCareerTechnical>
