@@ -17,14 +17,15 @@ const moduleFunction = function(
 ) {
 	
 	const { xLog, getConfig } = process.global;
+	
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
-	const thinkersList=getConfig('thinkers');
+	const thinkersList=getConfig('thinkers'); //thinkers is the entire prompting datastructure, has an element for each line in a thought process
 
-	const { thoughtProcesses, defaultThoughtProcess } = localConfig;
+	const { thoughtProcesses, defaultThoughtProcess } = localConfig; //thought processes is the list of thinker modules
 	const thoughtProcesslist = thoughtProcess
 		? thoughtProcesses[thoughtProcess]
 		: thoughtProcesses[defaultThoughtProcess];
-	
+
 	
 	// ================================================================================
 	// WHERE THE RUBBER MEETS THE ROAD

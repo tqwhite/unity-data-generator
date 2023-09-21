@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "qtools-asynchronous-pipe-plus": "^1.0.2",
+    "qtools-functional-library": "^1.1.15"
+  }
+}

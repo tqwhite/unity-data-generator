@@ -1,0 +1,11 @@
+{
+  "name": "xml-maker",
+  "version": "1.0.0",
+  "description": "jina-core personality for making xml test data",
+  "main": "xml-maker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}

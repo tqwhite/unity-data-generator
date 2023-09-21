@@ -5,8 +5,10 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); 
 //const projectRoot=fs.realpathSync(path.join(__dirname, '..', '..')); // adjust the number of '..' to fit reality
 
 const qt = require('qtools-functional-library'); //qt.help({printOutput:true, queryString:'.*', sendJson:false});
-const fs=require('fs');
-//START OF moduleFunction() ============================================================
+const fs = require('fs');
+
+const prompts = require('./lib/prompts');  
+ //START OF moduleFunction() ============================================================
 
 const moduleFunction = function({
 	addXmlElement,
@@ -52,7 +54,6 @@ const moduleFunction = function({
 			specObj,
 			segmentStack
 		) {
-			
 			if (isDuplicate(specObj)) {
 				return null;
 			}
@@ -64,7 +65,7 @@ const moduleFunction = function({
 				currentXml,
 				potentialFinalObject
 			};
-			
+
 			xLog.debug(
 				`\n=-=============  group wisdom  ========================= [call-jina.js.generatePrompt]\n`
 			);
@@ -73,7 +74,6 @@ const moduleFunction = function({
 				xLog.debug(`${path}: ${specObj[path].Description}`)
 			);
 
-			
 			const {
 				wisdom,
 				rawAiResponseObject,
@@ -154,19 +154,32 @@ const moduleFunction = function({
 				specObj,
 				currentXml,
 				potentialFinalObject
-			};
-
-
-			xLog.debug(`specObj.XPath=${specObj.XPath}`);
+			}; 
+			 xLog.debug(`specObj.XPath=${specObj.XPath}`);
 			xLog.debug(`specObj.Description=${specObj.Description}`);
-			
+
 			const {
 				wisdom,
 				rawAiResponseObject,
 				thinkerResponses
-			} = await jinaCore.getResponse(promptGenerationData, {}); //getResponse is conducted by the conversationGenerator operating a thoughtProcesss
-
-			const tooShortFlag = false; //(wisdom.length < currentXml.length);
+			} = await jinaCore.getResponse(
+				promptGenerationData,
+				{}
+			);   //getResponse is conducted by the conversationGenerator operating a thoughtProcesss
+			
+			
+			
+// 			 console.log(`wisdom=${wisdom}`);  
+// 			 console.log(' Debug Exit [call-jina.js.generatePrompt]', {
+// 				depth: 4,
+// 				colors: true
+// 			});
+// 			process.exit();    //tqDebug
+			
+			
+			
+			
+			 const tooShortFlag = false; //(wisdom.length < currentXml.length);
 			if (tooShortFlag || rawAiResponseObject.isError) {
 				const message = tooShortFlag
 					? 'new XML was shorter than incumbent XML'
@@ -182,7 +195,7 @@ const moduleFunction = function({
 			xmlVersionStack.push(thinkerResponses['xmlReview'].wisdom);
 
 			// xLog.status(`segmentStack.length=${segmentStack.length}`);
- 			// xLog.status(`xmlVersionStack.length=${xmlVersionStack.length}`);
+			// xLog.status(`xmlVersionStack.length=${xmlVersionStack.length}`);
 
 			return wisdom;
 
@@ -223,23 +236,21 @@ const moduleFunction = function({
 		const group = createXmlElement(groupKey);
 		const backlog = [];
 		let wisdom;
-		
+
 		xLog.debug(
 			`\n=-= START ${groupXPath} ========================= [call-jina.js.callJina]\n`
 		);
 		children.join('; ') && xLog.debug(`children=${children.join('; ')}`);
-		
-			const generatePrompt = generatePromptActual({ jinaCore });
-			const generatePromptForGroup = generatePromptForGroupActual({ jinaCore });
+
+		const generatePrompt = generatePromptActual({ jinaCore });
+		const generatePromptForGroup = generatePromptForGroupActual({ jinaCore });
 
 		if (commandLineParameters.switches.sendGroupsToGenerate) {
-
 			const specsObj = {};
 
 			Object.keys(fields)
 				.filter(path => path.match(groupXPath))
 				.forEach(path => (specsObj[path] = fields[path]));
-			
 
 			const segmentStack = ['First pass. No incumbent XML.'];
 			generatePromptResult = await generatePromptForGroup(
@@ -262,7 +273,7 @@ const moduleFunction = function({
 						fields,
 						segmentStack
 					); // generatePrompt() ======================
-					wisdom=generatePromptResult?generatePromptResult:wisdom;
+					wisdom = generatePromptResult ? generatePromptResult : wisdom;
 					const child = createXmlElement(childKey, {}, generatePromptResult);
 					addXmlElement(child, group);
 				} else {
@@ -283,8 +294,8 @@ const moduleFunction = function({
 					fields,
 					segmentStack
 				); // generatePrompt() ======================
-					wisdom=generatePromptResult?generatePromptResult:wisdom;
-				group[groupKey].$[key]=generatePromptResult;
+				wisdom = generatePromptResult ? generatePromptResult : wisdom;
+				group[groupKey].$[key] = generatePromptResult;
 			} else {
 				// Child(ren)
 				const elementKey = childParts[childParts.length - 2];
@@ -294,27 +305,27 @@ const moduleFunction = function({
 						fields,
 						segmentStack
 					); // generatePrompt() ======================
-					wisdom=generatePromptResult?generatePromptResult:wisdom;
-					sequence.$[key]=generatePromptResult;
+					wisdom = generatePromptResult ? generatePromptResult : wisdom;
+					sequence.$[key] = generatePromptResult;
 				}
 			}
 		}
-		
+
 		xLog.debug(
 			`\n=-= END callJina ${groupXPath} ========================= [call-jina.js.callJina]\n`
 		);
 
+		const outFile = commandLineParameters.qtGetSurePath(
+			'values.outFile[0]',
+			''
+		);
+
+		if (outFile) {
+			wisdom && fs.writeFileSync(outFile, wisdom); //note: this has incomplete values written on each iteration. final is complete.
+		} else {
+			wisdom && xLog.result(wisdom);
+		}
 		
-const outFile=commandLineParameters.qtGetSurePath('values.outFile[0]', '');
-
-if (outFile){
-	wisdom && fs.writeFileSync(outFile, wisdom); //note: this has incomplete values written on each iteration. final is complete.
-}
-else{
-	wisdom && xLog.result(wisdom);
-}
-
-
 		return group;
 	}
 	
