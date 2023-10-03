@@ -6,7 +6,7 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); 
 
 const qt = require('qtools-functional-library'); //qt.help({printOutput:true, queryString:'.*', sendJson:false});
 
-//START OF moduleFunction() ============================================================
+//START OF moduleFunction() ========================================hello====================
 
 const moduleFunction = async function(
 	error,
