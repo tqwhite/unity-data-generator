@@ -145,9 +145,11 @@ const moduleFunction = async function(
 							//						xLog.result(xmlOutput);
 							xLog.status('\n'); // Whitespace
 						}
+						
+						const {decode}=await import('html-entities');
 						const outputPath = outputsPath + objectName + '.xml';
 						try {
-							fs.writeFileSync(outputPath, xmlOutput, { encoding: 'utf-8' });
+							fs.writeFileSync(outputPath, decode(xmlOutput, {level: 'xml'}), { encoding: 'utf-8' });
 						} catch (error) {
 							xLog.error(`Error writing: ${outputPath}`);
 							xLog.error(error.message);
