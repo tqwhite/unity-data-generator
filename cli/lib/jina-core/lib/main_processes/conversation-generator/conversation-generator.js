@@ -25,7 +25,6 @@ const moduleFunction = function(
 	const thoughtProcesslist = thoughtProcess
 		? thoughtProcesses[thoughtProcess]
 		: thoughtProcesses[defaultThoughtProcess];
-
 	
 	// ================================================================================
 	// WHERE THE RUBBER MEETS THE ROAD
@@ -56,6 +55,7 @@ const moduleFunction = function(
 		thoughtProcesslist.forEach(thoughtProcess =>
 			taskList.push((args, next) => {
 				const { thinkerResponses, latestResponse='first pass. no XML yet. replace with top-level object.', thinkersList, promptGenerationData } = args;
+
 				
 				const thinkerSpec=thinkersList[thoughtProcess.name];
 				const {smartyPantsName}=thinkerSpec;

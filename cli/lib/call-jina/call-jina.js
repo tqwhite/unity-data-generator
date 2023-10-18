@@ -169,7 +169,7 @@ const moduleFunction = function({
 				lastThinkerName
 			} = await jinaCore.getResponse(promptGenerationData, {}); //getResponse is conducted by the conversationGenerator operating a thoughtProcesss
 
-			// 			 console.log(`wisdom=${wisdom}`);
+			 			 console.log(`wisdom=${wisdom}`);
 			// 			 console.log(' Debug Exit [call-jina.js.generatePrompt]', {
 			// 				depth: 4,
 			// 				colors: true
@@ -177,6 +177,7 @@ const moduleFunction = function({
 			// 			process.exit();    //tqDebug
 
 			const tooShortFlag = false; //(wisdom.length < currentXml.length);
+
 			if (tooShortFlag || rawAiResponseObject.isError) {
 				const message = tooShortFlag
 					? 'new XML was shorter than incumbent XML'
@@ -189,6 +190,7 @@ const moduleFunction = function({
 			}
 
 			segmentStack.push(wisdom);
+
 			xmlVersionStack.push(thinkerResponses[lastThinkerName].wisdom);
 
 			// xLog.status(`segmentStack.length=${segmentStack.length}`);

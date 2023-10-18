@@ -40,7 +40,7 @@ const moduleFunction = async function(
 	const Ajv = require('ajv');
 	const { v1, v4 } = require('uuid');
 	
-	const jinaCore = require('./lib/jina-core').conversationGenerator({thoughtProcess:'unityGenerator'});
+	const jinaCore = require('./lib/jina-core').conversationGenerator();
 	
 	const callJinaGen = require('./lib/call-jina');
 	
@@ -521,9 +521,13 @@ const moduleFunction = async function(
 								// This must be done before the group to maintain the proper order.
 								const groupPeers = reduceChildren(parentXPath);
 								let peer = await callJina(parentXPath, groupPeers, fields); //CALL JINA ============================
+								console.log('======= peer');
+								console.log(peer);    
 								copyXmlChildren(peer, parent);
 								// Process the group.
 								let child = await callJina(currentXPath, groupChildren, fields); //CALL JINA ============================
+								console.log('======= child');
+								console.log(child);
 								addXmlElement(group, parent);
 								copyXmlChildren(child, group);
 							}
@@ -541,6 +545,8 @@ const moduleFunction = async function(
 						if (objectName == currentKey) {
 							const groupChildren = reduceChildren(currentXPath);
 							let child = await callJina(currentXPath, groupChildren, fields); //CALL JINA ============================
+								console.log('======= child2');
+								console.log(child);
 							copyXmlChildren(child, group);
 						}
 					}
