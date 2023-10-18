@@ -7,7 +7,7 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); 
 const qt = require('qtools-functional-library'); //qt.help({printOutput:true, queryString:'.*', sendJson:false});
 const fs = require('fs');
 
- //START OF moduleFunction() ============================================================
+//START OF moduleFunction() ============================================================
 
 const moduleFunction = function({
 	addXmlElement,
@@ -19,9 +19,10 @@ const moduleFunction = function({
 	xmlVersionStack,
 	commandLineParameters
 }) {
-console.log(`\n=-=============   moduleFunction  ========================= [call-jina.js.moduleFunction]\n`);
-
-
+	console.log(
+		`\n=-=============   moduleFunction  ========================= [call-jina.js.moduleFunction]\n`
+	);
+	
 	const { xLog } = process.global;
 	// 	process.global = {};
 	// 	process.global.xLog = xLog;
@@ -79,9 +80,10 @@ console.log(`\n=-=============   moduleFunction  ========================= [call
 			const {
 				wisdom,
 				rawAiResponseObject,
-				thinkerResponses
+				thinkerResponses,
+				lastThinkerName
 			} = await jinaCore.getResponse(promptGenerationData, {}); //getResponse is conducted by the conversationGenerator operating a thoughtProcesss
-
+			
 			const tooShortFlag = false; //(wisdom.length < currentXml.length);
 			if (tooShortFlag || rawAiResponseObject.isError) {
 				const message = tooShortFlag
@@ -156,32 +158,25 @@ console.log(`\n=-=============   moduleFunction  ========================= [call
 				specObj,
 				currentXml,
 				potentialFinalObject
-			}; 
-			 xLog.debug(`specObj.XPath=${specObj.XPath}`);
+			};
+			xLog.debug(`specObj.XPath=${specObj.XPath}`);
 			xLog.debug(`specObj.Description=${specObj.Description}`);
 
 			const {
 				wisdom,
 				rawAiResponseObject,
-				thinkerResponses
-			} = await jinaCore.getResponse(
-				promptGenerationData,
-				{}
-			);   //getResponse is conducted by the conversationGenerator operating a thoughtProcesss
-			
-			
-			
-// 			 console.log(`wisdom=${wisdom}`);  
-// 			 console.log(' Debug Exit [call-jina.js.generatePrompt]', {
-// 				depth: 4,
-// 				colors: true
-// 			});
-// 			process.exit();    //tqDebug
-			
-			
-			
-			
-			 const tooShortFlag = false; //(wisdom.length < currentXml.length);
+				thinkerResponses,
+				lastThinkerName
+			} = await jinaCore.getResponse(promptGenerationData, {}); //getResponse is conducted by the conversationGenerator operating a thoughtProcesss
+
+			// 			 console.log(`wisdom=${wisdom}`);
+			// 			 console.log(' Debug Exit [call-jina.js.generatePrompt]', {
+			// 				depth: 4,
+			// 				colors: true
+			// 			});
+			// 			process.exit();    //tqDebug
+
+			const tooShortFlag = false; //(wisdom.length < currentXml.length);
 			if (tooShortFlag || rawAiResponseObject.isError) {
 				const message = tooShortFlag
 					? 'new XML was shorter than incumbent XML'
@@ -194,7 +189,7 @@ console.log(`\n=-=============   moduleFunction  ========================= [call
 			}
 
 			segmentStack.push(wisdom);
-			xmlVersionStack.push(thinkerResponses['xmlReview'].wisdom);
+			xmlVersionStack.push(thinkerResponses[lastThinkerName].wisdom);
 
 			// xLog.status(`segmentStack.length=${segmentStack.length}`);
 			// xLog.status(`xmlVersionStack.length=${xmlVersionStack.length}`);
@@ -327,7 +322,7 @@ console.log(`\n=-=============   moduleFunction  ========================= [call
 		} else {
 			wisdom && xLog.result(wisdom);
 		}
-		
+
 		return group;
 	}
 	

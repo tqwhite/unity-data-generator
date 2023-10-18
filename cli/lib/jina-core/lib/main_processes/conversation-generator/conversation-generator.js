@@ -62,7 +62,7 @@ const moduleFunction = function(
 
 				const localCallback = (err, latestResponse) => {
 					thinkerResponses[thinkerSpec.name]=latestResponse;
-					next(err, { ...args, thinkerResponses, latestResponse });
+					next(err, { ...args, thinkerResponses, latestResponse, lastThinkerName:thinkerSpec.name });
 				};
 				
 				const smartyPants=smartyPantsChooser({smartyPantsName});
@@ -95,9 +95,9 @@ const moduleFunction = function(
 		const initialData = { localConfig, promptGenerationData, thinkersList }; //thoughtProcesslist enters in the loop above
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 
-			const {latestResponse, responseObj, thinkerResponses} = args;
+			const {latestResponse, responseObj, thinkerResponses, lastThinkerName} = args;
 
-			callback(err, {...latestResponse, thinkerResponses});
+			callback(err, {...latestResponse, thinkerResponses, lastThinkerName});
 		});
 	};
 	
