@@ -142,7 +142,7 @@ const moduleFunction = async function(
 						//             });
 						if (true) {
 							xLog.status('\nGenerated XML:');
-							//						xLog.result(xmlOutput);
+							xLog.result(xmlOutput);
 							xLog.status('\n'); // Whitespace
 						}
 						
@@ -156,11 +156,6 @@ const moduleFunction = async function(
 							process.exit(1);
 						}
 					}
-					
-					
-					
-					
-					
 					await xml2js.parseString(xmlString, parseStringCallback);
 				}
 			}
@@ -177,6 +172,17 @@ const moduleFunction = async function(
 		process.exit(1);
 	}
 
+  // So we generate an object (rather than a collection).
+  function removeRootXPath(xpath) {
+    // Split the XPath by '/'
+    const parts = xpath.split('/');
+
+    // Remove the first part (root entry) and join the rest back into a string
+    const resultXPath = '/' + parts.slice(2).join('/');
+
+    return resultXPath;
+  }
+
 	// So we have the contents of the worksheet optimized for lookup by XPath.
 	function createWorksheetFields(sheet) {
 		// Find the range of cells in the sheet
@@ -191,11 +197,14 @@ const moduleFunction = async function(
 		for (let row = 1; row < rows; row++) {
 			// Read the unique ID from column F (index 5 - 1-based index)
 			const uniqueIDCellAddress = xlsx.utils.encode_cell({ r: row, c: 5 });
-			const uniqueID = sheet[uniqueIDCellAddress]
+			const fullUniqueID = sheet[uniqueIDCellAddress]
 				? sheet[uniqueIDCellAddress].v
 				: undefined;
 
-			if (uniqueID) {
+			if (fullUniqueID) {
+//			  const uniqueID = removeRootXPath(fullUniqueID);
+ 			  const uniqueID = fullUniqueID;
+// 			  xLog.status(`XPath: ${uniqueID}`);
 				// Initialize the inner dictionary for this unique ID
 				fields[uniqueID] = {};
 
@@ -215,6 +224,10 @@ const moduleFunction = async function(
 					const cellValue = sheet[cellAddress]
 						? sheet[cellAddress].v
 						: undefined;
+//             // So we use a consistent (object) root for our XPaths.
+//             if(5 == col) {
+//               cellValue = uniqueID;
+//             }
 
 					// Add the cell value to the inner dictionary with the column header as the key
 					fields[uniqueID][columnHeader] = cellValue;
@@ -403,6 +416,8 @@ const moduleFunction = async function(
 	
 	const xmlVersionStack=['First pass. No XML']; //this probably needs to be moved to a callJina() link, the one for the beginning of a new element
 	
+	xLog.status(`callJina got here!!!`);  // Debug
+	
 	const { callJina } = callJinaGen({
 		addXmlElement,
 		getFieldValue,
@@ -507,6 +522,7 @@ const moduleFunction = async function(
 					const objectName = currentParts[1];
 					const currentKey = currentParts[currentParts.length - 1];
 					const parentXPath = currentParts.slice(0, -1).join('/');
+					let xmlString = "";
 					if (!ignore) {
 						if (!hasFieldsRow(currentXPath, fields)) {
 							//xLog.status(`Group XPath: ${currentXPath}`);
@@ -520,16 +536,17 @@ const moduleFunction = async function(
 								// Process the immediate parents leaves.
 								// This must be done before the group to maintain the proper order.
 								const groupPeers = reduceChildren(parentXPath);
+								xLog.status(`await callJina(parentXPath, groupPeers, fields);`);  // Debug
 								let peer = await callJina(parentXPath, groupPeers, fields); //CALL JINA ============================
 								console.log('======= peer');
-								console.log(peer);    
-								copyXmlChildren(peer, parent);
+								console.log(peer);
+								//copyXmlChildren(peer, parent);
 								// Process the group.
 								let child = await callJina(currentXPath, groupChildren, fields); //CALL JINA ============================
 								console.log('======= child');
 								console.log(child);
-								addXmlElement(group, parent);
-								copyXmlChildren(child, group);
+								//addXmlElement(group, parent);
+								//copyXmlChildren(child, group);
 							}
 						} else {
 							//xLog.status(`Leaf XPath: ${currentXPath}`);
@@ -545,9 +562,9 @@ const moduleFunction = async function(
 						if (objectName == currentKey) {
 							const groupChildren = reduceChildren(currentXPath);
 							let child = await callJina(currentXPath, groupChildren, fields); //CALL JINA ============================
-								console.log('======= child2');
-								console.log(child);
-							copyXmlChildren(child, group);
+							console.log('======= child2');
+							console.log(child);
+							//copyXmlChildren(child, group);
 						}
 					}
 				};

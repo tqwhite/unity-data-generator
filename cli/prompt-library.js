@@ -35,6 +35,9 @@ Always wrap the XML part of your response in delimiters like this:
 
 There should be *nothing* except well-formed XML between those delimiters.
 
+If you must chose between explanation and XML you must favor XML.
+It is imperative that your response includes <!backDelimitter!> after <!frontDelimiter!>!
+
 There are a few things that, working on this, you need to watch out for:
 
 repeating the same data in separate elements, eg, if there is are two addresses or phone number elements in an object, they should be different when appropriate. Deciding if it's appropriate requires your judgment. Addresses referring to the same place should be the same.
@@ -43,7 +46,7 @@ This is the preexisting object that you are enhancing based on the the new speci
 
 Current XML:
 
-<!currentXml!>
+<!potentialFinalObject!>
 
 Using the following definition information, you are going to 
 

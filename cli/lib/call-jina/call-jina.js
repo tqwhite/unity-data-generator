@@ -147,6 +147,21 @@ const moduleFunction = function({
 			specObj.XPath = getFieldValue(leafXPath, 'XPath', fields);
 			//specObj.CEDS_ID=getFieldValue(leafXPath, 'CEDS ID', fields);
 			specObj.Format = getFieldValue(leafXPath, 'Format', fields);
+			
+			// So large codesets don't exceed our supported token count.
+			function reduceToFirstN(inputString, n) {
+        // Split the input string into an array of values
+        const values = inputString.split(', ');
+
+        // Slice the array to get the first 'n' values
+        const reducedValues = values.slice(0, n);
+
+        // Join the reduced values back into a string with comma-space separation
+        const resultString = reducedValues.join(', ');
+
+        return resultString;
+      }
+      specObj.Format = reduceToFirstN(specObj.Format, 20);
 
 			if (isDuplicate(specObj)) {
 				return null;
@@ -227,8 +242,6 @@ const moduleFunction = function({
 	// Note:  At a minimum parse the XML you get back from ChatGPT.
 	// See:  xml2js.parseString
 	
-	
-	
 	async function callJina(groupXPath, children, fields) {
 		const groupParts = groupXPath.split('/');
 		const groupKey = groupParts[groupParts.length - 1];
@@ -244,6 +257,7 @@ const moduleFunction = function({
 		const generatePrompt = generatePromptActual({ jinaCore });
 		const generatePromptForGroup = generatePromptForGroupActual({ jinaCore });
 
+    let segmentStack = null;
 		if (commandLineParameters.switches.sendGroupsToGenerate) {
 			const specsObj = {};
 
@@ -251,7 +265,7 @@ const moduleFunction = function({
 				.filter(path => path.match(groupXPath))
 				.forEach(path => (specsObj[path] = fields[path]));
 
-			const segmentStack = ['First pass. No incumbent XML.'];
+      const segmentStack = ['First pass. No incumbent XML.'];
 			generatePromptResult = await generatePromptForGroup(
 				children.join('\n'),
 				specsObj,
@@ -261,8 +275,7 @@ const moduleFunction = function({
 			// 			addXmlElement(child, group);
 		} else {
 			for (const childXPath of children) {
-				const segmentStack = ['First pass. Make new XML.'];
-
+        const segmentStack = ['First pass. Make new XML.'];
 				const childParts = childXPath.split('/');
 				const childKey = childParts[childParts.length - 1];
 				// So we process elements first, then attributes.
@@ -282,7 +295,7 @@ const moduleFunction = function({
 		}
 		// So we process attributes after their tag has been created.
 		for (const childXPath of backlog) {
-			const segmentStack = ['First round. No incumbent XML.'];
+      const segmentStack = ['First round. No incumbent XML.'];
 			const childParts = childXPath.split('/');
 			const childKey = childParts[childParts.length - 1];
 			const key = childKey.slice(1);
