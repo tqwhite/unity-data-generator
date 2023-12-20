@@ -338,7 +338,7 @@ const moduleFunction = function({
 			wisdom && xLog.result(wisdom);
 		}
 
-		return group;
+		return wisdom;
 	}
 	
 	return { callJina };

@@ -202,9 +202,7 @@ const moduleFunction = async function(
 				: undefined;
 
 			if (fullUniqueID) {
-//			  const uniqueID = removeRootXPath(fullUniqueID);
- 			  const uniqueID = fullUniqueID;
-// 			  xLog.status(`XPath: ${uniqueID}`);
+			  const uniqueID = removeRootXPath(fullUniqueID);
 				// Initialize the inner dictionary for this unique ID
 				fields[uniqueID] = {};
 
@@ -221,13 +219,13 @@ const moduleFunction = async function(
 
 					// Read the cell value
 					const cellAddress = xlsx.utils.encode_cell({ r: row, c: col });
-					const cellValue = sheet[cellAddress]
+					let cellValue = sheet[cellAddress]
 						? sheet[cellAddress].v
 						: undefined;
-//             // So we use a consistent (object) root for our XPaths.
-//             if(5 == col) {
-//               cellValue = uniqueID;
-//             }
+            // So we use a consistent (object) root for our XPaths.
+            if(5 == col) {
+              cellValue = uniqueID;
+            }
 
 					// Add the cell value to the inner dictionary with the column header as the key
 					fields[uniqueID][columnHeader] = cellValue;
@@ -285,7 +283,7 @@ const moduleFunction = async function(
 	function getFieldsRow(xpath, fields) {
 		const xpathParts = xpath.split('/');
 		const firstPart = xpathParts[1];
-		xpath = '/' + firstPart + 's' + xpath;
+		//xpath = '/' + firstPart + 's' + xpath;
 		return fields[xpath];
 	}
 
@@ -364,6 +362,20 @@ const moduleFunction = async function(
 		}
 	}
 
+  // So we can take an XML string and work with it.
+  // See: createXmlString
+  function parseXmlString(xml) {
+      return new Promise((resolve, reject) => {
+          xml2js.parseString(xml, (err, result) => {
+              if (err) {
+                  reject(err);
+              } else {
+                  resolve(result);
+              }
+          });
+      });
+  }
+
 	// So we can validate and output the resulting XML as we like.
 	function createXmlString(xmlObject) {
 		const builder = new xml2js.Builder();
@@ -415,8 +427,6 @@ const moduleFunction = async function(
 	// TQii refactor Jina to her own module
 	
 	const xmlVersionStack=['First pass. No XML']; //this probably needs to be moved to a callJina() link, the one for the beginning of a new element
-	
-	xLog.status(`callJina got here!!!`);  // Debug
 	
 	const { callJina } = callJinaGen({
 		addXmlElement,
@@ -479,7 +489,6 @@ const moduleFunction = async function(
 
 				let groupingTag = true;
 				let group = null;
-				//xLog.status(`XPath: ${currentXPath}`);
 				// Root!
 				if (isEmpty(xmlObject)) {
 					// So we start with the root and add it to the tree by reference.
@@ -522,21 +531,19 @@ const moduleFunction = async function(
 					const objectName = currentParts[1];
 					const currentKey = currentParts[currentParts.length - 1];
 					const parentXPath = currentParts.slice(0, -1).join('/');
-					let xmlString = "";
 					if (!ignore) {
 						if (!hasFieldsRow(currentXPath, fields)) {
 							//xLog.status(`Group XPath: ${currentXPath}`);
 							// Since the root namespace declaration is special.
 							if (xmlObject == parent && '@xmlns' == currentKey) {
 								const rootKey = currentParts[1];
-								xmlObject[rootKey].$.xmlns = xmlnsDeclaration;
+								//xmlObject[rootKey].$.xmlns = xmlnsDeclaration;
 							} else if (null != parent) {
 								// So we don't match the children while look for group peers.
 								const groupChildren = reduceChildren(currentXPath);
 								// Process the immediate parents leaves.
 								// This must be done before the group to maintain the proper order.
 								const groupPeers = reduceChildren(parentXPath);
-								xLog.status(`await callJina(parentXPath, groupPeers, fields);`);  // Debug
 								let peer = await callJina(parentXPath, groupPeers, fields); //CALL JINA ============================
 								console.log('======= peer');
 								console.log(peer);
@@ -565,6 +572,12 @@ const moduleFunction = async function(
 							console.log('======= child2');
 							console.log(child);
 							//copyXmlChildren(child, group);
+							// So we pass back all of Jina's hard work.
+							const parsedObject = await parseXmlString(child);
+							console.log(parsedObject);  // Debug
+							copyXmlChildren(parsedObject, xmlObject);
+							const rootKey = Object.keys(xmlObject)[0];
+							xmlObject[rootKey].$.xmlns = xmlnsDeclaration;
 						}
 					}
 				};
