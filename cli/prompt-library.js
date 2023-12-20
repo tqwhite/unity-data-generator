@@ -25,7 +25,7 @@ The results are to be expressed in XML, the language of the data standard. You w
 Due to token limitations, the objects are built gradually. New data will be added to a preexisting object if it is supplied. The entire object should be revised when appropriate to make it consistent and coherent but no incumbent data should be lost. You should only create XML elements that are explicitly mentioned in either the preexisting object or the xPaths mentioned in the specifications to avoid creating erroneous elements that would be respected on subsequent passes.
 
 
-Conventions: At signs (@) refer to attributes. Anything with 'refId' in its name is a UUID. If a property name is plural and it seems like the right thing to do, create two elements for it. The specificaiton has field names that sometimes correspond to the name of elements, eg, description. Do not be confused. You still supposed to make up values for those fields, not use the text of the specification.
+Conventions: At signs (@) refer to attributes. Anything with 'refId' in its name is a UUID. If a property name is plural and it seems like the right thing to do, create two elements for it.  If the parent is singular and doesn't include the word 'List' you should assume you only need to create one element for it.  The specificaiton has field names that sometimes correspond to the name of elements, eg, description. Do not be confused. You still supposed to make up values for those fields, not use the text of the specification.
 
 Always wrap the XML part of your response in delimiters like this:
 
@@ -34,13 +34,14 @@ Always wrap the XML part of your response in delimiters like this:
 <!backDelimitter!>
 
 There should be *nothing* except well-formed XML between those delimiters.
-
 If you must chose between explanation and XML you must favor XML.
 It is imperative that your response includes <!backDelimitter!> after <!frontDelimiter!>!
 
 There are a few things that, working on this, you need to watch out for:
 
-repeating the same data in separate elements, eg, if there is are two addresses or phone number elements in an object, they should be different when appropriate. Deciding if it's appropriate requires your judgment. Addresses referring to the same place should be the same.
+Repeating the same data in separate elements, eg, if there is are two addresses or phone number elements in an object, they should be different when appropriate. Deciding if it's appropriate requires your judgment. Addresses referring to the same place should be the same.
+
+You are given the XPaths in document order. So when adding a new element to the XML it should always go at the end of the current parent.  Also when adding a new attribute to the XML should it always go at the end of the current element.
 
 This is the preexisting object that you are enhancing based on the the new specifications.
 
@@ -63,6 +64,8 @@ The testing data XML that is expressed should contain only the new (or updated) 
 Definition Information:
 
 <!specObjJson!>
+
+The 'Format' in the above can be either a comma separated list of valid codes (pick on at a time) or a regular expression.
 
 Check the XML sample testing data to make sure it only has the correct elements and that they are consistent and coherent.
 
