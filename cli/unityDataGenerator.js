@@ -583,6 +583,7 @@ const moduleFunction = async function(
 				};
 				// Tail:  So we can do things on the way back up!
 				if (xor(index, attribute)) {
+					xLog.status(`Current XPath: ${currentXPath}`);  // TQ & John where here!
 					await wrapItUp();
 				}
 			}
