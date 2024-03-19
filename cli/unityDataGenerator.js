@@ -337,29 +337,29 @@ const moduleFunction = async function(
 
 	// So we can copy a groups children into the preprepared node.
 	function copyXmlChildren(source, destination) {
-		const sourceKey = Object.keys(source)[0];
-		const destinationKey = Object.keys(destination)[0];
-		if (sourceKey != destinationKey) {
-			xLog.status(
-				'Warning:  Source and destination mismatch, copying children anyway!'
-			);
-			xLog.status(`Source: ${sourceKey}, 'Destination:', ${destinationKey}`);
-		}
-		// So we copy attributes (without removing existing ones).
-		const attributeKeys = Object.keys(source[sourceKey].$);
-		for (const attributeKey of attributeKeys) {
-			destination[destinationKey].$[attributeKey] =
-				source[sourceKey].$[attributeKey];
-		}
-		// So we copy elements.
-		const elementKeys = Object.keys(source[sourceKey]);
-		for (const elementKey of elementKeys) {
-			// So we handle the attributes separately (see above).
-			if ('$' != elementKey) {
-				const wrappedSource = { [elementKey]: source[sourceKey][elementKey] };
-				destination[destinationKey][elementKey] = source[sourceKey][elementKey];
-			}
-		}
+        const sourceKey = Object.keys(source)[0];
+        const destinationKey = Object.keys(destination)[0];
+        if (sourceKey != destinationKey) {
+            xLog.status(
+                'Warning:  Source and destination mismatch, copying children anyway!'
+            );
+            xLog.status(`Source: ${sourceKey}, 'Destination:', ${destinationKey}`);
+        }
+        // So we copy attributes (without removing existing ones).
+        const attributeKeys = Object.keys(source[sourceKey].$);
+        for (const attributeKey of attributeKeys) {
+            destination[destinationKey].$[attributeKey] =
+                source[sourceKey].$[attributeKey];
+        }
+        // So we copy elements.
+        const elementKeys = Object.keys(source[sourceKey]);
+        for (const elementKey of elementKeys) {
+            // So we handle the attributes separately (see above).
+            if ('$' != elementKey) {
+                const wrappedSource = { [elementKey]: source[sourceKey][elementKey] };
+                destination[destinationKey][elementKey] = source[sourceKey][elementKey];
+            }
+        }
 	}
 
   // So we can take an XML string and work with it.
@@ -535,10 +535,7 @@ const moduleFunction = async function(
 						if (!hasFieldsRow(currentXPath, fields)) {
 							//xLog.status(`Group XPath: ${currentXPath}`);
 							// Since the root namespace declaration is special.
-							if (xmlObject == parent && '@xmlns' == currentKey) {
-								const rootKey = currentParts[1];
-								//xmlObject[rootKey].$.xmlns = xmlnsDeclaration;
-							} else if (null != parent) {
+							if (null != parent) {
 								// So we don't match the children while look for group peers.
 								const groupChildren = reduceChildren(currentXPath);
 								// Process the immediate parents leaves.
@@ -568,14 +565,17 @@ const moduleFunction = async function(
 						// So we ensure we have generated the entire example.
 						if (objectName == currentKey) {
 							const groupChildren = reduceChildren(currentXPath);
-							let child = await callJina(currentXPath, groupChildren, fields); //CALL JINA ============================
-							console.log('======= child2');
-							console.log(child);
-							//copyXmlChildren(child, group);
-							// So we pass back all of Jina's hard work.
-							const parsedObject = await parseXmlString(child);
-							console.log(parsedObject);  // Debug
-							copyXmlChildren(parsedObject, xmlObject);
+                            let child = await callJina(currentXPath, groupChildren, fields); //CALL JINA ============================
+                            console.log('======= child2');
+                            console.log(child);
+                            //copyXmlChildren(child, group);
+                            // So we pass back all of Jina's hard work.
+                            const parsedObject = await parseXmlString(child);
+                            
+                            // So we embrace the new object.
+                            copyXmlChildren(parsedObject, xmlObject);
+							
+							// So we set the namespace.
 							const rootKey = Object.keys(xmlObject)[0];
 							xmlObject[rootKey].$.xmlns = xmlnsDeclaration;
 						}

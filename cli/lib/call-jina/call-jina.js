@@ -243,6 +243,10 @@ const moduleFunction = function({
 	// See:  xml2js.parseString
 	
 	async function callJina(groupXPath, children, fields) {
+		// So if we aren't asked to do anything we return the previous XML.
+		if (Array.isArray(children) && children.length != 0) {
+		    // To Do:  Return the previous XML.
+		}
 		const groupParts = groupXPath.split('/');
 		const groupKey = groupParts[groupParts.length - 1];
 		const group = createXmlElement(groupKey);
