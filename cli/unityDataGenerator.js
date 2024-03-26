@@ -55,6 +55,23 @@ const moduleFunction = async function(
 		process.exit(1);
 	}
 
+	// ===================================================================================
+	// TQii refactor Jina to her own module
+	
+	const xmlVersionStack=['First pass. No XML']; //this probably needs to be moved to a callJina() link, the one for the beginning of a new element
+	
+	const { callJina } = callJinaGen({
+		addXmlElement,
+		getFieldValue,
+		createXmlElement,
+		knownIds,
+		createUUID,
+		jinaCore,
+		xmlVersionStack,
+		commandLineParameters
+	});
+
+	// ===================================================================================
 	
 	try {
 		const startTime = performance.now(); //milliseconds
@@ -116,11 +133,11 @@ const moduleFunction = async function(
 						//xLog.status(xmlInput);
 
 						// So we can prompt for random valid human friend data at any place in the object.
-						let xmlObject = {};
+						let xmlObject = createXmlElement(rootName);
 						//xLog.status('\nTraversal with XPath:');
 						children = [];
 						
-						await traverseXML(template, xmlObject, fields);
+						await traverseXML(sheet, xmlObject, fields);
 
 						// So we see our results and can keep fruit of our labor (as XML)l.
 						//xLog.status(JSON.stringify(xmlObject, null, 2));  // Debug
@@ -343,7 +360,7 @@ const moduleFunction = async function(
             xLog.status(
                 'Warning:  Source and destination mismatch, copying children anyway!'
             );
-            xLog.status(`Source: ${sourceKey}, 'Destination:', ${destinationKey}`);
+            xLog.status(`Source: ${sourceKey}, Destination:, ${destinationKey}`);
         }
         // So we copy attributes (without removing existing ones).
         const attributeKeys = Object.keys(source[sourceKey].$);
@@ -377,9 +394,9 @@ const moduleFunction = async function(
   }
 
 	// So we can validate and output the resulting XML as we like.
-	function createXmlString(xmlObject) {
+	function createXmlString(xmlJsonObject) {
 		const builder = new xml2js.Builder();
-		return builder.buildObject(xmlObject);
+		return builder.buildObject(xmlJsonObject);
 	}
 
 	// So we can create SIF IDs.
@@ -422,172 +439,61 @@ const moduleFunction = async function(
 		return (a || b) && !(a && b);
 	}
 
-	
-	// ===================================================================================
-	// TQii refactor Jina to her own module
-	
-	const xmlVersionStack=['First pass. No XML']; //this probably needs to be moved to a callJina() link, the one for the beginning of a new element
-	
-	const { callJina } = callJinaGen({
-		addXmlElement,
-		getFieldValue,
-		createXmlElement,
-		knownIds,
-		createUUID,
-		jinaCore,
-		xmlVersionStack,
-		commandLineParameters
-	});
-
-	// ===================================================================================
-
-
-	// Function to recursively traverse the XML object
+    // So we can get the group XPath from a value XPath.
+    // Note:  This has no way of know that you actually passed in value XPath.
+    // To Do:  Determine if "value XPath" is the right term.
+    function getGroupXPath(xpath) {
+        // Split the XPath by '/'
+        const parts = xpath.split('/');
+    
+        // Remove the first part (root entry) and join the rest back into a string
+        const resultXPath = parts.slice(0, -1).join('/');
+    
+        return resultXPath;    
+    }
+				
+	// Function to loop over the sheet in document order.
 	async function traverseXML(
-		template,
+		sheet,
 		xmlObject,
-		fields,
-		parent = null,
-		xpath = '',
-		ipath = '',
-		ignore = false
+		fields
 	) {
-		if (typeof template === 'object') {
-			let index = false;
-			let attribute = false;
-			for (const key in template) {
-				// So we ignore tags completely.
-				if (ignoreTags.includes(key)) {
-					ignore = true;
-				}
-				// Head:  So we can do things on the way down.
-				// So we include non-indexes in our XPaths.
-				if (isNaN(key)) {
-					// So we build proper XPaths for attributes (with '@').
-					if ('$' == key) {
-						var currentXPath = `${xpath}/` + '@';
-						index = true;
-						attribute = true;
-					} else {
-						if ('@' == xpath[xpath.length - 1]) {
-							var currentXPath = `${xpath}${key}`;
-							index = false;
-							attribute = true;
-						} else {
-							var currentXPath = `${xpath}/${key}`;
-							index = false;
-							attribute = false;
-						}
-					}
-				} else {
-					// So we we don't add index to our XPaths.
-					var currentXPath = xpath;
-					index = true;
-					attribute = false;
-				}
-				let currentIPath = `${ipath}/${key}`;
+		// Find the range of cells in the sheet
+		const range = xlsx.utils.decode_range(sheet['!ref']);
+		const rows = range.e.r + 1; // Total number of rows (1-based index)
+		const cols = range.e.c + 1; // Total number of columns (1-based index)
 
-				let groupingTag = true;
-				let group = null;
-				// Root!
-				if (isEmpty(xmlObject)) {
-					// So we start with the root and add it to the tree by reference.
-					const root = createXmlElement(key);
-					xmlObject[key] = root[key];
-					group = xmlObject;
-					// So we treat the root as a grouping tag on the way back up.
-					index = true;
-				} else if (index && !attribute && !ignore) {
-					// Index:  So we pick-up on lists of grouping tags.
-					// Not Attribute:  So we add all leaves on the way back up.
-					const currentParts = currentXPath.split('/');
-					const currentKey = currentParts[currentParts.length - 1];
-					// So we know if actually have a grouping tag.
-					if (!hasFieldsRow(currentXPath, fields)) {
-						// So we can build up the tree structure later (just the grouping tags).
-						group = createXmlElement(currentKey);
-					}
-				}
+		// Loop through the rows starting from 1 to skip the header row
+		let child = undefined;
+		for (let row = 1; row < rows; row++) {
+			// Read the unique ID from column F (index 5 - 1-based index)
+			const uniqueIDCellAddress = xlsx.utils.encode_cell({ r: row, c: 5 });
+			const fullUniqueID = sheet[uniqueIDCellAddress]
+				? sheet[uniqueIDCellAddress].v
+				: undefined;
+			if (fullUniqueID) {
+                // So we create an object, not a collection.
+                const currentXPath = removeRootXPath(fullUniqueID);
+                
+                // So we ask that a value be create for the current XPath.
+                var groupChildren = [];
+                groupChildren.push(currentXPath);
+                
+                // So Jina knows what the current XML grouping tag is.
+                const groupXPath = getGroupXPath(currentXPath);
+                
+                // Hand off
+                child = await callJina(groupXPath, groupChildren, fields); //============================
 
-				// So keep this step in the recursion's parent.
-				let newParent = parent;
-				if (null != group) {
-					newParent = group;
-				}
-				// Recurse:  So we keep going.
-				await traverseXML(
-					template[key],
-					xmlObject,
-					fields,
-					newParent,
-					currentXPath,
-					currentIPath,
-					ignore
-				);
-				
-				
-				const wrapItUp = async () => {
-					const currentParts = currentXPath.split('/');
-					const objectName = currentParts[1];
-					const currentKey = currentParts[currentParts.length - 1];
-					const parentXPath = currentParts.slice(0, -1).join('/');
-					if (!ignore) {
-						if (!hasFieldsRow(currentXPath, fields)) {
-							//xLog.status(`Group XPath: ${currentXPath}`);
-							// Since the root namespace declaration is special.
-							if (null != parent) {
-								// So we don't match the children while look for group peers.
-								const groupChildren = reduceChildren(currentXPath);
-								// Process the immediate parents leaves.
-								// This must be done before the group to maintain the proper order.
-								const groupPeers = reduceChildren(parentXPath);
-								let peer = await callJina(parentXPath, groupPeers, fields); //CALL JINA ============================
-								console.log('======= peer');
-								console.log(peer);
-								//copyXmlChildren(peer, parent);
-								// Process the group.
-								let child = await callJina(currentXPath, groupChildren, fields); //CALL JINA ============================
-								console.log('======= child');
-								console.log(child);
-								//addXmlElement(group, parent);
-								//copyXmlChildren(child, group);
-							}
-						} else {
-							//xLog.status(`Leaf XPath: ${currentXPath}`);
-							children.push(currentXPath);
-						}
-					}
-					if (ignoreTags.includes(currentKey)) {
-						ignore = false;
-					}
-					// Root
-					if (xmlObject == group) {
-						// So we ensure we have generated the entire example.
-						if (objectName == currentKey) {
-							const groupChildren = reduceChildren(currentXPath);
-                            let child = await callJina(currentXPath, groupChildren, fields); //CALL JINA ============================
-                            console.log('======= child2');
-                            console.log(child);
-                            //copyXmlChildren(child, group);
-                            // So we pass back all of Jina's hard work.
-                            const parsedObject = await parseXmlString(child);
-                            
-                            // So we embrace the new object.
-                            copyXmlChildren(parsedObject, xmlObject);
-							
-							// So we set the namespace.
-							const rootKey = Object.keys(xmlObject)[0];
-							xmlObject[rootKey].$.xmlns = xmlnsDeclaration;
-						}
-					}
-				};
-				// Tail:  So we can do things on the way back up!
-				if (xor(index, attribute)) {
-					xLog.status(`Current XPath: ${currentXPath}`);  // TQ & John where here!
-					await wrapItUp();
-				}
+                // So we can watch the process unfold.
+                console.log(child);  // Debug
 			}
 		}
+		const parsedObject = await parseXmlString(child);
+		copyXmlChildren(parsedObject, xmlObject);
+		// So we set the namespace.
+	    const rootKey = Object.keys(xmlObject)[0];
+	    xmlObject[rootKey].$.xmlns = xmlnsDeclaration;
 	}
 	
 };
