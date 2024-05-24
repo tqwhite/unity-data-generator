@@ -49,6 +49,8 @@ const moduleFunction = async function(
 
 	const collection = commandLineParameters.qtGetSurePath('fileList.0');
 	
+	const substringsToExclude = ['SIF_Metadata', 'SIF_ExtendedElements'];
+	
 	// So we have the metadata for engineering prompts (we start with the spreadsheet).
 	if (!fs.existsSync(spreadsheetPath)) {
 		xLog.error(`No specifications found. ${spreadsheetPath} does not exists`);
@@ -465,6 +467,7 @@ const moduleFunction = async function(
 
 		// Loop through the rows starting from 1 to skip the header row
 		let child = undefined;
+		let allXPaths = []
 		for (let row = 1; row < rows; row++) {
 			// Read the unique ID from column F (index 5 - 1-based index)
 			const uniqueIDCellAddress = xlsx.utils.encode_cell({ r: row, c: 5 });
@@ -472,21 +475,24 @@ const moduleFunction = async function(
 				? sheet[uniqueIDCellAddress].v
 				: undefined;
 			if (fullUniqueID) {
-                // So we create an object, not a collection.
-                const currentXPath = removeRootXPath(fullUniqueID);
-                
-                // So we ask that a value be create for the current XPath.
-                var groupChildren = [];
-                groupChildren.push(currentXPath);
-                
-                // So Jina knows what the current XML grouping tag is.
-                const groupXPath = getGroupXPath(currentXPath);
-                
-                // Hand off
-                child = await callJina(groupXPath, groupChildren, fields); //============================
+				if (!substringsToExclude.some(substring => fullUniqueID.includes(substring))) { 
+					// So we create an object, not a collection.
+					const currentXPath = removeRootXPath(fullUniqueID);
 
-                // So we can watch the process unfold.
-                console.log(child);  // Debug
+					// So we ask that a value be create for the current XPath.
+					var groupChildren = [];
+					groupChildren.push(currentXPath);
+					allXPaths.push(currentXPath);
+
+					// So Jina knows what the current XML grouping tag is.
+					const groupXPath = getGroupXPath(currentXPath);
+
+					// Hand off
+					child = await callJina(groupXPath, groupChildren, fields); //============================
+
+					// So we can watch the process unfold.
+					console.log(child);  // Debug
+				}
 			}
 		}
 		const parsedObject = await parseXmlString(child);
@@ -494,6 +500,8 @@ const moduleFunction = async function(
 		// So we set the namespace.
 	    const rootKey = Object.keys(xmlObject)[0];
 	    xmlObject[rootKey].$.xmlns = xmlnsDeclaration;
+	  // Now that the object is complete you can have Jina check its order using allXPaths.
+	  
 	}
 	
 };
