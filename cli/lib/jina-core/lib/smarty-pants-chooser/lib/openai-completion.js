@@ -80,7 +80,7 @@ const moduleFunction = function({ accessParms, model, promptList }) {
 			rawAiResponseObject.promptList = promptList;
 
 			xLog.status(
-				`executionTime=${rawAiResponseObject.executionSeconds} seconds`
+				`gpt executionTime=${rawAiResponseObject.executionSeconds} seconds [${moduleName}]`
 			);
 
 			const wisdom = rawAiResponseObject

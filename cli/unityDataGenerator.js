@@ -8,18 +8,18 @@ const qt = require('qtools-functional-library'); //qt.help({printOutput:true, qu
 
 //START OF moduleFunction() ========================================hello====================
 
-const moduleFunction = async function(
+const moduleFunction = async function (
 	error,
-	{ getConfig, commandLineParameters }
+	{ getConfig, commandLineParameters },
 ) {
 	//remember, this has init at the end of the file
 	const { xLog } = process.global;
-	if(error){
+	if (error) {
 		xLog.error(error);
 		process.exit(1);
 	}
-		
-	process.global.getConfig=getConfig;
+
+	process.global.getConfig = getConfig;
 
 	const localConfig = getConfig('SYSTEM');
 
@@ -29,7 +29,7 @@ const moduleFunction = async function(
 		outputsPath,
 		strictXSD,
 		ignoreTags,
-		knownIds
+		knownIds,
 	} = localConfig;
 
 	const fs = require('fs');
@@ -39,18 +39,18 @@ const moduleFunction = async function(
 	const { XMLParser } = require('fast-xml-parser');
 	const Ajv = require('ajv');
 	const { v1, v4 } = require('uuid');
-	
+
 	const jinaCore = require('./lib/jina-core').conversationGenerator();
-	
+
 	const callJinaGen = require('./lib/call-jina');
-	
+
 	var xmlnsDeclaration = '';
 	var children = [];
 
 	const collection = commandLineParameters.qtGetSurePath('fileList.0');
-	
+
 	const substringsToExclude = ['SIF_Metadata', 'SIF_ExtendedElements'];
-	
+
 	// So we have the metadata for engineering prompts (we start with the spreadsheet).
 	if (!fs.existsSync(spreadsheetPath)) {
 		xLog.error(`No specifications found. ${spreadsheetPath} does not exists`);
@@ -59,9 +59,9 @@ const moduleFunction = async function(
 
 	// ===================================================================================
 	// TQii refactor Jina to her own module
-	
-	const xmlVersionStack=['First pass. No XML']; //this probably needs to be moved to a callJina() link, the one for the beginning of a new element
-	
+
+	const xmlVersionStack = ['First pass. No XML']; //this probably needs to be moved to a callJina() link, the one for the beginning of a new element
+
 	const { callJina } = callJinaGen({
 		addXmlElement,
 		getFieldValue,
@@ -70,11 +70,11 @@ const moduleFunction = async function(
 		createUUID,
 		jinaCore,
 		xmlVersionStack,
-		commandLineParameters
+		commandLineParameters,
 	});
 
 	// ===================================================================================
-	
+
 	try {
 		const startTime = performance.now(); //milliseconds
 		const workbook = xlsx.readFile(spreadsheetPath);
@@ -102,16 +102,15 @@ const moduleFunction = async function(
 					} catch (error) {
 						xLog.error(`Error reading XML file: ${error.message}`);
 						process.exit(1);
-					}					
-					const parseStringCallback=async (err, result) => {
+					}
+					const parseStringCallback = async (err, result) => {
 						if (err) {
 							xLog.error(`Error parsing the XML: ${err.message}`);
 							process.exit(1);
 						}
-					
-						fs.mkdirSync(structuresPath, {recursive:true});
-						xLog.status(`Writing to output directory: ${structuresPath}`);
 
+						fs.mkdirSync(structuresPath, { recursive: true });
+						xLog.status(`Writing to output directory: ${structuresPath}`);
 
 						//xLog.status('\nXML Contents:');  // Debug
 						//xLog.status(removeFirstLine(xmlString));  // Debug
@@ -119,7 +118,8 @@ const moduleFunction = async function(
 						const xmlCollection = result;
 						// So we have an object, not a collection.
 						const rootName = Object.keys(xmlCollection)[0];
-						xmlnsDeclaration = xmlCollection[rootName].$?.xmlns;
+						xmlnsDeclaration = xmlCollection[rootName].$?.xmlns; //namespace is NOT in the spreadsheet
+	
 						const xpathResult = xpath.find(xmlCollection, '/' + rootName);
 						const objectName = rootName.slice(0, -1);
 						let template = xpathResult[0][objectName][0];
@@ -138,7 +138,7 @@ const moduleFunction = async function(
 						let xmlObject = createXmlElement(rootName);
 						//xLog.status('\nTraversal with XPath:');
 						children = [];
-						
+
 						await traverseXML(sheet, xmlObject, fields);
 
 						// So we see our results and can keep fruit of our labor (as XML)l.
@@ -164,43 +164,46 @@ const moduleFunction = async function(
 							xLog.result(xmlOutput);
 							xLog.status('\n'); // Whitespace
 						}
-						
-						const {decode}=await import('html-entities');
+
+						const { decode } = await import('html-entities');
 						const outputPath = outputsPath + objectName + '.xml';
 						try {
-							fs.writeFileSync(outputPath, decode(xmlOutput, {level: 'xml'}), { encoding: 'utf-8' });
+							fs.writeFileSync(
+								outputPath,
+								decode(xmlOutput, { level: 'xml' }),
+								{ encoding: 'utf-8' },
+							);
 						} catch (error) {
 							xLog.error(`Error writing: ${outputPath}`);
 							xLog.error(error.message);
 							process.exit(1);
 						}
-					}
+					};
 					await xml2js.parseString(xmlString, parseStringCallback);
 				}
 			}
 		}
 		const endTime = performance.now();
-		const duration=(
-					(endTime - startTime) /
-					1000
-				).toFixed(2);
-			
-		xLog.status(`Processing time: ${duration} seconds`)
+		const duration = ((endTime - startTime) / 1000).toFixed(2);
+
+		xLog.verbose(`Processing time: ${duration} seconds`);
 	} catch (error) {
 		xLog.error(`Error: ${error.message}`);
 		process.exit(1);
 	}
 
-  // So we generate an object (rather than a collection).
-  function removeRootXPath(xpath) {
-    // Split the XPath by '/'
-    const parts = xpath.split('/');
+	// ===================================================================================
 
-    // Remove the first part (root entry) and join the rest back into a string
-    const resultXPath = '/' + parts.slice(2).join('/');
+	// So we generate an object (rather than a collection).
+	function removeRootXPath(xpath) {
+		// Split the XPath by '/'
+		const parts = xpath.split('/');
 
-    return resultXPath;
-  }
+		// Remove the first part (root entry) and join the rest back into a string
+		const resultXPath = '/' + parts.slice(2).join('/');
+
+		return resultXPath;
+	}
 
 	// So we have the contents of the worksheet optimized for lookup by XPath.
 	function createWorksheetFields(sheet) {
@@ -221,7 +224,7 @@ const moduleFunction = async function(
 				: undefined;
 
 			if (fullUniqueID) {
-			  const uniqueID = removeRootXPath(fullUniqueID);
+				const uniqueID = removeRootXPath(fullUniqueID);
 				// Initialize the inner dictionary for this unique ID
 				fields[uniqueID] = {};
 
@@ -230,7 +233,7 @@ const moduleFunction = async function(
 					// Read the column header (index 0 - 0-based index)
 					const columnHeaderCellAddress = xlsx.utils.encode_cell({
 						r: 0,
-						c: col
+						c: col,
 					});
 					const columnHeader = sheet[columnHeaderCellAddress]
 						? sheet[columnHeaderCellAddress].v
@@ -238,13 +241,11 @@ const moduleFunction = async function(
 
 					// Read the cell value
 					const cellAddress = xlsx.utils.encode_cell({ r: row, c: col });
-					let cellValue = sheet[cellAddress]
-						? sheet[cellAddress].v
-						: undefined;
-            // So we use a consistent (object) root for our XPaths.
-            if(5 == col) {
-              cellValue = uniqueID;
-            }
+					let cellValue = sheet[cellAddress] ? sheet[cellAddress].v : undefined;
+					// So we use a consistent (object) root for our XPaths.
+					if (5 == col) {
+						cellValue = uniqueID;
+					}
 
 					// Add the cell value to the inner dictionary with the column header as the key
 					fields[uniqueID][columnHeader] = cellValue;
@@ -268,13 +269,13 @@ const moduleFunction = async function(
 				const ajv = new Ajv({
 					allErrors: true,
 					strict: false,
-					validateSchema: false
+					validateSchema: false,
 				});
 				const parserOptions = {
 					ignoreAttributes: false,
 					attributeNamePrefix: '',
 					parseNodeValue: true, // Version 4 change: Enable parsing of node value
-					parseAttributeValue: true // Version 4 change: Enable parsing of attribute values
+					parseAttributeValue: true, // Version 4 change: Enable parsing of attribute values
 				};
 
 				const parser = new XMLParser();
@@ -282,15 +283,31 @@ const moduleFunction = async function(
 				const xsdParsed = parser.parse(xsdData, parserOptions);
 				ajv.addSchema(xsdParsed, 'xsd');
 
+console.log(`\n=-=============   xsdData  ========================= [unityDataGenerator.js.validateXMLAgainstXSD]\n`);
+
+
+console.dir({['xsdData']:xsdData}, { showHidden: false, depth: 4, colors: true });
+
+console.log(`\n=-=============   xmlString  ========================= [unityDataGenerator.js.validateXMLAgainstXSD]\n`);
+
+
+console.dir({['xmlString']:xmlString}, { showHidden: false, depth: 4, colors: true });
+
+console.log(`\n=-=============   xmlString  ========================= [unityDataGenerator.js.validateXMLAgainstXSD]\n`);
+
+
 				const xmlParsed = parser.parse(xmlString, parserOptions);
+console.log(`\n=-=============   parser.parse  ========================= [unityDataGenerator.js.validateXMLAgainstXSD]\n`);
+
+
 				const isValid = ajv.validate('xsd', xmlParsed);
 
 				if (isValid) {
 					resolve({ isValid: true, errors: null });
 				} else {
-					const errors = ajv.errors.map(error => ({
+					const errors = ajv.errors.map((error) => ({
 						message: error.message,
-						line: error.dataPath
+						line: error.dataPath,
 					}));
 					resolve({ isValid: false, errors });
 				}
@@ -333,7 +350,7 @@ const moduleFunction = async function(
 	function createXmlElement(tagName, attributes = {}, value = null) {
 		const element = {};
 		element[tagName] = {
-			$: attributes
+			$: attributes,
 		};
 		if (null != value) {
 			element[tagName]._ = value;
@@ -356,44 +373,44 @@ const moduleFunction = async function(
 
 	// So we can copy a groups children into the preprepared node.
 	function copyXmlChildren(source, destination) {
-        const sourceKey = Object.keys(source)[0];
-        const destinationKey = Object.keys(destination)[0];
-        if (sourceKey != destinationKey) {
-            xLog.status(
-                'Warning:  Source and destination mismatch, copying children anyway!'
-            );
-            xLog.status(`Source: ${sourceKey}, Destination:, ${destinationKey}`);
-        }
-        // So we copy attributes (without removing existing ones).
-        const attributeKeys = Object.keys(source[sourceKey].$);
-        for (const attributeKey of attributeKeys) {
-            destination[destinationKey].$[attributeKey] =
-                source[sourceKey].$[attributeKey];
-        }
-        // So we copy elements.
-        const elementKeys = Object.keys(source[sourceKey]);
-        for (const elementKey of elementKeys) {
-            // So we handle the attributes separately (see above).
-            if ('$' != elementKey) {
-                const wrappedSource = { [elementKey]: source[sourceKey][elementKey] };
-                destination[destinationKey][elementKey] = source[sourceKey][elementKey];
-            }
-        }
+		const sourceKey = Object.keys(source)[0];
+		const destinationKey = Object.keys(destination)[0];
+		if (sourceKey != destinationKey) {
+			xLog.verbose(
+				'Warning:  Source and destination mismatch, copying children anyway!',
+			);
+			xLog.verbose(`Source: ${sourceKey}, Destination:, ${destinationKey}`);
+		}
+		// So we copy attributes (without removing existing ones).
+		const attributeKeys = Object.keys(source[sourceKey].$);
+		for (const attributeKey of attributeKeys) {
+			destination[destinationKey].$[attributeKey] =
+				source[sourceKey].$[attributeKey];
+		}
+		// So we copy elements.
+		const elementKeys = Object.keys(source[sourceKey]);
+		for (const elementKey of elementKeys) {
+			// So we handle the attributes separately (see above).
+			if ('$' != elementKey) {
+				const wrappedSource = { [elementKey]: source[sourceKey][elementKey] };
+				destination[destinationKey][elementKey] = source[sourceKey][elementKey];
+			}
+		}
 	}
 
-  // So we can take an XML string and work with it.
-  // See: createXmlString
-  function parseXmlString(xml) {
-      return new Promise((resolve, reject) => {
-          xml2js.parseString(xml, (err, result) => {
-              if (err) {
-                  reject(err);
-              } else {
-                  resolve(result);
-              }
-          });
-      });
-  }
+	// So we can take an XML string and work with it.
+	// See: createXmlString
+	function parseXmlString(xml) {
+		return new Promise((resolve, reject) => {
+			xml2js.parseString(xml, (err, result) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(result);
+				}
+			});
+		});
+	}
 
 	// So we can validate and output the resulting XML as we like.
 	function createXmlString(xmlJsonObject) {
@@ -441,25 +458,21 @@ const moduleFunction = async function(
 		return (a || b) && !(a && b);
 	}
 
-    // So we can get the group XPath from a value XPath.
-    // Note:  This has no way of know that you actually passed in value XPath.
-    // To Do:  Determine if "value XPath" is the right term.
-    function getGroupXPath(xpath) {
-        // Split the XPath by '/'
-        const parts = xpath.split('/');
-    
-        // Remove the first part (root entry) and join the rest back into a string
-        const resultXPath = parts.slice(0, -1).join('/');
-    
-        return resultXPath;    
-    }
-				
+	// So we can get the group XPath from a value XPath.
+	// Note:  This has no way of know that you actually passed in value XPath.
+	// To Do:  Determine if "value XPath" is the right term.
+	function getGroupXPath(xpath) {
+		// Split the XPath by '/'
+		const parts = xpath.split('/');
+
+		// Remove the first part (root entry) and join the rest back into a string
+		const resultXPath = parts.slice(0, -1).join('/');
+
+		return resultXPath;
+	}
+
 	// Function to loop over the sheet in document order.
-	async function traverseXML(
-		sheet,
-		xmlObject,
-		fields
-	) {
+	async function traverseXML(sheet, xmlObject, fields) {
 		// Find the range of cells in the sheet
 		const range = xlsx.utils.decode_range(sheet['!ref']);
 		const rows = range.e.r + 1; // Total number of rows (1-based index)
@@ -467,7 +480,7 @@ const moduleFunction = async function(
 
 		// Loop through the rows starting from 1 to skip the header row
 		let child = undefined;
-		let allXPaths = []
+		let allXPaths = [];
 		for (let row = 1; row < rows; row++) {
 			// Read the unique ID from column F (index 5 - 1-based index)
 			const uniqueIDCellAddress = xlsx.utils.encode_cell({ r: row, c: 5 });
@@ -475,7 +488,11 @@ const moduleFunction = async function(
 				? sheet[uniqueIDCellAddress].v
 				: undefined;
 			if (fullUniqueID) {
-				if (!substringsToExclude.some(substring => fullUniqueID.includes(substring))) { 
+				if (
+					!substringsToExclude.some((substring) =>
+						fullUniqueID.includes(substring),
+					)
+				) {
 					// So we create an object, not a collection.
 					const currentXPath = removeRootXPath(fullUniqueID);
 
@@ -491,19 +508,18 @@ const moduleFunction = async function(
 					child = await callJina(groupXPath, groupChildren, fields); //============================
 
 					// So we can watch the process unfold.
-					console.log(child);  // Debug
+					xLog.verbose(child); // Debug
 				}
 			}
 		}
 		const parsedObject = await parseXmlString(child);
 		copyXmlChildren(parsedObject, xmlObject);
 		// So we set the namespace.
-	    const rootKey = Object.keys(xmlObject)[0];
-	    xmlObject[rootKey].$.xmlns = xmlnsDeclaration;
-	  // Now that the object is complete you can have Jina check its order using allXPaths.
-	  
+		const rootKey = Object.keys(xmlObject)[0];
+		xmlObject[rootKey].$.xmlns = xmlnsDeclaration;
+		// Now that the object is complete you can have Jina check its order using allXPaths.
 	}
-	
+
 };
 
 //END OF moduleFunction() ============================================================
@@ -515,13 +531,13 @@ process.global = {};
 process.global.applicationBasePath = path.join(
 	path.dirname(__filename),
 	'..',
-	'..'
+	'..',
 );
 process.global.xLog = xLog;
 
 require('./lib/assemble-configuration-show-help-maybe-exit')({
 	configSegmentName: 'SYSTEM',
 	terminationFunction: process.exit,
-	callback: moduleFunction
+	callback: moduleFunction,
 });
 

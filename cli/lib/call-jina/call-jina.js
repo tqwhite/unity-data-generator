@@ -19,9 +19,6 @@ const moduleFunction = function({
 	xmlVersionStack,
 	commandLineParameters
 }) {
-	console.log(
-		`\n=-=============   moduleFunction  ========================= [call-jina.js.moduleFunction]\n`
-	);
 	
 	const { xLog } = process.global;
 	// 	process.global = {};
@@ -69,12 +66,12 @@ const moduleFunction = function({
 				potentialFinalObject
 			};
 
-			xLog.debug(
+			xLog.verbose(
 				`\n=-=============  group wisdom  ========================= [call-jina.js.generatePrompt]\n`
 			);
 
 			Object.keys(specObj).forEach(path =>
-				xLog.debug(`${path}: ${specObj[path].Description}`)
+				xLog.verbose(`${path}: ${specObj[path].Description}`)
 			);
 
 			const {
@@ -98,11 +95,11 @@ const moduleFunction = function({
 
 			segmentStack.push(wisdom);
 			xmlVersionStack.push(thinkerResponses['xmlReview'].wisdom);
-			xLog.status(`segmentStack.length=${segmentStack.length}`);
-			xLog.status(`xmlVersionStack.length=${xmlVersionStack.length}`);
+			xLog.verbose(`segmentStack.length=${segmentStack.length}`);
+			xLog.verbose(`xmlVersionStack.length=${xmlVersionStack.length}`);
 
-			xLog.debug(wisdom);
-			xLog.debug(
+			xLog.verbose(wisdom);
+			xLog.verbose(
 				`\n=-=============  group wisdom end ========================= [call-jina.js.generatePrompt]\n`
 			);
 			return wisdom;
@@ -174,8 +171,8 @@ const moduleFunction = function({
 				currentXml,
 				potentialFinalObject
 			};
-			xLog.debug(`specObj.XPath=${specObj.XPath}`);
-			xLog.debug(`specObj.Description=${specObj.Description}`);
+			xLog.verbose(`specObj.XPath=${specObj.XPath}`);
+			xLog.verbose(`specObj.Description=${specObj.Description}`);
 
 			const {
 				wisdom,
@@ -184,7 +181,7 @@ const moduleFunction = function({
 				lastThinkerName
 			} = await jinaCore.getResponse(promptGenerationData, {}); //getResponse is conducted by the conversationGenerator operating a thoughtProcesss
 
-			 			 console.log(`wisdom=${wisdom}`);
+			 			 xLog.verbose(`wisdom=${wisdom}`);
 			// 			 console.log(' Debug Exit [call-jina.js.generatePrompt]', {
 			// 				depth: 4,
 			// 				colors: true
@@ -249,10 +246,10 @@ const moduleFunction = function({
 		const backlog = [];
 		let wisdom;
 
-		xLog.debug(
-			`\n=-= START ${groupXPath} ========================= [call-jina.js.callJina]\n`
+		xLog.status(
+			`\nprocessing segment: ${groupXPath} [call-jina.js.callJina]`
 		);
-		children.join('; ') && xLog.debug(`children=${children.join('; ')}`);
+		children.join('; ') && xLog.verbose(`children=${children.join('; ')}`);
 
 		const generatePrompt = generatePromptActual({ jinaCore });
 		const generatePromptForGroup = generatePromptForGroupActual({ jinaCore });
@@ -323,7 +320,7 @@ const moduleFunction = function({
 			}
 		}
 
-		xLog.debug(
+		xLog.verbose(
 			`\n=-= END callJina ${groupXPath} ========================= [call-jina.js.callJina]\n`
 		);
 
@@ -333,12 +330,12 @@ const moduleFunction = function({
 		);
 
 		if (outFile) {
-			wisdom && fs.writeFileSync(outFile, wisdom); //note: this has incomplete values written on each iteration. final is complete.
+			wisdom && fs.writeFileSync(outFile, `PARTIAL\n${wisdom}`); //note: this has incomplete values written on each iteration. final is complete.
 		} else {
-			wisdom && xLog.result(wisdom);
+			wisdom && xLog.verbose(wisdom);
 		}
 
-		true && xLog.debug(
+		xLog.verbose(
 			`        end callJina ${groupXPath} ========================= [call-jina.js.callJina]\n`
 		);
 

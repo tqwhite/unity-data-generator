@@ -56,6 +56,7 @@ const moduleFunction = function() {
 		if (silent) {
 			return;
 		}
+		console.trace();
 		console.log(message);
 	};
 

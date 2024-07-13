@@ -11,14 +11,14 @@ const pipeRunner = asynchronousPipePlus.pipeRunner;
 const taskListPlus = asynchronousPipePlus.taskListPlus;
 //START OF moduleFunction() ============================================================
 
-const moduleFunction = function({ accessParms }) {
+const moduleFunction = function ({ accessParms, annotation }) {
 	const { apiKey } = accessParms;
 	const { xLog, getConfig } = process.global;
 	//const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
-	
-	const accessExternalResource = (args, callback) => {
-		const {promptList} = args;
+	xLog.status(annotation);
 
+	const accessExternalResource = (args, callback) => {
+		const { promptList } = args;
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
@@ -27,7 +27,8 @@ const moduleFunction = function({ accessParms }) {
 		taskList.push((args, next) => {
 			const openAiCompletion = require('./openai-completion')({
 				accessParms,
-				model: 'gpt-4'
+				model: 'gpt-4',
+				model: 'gpt-4o',
 			});
 			next('', { ...args, openAiCompletion });
 		});
@@ -52,6 +53,7 @@ const moduleFunction = function({ accessParms }) {
 		});
 	};
 	
+
 	return { accessExternalResource };
 };
 

@@ -11,53 +11,50 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 
 //START OF moduleFunction() ============================================================
 
-const moduleFunction = function(args = {}) {
+const moduleFunction = function (args = {}) {
 	const { xLog } = process.global;
-	
+	const tempFilePath = '/tmp/prompts.log';
+	xLog.status(`logging all prompts into ${tempFilePath} [${moduleName}]`);
+
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
-	
+
 	const systemPrompt =
 		'You are a data scientist, Working to accurately process XML data. You are determined to produce complete, useful test data.';
-	
+
 	// ================================================================================
 	// UTILITIES
 
 	const promptGenerator = require('../lib/prompt-generator')();
 
-	const formulatePromptList = promptGenerator => (
-		thinkerExchangePromptData = {}
-	) => {
-		//sample: const promptList = [{ role: 'user', content: 'one sentence about neutron starts' }];
-		const {
-			specObj,
-			currentXml,
-			potentialFinalObject
-		} = thinkerExchangePromptData;
-		const replaceObject = {
-			specObj,
-			potentialFinalObject,
-			newXmlSegment: thinkerExchangePromptData.latestResponse.wisdom,
-			currentXml,
-			employerModuleName: moduleName
+	const formulatePromptList =
+		(promptGenerator) =>
+		(thinkerExchangePromptData = {}) => {
+			//sample: const promptList = [{ role: 'user', content: 'one sentence about neutron starts' }];
+			const { specObj, currentXml, potentialFinalObject } =
+				thinkerExchangePromptData;
+			const replaceObject = {
+				specObj,
+				potentialFinalObject,
+				newXmlSegment: thinkerExchangePromptData.latestResponse.wisdom,
+				currentXml,
+				employerModuleName: moduleName,
+			};
+
+			const { promptList, extractionParameters } =
+				promptGenerator.iterativeGeneratorPrompt(replaceObject);
+			return { promptList, extractionParameters };
 		};
 
-		const {
-			promptList,
-			extractionParameters
-		} = promptGenerator.iterativeGeneratorPrompt(replaceObject);
-		return { promptList, extractionParameters };
-	};
-	
 	function regexEscape(s) {
 		return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 	}
-	
+
 	const filterOutput = (result = '', extractionParameters) => {
 		// this could receive a complex string and extract one or more segments for a response
 		const regEx = new RegExp(
 			`${regexEscape(
-				extractionParameters.frontDelimiter
-			)}(?<xmlResult>.*?)${regexEscape(extractionParameters.backDelimitter)}`
+				extractionParameters.frontDelimiter,
+			)}(?<xmlResult>.*?)${regexEscape(extractionParameters.backDelimitter)}`,
 		);
 		const tmp = result.replace(/\n/g, '<Q22820234623146231362>').match(regEx);
 
@@ -89,7 +86,7 @@ const moduleFunction = function(args = {}) {
 	// ================================================================================
 	// ================================================================================
 	// DO THE JOB
-	
+
 	const executeRequest = (args, callback) => {
 		const { thinkerExchangePromptData } = args;
 		const taskList = new taskListPlus();
@@ -101,20 +98,16 @@ const moduleFunction = function(args = {}) {
 			const {
 				promptGenerator,
 				formulatePromptList,
-				thinkerExchangePromptData
+				thinkerExchangePromptData,
 			} = args;
 
 			const { promptList, extractionParameters } = formulatePromptList(
-				promptGenerator
+				promptGenerator,
 			)(thinkerExchangePromptData);
 
-			const tempFilePath = '/tmp/prompts.log';
-			xLog.status(`logging all xml-review prompts into ${tempFilePath}`);
 			require('fs').appendFileSync(
 				tempFilePath,
-				`\n\n\n${moduleName}---------------------------------------------------\n${
-					promptList[0].content
-				}\n----------------------------------------------------\n\n`
+				`\n\n\n${moduleName}---------------------------------------------------\n${promptList[0].content}\n----------------------------------------------------\n\n`,
 			);
 
 			next('', { ...args, promptList, extractionParameters });
@@ -152,14 +145,14 @@ const moduleFunction = function(args = {}) {
 			accessSmartyPants,
 			filterOutput,
 			thinkerExchangePromptData,
-			systemPrompt
+			systemPrompt,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			const { processedWisdom: wisdom, rawAiResponseObject } = args;
 			callback(err, { wisdom, rawAiResponseObject });
 		});
 	};
-	
+
 	return { executeRequest };
 };
 
