@@ -22,6 +22,9 @@ const moduleFunction = function(
 	const thinkersList=getConfig('thinkers'); //thinkers is the entire prompting datastructure, has an element for each line in a thought process
 
 	const { thoughtProcesses, defaultThoughtProcess } = localConfig; //thought processes is the list of thinker modules
+	
+	thoughtProcess && xLog.status(`Overriding default (${defaultThoughtProcess}), using --thoughtProcess=${thoughtProcess} instead`)
+	
 	const thoughtProcesslist = thoughtProcess
 		? thoughtProcesses[thoughtProcess]
 		: thoughtProcesses[defaultThoughtProcess];

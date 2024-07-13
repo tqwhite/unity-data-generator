@@ -28,7 +28,8 @@ const moduleFunction = function({ configSegmentName, callback }) {
 		'-noColor',
 		'-showConfig',
 		'-outFile',
-		'--overrideConfigPath'
+		'--overrideConfigPath',
+		'--thoughtProcess'
 	];
 
 	const commandLineParameters = commandLineParser.getParameters();

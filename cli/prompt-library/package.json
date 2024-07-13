@@ -1,0 +1,14 @@
+{
+  "name": "prompt-library",
+  "version": "1.0.0",
+  "description": "organizes text for prompts for convenient text editing",
+  "main": "prompt-library.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC",
+  "dependencies": {
+    "qtools-library-dot-d": "^1.0.2"
+  }
+}

@@ -22,6 +22,11 @@ const moduleFunction = function(args = {}) {
 
 		const promptLibrary = require(localConfig.promptLibraryModulePath)(); 
 		
+		if (!promptLibrary[employerModuleName]){
+			xLog.error(`\nmodule 'prompt-library' has no property named '${moduleName}'`);
+			throw `module 'prompt-library' has no property named '${moduleName}'`;
+		}
+		
 		 const {
 			promptTemplate,
 			extractionParameters

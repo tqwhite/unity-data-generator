@@ -1,0 +1,11 @@
+{
+  "name": "tqs-review",
+  "version": "1.0.0",
+  "description": "tq's jina-core tqs testing data evaluation module",
+  "main": "tqs-review.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "tqs-maker",
+  "version": "1.0.0",
+  "description": "tq's jina-core personality for making xml test data",
+  "main": "tqs-maker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}

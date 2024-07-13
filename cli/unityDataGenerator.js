@@ -40,7 +40,8 @@ const moduleFunction = async function (
 	const Ajv = require('ajv');
 	const { v1, v4 } = require('uuid');
 
-	const jinaCore = require('./lib/jina-core').conversationGenerator();
+	const thoughtProcess=commandLineParameters.qtGetSurePath('values.thoughtProcess', []).qtLast(); //override default in systemConfig.ini
+	const jinaCore = require('./lib/jina-core').conversationGenerator({thoughtProcess});
 
 	const callJinaGen = require('./lib/call-jina');
 
@@ -73,16 +74,8 @@ const moduleFunction = async function (
 		commandLineParameters,
 	});
 
-	// ===================================================================================
+const mainIterationFunction=async ({workbook,worksheetNames})=>{
 
-	try {
-		const startTime = performance.now(); //milliseconds
-		const workbook = xlsx.readFile(spreadsheetPath);
-		const worksheetNames = workbook.SheetNames;
-		xLog.status(`Using data model spec file: ${spreadsheetPath}`);
-
-		//revised from forEach() by tqii to help async/await
-		for (var index = 0, len = worksheetNames.length; index < len; index++) {
 			var name = worksheetNames[index];
 			// So we have the contents of the worksheet optimized for lookup by XPath.
 			const sheet = workbook.Sheets[name];
@@ -119,7 +112,7 @@ const moduleFunction = async function (
 						// So we have an object, not a collection.
 						const rootName = Object.keys(xmlCollection)[0];
 						xmlnsDeclaration = xmlCollection[rootName].$?.xmlns; //namespace is NOT in the spreadsheet
-	
+
 						const xpathResult = xpath.find(xmlCollection, '/' + rootName);
 						const objectName = rootName.slice(0, -1);
 						let template = xpathResult[0][objectName][0];
@@ -139,7 +132,7 @@ const moduleFunction = async function (
 						//xLog.status('\nTraversal with XPath:');
 						children = [];
 
-						await traverseXML(sheet, xmlObject, fields);
+						await traverseXML(sheet, xmlObject, fields); //this does callJina()
 
 						// So we see our results and can keep fruit of our labor (as XML)l.
 						//xLog.status(JSON.stringify(xmlObject, null, 2));  // Debug
@@ -182,16 +175,8 @@ const moduleFunction = async function (
 					await xml2js.parseString(xmlString, parseStringCallback);
 				}
 			}
+
 		}
-		const endTime = performance.now();
-		const duration = ((endTime - startTime) / 1000).toFixed(2);
-
-		xLog.verbose(`Processing time: ${duration} seconds`);
-	} catch (error) {
-		xLog.error(`Error: ${error.message}`);
-		process.exit(1);
-	}
-
 	// ===================================================================================
 
 	// So we generate an object (rather than a collection).
@@ -283,22 +268,7 @@ const moduleFunction = async function (
 				const xsdParsed = parser.parse(xsdData, parserOptions);
 				ajv.addSchema(xsdParsed, 'xsd');
 
-console.log(`\n=-=============   xsdData  ========================= [unityDataGenerator.js.validateXMLAgainstXSD]\n`);
-
-
-console.dir({['xsdData']:xsdData}, { showHidden: false, depth: 4, colors: true });
-
-console.log(`\n=-=============   xmlString  ========================= [unityDataGenerator.js.validateXMLAgainstXSD]\n`);
-
-
-console.dir({['xmlString']:xmlString}, { showHidden: false, depth: 4, colors: true });
-
-console.log(`\n=-=============   xmlString  ========================= [unityDataGenerator.js.validateXMLAgainstXSD]\n`);
-
-
 				const xmlParsed = parser.parse(xmlString, parserOptions);
-console.log(`\n=-=============   parser.parse  ========================= [unityDataGenerator.js.validateXMLAgainstXSD]\n`);
-
 
 				const isValid = ajv.validate('xsd', xmlParsed);
 
@@ -518,6 +488,29 @@ console.log(`\n=-=============   parser.parse  ========================= [unityD
 		const rootKey = Object.keys(xmlObject)[0];
 		xmlObject[rootKey].$.xmlns = xmlnsDeclaration;
 		// Now that the object is complete you can have Jina check its order using allXPaths.
+	}
+
+	// EXECUTE PROCESSING ===================================================================================
+
+	try {
+		const startTime = performance.now(); //milliseconds
+		const workbook = xlsx.readFile(spreadsheetPath);
+		const worksheetNames = workbook.SheetNames;
+		xLog.status(`Using data model spec file: ${spreadsheetPath}`);
+
+		//revised from forEach() by tqii to help async/await
+		for (var index = 0, len = worksheetNames.length; index < len; index++) {
+
+		await mainIterationFunction({workbook,worksheetNames})
+
+		}
+		const endTime = performance.now();
+		const duration = ((endTime - startTime) / 1000).toFixed(2);
+
+		xLog.verbose(`Processing time: ${duration} seconds`);
+	} catch (error) {
+		xLog.error(`Error: ${error.message}`);
+		process.exit(1);
 	}
 
 };
