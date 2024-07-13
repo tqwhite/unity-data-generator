@@ -30,8 +30,8 @@ const moduleFunction = function() {
 	const {smartyPantsList} = getConfig(moduleName); //getConfig(`${moduleName}`);
 
 	const smartyPantsFactory = ({smartyPantsName}) => {
-		const {moduleName, accessParms, annotation}=smartyPantsList[smartyPantsName];
-		const smartyPants=require(`./lib/${moduleName}`)({accessParms, annotation})
+		const {moduleName, accessParms, modelName}=smartyPantsList[smartyPantsName];
+		const smartyPants=require(`./lib/${moduleName}`)({accessParms, modelName})
 		return smartyPants;
 	};
 
