@@ -131,7 +131,7 @@ const mainIterationFunction=async ({workbook,worksheetNames})=>{
 						let xmlObject = createXmlElement(rootName);
 						//xLog.status('\nTraversal with XPath:');
 						children = [];
-
+						
 						await traverseXML(sheet, xmlObject, fields); //this does callJina()
 
 						// So we see our results and can keep fruit of our labor (as XML)l.
@@ -160,15 +160,17 @@ const mainIterationFunction=async ({workbook,worksheetNames})=>{
 
 						const { decode } = await import('html-entities');
 						const outputPath = outputsPath + objectName + '.xml';
+						fs.mkdirSync(path.dirname(outputPath), {recursive:true});
 						try {
 							fs.writeFileSync(
 								outputPath,
 								decode(xmlOutput, { level: 'xml' }),
 								{ encoding: 'utf-8' },
 							);
+							xLog.error(`Output file path: ${outputPath}`);
 						} catch (error) {
 							xLog.error(`Error writing: ${outputPath}`);
-							xLog.error(error.message);
+							xLog.error(error.toString());
 							process.exit(1);
 						}
 					};
@@ -352,7 +354,9 @@ const mainIterationFunction=async ({workbook,worksheetNames})=>{
 			xLog.verbose(`Source: ${sourceKey}, Destination:, ${destinationKey}`);
 		}
 		// So we copy attributes (without removing existing ones).
-		const attributeKeys = Object.keys(source[sourceKey].$);
+		
+		const attributeKeys = Object.keys(source.qtGetSurePath(`[${sourceKey}].$`, {}));
+		
 		for (const attributeKey of attributeKeys) {
 			destination[destinationKey].$[attributeKey] =
 				source[sourceKey].$[attributeKey];
