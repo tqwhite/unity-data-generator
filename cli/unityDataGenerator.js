@@ -378,6 +378,14 @@ const mainIterationFunction=async ({workbook,worksheetNames})=>{
 		return new Promise((resolve, reject) => {
 			xml2js.parseString(xml, (err, result) => {
 				if (err) {
+console.log(`\n=-=============   xml  ========================= [unityDataGenerator.js.parseXmlString]\n`);
+
+
+console.log(`xml=${xml}`);
+
+console.log(`\n=-=============   xml  ========================= [unityDataGenerator.js.parseXmlString]\n`);
+
+
 					reject(err);
 				} else {
 					resolve(result);

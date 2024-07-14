@@ -65,6 +65,7 @@ const moduleFunction = function(
 
 				const localCallback = (err, latestResponse) => {
 					thinkerResponses[thinkerSpec.name]=latestResponse;
+					latestResponse.wisdom=latestResponse.wisdom.replace(/\`\`\`xml/i, '').replace(/\`\`\`/, '');
 					next(err, { ...args, thinkerResponses, latestResponse, lastThinkerName:thinkerSpec.name });
 				};
 				
