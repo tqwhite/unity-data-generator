@@ -29,7 +29,9 @@ const moduleFunction = function({ configSegmentName, callback }) {
 		'-showConfig',
 		'-outFile',
 		'--overrideConfigPath',
-		'--thoughtProcess'
+		'--thoughtProcess',
+		'--refinerName',
+		'-echoAlso'
 	];
 
 	const commandLineParameters = commandLineParser.getParameters();

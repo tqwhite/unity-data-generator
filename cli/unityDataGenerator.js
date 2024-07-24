@@ -40,15 +40,27 @@ const moduleFunction = async function (
 	const Ajv = require('ajv');
 	const { v1, v4 } = require('uuid');
 
-	const thoughtProcess=commandLineParameters.qtGetSurePath('values.thoughtProcess', []).qtLast(); //override default in systemConfig.ini
-	const jinaCore = require('./lib/jina-core').conversationGenerator({thoughtProcess});
+	const thoughtProcess = commandLineParameters
+		.qtGetSurePath('values.thoughtProcess', [])
+		.qtLast('unityGenerator'); //override default in systemConfig.ini
+	const refinerName = commandLineParameters
+		.qtGetSurePath('values.refinerName', [])
+		.qtLast('refiner'); //override default in systemConfig.ini
+
+	const jinaCore = require('./lib/jina-core').conversationGenerator({
+		thoughtProcess,
+	});
+	const jinaRefiner = require('./lib/jina-core').conversationGenerator({
+		thoughtProcess: refinerName,
+	});
 
 	const callJinaGen = require('./lib/call-jina');
+	const refineXmlGen = require('./lib/refine-xml');
 
 	var xmlnsDeclaration = '';
 	var children = [];
 
-	const collection = commandLineParameters.qtGetSurePath('fileList.0');
+	const targetObjectName = commandLineParameters.qtGetSurePath('fileList.0');
 
 	const substringsToExclude = ['SIF_Metadata', 'SIF_ExtendedElements'];
 
@@ -73,112 +85,144 @@ const moduleFunction = async function (
 		xmlVersionStack,
 		commandLineParameters,
 	});
+	
 
-const mainIterationFunction=async ({workbook,worksheetNames})=>{
+	const { callRefiner } = refineXmlGen({
+		jinaRefiner,
+		commandLineParameters,
+	});
+	
 
-			var name = worksheetNames[index];
-			// So we have the contents of the worksheet optimized for lookup by XPath.
-			const sheet = workbook.Sheets[name];
-			const fields = createWorksheetFields(sheet);
-			// So we can focus (on one object at a time).
-			if (null == collection || name == collection) {
-				// So we have an XML template to fill in.
-				const structurePath = structuresPath + name + '.xml';
-				if (!fs.existsSync(structurePath)) {
-					xLog.status(`XML not found: ${structurePath}`);
+	const mainIterationFunction = async ({ workbook, worksheetNames }) => {
+		var name = worksheetNames[index];
+		// So we have the contents of the worksheet optimized for lookup by XPath.
+		const sheet = workbook.Sheets[name];
+		const fields = createWorksheetFields(sheet);
+		// So we can focus (on one object at a time).
+		if (null == targetObjectName || name == targetObjectName) {
+			// So we have an XML template to fill in.
+			const structurePath = structuresPath + name + '.xml';
+			if (!fs.existsSync(structurePath)) {
+				xLog.status(`XML not found: ${structurePath}`);
+				process.exit(1);
+			} else {
+				xLog.status(`XML found: ${structurePath}`);
+				let xmlString = '';
+				try {
+					xmlString = fs.readFileSync(structurePath, 'utf8');
+				} catch (error) {
+					xLog.error(`Error reading XML file: ${error.message}`);
 					process.exit(1);
-				} else {
-					xLog.status(`XML found: ${structurePath}`);
-					let xmlString = '';
-					try {
-						xmlString = fs.readFileSync(structurePath, 'utf8');
-					} catch (error) {
-						xLog.error(`Error reading XML file: ${error.message}`);
+				}
+				const parseStringCallback = async (err, result) => {
+					if (err) {
+						xLog.error(`Error parsing the XML: ${err.message}`);
 						process.exit(1);
 					}
-					const parseStringCallback = async (err, result) => {
-						if (err) {
-							xLog.error(`Error parsing the XML: ${err.message}`);
-							process.exit(1);
-						}
 
-						fs.mkdirSync(structuresPath, { recursive: true });
-						xLog.status(`Writing to output directory: ${structuresPath}`);
+					fs.mkdirSync(structuresPath, { recursive: true });
+					xLog.status(`Writing to output directory: ${structuresPath}`);
 
-						//xLog.status('\nXML Contents:');  // Debug
-						//xLog.status(removeFirstLine(xmlString));  // Debug
+					//xLog.status('\nXML Contents:');  // Debug
+					//xLog.status(removeFirstLine(xmlString));  // Debug
 
-						const xmlCollection = result;
-						// So we have an object, not a collection.
-						const rootName = Object.keys(xmlCollection)[0];
-						xmlnsDeclaration = xmlCollection[rootName].$?.xmlns; //namespace is NOT in the spreadsheet
+					const xmlCollection = result;
+					// So we have an object, not a collection.
+					const rootName = Object.keys(xmlCollection)[0];
+					xmlnsDeclaration = xmlCollection[rootName].$?.xmlns; //namespace is NOT in the spreadsheet
 
-						const xpathResult = xpath.find(xmlCollection, '/' + rootName);
-						const objectName = rootName.slice(0, -1);
-						let template = xpathResult[0][objectName][0];
-						if (null != xmlnsDeclaration) {
-							template.$.xmlns = xmlnsDeclaration;
-						}
-						template = { [objectName]: template };
-						//xLog.status(JSON.stringify(template, null, 2));  // Debug
-						//xLog.status(template);  // Debug
-						let xmlInput = createXmlString(template);
-						xmlInput = removeFirstLine(xmlInput);
-						//xLog.status('\nInput XML:');
-						//xLog.status(xmlInput);
+					const xpathResult = xpath.find(xmlCollection, '/' + rootName);
+					const objectName = rootName.slice(0, -1);
+					let template = xpathResult[0][objectName][0];
+					if (null != xmlnsDeclaration) {
+						template.$.xmlns = xmlnsDeclaration;
+					}
+					template = { [objectName]: template };
+					//xLog.status(JSON.stringify(template, null, 2));  // Debug
+					//xLog.status(template);  // Debug
+					let xmlInput = createXmlString(template);
+					xmlInput = removeFirstLine(xmlInput);
+					//xLog.status('\nInput XML:');
+					//xLog.status(xmlInput);
 
-						// So we can prompt for random valid human friend data at any place in the object.
-						let xmlObject = createXmlElement(rootName);
-						//xLog.status('\nTraversal with XPath:');
-						children = [];
-						
-						await traverseXML(sheet, xmlObject, fields); //this does callJina()
+					// So we can prompt for random valid human friend data at any place in the object.
+					let xmlObject = createXmlElement(rootName);
+					//xLog.status('\nTraversal with XPath:');
+					children = [];
 
-						// So we see our results and can keep fruit of our labor (as XML)l.
-						//xLog.status(JSON.stringify(xmlObject, null, 2));  // Debug
-						//xLog.status(xmlObject);  // Debug
-						let xmlOutput = createXmlString(xmlObject);
-						xmlOutput = removeFirstLine(xmlOutput);
-						//validateXMLAgainstXSD(xmlOutput, strictXSD);
-						//           validateXMLAgainstXSD(xmlOutput, strictXSD)
-						//             .then((validationResult) => {
-						//               if (validationResult.isValid) {
-						//                 xLog.status('XML is valid.');
-						//               } else {
-						//                 xLog.status('XML is not valid. Errors:');
-						//                 xLog.status(validationResult.errors);
-						//               }
-						//             })
-						//             .catch((err) => {
-						//               xLog.error(`Error during XML validation: ${err}`);
-						//             });
-						if (true) {
-							xLog.status('\nGenerated XML:');
-							xLog.result(xmlOutput);
-							xLog.status('\n'); // Whitespace
-						}
+					await traverseXML(sheet, xmlObject, fields); //this does callJina()
 
-						const { decode } = await import('html-entities');
-						const outputPath = outputsPath + objectName + '.xml';
-						fs.mkdirSync(path.dirname(outputPath), {recursive:true});
-						try {
-							fs.writeFileSync(
-								outputPath,
-								decode(xmlOutput, { level: 'xml' }),
-								{ encoding: 'utf-8' },
-							);
-							xLog.error(`Output file path: ${outputPath}`);
-						} catch (error) {
-							xLog.error(`Error writing: ${outputPath}`);
-							xLog.error(error.toString());
-							process.exit(1);
-						}
-					};
-					await xml2js.parseString(xmlString, parseStringCallback);
-				}
+					// So we see our results and can keep fruit of our labor (as XML)l.
+					//xLog.status(JSON.stringify(xmlObject, null, 2));  // Debug
+					//xLog.status(xmlObject);  // Debug
+					let xmlOutput = createXmlString(xmlObject);
+					xmlOutput = removeFirstLine(xmlOutput);
+					//validateXMLAgainstXSD(xmlOutput, strictXSD);
+					//           validateXMLAgainstXSD(xmlOutput, strictXSD)
+					//             .then((validationResult) => {
+					//               if (validationResult.isValid) {
+					//                 xLog.status('XML is valid.');
+					//               } else {
+					//                 xLog.status('XML is not valid. Errors:');
+					//                 xLog.status(validationResult.errors);
+					//               }
+					//             })
+					//             .catch((err) => {
+					//               xLog.error(`Error during XML validation: ${err}`);
+					//             });
+					if (false) {
+						xLog.status('\nGenerated XML:');
+						xLog.result(xmlOutput);
+						xLog.status('\n'); // Whitespace
+					}
+
+					const { decode } = await import('html-entities');
+					const outputPath = outputsPath + objectName + '.xml';
+					fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+
+					const xmlString = decode(xmlOutput, { level: 'xml' });
+
+					const targetWorksheet = workbook.Sheets[targetObjectName];
+					const targetXpathFieldList = createWorksheetFields(targetWorksheet);
+					
+					const testBadString = xmlString.replace(
+						'</LEAAccountability>',
+						'<x>HELLO</x>\n</LEAAccountability>',
+					);
+console.log(`\n=-=============   testBadString  ========================= [unityDataGenerator.js.moduleFunction]\n`);
+
+
+console.log(`testBadString=${testBadString}`);
+
+console.log(`\n=-=============   testBadString  ========================= [unityDataGenerator.js.moduleFunction]\n`);
+
+
+					const refinedXml = await callRefiner({
+						xmlString: testBadString,
+						targetXpathFieldList,
+					});
+					// 					.catch((err) => {
+					// 						xLog.error(`Error: ${err}. Error Exit Now.`);
+					// 						process.exit(1);
+					// 					});
+
+					if (commandLineParameters.switches.echoAlso) {
+						xLog.status(refinedXml);
+					}
+
+					try {
+						fs.writeFileSync(outputPath, refinedXml, { encoding: 'utf-8' });
+						xLog.error(`Output file path: ${outputPath}`);
+					} catch (error) {
+						xLog.error(`Error writing: ${outputPath}`);
+						xLog.error(error.toString());
+						process.exit(1);
+					}
+				};
+				await xml2js.parseString(xmlString, parseStringCallback);
 			}
-
 		}
+	};
 	// ===================================================================================
 
 	// So we generate an object (rather than a collection).
@@ -354,9 +398,11 @@ const mainIterationFunction=async ({workbook,worksheetNames})=>{
 			xLog.verbose(`Source: ${sourceKey}, Destination:, ${destinationKey}`);
 		}
 		// So we copy attributes (without removing existing ones).
-		
-		const attributeKeys = Object.keys(source.qtGetSurePath(`[${sourceKey}].$`, {}));
-		
+
+		const attributeKeys = Object.keys(
+			source.qtGetSurePath(`[${sourceKey}].$`, {}),
+		);
+
 		for (const attributeKey of attributeKeys) {
 			destination[destinationKey].$[attributeKey] =
 				source[sourceKey].$[attributeKey];
@@ -378,14 +424,6 @@ const mainIterationFunction=async ({workbook,worksheetNames})=>{
 		return new Promise((resolve, reject) => {
 			xml2js.parseString(xml, (err, result) => {
 				if (err) {
-console.log(`\n=-=============   xml  ========================= [unityDataGenerator.js.parseXmlString]\n`);
-
-
-console.log(`xml=${xml}`);
-
-console.log(`\n=-=============   xml  ========================= [unityDataGenerator.js.parseXmlString]\n`);
-
-
 					reject(err);
 				} else {
 					resolve(result);
@@ -512,9 +550,7 @@ console.log(`\n=-=============   xml  ========================= [unityDataGenera
 
 		//revised from forEach() by tqii to help async/await
 		for (var index = 0, len = worksheetNames.length; index < len; index++) {
-
-		await mainIterationFunction({workbook,worksheetNames})
-
+			await mainIterationFunction({ workbook, worksheetNames });
 		}
 		const endTime = performance.now();
 		const duration = ((endTime - startTime) / 1000).toFixed(2);
@@ -524,7 +560,6 @@ console.log(`\n=-=============   xml  ========================= [unityDataGenera
 		xLog.error(`Error: ${error.message}`);
 		process.exit(1);
 	}
-
 };
 
 //END OF moduleFunction() ============================================================

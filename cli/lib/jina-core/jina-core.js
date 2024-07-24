@@ -16,10 +16,11 @@ const moduleFunction = function() {
 	const { xLog, getConfig } = process.global;
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
 	
-	const smartyPantsChooser=require('./lib/smarty-pants-chooser')(); //reserving the right to have overarching controls
+
+	const smartyPantsChooser=require('../smarty-pants-chooser')(); //reserving the right to have overarching controls
 
 
-	const conversationGenerator=({thoughtProcess}={})=>require('./lib/main_processes/conversation-generator')({thoughtProcess, smartyPantsChooser});
+	const conversationGenerator=({thoughtProcess}={})=>require('../conversation-generator')({thoughtProcess, smartyPantsChooser});
 	
 	const embedGenerator=()=>{someModule:'Not Yet Implemented'}
 	const fileUploader=()=>{someModule:'Not Yet Implemented'}
