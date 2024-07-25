@@ -36,18 +36,18 @@ const moduleFunction = function ({ accessParms, modelName }) {
 
 		taskList.push((args, next) => {
 			const { openAiCompletion, promptList } = args;
-			xLog.verbose(
+			xLog.debug(
 				`promptList ==================================================`,
 			);
 			const localCallback = (err, { rawAiResponseObject, wisdom }) => {
-				xLog.verbose(wisdom);
-				xLog.verbose(
+				xLog.debug(wisdom);
+				xLog.debug(
 					`promptList END ==================================================`,
 				);
 				next(err, { ...args, rawAiResponseObject, wisdom });
 			};
 
-			xLog.verbose(promptList);
+			xLog.debug(promptList);
 
 			openAiCompletion.getCompletion({ promptList }, localCallback);
 		});

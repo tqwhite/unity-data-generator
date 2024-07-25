@@ -38,9 +38,6 @@ const moduleFunction = function (args = {}) {
 				validationMessage: thinkerExchangePromptData.validationMessage?thinkerExchangePromptData.validationMessage:'No XML structural errors are known',
 				employerModuleName: moduleName,
 			};
-
-console.log(`X: replaceObject.validationMessage=${replaceObject.validationMessage}`);
-
 			const { promptList, extractionParameters } =
 				promptGenerator.iterativeGeneratorPrompt(replaceObject);
 			return { promptList, extractionParameters };
@@ -52,23 +49,17 @@ console.log(`X: replaceObject.validationMessage=${replaceObject.validationMessag
 
 	const filterOutput = (result = '', extractionParameters) => {
 		// this could receive a complex string and extract one or more segments for a response
-		const regEx = new RegExp(
-			`${regexEscape(
-				extractionParameters.frontDelimiter,
-			)}(?<xmlResult>.*?)${regexEscape(extractionParameters.backDelimitter)}`,
-		);
+		const regEx = new RegExp( `${regexEscape( extractionParameters.frontDelimiter, )}(?<xmlResult>.*?)${regexEscape(extractionParameters.backDelimitter)}`, );
 		const tmp = result.replace(/\n/g, '<Q22820234623146231362>').match(regEx);
+		const xml = tmp ? tmp .qtGetSurePath('groups.xmlResult', result) .replace(/<Q22820234623146231362>/g, '\n') : result;
+		
+		
+		const regEx2 = new RegExp( `${regexEscape( extractionParameters.explanationFrontDelimitter, )}(?<xmlResult>.*?)${regexEscape(extractionParameters.explanationBackDelimitter)}`, );
+		const tmp2 = result.replace(/\n/g, '<Q22820234623146231362>').match(regEx2);
+		const explanation = tmp ? tmp2 .qtGetSurePath('groups.xmlResult', result) .replace(/<Q22820234623146231362>/g, '\n') : result;
 
-		// 		const tmp = result
-		// 			.replace(/\n/g, '<Q22820234623146231362>')
-		// 			.match(/\[START XML SAMPLE\](?<xmlResult>.*?)\[END XML SAMPLE\]/);
-
-		const final = tmp
-			? tmp
-					.qtGetSurePath('groups.xmlResult', result)
-					.replace(/<Q22820234623146231362>/g, '\n')
-			: result;
-		return final;
+		
+		return {xml, explanation};
 	};
 
 	// ================================================================================
@@ -144,9 +135,8 @@ console.log(`X: replaceObject.validationMessage=${replaceObject.validationMessag
 		taskList.push((args, next) => {
 			const { filterOutput, wisdom: rawWisdom, extractionParameters } = args;
 
-			const processedWisdom = filterOutput(rawWisdom, extractionParameters); //presently the source of being upperCase
-
-			next('', { ...args, processedWisdom });
+			const {xml:processedWisdom, explanation} = filterOutput(rawWisdom, extractionParameters); //presently the source of being upperCase
+			next('', { ...args, processedWisdom, explanation });
 		});
 
 		// --------------------------------------------------------------------------------
@@ -162,8 +152,24 @@ console.log(`X: replaceObject.validationMessage=${replaceObject.validationMessag
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 
-			const { processedWisdom:wisdom, rawAiResponseObject } = args;
-			callback(err, { wisdom, rawAiResponseObject });
+			const { processedWisdom:wisdom, explanation, rawAiResponseObject, thinkerExchangePromptData } = args;
+			
+			xLog.verbose(`\n------------------------\nXML Refinement Explanation:\n${explanation}\n------------------------`)
+			
+			const refinementReport=`
+====================================================================================================
+XML REFINEMENT PASS ${new Date().toLocaleString()}
+The XML Validation API returned the following message:
+
+<!validationMessage!>
+
+The Refined XML below was evaluated. Here are the details of the process that allowed for the errors...
+------------------------\nOriginal XML:\n${thinkerExchangePromptData.potentialFinalObject}\n------------------------
+------------------------\nRefined XML:\n${wisdom}\n------------------------
+------------------------\nXML Refinement Explanation:\n${explanation}\n------------------------
+			`;
+
+			callback(err, { wisdom, explanation, refinementReport, rawAiResponseObject });
 		});
 	};
 

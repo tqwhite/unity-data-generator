@@ -17,7 +17,7 @@ const fs = require('fs');
 
 //START OF moduleFunction() ============================================================
 
-const moduleFunction = function({ configSegmentName, callback }) {
+const moduleFunction = function ({ configSegmentName, callback }) {
 	const { xLog } = process.global;
 	const validControls = [
 		'-help',
@@ -25,13 +25,15 @@ const moduleFunction = function({ configSegmentName, callback }) {
 		'-silent',
 		'-quiet',
 		'-verbose',
+		'-debug',
 		'-noColor',
 		'-showConfig',
 		'-outFile',
 		'--overrideConfigPath',
 		'--thoughtProcess',
 		'--refinerName',
-		'-echoAlso'
+		'-echoAlso',
+		'-listElements'
 	];
 
 	const commandLineParameters = commandLineParser.getParameters();
@@ -44,13 +46,15 @@ const moduleFunction = function({ configSegmentName, callback }) {
 
 	taskList.push((args, next) => {
 		const localCallback = (err, args) => {
-		const { config, allConfigs }=args;
-			const getConfigActual = allConfigs => segmentName =>
-				({...allConfigs[segmentName], _segmentName:segmentName});
-				
+			const { config, allConfigs } = args;
+			const getConfigActual = (allConfigs) => (segmentName) => ({
+				...allConfigs[segmentName],
+				_segmentName: segmentName,
+			});
+
 			const getConfig = getConfigActual({
 				...allConfigs,
-				commandLineParameters
+				commandLineParameters,
 			});
 
 			next(err, {
@@ -58,14 +62,14 @@ const moduleFunction = function({ configSegmentName, callback }) {
 				moduleConfig: config,
 				allConfigs,
 				commandLineParameters,
-				getConfig
+				getConfig,
 			});
 		};
 
 		const configFilePath = figureOutConfigPath.getConfigPath({
 			fileString: commandLineParameters.qtGetSurePath(
-				'values.overrideConfigPath[0]'
-			)
+				'values.overrideConfigPath[0]',
+			),
 		});
 
 		if (!fs.existsSync(configFilePath)) {
@@ -83,9 +87,9 @@ const moduleFunction = function({ configSegmentName, callback }) {
 					commandLineParameters.switches.prod ||
 					commandLineParameters.switches.forceProd
 						? { useProdPath: true }
-						: void 0
+						: void 0,
 			},
-			localCallback
+			localCallback,
 		);
 	});
 
@@ -102,16 +106,16 @@ const moduleFunction = function({ configSegmentName, callback }) {
 		//this expands to "deployPrograms configPath --actions -help" and the flaw omits switch.help.
 		//This line works around the flaw. tqii 7/20/21
 
-		const help = process.argv.filter(item => item.match(/-help/)).qtLast();
+		const help = process.argv.filter((item) => item.match(/-help/)).qtLast();
 
 		if (help) {
 			process.stderr.write(
 				helpText.mainHelp({
 					defaultRequestFilePath: moduleConfig.qtGetSurePath(
 						'defaultRequestFilePath',
-						'startAll.defaultRequestFilePath is missing from systemParameters.ini'
-					)
-				})
+						'startAll.defaultRequestFilePath is missing from systemParameters.ini',
+					),
+				}),
 			);
 			next('skipRestOfPipe');
 			return;
@@ -128,7 +132,7 @@ const moduleFunction = function({ configSegmentName, callback }) {
 
 		moduleConfig.port = commandLineParameters.qtGetSurePath(
 			'values.port[0]',
-			moduleConfig.port
+			moduleConfig.port,
 		);
 
 		next('', args);
@@ -140,21 +144,37 @@ const moduleFunction = function({ configSegmentName, callback }) {
 	taskList.push((args, next) => {
 		const { allConfigs, moduleConfig, configFilePath } = args;
 
-		const localCallback = err => {
+		const localCallback = (err) => {
 			next(err, args);
 		};
 
 		if (commandLineParameters.switches.showConfig) {
-			allConfigs.qtSelectProperties(['_meta', '_substitutions'], {excludeMode:true}).qtDump({ noSuffix: true });
+			const cloneConfig = allConfigs.qtClone();
+			const redactions = cloneConfig.REDACTIONS;
+
+			redactions.forEach((dottedPath) =>
+				cloneConfig.qtPutSurePath(dottedPath, '**********'),
+			);
+
+			xLog.result(
+				JSON.stringify(
+					cloneConfig.qtSelectProperties(['_meta', '_substitutions', 'REDACTIONS'], {
+						excludeMode: true,
+					}),
+					'',
+					'\t',
+				),
+			);
 			process.exit(); //EXIT ==================================================
 			//next('skipRestOfPipe');
 			//return;
 		}
 
 		const errors = process.argv
-			.filter(item => item.match(/^-/))
-			.filter(item => {
-				return !validControls.filter(validItem => item.match(validItem)).length;
+			.filter((item) => item.match(/^-/))
+			.filter((item) => {
+				return !validControls.filter((validItem) => item.match(validItem))
+					.length;
 			});
 
 		let errorMessage = '';
@@ -165,7 +185,7 @@ const moduleFunction = function({ configSegmentName, callback }) {
 				.replace(/, $/, '');
 
 			next(
-				`Bad flags in command line ${errList}. Try --help. (Did you miss a double hyphen?)`
+				`Bad flags in command line ${errList}. Try --help. (Did you miss a double hyphen?)`,
 			);
 			return;
 		}
@@ -179,7 +199,7 @@ const moduleFunction = function({ configSegmentName, callback }) {
 	const initialData = {
 		configSegmentName,
 		commandLineParameters,
-		xLog
+		xLog,
 	};
 	asynchronousPipePlus.pipeRunner(
 		taskList,
@@ -189,19 +209,19 @@ const moduleFunction = function({ configSegmentName, callback }) {
 				moduleConfig = {},
 				commandLineParameters = {},
 				allConfigs,
-				getConfig
+				getConfig,
 			} = finalResult;
 
 			callback(err, {
 				allConfigs,
 				commandLineParameters,
-				getConfig
+				getConfig,
 			});
-		}
+		},
 	);
 };
 
 //END OF moduleFunction() ============================================================
 
-module.exports = args => new moduleFunction(args);
+module.exports = (args) => new moduleFunction(args);
 

@@ -33,7 +33,7 @@ const moduleFunction = function ({ jinaRefiner, commandLineParameters }) {
 		};
 
 		do {
-			const result = await jinaRefiner.getResponse(promptGenerationData, {});
+			const result = await jinaRefiner.getResponse(promptGenerationData, {temperatureFactor:count});
 
 			const { rawAiResponseObject, thinkerResponses, lastThinkerName } = result;
 			wisdom = result.wisdom;

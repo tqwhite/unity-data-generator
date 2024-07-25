@@ -6,6 +6,16 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); 
 
 const qt = require('qtools-functional-library'); //qt.help({printOutput:true, queryString:'.*', sendJson:false});
 
+
+const fs = require('fs');
+const xlsx = require('xlsx');
+const xml2js = require('xml2js');
+const xpath = require('xml2js-xpath');
+const { XMLParser } = require('fast-xml-parser');
+const Ajv = require('ajv');
+const { v1, v4 } = require('uuid');
+
+
 //START OF moduleFunction() ========================================hello====================
 
 const moduleFunction = async function (
@@ -26,19 +36,12 @@ const moduleFunction = async function (
 	const {
 		spreadsheetPath,
 		structuresPath,
-		outputsPath,
 		strictXSD,
 		ignoreTags,
 		knownIds,
 	} = localConfig;
-
-	const fs = require('fs');
-	const xlsx = require('xlsx');
-	const xml2js = require('xml2js');
-	const xpath = require('xml2js-xpath');
-	const { XMLParser } = require('fast-xml-parser');
-	const Ajv = require('ajv');
-	const { v1, v4 } = require('uuid');
+	
+	let {outputsPath}=localConfig;
 
 	const thoughtProcess = commandLineParameters
 		.qtGetSurePath('values.thoughtProcess', [])
@@ -57,11 +60,40 @@ const moduleFunction = async function (
 	const callJinaGen = require('./lib/call-jina');
 	const refineXmlGen = require('./lib/refine-xml');
 
+	const targetObjectName = commandLineParameters.qtGetSurePath('fileList.0');
+	
+
+	const outFile = commandLineParameters.qtGetSurePath(
+		'values.outFile[0]',
+		'',
+	);
+	
+	if (outFile && fs.existsSync(path.dirname(outFile))){
+		fs.mkdirSync(path.dirname(outFile), {recursive:true});
+		outputsPath=path.dirname(outFile);
+	}
+	
+	const outputFilePath = outFile
+		? outFile
+		: outputsPath + targetObjectName + '.xml';
+		
+		
+	const baseName=path.basename(outputFilePath);
+	const outputDir=path.dirname(outputFilePath);
+	const extension=path.extname(baseName);
+	const tempName=baseName.replace(extension, '')+'_temp'+extension;
+	const tempFilePath=path.join('/tmp/udgWorkingFiles', tempName);
+	fs.mkdirSync(path.dirname(tempFilePath), {recursive:true});
+	xLog.status(`writing working XML to ${tempFilePath}`);
+
+	if (!targetObjectName && !commandLineParameters.switches.listElements) {
+		xLog.error(`target element name is required. try -help or -listElements`);
+		process.exit(1);
+	}
+	
+
 	var xmlnsDeclaration = '';
 	var children = [];
-
-	const targetObjectName = commandLineParameters.qtGetSurePath('fileList.0');
-
 	const substringsToExclude = ['SIF_Metadata', 'SIF_ExtendedElements'];
 
 	// So we have the metadata for engineering prompts (we start with the spreadsheet).
@@ -84,6 +116,7 @@ const moduleFunction = async function (
 		jinaCore,
 		xmlVersionStack,
 		commandLineParameters,
+		tempFilePath
 	});
 	
 
@@ -96,6 +129,12 @@ const moduleFunction = async function (
 	const mainIterationFunction = async ({ workbook, worksheetNames }) => {
 		var name = worksheetNames[index];
 		// So we have the contents of the worksheet optimized for lookup by XPath.
+
+		if (commandLineParameters.switches.listElements) {
+			xLog.result(JSON.stringify(Object.keys(workbook.Sheets), '', '\t'));
+			process.exit();
+		}
+
 		const sheet = workbook.Sheets[name];
 		const fields = createWorksheetFields(sheet);
 		// So we can focus (on one object at a time).
@@ -177,44 +216,70 @@ const moduleFunction = async function (
 					}
 
 					const { decode } = await import('html-entities');
-					const outputPath = outputsPath + objectName + '.xml';
-					fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+
+					fs.mkdirSync(path.dirname(outputFilePath), { recursive: true });
 
 					const xmlString = decode(xmlOutput, { level: 'xml' });
 
 					const targetWorksheet = workbook.Sheets[targetObjectName];
 					const targetXpathFieldList = createWorksheetFields(targetWorksheet);
-					
-					const testBadString = xmlString.replace(
-						'</LEAAccountability>',
-						'<x>HELLO</x>\n</LEAAccountability>',
+
+					let workingResultString = xmlString;
+
+					switch ('no forced error for debug') {
+						case 'a':
+							workingResultString = xmlString.replace(
+								'</LEAAccountability>',
+								'<x>HELLO</x>\n</LEAAccountability>',
+							);
+							break;
+						case 'b':
+							workingResultString = `<LEAAccountabilitys xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+  <LEAAccountability RefId="123e4567-e89b-12d3-a456-426614174000" LEAInfoRefId="123e4567-e89b-12d3-a456-426614174000">
+    <Sub1>Data1</Sub1>
+    <Sub2>Data2</Sub2>
+    <GunFreeSchoolsActReportingStatus Codeset="http://example.com/codeset/gunfreeschoolsactreportingstatus">YesReportingOffenses</GunFreeSchoolsActReportingStatus>
+  </LEAAccountability>
+  <LEAAccountability RefId="123e4567-e89b-12d3-a456-426614174001" LEAInfoRefId="123e4567-e89b-12d3-a456-426614174001">
+    <Sub1>Data3</Sub1>
+    <Sub2>Data4</Sub2>
+    <GunFreeSchoolsActReportingStatus Codeset="http://example.com/codeset/gunfreeschoolsactreportingstatus">YesReportingOffenses</GunFreeSchoolsActReportingStatus>
+  </LEAAccountability>
+  <LEAAccountability RefId="123e4567-e89b-12d3-a456-426614174002" LEAInfoRefId="123e4567-e89b-12d3-a456-426614174002">
+    <GunFreeSchoolsActReportingStatus Codeset="http://example.com/codeset/gunfreeschoolsactreportingstatus">YesReportingOffenses</GunFreeSchoolsActReportingStatus>
+  </LEAAccountability>
+</LEAAccountabilitys>`;
+
+							break;
+					}
+
+					console.log(
+						`\n=-=============   workingResultString  ========================= [unityDataGenerator.js.moduleFunction]\n`,
 					);
-console.log(`\n=-=============   testBadString  ========================= [unityDataGenerator.js.moduleFunction]\n`);
 
+					console.log(`workingResultString=${workingResultString}`);
 
-console.log(`testBadString=${testBadString}`);
-
-console.log(`\n=-=============   testBadString  ========================= [unityDataGenerator.js.moduleFunction]\n`);
-
+					console.log(
+						`\n=-=============   workingResultString  ========================= [unityDataGenerator.js.moduleFunction]\n`,
+					);
 
 					const refinedXml = await callRefiner({
-						xmlString: testBadString,
+						xmlString: workingResultString,
 						targetXpathFieldList,
+					}).catch((err) => {
+						xLog.error(`Error: ${err}. Error Exit Quitting Now.`);
+						process.exit(1);
 					});
-					// 					.catch((err) => {
-					// 						xLog.error(`Error: ${err}. Error Exit Now.`);
-					// 						process.exit(1);
-					// 					});
 
 					if (commandLineParameters.switches.echoAlso) {
 						xLog.status(refinedXml);
 					}
 
 					try {
-						fs.writeFileSync(outputPath, refinedXml, { encoding: 'utf-8' });
-						xLog.error(`Output file path: ${outputPath}`);
+						fs.writeFileSync(outputFilePath, refinedXml, { encoding: 'utf-8' });
+						xLog.error(`Output file path: ${outputFilePath}`);
 					} catch (error) {
-						xLog.error(`Error writing: ${outputPath}`);
+						xLog.error(`Error writing: ${outputFilePath}`);
 						xLog.error(error.toString());
 						process.exit(1);
 					}
@@ -392,10 +457,10 @@ console.log(`\n=-=============   testBadString  ========================= [unity
 		const sourceKey = Object.keys(source)[0];
 		const destinationKey = Object.keys(destination)[0];
 		if (sourceKey != destinationKey) {
-			xLog.verbose(
+			xLog.debug(
 				'Warning:  Source and destination mismatch, copying children anyway!',
 			);
-			xLog.verbose(`Source: ${sourceKey}, Destination:, ${destinationKey}`);
+			xLog.debug(`Source: ${sourceKey}, Destination:, ${destinationKey}`);
 		}
 		// So we copy attributes (without removing existing ones).
 
@@ -422,6 +487,7 @@ console.log(`\n=-=============   testBadString  ========================= [unity
 	// See: createXmlString
 	function parseXmlString(xml) {
 		return new Promise((resolve, reject) => {
+		try{
 			xml2js.parseString(xml, (err, result) => {
 				if (err) {
 					reject(err);
@@ -429,6 +495,13 @@ console.log(`\n=-=============   testBadString  ========================= [unity
 					resolve(result);
 				}
 			});
+			}
+			catch(err){
+				xLog.error(`xml2js() failed on this XML:`)
+				xLog.result(xml);
+				xLog.error(`End of bad XML`)
+				reject(err);
+			}
 		});
 	}
 
@@ -528,7 +601,7 @@ console.log(`\n=-=============   testBadString  ========================= [unity
 					child = await callJina(groupXPath, groupChildren, fields); //============================
 
 					// So we can watch the process unfold.
-					xLog.verbose(child); // Debug
+					xLog.debug(child); // Debug
 				}
 			}
 		}
@@ -555,7 +628,7 @@ console.log(`\n=-=============   testBadString  ========================= [unity
 		const endTime = performance.now();
 		const duration = ((endTime - startTime) / 1000).toFixed(2);
 
-		xLog.verbose(`Processing time: ${duration} seconds`);
+		xLog.debug(`Processing time: ${duration} seconds`);
 	} catch (error) {
 		xLog.error(`Error: ${error.message}`);
 		process.exit(1);

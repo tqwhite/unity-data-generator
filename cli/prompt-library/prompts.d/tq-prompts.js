@@ -124,11 +124,11 @@ example base
 <Examples>
 \t<Example RefId=\"123e4567-e89b-12d3-a456-426614174000\">
 \t\t<Sub1> hello </Sub1>
-\t\t<Sub2> goodbye </Sub1>
+\t\t<Sub2> goodbye </Sub2>
 \t</Example>
 \t<Example RefId=\"123e4567-e89b-12d3-a456-426614174001\">
 \t\t<Sub1> orange </Sub1>
-\t\t<Sub2> black </Sub1>
+\t\t<Sub2> black </Sub2>
 \t</Example>
 </Examples>
 
@@ -143,12 +143,12 @@ The new merged element could look like this before you revise the facts 'kitten'
 <Examples>
 \t<Example RefId=\"123e4567-e89b-12d3-a456-426614174000\">
 \t\t<Sub1> hello </Sub1>
-\t\t<Sub2> goodbye </Sub1>
+\t\t<Sub2> goodbye </Sub2>
 \t<NewSub>kitten</NewSub>
 \t</Example>
 \t<Example RefId=\"123e4567-e89b-12d3-a456-426614174001\">
 \t\t<Sub1> orange </Sub1>
-\t\t<Sub2> black </Sub1>
+\t\t<Sub2> black </Sub2>
 \t<NewSub>kitten</NewSub>
 \t</Example>
 </Examples>
@@ -202,10 +202,15 @@ There should be *nothing* except well-formed XML between those delimiters.
 				
 				
 				
+				
+				
+				
 				'fix-problems': {
 					extractionParameters: {
 						frontDelimiter: '[START XML SAMPLE]',
 						backDelimitter: '[END XML SAMPLE]',
+						explanationFrontDelimitter: '[START EXPLANATIONS]',
+						explanationBackDelimitter: '[END EXPLANATIONS]',
 					},
 					promptTemplate: `
 This project is the creation of valid, realistic test data objects for use in education software data exchange. The task at hand is to finalize 'current XML object' below by evaluating it in comparison to its semantic specification and to correct any XML validation errors that have been reported.
@@ -235,6 +240,26 @@ Coherency is important. For this purpose, coherence means that data values align
 
 The process that is generating these test data objects has had a particularly difficult time with coherence in categories and the specific type. Eg, the name of a classroom topic and the category. We have seen "Intro to English" categorized as "Mathematics". When you see problems like this, change the data to be coherent with sensitivity to the rest of the data in the object.
 
+Sometimes there are codes from outside standards, eg, SCED, but there are others, Please evaluate them for coherence and match them to the other valurs in the object.
+
+
+ADVICE FOR SOLVING COMMON PROBLEMS:
+
+• "The root element is not specified in the semantic specification"
+
+	• Often, the generating entity creates an enclosing parent element with a plural name, e.g., <Things><Thing>value</Thing></Things>. If there is no XPath for the plural parent element, remove the parent element and keep the most complete of the enclosed elements.
+
+• "The markup in the document following the root element must be well-formed"
+
+	• This issue often arises when a plural parent element is removed, leaving behind several elements that formed a list before the removal. To solve this problem, review the elements and delete all but the most well-formed, coherent one.
+
+• "Invalid content was found"
+
+	• Sometimes, elements that are neither in the semantic specification nor the XML are generated. It is crucial to carefully compare the XML to the xPaths in the semantic specification and eliminate elements that are not specified there.
+
+
+INSTRUCTIONS
+
 Please... 
 
 1) revise the XML to solve the error(s) then 
@@ -245,6 +270,8 @@ Please...
 
 4) Go back over it one more time to make sure all three of the previous tasks were done correctly.
 
+To facilliate subsequent processing, please format your output according to these instructions:
+
 Wrap the resulting XML with delimiters like this:
 
 <!frontDelimiter!>
@@ -252,6 +279,13 @@ Wrap the resulting XML with delimiters like this:
 <!backDelimitter!>
 
 There should be *nothing* except well-formed XML between those delimiters.
+
+Explain your reasoning for each step of the processing. Wrap the explanatory text with delimiters like this:
+
+<!explanationFrontDelimitter!>
+EXPLANATIONS GO HERE
+<!explanationBackDelimitter!>
+
 
 
 		`,

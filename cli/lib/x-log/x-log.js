@@ -15,7 +15,7 @@ const util=require('util');
 const moduleFunction = function() {
 	const annotation = `HELLO FROM: ${__filename}. Note: this function accesses the command line directly.`;
 
-	const { silent, quiet, verbose } = commandLineParameters.switches; //flags used here need to be added to assemble-configuration-show-help-maybe-exit.js
+	const { silent, quiet, verbose, debug } = commandLineParameters.switches; //flags used here need to be added to assemble-configuration-show-help-maybe-exit.js
 	
 	const outputFunction = console.error;
 	const color =
@@ -56,18 +56,10 @@ const moduleFunction = function() {
 		if (silent) {
 			return;
 		}
-		console.log(message);
+		process.stdout.write(message);
 	};
 
 	const status = (message, options={}) => {
-		message=stringify(message, options);;
-		if (silent || quiet) {
-			return;
-		}
-		outputFunction(message);
-	};
-
-	const debug = (message, options={}) => {
 		message=stringify(message, options);;
 		if (silent || quiet) {
 			return;
@@ -92,12 +84,21 @@ const moduleFunction = function() {
 		outputFunction(message);
 	};
 
+	const debugFunction = (message, options={}) => {
+		message=stringify(message, options);;
+		if (silent || !debug || !verbose) {
+			return;
+		}
+
+		outputFunction(message);
+	};
+
 	return {
 		annotation,
 		error,
 		result,
 		status,
-		debug,
+		debug:debugFunction,
 		emphatic,
 		verbose: verboseFunction
 	};

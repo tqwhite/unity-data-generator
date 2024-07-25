@@ -19,38 +19,42 @@ return `
 
 NAME
 
-	docServer - Manage/Send/Receive files according to requests submitted by docClient
+	Uniuty Data Generator - Generate XML test data for A4L Unity Data model
 
 DESCRIPTION
 
-	docServer establishes a persistent server process that answers requests on a port. 
-	Typically, it is used with no parameters relying, instead, on a configuration file.
+	unityDataGenerator.js MODELNAME
 	
-	Operation can be customized by specifying a special config file. Also, the port number
-	can be overridden on the command line.
-	
+	Writes XML to file. Displays path of file.
 
 CONTROLS
 
---port:	Override port default set in configuration file (takes precedence over overrideConfigPath)
 
+--thoughtProcess:	specify the name of the AI process sequence for generating XML
+--refinerName:	specify the name of the AI process sequence for refining XML
 --overrideConfigPath:	Specify a configuration file to override default (configs/systemParameters.ini)
 
 OUTPUT
 
+-outFile:	Override the default file path
+-echoAlso:	Show XML on command line as well as writing to file
+
+MESSAGES
+
 -help, --help	shows this help message. No processing is done.
 
--showConfig	display the final configuration file that would be used. No processing is done.
+-showConfig	display the final configuration (pipe to jq, if you have it)
 
--silent
--quiet
--verbose
+-silent	turns off all message output
+-quiet	turns off all but error messages
+-verbose	shows additional messages that clarify what is going on
+-debug	shows all development debugging messages, plus verbose and everything else
 
 EXAMPLES
 
-docServer
-docServer --overrideConfigPath="FILEPATH/systemParamters.ini" PATH/TO/FILE
-deployPrograms "FILEPATH/config.ini" --actions=hostname -skipInitCleanup
+unityDataGenerator.js LEAAccountabilitys; //smallest of the models
+unityDataGenerator.js --overrideConfigPath="FILEPATH/systemParamters.ini" --outFile=PATH/TO/FILE
+
 
 ============================================================
 ${errorMessage}

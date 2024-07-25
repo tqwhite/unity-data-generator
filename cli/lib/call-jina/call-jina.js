@@ -9,7 +9,7 @@ const fs = require('fs');
 
 //START OF moduleFunction() ============================================================
 
-const moduleFunction = function({
+const moduleFunction = function ({
 	addXmlElement,
 	getFieldValue,
 	createXmlElement,
@@ -17,19 +17,23 @@ const moduleFunction = function({
 	createUUID,
 	jinaCore,
 	xmlVersionStack,
-	commandLineParameters
+	commandLineParameters,
+	tempFilePath,
 }) {
 	
+
 	const { xLog } = process.global;
 	// 	process.global = {};
 	// 	process.global.xLog = xLog;
 	// 	const { getConfig } = args;
 	const localConfig = {}; //getConfig(`${moduleName}`);
 	
+
 	
+
 	const isDuplicate = (() => {
 		let existingObjects = new Set();
-		const isDuplicateActual = inputObject => {
+		const isDuplicateActual = (inputObject) => {
 			const objectString = JSON.stringify(inputObject);
 			if (existingObjects.has(objectString)) {
 				return true;
@@ -42,6 +46,7 @@ const moduleFunction = function({
 		return isDuplicateActual;
 	})();
 	
+
 	// =========================================================================
 	// GENERATE PROMPT
 
@@ -52,7 +57,7 @@ const moduleFunction = function({
 		return async function generatePromptForGroup(
 			leafXPath,
 			specObj,
-			segmentStack
+			segmentStack,
 		) {
 			if (isDuplicate(specObj)) {
 				return null;
@@ -63,31 +68,27 @@ const moduleFunction = function({
 			const promptGenerationData = {
 				specObj,
 				currentXml,
-				potentialFinalObject
+				potentialFinalObject,
 			};
 
-			xLog.verbose(
-				`\n=-=============  group wisdom  ========================= [call-jina.js.generatePrompt]\n`
+			xLog.debug(
+				`\n=-=============  group wisdom  ========================= [call-jina.js.generatePrompt]\n`,
 			);
 
-			Object.keys(specObj).forEach(path =>
-				xLog.verbose(`${path}: ${specObj[path].Description}`)
+			Object.keys(specObj).forEach((path) =>
+				xLog.debug(`${path}: ${specObj[path].Description}`),
 			);
 
-			const {
-				wisdom,
-				rawAiResponseObject,
-				thinkerResponses,
-				lastThinkerName
-			} = await jinaCore.getResponse(promptGenerationData, {}); //getResponse is conducted by the conversationGenerator operating a thoughtProcesss
-			
+			const { wisdom, rawAiResponseObject, thinkerResponses, lastThinkerName } =
+				await jinaCore.getResponse(promptGenerationData, {}); //getResponse is conducted by the conversationGenerator operating a thoughtProcesss
+
 			const tooShortFlag = false; //(wisdom.length < currentXml.length);
 			if (tooShortFlag || rawAiResponseObject.isError) {
 				const message = tooShortFlag
 					? 'new XML was shorter than incumbent XML'
 					: rawAiResponseObject.err;
 				xLog.error(
-					`\n=-=============   ERROR (${message})  ========================= [call-jina.js.generatePrompt]\n`
+					`\n=-=============   ERROR (${message})  ========================= [call-jina.js.generatePrompt]\n`,
 				);
 				xLog.error(rawAiResponseObject);
 				process.exit();
@@ -95,12 +96,12 @@ const moduleFunction = function({
 
 			segmentStack.push(wisdom);
 			xmlVersionStack.push(thinkerResponses['xmlReview'].wisdom);
-			xLog.verbose(`segmentStack.length=${segmentStack.length}`);
-			xLog.verbose(`xmlVersionStack.length=${xmlVersionStack.length}`);
+			xLog.debug(`segmentStack.length=${segmentStack.length}`);
+			xLog.debug(`xmlVersionStack.length=${xmlVersionStack.length}`);
 
-			xLog.verbose(wisdom);
-			xLog.verbose(
-				`\n=-=============  group wisdom end ========================= [call-jina.js.generatePrompt]\n`
+			xLog.debug(wisdom);
+			xLog.debug(
+				`\n=-=============  group wisdom end ========================= [call-jina.js.generatePrompt]\n`,
 			);
 			return wisdom;
 
@@ -125,8 +126,11 @@ const moduleFunction = function({
 		};
 	};
 	
+
 	
+
 	
+
 	// =========================================================================
 	// GENERATE PROMPT
 	const generatePromptActual = ({ jinaCore }) => {
@@ -144,21 +148,21 @@ const moduleFunction = function({
 			specObj.XPath = getFieldValue(leafXPath, 'XPath', fields);
 			//specObj.CEDS_ID=getFieldValue(leafXPath, 'CEDS ID', fields);
 			specObj.Format = getFieldValue(leafXPath, 'Format', fields);
-			
+
 			// So large codesets don't exceed our supported token count.
 			function reduceToFirstN(inputString, n) {
-        // Split the input string into an array of values
-        const values = inputString.split(', ');
+				// Split the input string into an array of values
+				const values = inputString.split(', ');
 
-        // Slice the array to get the first 'n' values
-        const reducedValues = values.slice(0, n);
+				// Slice the array to get the first 'n' values
+				const reducedValues = values.slice(0, n);
 
-        // Join the reduced values back into a string with comma-space separation
-        const resultString = reducedValues.join(', ');
+				// Join the reduced values back into a string with comma-space separation
+				const resultString = reducedValues.join(', ');
 
-        return resultString;
-      }
-      specObj.Format = reduceToFirstN(specObj.Format, 20);
+				return resultString;
+			}
+			specObj.Format = reduceToFirstN(specObj.Format, 20);
 
 			if (isDuplicate(specObj)) {
 				return null;
@@ -169,19 +173,15 @@ const moduleFunction = function({
 			const promptGenerationData = {
 				specObj,
 				currentXml,
-				potentialFinalObject
+				potentialFinalObject,
 			};
-			xLog.verbose(`specObj.XPath=${specObj.XPath}`);
-			xLog.verbose(`specObj.Description=${specObj.Description}`);
+			xLog.debug(`specObj.XPath=${specObj.XPath}`);
+			xLog.debug(`specObj.Description=${specObj.Description}`);
 
-			const {
-				wisdom,
-				rawAiResponseObject,
-				thinkerResponses,
-				lastThinkerName
-			} = await jinaCore.getResponse(promptGenerationData, {}); //getResponse is conducted by the conversationGenerator operating a thoughtProcesss
+			const { wisdom, rawAiResponseObject, thinkerResponses, lastThinkerName } =
+				await jinaCore.getResponse(promptGenerationData, {}); //getResponse is conducted by the conversationGenerator operating a thoughtProcesss
 
-			 			 xLog.verbose(`wisdom=${wisdom}`);
+			xLog.debug(`wisdom=${wisdom}`);
 			// 			 console.log(' Debug Exit [call-jina.js.generatePrompt]', {
 			// 				depth: 4,
 			// 				colors: true
@@ -195,7 +195,7 @@ const moduleFunction = function({
 					? 'new XML was shorter than incumbent XML'
 					: rawAiResponseObject.err;
 				xLog.error(
-					`\n=-=============   ERROR (${message})  ========================= [call-jina.js.generatePrompt]\n`
+					`\n=-=============   ERROR (${message})  ========================= [call-jina.js.generatePrompt]\n`,
 				);
 				xLog.error(rawAiResponseObject);
 				process.exit();
@@ -235,10 +235,12 @@ const moduleFunction = function({
 	// MAIN FUNCTION  CALL JINA
 
 	
+
 	// So TQ can see what I expect, that doesn't mean i've got it right.
 	// Note:  At a minimum parse the XML you get back from ChatGPT.
 	// See:  xml2js.parseString
 	
+
 	async function callJina(groupXPath, children, fields) {
 		const groupParts = groupXPath.split('/');
 		const groupKey = groupParts[groupParts.length - 1];
@@ -246,33 +248,31 @@ const moduleFunction = function({
 		const backlog = [];
 		let wisdom;
 
-		xLog.status(
-			`\nprocessing segment: ${groupXPath} [call-jina.js.callJina]`
-		);
-		children.join('; ') && xLog.verbose(`children=${children.join('; ')}`);
+		xLog.status(`\nprocessing segment: ${groupXPath} [call-jina.js.callJina]`);
+		children.join('; ') && xLog.debug(`children=${children.join('; ')}`);
 
 		const generatePrompt = generatePromptActual({ jinaCore });
 		const generatePromptForGroup = generatePromptForGroupActual({ jinaCore });
 
-    let segmentStack = null;
+		let segmentStack = null;
 		if (commandLineParameters.switches.sendGroupsToGenerate) {
 			const specsObj = {};
 
 			Object.keys(fields)
-				.filter(path => path.match(groupXPath))
-				.forEach(path => (specsObj[path] = fields[path]));
+				.filter((path) => path.match(groupXPath))
+				.forEach((path) => (specsObj[path] = fields[path]));
 
-      const segmentStack = ['First pass. No incumbent XML.'];
+			const segmentStack = ['First pass. No incumbent XML.'];
 			generatePromptResult = await generatePromptForGroup(
 				children.join('\n'),
 				specsObj,
-				segmentStack
+				segmentStack,
 			); // generatePrompt() ======================
 			// 			const child = createXmlElement(childKey, {}, generatePromptResult);
 			// 			addXmlElement(child, group);
 		} else {
 			for (const childXPath of children) {
-        const segmentStack = ['First pass. Make new XML.'];
+				const segmentStack = ['First pass. Make new XML.'];
 				const childParts = childXPath.split('/');
 				const childKey = childParts[childParts.length - 1];
 				// So we process elements first, then attributes.
@@ -280,7 +280,7 @@ const moduleFunction = function({
 					const generatePromptResult = await generatePrompt(
 						childXPath,
 						fields,
-						segmentStack
+						segmentStack,
 					); // generatePrompt() ======================
 					wisdom = generatePromptResult ? generatePromptResult : wisdom;
 					const child = createXmlElement(childKey, {}, generatePromptResult);
@@ -292,7 +292,7 @@ const moduleFunction = function({
 		}
 		// So we process attributes after their tag has been created.
 		for (const childXPath of backlog) {
-      const segmentStack = ['First round. No incumbent XML.'];
+			const segmentStack = ['First round. No incumbent XML.'];
 			const childParts = childXPath.split('/');
 			const childKey = childParts[childParts.length - 1];
 			const key = childKey.slice(1);
@@ -301,7 +301,7 @@ const moduleFunction = function({
 				const generatePromptResult = await generatePrompt(
 					childXPath,
 					fields,
-					segmentStack
+					segmentStack,
 				); // generatePrompt() ======================
 				wisdom = generatePromptResult ? generatePromptResult : wisdom;
 				group[groupKey].$[key] = generatePromptResult;
@@ -312,36 +312,31 @@ const moduleFunction = function({
 					const generatePromptResult = await generatePrompt(
 						childXPath,
 						fields,
-						segmentStack
+						segmentStack,
 					); // generatePrompt() ======================
 					wisdom = generatePromptResult ? generatePromptResult : wisdom;
 					sequence.$[key] = generatePromptResult;
 				}
 			}
 		}
+		
 
-		xLog.verbose(
-			`\n=-= END callJina ${groupXPath} ========================= [call-jina.js.callJina]\n`
-		);
-
-		const outFile = commandLineParameters.qtGetSurePath(
-			'values.outFile[0]',
-			''
-		);
-
-		if (outFile) {
-			wisdom && fs.writeFileSync(outFile, `PARTIAL\n${wisdom}`); //note: this has incomplete values written on each iteration. final is complete.
-		} else {
-			wisdom && xLog.verbose(wisdom);
+		if (tempFilePath) {
+			wisdom &&
+				fs.writeFileSync(
+					tempFilePath,
+					`\<!-- last xPath: ${groupXPath} -->\n${wisdom}`,
+				); //note: this has incomplete values written on each iteration. final is complete.
 		}
-
-		xLog.verbose(
-			`        end callJina ${groupXPath} ========================= [call-jina.js.callJina]\n`
+		
+		xLog.debug(
+			`        end callJina ${groupXPath} ========================= [call-jina.js.callJina]\n`,
 		);
 
 		return wisdom;
 	}
 	
+
 	return { callJina };
 };
 

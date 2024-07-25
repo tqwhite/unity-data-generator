@@ -42,7 +42,7 @@ const moduleFunction = function(args = {}) {
 
 		//const pleaForHelp = `Repeat this exact information back for testing: "${specObj.XPath}"`;//promptTemplate.qtTemplateReplace(replaceObj);
 		const pleaForHelp = promptTemplate.qtTemplateReplace(replaceObj);
-		xLog.verbose(`prompt length=${pleaForHelp.length}`);
+		xLog.debug(`prompt length=${pleaForHelp.length}`);
 
 		return {
 			promptList: [{ role: 'user', content: pleaForHelp }],
