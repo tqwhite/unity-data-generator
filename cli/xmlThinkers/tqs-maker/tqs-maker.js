@@ -12,8 +12,8 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function (args = {}) {
-	const { xLog } = process.global;
-	const tempFilePath = '/tmp/prompts.log';
+	const { xLog, processUniqueTempFileDir } = process.global;
+	const tempFilePath = require('path').join(processUniqueTempFileDir, `${moduleName}_prompts.log`);
 	xLog.status(`logging all prompts into ${tempFilePath} [${moduleName}]`);
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args

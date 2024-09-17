@@ -18,7 +18,7 @@ const moduleFunction = function ({ accessParms, modelName }) {
 	xLog.status(`using OpenAI model: ${modelName}`);
 
 	const accessExternalResource = (args, callback) => {
-		const { promptList } = args;
+		const { promptList, temperatureFactor } = args;
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ const moduleFunction = function ({ accessParms, modelName }) {
 
 			xLog.debug(promptList);
 
-			openAiCompletion.getCompletion({ promptList }, localCallback);
+			openAiCompletion.getCompletion({ promptList, temperatureFactor }, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------

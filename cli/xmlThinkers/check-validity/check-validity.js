@@ -15,7 +15,7 @@ const https = require('https');
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function (args = {}) {
-	const { xLog } = process.global;
+	const { xLog, processUniqueTempFileDir } = process.global;
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
 
@@ -103,17 +103,17 @@ const moduleFunction = function (args = {}) {
 					return;
 				}
 
-				const fileString = refinementReport
+				const fileOutputString = refinementReport
 					? refinementReport.replace(/<!validationMessage!>/, validationMessage)
 					: `No refinement report was generated for inValid XML error ${validationMessage}`;
 
-				console.log(`fileString=${fileString}`);
 
 				if (!isValid) {
-					require('fs').writeFileSync('/tmp/refinementLog.log', fileString, {
+					const refinementFilePath=require('path').join(processUniqueTempFileDir, 'refinementLog.log');
+					require('fs').writeFileSync(refinementFilePath, fileOutputString, {
 						append: true,
 					});
-					xLog.status(`refinement results are saved in /tmp/refinementLog.log`);
+					xLog.status(`refinement results are saved in ${refinementFilePath}`);
 				}
 
 				next('', { ...args, validationMessage, isValid });

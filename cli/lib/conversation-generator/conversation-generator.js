@@ -11,128 +11,145 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 
 //START OF moduleFunction() ============================================================
 
-const moduleFunction = function(
+const moduleFunction = function (
 	{ thoughtProcess, smartyPantsChooser },
-	callback
+	callback,
 ) {
-	
+
 	const { xLog, getConfig } = process.global;
-	
+
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
-	const thinkersList=getConfig('thinkers'); //thinkers is the entire prompting datastructure, has an element for each line in a thought process
+	const thinkersList = getConfig('thinkers'); //thinkers is the entire prompting datastructure, has an element for each line in a thought process
 
 	const { thoughtProcesses, defaultThoughtProcess } = localConfig; //thought processes is the list of thinker modules
 
 	const thoughtProcesslist = thoughtProcesses[thoughtProcess];
-	
+
 	// ================================================================================
 	// WHERE THE RUBBER MEETS THE ROAD
-	
+
 	// This acts as an intermediary to convey opaque prompt data from the outside world to the thinkerS that actually talks to an AI system
-	const askTheSmartyPantsActual = ({ localConfig }) => (
-		args,
-		callback
-	) => {
-		const taskList = new taskListPlus();
-		
-		const {promptGenerationData}=args;
+	const askTheSmartyPantsActual =
+		({ localConfig }) =>
+		(args, callback) => {
+			const taskList = new taskListPlus();
 
-	
-		// --------------------------------------------------------------------------------
-		// INITIALIZE PIPE
+			const { promptGenerationData, temperatureFactor } = args;
 
-		taskList.push((args, next) => {
+			// --------------------------------------------------------------------------------
+			// INITIALIZE PIPE
 
-			const thinkerResponses = {};
-
-			next('', { ...args, thinkerResponses });
-		});
-
-		// --------------------------------------------------------------------------------
-		// INSTANTIATE AND EXECUTE THINKERS
-
-		thoughtProcesslist.forEach(thoughtProcess =>
 			taskList.push((args, next) => {
-				const { thinkerResponses, latestResponse='first pass. no XML yet. replace with top-level object.', thinkersList, promptGenerationData } = args;
+				const thinkerResponses = {};
 
-				
-				const thinkerSpec=thinkersList[thoughtProcess.name];
-				const {smartyPantsName}=thinkerSpec;
+				next('', { ...args, thinkerResponses });
+			});
 
-				const localCallback = (err, latestResponse) => {
-					thinkerResponses[thinkerSpec.name]=latestResponse;
-					latestResponse.wisdom=latestResponse.wisdom.replace(/\`\`\`xml/i, '').replace(/\`\`\`/, '');
-					next(err, { ...args, thinkerResponses, latestResponse, lastThinkerName:thinkerSpec.name });
-				};
-				
-				const smartyPants=smartyPantsChooser({smartyPantsName});
+			// --------------------------------------------------------------------------------
+			// INSTANTIATE AND EXECUTE THINKERS
 
-				const thinker = require(thinkerSpec.module)({
-					thinkerSpec,
-					smartyPants
-				});
+			thoughtProcesslist.forEach((thoughtProcess) =>
+				taskList.push((args, next) => {
+					const {
+						thinkerResponses,
+						latestResponse = 'first pass. no XML yet. replace with top-level object.',
+						thinkersList,
+						promptGenerationData,
+					} = args;
 
+					const thinkerSpec = thinkersList[thoughtProcess.name];
+					const { smartyPantsName } = thinkerSpec;
 
-				const thinkerExchangePromptData = {...promptGenerationData, latestResponse};
+					const localCallback = (err, latestResponse) => {
+						thinkerResponses[thinkerSpec.name] = latestResponse;
+						latestResponse.wisdom = latestResponse.wisdom
+							.replace(/\`\`\`xml/i, '')
+							.replace(/\`\`\`/, '');
+						next(err, {
+							...args,
+							thinkerResponses,
+							latestResponse,
+							lastThinkerName: thinkerSpec.name,
+						});
+					};
 
-				thinker.executeRequest({thinkerExchangePromptData}, localCallback);
-			})
-		);
+					const smartyPants = smartyPantsChooser({ smartyPantsName });
 
-		// --------------------------------------------------------------------------------
-		// TASKLIST ITEM TEMPLATE
+					const thinker = require(thinkerSpec.module)({
+						thinkerSpec,
+						smartyPants,
+					});
 
-		taskList.push((args, next) => {
-			const { thinkerResponses } = args;
+					const thinkerExchangePromptData = {
+						...promptGenerationData,
+						temperatureFactor,
+						latestResponse,
+					};
 
-			
-			next('', { ...args});
-		});
+					thinker.executeRequest({ thinkerExchangePromptData }, localCallback);
+				}),
+			);
 
-		// --------------------------------------------------------------------------------
-		// INIT AND EXECUTE THE PIPELINE
+			// --------------------------------------------------------------------------------
+			// TASKLIST ITEM TEMPLATE
 
-		const initialData = { localConfig, promptGenerationData, thinkersList }; //thoughtProcesslist enters in the loop above
-		pipeRunner(taskList.getList(), initialData, (err, args) => {
+			taskList.push((args, next) => {
+				const { thinkerResponses } = args;
 
-			const {latestResponse, responseObj, thinkerResponses, lastThinkerName} = args;
+				next('', { ...args });
+			});
 
-			callback(err, {...latestResponse, thinkerResponses, lastThinkerName});
-		});
-	};
-	
+			// --------------------------------------------------------------------------------
+			// INIT AND EXECUTE THE PIPELINE
 
+			const initialData = { localConfig, promptGenerationData, thinkersList }; //thoughtProcesslist enters in the loop above
+			pipeRunner(taskList.getList(), initialData, (err, args) => {
+				const {
+					latestResponse,
+					responseObj,
+					thinkerResponses,
+					lastThinkerName,
+				} = args;
+
+				callback(err, { ...latestResponse, thinkerResponses, lastThinkerName });
+			});
+		};
 
 	// ================================================================================
 	// INITIALIZE THE THINKERS
-	
+
 	const askTheSmartyPants = askTheSmartyPantsActual({
-		localConfig
+		localConfig,
 	});
 
 	// ================================================================================
 	// DO THE JOB
-	
+
 	let count = 0;
 
 	const getResponse = (promptGenerationData, options, callback) => {
-	
-		if (typeof(options)=='function'){
-			callback=options;
-			options={};
+
+		if (typeof options == 'function') {
+			callback = options;
+			options = {};
 		}
-	
+
 		if (callback) {
-			askTheSmartyPants({promptGenerationData, ...options}, (err, result) => callback(err, 100 * count++));
+			askTheSmartyPants({ promptGenerationData, ...options }, (err, result) =>
+				callback(err, 100 * count++),
+			);
 		} else {
 			return new Promise((resolve, reject) => {
-				askTheSmartyPants({promptGenerationData, ...options}, (err, response) => {
-					resolve(response);
-				});
+				askTheSmartyPants(
+					{ promptGenerationData, ...options },
+					(err, response) => {
+						resolve(response);
+					},
+				);
 			});
 		}
 	};
-	
+
 	return { getResponse };
 };
 

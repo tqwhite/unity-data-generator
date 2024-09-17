@@ -21,9 +21,10 @@ const moduleFunction = function ({ jinaRefiner, commandLineParameters }) {
 	async function callRefiner({ xmlString, targetXpathFieldList }) {
 		let isValid = false;
 		let validationMessage = '';
-		const limit=2;
+		const limit = 5;
 		let count = 0;
 		let wisdom = '';
+		const tempList = [0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6];
 
 		const promptGenerationData = {
 			specObj: {},
@@ -33,7 +34,11 @@ const moduleFunction = function ({ jinaRefiner, commandLineParameters }) {
 		};
 
 		do {
-			const result = await jinaRefiner.getResponse(promptGenerationData, {temperatureFactor:count});
+			const temperatureFactor = tempList[count];
+
+			const result = await jinaRefiner.getResponse(promptGenerationData, {
+				temperatureFactor,
+			});
 
 			const { rawAiResponseObject, thinkerResponses, lastThinkerName } = result;
 			wisdom = result.wisdom;
@@ -44,8 +49,8 @@ const moduleFunction = function ({ jinaRefiner, commandLineParameters }) {
 			);
 
 			promptGenerationData.currentXml = wisdom;
-			promptGenerationData.validationMessage = `Element <x> is illegal. Not part of spec`;//validationMessage;
-
+			promptGenerationData.validationMessage = `Element <x> is illegal. Not part of spec`; //validationMessage;
+			
 
 			if (!isValid) {
 				xLog.error('----------------------------------------');
@@ -56,8 +61,7 @@ const moduleFunction = function ({ jinaRefiner, commandLineParameters }) {
 			}
 
 			count++;
-
-		} while (!isValid && count < limit+1);
+		} while (!isValid && count < limit + 1);
 
 		if (!isValid) {
 			xLog.error(wisdom);

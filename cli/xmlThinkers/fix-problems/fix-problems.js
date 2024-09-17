@@ -12,8 +12,8 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function (args = {}) {
-	const { xLog } = process.global;
-	const tempFilePath = '/tmp/prompts.log';
+	const { xLog, processUniqueTempFileDir } = process.global;
+	const tempFilePath = require('path').join(processUniqueTempFileDir, `${moduleName}_prompts.log`);
 	xLog.status(`logging all prompts into ${tempFilePath} [${moduleName}]`);
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
@@ -66,13 +66,13 @@ const moduleFunction = function (args = {}) {
 	// TALK TO AI
 
 	const accessSmartyPants = (args, callback) => {
-		let { promptList, systemPrompt } = args;
+		let { promptList, systemPrompt, temperatureFactor } = args;
 
 		const localCallback = (err, result) => {
 			callback('', result);
 		};
 		promptList.unshift({ role: 'system', content: systemPrompt });
-		smartyPants.accessExternalResource({ promptList }, localCallback); //in this case, smartyPants is gpt4-completion
+		smartyPants.accessExternalResource({ promptList, temperatureFactor }, localCallback); //in this case, smartyPants is gpt4-completion
 	};
 
 	// ================================================================================
@@ -120,13 +120,14 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { accessSmartyPants, promptList, systemPrompt } = args;
+			const { accessSmartyPants, promptList, systemPrompt, thinkerExchangePromptData } = args;
+			const {temperatureFactor}=thinkerExchangePromptData
 			const localCallback = (err, result) => {
 
 				next(err, { ...args, ...result });
 			};
 
-			accessSmartyPants({ promptList, systemPrompt }, localCallback);
+			accessSmartyPants({ promptList, systemPrompt, temperatureFactor }, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------
@@ -159,14 +160,17 @@ const moduleFunction = function (args = {}) {
 			const refinementReport=`
 ====================================================================================================
 XML REFINEMENT PASS ${new Date().toLocaleString()}
-The XML Validation API returned the following message:
-
-<!validationMessage!>
 
 The Refined XML below was evaluated. Here are the details of the process that allowed for the errors...
 ------------------------\nOriginal XML:\n${thinkerExchangePromptData.potentialFinalObject}\n------------------------
 ------------------------\nRefined XML:\n${wisdom}\n------------------------
 ------------------------\nXML Refinement Explanation:\n${explanation}\n------------------------
+
+The XML Validation API returned the following message for the Refined version:
+
+<!validationMessage!>
+
+------------------------
 			`;
 
 			callback(err, { wisdom, explanation, refinementReport, rawAiResponseObject });

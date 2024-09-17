@@ -16,6 +16,39 @@ const Ajv = require('ajv');
 const { v1, v4 } = require('uuid');
 
 
+/*
+
+NEXT:
+
+In StudentPersonal, we got this:
+
+
+Error: Non-whitespace before first tag.
+Line: 0
+Column: 1
+Char: [
+    at error (/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/node_modules/sax/lib/sax.js:651:10)
+    at strictFail (/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/node_modules/sax/lib/sax.js:677:7)
+    at beginWhiteSpace (/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/node_modules/sax/lib/sax.js:951:7)
+    at SAXParser.write (/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/node_modules/sax/lib/sax.js:1006:11)
+    at exports.Parser.Parser.parseString (/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/node_modules/xml2js/lib/parser.js:337:31)
+    at Parser.parseString (/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/node_modules/xml2js/lib/parser.js:5:59)
+    at exports.parseString (/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/node_modules/xml2js/lib/parser.js:383:19)
+    at /Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/unityDataGenerator.js:468:11
+    at new Promise (<anonymous>)
+    at parseXmlString (/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/unityDataGenerator.js:467:10)
+
+
+I need to add try/catch around the XML parsing in case Jina makes a mistake. Test it by forcing whitespace.
+
+In the catch, add a thinker that reads the error and fixes the XML.
+
+
+2) Make UDG be reenter-able. Ie, let me give it the _temp file and have it pick where it left off
+
+
+*/
+
 //START OF moduleFunction() ========================================hello====================
 
 const moduleFunction = async function (
@@ -33,15 +66,24 @@ const moduleFunction = async function (
 
 	const localConfig = getConfig('SYSTEM');
 
-	const {
-		spreadsheetPath,
-		structuresPath,
-		strictXSD,
-		ignoreTags,
-		knownIds,
-	} = localConfig;
+	const { spreadsheetPath, structuresPath, strictXSD, ignoreTags, knownIds } =
+		localConfig;
 	
-	let {outputsPath}=localConfig;
+
+	let { outputsPath } = localConfig;
+	
+
+	const targetObjectName = commandLineParameters.qtGetSurePath('fileList.0'); //validated below
+	const processUniqueTempFileDir = path.join(
+		'/',
+		'tmp',
+		'unityDataGeneratorTemp',
+		`${targetObjectName}_${Math.floor(Date.now() / 1000)
+			.toString()
+			.slice(-4)}`,
+	);
+	process.global.processUniqueTempFileDir = processUniqueTempFileDir;
+	fs.mkdirSync(processUniqueTempFileDir, { recursive: true });
 
 	const thoughtProcess = commandLineParameters
 		.qtGetSurePath('values.thoughtProcess', [])
@@ -59,31 +101,30 @@ const moduleFunction = async function (
 
 	const callJinaGen = require('./lib/call-jina');
 	const refineXmlGen = require('./lib/refine-xml');
-
-	const targetObjectName = commandLineParameters.qtGetSurePath('fileList.0');
 	
 
-	const outFile = commandLineParameters.qtGetSurePath(
-		'values.outFile[0]',
-		'',
-	);
+	const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
 	
-	if (outFile && fs.existsSync(path.dirname(outFile))){
-		fs.mkdirSync(path.dirname(outFile), {recursive:true});
-		outputsPath=path.dirname(outFile);
+
+	if (outFile && fs.existsSync(path.dirname(outFile))) {
+		fs.mkdirSync(path.dirname(outFile), { recursive: true });
+		outputsPath = path.dirname(outFile);
 	}
 	
+
 	const outputFilePath = outFile
 		? outFile
 		: outputsPath + targetObjectName + '.xml';
-		
-		
-	const baseName=path.basename(outputFilePath);
-	const outputDir=path.dirname(outputFilePath);
-	const extension=path.extname(baseName);
-	const tempName=baseName.replace(extension, '')+'_temp'+extension;
-	const tempFilePath=path.join('/tmp/udgWorkingFiles', tempName);
-	fs.mkdirSync(path.dirname(tempFilePath), {recursive:true});
+
+	const baseName = path.basename(outputFilePath);
+	const outputDir = path.dirname(outputFilePath);
+	fs.mkdirSync(path.dirname(outputFilePath), { recursive: true });
+	const extension = path.extname(baseName);
+	
+
+	const tempName = baseName.replace(extension, '') + '_temp' + extension;
+	const tempFilePath = path.join(processUniqueTempFileDir, tempName);
+	fs.mkdirSync(path.dirname(tempFilePath), { recursive: true });
 	xLog.status(`writing working XML to ${tempFilePath}`);
 
 	if (!targetObjectName && !commandLineParameters.switches.listElements) {
@@ -116,7 +157,7 @@ const moduleFunction = async function (
 		jinaCore,
 		xmlVersionStack,
 		commandLineParameters,
-		tempFilePath
+		tempFilePath,
 	});
 	
 
@@ -216,8 +257,7 @@ const moduleFunction = async function (
 					}
 
 					const { decode } = await import('html-entities');
-
-					fs.mkdirSync(path.dirname(outputFilePath), { recursive: true });
+					
 
 					const xmlString = decode(xmlOutput, { level: 'xml' });
 
@@ -267,7 +307,11 @@ const moduleFunction = async function (
 						xmlString: workingResultString,
 						targetXpathFieldList,
 					}).catch((err) => {
-						xLog.error(`Error: ${err}. Error Exit Quitting Now.`);
+						xLog.status(`Process detail info dir: ${processUniqueTempFileDir}`);
+						xLog.error(
+							`Error: ${err}. Error Exit Quitting Now. See refinement.log for more info and last XML.`,
+						);
+						console.trace();
 						process.exit(1);
 					});
 
@@ -275,9 +319,14 @@ const moduleFunction = async function (
 						xLog.status(refinedXml);
 					}
 
+					xLog.status(`Process detail info dir: ${processUniqueTempFileDir}`);
 					try {
 						fs.writeFileSync(outputFilePath, refinedXml, { encoding: 'utf-8' });
-						xLog.error(`Output file path: ${outputFilePath}`);
+						fs.symlinkSync(
+							outputFilePath,
+							path.join(processUniqueTempFileDir, 'outputFileAlias'),
+						);
+						xLog.status(`Output file path: ${outputFilePath}`);
 					} catch (error) {
 						xLog.error(`Error writing: ${outputFilePath}`);
 						xLog.error(error.toString());
@@ -487,19 +536,18 @@ const moduleFunction = async function (
 	// See: createXmlString
 	function parseXmlString(xml) {
 		return new Promise((resolve, reject) => {
-		try{
-			xml2js.parseString(xml, (err, result) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(result);
-				}
-			});
-			}
-			catch(err){
-				xLog.error(`xml2js() failed on this XML:`)
+			try {
+				xml2js.parseString(xml, (err, result) => {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(result);
+					}
+				});
+			} catch (err) {
+				xLog.error(`xml2js() failed on this XML:`);
 				xLog.result(xml);
-				xLog.error(`End of bad XML`)
+				xLog.error(`End of bad XML`);
 				reject(err);
 			}
 		});
@@ -605,7 +653,16 @@ const moduleFunction = async function (
 				}
 			}
 		}
-		const parsedObject = await parseXmlString(child);
+
+		//one time, Jina gave me XML that had leading/following characters. removing them
+		const parsedObject = await parseXmlString(
+			child.replace(/^[^[]*?</, '<').replace(/[^>*]*?$/, ''),
+		).catch((err) => {
+			xLog.error(err);
+			process.exit(1);
+			
+		});
+
 		copyXmlChildren(parsedObject, xmlObject);
 		// So we set the namespace.
 		const rootKey = Object.keys(xmlObject)[0];

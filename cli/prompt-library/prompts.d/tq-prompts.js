@@ -232,6 +232,10 @@ An XML validator was run on the current XML object. Here is the result:
 
 If there are XML validation errors, you should correct them, keeping in mind the semantic specification and the following instructions.
 
+These XML validation errors are very technical and complex. You should read them carefully, step by step, look at the element it references and find a way to change the element prevent the error. The exact text of the validation error is very important.
+
+WHEN YOU COMPLETE THE REVISIONS, PLEASE REVIEW THE RESULTING XML AND COMPARE IT TO MAKE SURE THE VALIDATION ERROR IS REPAIRED.
+
 It is crucial that All elements marked as mandatory in thee semantic specification are present. You should create new, valid elements if any mandatory ones are missing. All semantic information must be correct.
 
 If there are elements in the XML that do not have corresponding xPath specifications, they should be removed.

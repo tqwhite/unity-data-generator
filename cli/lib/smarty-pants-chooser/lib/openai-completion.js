@@ -20,7 +20,7 @@ const moduleFunction = function({ accessParms, model, promptList }) {
 	
 	const getCompletion = (args, callback) => {
 		const taskList = new taskListPlus();
-		const { promptList } = args;
+		const { promptList, temperatureFactor } = args;
 
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
@@ -52,7 +52,7 @@ const moduleFunction = function({ accessParms, model, promptList }) {
 				rawAiResponseObject = await openai.chat.completions.create({
 					messages: promptList,
 					model,
-					temperature: 0.0,
+					temperature: temperatureFactor?temperatureFactor:0.0,
 					//max_tokens: 3000,
 					top_p: 1,
 					frequency_penalty: 0,
