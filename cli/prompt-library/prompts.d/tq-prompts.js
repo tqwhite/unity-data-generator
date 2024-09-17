@@ -168,6 +168,17 @@ Example of merging new data while keeping elements:
 \t</Example>
 </Examples>
 
+CRUCIAL POINT: NONE OF THE ELEMENTS (Examples, Sub1, etc) SHOWN IN THE EXAMPLES ABOVE SHOULD APPEAR IN THE RESULTING OBJECT. THEY ARE ILLUSTRATIONS ONLY.
+
+Finally, the top level element requires a namespace identification. For this project it is:
+
+ xmlns="http://www.sifassociation.org/datamodel/na/4.x"
+ 
+EC,
+
+<Example  xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+</Example>
+
 Here is the real data:
 
 
@@ -249,6 +260,10 @@ Sometimes there are codes from outside standards, eg, SCED, but there are others
 
 ADVICE FOR SOLVING COMMON PROBLEMS:
 
+• "Cannot find the declaration of element X"
+
+	• Sometimes previous generating steps create a list with multiple elements and then subsequent steps remove the unwanted grouping element. If there are multiple elements with the same name and no grouping element, discard all except one of them.
+
 • "The root element is not specified in the semantic specification"
 
 	• Often, the generating entity creates an enclosing parent element with a plural name, e.g., <Things><Thing>value</Thing></Things>. If there is no XPath for the plural parent element, remove the parent element and keep the most complete of the enclosed elements.
@@ -261,6 +276,8 @@ ADVICE FOR SOLVING COMMON PROBLEMS:
 
 	• Sometimes, elements that are neither in the semantic specification nor the XML are generated. It is crucial to carefully compare the XML to the xPaths in the semantic specification and eliminate elements that are not specified there.
 
+• Any namespace error
+	• Make sure that the top level element includes the follow namespace declration: xmlns="http://www.sifassociation.org/datamodel/na/4.x"
 
 INSTRUCTIONS
 
@@ -270,9 +287,11 @@ Please...
 
 2) compare the object and all of its values to the semantic specification. Make sure that the values match the explanation in the semantic specification then
 
-3) review your work to make sure that all of the values are coherent with each other and finally
+3) since there can be many unwanted elements not found in the semantic specification, make sure ALL are removed then
 
-4) Go back over it one more time to make sure all three of the previous tasks were done correctly.
+4) review your work to make sure that all of the values are coherent with each other and finally
+
+5) Go back over it one more time to make sure all three of the previous tasks were done correctly.
 
 To facilliate subsequent processing, please format your output according to these instructions:
 

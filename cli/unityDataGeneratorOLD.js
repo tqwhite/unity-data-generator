@@ -74,7 +74,7 @@ const moduleFunction = async function (
 	
 
 	const targetObjectName = commandLineParameters.qtGetSurePath('fileList.0'); //validated below
-	const processUniqueTempFileDir = path.join(
+	const batchSpecificDebugLogDirPath = path.join(
 		'/',
 		'tmp',
 		'unityDataGeneratorTemp',
@@ -82,8 +82,8 @@ const moduleFunction = async function (
 			.toString()
 			.slice(-4)}`,
 	);
-	process.global.processUniqueTempFileDir = processUniqueTempFileDir;
-	fs.mkdirSync(processUniqueTempFileDir, { recursive: true });
+	process.global.batchSpecificDebugLogDirPath = batchSpecificDebugLogDirPath;
+	fs.mkdirSync(batchSpecificDebugLogDirPath, { recursive: true });
 
 	const thoughtProcess = commandLineParameters
 		.qtGetSurePath('values.thoughtProcess', [])
@@ -123,7 +123,7 @@ const moduleFunction = async function (
 	
 
 	const tempName = baseName.replace(extension, '') + '_temp' + extension;
-	const tempFilePath = path.join(processUniqueTempFileDir, tempName);
+	const tempFilePath = path.join(batchSpecificDebugLogDirPath, tempName);
 	fs.mkdirSync(path.dirname(tempFilePath), { recursive: true });
 	xLog.status(`writing working XML to ${tempFilePath}`);
 
@@ -307,7 +307,7 @@ const moduleFunction = async function (
 						xmlString: workingResultString,
 						targetXpathFieldList,
 					}).catch((err) => {
-						xLog.status(`Process detail info dir: ${processUniqueTempFileDir}`);
+						xLog.status(`Process detail info dir: ${batchSpecificDebugLogDirPath}`);
 						xLog.error(
 							`Error: ${err}. Error Exit Quitting Now. See refinement.log for more info and last XML.`,
 						);
@@ -319,12 +319,12 @@ const moduleFunction = async function (
 						xLog.status(refinedXml);
 					}
 
-					xLog.status(`Process detail info dir: ${processUniqueTempFileDir}`);
+					xLog.status(`Process detail info dir: ${batchSpecificDebugLogDirPath}`);
 					try {
 						fs.writeFileSync(outputFilePath, refinedXml, { encoding: 'utf-8' });
 						fs.symlinkSync(
 							outputFilePath,
-							path.join(processUniqueTempFileDir, 'outputFileAlias'),
+							path.join(batchSpecificDebugLogDirPath, 'outputFileAlias'),
 						);
 						xLog.status(`Output file path: ${outputFilePath}`);
 					} catch (error) {

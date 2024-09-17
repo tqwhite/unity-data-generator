@@ -12,8 +12,8 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function (args = {}) {
-	const { xLog, processUniqueTempFileDir } = process.global;
-	const tempFilePath = require('path').join(processUniqueTempFileDir, `${moduleName}_prompts.log`);
+	const { xLog, batchSpecificDebugLogDirPath } = process.global;
+	const tempFilePath = require('path').join(batchSpecificDebugLogDirPath, `${moduleName}_prompts.log`);
 	xLog.status(`logging all prompts into ${tempFilePath} [${moduleName}]`);
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
@@ -35,7 +35,7 @@ const moduleFunction = function (args = {}) {
 			const replaceObject = {
 				...thinkerExchangePromptData,
 				potentialFinalObject,
-				validationMessage: thinkerExchangePromptData.validationMessage?thinkerExchangePromptData.validationMessage:'No XML structural errors are known',
+				validationMessage: thinkerExchangePromptData.validationMessage?JSON.stringify(thinkerExchangePromptData.validationMessage, '', '\t'):'No XML structural errors are known',
 				employerModuleName: moduleName,
 			};
 			const { promptList, extractionParameters } =

@@ -15,7 +15,7 @@ const https = require('https');
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function (args = {}) {
-	const { xLog, processUniqueTempFileDir } = process.global;
+	const { xLog, batchSpecificDebugLogDirPath } = process.global;
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
 
@@ -35,10 +35,12 @@ const moduleFunction = function (args = {}) {
 	const accessSmartyPants = (currentXml, callback) => {
 		const localCallback = (err, validationMessage) => {
 			let isValid = false;
-			if (validationMessage == 'XML is valid.') {
+console.dir({['validationMessage']:validationMessage}, { showHidden: false, depth: 4, colors: true });
+
+			if (validationMessage.pass) {
 				isValid = true;
 			}
-			xLog.verbose(`XML VALIDATION RESULT: ${validationMessage}`);
+			xLog.verbose(`XML VALIDATION RESULT: ${JSON.stringify(validationMessage, '', '\t')}`);
 			callback('', { validationMessage, isValid });
 		};
 		const url = 'https://testharness.a4l.org/SIFController/api/validate/4.3/';
@@ -104,12 +106,12 @@ const moduleFunction = function (args = {}) {
 				}
 
 				const fileOutputString = refinementReport
-					? refinementReport.replace(/<!validationMessage!>/, validationMessage)
+					? refinementReport.replace(/<!validationMessage!>/, JSON.stringify(validationMessage, '', '\t'))
 					: `No refinement report was generated for inValid XML error ${validationMessage}`;
 
 
 				if (!isValid) {
-					const refinementFilePath=require('path').join(processUniqueTempFileDir, 'refinementLog.log');
+					const refinementFilePath=require('path').join(batchSpecificDebugLogDirPath, 'refinementLog.log');
 					require('fs').writeFileSync(refinementFilePath, fileOutputString, {
 						append: true,
 					});

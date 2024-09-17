@@ -63,6 +63,7 @@ const moduleFunction = async function (
 	}
 
 	process.global.getConfig = getConfig;
+	process.global.commandLineParameters = commandLineParameters; //recent protocol is to keep this in global
 
 	const localConfig = getConfig('SYSTEM');
 
@@ -74,7 +75,7 @@ const moduleFunction = async function (
 	
 
 	const targetObjectName = commandLineParameters.qtGetSurePath('fileList.0'); //validated below
-	const processUniqueTempFileDir = path.join(
+	const batchSpecificDebugLogDirPath = path.join(
 		'/',
 		'tmp',
 		'unityDataGeneratorTemp',
@@ -82,8 +83,8 @@ const moduleFunction = async function (
 			.toString()
 			.slice(-4)}`,
 	);
-	process.global.processUniqueTempFileDir = processUniqueTempFileDir;
-	fs.mkdirSync(processUniqueTempFileDir, { recursive: true });
+	process.global.batchSpecificDebugLogDirPath = batchSpecificDebugLogDirPath;
+	fs.mkdirSync(batchSpecificDebugLogDirPath, { recursive: true });
 
 	const thoughtProcess = commandLineParameters
 		.qtGetSurePath('values.thoughtProcess', [])
@@ -123,7 +124,7 @@ const moduleFunction = async function (
 	
 
 	const tempName = baseName.replace(extension, '') + '_temp' + extension;
-	const tempFilePath = path.join(processUniqueTempFileDir, tempName);
+	const tempFilePath = path.join(batchSpecificDebugLogDirPath, tempName);
 	fs.mkdirSync(path.dirname(tempFilePath), { recursive: true });
 	xLog.status(`writing working XML to ${tempFilePath}`);
 
@@ -148,148 +149,15 @@ const moduleFunction = async function (
 
 	const xmlVersionStack = ['First pass. No XML']; //this probably needs to be moved to a callJina() link, the one for the beginning of a new element
 
-	const { callJina } = callJinaGen({
-		addXmlElement,
-		getFieldValue,
-		createXmlElement,
-		knownIds,
-		createUUID,
-		jinaCore,
-		xmlVersionStack,
-		commandLineParameters,
-		tempFilePath,
-	});
-	
-
-	const { callRefiner } = refineXmlGen({
-		jinaRefiner,
-		commandLineParameters,
-	});
-	
-// ====================================================================================
-// main iteration function
-const mainIterationFunction = async ({ sheet, structurePath, xmlString }) => {
-  // Generate a list of target XPath fields from the provided worksheet
-  const targetXpathFieldList = createWorksheetFields(sheet);
-
-  // Callback function to handle the parsed XML
-  const parseStringCallback = async (err, result) => {
-    if (err) {
-      xLog.error(`Error parsing the XML: ${err.message}`);
-      process.exit(1);
-    }
-
-    // Ensure the output directory exists
-    fs.mkdirSync(path.dirname(structurePath), { recursive: true });
-    xLog.status(`Writing to output directory: ${structurePath}`);
-
-    const xmlCollection = result;
-
-    // Extract the root element name from the XML
-    const rootName = Object.keys(xmlCollection)[0];
-    const xmlnsDeclaration = xmlCollection[rootName].$?.xmlns; // Namespace (if any)
-
-    // Use XPath to find the root element
-    const xpathResult = xpath.find(xmlCollection, '/' + rootName);
-    const objectName = rootName.slice(0, -1); // Remove last character to get object name
-    let template = xpathResult[0][objectName][0];
-
-    // Add namespace declaration if present
-    if (xmlnsDeclaration != null) {
-      template.$.xmlns = xmlnsDeclaration;
-    }
-    template = { [objectName]: template };
-
-    // Convert the template object back to an XML string
-    let xmlInput = createXmlString(template);
-    xmlInput = removeFirstLine(xmlInput); // Remove XML declaration line
-
-    // Initialize an XML object for data generation
-    const xmlObject = createXmlElement(rootName);
-
-    // Traverse the XML and populate data fields
-    await traverseXML(sheet, xmlObject, targetXpathFieldList); // This function internally calls callJina()
-
-    // Generate the output XML string
-    let xmlOutput = createXmlString(xmlObject);
-    xmlOutput = removeFirstLine(xmlOutput); // Remove XML declaration line
-
-    // Decode any HTML entities in the XML string
-    const { decode } = await import('html-entities');
-    const decodedXmlString = decode(xmlOutput, { level: 'xml' });
-
-    let workingResultString = decodedXmlString;
-
-    // Optionally manipulate the XML for debugging purposes
-    // Change the switch value to 'a' or 'b' to introduce errors for testing
-    switch ('no forced error for debug') {
-      case 'a':
-        // Introduce a deliberate error by inserting invalid XML content
-        workingResultString = decodedXmlString.replace(
-          '</LEAAccountability>',
-          '<x>HELLO</x>\n</LEAAccountability>',
-        );
-        break;
-      case 'b':
-        // Replace the entire XML with a sample XML containing errors
-        workingResultString = `<LEAAccountabilitys xmlns="http://www.sifassociation.org/datamodel/na/4.x">
-  <!-- Sample XML data for debugging -->
-</LEAAccountabilitys>`;
-        break;
-    }
-
-    // Log the working result string for debugging
-    console.log(`\n=== Working Result String ===\n`);
-    console.log(`workingResultString=${workingResultString}`);
-    console.log(`\n=============================\n`);
-
-    // Refine the XML using an external function
-    const refinedXml = await callRefiner({
-      xmlString: workingResultString,
-      targetXpathFieldList,
-    }).catch((err) => {
-      xLog.status(`Process detail info dir: ${processUniqueTempFileDir}`);
-      xLog.error(
-        `Error: ${err}. Error Exit Quitting Now. See refinement.log for more info and last XML.`,
-      );
-      console.trace();
-      process.exit(1);
-    });
-
-    // Optionally display the refined XML
-    if (commandLineParameters.switches.echoAlso) {
-      xLog.status(refinedXml);
-    }
-
-    xLog.status(`Process detail info dir: ${processUniqueTempFileDir}`);
-
-    // Write the refined XML to the output file
-    try {
-      fs.writeFileSync(outputFilePath, refinedXml, { encoding: 'utf-8' });
-      fs.symlinkSync(
-        outputFilePath,
-        path.join(processUniqueTempFileDir, 'outputFileAlias'),
-      );
-      xLog.status(`Output file path: ${outputFilePath}`);
-    } catch (error) {
-      xLog.error(`Error writing to: ${outputFilePath}`);
-      xLog.error(error.toString());
-      process.exit(1);
-    }
-  };
-
-  // Parse the XML string using xml2js
-  await xml2js.parseString(xmlString, parseStringCallback);
-};
-
-
-
-
 
 	
+
 	
+
 	
+
 	
+
 	
 
 	// So we generate an object (rather than a collection).
@@ -566,7 +434,7 @@ const mainIterationFunction = async ({ sheet, structurePath, xmlString }) => {
 	}
 
 	// Function to loop over the sheet in document order.
-	async function traverseXML(sheet, xmlObject, fields) {
+	const traverseXML= ({callJina})=>async function (sheet, xmlObject, fields) {
 		// Find the range of cells in the sheet
 		const range = xlsx.utils.decode_range(sheet['!ref']);
 		const rows = range.e.r + 1; // Total number of rows (1-based index)
@@ -624,6 +492,46 @@ const mainIterationFunction = async ({ sheet, structurePath, xmlString }) => {
 
 	// EXECUTE PROCESSING ===================================================================================
 
+	const { callJina } = callJinaGen({
+		addXmlElement,
+		getFieldValue,
+		createXmlElement,
+		knownIds,
+		createUUID,
+		jinaCore,
+		xmlVersionStack,
+		commandLineParameters,
+		tempFilePath,
+	});
+	
+
+	const { callRefiner } = refineXmlGen({
+		jinaRefiner,
+		commandLineParameters,
+	});
+	
+	
+
+
+	
+
+	const { cleanAndOutputXml } = require('./lib/clean-and-output-xml-exit')({
+					createWorksheetFields,
+					createXmlString,
+					removeFirstLine,
+					createXmlElement,
+					traverseXML:traverseXML({callJina}),
+					callRefiner,
+					xpath,
+					xml2js,
+					batchSpecificDebugLogDirPath,
+				});
+
+	
+
+	
+	
+	
 	try {
 		const startTime = performance.now(); //milliseconds
 		const workbook = xlsx.readFile(spreadsheetPath);
@@ -642,23 +550,26 @@ const mainIterationFunction = async ({ sheet, structurePath, xmlString }) => {
 
 			const sheet = workbook.Sheets[name];
 
-		const structurePath = structuresPath + name + '.xml';
-		
-		// So we have an XML template to fill in.
-		if (!fs.existsSync(structurePath)) {
-			xLog.status(`XML not found: ${structurePath}`);
-			process.exit(1);
+			const structurePath = structuresPath + name + '.xml';
+
+			// So we have an XML template to fill in.
+			if (!fs.existsSync(structurePath)) {
+				xLog.status(`XML not found: ${structurePath}`);
+				process.exit(1);
+			}
+			const xmlString = fs.readFileSync(structurePath, 'utf8');
+
+			// Parse the XML string using xml2js
+			await xml2js.parseString(
+				xmlString,
+				cleanAndOutputXml({
+					targetXpathFieldList,
+					sheet,
+					structurePath,
+					outputFilePath,}),
+			);
 		}
-		const xmlString = fs.readFileSync(structurePath, 'utf8');
-			await mainIterationFunction({
-				workbook,
-				worksheetNames,
-				index,
-				sheet,
-				name,
-				targetXpathFieldList,structurePath,xmlString
-			});
-		}
+
 		const endTime = performance.now();
 		const duration = ((endTime - startTime) / 1000).toFixed(2);
 

@@ -49,13 +49,14 @@ const moduleFunction = function ({ jinaRefiner, commandLineParameters }) {
 			);
 
 			promptGenerationData.currentXml = wisdom;
-			promptGenerationData.validationMessage = `Element <x> is illegal. Not part of spec`; //validationMessage;
+			promptGenerationData.validationMessage = {error:`Element <x> is illegal. Not part of spec`}; //validationMessage;
 			
 
 			if (!isValid) {
 				xLog.error('----------------------------------------');
 				xLog.error(wisdom);
-				xLog.status(`XML Validation Error: ${validationMessage}`);
+				xLog.status(`XML Validation Error: `);
+				xLog.status(validationMessage);
 				xLog.status(`Tries remaining: ${limit - count}`);
 				xLog.error('----------------------------------------');
 			}
