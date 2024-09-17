@@ -434,7 +434,7 @@ const moduleFunction = async function (
 	}
 
 	// Function to loop over the sheet in document order.
-	const traverseXML= ({callJina})=>async function (sheet, xmlObject, fields) {
+	const traverseXMLGen= ({callJina})=>async function (sheet, xmlObject, fields) {
 		// Find the range of cells in the sheet
 		const range = xlsx.utils.decode_range(sheet['!ref']);
 		const rows = range.e.r + 1; // Total number of rows (1-based index)
@@ -520,11 +520,12 @@ const moduleFunction = async function (
 					createXmlString,
 					removeFirstLine,
 					createXmlElement,
-					traverseXML:traverseXML({callJina}),
+					traverseXMLGen,
 					callRefiner,
 					xpath,
 					xml2js,
 					batchSpecificDebugLogDirPath,
+					callJina
 				});
 
 	

@@ -35,8 +35,6 @@ const moduleFunction = function (args = {}) {
 	const accessSmartyPants = (currentXml, callback) => {
 		const localCallback = (err, validationMessage) => {
 			let isValid = false;
-console.dir({['validationMessage']:validationMessage}, { showHidden: false, depth: 4, colors: true });
-
 			if (validationMessage.pass) {
 				isValid = true;
 			}

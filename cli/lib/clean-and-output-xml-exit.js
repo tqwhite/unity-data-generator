@@ -20,11 +20,12 @@ const moduleFunction =
 		createXmlString,
 		removeFirstLine,
 		createXmlElement,
-		traverseXML,
+		traverseXMLGen,
 		callRefiner,
 		xpath,
 		xml2js,
 		batchSpecificDebugLogDirPath,
+		callJina,
 	} = {}) => {
 		const { xLog, getConfig, rawConfig, commandLineParameters } =
 			process.global;
@@ -64,7 +65,11 @@ const moduleFunction =
 				const xmlObject = createXmlElement(rootName);
 
 				// Traverse the XML and populate data fields
-				await traverseXML(sheet, xmlObject, targetXpathFieldList); // This function internally calls callJina()
+				await traverseXMLGen({ callJina })(
+					sheet,
+					xmlObject,
+					targetXpathFieldList,
+				); // This function internally calls callJina()
 
 				// Generate the output XML string
 				let xmlOutput = createXmlString(xmlObject);
@@ -85,19 +90,24 @@ const moduleFunction =
 							'</LEAAccountability>',
 							'<x>HELLO</x>\n</LEAAccountability>',
 						);
+
+						// Log the working result string for debugging
+						console.log(`\n=== Working Result String ===\n`);
+						console.log(`workingResultString=${workingResultString}`);
+						console.log(`\n=============================\n`);
 						break;
 					case 'b':
 						// Replace the entire XML with a sample XML containing errors
 						workingResultString = `<LEAAccountabilitys xmlns="http://www.sifassociation.org/datamodel/na/4.x">
   <!-- Sample XML data for debugging -->
 </LEAAccountabilitys>`;
+
+						// Log the working result string for debugging
+						console.log(`\n=== Working Result String ===\n`);
+						console.log(`workingResultString=${workingResultString}`);
+						console.log(`\n=============================\n`);
 						break;
 				}
-
-				// Log the working result string for debugging
-				console.log(`\n=== Working Result String ===\n`);
-				console.log(`workingResultString=${workingResultString}`);
-				console.log(`\n=============================\n`);
 
 				// Refine the XML using an external function
 				const refinedXml = await callRefiner({
