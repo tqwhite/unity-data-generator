@@ -30,10 +30,11 @@ const moduleFunction = function (args = {}) {
 		(promptGenerator) =>
 		(thinkerExchangePromptData = {}) => {
 			//sample: const promptList = [{ role: 'user', content: 'one sentence about neutron starts' }];
-			const { specObj, currentXml, potentialFinalObject } =
+			const { specObj, currentXml, potentialFinalObject, elementSpecWorksheet } =
 				thinkerExchangePromptData;
 			const replaceObject = {
 				specObj,
+				elementSpecWorksheet,
 				potentialFinalObject,
 				newXmlSegment: thinkerExchangePromptData.latestResponse.wisdom,
 				currentXml,

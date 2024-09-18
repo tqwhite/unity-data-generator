@@ -33,7 +33,7 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 		'--thoughtProcess',
 		'--refinerName',
 		'-echoAlso',
-		'-listElements'
+		'-listElements',
 	];
 
 	const commandLineParameters = commandLineParser.getParameters();

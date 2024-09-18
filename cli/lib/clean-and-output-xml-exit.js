@@ -31,12 +31,8 @@ const moduleFunction =
 			process.global;
 		// Callback function to handle the parsed XML
 		const cleanAndOutputXml =
-			({ sheet, structurePath, outputFilePath, targetXpathFieldList }) =>
+			({ sheet, structurePath, outputFilePath, targetXpathFieldList, elementSpecWorksheet }) =>
 			async (err, xmlCollection) => {
-				if (err) {
-					xLog.error(`Error parsing the XML: ${err.message}`);
-					process.exit(1);
-				}
 
 				// Ensure the output directory exists
 				fs.mkdirSync(path.dirname(structurePath), { recursive: true });
@@ -65,11 +61,12 @@ const moduleFunction =
 				const xmlObject = createXmlElement(rootName);
 
 				// Traverse the XML and populate data fields
-				await traverseXMLGen({ callJina })(
+				await traverseXMLGen({ callJina })({
 					sheet,
 					xmlObject,
-					targetXpathFieldList,
-				); // This function internally calls callJina()
+					fields:targetXpathFieldList,
+					elementSpecWorksheet
+				}); // This function internally calls callJina()
 
 				// Generate the output XML string
 				let xmlOutput = createXmlString(xmlObject);
@@ -81,33 +78,6 @@ const moduleFunction =
 
 				let workingResultString = decodedXmlString;
 
-				// Optionally manipulate the XML for debugging purposes
-				// Change the switch value to 'a' or 'b' to introduce errors for testing
-				switch ('no forced error for debug') {
-					case 'a':
-						// Introduce a deliberate error by inserting invalid XML content
-						workingResultString = decodedXmlString.replace(
-							'</LEAAccountability>',
-							'<x>HELLO</x>\n</LEAAccountability>',
-						);
-
-						// Log the working result string for debugging
-						console.log(`\n=== Working Result String ===\n`);
-						console.log(`workingResultString=${workingResultString}`);
-						console.log(`\n=============================\n`);
-						break;
-					case 'b':
-						// Replace the entire XML with a sample XML containing errors
-						workingResultString = `<LEAAccountabilitys xmlns="http://www.sifassociation.org/datamodel/na/4.x">
-  <!-- Sample XML data for debugging -->
-</LEAAccountabilitys>`;
-
-						// Log the working result string for debugging
-						console.log(`\n=== Working Result String ===\n`);
-						console.log(`workingResultString=${workingResultString}`);
-						console.log(`\n=============================\n`);
-						break;
-				}
 
 				// Refine the XML using an external function
 				const refinedXml = await callRefiner({
@@ -126,7 +96,7 @@ const moduleFunction =
 
 				// Optionally display the refined XML
 				if (commandLineParameters.switches.echoAlso) {
-					xLog.status(refinedXml);
+					xLog.result(refinedXml);
 				}
 
 				xLog.status(`Process detail info dir: ${batchSpecificDebugLogDirPath}`);

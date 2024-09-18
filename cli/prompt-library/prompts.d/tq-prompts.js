@@ -98,7 +98,11 @@ It is imperative that you always express the entire XML object with NO elisions,
 
 The testing data XML that is expressed should contain only the new (or updated) objects. If you found list elements, the containing element should be included.
 
-Definition Information:
+Here us the definition of the entire object:
+
+<!elementSpecWorksheetJson!>
+
+Here is the part we are working on right now:
 
 <!specObjJson!>
 
@@ -181,6 +185,11 @@ EC,
 
 Here is the real data:
 
+Definition of the entire object:
+
+<!elementSpecWorksheetJson!>
+
+The final object should be consistent with this information. The sequence of XML elements should appear in the same order as their xPaths appear in this specification.
 
 Base:
 

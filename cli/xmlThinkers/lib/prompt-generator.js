@@ -15,6 +15,7 @@ const moduleFunction = function(args = {}) {
 	const iterativeGeneratorPrompt = args => {
 		const {
 			specObj,
+			elementSpecWorksheet,
 			currentXml,
 			employerModuleName,
 			potentialFinalObject
@@ -34,6 +35,7 @@ const moduleFunction = function(args = {}) {
 
 		const replaceObj = {
 			...args,
+			elementSpecWorksheetJson: JSON.stringify(elementSpecWorksheet, '', '\t'),
 			specObjJson: JSON.stringify(specObj, '', '\t'),
 			currentXml,
 			potentialFinalObject,

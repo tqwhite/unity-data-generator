@@ -29,12 +29,11 @@ const moduleFunction = function (args = {}) {
 		(promptGenerator) =>
 		(thinkerExchangePromptData = {}) => {
 			//sample: const promptList = [{ role: 'user', content: 'one sentence about neutron starts' }];
-			const { specObj, currentXml, elementSpecWorksheet } = thinkerExchangePromptData;
+			const { specObj, currentXml } = thinkerExchangePromptData;
 			const { promptList, extractionParameters } =
 				promptGenerator.iterativeGeneratorPrompt({
 					specObj,
 					currentXml,
-					elementSpecWorksheet,
 					employerModuleName: moduleName,
 				});
 			return { promptList, extractionParameters };
