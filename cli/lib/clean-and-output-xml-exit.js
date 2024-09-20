@@ -38,45 +38,52 @@ const moduleFunction =
 				fs.mkdirSync(path.dirname(structurePath), { recursive: true });
 				xLog.status(`Writing to output directory: ${structurePath}`);
 
+
+          let workingResultString = await callJina({
+            groupXPath:'/LEAAccountability',
+            children: ['/LEAAccountability/@RefId'],
+            fields:targetXpathFieldList,
+            elementSpecWorksheet,
+          });
 				// Extract the root element name from the XML
-				const rootName = Object.keys(xmlCollection)[0];
-				const xmlnsDeclaration = xmlCollection[rootName].$?.xmlns; // Namespace (if any)
-
-				// Use XPath to find the root element
-				const xpathResult = xpath.find(xmlCollection, '/' + rootName);
-				const objectName = rootName.slice(0, -1); // Remove last character to get object name
-				let template = xpathResult[0][objectName][0];
-
-				// Add namespace declaration if present
-				if (xmlnsDeclaration != null) {
-					template.$.xmlns = xmlnsDeclaration;
-				}
-				template = { [objectName]: template };
-
-				// Convert the template object back to an XML string
-				let xmlInput = createXmlString(template);
-				xmlInput = removeFirstLine(xmlInput); // Remove XML declaration line
+// 				const rootName = Object.keys(xmlCollection)[0];
+// 				const xmlnsDeclaration = xmlCollection[rootName].$?.xmlns; // Namespace (if any)
+// 
+// 				// Use XPath to find the root element
+// 				const xpathResult = xpath.find(xmlCollection, '/' + rootName);
+// 				const objectName = rootName.slice(0, -1); // Remove last character to get object name
+// 				let template = xpathResult[0][objectName][0];
+// 
+// 				// Add namespace declaration if present
+// 				if (xmlnsDeclaration != null) {
+// 					template.$.xmlns = xmlnsDeclaration;
+// 				}
+// 				template = { [objectName]: template };
+// 
+// 				// Convert the template object back to an XML string
+// 				let xmlInput = createXmlString(template);
+// 				xmlInput = removeFirstLine(xmlInput); // Remove XML declaration line
 
 				// Initialize an XML object for data generation
-				const xmlObject = createXmlElement(rootName);
-
-				// Traverse the XML and populate data fields
-				await traverseXMLGen({ callJina })({
-					sheet,
-					xmlObject,
-					fields:targetXpathFieldList,
-					elementSpecWorksheet
-				}); // This function internally calls callJina()
+//		const xmlObject = createXmlElement(rootName);
+          
+          
+// 				// Traverse the XML and populate data fields
+// 				await traverseXMLGen({ callJina })({
+// 					sheet,
+// 					xmlObject,
+// 					fields:targetXpathFieldList,
+// 					elementSpecWorksheet
+// 				}); // This function internally calls callJina()
 
 				// Generate the output XML string
-				let xmlOutput = createXmlString(xmlObject);
-				xmlOutput = removeFirstLine(xmlOutput); // Remove XML declaration line
+// 				let xmlOutput = createXmlString(xmlObject);
+// 				xmlOutput = removeFirstLine(xmlOutput); // Remove XML declaration line
+// 
+// 				// Decode any HTML entities in the XML string
+// 				const { decode } = await import('html-entities');
+// 				const decodedXmlString = decode(xmlOutput, { level: 'xml' });
 
-				// Decode any HTML entities in the XML string
-				const { decode } = await import('html-entities');
-				const decodedXmlString = decode(xmlOutput, { level: 'xml' });
-
-				let workingResultString = decodedXmlString;
 
 
 				// Refine the XML using an external function
