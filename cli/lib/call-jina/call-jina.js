@@ -81,15 +81,14 @@ const moduleFunction = function ({
 				potentialFinalObject,
 			};
 
-			xLog.debug(`specObj.XPath=${specObj.XPath}`);
-			xLog.debug(`specObj.Description=${specObj.Description}`);
+			xLog.debug(specObj.XPath, {label:"specObj.XPath"});
+			xLog.debug(specObj.Description, {label:"specObj.Description"});
 
 			// Get AI-generated response from jinaCore
 			const { wisdom, rawAiResponseObject, thinkerResponses, lastThinkerName } =
 				await jinaCore.getResponse(promptGenerationData, {});
 
-			xLog.debug(`wisdom=${wisdom}`);
-
+			xLog.debug(wisdom, {label:"WISDOM"});
 			// Handle errors or invalid responses
 			if (rawAiResponseObject.isError) {
 				const message = rawAiResponseObject.err;
@@ -120,7 +119,7 @@ const moduleFunction = function ({
 		let wisdom;
 
 		xLog.status(`\nProcessing segment: ${groupXPath} [call-jina.js.callJina]`);
-		children.join('; ') && xLog.debug(`Children: ${children.join('; ')}`);
+		children.join('; ') && xLog.debug(children.join('; '), {label:'children'});
 
 		const operateJina = operateJinaActual({ jinaCore });
 

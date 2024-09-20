@@ -343,21 +343,8 @@ const moduleFunction = async function (
     let child;
     let allXPaths = [];
 
-    for (let row = 1; row < rows; row++) {
-      const uniqueIDCellAddress = xlsx.utils.encode_cell({ r: row, c: 5 });
-      const fullUniqueID = sheet[uniqueIDCellAddress]
-        ? sheet[uniqueIDCellAddress].v
-        : undefined;
-      if (fullUniqueID) {
-        if (
-          !substringsToExclude.some((substring) =>
-            fullUniqueID.includes(substring),
-          )
-        ) {
-          const currentXPath = removeRootXPath(fullUniqueID);
-          const groupChildren = [currentXPath];
-          allXPaths.push(currentXPath);
-          const groupXPath = getGroupXPath(currentXPath);
+          const groupChildren = ['/LEAAccountability/@RefId'];
+          const groupXPath = '/LEAAccountability';
 
           child = await callJina({
             groupXPath,
@@ -365,10 +352,14 @@ const moduleFunction = async function (
             fields,
             elementSpecWorksheet,
           });
-          xLog.debug(child);
-        }
-      }
-    }
+
+console.log(`\n=-=============   child  ========================= [unityDataGenerator.js.[ anonymous ]]\n`);
+
+
+console.dir({['child']:child}, { showHidden: false, depth: 4, colors: true });
+
+console.log(`\n=-=============   child  ========================= [unityDataGenerator.js.[ anonymous ]]\n`);
+
 
     // Clean up and parse the XML
     const parsedObject = await parseXmlString(
