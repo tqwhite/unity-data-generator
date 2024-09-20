@@ -1,8 +1,8 @@
 {
-  "name": "call-jina",
+  "name": "xml-generator",
   "version": "1.0.0",
   "description": "interface to Jina for creating XML testing data",
-  "main": "call-jina.js",
+  "main": "xml-generator.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

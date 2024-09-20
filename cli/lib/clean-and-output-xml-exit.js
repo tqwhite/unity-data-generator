@@ -6,9 +6,9 @@ const fs = require('fs');
 
 // START OF moduleFunction() ============================================================
 const moduleFunction = () => ({
-  callRefiner,
+  xmlRefiner,
   batchSpecificDebugLogDirPath,
-  callJina,
+  xmlGenerator,
 }) => {
   const { xLog, commandLineParameters } = process.global;
 
@@ -20,8 +20,8 @@ const moduleFunction = () => ({
     }) =>
     async (err, xmlCollection) => {
 
-      // Generate initial XML using callJina
-      const xmlString = await callJina({
+      // Generate initial XML using xmlGenerator
+      const xmlString = await xmlGenerator({
         groupXPath: '/LEAAccountability',
         children: ['/LEAAccountability/@RefId'],
         fields: elementSpecWorksheet,
@@ -29,7 +29,7 @@ const moduleFunction = () => ({
       });
 
       // Refine the XML using an external function
-      const refinedXml = await callRefiner({
+      const refinedXml = await xmlRefiner({
         xmlString,
         targetXpathFieldList:elementSpecWorksheet,
       }).catch((err) => {

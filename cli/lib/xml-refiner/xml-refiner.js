@@ -11,14 +11,14 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 
 //START OF moduleFunction() ============================================================
 
-const moduleFunction = function ({ jinaRefiner, commandLineParameters }) {
-	//jinaRefiner is jinaCore/conversationGenerator with different parameters
+const moduleFunction = function ({ xmlRefiningSmartyPants, commandLineParameters }) {
+	//xmlRefiningSmartyPants is xmlGeneratingSmartyPants/conversationGenerator with different parameters
 
 	const { xLog, getConfig } = process.global;
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
 	
 
-	async function callRefiner({ xmlString, targetXpathFieldList }) {
+	async function xmlRefiner({ xmlString, targetXpathFieldList }) {
 		let isValid = false;
 		let validationMessage = '';
 		const limit = 5;
@@ -36,7 +36,7 @@ const moduleFunction = function ({ jinaRefiner, commandLineParameters }) {
 		do {
 			const temperatureFactor = tempList[count];
 
-			const result = await jinaRefiner.getResponse(promptGenerationData, {
+			const result = await xmlRefiningSmartyPants.getResponse(promptGenerationData, {
 				temperatureFactor,
 			});
 
@@ -72,7 +72,7 @@ const moduleFunction = function ({ jinaRefiner, commandLineParameters }) {
 		return wisdom;
 	}
 
-	return { callRefiner };
+	return { xmlRefiner };
 };
 
 //END OF moduleFunction() ============================================================

@@ -76,28 +76,28 @@ const moduleFunction = async function (
   const tempFilePath = path.join(batchSpecificDebugLogDirPath, tempName);
   xLog.status(`Writing working XML to ${tempFilePath}`);
 
-  // Initialize Jina AI core and callJina function
-  const jinaCore = require('./lib/jina-core').conversationGenerator({
+  // Initialize Jina AI core and xmlGenerator function
+  const xmlGeneratingSmartyPants = require('./lib/jina-core').conversationGenerator({
     thoughtProcess,
   }); // provides .getResponse()
-  const { callJina } = require('./lib/call-jina')({
-    jinaCore,
+  const { xmlGenerator } = require('./lib/xml-generator')({
+    xmlGeneratingSmartyPants,
     tempFilePath,
   });
 
-  // Initialize Jina AI refiner and callRefiner function
-  const jinaRefiner = require('./lib/jina-core').conversationGenerator({
+  // Initialize Jina AI refiner and xmlRefiner function
+  const xmlRefiningSmartyPants = require('./lib/jina-core').conversationGenerator({
     thoughtProcess: refinerName,
   }); // provides .getResponse()
-  const { callRefiner } = require('./lib/refine-xml')({
-    jinaRefiner,
+  const { xmlRefiner } = require('./lib/xml-refiner')({
+    xmlRefiningSmartyPants,
   });
 
   // Initialize cleanAndOutputXml function
   const { cleanAndOutputXml } = require('./lib/clean-and-output-xml-exit')({
-    callRefiner,
+    xmlRefiner,
+    xmlGenerator,
     batchSpecificDebugLogDirPath,
-    callJina,
   });
 
   // Check if spreadsheet exists

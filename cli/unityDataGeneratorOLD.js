@@ -92,15 +92,15 @@ const moduleFunction = async function (
 		.qtGetSurePath('values.refinerName', [])
 		.qtLast('refiner'); //override default in systemConfig.ini
 
-	const jinaCore = require('./lib/jina-core').conversationGenerator({
+	const xmlGeneratingSmartyPants = require('./lib/jina-core').conversationGenerator({
 		thoughtProcess,
 	});
-	const jinaRefiner = require('./lib/jina-core').conversationGenerator({
+	const xmlRefiningSmartyPants = require('./lib/jina-core').conversationGenerator({
 		thoughtProcess: refinerName,
 	});
 
-	const callJinaGen = require('./lib/call-jina');
-	const refineXmlGen = require('./lib/refine-xml');
+	const xmlGeneratorGen = require('./lib/xml-generator');
+	const refineXmlGen = require('./lib/xml-refiner');
 	
 
 	const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
@@ -146,23 +146,23 @@ const moduleFunction = async function (
 	// ===================================================================================
 	// TQii refactor Jina to her own module
 
-	const xmlVersionStack = ['First pass. No XML']; //this probably needs to be moved to a callJina() link, the one for the beginning of a new element
+	const xmlVersionStack = ['First pass. No XML']; //this probably needs to be moved to a xmlGenerator() link, the one for the beginning of a new element
 
-	const { callJina } = callJinaGen({
+	const { xmlGenerator } = xmlGeneratorGen({
 		addXmlElement,
 		getFieldValue,
 		createXmlElement,
 		knownIds,
 		createUUID,
-		jinaCore,
+		xmlGeneratingSmartyPants,
 		xmlVersionStack,
 		commandLineParameters,
 		tempFilePath,
 	});
 	
 
-	const { callRefiner } = refineXmlGen({
-		jinaRefiner,
+	const { xmlRefiner } = refineXmlGen({
+		xmlRefiningSmartyPants,
 		commandLineParameters,
 	});
 	
@@ -230,7 +230,7 @@ const moduleFunction = async function (
 					//xLog.status('\nTraversal with XPath:');
 					children = [];
 
-					await traverseXML(sheet, xmlObject, fields); //this does callJina()
+					await traverseXML(sheet, xmlObject, fields); //this does xmlGenerator()
 
 					// So we see our results and can keep fruit of our labor (as XML)l.
 					//xLog.status(JSON.stringify(xmlObject, null, 2));  // Debug
@@ -303,7 +303,7 @@ const moduleFunction = async function (
 						`\n=-=============   workingResultString  ========================= [unityDataGenerator.js.moduleFunction]\n`,
 					);
 
-					const refinedXml = await callRefiner({
+					const refinedXml = await xmlRefiner({
 						xmlString: workingResultString,
 						targetXpathFieldList,
 					}).catch((err) => {
@@ -646,7 +646,7 @@ const moduleFunction = async function (
 					const groupXPath = getGroupXPath(currentXPath);
 
 					// Hand off
-					child = await callJina(groupXPath, groupChildren, fields); //============================
+					child = await xmlGenerator(groupXPath, groupChildren, fields); //============================
 
 					// So we can watch the process unfold.
 					xLog.debug(child); // Debug

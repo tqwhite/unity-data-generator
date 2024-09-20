@@ -4,7 +4,7 @@
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
 
 // Module for calling Jina AI to generate XML segments based on field values.
-// Provides function callJina which processes segments and attributes.
+// Provides function xmlGenerator which processes segments and attributes.
 
 const qt = require('qtools-functional-library'); // Utility library
 const fs = require('fs');
@@ -12,7 +12,7 @@ const fs = require('fs');
 // START OF moduleFunction() ============================================================
 
 const moduleFunction = function ({
-	jinaCore,    // Jina AI core object for generating AI responses
+	xmlGeneratingSmartyPants,    // Jina AI core object for generating AI responses
 	tempFilePath, // Temporary file path to write intermediate results
 }) {
 	const { xLog } = process.global; // Global logging utility
@@ -21,7 +21,7 @@ const moduleFunction = function ({
 	// MAIN FUNCTION CALL JINA
 
 	// Main function to process a group and its children using Jina AI
-	async function callJina({
+	async function xmlGenerator({
 		groupXPath,
 		children,
 		elementSpecWorksheet,
@@ -39,8 +39,8 @@ const moduleFunction = function ({
 			potentialFinalObject: '', // No previous XML for first pass
 		};
 
-		// Get AI-generated response from jinaCore
-		const { wisdom, rawAiResponseObject } = await jinaCore.getResponse(promptGenerationData, {});
+		// Get AI-generated response from xmlGeneratingSmartyPants
+		const { wisdom, rawAiResponseObject } = await xmlGeneratingSmartyPants.getResponse(promptGenerationData, {});
 
 		// Handle errors or invalid responses
 		if (rawAiResponseObject.isError) {
@@ -59,12 +59,12 @@ const moduleFunction = function ({
 		}
 
 		xLog.debug(wisdom, { label: 'WISDOM' });
-		xLog.debug(`End callJina ${groupXPath} === [${moduleName}]\n`);
+		xLog.debug(`End xmlGenerator ${groupXPath} === [${moduleName}]\n`);
 
 		return wisdom;
 	}
 
-	return { callJina };
+	return { xmlGenerator };
 };
 
 // END OF moduleFunction() ============================================================
