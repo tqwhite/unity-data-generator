@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 'use strict';
 
+const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
+
 // Module for calling Jina AI to generate XML segments based on field values.
 // Provides function callJina which processes segments and attributes.
-
-const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
-// moduleName is the name of the current module, without path and extension.
 
 const qt = require('qtools-functional-library'); // Utility library
 const fs = require('fs');
@@ -27,7 +26,7 @@ const moduleFunction = function ({
 		children,
 		elementSpecWorksheet,
 	}) {
-		xLog.status(`\nProcessing segment: ${groupXPath} [call-jina.js.callJina]`);
+		xLog.status(`\nProcessing segment: ${groupXPath} [${moduleName}]`);
 
 		if (children && children.length > 0) {
 			xLog.debug(children.join('; '), { label: 'children' });
@@ -36,22 +35,17 @@ const moduleFunction = function ({
 		// Prepare promptGenerationData
 		const promptGenerationData = {
 			elementSpecWorksheet,
-			currentXml: '',             // No incumbent XML for first round
-			potentialFinalObject: '',   // No previous XML for first pass
+			currentXml: '',           // No incumbent XML for first round
+			potentialFinalObject: '', // No previous XML for first pass
 		};
 
 		// Get AI-generated response from jinaCore
-		const {
-			wisdom,
-			rawAiResponseObject,
-		} = await jinaCore.getResponse(promptGenerationData, {});
+		const { wisdom, rawAiResponseObject } = await jinaCore.getResponse(promptGenerationData, {});
 
 		// Handle errors or invalid responses
 		if (rawAiResponseObject.isError) {
 			const message = rawAiResponseObject.err;
-			xLog.error(
-				`\n=-=============   ERROR (${message})  ========================= [call-jina.js.callJina]\n`,
-			);
+			xLog.error(`\n=== ERROR (${message}) === [${moduleName}]\n`);
 			xLog.error(rawAiResponseObject);
 			process.exit();
 		}
@@ -65,9 +59,7 @@ const moduleFunction = function ({
 		}
 
 		xLog.debug(wisdom, { label: 'WISDOM' });
-		xLog.debug(
-			`End callJina ${groupXPath} ========================= [call-jina.js.callJina]\n`,
-		);
+		xLog.debug(`End callJina ${groupXPath} === [${moduleName}]\n`);
 
 		return wisdom;
 	}

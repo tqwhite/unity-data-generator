@@ -32,6 +32,11 @@ const moduleFunction = async function (
   // Get target object name from command line parameters
   const targetObjectName = commandLineParameters.qtGetSurePath('fileList.0');
 
+  if (!targetObjectName && !commandLineParameters.switches.listElements) {
+    xLog.error(`Target element name is required. Try -help or -listElements`);
+    process.exit(1);
+  }
+
   // Set up batch-specific debug log directory
   const batchSpecificDebugLogDirPath = path.join(
     '/',
@@ -52,26 +57,12 @@ const moduleFunction = async function (
     .qtGetSurePath('values.refinerName', [])
     .qtLast('refiner');
 
-  // Initialize Jina AI core and refiner
-  const jinaCore = require('./lib/jina-core').conversationGenerator({
-    thoughtProcess,
-  });
-  const jinaRefiner = require('./lib/jina-core').conversationGenerator({
-    thoughtProcess: refinerName,
-  });
-
-  // Initialize callJina and refineXml modules
-  const callJinaGen = require('./lib/call-jina');
-  const refineXmlGen = require('./lib/refine-xml');
-
-  // Determine output file path
+  // Determine output file path and temporary file path
   const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
-
   if (outFile) {
     outputsPath = path.dirname(outFile);
     fs.mkdirSync(outputsPath, { recursive: true });
   }
-
   const outputFilePath = outFile
     ? outFile
     : path.join(outputsPath, `${targetObjectName}.xml`);
@@ -81,15 +72,33 @@ const moduleFunction = async function (
   fs.mkdirSync(outputDir, { recursive: true });
   const extension = path.extname(baseName);
 
-  // Set up temporary file path
   const tempName = `${baseName.replace(extension, '')}_temp${extension}`;
   const tempFilePath = path.join(batchSpecificDebugLogDirPath, tempName);
   xLog.status(`Writing working XML to ${tempFilePath}`);
 
-  if (!targetObjectName && !commandLineParameters.switches.listElements) {
-    xLog.error(`Target element name is required. Try -help or -listElements`);
-    process.exit(1);
-  }
+  // Initialize Jina AI core and callJina function
+  const jinaCore = require('./lib/jina-core').conversationGenerator({
+    thoughtProcess,
+  }); // provides .getResponse()
+  const { callJina } = require('./lib/call-jina')({
+    jinaCore,
+    tempFilePath,
+  });
+
+  // Initialize Jina AI refiner and callRefiner function
+  const jinaRefiner = require('./lib/jina-core').conversationGenerator({
+    thoughtProcess: refinerName,
+  }); // provides .getResponse()
+  const { callRefiner } = require('./lib/refine-xml')({
+    jinaRefiner,
+  });
+
+  // Initialize cleanAndOutputXml function
+  const { cleanAndOutputXml } = require('./lib/clean-and-output-xml-exit')({
+    callRefiner,
+    batchSpecificDebugLogDirPath,
+    callJina,
+  });
 
   // Check if spreadsheet exists
   if (!fs.existsSync(spreadsheetPath)) {
@@ -98,21 +107,6 @@ const moduleFunction = async function (
   }
 
   // EXECUTE PROCESSING
-
-  const { callJina } = callJinaGen({
-    jinaCore,
-    tempFilePath,
-  });
-
-  const { callRefiner } = refineXmlGen({
-    jinaRefiner,
-  });
-
-  const { cleanAndOutputXml } = require('./lib/clean-and-output-xml-exit')({
-    callRefiner,
-    batchSpecificDebugLogDirPath,
-    callJina,
-  });
 
   try {
     const startTime = performance.now();

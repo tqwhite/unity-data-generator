@@ -12,16 +12,14 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function() {
-	
+
 	const { xLog, getConfig } = process.global;
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
-	
 
 	const smartyPantsChooser=require('../smarty-pants-chooser')(); //reserving the right to have overarching controls
 
-
 	const conversationGenerator=({thoughtProcess}={})=>require('../conversation-generator')({thoughtProcess, smartyPantsChooser});
-	
+
 	const embedGenerator=()=>{someModule:'Not Yet Implemented'}
 	const fileUploader=()=>{someModule:'Not Yet Implemented'}
 
