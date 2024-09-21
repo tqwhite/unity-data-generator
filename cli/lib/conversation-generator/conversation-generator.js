@@ -57,11 +57,12 @@ const moduleFunction = function (
 						promptGenerationData,
 					} = args;
 
-					const thinkerSpec = thinkersList[thoughtProcess.name];
+					const thinkerSpec = thinkersList[thoughtProcess.configName];
+
 					const { smartyPantsName } = thinkerSpec;
 
 					const localCallback = (err, latestResponse) => {
-						thinkerResponses[thinkerSpec.name] = latestResponse;
+						thinkerResponses[thinkerSpec.selfName] = latestResponse;
 						latestResponse.wisdom = latestResponse.wisdom
 							.replace(/\`\`\`xml/i, '')
 							.replace(/\`\`\`/, '');
@@ -69,7 +70,7 @@ const moduleFunction = function (
 							...args,
 							thinkerResponses,
 							latestResponse,
-							lastThinkerName: thinkerSpec.name,
+							lastThinkerName: thinkerSpec.selfName,
 						});
 					};
 

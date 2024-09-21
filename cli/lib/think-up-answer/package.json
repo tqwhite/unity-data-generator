@@ -1,8 +1,8 @@
 {
-  "name": "xml-generator",
+  "name": "think-up-answer",
   "version": "1.0.0",
   "description": "interface to Jina for creating XML testing data",
-  "main": "xml-generator.js",
+  "main": "think-up-answer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

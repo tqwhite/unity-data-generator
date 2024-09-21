@@ -37,6 +37,9 @@ const moduleFunction = async function (
     process.exit(1);
   }
 
+  // ===========================================================================
+  // SET UP DIRECTORIES AND FILE PATHS
+
   // Set up batch-specific debug log directory
   const batchSpecificDebugLogDirPath = path.join(
     '/',
@@ -76,22 +79,28 @@ const moduleFunction = async function (
   const tempFilePath = path.join(batchSpecificDebugLogDirPath, tempName);
   xLog.status(`Writing working XML to ${tempFilePath}`);
 
+  // ===========================================================================
+  // BUILD SMARTYPANTS AND THEIR EXECUTORS
+
   // Initialize Jina AI core and xmlGenerator function
   const xmlGeneratingSmartyPants = require('./lib/jina-core').conversationGenerator({
     thoughtProcess,
   }); // provides .getResponse()
-  const { xmlGenerator } = require('./lib/xml-generator')({
+  const { xmlGenerator } = require('./lib/think-up-answer')({
     xmlGeneratingSmartyPants,
     tempFilePath,
-  });
+  }); // munges data and orchestrates this specific smartyPants process
 
   // Initialize Jina AI refiner and xmlRefiner function
   const xmlRefiningSmartyPants = require('./lib/jina-core').conversationGenerator({
     thoughtProcess: refinerName,
   }); // provides .getResponse()
-  const { xmlRefiner } = require('./lib/xml-refiner')({
+  const { xmlRefiner } = require('./lib/think-keep-trying')({
     xmlRefiningSmartyPants,
-  });
+  }); // munges data and orchestrates this specific smartyPants process
+
+  // ===========================================================================
+  // COMBINE SMARTYPANTS EXECUTORS INTO THE MAIN EXECUTION OBJECT
 
   // Initialize cleanAndOutputXml function
   const { cleanAndOutputXml } = require('./lib/clean-and-output-xml-exit')({
@@ -100,13 +109,17 @@ const moduleFunction = async function (
     batchSpecificDebugLogDirPath,
   });
 
+  // ===========================================================================
+  // CHECK INPUT FILES AND PREPARE FOR PROCESSING
+
   // Check if spreadsheet exists
   if (!fs.existsSync(spreadsheetPath)) {
     xLog.error(`No specifications found. ${spreadsheetPath} does not exist`);
     process.exit(1);
   }
 
-  // EXECUTE PROCESSING
+  // ===========================================================================
+  // EXECUTE THE PROCESS FOR SOME OR ALL OF THE POSSIBLE ELEMENTS
 
   try {
     const startTime = performance.now();

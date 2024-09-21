@@ -99,8 +99,8 @@ const moduleFunction = async function (
 		thoughtProcess: refinerName,
 	});
 
-	const xmlGeneratorGen = require('./lib/xml-generator');
-	const refineXmlGen = require('./lib/xml-refiner');
+	const xmlGeneratorGen = require('./lib/think-up-answer');
+	const refineXmlGen = require('./lib/think-keep-trying');
 	
 
 	const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
