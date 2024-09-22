@@ -1,8 +1,8 @@
 {
-  "name": "tqs-review",
+  "name": "xml-review",
   "version": "1.0.0",
-  "description": "tq's jina-core tqs testing data evaluation module",
-  "main": "tqs-review.js",
+  "description": "tq's jina-core xml testing data evaluation module",
+  "main": "xml-review.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

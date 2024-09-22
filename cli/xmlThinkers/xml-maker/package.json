@@ -1,8 +1,8 @@
 {
-  "name": "tqs-maker",
+  "name": "xml-maker",
   "version": "1.0.0",
   "description": "tq's jina-core personality for making xml test data",
-  "main": "tqs-maker.js",
+  "main": "xml-maker.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

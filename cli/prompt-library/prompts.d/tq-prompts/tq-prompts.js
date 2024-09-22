@@ -19,14 +19,14 @@ const moduleFunction =
 
 		const workingFunction = () => {
 			return {
-				'tqs-maker': {
+				'xml-maker': {
 					extractionParameters: {
 						frontDelimiter: '[START XML SAMPLE]',
 						backDelimitter: '[END XML SAMPLE]',
 					},
 					promptTemplate: require('./stringsLib/tq-maker-string1')(),
 				},
-				'tqs-review': {
+				'xml-review': {
 					extractionParameters: {
 						frontDelimiter: '[START XML SAMPLE]',
 						backDelimitter: '[END XML SAMPLE]',

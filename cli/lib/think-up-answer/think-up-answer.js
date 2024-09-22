@@ -17,6 +17,7 @@ const moduleFunction = function ({
 	tempFilePath, // Temporary file path to write intermediate results
 }) {
 	const { xLog } = process.global; // Global logging utility
+	xLog.status(`using thoughtProcess '${thoughtProcessName}' in [${moduleName}]`);
 
 	const jinaConversation = jinaCore.conversationGenerator({
 		thoughtProcessName,

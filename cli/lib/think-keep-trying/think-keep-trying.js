@@ -18,6 +18,7 @@ const moduleFunction = function ({
 }) {
 	const { xLog, getConfig } = process.global;
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
+	xLog.status(`using thoughtProcess '${thoughtProcessName}' in [${moduleName}]`);
 	
 
 	const jinaConversation = jinaCore.conversationGenerator({
