@@ -30,10 +30,12 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 		'-showConfig',
 		'-outFile',
 		'--overrideConfigPath',
-		'--thoughtProcess',
+		'--xmlGeneratorName',
 		'--refinerName',
 		'-echoAlso',
 		'-listElements',
+		'-showParseErrors',
+		'--elements'
 	];
 
 	const commandLineParameters = commandLineParser.getParameters();

@@ -40,7 +40,7 @@ const moduleFunction = function () {
 			};
 			const parms = { ...defaults, ...options };
 
-				return(JSON.stringify(message, '', '\t'))
+			return JSON.stringify(message, '', '\t');
 		}
 
 		return message;
@@ -79,16 +79,15 @@ const moduleFunction = function () {
 
 	const verboseFunction = (message, options = {}) => {
 		message = stringify(message, options);
-		if (silent || !verbose) {
-			return;
+		if (!silent && verbose) {
+			outputFunction(message);
 		}
 
-		outputFunction(message);
 	};
 
 	const debugFunction = (message, options = {}) => {
 		message = stringify(message, options);
-		if (!silent && (debug || verbose)) {
+		if (!silent && debug) {
 			if(options.label){
 			outputFunction(`\n${'DEBUG: '.padEnd(43, '-')}\n${options.label}\n${message}${''.padEnd(50, '-')}\n`);
 			}

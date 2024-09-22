@@ -1,8 +1,8 @@
 {
-  "name": "johns-maker",
+  "name": "tq-prompts",
   "version": "1.0.0",
-  "description": "jina-core xml testing data evaluation module",
-  "main": "johns-maker.js",
+  "description": "organizing for gpt prompt string manufacture",
+  "main": "tq-prompts.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

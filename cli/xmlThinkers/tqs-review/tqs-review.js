@@ -13,7 +13,10 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 
 const moduleFunction = function (args = {}) {
 	const { xLog, batchSpecificDebugLogDirPath } = process.global;
-	const tempFilePath = require('path').join(batchSpecificDebugLogDirPath, `${moduleName}_prompts.log`);
+	const tempFilePath = require('path').join(
+		batchSpecificDebugLogDirPath,
+		`${moduleName}_prompts.log`,
+	);
 	xLog.status(`logging all prompts into ${tempFilePath} [${moduleName}]`);
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
@@ -30,11 +33,15 @@ const moduleFunction = function (args = {}) {
 		(promptGenerator) =>
 		(thinkerExchangePromptData = {}) => {
 			//sample: const promptList = [{ role: 'user', content: 'one sentence about neutron starts' }];
-			const { specObj, currentXml, potentialFinalObject, elementSpecWorksheet } =
-				thinkerExchangePromptData;
-			const replaceObject = {
+			const {
 				specObj,
-				elementSpecWorksheet,
+				currentXml,
+				potentialFinalObject,
+				elementSpecWorksheetJson,
+			} = thinkerExchangePromptData;
+			const replaceObject = {
+			elementSpecWorksheetJson,
+				specObj,
 				potentialFinalObject,
 				newXmlSegment: thinkerExchangePromptData.latestResponse.wisdom,
 				currentXml,
@@ -133,6 +140,10 @@ const moduleFunction = function (args = {}) {
 			const { filterOutput, wisdom: rawWisdom, extractionParameters } = args;
 
 			const processedWisdom = filterOutput(rawWisdom, extractionParameters); //presently the source of being upperCase
+
+			xLog.verbose(
+				`\nPROCESSED WISDOM:\n${processedWisdom}\n[${moduleName}]\n`,
+			);
 
 			next('', { ...args, processedWisdom });
 		});

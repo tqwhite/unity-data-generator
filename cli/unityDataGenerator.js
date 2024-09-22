@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-
+const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 // Module to generate Unity Data using Jina AI
 
 const fs = require('fs');
@@ -12,159 +12,200 @@ const { performance } = require('perf_hooks');
 // START OF moduleFunction() ============================================================
 
 const moduleFunction = async function (
-  error,
-  { getConfig, commandLineParameters },
+	error,
+	{ getConfig, commandLineParameters },
 ) {
-  // Handle initial error
-  if (error) {
-    xLog.error(error);
-    process.exit(1);
-  }
+	// Handle initial error
+	if (error) {
+		xLog.error(error);
+		process.exit(1);
+	}
 
-  // Set global configurations
-  process.global.getConfig = getConfig;
-  process.global.commandLineParameters = commandLineParameters;
+	// Set global configurations
+	process.global.getConfig = getConfig;
+	process.global.commandLineParameters = commandLineParameters;
 
-  const localConfig = getConfig('SYSTEM');
-  const { spreadsheetPath } = localConfig;
-  let { outputsPath } = localConfig;
+	const localConfig = getConfig('SYSTEM');
+	const { spreadsheetPath } = localConfig;
+	let { outputsPath } = localConfig;
 
-  // Get target object name from command line parameters
-  const targetObjectName = commandLineParameters.qtGetSurePath('fileList.0');
+	// Get target object name from command line parameters
+	let targetObjectNameList = commandLineParameters.qtGetSurePath('values.elements', []);
+	targetObjectNameList=targetObjectNameList.length?targetObjectNameList:commandLineParameters.qtGetSurePath('fileList', []);
 
-  if (!targetObjectName && !commandLineParameters.switches.listElements) {
-    xLog.error(`Target element name is required. Try -help or -listElements`);
-    process.exit(1);
-  }
+	if (!targetObjectNameList.length && !commandLineParameters.switches.listElements) {
+		xLog.error(`Target element name is required. Try -help or -listElements`);
+		process.exit(1);
+	}
 
-  // ===========================================================================
-  // SET UP DIRECTORIES AND FILE PATHS
+	// ===========================================================================
+	// SET UP DIRECTORIES AND FILE PATHS
 
-  // Set up batch-specific debug log directory
-  const batchSpecificDebugLogDirPath = path.join(
-    '/',
-    'tmp',
-    'unityDataGeneratorTemp',
-    `${targetObjectName}_${Math.floor(Date.now() / 1000)
-      .toString()
-      .slice(-4)}`,
-  );
-  process.global.batchSpecificDebugLogDirPath = batchSpecificDebugLogDirPath;
-  fs.mkdirSync(batchSpecificDebugLogDirPath, { recursive: true });
+	// Set up batch-specific debug log directory
+	const batchSpecificDebugLogDirPath = path.join(
+		'/',
+		'tmp',
+		'unityDataGeneratorTemp',
+		`${targetObjectNameList}_${Math.floor(Date.now() / 1000)
+			.toString()
+			.slice(-4)}`,
+	);
+	process.global.batchSpecificDebugLogDirPath = batchSpecificDebugLogDirPath;
+	fs.mkdirSync(batchSpecificDebugLogDirPath, { recursive: true });
 
-  // Determine thought process and refiner names
-  const thoughtProcess = commandLineParameters
-    .qtGetSurePath('values.thoughtProcess', [])
-    .qtLast('unityGenerator');
-  const refinerName = commandLineParameters
-    .qtGetSurePath('values.refinerName', [])
-    .qtLast('refiner');
+	// Determine output file path and temporary file path
+	const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
+	if (outFile) {
+		outputsPath = path.dirname(outFile);
+		fs.mkdirSync(outputsPath, { recursive: true });
+	}
+	const outputFilePath = outFile
+		? outFile
+		: path.join(outputsPath, `${targetObjectNameList}.xml`);
 
-  // Determine output file path and temporary file path
-  const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
-  if (outFile) {
-    outputsPath = path.dirname(outFile);
-    fs.mkdirSync(outputsPath, { recursive: true });
-  }
-  const outputFilePath = outFile
-    ? outFile
-    : path.join(outputsPath, `${targetObjectName}.xml`);
+	const baseName = path.basename(outputFilePath);
+	const outputDir = path.dirname(outputFilePath);
+	fs.mkdirSync(outputDir, { recursive: true });
+	const extension = path.extname(baseName);
 
-  const baseName = path.basename(outputFilePath);
-  const outputDir = path.dirname(outputFilePath);
-  fs.mkdirSync(outputDir, { recursive: true });
-  const extension = path.extname(baseName);
+	const tempName = `${baseName.replace(extension, '')}_temp${extension}`;
+	const tempFilePath = path.join(batchSpecificDebugLogDirPath, tempName);
+	xLog.status(`Writing working XML to ${tempFilePath}`);
 
-  const tempName = `${baseName.replace(extension, '')}_temp${extension}`;
-  const tempFilePath = path.join(batchSpecificDebugLogDirPath, tempName);
-  xLog.status(`Writing working XML to ${tempFilePath}`);
+	// ===========================================================================
+	// BUILD SMARTYPANTS AND THEIR EXECUTORS
 
-  // ===========================================================================
-  // BUILD SMARTYPANTS AND THEIR EXECUTORS
+	// Determine thought process and refiner names; default or command line spec
+	const xmlGeneratorName = commandLineParameters
+		.qtGetSurePath('values.xmlGeneratorName', [])
+		.qtLast('unityGenerator');
 
-  // Initialize Jina AI core and xmlGenerator function
-  const xmlGeneratingSmartyPants = require('./lib/jina-core').conversationGenerator({
-    thoughtProcess,
-  }); // provides .getResponse()
-  const { xmlGenerator } = require('./lib/think-up-answer')({
-    xmlGeneratingSmartyPants,
-    tempFilePath,
-  }); // munges data and orchestrates this specific smartyPants process
+	const refinerName = commandLineParameters
+		.qtGetSurePath('values.refinerName', [])
+		.qtLast('refiner');
 
-  // Initialize Jina AI refiner and xmlRefiner function
-  const xmlRefiningSmartyPants = require('./lib/jina-core').conversationGenerator({
-    thoughtProcess: refinerName,
-  }); // provides .getResponse()
-  const { xmlRefiner } = require('./lib/think-keep-trying')({
-    xmlRefiningSmartyPants,
-  }); // munges data and orchestrates this specific smartyPants process
+	const jinaCore = require('./lib/jina-core');
 
-  // ===========================================================================
-  // COMBINE SMARTYPANTS EXECUTORS INTO THE MAIN EXECUTION OBJECT
+	// Initialize Jina AI core and xmlGenerator function
+	const { jinaResponder: xmlGenerator } = require('./lib/think-up-answer')({
+		jinaCore,
+		thoughtProcessName: xmlGeneratorName,
+		tempFilePath,
+	}); // munges data and orchestrates this specific smartyPants process
 
-  // Initialize cleanAndOutputXml function
-  const { cleanAndOutputXml } = require('./lib/clean-and-output-xml-exit')({
-    xmlRefiner,
-    xmlGenerator,
-    batchSpecificDebugLogDirPath,
-  });
+	// Initialize Jina AI refiner and xmlRefiner function
+	const { jinaResponder: xmlRefiner } = require('./lib/think-keep-trying')({
+		jinaCore,
+		thoughtProcessName: refinerName,
+	}); // munges data and orchestrates this specific smartyPants process
 
-  // ===========================================================================
-  // CHECK INPUT FILES AND PREPARE FOR PROCESSING
+	// ===========================================================================
+	// COMBINE SMARTYPANTS EXECUTORS INTO THE MAIN EXECUTION OBJECT
 
-  // Check if spreadsheet exists
-  if (!fs.existsSync(spreadsheetPath)) {
-    xLog.error(`No specifications found. ${spreadsheetPath} does not exist`);
-    process.exit(1);
-  }
+	// Initialize cleanAndOutputXml function
+	const { cleanAndOutputXml } = require('./lib/clean-and-output-xml-exit')({
+		xmlRefiner,
+		xmlGenerator,
+		batchSpecificDebugLogDirPath,
+	});
 
-  // ===========================================================================
-  // EXECUTE THE PROCESS FOR SOME OR ALL OF THE POSSIBLE ELEMENTS
+	// ===========================================================================
+	// CHECK INPUT FILES AND PREPARE FOR PROCESSING
 
-  try {
-    const startTime = performance.now();
-    const workbook = xlsx.readFile(spreadsheetPath);
-    const worksheetNames = workbook.SheetNames;
-    xLog.status(`Using data model spec file: ${spreadsheetPath}`);
+	// Check if spreadsheet exists
+	if (!fs.existsSync(spreadsheetPath)) {
+		xLog.error(`No specifications found. ${spreadsheetPath} does not exist`);
+		process.exit(1);
+	}
 
-    for (let index = 0; index < worksheetNames.length; index++) {
-      const name = worksheetNames[index];
+	// ===========================================================================
+	// EXECUTE THE PROCESS FOR SOME OR ALL OF THE POSSIBLE ELEMENTS
 
-      if (targetObjectName != null && name !== targetObjectName) {
-        continue;
-      }
+	const executeProcess = async ({
+		performance,
+		xlsx,
+		spreadsheetPath,
+		xLog,
+		targetObjectNameList,
+		cleanAndOutputXml,
+		outputFilePath,
+		commandLineParameters,
+	}) => {
+		const startTime = performance.now();
+		const workbook = xlsx.readFile(spreadsheetPath);
+		const worksheetNames = workbook.SheetNames;
+		xLog.status(`Using data model spec file: ${spreadsheetPath}`);
+		
+		if (commandLineParameters.switches.listElements) {
+			xLog.status(worksheetNames.join('\n'));
+			process.exit();
+		}
 
-      const sheet = workbook.Sheets[name];
-      const elementSpecWorksheet = xlsx.utils.sheet_to_json(sheet);
+		for (let index = 0; index < worksheetNames.length; index++) {
+			const name = worksheetNames[index];
 
-      await cleanAndOutputXml({
-        outputFilePath,
-        elementSpecWorksheet,
-      })();
-    }
+			if (!targetObjectNameList.includes(name)) {
+				continue;
+			}
+			
+			xLog.status(`Found element definition for ${name}`);
+			
+			const sheet = workbook.Sheets[name];
+			const elementSpecWorksheet = xlsx.utils.sheet_to_json(sheet);
+			const elementSpecWorksheetJson = JSON.stringify(
+				elementSpecWorksheet,
+				'',
+				'\t',
+			);
 
-    const endTime = performance.now();
-    const duration = ((endTime - startTime) / 1000).toFixed(2);
+			await cleanAndOutputXml({
+				outputFilePath,
+				elementSpecWorksheetJson,
+			})();
+		}
 
-    xLog.debug(`Processing time: ${duration} seconds`);
-  } catch (error) {
-    xLog.error(`Error: ${error.message}`);
-    process.exit(1);
-  }
+		const endTime = performance.now();
+		const duration = ((endTime - startTime) / 1000).toFixed(2);
+
+		xLog.debug(`Processing time: ${duration} seconds`);
+	};
+	const executionDependencies = {
+		performance,
+		xlsx,
+		spreadsheetPath,
+		xLog,
+		targetObjectNameList,
+		cleanAndOutputXml,
+		outputFilePath,
+		commandLineParameters,
+	};
+	if (commandLineParameters.switches.showParseErrors) {
+		executeProcess(executionDependencies);
+	} else {
+		try {
+			await executeProcess(executionDependencies);
+		} catch (error) {
+			xLog.error(`Error: ${error.message} [${moduleName}]`);
+			if (commandLineParameters.switches.debug) {
+				console.trace();
+			}
+			process.exit(1);
+		}
+	}
 };
 
 // END OF moduleFunction() ============================================================
 
 process.global = {};
 process.global.applicationBasePath = path.join(
-  path.dirname(__filename),
-  '..',
-  '..',
+	path.dirname(__filename),
+	'..',
+	'..',
 );
 process.global.xLog = xLog;
 
 require('./lib/assemble-configuration-show-help-maybe-exit')({
-  configSegmentName: 'SYSTEM',
-  terminationFunction: process.exit,
-  callback: moduleFunction,
+	configSegmentName: 'SYSTEM',
+	terminationFunction: process.exit,
+	callback: moduleFunction,
 });

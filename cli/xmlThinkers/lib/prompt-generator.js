@@ -15,13 +15,13 @@ const moduleFunction = function(args = {}) {
 	const iterativeGeneratorPrompt = args => {
 		const {
 			specObj,
-			elementSpecWorksheet,
+			elementSpecWorksheetJson,
 			currentXml,
 			employerModuleName,
 			potentialFinalObject
 		} = args;
 
-		const promptLibrary = require(localConfig.promptLibraryModulePath)(); 
+		const promptLibrary = require(localConfig.promptLibraryModulePath)(); //'johns-maker', 'johns-review', 'tqs-maker', 'tqs-review', 'fix-problems' 
 		
 		if (!promptLibrary[employerModuleName]){
 			xLog.error(`\nmodule 'prompt-library' has no property named '${moduleName}'`);
@@ -33,16 +33,10 @@ const moduleFunction = function(args = {}) {
 			extractionParameters
 		} = promptLibrary[employerModuleName];
 
-		const replaceObj = {
-			...args,
-			elementSpecWorksheetJson: JSON.stringify(elementSpecWorksheet, '', '\t'),
-			specObjJson: JSON.stringify(specObj, '', '\t'),
-			currentXml,
-			potentialFinalObject,
-			...extractionParameters
-		};
+		const replaceObj = {...args, ...extractionParameters};
 
 		//const pleaForHelp = `Repeat this exact information back for testing: "${specObj.XPath}"`;//promptTemplate.qtTemplateReplace(replaceObj);
+
 		const pleaForHelp = promptTemplate.qtTemplateReplace(replaceObj);
 
 		return {

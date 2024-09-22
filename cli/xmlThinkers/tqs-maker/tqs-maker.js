@@ -29,12 +29,10 @@ const moduleFunction = function (args = {}) {
 		(promptGenerator) =>
 		(thinkerExchangePromptData = {}) => {
 			//sample: const promptList = [{ role: 'user', content: 'one sentence about neutron starts' }];
-			const { specObj, currentXml, elementSpecWorksheet } = thinkerExchangePromptData;
+			const { specObj, currentXml, elementSpecWorksheetJson } = thinkerExchangePromptData;
 			const { promptList, extractionParameters } =
 				promptGenerator.iterativeGeneratorPrompt({
-					specObj,
-					currentXml,
-					elementSpecWorksheet,
+					elementSpecWorksheetJson,
 					employerModuleName: moduleName,
 				});
 			return { promptList, extractionParameters };
@@ -83,7 +81,7 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { thinkerExchangePromptData } = args;
+		const { promptReplacementObject, thinkerExchangePromptData } = args;
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------

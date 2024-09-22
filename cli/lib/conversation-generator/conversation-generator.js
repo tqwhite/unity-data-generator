@@ -12,7 +12,7 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function (
-	{ thoughtProcess, smartyPantsChooser },
+	{ thoughtProcessName, smartyPantsChooser },
 	callback,
 ) {
 
@@ -23,7 +23,7 @@ const moduleFunction = function (
 
 	const { thoughtProcesses, defaultThoughtProcess } = localConfig; //thought processes is the list of thinker modules
 
-	const thoughtProcesslist = thoughtProcesses[thoughtProcess];
+	const thoughtProcesslist = thoughtProcesses[thoughtProcessName];
 
 	// ================================================================================
 	// WHERE THE RUBBER MEETS THE ROAD
@@ -105,6 +105,7 @@ const moduleFunction = function (
 
 			const initialData = { localConfig, promptGenerationData, thinkersList }; //thoughtProcesslist enters in the loop above
 			pipeRunner(taskList.getList(), initialData, (err, args) => {
+
 				const {
 					latestResponse,
 					responseObj,
@@ -136,10 +137,16 @@ const moduleFunction = function (
 		}
 
 		if (callback) {
+
+console.log(`callback=${callback}`);
+
+console.log(' Debug Exit [conversation-generator.js.moduleFunction]', {depth:4, colors:true}); process.exit(); //tqDebug
+
 			askTheSmartyPants({ promptGenerationData, ...options }, (err, result) =>
 				callback(err, 100 * count++),
-			);
+			); //WTF is this?
 		} else {
+			//this appears to be the one that is actioned
 			return new Promise((resolve, reject) => {
 				askTheSmartyPants(
 					{ promptGenerationData, ...options },
@@ -150,8 +157,12 @@ const moduleFunction = function (
 			});
 		}
 	};
+	
+	const debugInfo=()=>{
+		xLog.status(`thoughtProcessName=${thoughtProcessName} [${moduleName}]`);
+	}
 
-	return { getResponse };
+	return { getResponse, debugInfo };
 };
 
 //END OF moduleFunction() ============================================================

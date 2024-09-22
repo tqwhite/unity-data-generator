@@ -11,14 +11,20 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 
 //START OF moduleFunction() ============================================================
 
-const moduleFunction = function ({ xmlRefiningSmartyPants, commandLineParameters }) {
-	//xmlRefiningSmartyPants is xmlGeneratingSmartyPants/conversationGenerator with different parameters
-
+const moduleFunction = function ({
+	jinaCore,
+	thoughtProcessName,
+	commandLineParameters,
+}) {
 	const { xLog, getConfig } = process.global;
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
 	
 
-	async function xmlRefiner({ xmlString, targetXpathFieldList }) {
+	const jinaConversation = jinaCore.conversationGenerator({
+		thoughtProcessName,
+	}); // provides .getResponse()
+
+	async function jinaResponder(promptReplacementObject) {
 		let isValid = false;
 		let validationMessage = '';
 		const limit = 5;
@@ -26,17 +32,26 @@ const moduleFunction = function ({ xmlRefiningSmartyPants, commandLineParameters
 		let wisdom = '';
 		const tempList = [0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6];
 
+		const { xmlString, targetXpathFieldList } = promptReplacementObject;
+		
+		
+		
+		
 		const promptGenerationData = {
+			promptReplacementObject,
 			specObj: {},
 			currentXml: xmlString,
 			potentialFinalObject: xmlString,
 			xpathJsonData: JSON.stringify(targetXpathFieldList, '', '\t'),
 		};
+		
+		
+		
 
 		do {
 			const temperatureFactor = tempList[count];
 
-			const result = await xmlRefiningSmartyPants.getResponse(promptGenerationData, {
+			const result = await jinaConversation.getResponse(promptGenerationData, {
 				temperatureFactor,
 			});
 
@@ -49,8 +64,9 @@ const moduleFunction = function ({ xmlRefiningSmartyPants, commandLineParameters
 			);
 
 			promptGenerationData.currentXml = wisdom;
-			promptGenerationData.validationMessage = {error:`Element <x> is illegal. Not part of spec`}; //validationMessage;
-			
+			promptGenerationData.validationMessage = {
+				error: `Element <x> is illegal. Not part of spec`,
+			}; //validationMessage;
 
 			if (!isValid) {
 				xLog.error('----------------------------------------');
@@ -72,7 +88,7 @@ const moduleFunction = function ({ xmlRefiningSmartyPants, commandLineParameters
 		return wisdom;
 	}
 
-	return { xmlRefiner };
+	return { jinaResponder };
 };
 
 //END OF moduleFunction() ============================================================
