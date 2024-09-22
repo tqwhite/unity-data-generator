@@ -6,6 +6,8 @@ const commandLineParameters = commandLineParser.getParameters();
 
 const qt = require('qtools-functional-library');
 //console.dir(qt.help());
+const fs=require('fs');
+const path=require('path');
 
 const chalk = require('chalk');
 const util = require('util');
@@ -82,19 +84,41 @@ const moduleFunction = function () {
 		if (!silent && verbose) {
 			outputFunction(message);
 		}
-
 	};
 
 	const debugFunction = (message, options = {}) => {
 		message = stringify(message, options);
 		if (!silent && debug) {
-			if(options.label){
-			outputFunction(`\n${'DEBUG: '.padEnd(43, '-')}\n${options.label}\n${message}${''.padEnd(50, '-')}\n`);
+			if (options.label) {
+				outputFunction(
+					`\n${'DEBUG: '.padEnd(43, '-')}\n${options.label}\n${message}${''.padEnd(50, '-')}\n`,
+				);
 			}
-			outputFunction(`\n${''.padEnd(50, '-')}\n${message}${''.padEnd(50, '-')}\n`);
+			outputFunction(
+				`\n${''.padEnd(50, '-')}\n${message}${''.padEnd(50, '-')}\n`,
+			);
 		}
-
 	};
+	
+
+	let processFilesDirectory = '';
+	let setProcessFilesDirectory = (dirPath) => {
+		fs.mkdirSync(dirPath, { recursive: true });
+		processFilesDirectory = dirPath;
+		status(`process files directory set: ${dirPath}`);
+	};
+	
+	const getProcessFilesDirectory=()=>processFilesDirectory;
+	
+	const saveProcessFile=(fileName, inData, options={})=>{
+		let fileData=inData;
+		if(options.saveAsJson){
+			fileData=JSON.stringify(inData, '', '\t');
+		}
+		const filePath=path.join(processFilesDirectory, fileName);
+		fs.writeFileSync(filePath, fileData, {append:options.append?options.append:false});
+		status(`save to ${filePath}`);
+	}
 
 	return {
 		annotation,
@@ -104,6 +128,9 @@ const moduleFunction = function () {
 		debug: debugFunction,
 		emphatic,
 		verbose: verboseFunction,
+		setProcessFilesDirectory,
+		getProcessFilesDirectory,
+		saveProcessFile
 	};
 };
 

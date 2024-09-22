@@ -26,7 +26,7 @@ const moduleFunction = async function (
 	process.global.commandLineParameters = commandLineParameters;
 
 	const localConfig = getConfig('SYSTEM');
-	const { spreadsheetPath } = localConfig;
+	const { spreadsheetPath, batchSpecificDebugLogParentDirPath, batchSpecificDebugLogParentDirPurgeCount, } = localConfig;
 	let { outputsPath } = localConfig;
 
 	// Get target object name from command line parameters
@@ -43,15 +43,14 @@ const moduleFunction = async function (
 
 	// Set up batch-specific debug log directory
 	const batchSpecificDebugLogDirPath = path.join(
-		'/',
-		'tmp',
-		'unityDataGeneratorTemp',
+		batchSpecificDebugLogParentDirPath,
 		`${targetObjectNameList}_${Math.floor(Date.now() / 1000)
 			.toString()
 			.slice(-4)}`,
 	);
-	process.global.batchSpecificDebugLogDirPath = batchSpecificDebugLogDirPath;
-	fs.mkdirSync(batchSpecificDebugLogDirPath, { recursive: true });
+	require('./lib/purge-cleanup-directory')().executePurging(batchSpecificDebugLogParentDirPath, batchSpecificDebugLogParentDirPurgeCount);
+
+	xLog.setProcessFilesDirectory(batchSpecificDebugLogDirPath);
 
 	// Determine output file path and temporary file path
 	const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
@@ -68,9 +67,6 @@ const moduleFunction = async function (
 	fs.mkdirSync(outputDir, { recursive: true });
 	const extension = path.extname(baseName);
 
-	const tempName = `${baseName.replace(extension, '')}_temp${extension}`;
-	const tempFilePath = path.join(batchSpecificDebugLogDirPath, tempName);
-	xLog.status(`Writing working XML to ${tempFilePath}`);
 
 	// ===========================================================================
 	// BUILD SMARTYPANTS AND THEIR EXECUTORS
@@ -90,7 +86,6 @@ const moduleFunction = async function (
 	const { jinaResponder: xmlGenerator } = require('./lib/think-up-answer')({
 		jinaCore,
 		thoughtProcessName: xmlGeneratorName,
-		tempFilePath,
 	}); // munges data and orchestrates this specific smartyPants process
 
 	// Initialize Jina AI refiner and xmlRefiner function
@@ -106,7 +101,6 @@ const moduleFunction = async function (
 	const { cleanAndOutputXml } = require('./lib/clean-and-output-xml-exit')({
 		xmlRefiner,
 		xmlGenerator,
-		batchSpecificDebugLogDirPath,
 	});
 
 	// ===========================================================================

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 'use strict';
+const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
 
 const path = require('path');
 const fs = require('fs');
@@ -7,7 +8,7 @@ const fs = require('fs');
 // START OF moduleFunction() ============================================================
 const moduleFunction =
 	() =>
-	({ xmlRefiner, batchSpecificDebugLogDirPath, xmlGenerator }) => {
+	({ xmlRefiner, xmlGenerator }) => {
 		const { xLog, commandLineParameters } = process.global;
 
 		// Callback function to handle the parsed XML
@@ -20,39 +21,29 @@ const moduleFunction =
 				});
 
 				// Refine the XML using an external function
-				const refinedXml = await xmlRefiner({ xmlString, elementSpecWorksheetJson }).catch(
-					(err) => {
-						xLog.status(
-							`Process detail info dir: ${batchSpecificDebugLogDirPath}`,
-						);
-						xLog.error(
-							`Error: ${err}. Error Exit Quitting Now. See refinement.log for more info and last XML.`,
-						);
-						console.trace();
-						process.exit(1);
-					},
-				);
+				const refinedXml = await xmlRefiner({
+					xmlString,
+					elementSpecWorksheetJson,
+				}).catch((err) => {
+					xLog.error(
+						`Error: ${err}. Error Exit Quitting Now.`,
+					);
+					console.trace();
+					process.exit(1);
+				});
 
 				// Optionally display the refined XML
 				if (commandLineParameters.switches.echoAlso) {
 					xLog.result(refinedXml);
 				}
 
-				xLog.status(`Process detail info dir: ${batchSpecificDebugLogDirPath}`);
+				xLog.saveProcessFile(
+					`${moduleName}_{path.basename(outputFilePath)}.xml`,
+					refinedXml,
+				);
 
-				// Write the refined XML to the output file
-				try {
-					fs.writeFileSync(outputFilePath, refinedXml, { encoding: 'utf-8' });
-					fs.symlinkSync(
-						outputFilePath,
-						path.join(batchSpecificDebugLogDirPath, 'outputFileAlias'),
-					);
-					xLog.status(`Output file path: ${outputFilePath}`);
-				} catch (error) {
-					xLog.error(`Error writing to: ${outputFilePath}`);
-					xLog.error(error.toString());
-					process.exit(1);
-				}
+				fs.writeFileSync(outputFilePath, refinedXml, { encoding: 'utf-8' });
+				xLog.status(`Output file path: ${outputFilePath}`);
 			};
 
 		return { cleanAndOutputXml };

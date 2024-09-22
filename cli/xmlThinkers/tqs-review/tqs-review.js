@@ -12,12 +12,7 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function (args = {}) {
-	const { xLog, batchSpecificDebugLogDirPath } = process.global;
-	const tempFilePath = require('path').join(
-		batchSpecificDebugLogDirPath,
-		`${moduleName}_prompts.log`,
-	);
-	xLog.status(`logging all prompts into ${tempFilePath} [${moduleName}]`);
+	const { xLog } = process.global;
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
 
@@ -40,7 +35,7 @@ const moduleFunction = function (args = {}) {
 				elementSpecWorksheetJson,
 			} = thinkerExchangePromptData;
 			const replaceObject = {
-			elementSpecWorksheetJson,
+				elementSpecWorksheetJson,
 				specObj,
 				potentialFinalObject,
 				newXmlSegment: thinkerExchangePromptData.latestResponse.wisdom,
@@ -112,11 +107,14 @@ const moduleFunction = function (args = {}) {
 			const { promptList, extractionParameters } = formulatePromptList(
 				promptGenerator,
 			)(thinkerExchangePromptData);
+			
 
-			require('fs').appendFileSync(
-				tempFilePath,
+			xLog.saveProcessFile(
+				`${moduleName}_promptList.log`,
 				`\n\n\n${moduleName}---------------------------------------------------\n${promptList[0].content}\n----------------------------------------------------\n\n`,
+				{ append: true },
 			);
+			
 
 			next('', { ...args, promptList, extractionParameters });
 		});
