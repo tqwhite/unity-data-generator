@@ -12,12 +12,12 @@ This project is the creation of valid, realistic test data objects for use in ed
 
 Here is the current XML object:
 
-<!potentialFinalObject!>
+<!latestWisdom!>
 
 
 Here is the semantic specification for this object. It is expressed as a JSON object with keys that are xPaths referring to the current XML object. 
 
-<!xpathJsonData!>
+<!elementSpecWorksheetJson!>
 
 
 An XML validator was run on the current XML object. Here is the result:
@@ -62,6 +62,9 @@ ADVICE FOR SOLVING COMMON PROBLEMS:
 • Any namespace error
 	• Make sure that the top level element includes the follow namespace declration: xmlns="http://www.sifassociation.org/datamodel/na/4.x"
 
+• "not facet-valid with respect to pattern"
+	• This is probably followed by a regular expression specification. Review the regular expression, look at the line/column number and make the value consistent with the regular expression.
+
 INSTRUCTIONS
 
 Please... 
@@ -75,6 +78,8 @@ Please...
 4) review your work to make sure that all of the values are coherent with each other and finally
 
 5) Go back over it one more time to make sure all three of the previous tasks were done correctly.
+
+6) Explain why you were not able to fix a "not facet-valid" error, if one is presented.
 
 To facilliate subsequent processing, please format your output according to these instructions:
 

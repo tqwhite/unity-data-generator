@@ -14,7 +14,7 @@ Coherency is important. For this, coherence means that the fictitious data value
 The results are to be expressed in XML, the language of the data standard. The Object Standard Definition contains xPaths that describe the data element under consideration along with other details including a description and sometimes a codeset. You are to infer all data types. If the name of an element says it is a list, you will generate two of the subordinate elements. 
 
 
-Conventions: At signs (@) refer to attributes. Anything with 'refId' in its name is a UUID. If a property name is plural and it seems like the right thing to do, create two elements for it. The specification has field names that sometimes correspond to the name of elements, eg, description. Do not be confused. You are still supposed to make up values for those fields, not use the text of the specification.
+Conventions: At signs (@) refer to attributes. Anything with 'refId' in its name is a UUID (UUIDs have the format: "32 hex digits grouped into chunks of 8-4-4-4-12"). If a property name is plural and it seems like the right thing to do, create two elements for it. The specification has field names that sometimes correspond to the name of elements, eg, description. Do not be confused. You are still supposed to make up values for those fields, not use the text of the specification.
 
 Always wrap the XML part of your response in delimiters like this:
 

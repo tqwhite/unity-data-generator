@@ -83,13 +83,13 @@ const moduleFunction = async function (
 	const jinaCore = require('./lib/jina-core');
 
 	// Initialize Jina AI core and xmlGenerator function
-	const { jinaResponder: xmlGenerator } = require('./lib/think-up-answer')({
+	const { jinaResponder: xmlGenerator } = require('./organizers/think-up-answer')({
 		jinaCore,
 		thoughtProcessName: xmlGeneratorName,
 	}); // munges data and orchestrates this specific smartyPants process
 
 	// Initialize Jina AI refiner and xmlRefiner function
-	const { jinaResponder: xmlRefiner } = require('./lib/think-keep-trying')({
+	const { jinaResponder: xmlRefiner } = require('./organizers/think-keep-trying')({
 		jinaCore,
 		thoughtProcessName: refinerName,
 	}); // munges data and orchestrates this specific smartyPants process
@@ -97,8 +97,8 @@ const moduleFunction = async function (
 	// ===========================================================================
 	// COMBINE SMARTYPANTS EXECUTORS INTO THE MAIN EXECUTION OBJECT
 
-	// Initialize cleanAndOutputXml function
-	const { cleanAndOutputXml } = require('./lib/clean-and-output-xml-exit')({
+	// Initialize runTask function
+	const { runTask } = require('./lib/task-runner')({
 		xmlRefiner,
 		xmlGenerator,
 	});
@@ -121,7 +121,7 @@ const moduleFunction = async function (
 		spreadsheetPath,
 		xLog,
 		targetObjectNameList,
-		cleanAndOutputXml,
+		runTask,
 		outputFilePath,
 		commandLineParameters,
 	}) => {
@@ -152,7 +152,7 @@ const moduleFunction = async function (
 				'\t',
 			);
 
-			await cleanAndOutputXml({
+			await runTask({
 				outputFilePath,
 				elementSpecWorksheetJson,
 			})();
@@ -169,7 +169,7 @@ const moduleFunction = async function (
 		spreadsheetPath,
 		xLog,
 		targetObjectNameList,
-		cleanAndOutputXml,
+		runTask,
 		outputFilePath,
 		commandLineParameters,
 	};

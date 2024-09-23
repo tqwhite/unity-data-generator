@@ -28,37 +28,19 @@ const moduleFunction = function ({
 
 	// Main function to process a group and its children using Jina AI
 	async function jinaResponder(promptReplacementObject) {
-		const { groupXPath, children, elementSpecWorksheetJson } =
-			promptReplacementObject;
-
-		// Prepare promptGenerationData
-		const promptGenerationData = {
-			promptReplacementObject,
-			elementSpecWorksheetJson,
-			currentXml: '', // No incumbent XML for first round
-			potentialFinalObject: '', // No previous XML for first pass
-		};
 
 		// Get AI-generated response from jinaConversation
-		const { wisdom, rawAiResponseObject } = await jinaConversation.getResponse(
-			promptGenerationData,
+		const { wisdom, latestResponse, args } = await jinaConversation.getResponse(
+			promptReplacementObject,
 			{},
 		);
-
+		const {rawAiResponseObject}=latestResponse;
 		// Handle errors or invalid responses
 		if (rawAiResponseObject.isError) {
 			const message = rawAiResponseObject.err;
 			xLog.error(`\n=== ERROR (${message}) === [${moduleName}]\n`);
 			xLog.error(rawAiResponseObject);
 			process.exit();
-		}
-
-		// Write intermediate results to temp file if specified
-		if (tempFilePath && wisdom) {
-			fs.writeFileSync(
-				tempFilePath,
-				`<!-- last xPath: ${groupXPath} -->\n${wisdom}`,
-			);
 		}
 
 		xLog.verbose(wisdom, { label: 'WISDOM' });

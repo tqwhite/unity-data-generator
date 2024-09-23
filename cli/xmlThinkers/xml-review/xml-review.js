@@ -27,19 +27,8 @@ const moduleFunction = function (args = {}) {
 	const formulatePromptList =
 		(promptGenerator) =>
 		(thinkerExchangePromptData = {}) => {
-			//sample: const promptList = [{ role: 'user', content: 'one sentence about neutron starts' }];
-			const {
-				specObj,
-				currentXml,
-				potentialFinalObject,
-				elementSpecWorksheetJson,
-			} = thinkerExchangePromptData;
 			const replaceObject = {
-				elementSpecWorksheetJson,
-				specObj,
-				potentialFinalObject,
-				newXmlSegment: thinkerExchangePromptData.latestResponse.wisdom,
-				currentXml,
+				...thinkerExchangePromptData,
 				employerModuleName: moduleName,
 			};
 
@@ -159,7 +148,7 @@ const moduleFunction = function (args = {}) {
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			const { processedWisdom: wisdom, rawAiResponseObject } = args;
-			callback(err, { wisdom, rawAiResponseObject });
+			callback(err, { wisdom, rawAiResponseObject, args });
 		});
 	};
 

@@ -26,14 +26,13 @@ const moduleFunction = function (args = {}) {
 	const formulatePromptList =
 		(promptGenerator) =>
 		(thinkerExchangePromptData = {}) => {
-			//sample: const promptList = [{ role: 'user', content: 'one sentence about neutron starts' }];
 			const { specObj, currentXml, elementSpecWorksheetJson } = thinkerExchangePromptData;
 			const { promptList, extractionParameters } =
 				promptGenerator.iterativeGeneratorPrompt({
 					elementSpecWorksheetJson,
 					employerModuleName: moduleName,
-				});
-			return { promptList, extractionParameters };
+				}); //like everything I make, this returns an array
+			return { promptList, extractionParameters }; //extraction parameters are needed for unpacking resukt
 		};
 
 	function regexEscape(s) {

@@ -36,6 +36,7 @@ const moduleFunction = function (args = {}) {
 				validationMessage: thinkerExchangePromptData.validationMessage?JSON.stringify(thinkerExchangePromptData.validationMessage, '', '\t'):'No XML structural errors are known',
 				employerModuleName: moduleName,
 			};
+			
 			const { promptList, extractionParameters } =
 				promptGenerator.iterativeGeneratorPrompt(replaceObject);
 			return { promptList, extractionParameters };
@@ -172,7 +173,7 @@ The XML Validation API returned the following message for the Refined version:
 ------------------------
 			`;
 
-			callback(err, { wisdom, explanation, refinementReport, rawAiResponseObject });
+			callback(err, { HELLO:'GOODBYE', wisdom, explanation, refinementReport, rawAiResponseObject, args });
 		});
 	};
 

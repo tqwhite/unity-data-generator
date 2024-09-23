@@ -18,8 +18,9 @@ const moduleFunction = function ({
 }) {
 	const { xLog, getConfig } = process.global;
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
-	xLog.status(`using thoughtProcess '${thoughtProcessName}' in [${moduleName}]`);
-	
+	xLog.status(
+		`using thoughtProcess '${thoughtProcessName}' in [${moduleName}]`,
+	);
 
 	const jinaConversation = jinaCore.conversationGenerator({
 		thoughtProcessName,
@@ -28,43 +29,42 @@ const moduleFunction = function ({
 	async function jinaResponder(promptReplacementObject) {
 		let isValid = false;
 		let validationMessage = '';
-		const limit = 5;
+		const limit = 1;
 		let count = 0;
 		let wisdom = '';
 		const tempList = [0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6];
 
-		const { xmlString, targetXpathFieldList } = promptReplacementObject;
-		
-		
-		
-		
+		const { latestWisdom, targetXpathFieldList } = promptReplacementObject;
+
 		const promptGenerationData = {
 			promptReplacementObject,
-			specObj: {},
-			currentXml: xmlString,
-			potentialFinalObject: xmlString,
-			xpathJsonData: JSON.stringify(targetXpathFieldList, '', '\t'),
 		};
-		
-		
-		
-
+process.global.tqDebugFlag=true;
 		do {
 			const temperatureFactor = tempList[count];
 
-			const result = await jinaConversation.getResponse(promptGenerationData, {
-				temperatureFactor,
-			});
+			const result = await jinaConversation.getResponse(
+				promptReplacementObject,
+				{
+					temperatureFactor,
+				},
+			);
 
-			const { rawAiResponseObject, thinkerResponses, lastThinkerName } = result;
-			wisdom = result.wisdom;
+			const {
+				wisdom,
+				rawAiResponseObject,
+				thinkerResponses,
+				lastThinkerName,
+				latestResponse,
+			} = result;
+
 			isValid = thinkerResponses.qtGetSurePath('checkValidity.isValid', false);
 			validationMessage = thinkerResponses.qtGetSurePath(
 				'checkValidity.validationMessage',
 				false,
 			);
 
-			promptGenerationData.currentXml = wisdom;
+			promptGenerationData.latestWisdom = wisdom;
 			promptGenerationData.validationMessage = {
 				error: `Element <x> is illegal. Not part of spec`,
 			}; //validationMessage;
@@ -83,9 +83,9 @@ const moduleFunction = function ({
 
 		if (!isValid) {
 			xLog.error(wisdom);
-			throw 'Jina failed to fix the XML';
+			throw 'Jina failed to fix the XML\n    ${validationMessage.xpath}\n    ${validationMessage.error}';
 		}
-
+process.global.tqDebugFlag=false;
 		return wisdom;
 	}
 

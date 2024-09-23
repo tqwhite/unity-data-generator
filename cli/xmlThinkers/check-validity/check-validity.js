@@ -33,6 +33,7 @@ const moduleFunction = function (args = {}) {
 	// TALK TO AI
 
 	const accessSmartyPants = (currentXml, callback) => {
+
 		const localCallback = (err, validationMessage) => {
 			let isValid = false;
 			if (validationMessage.pass) {
@@ -80,8 +81,8 @@ const moduleFunction = function (args = {}) {
 
 	const executeRequest = (args, callback) => {
 		const currentXml = args.qtGetSurePath(
-			'thinkerExchangePromptData.latestResponse.wisdom',
-			'got nothing from previous process (fix-problems.js)',
+			'thinkerExchangePromptData.latestWisdom',
+			'got nothing from previous process (ie, fix-problems.js)',
 		);
 		const refinementReport = args.qtGetSurePath(
 			'thinkerExchangePromptData.latestResponse.refinementReport',
@@ -139,6 +140,7 @@ const moduleFunction = function (args = {}) {
 				validationMessage,
 				isValid,
 				rawAiResponseObject,
+				args
 			});
 		});
 	};

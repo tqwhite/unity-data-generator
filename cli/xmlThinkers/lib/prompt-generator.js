@@ -13,19 +13,13 @@ const moduleFunction = function(args = {}) {
 	const { xLog, getConfig } = process.global;
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
 	const iterativeGeneratorPrompt = args => {
-		const {
-			specObj,
-			elementSpecWorksheetJson,
-			currentXml,
-			employerModuleName,
-			potentialFinalObject
-		} = args;
+		const {employerModuleName} = args;
 
 		const promptLibrary = require(localConfig.promptLibraryModulePath)(); //'johns-maker', 'johns-review', 'tqs-maker', 'tqs-review', 'fix-problems' 
 		
 		if (!promptLibrary[employerModuleName]){
-			xLog.error(`\nmodule 'prompt-library' has no property named '${moduleName}'`);
-			throw `module 'prompt-library' has no property named '${moduleName}'`;
+			xLog.error(`\nmodule 'prompt-library' has no property for '${employerModuleName}'`);
+			throw `module 'prompt-library' has no property for '${employerModuleName}'`;
 		}
 		
 		 const {

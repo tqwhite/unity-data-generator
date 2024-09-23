@@ -7,94 +7,29 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); 
 const moduleFunction = ({ moduleName } = {}) => () => {
 
 	return `
-	Merge these new segment into the base to produce a final, merged object. Attributes of new segment elements should be applied to existing base elements. Review the object for consistency and coherence. if elements of the same type have the same refId, change them so they are all different UUIDs.
+This is the quality control step in a process that is generating XML Test Data that matches a specification and has fictitious data values that resemble data that would occur in the real world. 
 
-This is important, if the new segment has elements that are the same type as elements in the base, the new elements should be merged into the corresponding base elements. The merged XML should have at most two subordinate elements of the same type. Review the similar elements for repetition and revise the test data if necessary. It is crucial that all elements of the Base are retained. 
+The requirements for the XML are specified in the Object Standard Definition below. Your goal is to examine the XML and make sure it is of the highest quality.
 
-For example, you might get
+The main function is to compare the XML Test Data to the Object Standard Definition and REVISE THE XML TO INSURE THAT IT IS CONSISTENT, ACCURATELY REPRESENTS THE OBJECT STANDARD DEFINITION AND IS COHERENT.
 
-example base
+Being coherent is important. For this, coherence means that the fictitious data values align with each other in ways that make sense to the user of this testing data. For example, addresses of students should match that of the school. Within objects, the invented data needs to be consistent, eg, the student model has properties of first, last and full name. If the first is 'Joe' and the last is 'White', it would be incorrect to say the full name is 'Sam Smith'. The coherent value is 'Joe White'.
 
-<Examples>
-\t<Example RefId=\"123e4567-e89b-12d3-a456-426614174000\">
-\t\t<Sub1> hello </Sub1>
-\t\t<Sub2> goodbye </Sub2>
-\t</Example>
-\t<Example RefId=\"123e4567-e89b-12d3-a456-426614174001\">
-\t\t<Sub1> orange </Sub1>
-\t\t<Sub2> black </Sub2>
-\t</Example>
-</Examples>
+The order of the XML elements is also important. You should revise the XML to insure that the elements appear in the same order as they appear in the Object Standard Definition.
 
-example new segment:
+An IMPORTANT EXCEPTION to adhering to the Object Standard Definition is that the XML Test Data should NOT have a top level grouping object with multiple subordinates. IE, you should revise <things><thing>a</thing><thing></thing>b</things> to remove <things> and all but one of the <thing> elements. Choose the nicest looking one to keep.
 
-<Example>
-\t<NewSub>kitten</NewSub>
-</Example>
-
-The new merged element could look like this before you revise the facts 'kitten' to be different.
-
-<Examples>
-\t<Example RefId=\"123e4567-e89b-12d3-a456-426614174000\">
-\t\t<Sub1> hello </Sub1>
-\t\t<Sub2> goodbye </Sub2>
-\t<NewSub>kitten</NewSub>
-\t</Example>
-\t<Example RefId=\"123e4567-e89b-12d3-a456-426614174001\">
-\t\t<Sub1> orange </Sub1>
-\t\t<Sub2> black </Sub2>
-\t<NewSub>kitten</NewSub>
-\t</Example>
-</Examples>
-
-It is crucial that all existing elements be kept and shown in your response. Never eliminate elements from the base. In the example below, notice that the elements Sub1 and Sub2 are retained with NewSub being added (then revised to prevent duplication). Never ever ever replace Base XML with comments such as, \"<!-- Existing Example data here -->\". That makes the result completely useless.
-
-Example of merging new data while keeping elements: 
-
-<Examples>
-\t<Example RefId=\"123e4567-e89b-12d3-a456-426614174000\">
-        <!-- Existing Example data here -->
-\t\t<NewSub>kitten</NewSub>
-\t</Example>
-\t<Example RefId=\"123e4567-e89b-12d3-a456-426614174001\">
-        <!-- Existing Example data here -->
-\t\t<NewSub>kitten</NewSub>
-\t</Example>
-</Examples>
-
-CRUCIAL POINT: NONE OF THE ELEMENTS (Examples, Sub1, etc) SHOWN IN THE EXAMPLES ABOVE SHOULD APPEAR IN THE RESULTING OBJECT. THEY ARE ILLUSTRATIONS ONLY.
-
-Finally, the top level element requires a namespace identification. For this project it is:
-
- xmlns="http://www.sifassociation.org/datamodel/na/4.x"
- 
-EC,
-
-<Example  xmlns="http://www.sifassociation.org/datamodel/na/4.x">
-</Example>
-
-Here is the real data:
-
-Definition of the entire object:
+Here is the Object Standard Definition:
 
 <!elementSpecWorksheetJson!>
 
-The final object should be consistent with this information. The sequence of XML elements should appear in the same order as their xPaths appear in this specification.
 
-Base:
+Here is the XML Test Data:
 
-<!potentialFinalObject!>
-
-Merge this new segment. 
-
-This merged element is to be a complete XML object for testing.
-
-New segment:
-
-<!newXmlSegment!>
+<!latestWisdom!>
 
 
-Wrap the resulting XML with delimiters like this:
+Wrap the finished XML with delimiters like this:
 
 <!frontDelimiter!>
  MERGED XML GOES HERE

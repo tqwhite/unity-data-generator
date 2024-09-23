@@ -12,17 +12,18 @@ const moduleFunction =
 		const { xLog, commandLineParameters } = process.global;
 
 		// Callback function to handle the parsed XML
-		const cleanAndOutputXml =
+		const runTask =
 			({ outputFilePath, elementSpecWorksheetJson }) =>
 			async (err, xmlCollection) => {
 				// Generate initial XML using xmlGenerator
 				const xmlString = await xmlGenerator({
+					latestWisdom:'first pass. no XML yet. replace with top-level object.',
 					elementSpecWorksheetJson,
 				});
 
 				// Refine the XML using an external function
 				const refinedXml = await xmlRefiner({
-					xmlString,
+					latestWisdom:xmlString,
 					elementSpecWorksheetJson,
 				}).catch((err) => {
 					xLog.error(
@@ -46,7 +47,7 @@ const moduleFunction =
 				xLog.status(`Output file path: ${outputFilePath}`);
 			};
 
-		return { cleanAndOutputXml };
+		return { runTask };
 	};
 
 // END OF moduleFunction() ============================================================
