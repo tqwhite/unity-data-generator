@@ -36,20 +36,17 @@ const moduleFunction = function ({ accessParms, modelName }) {
 
 		taskList.push((args, next) => {
 			const { openAiCompletion, promptList } = args;
-			xLog.debug(
-				`promptList START ==================================================`,
-			);
+
 			const localCallback = (err, { rawAiResponseObject, wisdom }) => {
-				xLog.debug(
-					`promptList END ==================================================`,
-				);
-				xLog.debug(wisdom);
 				next(err, { ...args, rawAiResponseObject, wisdom });
 			};
 
 			xLog.debug(promptList);
 
-			openAiCompletion.getCompletion({ promptList, temperatureFactor }, localCallback);
+			openAiCompletion.getCompletion(
+				{ promptList, temperatureFactor },
+				localCallback,
+			);
 		});
 
 		// --------------------------------------------------------------------------------
@@ -61,7 +58,6 @@ const moduleFunction = function ({ accessParms, modelName }) {
 			callback(err, { rawAiResponseObject, wisdom });
 		});
 	};
-	
 
 	return { accessExternalResource };
 };
@@ -69,6 +65,4 @@ const moduleFunction = function ({ accessParms, modelName }) {
 //END OF moduleFunction() ============================================================
 
 module.exports = moduleFunction;
-//module.exports = new moduleFunction();
-//moduleFunction().workingFunction().qtDump();
 

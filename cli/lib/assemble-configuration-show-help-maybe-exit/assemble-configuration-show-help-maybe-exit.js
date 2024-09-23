@@ -30,7 +30,7 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 		'-showConfig',
 		'-outFile',
 		'--overrideConfigPath',
-		'--xmlGeneratorName',
+		'--xmlGeneratingingFacilitatorName',
 		'--refinerName',
 		'-echoAlso',
 		'-listElements',

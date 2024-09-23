@@ -49,8 +49,7 @@ const moduleFunction = async function (
 			.slice(-4)}`,
 	);
 	require('./lib/purge-cleanup-directory')().executePurging(batchSpecificDebugLogParentDirPath, batchSpecificDebugLogParentDirPurgeCount);
-
-	xLog.setProcessFilesDirectory(batchSpecificDebugLogDirPath);
+	xLog.setProcessFilesDirectory(batchSpecificDebugLogDirPath); //sort of a log for stuff too big to put in a log
 
 	// Determine output file path and temporary file path
 	const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
@@ -72,8 +71,8 @@ const moduleFunction = async function (
 	// BUILD SMARTYPANTS AND THEIR EXECUTORS
 
 	// Determine thought process and refiner names; default or command line spec
-	const xmlGeneratorName = commandLineParameters
-		.qtGetSurePath('values.xmlGeneratorName', [])
+	const xmlGeneratingingFacilitatorName = commandLineParameters
+		.qtGetSurePath('values.xmlGeneratingingFacilitatorName', [])
 		.qtLast('unityGenerator');
 
 	const refinerName = commandLineParameters
@@ -82,14 +81,14 @@ const moduleFunction = async function (
 
 	const jinaCore = require('./lib/jina-core');
 
-	// Initialize Jina AI core and xmlGenerator function
-	const { facilitator: xmlGenerator } = require('./facilitators/get-answer')({
+	// Initialize Jina AI core and xmlGeneratingingFacilitator function
+	const { facilitator: xmlGeneratingingFacilitator } = require('./facilitators/get-answer')({
 		jinaCore,
-		thoughtProcessName: xmlGeneratorName,
+		thoughtProcessName: xmlGeneratingingFacilitatorName,
 	}); // munges data and orchestrates this specific smartyPants process
 
-	// Initialize Jina AI refiner and xmlRefiner function
-	const { facilitator: xmlRefiner } = require('./facilitators/answer-until-valid')({
+	// Initialize Jina AI refiner and xmlRefiningFacilitator function
+	const { facilitator: xmlRefiningFacilitator } = require('./facilitators/answer-until-valid')({
 		jinaCore,
 		thoughtProcessName: refinerName,
 	}); // munges data and orchestrates this specific smartyPants process
@@ -99,8 +98,8 @@ const moduleFunction = async function (
 
 	// Initialize runTask function
 	const { runTask } = require('./lib/task-runner')({
-		xmlRefiner,
-		xmlGenerator,
+		xmlRefiningFacilitator,
+		xmlGeneratingingFacilitator,
 	});
 
 	// ===========================================================================

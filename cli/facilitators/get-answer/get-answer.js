@@ -34,14 +34,16 @@ const moduleFunction = function ({
 			promptReplacementObject,
 			{},
 		);
-		const {rawAiResponseObject}=latestResponse;
-		// Handle errors or invalid responses
-		if (rawAiResponseObject.isError) {
-			const message = rawAiResponseObject.err;
-			xLog.error(`\n=== ERROR (${message}) === [${moduleName}]\n`);
-			xLog.error(rawAiResponseObject);
-			process.exit();
-		}
+		
+// 		const {rawAiResponseObject}={NOTE: "get this from the args object if I still want this out here"};
+// 		
+// 		// Handle errors or invalid responses
+// 		if (rawAiResponseObject.isError) {
+// 			const message = rawAiResponseObject.err;
+// 			xLog.error(`\n=== ERROR (${message}) === [${moduleName}]\n`);
+// 			xLog.error(rawAiResponseObject);
+// 			process.exit();
+// 		}
 
 		xLog.verbose(wisdom, { label: 'WISDOM' });
 

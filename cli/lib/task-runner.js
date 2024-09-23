@@ -8,30 +8,32 @@ const fs = require('fs');
 // START OF moduleFunction() ============================================================
 const moduleFunction =
 	() =>
-	({ xmlRefiner, xmlGenerator }) => {
+	({ xmlRefiningFacilitator, xmlGeneratingingFacilitator }) => {
 		const { xLog, commandLineParameters } = process.global;
 
 		// Callback function to handle the parsed XML
 		const runTask =
 			({ outputFilePath, elementSpecWorksheetJson }) =>
 			async (err, xmlCollection) => {
-				// Generate initial XML using xmlGenerator
-				const xmlString = await xmlGenerator({
+			
+				
+				// =========================================================
+				// EXECUTE THE CONVERSATIONS
+				
+				// Generate initial XML using xmlGeneratingingFacilitator
+				const xmlString = await xmlGeneratingingFacilitator({
 					latestWisdom:'first pass. no XML yet. replace with top-level object.',
 					elementSpecWorksheetJson,
 				});
 
 				// Refine the XML using an external function
-				const refinedXml = await xmlRefiner({
+				const refinedXml = await xmlRefiningFacilitator({
 					latestWisdom:xmlString,
 					elementSpecWorksheetJson,
-				}).catch((err) => {
-					xLog.error(
-						`Error: ${err}. Error Exit Quitting Now.`,
-					);
-					console.trace();
-					process.exit(1);
 				});
+				
+				// =========================================================
+				// SEND THE RESULTS
 
 				// Optionally display the refined XML
 				if (commandLineParameters.switches.echoAlso) {

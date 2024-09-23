@@ -26,7 +26,6 @@ const moduleFunction = function (
 
 	// ================================================================================
 	// WHERE THE RUBBER MEETS THE ROAD
-	
 
 	// 	const conversationReplacementObject = {};
 	// 	const addToConversationReplaceObject = (args) => {
@@ -44,90 +43,90 @@ const moduleFunction = function (
 	// This acts as an intermediary to convey opaque prompt data from the outside world to the thinkerS that actually talks to an AI system
 	const askTheSmartyPantsActual =
 		({ localConfig }) =>
-		(promptGenerationData, options = {}, callback) => {const taskList = new taskListPlus();
+		(promptGenerationData, options = {}, callback) => {
+			const taskList = new taskListPlus();
 
-// --------------------------------------------------------------------------------
-// INITIALIZE PIPE
+			// --------------------------------------------------------------------------------
+			// INITIALIZE PIPE
 
-taskList.push((args, next) => {
-	const thinkerResponses = {};
+			taskList.push((args, next) => {
+				const thinkerResponses = {};
 
-	next('', { ...args, thinkerResponses });
-});
+				next('', { ...args, thinkerResponses });
+			});
 
-// --------------------------------------------------------------------------------
-// INSTANTIATE AND EXECUTE THINKERS
+			// --------------------------------------------------------------------------------
+			// INSTANTIATE AND EXECUTE THINKERS
 
-thoughtProcesslist.forEach((thoughtProcess) =>
-	taskList.push((args, next) => {
+			thoughtProcesslist.forEach((thoughtProcess) =>
+				taskList.push((args, next) => {
+					const { thinkerResponses, thinkersList, promptGenerationData } = args;
+					const latestWisdom = args.latestWisdom
+						? args.latestWisdom
+						: 'Start from scratch';
 
-		const { thinkerResponses, thinkersList, promptGenerationData } = args;
-		const latestWisdom = args.latestWisdom
-			? args.latestWisdom
-			: 'Start from scratch';
+					const thinkerSpec = thinkersList[thoughtProcess.configName];
 
-		const thinkerSpec = thinkersList[thoughtProcess.configName];
+					const { smartyPantsName } = thinkerSpec;
 
-		const { smartyPantsName } = thinkerSpec;
+					const localCallback = (err, latestResponse) => {
+						thinkerResponses[thinkerSpec.selfName] = latestResponse;
 
-		const localCallback = (err, latestResponse) => {
+						latestResponse.wisdom = latestResponse.wisdom
+							.replace(/\`\`\`xml/i, '')
+							.replace(/\`\`\`/, '');
+						next(err, {
+							...args,
+							thinkerResponses,
+							latestResponse,
+							latestWisdom: latestResponse.wisdom,
+							lastThinkerName: thinkerSpec.selfName,
+						});
+					};
 
-			thinkerResponses[thinkerSpec.selfName] = latestResponse;
+					const thinker = require(thinkerSpec.module)({
+						thinkerSpec,
+						smartyPants: smartyPantsChooser({ smartyPantsName }),
+					});
 
-			latestResponse.wisdom = latestResponse.wisdom
-				.replace(/\`\`\`xml/i, '')
-				.replace(/\`\`\`/, '');
-			next(err, {
-				...args,
-				thinkerResponses,
-				latestResponse,
-				latestWisdom: latestResponse.wisdom,
-				lastThinkerName: thinkerSpec.selfName,
+					const thinkerExchangePromptData = {
+						...promptGenerationData,
+						...args,
+					};
+
+					thinker.executeRequest({ thinkerExchangePromptData }, localCallback);
+				}),
+			);
+
+			// --------------------------------------------------------------------------------
+			// TASKLIST ITEM TEMPLATE
+
+			taskList.push((args, next) => {
+				const { thinkerResponses } = args;
+
+				next('', { ...args });
+			});
+
+			// --------------------------------------------------------------------------------
+			// INIT AND EXECUTE THE PIPELINE
+
+			const initialData = { localConfig, promptGenerationData, thinkersList }; //thoughtProcesslist enters in the loop above
+			pipeRunner(taskList.getList(), initialData, (err, args) => {
+				const {
+					latestResponse,
+					responseObj,
+					thinkerResponses,
+					lastThinkerName,
+				} = args;
+
+				callback(err, {
+					latestResponse,
+					thinkerResponses,
+					lastThinkerName,
+					XXX: 'HELLO',
+				});
 			});
 		};
-
-		const thinker = require(thinkerSpec.module)({
-			thinkerSpec,
-			smartyPants: smartyPantsChooser({ smartyPantsName }),
-		});
-
-		const thinkerExchangePromptData = {
-			...promptGenerationData,
-			...args,
-		};
-		
-		
-		
-
-		thinker.executeRequest({ thinkerExchangePromptData }, localCallback);
-	}),
-);
-
-// --------------------------------------------------------------------------------
-// TASKLIST ITEM TEMPLATE
-
-taskList.push((args, next) => {
-	const { thinkerResponses } = args;
-
-	next('', { ...args });
-});
-
-// --------------------------------------------------------------------------------
-// INIT AND EXECUTE THE PIPELINE
-
-const initialData = { localConfig, promptGenerationData, thinkersList }; //thoughtProcesslist enters in the loop above
-pipeRunner(taskList.getList(), initialData, (err, args) => {
-	const { latestResponse, responseObj, thinkerResponses, lastThinkerName } =
-		args;
-
-	callback(err, {
-		latestResponse,
-		thinkerResponses,
-		lastThinkerName,
-		XXX: 'HELLO',
-	});
-});
-};
 
 	// ================================================================================
 	// INITIALIZE THE THINKERS
@@ -141,33 +140,15 @@ pipeRunner(taskList.getList(), initialData, (err, args) => {
 
 	let count = 0;
 
-	const getResponse = (promptGenerationData, options = {}, callback) => {				
+	const getResponse = (promptGenerationData, options = {}) => {
 
-		if (typeof options == 'function') {
-			callback = options;
-			options = {};
-		}
-
-		if (callback) {
-			xLog.status(`callback=${callback}`);
-			xLog.status(
-				' Debug Exit This "100 * count++" makes no sense. [conversation-generator.js.moduleFunction]',
-			);
-			process.exit(); //tqDebug
-
-			askTheSmartyPants(promptGenerationData, options, (err, result) =>
-				callback(err, 100 * count++),
-			); //WTF is this?
-		} else {
-			//this appears to be the one that is actioned
-			return new Promise((resolve, reject) => {
-				askTheSmartyPants(promptGenerationData, options, (err, response) => {
-					resolve(response);
-				}); //returns to think-keep-trying or think-up-answer
-			});
-		}
+		//this appears to be the one that is actioned
+		return new Promise((resolve, reject) => {
+			askTheSmartyPants(promptGenerationData, options, (err, response) => {
+				resolve(response);
+			}); //returns to think-keep-trying or think-up-answer
+		});
 	};
-	
 
 	const debugInfo = () => {
 		xLog.status(`thoughtProcessName=${thoughtProcessName} [${moduleName}]`);

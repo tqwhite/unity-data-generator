@@ -26,7 +26,8 @@ const moduleFunction = function (args = {}) {
 	const formulatePromptList =
 		(promptGenerator) =>
 		(thinkerExchangePromptData = {}) => {
-			const { specObj, currentXml, elementSpecWorksheetJson } = thinkerExchangePromptData;
+			const { specObj, currentXml, elementSpecWorksheetJson } =
+				thinkerExchangePromptData;
 			const { promptList, extractionParameters } =
 				promptGenerator.iterativeGeneratorPrompt({
 					elementSpecWorksheetJson,
@@ -94,7 +95,6 @@ const moduleFunction = function (args = {}) {
 			const { promptList, extractionParameters } = formulatePromptList(
 				promptGenerator,
 			)(thinkerExchangePromptData);
-
 
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
