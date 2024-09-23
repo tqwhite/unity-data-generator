@@ -26,7 +26,7 @@ const moduleFunction = function ({
 		thoughtProcessName,
 	}); // provides .getResponse()
 
-	async function jinaResponder(promptReplacementObject) {
+	async function facilitator(promptReplacementObject) {
 		let isValid = false;
 		let validationMessage = '';
 		const limit = 1;
@@ -39,7 +39,7 @@ const moduleFunction = function ({
 		const promptGenerationData = {
 			promptReplacementObject,
 		};
-process.global.tqDebugFlag=true;
+
 		do {
 			const temperatureFactor = tempList[count];
 
@@ -85,11 +85,10 @@ process.global.tqDebugFlag=true;
 			xLog.error(wisdom);
 			throw 'Jina failed to fix the XML\n    ${validationMessage.xpath}\n    ${validationMessage.error}';
 		}
-process.global.tqDebugFlag=false;
 		return wisdom;
 	}
 
-	return { jinaResponder };
+	return { facilitator };
 };
 
 //END OF moduleFunction() ============================================================

@@ -83,13 +83,13 @@ const moduleFunction = async function (
 	const jinaCore = require('./lib/jina-core');
 
 	// Initialize Jina AI core and xmlGenerator function
-	const { jinaResponder: xmlGenerator } = require('./organizers/think-up-answer')({
+	const { facilitator: xmlGenerator } = require('./facilitators/get-answer')({
 		jinaCore,
 		thoughtProcessName: xmlGeneratorName,
 	}); // munges data and orchestrates this specific smartyPants process
 
 	// Initialize Jina AI refiner and xmlRefiner function
-	const { jinaResponder: xmlRefiner } = require('./organizers/think-keep-trying')({
+	const { facilitator: xmlRefiner } = require('./facilitators/answer-until-valid')({
 		jinaCore,
 		thoughtProcessName: refinerName,
 	}); // munges data and orchestrates this specific smartyPants process

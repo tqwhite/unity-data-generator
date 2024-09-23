@@ -1,8 +1,8 @@
 {
-  "name": "think-up-answer",
+  "name": "answer-until-valid",
   "version": "1.0.0",
-  "description": "interface to Jina for creating XML testing data",
-  "main": "think-up-answer.js",
+  "description": "do some RAG and cleanup on the finished object",
+  "main": "answer-until-valid.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

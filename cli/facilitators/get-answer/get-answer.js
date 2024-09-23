@@ -4,7 +4,7 @@
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
 
 // Module for calling Jina AI to generate XML segments based on field values.
-// Provides function jinaResponder which processes segments and attributes.
+// Provides function facilitator which processes segments and attributes.
 
 const qt = require('qtools-functional-library'); // Utility library
 const fs = require('fs');
@@ -27,7 +27,7 @@ const moduleFunction = function ({
 	// MAIN FUNCTION CALL JINA
 
 	// Main function to process a group and its children using Jina AI
-	async function jinaResponder(promptReplacementObject) {
+	async function facilitator(promptReplacementObject) {
 
 		// Get AI-generated response from jinaConversation
 		const { wisdom, latestResponse, args } = await jinaConversation.getResponse(
@@ -48,7 +48,7 @@ const moduleFunction = function ({
 		return wisdom;
 	}
 
-	return { jinaResponder };
+	return { facilitator };
 };
 
 // END OF moduleFunction() ============================================================

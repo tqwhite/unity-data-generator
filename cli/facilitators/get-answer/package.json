@@ -1,8 +1,8 @@
 {
-  "name": "think-keep-trying",
+  "name": "get-answer",
   "version": "1.0.0",
-  "description": "do some RAG and cleanup on the finished object",
-  "main": "think-keep-trying.js",
+  "description": "interface to Jina for creating XML testing data",
+  "main": "get-answer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
