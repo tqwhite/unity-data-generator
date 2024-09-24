@@ -41,6 +41,7 @@ const moduleFunction = function (args = {}) {
 			callback('', { validationMessage, isValid });
 		};
 		const url = 'https://testharness.a4l.org/SIFController/api/validate/4.3/';
+		xLog.status(`validating with ${url}`);
 		const axiosParms = {
 			method: 'post',
 			url,
@@ -111,14 +112,14 @@ const moduleFunction = function (args = {}) {
 					: `No refinement report was generated for inValid XML error ${validationMessage}`;
 
 				xLog.saveProcessFile(
-					`${moduleName}_refindementReports.log`,
+					`${moduleName}_refinementReports.log`,
 					fileOutputString,
 					{ append: true },
 				);
 				
 				const errorDisplay=`\n${JSON.stringify(validationMessage, '', '\t')}\n--------------------\n`;
 				xLog.saveProcessFile(
-					`${moduleName}_validationMessages.log`,
+					`${moduleName}_responseList.log`,
 					errorDisplay,
 					{ append: true },
 				);

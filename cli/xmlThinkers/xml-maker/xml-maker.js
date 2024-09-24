@@ -117,6 +117,12 @@ const moduleFunction = function (args = {}) {
 		taskList.push((args, next) => {
 			const { filterOutput, wisdom: rawWisdom, extractionParameters } = args;
 
+			xLog.saveProcessFile(
+				`${moduleName}_responseList.log`,
+				`\n\n\n${moduleName}---------------------------------------------------\n${rawWisdom}\n----------------------------------------------------\n\n`,
+				{ append: true },
+			);
+			
 			const processedWisdom = filterOutput(rawWisdom, extractionParameters); //presently the source of being upperCase
 
 			next('', { ...args, processedWisdom });

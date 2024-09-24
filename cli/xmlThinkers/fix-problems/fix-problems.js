@@ -9,6 +9,12 @@ const asynchronousPipePlus = new require('qtools-asynchronous-pipe-plus')();
 const pipeRunner = asynchronousPipePlus.pipeRunner;
 const taskListPlus = asynchronousPipePlus.taskListPlus;
 
+// NOTE: THIS IS USUALLY A TQ NO-NO. This value is common to all instantiations of this
+// module. Fortunately, this is a batch program so it is only instantiated for the one
+// processing run.
+
+const validationList=[];
+
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function (args = {}) {
@@ -24,18 +30,19 @@ const moduleFunction = function (args = {}) {
 
 	const promptGenerator = require('../lib/prompt-generator')();
 
-	const formulatePromptList =
-		(promptGenerator) =>
-		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
+	const formulatePromptList = (promptGenerator) => {
+		return ({ latestWisdom, elementSpecWorksheetJson } = {}) => {
+			latestWisdom.validationMessage.error && validationList.push(latestWisdom.validationMessage.error);
 			const { promptList, extractionParameters } =
 				promptGenerator.iterativeGeneratorPrompt({
 					latestXml: latestWisdom.xml,
-					latestvalidationMessage: latestWisdom.validationMessage.error,
+					latestvalidationMessage: validationList.join('\n'),
 					elementSpecWorksheetJson,
 					employerModuleName: moduleName,
 				}); //like everything I make, this returns an array
 			return { promptList, extractionParameters }; //extraction parameters are needed for unpacking resukt
 		};
+	};
 
 	function regexEscape(s) {
 		return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -63,7 +70,7 @@ const moduleFunction = function (args = {}) {
 					.replace(/<Q22820234623146231362>/g, '\n')
 			: result;
 
-		// return { xml:xml.replace(/a/i, 'x'), explanation }; //force validation error
+		// return { xml: xml.replace(/a/i, 'x'), explanation }; //force validation error
 		return { xml, explanation };
 	};
 
@@ -131,6 +138,12 @@ const moduleFunction = function (args = {}) {
 		taskList.push((args, next) => {
 			const { filterOutput, wisdom: rawWisdom, extractionParameters } = args;
 
+			xLog.saveProcessFile(
+				`${moduleName}_responseList.log`,
+				`\n\n\n${moduleName}---------------------------------------------------\n${rawWisdom}\n----------------------------------------------------\n\n`,
+				{ append: true },
+			);
+
 			const wisdom = filterOutput(rawWisdom, extractionParameters); //presently the source of being upperCase
 
 			next('', { ...args, wisdom });
@@ -148,7 +161,6 @@ const moduleFunction = function (args = {}) {
 			...args,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-
 			const { wisdom } = args;
 
 			const lastThinkerWisdom = args.qtGetSurePath(
@@ -175,7 +187,10 @@ The XML Validation API Refined version was submited to the validation API with t
 ------------------------
 			`;
 
-			callback(err, { wisdom: {...wisdom, isValid:true, refinementReportPartialTemplate}, args }); //valid a priori since it was just fixed
+			callback(err, {
+				wisdom: { ...wisdom, isValid: true, refinementReportPartialTemplate },
+				args,
+			}); //valid a priori since it was just fixed
 		});
 	};
 

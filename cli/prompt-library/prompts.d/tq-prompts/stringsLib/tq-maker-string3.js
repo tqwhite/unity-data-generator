@@ -19,10 +19,13 @@ Here is the semantic specification for this object. It is expressed as a JSON ob
 
 <!elementSpecWorksheetJson!>
 
+ERROR REPORT SECTION
 
 An XML validator was run on the current XML object. Here is the result:
 
 <!latestvalidationMessage!>
+
+GUIDANCE FOR CORRECTING JUDGING CORRECT XML
 
 If there is an error, you MUST FIND A WAY TO CHANGE THE XML to make it better.
 
@@ -62,12 +65,12 @@ ADVICE FOR SOLVING COMMON PROBLEMS:
 	• Sometimes, elements that are neither in the semantic specification nor the XML are generated. It is crucial to carefully compare the XML to the xPaths in the semantic specification and eliminate elements that are not specified there.
 
 • Any namespace error
-	• Make sure that the top level element includes the follow namespace declration: xmlns="http://www.sifassociation.org/datamodel/na/4.x"
+	• Make sure that the top level element includes the follow namespace declaration: xmlns="http://www.sifassociation.org/datamodel/na/4.x"
 
 • "not facet-valid with respect to pattern"
-	• This is probably followed by a regular expression specification. Review the regular expression, look at the line/column number and make the value consistent with the regular expression.
+	• This is probably followed by a regular expression specification. Review the regular expression, look at the line/column number and make the value consistent with the regular expression. This usually means that a UUID is incorrect, ie, not a "32 hex digits grouped into chunks of 8-4-4-4-12".
 
-INSTRUCTIONS
+PROCESS INSTRUCTIONS
 
 Please... 
 
@@ -82,6 +85,9 @@ Please...
 5) Go back over it one more time to make sure all three of the previous tasks were done correctly.
 
 6) Explain why you were not able to fix a "not facet-valid" error, if one is presented.
+
+
+RESULT FORMATTING INSTRUCTIONS
 
 To faciliate subsequent processing, please format your output according to these instructions:
 
