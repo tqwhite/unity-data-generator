@@ -178,7 +178,7 @@ const moduleFunction = async function (
 		try {
 			await executeProcess(executionDependencies);
 		} catch (error) {
-			xLog.error(`Error: ${error.message} [${moduleName}]`);
+			xLog.error(`Error: ${error} [${moduleName}]`);
 			if (commandLineParameters.switches.debug) {
 				console.trace();
 			}

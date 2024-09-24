@@ -27,12 +27,12 @@ const moduleFunction = function ({
 	// MAIN FUNCTION CALL JINA
 
 	// Main function to process a group and its children using Jina AI
-	async function facilitator(promptReplacementObject) {
-
+	async function facilitator(passThroughObject) {
+		const options={}
 		// Get AI-generated response from jinaConversation
-		const { wisdom, latestResponse, args } = await jinaConversation.getResponse(
-			promptReplacementObject,
-			{},
+		const { latestWisdom, args } = await jinaConversation.getResponse(
+			passThroughObject,
+			options,
 		);
 		
 // 		const {rawAiResponseObject}={NOTE: "get this from the args object if I still want this out here"};
@@ -45,9 +45,9 @@ const moduleFunction = function ({
 // 			process.exit();
 // 		}
 
-		xLog.verbose(wisdom, { label: 'WISDOM' });
+		xLog.verbose(latestWisdom, { label: moduleName });
 
-		return wisdom;
+		return {latestWisdom, args};
 	}
 
 	return { facilitator };

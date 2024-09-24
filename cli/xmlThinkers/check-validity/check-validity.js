@@ -19,11 +19,8 @@ const moduleFunction = function (args = {}) {
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
 
-
 	// ================================================================================
 	// UTILITIES
-	
-	
 
 	const httpsAgent = new https.Agent({
 		rejectUnauthorized: false,
@@ -33,13 +30,14 @@ const moduleFunction = function (args = {}) {
 	// TALK TO AI
 
 	const accessSmartyPants = (currentXml, callback) => {
-
 		const localCallback = (err, validationMessage) => {
 			let isValid = false;
 			if (validationMessage.pass) {
 				isValid = true;
 			}
-			xLog.verbose(`XML VALIDATION RESULT: ${JSON.stringify(validationMessage, '', '\t')}`);
+			xLog.verbose(
+				`XML VALIDATION RESULT: ${JSON.stringify(validationMessage, '', '\t')}`,
+			);
 			callback('', { validationMessage, isValid });
 		};
 		const url = 'https://testharness.a4l.org/SIFController/api/validate/4.3/';
@@ -80,12 +78,13 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
+	
 		const currentXml = args.qtGetSurePath(
-			'thinkerExchangePromptData.latestWisdom',
+			'latestWisdom.xml',
 			'got nothing from previous process (ie, fix-problems.js)',
 		);
-		const refinementReport = args.qtGetSurePath(
-			'thinkerExchangePromptData.latestResponse.refinementReport',
+		const refinementReportPartialTemplate = args.qtGetSurePath(
+			'latestWisdom.refinementReportPartialTemplate',
 			'got nothing from previous process (fix-problems.js)',
 		);
 
@@ -104,10 +103,12 @@ const moduleFunction = function (args = {}) {
 					return;
 				}
 
-				const fileOutputString = refinementReport
-					? refinementReport.replace(/<!validationMessage!>/, JSON.stringify(validationMessage, '', '\t'))
+				const fileOutputString = refinementReportPartialTemplate
+					? refinementReportPartialTemplate.replace(
+							/<!validationMessage!>/,
+							JSON.stringify(validationMessage, '', '\t'),
+						)
 					: `No refinement report was generated for inValid XML error ${validationMessage}`;
-
 
 				xLog.saveProcessFile(
 					`${moduleName}_validationMessages.log`,
@@ -115,9 +116,14 @@ const moduleFunction = function (args = {}) {
 					{ append: true },
 				);
 
-				next('', { ...args, validationMessage, isValid });
+				const wisdom = {
+					xml: currentXml,
+					validationMessage,
+					isValid,
+				};
+
+				next('', { ...args, wisdom });
 			};
-			
 
 			accessSmartyPants(currentXml, localCallback);
 		});
@@ -129,19 +135,8 @@ const moduleFunction = function (args = {}) {
 			currentXml,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const {
-				isValid,
-				validationMessage,
-				currentXml: wisdom,
-				rawAiResponseObject = { source: "John's endpoint" },
-			} = args;
-			callback(err, {
-				wisdom,
-				validationMessage,
-				isValid,
-				rawAiResponseObject,
-				args
-			});
+			const { wisdom } = args;
+			callback(err, { wisdom, args });
 		});
 	};
 

@@ -26,55 +26,48 @@ const moduleFunction = function ({
 		thoughtProcessName,
 	}); // provides .getResponse()
 
-	async function facilitator(promptReplacementObject) {
+	async function facilitator(passThroughObject) {
+console.log(`\n=-=============   facilitator  ========================= [answer-until-valid.js.facilitator]\n`);
+
+
 		let isValid = false;
 		let validationMessage = '';
-		const limit = 1;
+		
+		const limit = 2;
+		
 		let count = 0;
 		let wisdom = '';
 		const tempList = [0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6];
+		
+		let resultWisdom;
+		let resultArgs;
 
-		const { latestWisdom, targetXpathFieldList } = promptReplacementObject;
-
-		const promptGenerationData = {
-			promptReplacementObject,
-		};
+		const { latestWisdom, args } = passThroughObject;
 
 		do {
 			const temperatureFactor = tempList[count];
+			const options = {
+				temperatureFactor,
+			};
 
-			const result = await jinaConversation.getResponse(
-				promptReplacementObject,
-				{
-					temperatureFactor,
-				},
-			);
+			const { latestWisdom: tmpWisdom, args: tmpArgs } =
+				await jinaConversation.getResponse(passThroughObject, temperatureFactor, options);
+				
+			resultWisdom=tmpWisdom;
+			resultArgs=resultArgs;
+			
+			isValid = resultWisdom.isValid;
+			validationMessage = resultWisdom.validationMessage;
 
-			const {
-				wisdom,
-				rawAiResponseObject,
-				thinkerResponses,
-				lastThinkerName,
-				latestResponse,
-			} = result;
-
-			isValid = thinkerResponses.qtGetSurePath('checkValidity.isValid', false);
-			validationMessage = thinkerResponses.qtGetSurePath(
-				'checkValidity.validationMessage',
-				false,
-			);
-
-			promptGenerationData.latestWisdom = wisdom;
-			promptGenerationData.validationMessage = {
-				error: `Element <x> is illegal. Not part of spec`,
-			}; //validationMessage;
+			passThroughObject.latestWisdom = resultWisdom;
+			passThroughObject.isValid = isValid;
 
 			if (!isValid) {
 				xLog.error('----------------------------------------');
 				xLog.error(wisdom);
 				xLog.status(`XML Validation Error: `);
 				xLog.status(validationMessage);
-				xLog.status(`Tries remaining: ${limit - count}`);
+				xLog.status(`Tries remaining: ${limit + 1 - count}`);
 				xLog.error('----------------------------------------');
 			}
 
@@ -82,10 +75,9 @@ const moduleFunction = function ({
 		} while (!isValid && count < limit + 1);
 
 		if (!isValid) {
-			xLog.error(wisdom);
-			throw 'Jina failed to fix the XML\n    ${validationMessage.xpath}\n    ${validationMessage.error}';
+			throw `Jina failed to fix the XML\n    xPath: ${validationMessage.xpath?validationMessage.xpath:'none given'}\n    Reason: ${validationMessage.error}`;
 		}
-		return wisdom;
+		return {latestWisdom:resultWisdom, args:resultArgs};
 	}
 
 	return { facilitator };

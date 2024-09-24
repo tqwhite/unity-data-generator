@@ -12,7 +12,7 @@ This project is the creation of valid, realistic test data objects for use in ed
 
 Here is the current XML object:
 
-<!latestWisdom!>
+<!latestXml!>
 
 
 Here is the semantic specification for this object. It is expressed as a JSON object with keys that are xPaths referring to the current XML object. 
@@ -22,7 +22,9 @@ Here is the semantic specification for this object. It is expressed as a JSON ob
 
 An XML validator was run on the current XML object. Here is the result:
 
-<!validationMessage!>
+<!latestValidationMsg!>
+
+If there is an error, you MUST FIND A WAY TO CHANGE THE XML to make it better.
 
 If there are XML validation errors, you should correct them, keeping in mind the semantic specification and the following instructions.
 
@@ -81,7 +83,7 @@ Please...
 
 6) Explain why you were not able to fix a "not facet-valid" error, if one is presented.
 
-To facilliate subsequent processing, please format your output according to these instructions:
+To faciliate subsequent processing, please format your output according to these instructions:
 
 Wrap the resulting XML with delimiters like this:
 

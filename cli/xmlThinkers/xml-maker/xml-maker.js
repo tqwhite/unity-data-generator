@@ -25,11 +25,10 @@ const moduleFunction = function (args = {}) {
 
 	const formulatePromptList =
 		(promptGenerator) =>
-		(thinkerExchangePromptData = {}) => {
-			const { specObj, currentXml, elementSpecWorksheetJson } =
-				thinkerExchangePromptData;
+		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
 			const { promptList, extractionParameters } =
 				promptGenerator.iterativeGeneratorPrompt({
+					latestXml:latestWisdom.xml,
 					elementSpecWorksheetJson,
 					employerModuleName: moduleName,
 				}); //like everything I make, this returns an array
@@ -48,10 +47,6 @@ const moduleFunction = function (args = {}) {
 			)}(?<xmlResult>.*?)${regexEscape(extractionParameters.backDelimitter)}`,
 		);
 		const tmp = result.replace(/\n/g, '<Q22820234623146231362>').match(regEx);
-
-		// 		const tmp = result
-		// 			.replace(/\n/g, '<Q22820234623146231362>')
-		// 			.match(/\[START XML SAMPLE\](?<xmlResult>.*?)\[END XML SAMPLE\]/);
 
 		const final = tmp
 			? tmp
@@ -79,7 +74,6 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { promptReplacementObject, thinkerExchangePromptData } = args;
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
@@ -92,9 +86,8 @@ const moduleFunction = function (args = {}) {
 				thinkerExchangePromptData,
 			} = args;
 
-			const { promptList, extractionParameters } = formulatePromptList(
-				promptGenerator,
-			)(thinkerExchangePromptData);
+			const { promptList, extractionParameters } =
+				formulatePromptList(promptGenerator)(args);
 
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
@@ -137,12 +130,12 @@ const moduleFunction = function (args = {}) {
 			formulatePromptList,
 			accessSmartyPants,
 			filterOutput,
-			thinkerExchangePromptData,
 			systemPrompt,
+			...args,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			const { processedWisdom: wisdom, rawAiResponseObject } = args;
-			callback(err, { wisdom, rawAiResponseObject });
+			callback(err, { wisdom:{xml:wisdom}, args });
 		});
 	};
 

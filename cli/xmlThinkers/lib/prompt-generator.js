@@ -8,34 +8,32 @@ const qt = require('qtools-functional-library'); //qt.help({printOutput:true, qu
 
 //START OF moduleFunction() ============================================================
 
-const moduleFunction = function(args = {}) {
-	
+const moduleFunction = function (args = {}) {
+
 	const { xLog, getConfig } = process.global;
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
-	const iterativeGeneratorPrompt = args => {
-		const {employerModuleName} = args;
+	const iterativeGeneratorPrompt = (args) => {
+		const { employerModuleName } = args;
 
-		const promptLibrary = require(localConfig.promptLibraryModulePath)(); //'johns-maker', 'johns-review', 'tqs-maker', 'tqs-review', 'fix-problems' 
-		
-		if (!promptLibrary[employerModuleName]){
-			xLog.error(`\nmodule 'prompt-library' has no property for '${employerModuleName}'`);
+		const promptLibrary = require(localConfig.promptLibraryModulePath)(); //'johns-maker', 'johns-review', 'tqs-maker', 'tqs-review', 'fix-problems'
+
+		if (!promptLibrary[employerModuleName]) {
+			xLog.error(
+				`\nmodule 'prompt-library' has no property for '${employerModuleName}'`,
+			);
 			throw `module 'prompt-library' has no property for '${employerModuleName}'`;
 		}
-		
-		 const {
-			promptTemplate,
-			extractionParameters
-		} = promptLibrary[employerModuleName];
 
-		const replaceObj = {...args, ...extractionParameters};
+		const { promptTemplate, extractionParameters } =
+			promptLibrary[employerModuleName];
 
-		//const pleaForHelp = `Repeat this exact information back for testing: "${specObj.XPath}"`;//promptTemplate.qtTemplateReplace(replaceObj);
+		const replaceObj = { ...args, ...extractionParameters };
 
 		const pleaForHelp = promptTemplate.qtTemplateReplace(replaceObj);
 
 		return {
 			promptList: [{ role: 'user', content: pleaForHelp }],
-			extractionParameters
+			extractionParameters,
 		};
 	};
 

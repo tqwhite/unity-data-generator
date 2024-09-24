@@ -43,14 +43,16 @@ const moduleFunction = function (
 	// This acts as an intermediary to convey opaque prompt data from the outside world to the thinkerS that actually talks to an AI system
 	const askTheSmartyPantsActual =
 		({ localConfig }) =>
-		(promptGenerationData, options = {}, callback) => {
+		(passThroughObject, options = {}, callback) => {
+			const { latestWisdom, args } = passThroughObject;
+
 			const taskList = new taskListPlus();
 
 			// --------------------------------------------------------------------------------
 			// INITIALIZE PIPE
 
 			taskList.push((args, next) => {
-				const thinkerResponses = {};
+				const thinkerResponses = args.thinkerResponses?args.thinkerResponses:{};
 
 				next('', { ...args, thinkerResponses });
 			});
@@ -60,26 +62,38 @@ const moduleFunction = function (
 
 			thoughtProcesslist.forEach((thoughtProcess) =>
 				taskList.push((args, next) => {
-					const { thinkerResponses, thinkersList, promptGenerationData } = args;
+					xLog.status(
+						`\n===============   ${thoughtProcess.configName}  ========================= [conversation-generator.js.moduleFunction]\n`,
+					);
+
+					const { thinkerResponses, thinkersList, passThroughObject } = args;
+
 					const latestWisdom = args.latestWisdom
 						? args.latestWisdom
-						: 'Start from scratch';
+						: 'LATEST WISDOM IS MISSING';
 
 					const thinkerSpec = thinkersList[thoughtProcess.configName];
-
 					const { smartyPantsName } = thinkerSpec;
 
 					const localCallback = (err, latestResponse) => {
 						thinkerResponses[thinkerSpec.selfName] = latestResponse;
 
-						latestResponse.wisdom = latestResponse.wisdom
-							.replace(/\`\`\`xml/i, '')
-							.replace(/\`\`\`/, '');
+						latestResponse.qtPutSurePath(
+							'wisdom.xml',
+							latestResponse
+								.qtGetSurePath(
+									'wisdom.xml',
+									`XML was missing from ${thoughtProcess.configName} response`,
+								)
+								.replace(/\`\`\`xml/i, '')
+								.replace(/\`\`\`/, ''),
+						);
+
 						next(err, {
 							...args,
+							latestWisdom: latestResponse.wisdom,
 							thinkerResponses,
 							latestResponse,
-							latestWisdom: latestResponse.wisdom,
 							lastThinkerName: thinkerSpec.selfName,
 						});
 					};
@@ -89,12 +103,7 @@ const moduleFunction = function (
 						smartyPants: smartyPantsChooser({ smartyPantsName }),
 					});
 
-					const thinkerExchangePromptData = {
-						...promptGenerationData,
-						...args,
-					};
-
-					thinker.executeRequest({ thinkerExchangePromptData }, localCallback);
+					thinker.executeRequest(args, localCallback);
 				}),
 			);
 
@@ -110,20 +119,17 @@ const moduleFunction = function (
 			// --------------------------------------------------------------------------------
 			// INIT AND EXECUTE THE PIPELINE
 
-			const initialData = { localConfig, promptGenerationData, thinkersList }; //thoughtProcesslist enters in the loop above
+			const initialData = {
+				...passThroughObject.args,
+				latestWisdom,
+				thinkersList,
+			}; //thoughtProcesslist enters in the loop above
 			pipeRunner(taskList.getList(), initialData, (err, args) => {
-				const {
-					latestResponse,
-					responseObj,
-					thinkerResponses,
-					lastThinkerName,
-				} = args;
+				const { latestWisdom, thinkerResponses } = args;
 
 				callback(err, {
-					latestResponse,
-					thinkerResponses,
-					lastThinkerName,
-					XXX: 'HELLO',
+					latestWisdom,
+					args,
 				});
 			});
 		};
@@ -140,11 +146,11 @@ const moduleFunction = function (
 
 	let count = 0;
 
-	const getResponse = (promptGenerationData, options = {}) => {
-
+	const getResponse = (passThroughObject, options = {}) => {
 		//this appears to be the one that is actioned
 		return new Promise((resolve, reject) => {
-			askTheSmartyPants(promptGenerationData, options, (err, response) => {
+			askTheSmartyPants(passThroughObject, options, (err, response) => {
+
 				resolve(response);
 			}); //returns to think-keep-trying or think-up-answer
 		});

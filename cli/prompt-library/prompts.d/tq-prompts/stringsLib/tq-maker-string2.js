@@ -26,7 +26,7 @@ Here is the Object Standard Definition:
 
 Here is the XML Test Data:
 
-<!latestWisdom!>
+<!latestXml!>
 
 
 Wrap the finished XML with delimiters like this:

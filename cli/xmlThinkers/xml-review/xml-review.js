@@ -26,15 +26,15 @@ const moduleFunction = function (args = {}) {
 
 	const formulatePromptList =
 		(promptGenerator) =>
-		(thinkerExchangePromptData = {}) => {
-			const replaceObject = {
-				...thinkerExchangePromptData,
-				employerModuleName: moduleName,
-			};
-
+		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
 			const { promptList, extractionParameters } =
-				promptGenerator.iterativeGeneratorPrompt(replaceObject);
-			return { promptList, extractionParameters };
+				promptGenerator.iterativeGeneratorPrompt({
+					latestXml:latestWisdom.xml,
+					latestValidationMsg:latestWisdom.validationMsg,
+					elementSpecWorksheetJson,
+					employerModuleName: moduleName,
+				}); //like everything I make, this returns an array
+			return { promptList, extractionParameters }; //extraction parameters are needed for unpacking resukt
 		};
 
 	function regexEscape(s) {
@@ -90,20 +90,18 @@ const moduleFunction = function (args = {}) {
 			const {
 				promptGenerator,
 				formulatePromptList,
-				thinkerExchangePromptData,
+				
 			} = args;
 
 			const { promptList, extractionParameters } = formulatePromptList(
 				promptGenerator,
-			)(thinkerExchangePromptData);
-			
+			)(args);
 
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
 				`\n\n\n${moduleName}---------------------------------------------------\n${promptList[0].content}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
-			
 
 			next('', { ...args, promptList, extractionParameters });
 		});
@@ -132,7 +130,7 @@ const moduleFunction = function (args = {}) {
 				`\nPROCESSED WISDOM:\n${processedWisdom}\n[${moduleName}]\n`,
 			);
 
-			next('', { ...args, processedWisdom });
+			next('', { args, wisdom:processedWisdom });
 		});
 
 		// --------------------------------------------------------------------------------
@@ -143,12 +141,12 @@ const moduleFunction = function (args = {}) {
 			formulatePromptList,
 			accessSmartyPants,
 			filterOutput,
-			thinkerExchangePromptData,
 			systemPrompt,
+			...args
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { processedWisdom: wisdom, rawAiResponseObject } = args;
-			callback(err, { wisdom, rawAiResponseObject, args });
+			const {  wisdom, rawAiResponseObject } = args;
+			callback(err, { args, wisdom:{xml:wisdom},  });
 		});
 	};
 

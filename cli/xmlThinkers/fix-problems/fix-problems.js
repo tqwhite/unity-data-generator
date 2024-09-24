@@ -26,20 +26,24 @@ const moduleFunction = function (args = {}) {
 
 	const formulatePromptList =
 		(promptGenerator) =>
-		(thinkerExchangePromptData = {}) => {
-			//sample: const promptList = [{ role: 'user', content: 'one sentence about neutron starts' }];
-			const { potentialFinalObject, validationMessage } =
-				thinkerExchangePromptData;
-			const replaceObject = {
-				...thinkerExchangePromptData,
-				potentialFinalObject,
-				validationMessage: thinkerExchangePromptData.validationMessage?JSON.stringify(thinkerExchangePromptData.validationMessage, '', '\t'):'No XML structural errors are known',
-				employerModuleName: moduleName,
-			};
-			
+		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
+
+console.log(`\n=-=============   latestWisdom  ========================= [fix-problems.js.moduleFunction]\n`);
+
+
+console.dir({['latestWisdom']:latestWisdom}, { showHidden: false, depth: 4, colors: true });
+
+console.log(`\n=-=============   latestWisdom  ========================= [fix-problems.js.moduleFunction]\n`);
+
+
 			const { promptList, extractionParameters } =
-				promptGenerator.iterativeGeneratorPrompt(replaceObject);
-			return { promptList, extractionParameters };
+				promptGenerator.iterativeGeneratorPrompt({
+					latestXml: latestWisdom.xml,
+					latestValidationMsg: latestWisdom.validationMsg.error,
+					elementSpecWorksheetJson,
+					employerModuleName: moduleName,
+				}); //like everything I make, this returns an array
+			return { promptList, extractionParameters }; //extraction parameters are needed for unpacking resukt
 		};
 
 	function regexEscape(s) {
@@ -48,17 +52,31 @@ const moduleFunction = function (args = {}) {
 
 	const filterOutput = (result = '', extractionParameters) => {
 		// this could receive a complex string and extract one or more segments for a response
-		const regEx = new RegExp( `${regexEscape( extractionParameters.frontDelimiter, )}(?<xmlResult>.*?)${regexEscape(extractionParameters.backDelimitter)}`, );
+		const regEx = new RegExp(
+			`${regexEscape(extractionParameters.frontDelimiter)}(?<xmlResult>.*?)${regexEscape(extractionParameters.backDelimitter)}`,
+		);
 		const tmp = result.replace(/\n/g, '<Q22820234623146231362>').match(regEx);
-		const xml = tmp ? tmp .qtGetSurePath('groups.xmlResult', result) .replace(/<Q22820234623146231362>/g, '\n') : result;
-		
-		
-		const regEx2 = new RegExp( `${regexEscape( extractionParameters.explanationFrontDelimitter, )}(?<xmlResult>.*?)${regexEscape(extractionParameters.explanationBackDelimitter)}`, );
-		const tmp2 = result.replace(/\n/g, '<Q22820234623146231362>').match(regEx2);
-		const explanation = tmp ? tmp2 .qtGetSurePath('groups.xmlResult', result) .replace(/<Q22820234623146231362>/g, '\n') : result;
+		const xml = tmp
+			? tmp
+					.qtGetSurePath('groups.xmlResult', result)
+					.replace(/<Q22820234623146231362>/g, '\n')
+			: result;
 
+		const regEx2 = new RegExp(
+			`${regexEscape(extractionParameters.explanationFrontDelimitter)}(?<xmlResult>.*?)${regexEscape(extractionParameters.explanationBackDelimitter)}`,
+		);
+		const tmp2 = result.replace(/\n/g, '<Q22820234623146231362>').match(regEx2);
+		const explanation = tmp
+			? tmp2
+					.qtGetSurePath('groups.xmlResult', result)
+					.replace(/<Q22820234623146231362>/g, '\n')
+			: result;
 		
-		return {xml, explanation};
+console.log(`\n=-=============   xml.replace  ========================= [fix-problems.js.moduleFunction]\n`);
+
+
+		 return { xml:xml.replace(/a/i, 'x'), explanation }; //force validation error
+		return { xml, explanation };
 	};
 
 	// ================================================================================
@@ -71,7 +89,10 @@ const moduleFunction = function (args = {}) {
 			callback('', result);
 		};
 		promptList.unshift({ role: 'system', content: systemPrompt });
-		smartyPants.accessExternalResource({ promptList, temperatureFactor }, localCallback); //in this case, smartyPants is gpt4-completion
+		smartyPants.accessExternalResource(
+			{ promptList, temperatureFactor },
+			localCallback,
+		); //in this case, smartyPants is gpt4-completion
 	};
 
 	// ================================================================================
@@ -79,33 +100,16 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { thinkerExchangePromptData } = args;
-
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
 
-// 		taskList.push((args, next) => {
-// 			const rawAiResponseObject={placeholder:'rawAiResponseObject'};
-// 			const processedWisdom='this is processedWisdom';
-// 			next('', {...args, processedWisdom, rawAiResponseObject});
-// 		});
-
-
-		// --------------------------------------------------------------------------------
-		// TASKLIST ITEM TEMPLATE
-
 		taskList.push((args, next) => {
-			const {
-				promptGenerator,
-				formulatePromptList,
-				thinkerExchangePromptData,
-			} = args;
+			const { promptGenerator, formulatePromptList } = args;
 
-			const { promptList, extractionParameters } = formulatePromptList(
-				promptGenerator,
-			)(thinkerExchangePromptData);
+			const { promptList, extractionParameters } =
+				formulatePromptList(promptGenerator)(args);
 
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
@@ -115,19 +119,22 @@ const moduleFunction = function (args = {}) {
 
 			next('', { ...args, promptList, extractionParameters });
 		});
-		
+
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { accessSmartyPants, promptList, systemPrompt, thinkerExchangePromptData } = args;
-			const {temperatureFactor}=thinkerExchangePromptData
-			const localCallback = (err, result) => {
+			const { accessSmartyPants, promptList, systemPrompt, temperatureFactor } =
+				args;
 
+			const localCallback = (err, result) => {
 				next(err, { ...args, ...result });
 			};
 
-			accessSmartyPants({ promptList, systemPrompt, temperatureFactor }, localCallback);
+			accessSmartyPants(
+				{ promptList, systemPrompt, temperatureFactor },
+				localCallback,
+			);
 		});
 
 		// --------------------------------------------------------------------------------
@@ -136,8 +143,9 @@ const moduleFunction = function (args = {}) {
 		taskList.push((args, next) => {
 			const { filterOutput, wisdom: rawWisdom, extractionParameters } = args;
 
-			const {xml:processedWisdom, explanation} = filterOutput(rawWisdom, extractionParameters); //presently the source of being upperCase
-			next('', { ...args, processedWisdom, explanation });
+			const wisdom = filterOutput(rawWisdom, extractionParameters); //presently the source of being upperCase
+
+			next('', { ...args, wisdom });
 		});
 
 		// --------------------------------------------------------------------------------
@@ -147,33 +155,39 @@ const moduleFunction = function (args = {}) {
 			promptGenerator,
 			formulatePromptList,
 			accessSmartyPants,
-			thinkerExchangePromptData,
 			systemPrompt,
-			filterOutput
+			filterOutput,
+			...args,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 
-			const { processedWisdom:wisdom, explanation, rawAiResponseObject, thinkerExchangePromptData } = args;
-			
-			xLog.verbose(`\n------------------------\nXML Refinement Explanation:\n${explanation}\n------------------------`)
-			
-			const refinementReport=`
+			const { wisdom } = args;
+
+			const lastThinkerWisdom = args.qtGetSurePath(
+				`thinkerResponses.${args.lastThinkerName}.wisdom.xml`,
+			);
+
+			xLog.verbose(
+				`\n------------------------\nXML Refinement Explanation:\n${wisdom.explanation}\n------------------------`,
+			);
+
+			const refinementReportPartialTemplate = `
 ====================================================================================================
 XML REFINEMENT PASS ${new Date().toLocaleString()}
 
 The Refined XML below was evaluated. Here are the details of the process that allowed for the errors...
-------------------------\nOriginal XML:\n${thinkerExchangePromptData.potentialFinalObject}\n------------------------
-------------------------\nRefined XML:\n${wisdom}\n------------------------
-------------------------\nXML Refinement Explanation:\n${explanation}\n------------------------
+------------------------\nBefore Refining XML:\n${lastThinkerWisdom}\n------------------------
+------------------------\nRefined XML:\n${wisdom.xml}\n------------------------
+------------------------\nXML Refinement Explanation:\n${wisdom.explanation}\n------------------------
 
-The XML Validation API returned the following message for the Refined version:
+The XML Validation API Refined version was submited to the validation API with this result:
 
 <!validationMessage!>
 
 ------------------------
 			`;
 
-			callback(err, { HELLO:'GOODBYE', wisdom, explanation, refinementReport, rawAiResponseObject, args });
+			callback(err, { wisdom: {...wisdom, isValid:true, refinementReportPartialTemplate}, args }); //valid a priori since it was just fixed
 		});
 	};
 
