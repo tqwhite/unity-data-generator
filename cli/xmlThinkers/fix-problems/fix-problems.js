@@ -27,19 +27,10 @@ const moduleFunction = function (args = {}) {
 	const formulatePromptList =
 		(promptGenerator) =>
 		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
-
-console.log(`\n=-=============   latestWisdom  ========================= [fix-problems.js.moduleFunction]\n`);
-
-
-console.dir({['latestWisdom']:latestWisdom}, { showHidden: false, depth: 4, colors: true });
-
-console.log(`\n=-=============   latestWisdom  ========================= [fix-problems.js.moduleFunction]\n`);
-
-
 			const { promptList, extractionParameters } =
 				promptGenerator.iterativeGeneratorPrompt({
 					latestXml: latestWisdom.xml,
-					latestValidationMsg: latestWisdom.validationMsg.error,
+					latestvalidationMessage: latestWisdom.validationMessage.error,
 					elementSpecWorksheetJson,
 					employerModuleName: moduleName,
 				}); //like everything I make, this returns an array
@@ -71,11 +62,8 @@ console.log(`\n=-=============   latestWisdom  ========================= [fix-pr
 					.qtGetSurePath('groups.xmlResult', result)
 					.replace(/<Q22820234623146231362>/g, '\n')
 			: result;
-		
-console.log(`\n=-=============   xml.replace  ========================= [fix-problems.js.moduleFunction]\n`);
 
-
-		 return { xml:xml.replace(/a/i, 'x'), explanation }; //force validation error
+		// return { xml:xml.replace(/a/i, 'x'), explanation }; //force validation error
 		return { xml, explanation };
 	};
 

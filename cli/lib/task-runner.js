@@ -27,7 +27,7 @@ const moduleFunction =
 
 
 				// Refine the XML using an external function
-				const tmp = await xmlRefiningFacilitator({ latestWisdom:{xml:latestWisdom.xml, validationMsg:'No errors detected'}, args });
+				const tmp = await xmlRefiningFacilitator({ latestWisdom:{xml:latestWisdom.xml, validationMessage:'No errors detected'}, args });
 				const { latestWisdom:refinedWisdom, args:unused }=tmp;
 				const refinedXml=refinedWisdom.xml;
 				
@@ -40,7 +40,7 @@ const moduleFunction =
 				}
 
 				xLog.saveProcessFile(
-					`${moduleName}_{path.basename(outputFilePath)}.xml`,
+					`${moduleName}_${path.basename(outputFilePath)}`,
 					refinedXml,
 				);
 

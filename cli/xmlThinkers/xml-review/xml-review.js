@@ -30,7 +30,7 @@ const moduleFunction = function (args = {}) {
 			const { promptList, extractionParameters } =
 				promptGenerator.iterativeGeneratorPrompt({
 					latestXml:latestWisdom.xml,
-					latestValidationMsg:latestWisdom.validationMsg,
+					latestvalidationMessage:latestWisdom.validationMessage,
 					elementSpecWorksheetJson,
 					employerModuleName: moduleName,
 				}); //like everything I make, this returns an array

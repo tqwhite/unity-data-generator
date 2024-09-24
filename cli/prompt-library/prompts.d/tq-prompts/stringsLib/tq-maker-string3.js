@@ -22,7 +22,7 @@ Here is the semantic specification for this object. It is expressed as a JSON ob
 
 An XML validator was run on the current XML object. Here is the result:
 
-<!latestValidationMsg!>
+<!latestvalidationMessage!>
 
 If there is an error, you MUST FIND A WAY TO CHANGE THE XML to make it better.
 

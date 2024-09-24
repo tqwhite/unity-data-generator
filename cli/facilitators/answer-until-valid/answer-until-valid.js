@@ -27,13 +27,10 @@ const moduleFunction = function ({
 	}); // provides .getResponse()
 
 	async function facilitator(passThroughObject) {
-console.log(`\n=-=============   facilitator  ========================= [answer-until-valid.js.facilitator]\n`);
-
-
 		let isValid = false;
 		let validationMessage = '';
 		
-		const limit = 2;
+		const limit = localConfig.validationRepairCycleLimit?localConfig.validationRepairCycleLimit:2;
 		
 		let count = 0;
 		let wisdom = '';

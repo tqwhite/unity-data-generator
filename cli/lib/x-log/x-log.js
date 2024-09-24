@@ -6,8 +6,8 @@ const commandLineParameters = commandLineParser.getParameters();
 
 const qt = require('qtools-functional-library');
 //console.dir(qt.help());
-const fs=require('fs');
-const path=require('path');
+const fs = require('fs');
+const path = require('path');
 
 const chalk = require('chalk');
 const util = require('util');
@@ -108,17 +108,23 @@ const moduleFunction = function () {
 		status(`process files directory set: ${dirPath}`);
 	};
 	
-	const getProcessFilesDirectory=()=>processFilesDirectory;
+
+	const getProcessFilesDirectory = () => processFilesDirectory;
 	
-	const saveProcessFile=(fileName, inData, options={})=>{
-		let fileData=inData;
-		if(options.saveAsJson){
-			fileData=JSON.stringify(inData, '', '\t');
+
+	const saveProcessFile = (fileName, inData, options = {}) => {
+		let fileData = inData;
+		if (options.saveAsJson) {
+			fileData = JSON.stringify(inData, '', '\t');
 		}
-		const filePath=path.join(processFilesDirectory, fileName);
-		fs.writeFileSync(filePath, fileData, {append:options.append?options.append:false});
+		const filePath = path.join(processFilesDirectory, fileName);
+		if (options.append) {
+			fs.appendFileSync(filePath, fileData);
+		} else {
+			fs.writeFileSync(filePath, fileData);
+		}
 		status(`save to ${filePath}`);
-	}
+	};
 
 	return {
 		annotation,
@@ -130,7 +136,7 @@ const moduleFunction = function () {
 		verbose: verboseFunction,
 		setProcessFilesDirectory,
 		getProcessFilesDirectory,
-		saveProcessFile
+		saveProcessFile,
 	};
 };
 

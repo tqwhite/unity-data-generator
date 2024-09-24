@@ -111,8 +111,15 @@ const moduleFunction = function (args = {}) {
 					: `No refinement report was generated for inValid XML error ${validationMessage}`;
 
 				xLog.saveProcessFile(
-					`${moduleName}_validationMessages.log`,
+					`${moduleName}_refindementReports.log`,
 					fileOutputString,
+					{ append: true },
+				);
+				
+				const errorDisplay=`\n${JSON.stringify(validationMessage, '', '\t')}\n--------------------\n`;
+				xLog.saveProcessFile(
+					`${moduleName}_validationMessages.log`,
+					errorDisplay,
 					{ append: true },
 				);
 
