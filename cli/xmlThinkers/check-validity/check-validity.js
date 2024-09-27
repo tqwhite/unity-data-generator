@@ -40,8 +40,10 @@ const moduleFunction = function (args = {}) {
 			);
 			callback('', { validationMessage, isValid });
 		};
+		
 		const url = 'https://testharness.a4l.org/SIFController/api/validate/4.3/';
 		xLog.status(`validating with ${url}`);
+		
 		const axiosParms = {
 			method: 'post',
 			url,

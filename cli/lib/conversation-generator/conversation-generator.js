@@ -68,10 +68,14 @@ const moduleFunction = function (
 
 					const { thinkerResponses, thinkersList, passThroughObject } = args;
 
-					const latestWisdom = args.latestWisdom
-						? args.latestWisdom
-						: 'LATEST WISDOM IS MISSING';
-
+					const latestWisdom = args.latestWisdom;
+					
+					if (!latestWisdom){
+						xLog.error(`A Thinker did not send a latestWisdom object. Cannot continue. Exiting.`)
+						thinkerResponses.qtListProperties({label:'thinkerResponses so far'});
+						throw `A Thinker did not send a latestWisdom object. Cannot continue. Exiting.`
+					}
+					
 					const thinkerSpec = thinkersList[thoughtProcess.configName];
 					const { smartyPantsName } = thinkerSpec;
 
