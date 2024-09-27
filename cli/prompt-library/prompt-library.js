@@ -20,15 +20,15 @@ const moduleFunction =
 		promptObjects.seal(); //make the library immutable
 		
 
-		let prompts = {};
+		let promptLibrary = {};
 
 		Object.keys(promptObjects)
 			.filter((name) => name.match(/prompts/))
 			.forEach((name) => {
-				prompts = Object.assign(prompts, promptObjects[name]());
+				promptLibrary = Object.assign(promptLibrary, promptObjects[name]());
 			});
 
-		return prompts;
+		return promptLibrary; //tq-prompts, tq-prompts-rev2
 	};
 
 //END OF moduleFunction() ============================================================

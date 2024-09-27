@@ -24,7 +24,7 @@ const moduleFunction = function (args = {}) {
 			throw `module 'prompt-library' has no property for '${employerModuleName}'`;
 		}
 
-		const { promptTemplate, extractionParameters } =
+		const { promptTemplate, extractionParameters, extractionFunction } =
 			promptLibrary[employerModuleName];
 
 		const replaceObj = { ...args, ...extractionParameters };
@@ -33,7 +33,7 @@ const moduleFunction = function (args = {}) {
 
 		return {
 			promptList: [{ role: 'user', content: pleaForHelp }],
-			extractionParameters,
+			extractionParameters,extractionFunction
 		};
 	};
 

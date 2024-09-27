@@ -35,7 +35,8 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 		'-echoAlso',
 		'-listElements',
 		'-showParseErrors',
-		'--elements'
+		'--elements',
+		'--alternateStringLib'
 	];
 
 	const commandLineParameters = commandLineParser.getParameters();

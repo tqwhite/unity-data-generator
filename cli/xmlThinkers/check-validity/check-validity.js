@@ -116,6 +116,13 @@ const moduleFunction = function (args = {}) {
 					fileOutputString,
 					{ append: true },
 				);
+
+
+				xLog.saveProcessFile(
+					`${moduleName}_lastOneChecked.xml`,
+					currentXml,
+					{ append: false },
+				);
 				
 				const errorDisplay=`\n${JSON.stringify(validationMessage, '', '\t')}\n--------------------\n`;
 				xLog.saveProcessFile(

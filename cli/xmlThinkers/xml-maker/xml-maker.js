@@ -26,13 +26,11 @@ const moduleFunction = function (args = {}) {
 	const formulatePromptList =
 		(promptGenerator) =>
 		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
-			const { promptList, extractionParameters } =
-				promptGenerator.iterativeGeneratorPrompt({
-					latestXml:latestWisdom.xml,
-					elementSpecWorksheetJson,
-					employerModuleName: moduleName,
-				}); //like everything I make, this returns an array
-			return { promptList, extractionParameters }; //extraction parameters are needed for unpacking resukt
+			return promptGenerator.iterativeGeneratorPrompt({
+				latestXml: latestWisdom.xml,
+				elementSpecWorksheetJson,
+				employerModuleName: moduleName,
+			}); //like everything I make, this returns an array
 		};
 
 	function regexEscape(s) {
@@ -86,8 +84,9 @@ const moduleFunction = function (args = {}) {
 				thinkerExchangePromptData,
 			} = args;
 
-			const { promptList, extractionParameters } =
+			const { promptList, extractionParameters, extractionFunction } =
 				formulatePromptList(promptGenerator)(args);
+
 
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
@@ -122,7 +121,7 @@ const moduleFunction = function (args = {}) {
 				`\n\n\n${moduleName}---------------------------------------------------\n${rawWisdom}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
-			
+
 			const processedWisdom = filterOutput(rawWisdom, extractionParameters); //presently the source of being upperCase
 
 			next('', { ...args, processedWisdom });
@@ -141,7 +140,7 @@ const moduleFunction = function (args = {}) {
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			const { processedWisdom: wisdom, rawAiResponseObject } = args;
-			callback(err, { wisdom:{xml:wisdom}, args });
+			callback(err, { wisdom: { xml: wisdom }, args });
 		});
 	};
 
