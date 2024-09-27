@@ -26,7 +26,7 @@ const moduleFunction =
 			);
 		
 
-		const extractionFunction = (inString) => {
+		const getLatestXml = (inString) => {
 			const startDelimiter = '[START XML SAMPLE]';
 			const endDelimiter = '[END XML SAMPLE]';
 
@@ -40,14 +40,50 @@ const moduleFunction =
 			const regexString = `${escapedStartDelimiter}(.*?)${escapedEndDelimiter}`;
 			const regex = new RegExp(regexString, 's');
 
-			const match = text.match(regex);
+			const match = inString.match(regex);
+
+			if (match) {
+				const result=match[1];
+				const xmlContent = result.substring(result.indexOf('<'), result.lastIndexOf('>') + 1);
+				return {latestXml:xmlContent}
+			} else {
+				return {latestXml:'XML Missing in Response'}
+			}
+		};
+
+		const getExplanation = (inString) => {
+			const startDelimiter = '[START EXPLANATIONS]';
+			const endDelimiter = '[END EXPLANATIONS]';
+
+			function escapeRegExp(string) {
+				return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escapes special characters for use in a regex
+			}
+
+			const escapedStartDelimiter = escapeRegExp(startDelimiter);
+			const escapedEndDelimiter = escapeRegExp(endDelimiter);
+
+			const regexString = `${escapedStartDelimiter}(.*?)${escapedEndDelimiter}`;
+			const regex = new RegExp(regexString, 's');
+
+			const match = inString.match(regex);
 
 			if (match) {
 				const xmlContent = match[1].trim();
-				return {xml:xmlContent}
+				return {explanation:xmlContent}
 			} else {
-				return {xml:'XML Missing in Response'}
+				return {explanation:'No explanation found.'}
 			}
+		};
+		
+
+		const extractionFunction = (extractionList=[])=>(inString) => {
+			const outObject={};
+			
+			extractionList.forEach(extractionFunc=>{
+				const result=extractionFunc(inString);
+				Object.assign(outObject, result); //mutates outObject
+			});
+			return outObject;
 		};
 		
 
@@ -57,7 +93,7 @@ const moduleFunction =
 		const workingFunction = () => {
 			return {
 				'xml-maker': {
-					extractionFunction,
+					extractionFunction:extractionFunction([getLatestXml]),
 					extractionParameters: {
 						frontDelimiter: `[START XML SAMPLE]`,
 						backDelimitter: `[END XML SAMPLE]`,
@@ -65,6 +101,7 @@ const moduleFunction =
 					promptTemplate: require(`./stringsLib/${stringsVariation}/maker`)(),
 				},
 				'xml-review': {
+					extractionFunction:extractionFunction([getLatestXml]),
 					extractionParameters: {
 						frontDelimiter: `[START XML SAMPLE]`,
 						backDelimitter: `[END XML SAMPLE]`,
@@ -73,6 +110,7 @@ const moduleFunction =
 				},
 
 				'fix-problems': {
+					extractionFunction:extractionFunction([getLatestXml, getExplanation]),
 					extractionParameters: {
 						frontDelimiter: `[START XML SAMPLE]`,
 						backDelimitter: `[END XML SAMPLE]`,

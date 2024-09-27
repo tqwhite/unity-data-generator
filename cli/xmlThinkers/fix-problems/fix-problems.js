@@ -32,47 +32,21 @@ const moduleFunction = function (args = {}) {
 
 	const formulatePromptList = (promptGenerator) => {
 		return ({ latestWisdom, elementSpecWorksheetJson } = {}) => {
-			latestWisdom.validationMessage.error && validationList.push(latestWisdom.validationMessage.error);
-			const { promptList, extractionParameters } =
-				promptGenerator.iterativeGeneratorPrompt({
-					latestXml: latestWisdom.xml,
-					latestvalidationMessage: validationList.join('\n'),
-					elementSpecWorksheetJson,
-					employerModuleName: moduleName,
-				}); //like everything I make, this returns an array
-			return { promptList, extractionParameters }; //extraction parameters are needed for unpacking resukt
+
+			let validationMessagesString = 'No errors found.';
+			if (latestWisdom.qtGetSurePath('validationMessage', {}).error) {
+				validationList.push(latestWisdom.validationMessage.error);
+				validationMessagesString = validationList.join('\n');
+			}
+			return promptGenerator.iterativeGeneratorPrompt({
+				...latestWisdom,
+				validationMessagesString,
+				elementSpecWorksheetJson,
+				employerModuleName: moduleName,
+			});
 		};
 	};
 
-	function regexEscape(s) {
-		return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-	}
-
-	const filterOutput = (result = '', extractionParameters) => {
-		// this could receive a complex string and extract one or more segments for a response
-		const regEx = new RegExp(
-			`${regexEscape(extractionParameters.frontDelimiter)}(?<xmlResult>.*?)${regexEscape(extractionParameters.backDelimitter)}`,
-		);
-		const tmp = result.replace(/\n/g, '<Q22820234623146231362>').match(regEx);
-		const xml = tmp
-			? tmp
-					.qtGetSurePath('groups.xmlResult', result)
-					.replace(/<Q22820234623146231362>/g, '\n')
-			: result;
-
-		const regEx2 = new RegExp(
-			`${regexEscape(extractionParameters.explanationFrontDelimitter)}(?<xmlResult>.*?)${regexEscape(extractionParameters.explanationBackDelimitter)}`,
-		);
-		const tmp2 = result.replace(/\n/g, '<Q22820234623146231362>').match(regEx2);
-		const explanation = tmp
-			? tmp2
-					.qtGetSurePath('groups.xmlResult', result)
-					.replace(/<Q22820234623146231362>/g, '\n')
-			: result;
-
-		// return { xml: xml.replace(/a/i, 'x'), explanation }; //force validation error
-		return { xml, explanation };
-	};
 
 	// ================================================================================
 	// TALK TO AI
@@ -101,50 +75,50 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { promptGenerator, formulatePromptList } = args;
+			const {
+				promptGenerator,
+				formulatePromptList,
+			} = args;
 
-			const { promptList, extractionParameters } =
-				formulatePromptList(promptGenerator)(args);
+			const promptElements = formulatePromptList(promptGenerator)(args);
 
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
-				`\n\n\n${moduleName}---------------------------------------------------\n${promptList[0].content}\n----------------------------------------------------\n\n`,
+				`\n\n\n${moduleName}---------------------------------------------------\n${promptElements.promptList[0].content}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
 
-			next('', { ...args, promptList, extractionParameters });
+			next('', { ...args, promptElements });
 		});
 
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { accessSmartyPants, promptList, systemPrompt, temperatureFactor } =
-				args;
+			const { accessSmartyPants, promptElements, systemPrompt } = args;
+			const { promptList } = promptElements;
 
 			const localCallback = (err, result) => {
 				next(err, { ...args, ...result });
 			};
 
-			accessSmartyPants(
-				{ promptList, systemPrompt, temperatureFactor },
-				localCallback,
-			);
+			accessSmartyPants({ promptList, systemPrompt }, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { filterOutput, wisdom: rawWisdom, extractionParameters } = args;
+			const { wisdom: rawWisdom, promptElements } = args;
+			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
 				`${moduleName}_responseList.log`,
 				`\n\n\n${moduleName}---------------------------------------------------\n${rawWisdom}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
-
-			const wisdom = filterOutput(rawWisdom, extractionParameters); //presently the source of being upperCase
+			
+			const wisdom = extractionFunction(rawWisdom);
 
 			next('', { ...args, wisdom });
 		});
@@ -157,14 +131,13 @@ const moduleFunction = function (args = {}) {
 			formulatePromptList,
 			accessSmartyPants,
 			systemPrompt,
-			filterOutput,
 			...args,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			const { wisdom } = args;
 
 			const lastThinkerWisdom = args.qtGetSurePath(
-				`thinkerResponses.${args.lastThinkerName}.wisdom.xml`,
+				`thinkerResponses.${args.lastThinkerName}.wisdom.latestXml`,
 			);
 
 			xLog.verbose(
@@ -176,11 +149,14 @@ const moduleFunction = function (args = {}) {
 XML REFINEMENT PASS ${new Date().toLocaleString()}
 
 The Refined XML below was evaluated. Here are the details of the process that allowed for the errors...
+
 ------------------------\nBefore Refining XML:\n${lastThinkerWisdom}\n------------------------
-------------------------\nRefined XML:\n${wisdom.xml}\n------------------------
+
+------------------------\nRefined XML:\n${wisdom.latestXml}\n------------------------
+
 ------------------------\nXML Refinement Explanation:\n${wisdom.explanation}\n------------------------
 
-The XML Validation API Refined version was submited to the validation API with this result:
+The Refined XML was submited to the validation API with this result:
 
 <!validationMessage!>
 

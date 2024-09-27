@@ -79,11 +79,12 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-	
-		const currentXml = args.qtGetSurePath(
-			'latestWisdom.xml',
-			'got nothing from previous process (ie, fix-problems.js)',
-		);
+		const currentXml = args.qtGetSurePath('latestWisdom.latestXml');
+
+		if (!currentXml) {
+			throw `No XML received from previous Thinker (fix-problems) in ${moduleName}`;
+		}
+
 		const refinementReportPartialTemplate = args.qtGetSurePath(
 			'latestWisdom.refinementReportPartialTemplate',
 			'got nothing from previous process (fix-problems.js)',
@@ -98,7 +99,8 @@ const moduleFunction = function (args = {}) {
 		taskList.push((args, next) => {
 			const { currentXml } = args;
 
-			const localCallback = (err, { validationMessage, isValid }) => {
+			const localCallback = (err, result) => {
+				const { validationMessage, isValid } = result;
 				if (err) {
 					next(err, args); //next('skipRestOfPipe', args);
 					return;
@@ -117,27 +119,22 @@ const moduleFunction = function (args = {}) {
 					{ append: true },
 				);
 
+				xLog.saveProcessFile(`${moduleName}_lastOneChecked.xml`, currentXml, {
+					append: false,
+				});
 
-				xLog.saveProcessFile(
-					`${moduleName}_lastOneChecked.xml`,
-					currentXml,
-					{ append: false },
-				);
-				
-				const errorDisplay=`\n${JSON.stringify(validationMessage, '', '\t')}\n--------------------\n`;
-				xLog.saveProcessFile(
-					`${moduleName}_responseList.log`,
-					errorDisplay,
-					{ append: true },
-				);
+				const errorDisplay = `\n${JSON.stringify(validationMessage, '', '\t')}\n--------------------\n`;
+				xLog.saveProcessFile(`${moduleName}_responseList.log`, errorDisplay, {
+					append: true,
+				});
 
 				const wisdom = {
-					xml: currentXml,
+					latestXml: currentXml,
 					validationMessage,
 					isValid,
 				};
 
-				next('', { ...args, wisdom });
+				next('', { ...args, wisdom, isValid });
 			};
 
 			accessSmartyPants(currentXml, localCallback);
@@ -150,7 +147,12 @@ const moduleFunction = function (args = {}) {
 			currentXml,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { wisdom } = args;
+			const { wisdom, isValid } = args;
+			if (isValid) {
+				xLog.status(`XML passed validation check`);
+			} else {
+				xLog.status(`XML did NOT pass validation check`);
+			}
 			callback(err, { wisdom, args });
 		});
 	};

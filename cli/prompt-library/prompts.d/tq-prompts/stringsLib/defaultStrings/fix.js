@@ -23,7 +23,7 @@ ERROR REPORT SECTION
 
 An XML validator was run on the current XML object. Here is the result:
 
-<!latestvalidationMessage!>
+<!validationMessagesString!>
 
 GUIDANCE FOR CORRECTING JUDGING CORRECT XML
 

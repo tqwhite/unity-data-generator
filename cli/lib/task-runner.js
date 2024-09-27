@@ -21,22 +21,21 @@ const moduleFunction =
 				// Generate initial XML using xmlGeneratingingFacilitator
 				const { latestWisdom, args } = await xmlGeneratingingFacilitator({
 					latestWisdom:
-						{xml:'first pass. no XML yet. replace with top-level object.'},
+						{latestXml:'first pass. no XML yet. replace with top-level object.'},
 					args:{elementSpecWorksheetJson},
 				});
 
-
 				// Refine the XML using an external function
-				const tmp = await xmlRefiningFacilitator({ latestWisdom:{xml:latestWisdom.xml, validationMessage:'No errors detected'}, args });
+				const tmp = await xmlRefiningFacilitator({ latestWisdom, args });
 				const { latestWisdom:refinedWisdom, args:unused }=tmp;
-				const refinedXml=refinedWisdom.xml;
+				const refinedXml=refinedWisdom.latestXml;
 				
 				// =========================================================
 				// SEND THE RESULTS
 
 				// Optionally display the refined XML
 				if (commandLineParameters.switches.echoAlso) {
-					xLog.result(refinedXml);
+					xLog.result(`\n\n${refinedXml}\n\n`);
 				}
 
 				xLog.saveProcessFile(

@@ -78,17 +78,6 @@ const moduleFunction = function (
 					const localCallback = (err, latestResponse) => {
 						thinkerResponses[thinkerSpec.selfName] = latestResponse;
 
-						latestResponse.qtPutSurePath(
-							'wisdom.xml',
-							latestResponse
-								.qtGetSurePath(
-									'wisdom.xml',
-									`XML was missing from ${thoughtProcess.configName} response`,
-								)
-								.replace(/\`\`\`xml/i, '')
-								.replace(/\`\`\`/, ''),
-						);
-
 						next(err, {
 							...args,
 							latestWisdom: latestResponse.wisdom,

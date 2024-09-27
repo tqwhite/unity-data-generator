@@ -31,7 +31,7 @@ The semantic specification for this object is provided as a JSON object with key
 
 An XML validator has been run on the current XML object. The results are as follows:
 
-<!latestvalidationMessage!>
+<!validationMessagesString!>
 
 ---
 

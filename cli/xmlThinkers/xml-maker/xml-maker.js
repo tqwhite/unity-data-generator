@@ -27,32 +27,11 @@ const moduleFunction = function (args = {}) {
 		(promptGenerator) =>
 		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
 			return promptGenerator.iterativeGeneratorPrompt({
-				latestXml: latestWisdom.xml,
+				...latestWisdom,
 				elementSpecWorksheetJson,
 				employerModuleName: moduleName,
-			}); //like everything I make, this returns an array
+			});
 		};
-
-	function regexEscape(s) {
-		return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-	}
-
-	const filterOutput = (result = '', extractionParameters) => {
-		// this could receive a complex string and extract one or more segments for a response
-		const regEx = new RegExp(
-			`${regexEscape(
-				extractionParameters.frontDelimiter,
-			)}(?<xmlResult>.*?)${regexEscape(extractionParameters.backDelimitter)}`,
-		);
-		const tmp = result.replace(/\n/g, '<Q22820234623146231362>').match(regEx);
-
-		const final = tmp
-			? tmp
-					.qtGetSurePath('groups.xmlResult', result)
-					.replace(/<Q22820234623146231362>/g, '\n')
-			: result;
-		return final;
-	};
 
 	// ================================================================================
 	// TALK TO AI
@@ -81,27 +60,25 @@ const moduleFunction = function (args = {}) {
 			const {
 				promptGenerator,
 				formulatePromptList,
-				thinkerExchangePromptData,
 			} = args;
 
-			const { promptList, extractionParameters, extractionFunction } =
-				formulatePromptList(promptGenerator)(args);
-
+			const promptElements = formulatePromptList(promptGenerator)(args);
 
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
-				`\n\n\n${moduleName}---------------------------------------------------\n${promptList[0].content}\n----------------------------------------------------\n\n`,
+				`\n\n\n${moduleName}---------------------------------------------------\n${promptElements.promptList[0].content}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
 
-			next('', { ...args, promptList, extractionParameters });
+			next('', { ...args, promptElements });
 		});
 
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { accessSmartyPants, promptList, systemPrompt } = args;
+			const { accessSmartyPants, promptElements, systemPrompt } = args;
+			const { promptList } = promptElements;
 
 			const localCallback = (err, result) => {
 				next(err, { ...args, ...result });
@@ -114,17 +91,18 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { filterOutput, wisdom: rawWisdom, extractionParameters } = args;
+			const { wisdom: rawWisdom, promptElements } = args;
+			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
 				`${moduleName}_responseList.log`,
 				`\n\n\n${moduleName}---------------------------------------------------\n${rawWisdom}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
+			const tmp=extractionFunction(rawWisdom);
+			const { latestXml } = extractionFunction(rawWisdom);
 
-			const processedWisdom = filterOutput(rawWisdom, extractionParameters); //presently the source of being upperCase
-
-			next('', { ...args, processedWisdom });
+			next('', { ...args, latestXml });
 		});
 
 		// --------------------------------------------------------------------------------
@@ -134,13 +112,12 @@ const moduleFunction = function (args = {}) {
 			promptGenerator,
 			formulatePromptList,
 			accessSmartyPants,
-			filterOutput,
 			systemPrompt,
 			...args,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { processedWisdom: wisdom, rawAiResponseObject } = args;
-			callback(err, { wisdom: { xml: wisdom }, args });
+			const { latestXml, rawAiResponseObject } = args;
+			callback(err, { wisdom: { latestXml }, args }); //generally, wisdom can contain many extracted values
 		});
 	};
 

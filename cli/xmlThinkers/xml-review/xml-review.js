@@ -27,40 +27,12 @@ const moduleFunction = function (args = {}) {
 	const formulatePromptList =
 		(promptGenerator) =>
 		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
-			const { promptList, extractionParameters } =
-				promptGenerator.iterativeGeneratorPrompt({
-					latestXml:latestWisdom.xml,
-					latestvalidationMessage:latestWisdom.validationMessage,
-					elementSpecWorksheetJson,
-					employerModuleName: moduleName,
-				}); //like everything I make, this returns an array
-			return { promptList, extractionParameters }; //extraction parameters are needed for unpacking resukt
+			return promptGenerator.iterativeGeneratorPrompt({
+				...latestWisdom,
+				elementSpecWorksheetJson,
+				employerModuleName: moduleName,
+			});
 		};
-
-	function regexEscape(s) {
-		return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-	}
-
-	const filterOutput = (result = '', extractionParameters) => {
-		// this could receive a complex string and extract one or more segments for a response
-		const regEx = new RegExp(
-			`${regexEscape(
-				extractionParameters.frontDelimiter,
-			)}(?<xmlResult>.*?)${regexEscape(extractionParameters.backDelimitter)}`,
-		);
-		const tmp = result.replace(/\n/g, '<Q22820234623146231362>').match(regEx);
-
-		// 		const tmp = result
-		// 			.replace(/\n/g, '<Q22820234623146231362>')
-		// 			.match(/\[START XML SAMPLE\](?<xmlResult>.*?)\[END XML SAMPLE\]/);
-
-		const final = tmp
-			? tmp
-					.qtGetSurePath('groups.xmlResult', result)
-					.replace(/<Q22820234623146231362>/g, '\n')
-			: result;
-		return final;
-	};
 
 	// ================================================================================
 	// TALK TO AI
@@ -90,31 +62,31 @@ const moduleFunction = function (args = {}) {
 			const {
 				promptGenerator,
 				formulatePromptList,
-				
+				thinkerExchangePromptData,
 			} = args;
 
-			const { promptList, extractionParameters } = formulatePromptList(
-				promptGenerator,
-			)(args);
+			const promptElements = formulatePromptList(promptGenerator)(args);
 
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
-				`\n\n\n${moduleName}---------------------------------------------------\n${promptList[0].content}\n----------------------------------------------------\n\n`,
+				`\n\n\n${moduleName}---------------------------------------------------\n${promptElements.promptList[0].content}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
 
-			next('', { ...args, promptList, extractionParameters });
+			next('', { ...args, promptElements });
 		});
 
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { accessSmartyPants, promptList, systemPrompt } = args;
+			const { accessSmartyPants, promptElements, systemPrompt } = args;
+			const { promptList } = promptElements;
 
 			const localCallback = (err, result) => {
 				next(err, { ...args, ...result });
 			};
+
 			accessSmartyPants({ promptList, systemPrompt }, localCallback);
 		});
 
@@ -122,21 +94,18 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { filterOutput, wisdom: rawWisdom, extractionParameters } = args;
+			const { wisdom: rawWisdom, promptElements } = args;
+			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
 				`${moduleName}_responseList.log`,
 				`\n\n\n${moduleName}---------------------------------------------------\n${rawWisdom}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
-			
-			const processedWisdom = filterOutput(rawWisdom, extractionParameters); //presently the source of being upperCase
 
-			xLog.verbose(
-				`\nPROCESSED WISDOM:\n${processedWisdom}\n[${moduleName}]\n`,
-			);
+			const wisdom = extractionFunction(rawWisdom);
 
-			next('', { args, wisdom:processedWisdom });
+			next('', { ...args, wisdom });
 		});
 
 		// --------------------------------------------------------------------------------
@@ -146,13 +115,12 @@ const moduleFunction = function (args = {}) {
 			promptGenerator,
 			formulatePromptList,
 			accessSmartyPants,
-			filterOutput,
 			systemPrompt,
-			...args
+			...args,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const {  wisdom, rawAiResponseObject } = args;
-			callback(err, { args, wisdom:{xml:wisdom},  });
+			const { wisdom, rawAiResponseObject } = args;
+			callback(err, { wisdom, args });
 		});
 	};
 
