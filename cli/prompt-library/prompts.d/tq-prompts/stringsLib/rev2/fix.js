@@ -102,17 +102,17 @@ Please follow these steps:
 
 - **XML Output**: Wrap the corrected XML with the following delimiters:
 
-  <!frontDelimitter!>
+  <!frontDelimiter!>
   [Your Corrected XML Here]
-  <!backDelimitter!>
+  <!backDelimiter!>
 
   - Ensure there is **nothing** except well-formed XML between these delimiters.
 
 - **Explanation**: Provide your reasoning for each processing step, wrapped with these delimiters:
 
-<!explanationFrontDelimitter!>
+<!explanationFrontDelimiter!>
 EXPLANATIONS GO HERE
-<!explanationBackDelimitter!>
+<!explanationBackDelimiter!>
 
 ---
 

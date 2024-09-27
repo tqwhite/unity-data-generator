@@ -60,7 +60,7 @@ Here is the XML Test Data for review:
 
 <!frontDelimiter!>
  MERGED XML GOES HERE
-<!backDelimitter!>
+<!backDelimiter!>
 
 **IMPORTANT**
 

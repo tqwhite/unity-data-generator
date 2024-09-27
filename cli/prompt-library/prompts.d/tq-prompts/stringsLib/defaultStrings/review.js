@@ -49,7 +49,7 @@ Wrap the finished XML with delimiters like this:
 
 <!frontDelimiter!>
  MERGED XML GOES HERE
-<!backDelimitter!>
+<!backDelimiter!>
 
 There should be *nothing* except well-formed XML between those delimiters.
 

@@ -67,7 +67,7 @@ The following Object Standard Definition is drawn from the **SIF** standard:
 
 <!frontDelimiter!>
  TESTING DATA XML GOES HERE
-<!backDelimitter!>
+<!backDelimiter!>
 
 There should be *nothing* except well-formed XML between those delimiters.
 

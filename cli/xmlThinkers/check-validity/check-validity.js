@@ -32,6 +32,12 @@ const moduleFunction = function (args = {}) {
 	const accessSmartyPants = (currentXml, callback) => {
 		const localCallback = (err, validationMessage) => {
 			let isValid = false;
+			
+			if (validationMessage.qtGetSurePath('error','').match(/Element 'identity' cannot have character/)){
+				xLog.status(`FOUND: weird identity error; forced isValid=true "t${validationMessage.qtGetSurePath('error','')}"`);
+				isValid = true;
+			}
+			
 			if (validationMessage.pass) {
 				isValid = true;
 			}

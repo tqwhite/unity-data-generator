@@ -47,6 +47,8 @@ const moduleFunction =
 				const xmlContent = result.substring(result.indexOf('<'), result.lastIndexOf('>') + 1);
 				return {latestXml:xmlContent}
 			} else {
+console.dir({['inString']:inString}, { showHidden: false, depth: 4, colors: true });
+
 				return {latestXml:'XML Missing in Response'}
 			}
 		};
@@ -96,7 +98,7 @@ const moduleFunction =
 					extractionFunction:extractionFunction([getLatestXml]),
 					extractionParameters: {
 						frontDelimiter: `[START XML SAMPLE]`,
-						backDelimitter: `[END XML SAMPLE]`,
+						backDelimiter: `[END XML SAMPLE]`,
 					},
 					promptTemplate: require(`./stringsLib/${stringsVariation}/maker`)(),
 				},
@@ -104,7 +106,7 @@ const moduleFunction =
 					extractionFunction:extractionFunction([getLatestXml]),
 					extractionParameters: {
 						frontDelimiter: `[START XML SAMPLE]`,
-						backDelimitter: `[END XML SAMPLE]`,
+						backDelimiter: `[END XML SAMPLE]`,
 					},
 					promptTemplate: require(`./stringsLib/${stringsVariation}/review`)(),
 				},
@@ -113,9 +115,9 @@ const moduleFunction =
 					extractionFunction:extractionFunction([getLatestXml, getExplanation]),
 					extractionParameters: {
 						frontDelimiter: `[START XML SAMPLE]`,
-						backDelimitter: `[END XML SAMPLE]`,
-						explanationFrontDelimitter: `[START EXPLANATIONS]`,
-						explanationBackDelimitter: `[END EXPLANATIONS]`,
+						backDelimiter: `[END XML SAMPLE]`,
+						explanationFrontDelimiter: `[START EXPLANATIONS]`,
+						explanationBackDelimiter: `[END EXPLANATIONS]`,
 					},
 					promptTemplate: require(`./stringsLib/${stringsVariation}/fix`)(),
 				},

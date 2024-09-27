@@ -12,6 +12,8 @@ const moduleFunction = function (args = {}) {
 
 	const { xLog, getConfig } = process.global;
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
+	
+	
 	const iterativeGeneratorPrompt = (args) => {
 		const { employerModuleName } = args;
 

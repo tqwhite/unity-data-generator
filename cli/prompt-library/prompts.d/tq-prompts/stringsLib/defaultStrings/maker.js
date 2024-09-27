@@ -41,7 +41,7 @@ Always wrap the XML part of your response in delimiters like this:
 
 <!frontDelimiter!>
  TESTING DATA XML GOES HERE
-<!backDelimitter!>
+<!backDelimiter!>
 
 There should be *nothing* except well-formed XML between those delimiters.
 

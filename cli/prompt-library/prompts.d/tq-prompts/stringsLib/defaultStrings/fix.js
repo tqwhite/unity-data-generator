@@ -95,15 +95,15 @@ Wrap the resulting XML with delimiters like this:
 
 <!frontDelimiter!>
  MERGED XML GOES HERE
-<!backDelimitter!>
+<!backDelimiter!>
 
 There should be *nothing* except well-formed XML between those delimiters.
 
 Explain your reasoning for each step of the processing. Wrap the explanatory text with delimiters like this:
 
-<!explanationFrontDelimitter!>
+<!explanationFrontDelimiter!>
 EXPLANATIONS GO HERE
-<!explanationBackDelimitter!>
+<!explanationBackDelimiter!>
 
 
 
