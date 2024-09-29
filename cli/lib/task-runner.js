@@ -29,7 +29,7 @@ const moduleFunction =
 				const tmp = await xmlRefiningFacilitator({ latestWisdom, args });
 				const { latestWisdom:refinedWisdom, args:unused }=tmp;
 				const refinedXml=refinedWisdom.latestXml;
-				
+
 				// =========================================================
 				// SEND THE RESULTS
 

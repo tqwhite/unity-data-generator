@@ -98,14 +98,14 @@ const moduleFunction = function (args = {}) {
 			'got nothing from previous process (fix-problems.js)',
 		);
 
-		const { thinkerExchangePromptData } = args;
+		const { unused } = args;
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { currentXml } = args;
+			const { currentXml, elementSpecWorksheetJsonXXX } = args;
 
 			const localCallback = (err, result) => {
 				const { validationMessage, isValid } = result;
@@ -140,6 +140,7 @@ const moduleFunction = function (args = {}) {
 					latestXml: currentXml,
 					validationMessage,
 					isValid,
+					elementSpecWorksheetJsonXXX
 				};
 
 				next('', { ...args, wisdom, isValid });

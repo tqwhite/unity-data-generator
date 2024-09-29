@@ -26,14 +26,26 @@ const moduleFunction = async function (
 	process.global.commandLineParameters = commandLineParameters;
 
 	const localConfig = getConfig('SYSTEM');
-	const { spreadsheetPath, batchSpecificDebugLogParentDirPath, batchSpecificDebugLogParentDirPurgeCount, } = localConfig;
+	const {
+		spreadsheetPath,
+		batchSpecificDebugLogParentDirPath,
+		batchSpecificDebugLogParentDirPurgeCount,
+	} = localConfig;
 	let { outputsPath } = localConfig;
 
 	// Get target object name from command line parameters
-	let targetObjectNameList = commandLineParameters.qtGetSurePath('values.elements', []);
-	targetObjectNameList=targetObjectNameList.length?targetObjectNameList:commandLineParameters.qtGetSurePath('fileList', []);
+	let targetObjectNameList = commandLineParameters.qtGetSurePath(
+		'values.elements',
+		[],
+	);
+	targetObjectNameList = targetObjectNameList.length
+		? targetObjectNameList
+		: commandLineParameters.qtGetSurePath('fileList', []);
 
-	if (!targetObjectNameList.length && !commandLineParameters.switches.listElements) {
+	if (
+		!targetObjectNameList.length &&
+		!commandLineParameters.switches.listElements
+	) {
 		xLog.error(`Target element name is required. Try -help or -listElements`);
 		process.exit(1);
 	}
@@ -48,7 +60,10 @@ const moduleFunction = async function (
 			.toString()
 			.slice(-4)}`,
 	);
-	require('./lib/purge-cleanup-directory')().executePurging(batchSpecificDebugLogParentDirPath, batchSpecificDebugLogParentDirPurgeCount);
+	require('./lib/purge-cleanup-directory')().executePurging(
+		batchSpecificDebugLogParentDirPath,
+		batchSpecificDebugLogParentDirPurgeCount,
+	);
 	xLog.setProcessFilesDirectory(batchSpecificDebugLogDirPath); //sort of a log for stuff too big to put in a log
 
 	// Determine output file path and temporary file path
@@ -65,7 +80,7 @@ const moduleFunction = async function (
 	const outputDir = path.dirname(outputFilePath);
 	fs.mkdirSync(outputDir, { recursive: true });
 	const extension = path.extname(baseName);
-
+	
 
 	// ===========================================================================
 	// BUILD SMARTYPANTS AND THEIR EXECUTORS
@@ -82,16 +97,18 @@ const moduleFunction = async function (
 	const jinaCore = require('./lib/jina-core');
 
 	// Initialize Jina AI core and xmlGeneratingingFacilitator function
-	const { facilitator: xmlGeneratingingFacilitator } = require('./facilitators/get-answer')({
-		jinaCore,
-		thoughtProcessName: xmlGeneratingingFacilitatorName,
-	}); // munges data and orchestrates this specific smartyPants process
+	const { facilitator: xmlGeneratingingFacilitator } =
+		require('./facilitators/get-answer')({
+			jinaCore,
+			thoughtProcessName: xmlGeneratingingFacilitatorName,
+		}); // munges data and orchestrates this specific smartyPants process
 
 	// Initialize Jina AI refiner and xmlRefiningFacilitator function
-	const { facilitator: xmlRefiningFacilitator } = require('./facilitators/answer-until-valid')({
-		jinaCore,
-		thoughtProcessName: refinerName,
-	}); // munges data and orchestrates this specific smartyPants process
+	const { facilitator: xmlRefiningFacilitator } =
+		require('./facilitators/answer-until-valid')({
+			jinaCore,
+			thoughtProcessName: refinerName,
+		}); // munges data and orchestrates this specific smartyPants process
 
 	// ===========================================================================
 	// COMBINE SMARTYPANTS EXECUTORS INTO THE MAIN EXECUTION OBJECT
@@ -103,80 +120,20 @@ const moduleFunction = async function (
 	});
 
 	// ===========================================================================
-	// CHECK INPUT FILES AND PREPARE FOR PROCESSING
-
-	// Check if spreadsheet exists
-	if (!fs.existsSync(spreadsheetPath)) {
-		xLog.error(`No specifications found. ${spreadsheetPath} does not exist`);
-		process.exit(1);
-	}
-
-	// ===========================================================================
 	// EXECUTE THE PROCESS FOR SOME OR ALL OF THE POSSIBLE ELEMENTS
+	
 
-	const executeProcess = async ({
-		performance,
-		xlsx,
-		spreadsheetPath,
-		xLog,
-		targetObjectNameList,
-		runTask,
-		outputFilePath,
-		commandLineParameters,
-	}) => {
-		const startTime = performance.now();
-		const workbook = xlsx.readFile(spreadsheetPath);
-		const worksheetNames = workbook.SheetNames;
-		xLog.status(`Using data model spec file: ${spreadsheetPath}`);
-		
-		if (commandLineParameters.switches.listElements) {
-			xLog.status(worksheetNames.join('\n'));
-			process.exit();
-		}
+	const startTime = performance.now();
 
-		for (let index = 0; index < worksheetNames.length; index++) {
-			const name = worksheetNames[index];
-
-			if (!targetObjectNameList.includes(name)) {
-				continue;
-			}
-			
-			xLog.status(`Found element definition for ${name}`);
-			
-			const sheet = workbook.Sheets[name];
-			const elementSpecWorksheet = xlsx.utils.sheet_to_json(sheet);
-			const elementSpecWorksheetJson = JSON.stringify(
-				elementSpecWorksheet,
-				'',
-				'\t',
-			);
-
-			await runTask({
-				outputFilePath,
-				elementSpecWorksheetJson,
-			})();
-		}
-
-		const endTime = performance.now();
-		const duration = ((endTime - startTime) / 1000).toFixed(2);
-
-		xLog.debug(`Processing time: ${duration} seconds`);
-	};
-	const executionDependencies = {
-		performance,
-		xlsx,
-		spreadsheetPath,
-		xLog,
-		targetObjectNameList,
-		runTask,
-		outputFilePath,
-		commandLineParameters,
-	};
 	if (commandLineParameters.switches.showParseErrors) {
-		executeProcess(executionDependencies);
+		await runTask({
+			outputFilePath,
+		})();
 	} else {
 		try {
-			await executeProcess(executionDependencies);
+			await runTask({
+				outputFilePath,
+			})();
 		} catch (error) {
 			xLog.error(`Error: ${error} [${moduleName}]`);
 			if (commandLineParameters.switches.debug) {
@@ -185,6 +142,8 @@ const moduleFunction = async function (
 			process.exit(1);
 		}
 	}
+	const endTime = performance.now();
+	const duration = ((endTime - startTime) / 1000).toFixed(2);
 };
 
 // END OF moduleFunction() ============================================================

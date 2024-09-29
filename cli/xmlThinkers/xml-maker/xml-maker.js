@@ -28,7 +28,6 @@ const moduleFunction = function (args = {}) {
 		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
 			return promptGenerator.iterativeGeneratorPrompt({
 				...latestWisdom,
-				elementSpecWorksheetJson,
 				employerModuleName: moduleName,
 			});
 		};
@@ -92,7 +91,7 @@ const moduleFunction = function (args = {}) {
 
 		taskList.push((args, next) => {
 			const { wisdom: rawWisdom, promptElements } = args;
-			const { extractionParameters, extractionFunction } = promptElements;
+			const { extractionParameters, extractionFunction, elementSpecWorksheetJsonXXX } = promptElements;
 
 			xLog.saveProcessFile(
 				`${moduleName}_responseList.log`,
@@ -102,7 +101,7 @@ const moduleFunction = function (args = {}) {
 			const tmp=extractionFunction(rawWisdom);
 			const { latestXml } = extractionFunction(rawWisdom);
 
-			next('', { ...args, latestXml });
+			next('', { ...args, latestXml, elementSpecWorksheetJsonXXX });
 		});
 
 		// --------------------------------------------------------------------------------

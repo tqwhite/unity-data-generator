@@ -29,7 +29,6 @@ const moduleFunction = function (args = {}) {
 		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
 			return promptGenerator.iterativeGeneratorPrompt({
 				...latestWisdom,
-				elementSpecWorksheetJson,
 				employerModuleName: moduleName,
 			});
 		};
@@ -43,6 +42,8 @@ const moduleFunction = function (args = {}) {
 		const localCallback = (err, result) => {
 			callback('', result);
 		};
+		
+		let a;
 		promptList.unshift({ role: 'system', content: systemPrompt });
 		smartyPants.accessExternalResource({ promptList }, localCallback); //in this case, smartyPants is gpt4-completion
 	};
@@ -52,7 +53,7 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { thinkerExchangePromptData } = args;
+		const { UNUSED } = args;
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
@@ -62,7 +63,6 @@ const moduleFunction = function (args = {}) {
 			const {
 				promptGenerator,
 				formulatePromptList,
-				thinkerExchangePromptData,
 			} = args;
 
 			const promptElements = formulatePromptList(promptGenerator)(args);
@@ -94,7 +94,7 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { wisdom: rawWisdom, promptElements } = args;
+			const { wisdom: rawWisdom, promptElements, elementSpecWorksheetJsonXXX } = args;
 			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
@@ -103,7 +103,7 @@ const moduleFunction = function (args = {}) {
 				{ append: true },
 			);
 
-			const wisdom = extractionFunction(rawWisdom);
+			const wisdom = {...extractionFunction(rawWisdom), elementSpecWorksheetJsonXXX};
 
 			next('', { ...args, wisdom });
 		});

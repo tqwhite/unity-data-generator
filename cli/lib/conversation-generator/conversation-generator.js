@@ -91,9 +91,11 @@ const moduleFunction = function (
 						});
 					};
 
+					const smartyPants=smartyPantsName?smartyPantsChooser({ smartyPantsName }):undefined;
+					
 					const thinker = require(thinkerSpec.module)({
 						thinkerSpec,
-						smartyPants: smartyPantsChooser({ smartyPantsName }),
+						smartyPants,
 					});
 
 					thinker.executeRequest(args, localCallback);
