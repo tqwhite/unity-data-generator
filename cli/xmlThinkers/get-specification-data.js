@@ -20,8 +20,8 @@ const moduleFunction = function (args = {}) {
 
 	const { spreadsheetPath } = getConfig(moduleName); //ignoring thinker specs included in args
 	
-	let targetObjectName = commandLineParameters.qtGetSurePath('values.elements', []).qtFirst();
-	targetObjectName=targetObjectName?targetObjectName:commandLineParameters.qtGetSurePath('fileList', []).qtFirst();
+	let targetObjectName = commandLineParameters.qtGetSurePath('values.elements', []).qtLast();
+	targetObjectName=targetObjectName?targetObjectName:commandLineParameters.qtGetSurePath('fileList', []).qtLast();
 
 	// ================================================================================
 	// UTILITIES
