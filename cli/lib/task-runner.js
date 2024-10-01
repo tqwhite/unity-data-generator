@@ -30,23 +30,8 @@ const moduleFunction =
 					latestWisdom = tmp.latestWisdom;
 					args = tmp.args;
 				}
-				const refinedXml = latestWisdom.latestXml;
 
-				// =========================================================
-				// SEND THE RESULTS
-
-				// Optionally display the refined XML
-				if (commandLineParameters.switches.echoAlso) {
-					xLog.result(`\n\n${refinedXml}\n\n`);
-				}
-
-				xLog.saveProcessFile(
-					`${moduleName}_${path.basename(outputFilePath)}`,
-					refinedXml,
-				);
-
-				fs.writeFileSync(outputFilePath, refinedXml, { encoding: 'utf-8' });
-				xLog.status(`Output file path: ${outputFilePath}`);
+				return latestWisdom;
 			};
 
 		return { runTask };

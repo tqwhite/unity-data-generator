@@ -27,31 +27,39 @@ const moduleFunction = function (
 		batchSpecificDebugLogParentDirPurgeCount,
 	} = localConfig;
 	let { outputsPath } = localConfig;
+	// ===========================================================================
+	// BUILD SMARTYPANTS AND THEIR EXECUTORS
 
-	// Get target object name from command line parameters
-	let targetObjectNameList = commandLineParameters.qtGetSurePath(
-		'values.elements',
-		[],
-	);
-	targetObjectNameList = targetObjectNameList.length
-		? targetObjectNameList
-		: commandLineParameters.qtGetSurePath('fileList', []);
+const jinaCore = require('./lib/jina-core');
 
-	if (
-		!targetObjectNameList.length &&
-		!commandLineParameters.switches.listElements
-	) {
-		xLog.error(`Target element name is required. Try -help or -listElements`);
-		process.exit(1);
-	}
+const makeFacilitators=({thoughtProcessNameList})=>{
 
+	// Initialize Jina AI core and xmlGeneratingingFacilitator function
+	const { facilitator: xmlGeneratingingFacilitator } =
+		require('./facilitators/get-answer')({
+			jinaCore,
+			thoughtProcessName: thoughtProcessNameList[0],
+		}); // munges data and orchestrates this specific smartyPants process
+
+	// Initialize Jina AI refiner and xmlRefiningFacilitator function
+	const { facilitator: xmlRefiningFacilitator } =
+		require('./facilitators/answer-until-valid')({
+			jinaCore,
+			thoughtProcessName: thoughtProcessNameList[1],
+		}); // munges data and orchestrates this specific smartyPants process
+		
+		return [xmlGeneratingingFacilitator, xmlRefiningFacilitator];
+		
+		}
+
+const askJina=async ({facilitators, targetObjectNameList, debugLogName})=>{
 	// ===========================================================================
 	// SET UP DIRECTORIES AND FILE PATHS
 
 	// Set up batch-specific debug log directory
 	const batchSpecificDebugLogDirPath = path.join(
 		batchSpecificDebugLogParentDirPath,
-		`${targetObjectNameList}_${Math.floor(Date.now() / 1000)
+		`${debugLogName}_${Math.floor(Date.now() / 1000)
 			.toString()
 			.slice(-4)}`,
 	);
@@ -61,55 +69,7 @@ const moduleFunction = function (
 	);
 	xLog.setProcessFilesDirectory(batchSpecificDebugLogDirPath); //sort of a log for stuff too big to put in a log
 
-	// Determine output file path and temporary file path
-	const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
-	if (outFile) {
-		outputsPath = path.dirname(outFile);
-		fs.mkdirSync(outputsPath, { recursive: true });
-	}
-	const outputFilePath = outFile
-		? outFile
-		: path.join(outputsPath, `${targetObjectNameList}.xml`);
 
-	const baseName = path.basename(outputFilePath);
-	const outputDir = path.dirname(outputFilePath);
-	fs.mkdirSync(outputDir, { recursive: true });
-	const extension = path.extname(baseName);
-	
-
-	// ===========================================================================
-	// BUILD SMARTYPANTS AND THEIR EXECUTORS
-const makeFacilitators=()=>{
-	// Determine thought process and refiner names; default or command line spec
-	const conversationOneThoughtProcessName = commandLineParameters
-		.qtGetSurePath('values.conversationOneThoughtProcessName', [])
-		.qtLast('unityGenerator');
-
-	const conversationTwoThoughtProcessName = commandLineParameters
-		.qtGetSurePath('values.conversationTwoThoughtProcessName', [])
-		.qtLast('refiner');
-
-	const jinaCore = require('./lib/jina-core');
-
-	// Initialize Jina AI core and xmlGeneratingingFacilitator function
-	const { facilitator: xmlGeneratingingFacilitator } =
-		require('./facilitators/get-answer')({
-			jinaCore,
-			thoughtProcessName: conversationOneThoughtProcessName,
-		}); // munges data and orchestrates this specific smartyPants process
-
-	// Initialize Jina AI refiner and xmlRefiningFacilitator function
-	const { facilitator: xmlRefiningFacilitator } =
-		require('./facilitators/answer-until-valid')({
-			jinaCore,
-			thoughtProcessName: conversationTwoThoughtProcessName,
-		}); // munges data and orchestrates this specific smartyPants process
-		
-		return [xmlGeneratingingFacilitator, xmlRefiningFacilitator];
-		
-		}
-
-const askJina=async ({facilitators})=>{
 	// ===========================================================================
 	// COMBINE SMARTYPANTS EXECUTORS INTO THE MAIN EXECUTION OBJECT
 
@@ -121,15 +81,13 @@ const askJina=async ({facilitators})=>{
 	
 
 	const startTime = performance.now();
-
+	let wisdom;
 	if (commandLineParameters.switches.showParseErrors) {
-		await runTask({
-			outputFilePath,
+		wisdom=await runTask({
 		})();
 	} else {
 		try {
-			await runTask({
-				outputFilePath,
+			wisdom=await runTask({
 			})();
 		} catch (error) {
 			xLog.error(`Error: ${error} [${moduleName}]`);
@@ -141,7 +99,7 @@ const askJina=async ({facilitators})=>{
 	}
 	const endTime = performance.now();
 	const duration = ((endTime - startTime) / 1000).toFixed(2);
-
+	return wisdom;
 }
 
 return {askJina, makeFacilitators}

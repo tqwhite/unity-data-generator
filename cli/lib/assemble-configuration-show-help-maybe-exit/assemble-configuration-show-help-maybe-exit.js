@@ -53,6 +53,7 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 			const getConfigActual = (allConfigs) => (segmentName) => ({
 				...allConfigs[segmentName],
 				_segmentName: segmentName,
+				_configFilePath:configFilePath
 			});
 
 			const getConfig = getConfigActual({
