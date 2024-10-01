@@ -53,8 +53,8 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { UNUSED } = args;
 		const taskList = new taskListPlus();
+
 
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
@@ -94,7 +94,7 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { wisdom: rawWisdom, promptElements, elementSpecWorksheetJsonXXX } = args;
+			const { wisdom: rawWisdom, promptElements, latestWisdom } = args;
 			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
@@ -103,7 +103,7 @@ const moduleFunction = function (args = {}) {
 				{ append: true },
 			);
 
-			const wisdom = {...extractionFunction(rawWisdom), elementSpecWorksheetJsonXXX};
+			const wisdom = {...latestWisdom, ...extractionFunction(rawWisdom)}; //overwrites latestXml
 
 			next('', { ...args, wisdom });
 		});

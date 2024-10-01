@@ -32,7 +32,6 @@ const moduleFunction =
 				}
 				const refinedXml = latestWisdom.latestXml;
 
-
 				// =========================================================
 				// SEND THE RESULTS
 

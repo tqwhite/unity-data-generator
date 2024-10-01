@@ -90,8 +90,8 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { wisdom: rawWisdom, promptElements } = args;
-			const { extractionParameters, extractionFunction, elementSpecWorksheetJsonXXX } = promptElements;
+			const { wisdom: rawWisdom, promptElements, latestWisdom } = args;
+			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
 				`${moduleName}_responseList.log`,
@@ -100,8 +100,9 @@ const moduleFunction = function (args = {}) {
 			);
 			const tmp=extractionFunction(rawWisdom);
 			const { latestXml } = extractionFunction(rawWisdom);
+			const wisdom={...latestWisdom, latestXml};
 
-			next('', { ...args, latestXml, elementSpecWorksheetJsonXXX });
+			next('', { ...args, wisdom });
 		});
 
 		// --------------------------------------------------------------------------------
@@ -115,8 +116,8 @@ const moduleFunction = function (args = {}) {
 			...args,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { latestXml, rawAiResponseObject } = args;
-			callback(err, { wisdom: { latestXml }, args }); //generally, wisdom can contain many extracted values
+			const { wisdom, rawAiResponseObject } = args;
+			callback(err, { wisdom, args }); //generally, wisdom can contain many extracted values
 		});
 	};
 

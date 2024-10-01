@@ -32,12 +32,18 @@ const moduleFunction = function (args = {}) {
 	const accessSmartyPants = (currentXml, callback) => {
 		const localCallback = (err, validationMessage) => {
 			let isValid = false;
-			
-			if (validationMessage.qtGetSurePath('error','').match(/Element 'identity' cannot have character/)){
-				xLog.status(`FOUND: weird identity error; forced isValid=true "t${validationMessage.qtGetSurePath('error','')}"`);
+
+			if (
+				validationMessage
+					.qtGetSurePath('error', '')
+					.match(/Element 'identity' cannot have character/)
+			) {
+				xLog.status(
+					`FOUND: weird identity error; forced isValid=true "t${validationMessage.qtGetSurePath('error', '')}"`,
+				);
 				isValid = true;
 			}
-			
+
 			if (validationMessage.pass) {
 				isValid = true;
 			}
@@ -46,10 +52,10 @@ const moduleFunction = function (args = {}) {
 			);
 			callback('', { validationMessage, isValid });
 		};
-		
+
 		const url = 'https://testharness.a4l.org/SIFController/api/validate/4.3/';
 		xLog.status(`validating with ${url}`);
-		
+
 		const axiosParms = {
 			method: 'post',
 			url,
@@ -105,7 +111,7 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { currentXml, elementSpecWorksheetJsonXXX } = args;
+			const { currentXml, latestWisdom } = args;
 
 			const localCallback = (err, result) => {
 				const { validationMessage, isValid } = result;
@@ -137,10 +143,10 @@ const moduleFunction = function (args = {}) {
 				});
 
 				const wisdom = {
+					...latestWisdom,
 					latestXml: currentXml,
 					validationMessage,
 					isValid,
-					elementSpecWorksheetJsonXXX
 				};
 
 				next('', { ...args, wisdom, isValid });
@@ -153,6 +159,7 @@ const moduleFunction = function (args = {}) {
 		// INIT AND EXECUTE THE PIPELINE
 
 		const initialData = {
+			...args,
 			currentXml,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {

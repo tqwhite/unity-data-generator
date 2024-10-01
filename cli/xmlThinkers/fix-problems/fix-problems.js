@@ -108,7 +108,7 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { wisdom: rawWisdom, promptElements, elementSpecWorksheetJsonXXX } = args;
+			const { wisdom: rawWisdom, promptElements, latestWiisdom } = args;
 			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
@@ -117,7 +117,7 @@ const moduleFunction = function (args = {}) {
 				{ append: true },
 			);
 			
-			const wisdom = {...extractionFunction(rawWisdom), elementSpecWorksheetJsonXXX};
+			const wisdom = {...latestWiisdom, ...extractionFunction(rawWisdom)};
 
 			next('', { ...args, wisdom });
 		});
