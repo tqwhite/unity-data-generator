@@ -36,7 +36,7 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 		'-listElements',
 		'-showParseErrors',
 		'--elements',
-		'--alternateStringLib'
+		'--alternateStringLib',
 	];
 
 	const commandLineParameters = commandLineParser.getParameters();
@@ -161,9 +161,12 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 
 			xLog.result(
 				JSON.stringify(
-					cloneConfig.qtSelectProperties(['_meta', '_substitutions', 'REDACTIONS'], {
-						excludeMode: true,
-					}),
+					cloneConfig.qtSelectProperties(
+						['_meta', '_substitutions', 'REDACTIONS'],
+						{
+							excludeMode: true,
+						},
+					),
 					'',
 					'\t',
 				),
@@ -214,6 +217,12 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 				allConfigs,
 				getConfig,
 			} = finalResult;
+
+			process.global = process.global ? process.global : {};
+
+			process.global.getConfig = getConfig;
+			process.global.commandLineParameters = commandLineParameters;
+			
 
 			callback(err, {
 				allConfigs,

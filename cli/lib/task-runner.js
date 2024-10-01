@@ -8,27 +8,30 @@ const fs = require('fs');
 // START OF moduleFunction() ============================================================
 const moduleFunction =
 	() =>
-	({ xmlRefiningFacilitator, xmlGeneratingingFacilitator }) => {
-		const { xLog, commandLineParameters } = process.global;
+	({ facilitators }) => {
+		const [xmlRefiningFacilitator, xmlGeneratingingFacilitator] = facilitators;
+
+		const { xLog, commandLineParameters, getConfig } = process.global;
+		const { conversations } = getConfig(moduleName);
 
 		// Callback function to handle the parsed XML
 		const runTask =
-			({ outputFilePath, elementSpecWorksheetJson }) =>
+			({ outputFilePath }) =>
 			async (err, xmlCollection) => {
 				// =========================================================
 				// EXECUTE THE CONVERSATIONS
+				let latestWisdom={latestXml:'first pass. no XML yet. replace with top-level object.'};
+				let args={};
+				for (var i = 0, len = facilitators.length; i < len; i++) {
+					const tmp = await facilitators[i]({
+						latestWisdom,
+						args,
+					});
+					latestWisdom = tmp.latestWisdom;
+					args = tmp.args;
+				}
+				const refinedXml = latestWisdom.latestXml;
 
-				// Generate initial XML using xmlGeneratingingFacilitator
-				const { latestWisdom, args } = await xmlGeneratingingFacilitator({
-					latestWisdom:
-						{latestXml:'first pass. no XML yet. replace with top-level object.'},
-					args:{elementSpecWorksheetJson},
-				});
-
-				// Refine the XML using an external function
-				const tmp = await xmlRefiningFacilitator({ latestWisdom, args });
-				const { latestWisdom:refinedWisdom, args:unused }=tmp;
-				const refinedXml=refinedWisdom.latestXml;
 
 				// =========================================================
 				// SEND THE RESULTS

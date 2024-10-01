@@ -70,6 +70,8 @@ const moduleFunction = function (
 
 					const latestWisdom = args.latestWisdom;
 					
+latestWisdom.qtListProperties({label:"latestWisdom [conversation-generator.js.moduleFunction]"});
+
 					if (!latestWisdom){
 						xLog.error(`A Thinker did not send a latestWisdom object. Cannot continue. Exiting.`)
 						thinkerResponses.qtListProperties({label:'thinkerResponses so far'});
