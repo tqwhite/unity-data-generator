@@ -26,7 +26,13 @@ const moduleFunction =
 					const tmp = await facilitators[i]({
 						latestWisdom,
 						args,
-					});
+					})
+					  .catch(err=>{
+						if (err){
+							xLog.error(`ErrorXX: ${err}.`);
+							throw err;
+						}
+					  });
 					latestWisdom = tmp.latestWisdom;
 					args = tmp.args;
 				}

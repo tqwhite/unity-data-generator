@@ -50,9 +50,6 @@ const moduleFunction = function () {
 
 	const error = (message, options = {}) => {
 		message = stringify(message, options);
-		if (silent) {
-			return;
-		}
 		outputFunction(color.red(message));
 	};
 	const result = (message, options = {}) => {
@@ -105,7 +102,7 @@ const moduleFunction = function () {
 	let setProcessFilesDirectory = (dirPath) => {
 		fs.mkdirSync(dirPath, { recursive: true });
 		processFilesDirectory = dirPath;
-		status(`process files directory set: ${dirPath}`);
+		status(`Process detail files directory set: ${dirPath}`);
 	};
 	
 

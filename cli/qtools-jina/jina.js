@@ -4,7 +4,6 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 // Module to generate Unity Data using Jina AI
 
 const fs = require('fs');
-const xlsx = require('xlsx');
 const path = require('path');
 const xLog = require('./lib/x-log');
 const { performance } = require('perf_hooks');
@@ -36,14 +35,14 @@ const makeFacilitators=({thoughtProcessNameList})=>{
 
 	// Initialize Jina AI core and xmlGeneratingingFacilitator function
 	const { facilitator: xmlGeneratingingFacilitator } =
-		require('./facilitators/get-answer')({
+		require('./lib/facilitators/get-answer')({
 			jinaCore,
 			thoughtProcessName: thoughtProcessNameList[0],
 		}); // munges data and orchestrates this specific smartyPants process
 
 	// Initialize Jina AI refiner and xmlRefiningFacilitator function
 	const { facilitator: xmlRefiningFacilitator } =
-		require('./facilitators/answer-until-valid')({
+		require('./lib/facilitators/answer-until-valid')({
 			jinaCore,
 			thoughtProcessName: thoughtProcessNameList[1],
 		}); // munges data and orchestrates this specific smartyPants process
@@ -90,11 +89,11 @@ const askJina=async ({facilitators, targetObjectNameList, debugLogName})=>{
 			wisdom=await runTask({
 			})();
 		} catch (error) {
-			xLog.error(`Error: ${error} [${moduleName}]`);
+			xLog.error(`Error: ${error.toString()} [${moduleName}]`);
 			if (commandLineParameters.switches.debug) {
 				console.trace();
 			}
-			process.exit(1);
+			throw error;
 		}
 	}
 	const endTime = performance.now();
@@ -110,12 +109,8 @@ return {askJina, makeFacilitators}
 
 // END OF moduleFunction() ============================================================
 
+
 process.global = {};
-process.global.applicationBasePath = path.join(
-	path.dirname(__filename),
-	'..',
-	'..',
-);
 process.global.xLog = xLog;
 
 require('./lib/assemble-configuration-show-help-maybe-exit')({

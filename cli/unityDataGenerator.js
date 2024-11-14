@@ -26,7 +26,9 @@
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
-const initJina = require('./jina'); // Initializes xLog and config in process.global
+
+// process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-jina/...figure-out-config-path.js
+const initJina = require('./qtools-jina/jina'); // Initializes xLog and config in process.global
 
 // =============================================================================
 // MODULE NAME DETERMINATION
@@ -101,6 +103,12 @@ const moduleName = path.basename(__filename, '.js');
     facilitators,
     targetObjectNameList,
     debugLogName: targetObjectNamesString,
+  })
+  .catch(err=>{
+  	if (err){
+  		xLog.error(`Error: ${err.toString()}. Exit. No Output.`);
+  		process.exit(1);
+  	}
   });
 
   // Get the latest refined XML

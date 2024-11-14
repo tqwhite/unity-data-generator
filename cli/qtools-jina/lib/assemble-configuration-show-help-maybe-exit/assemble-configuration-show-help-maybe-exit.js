@@ -15,6 +15,10 @@ const figureOutConfigPathGen = require('./lib/figure-out-config-path'); //this f
 
 const fs = require('fs');
 
+
+// TODO: update with newer code from project scaffold
+
+
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function ({ configSegmentName, callback }) {

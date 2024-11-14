@@ -62,7 +62,7 @@ const moduleFunction = function ({
 			if (!isValid) {
 				xLog.error('----------------------------------------');
 				xLog.error(wisdom);
-				xLog.status(`XML Validation Error: `);
+				xLog.status(`XML Validation Failed: `);
 				xLog.status(validationMessage);
 				xLog.status(`Tries remaining: ${limit + 1 - count}`);
 				xLog.error('----------------------------------------');
@@ -72,7 +72,9 @@ const moduleFunction = function ({
 		} while (!isValid && count < limit + 1);
 
 		if (!isValid) {
-			throw `Jina failed to fix the XML\n    xPath: ${validationMessage.xpath?validationMessage.xpath:'none given'}\n    Reason: ${validationMessage.error}`;
+			validationMessage.thrownBy=moduleName;
+			throw validationMessage;
+			// throw `Jina 'answer-until-valid.js' never became valid. xPath: ${validationMessage.xpath?validationMessage.xpath:'none given'} Reason: ${validationMessage.error}`;
 		}
 		return {latestWisdom:resultWisdom, args:resultArgs};
 	}

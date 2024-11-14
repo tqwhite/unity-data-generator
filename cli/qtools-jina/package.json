@@ -1,0 +1,11 @@
+{
+  "name": "qtools-jina",
+  "version": "1.0.0",
+  "description": "AI Framework for chain of thought, resource augmented, flexible apps",
+  "main": "jina.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}
