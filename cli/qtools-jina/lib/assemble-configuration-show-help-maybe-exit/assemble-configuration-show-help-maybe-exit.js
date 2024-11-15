@@ -1,8 +1,6 @@
 'use strict';
 
 const qt = require('qtools-functional-library');
-console.dir(require.resolve('qtools-asynchronous-pipe-plus'));
-console.log(' Debug Exit [assemble-configuration-show-help-maybe-exit.js.]', {depth:4, colors:true}); process.exit(); //tqDebug
 
 const asynchronousPipePlus = new require('qtools-asynchronous-pipe-plus')();
 const pipeRunner = asynchronousPipePlus.pipeRunner;
