@@ -43,6 +43,7 @@ const moduleFunction = function ({ xxx } = {}) {
 		// Unless a value is set in process.global.configPath
 
 		if (!process.global.configPath) {
+		
 			const homeUserNameFilePath = path.join(
 				projectRoot,
 				'configs',
