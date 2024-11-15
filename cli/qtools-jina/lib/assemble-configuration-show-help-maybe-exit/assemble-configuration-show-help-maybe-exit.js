@@ -125,8 +125,9 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 					),
 				}),
 			);
-			next('skipRestOfPipe');
-			return;
+			process.exit();
+// 			next('skipRestOfPipe');
+// 			return;
 		}
 
 		next('', args);
