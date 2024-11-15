@@ -10,18 +10,14 @@ const { performance } = require('perf_hooks');
 
 // START OF moduleFunction() ============================================================
 
-const moduleFunction = function (
-	{UNUSED}={},
-) {
-
-	const { xLog, getConfig, commandLineParameters }=process.global
-
+const moduleFunction = function ({ UNUSED } = {}) {
+	const { xLog, getConfig, commandLineParameters } = process.global;
+	
 
 	// Set global configurations
 
-	const localConfig = getConfig('SYSTEM');
+	const localConfig = getConfig('jina/system');
 	const {
-		spreadsheetPath,
 		batchSpecificDebugLogParentDirPath,
 		batchSpecificDebugLogParentDirPurgeCount,
 	} = localConfig;
@@ -29,82 +25,73 @@ const moduleFunction = function (
 	// ===========================================================================
 	// BUILD SMARTYPANTS AND THEIR EXECUTORS
 
-const jinaCore = require('./lib/jina-core');
+	const jinaCore = require('./lib/jina-core');
 
-const makeFacilitators=({thoughtProcessNameList})=>{
+	const makeFacilitators = ({ thoughtProcessSpecificationList }) =>
+		thoughtProcessSpecificationList.map((thoughtProcessSpecification) =>
+			require(
+				`./lib/facilitators/${thoughtProcessSpecification.facilitatorModuleName}`,
+			)({
+				jinaCore,
+				thoughtProcessName:
+					thoughtProcessSpecification.thinkerListGroupName,
+			}),
+		);
 
-	// Initialize Jina AI core and xmlGeneratingingFacilitator function
-	const { facilitator: xmlGeneratingingFacilitator } =
-		require('./lib/facilitators/get-answer')({
-			jinaCore,
-			thoughtProcessName: thoughtProcessNameList[0],
-		}); // munges data and orchestrates this specific smartyPants process
+	const askJina = async ({
+		facilitators,
+		targetObjectNameList,
+		debugLogName,
+	}) => {
+		// ===========================================================================
+		// SET UP DIRECTORIES AND FILE PATHS
 
-	// Initialize Jina AI refiner and xmlRefiningFacilitator function
-	const { facilitator: xmlRefiningFacilitator } =
-		require('./lib/facilitators/answer-until-valid')({
-			jinaCore,
-			thoughtProcessName: thoughtProcessNameList[1],
-		}); // munges data and orchestrates this specific smartyPants process
-		
-		return [xmlGeneratingingFacilitator, xmlRefiningFacilitator];
-		
+		// Set up batch-specific debug log directory
+		const batchSpecificDebugLogDirPath = path.join(
+			batchSpecificDebugLogParentDirPath,
+			`${debugLogName}_${Math.floor(Date.now() / 1000)
+				.toString()
+				.slice(-4)}`,
+		);
+		require('./lib/purge-cleanup-directory')().executePurging(
+			batchSpecificDebugLogParentDirPath,
+			batchSpecificDebugLogParentDirPurgeCount,
+		);
+		xLog.setProcessFilesDirectory(batchSpecificDebugLogDirPath); //sort of a log for stuff too big to put in a log
+
+		// ===========================================================================
+		// COMBINE SMARTYPANTS EXECUTORS INTO THE MAIN EXECUTION OBJECT
+
+		// Initialize runTask function
+		const { runTask } = require('./lib/task-runner')({ facilitators });
+
+		// ===========================================================================
+		// EXECUTE THE PROCESS FOR SOME OR ALL OF THE POSSIBLE ELEMENTS
+
+		const startTime = performance.now();
+		let wisdom;
+		if (commandLineParameters.switches.showParseErrors) {
+			wisdom = await runTask({})();
+		} else {
+			try {
+				wisdom = await runTask({})();
+			} catch (error) {
+				xLog.error(`Error: ${error.toString()} [${moduleName}]`);
+				if (commandLineParameters.switches.debug) {
+					console.trace();
+				}
+				throw error;
+			}
 		}
+		const endTime = performance.now();
+		const duration = ((endTime - startTime) / 1000).toFixed(2);
+		return wisdom;
+	};
 
-const askJina=async ({facilitators, targetObjectNameList, debugLogName})=>{
-	// ===========================================================================
-	// SET UP DIRECTORIES AND FILE PATHS
-
-	// Set up batch-specific debug log directory
-	const batchSpecificDebugLogDirPath = path.join(
-		batchSpecificDebugLogParentDirPath,
-		`${debugLogName}_${Math.floor(Date.now() / 1000)
-			.toString()
-			.slice(-4)}`,
-	);
-	require('./lib/purge-cleanup-directory')().executePurging(
-		batchSpecificDebugLogParentDirPath,
-		batchSpecificDebugLogParentDirPurgeCount,
-	);
-	xLog.setProcessFilesDirectory(batchSpecificDebugLogDirPath); //sort of a log for stuff too big to put in a log
-
-
-	// ===========================================================================
-	// COMBINE SMARTYPANTS EXECUTORS INTO THE MAIN EXECUTION OBJECT
-
-	// Initialize runTask function
-	const { runTask } = require('./lib/task-runner')({facilitators});
-
-	// ===========================================================================
-	// EXECUTE THE PROCESS FOR SOME OR ALL OF THE POSSIBLE ELEMENTS
+	return { askJina, makeFacilitators };
 	
 
-	const startTime = performance.now();
-	let wisdom;
-	if (commandLineParameters.switches.showParseErrors) {
-		wisdom=await runTask({
-		})();
-	} else {
-		try {
-			wisdom=await runTask({
-			})();
-		} catch (error) {
-			xLog.error(`Error: ${error.toString()} [${moduleName}]`);
-			if (commandLineParameters.switches.debug) {
-				console.trace();
-			}
-			throw error;
-		}
-	}
-	const endTime = performance.now();
-	const duration = ((endTime - startTime) / 1000).toFixed(2);
-	return wisdom;
-}
-
-return {askJina, makeFacilitators}
-
-
-
+	
 };
 
 // END OF moduleFunction() ============================================================
@@ -114,9 +101,9 @@ process.global = {};
 process.global.xLog = xLog;
 
 require('./lib/assemble-configuration-show-help-maybe-exit')({
-	configSegmentName: 'SYSTEM',
+	configSegmentName: 'jina/system',
 	terminationFunction: process.exit,
-	callback: ()=>{},
+	callback: () => {},
 }); //contributes to process.global
 
-module.exports=moduleFunction;
+module.exports = moduleFunction;

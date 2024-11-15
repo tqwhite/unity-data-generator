@@ -4,12 +4,12 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); 
 
 const path = require('path');
 const fs = require('fs');
+const util=require('util');
 
 // START OF moduleFunction() ============================================================
 const moduleFunction =
 	() =>
 	({ facilitators }) => {
-		const [xmlRefiningFacilitator, xmlGeneratingingFacilitator] = facilitators;
 
 		const { xLog, commandLineParameters, getConfig } = process.global;
 		const { conversations } = getConfig(moduleName);
@@ -23,13 +23,13 @@ const moduleFunction =
 				let latestWisdom={latestXml:'first pass. no XML yet. replace with top-level object.'};
 				let args={};
 				for (var i = 0, len = facilitators.length; i < len; i++) {
-					const tmp = await facilitators[i]({
+					const tmp = await facilitators[i].facilitator({
 						latestWisdom,
 						args,
 					})
 					  .catch(err=>{
 						if (err){
-							xLog.error(`ErrorXX: ${err}.`);
+							xLog.error(`\nError [${moduleName}/7Z3EooaJdjFLjsHu3in7]: \n${util.inspect(err, { showHidden: false, depth: null, colors: true })}`);
 							throw err;
 						}
 					  });

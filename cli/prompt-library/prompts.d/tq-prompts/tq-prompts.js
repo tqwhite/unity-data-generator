@@ -47,8 +47,6 @@ const moduleFunction =
 				const xmlContent = result.substring(result.indexOf('<'), result.lastIndexOf('>') + 1);
 				return {latestXml:xmlContent}
 			} else {
-console.dir({['inString']:inString}, { showHidden: false, depth: 4, colors: true });
-
 				return {latestXml:'XML Missing in Response'}
 			}
 		};

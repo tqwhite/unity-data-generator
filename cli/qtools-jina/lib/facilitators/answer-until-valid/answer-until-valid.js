@@ -17,7 +17,7 @@ const moduleFunction = function ({
 	commandLineParameters,
 }) {
 	const { xLog, getConfig } = process.global;
-	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
+	const localConfig = getConfig(`jina/${moduleName}`); //getConfig(`${moduleName}`);
 	xLog.status(
 		`using thoughtProcess '${thoughtProcessName}' in [${moduleName}]`,
 	);

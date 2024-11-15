@@ -48,7 +48,7 @@ const moduleName = path.basename(__filename, '.js');
   const { xLog, getConfig, commandLineParameters } = process.global;
 
   // Get configuration specific to this module
-  let { thoughtProcessNameList, outputsPath } = getConfig(moduleName);
+  let { thoughtProcessSpecificationList, outputsPath } = getConfig(moduleName);
 
   // =============================================================================
   // COMMAND-LINE PARAMETERS PROCESSING
@@ -96,7 +96,7 @@ const moduleName = path.basename(__filename, '.js');
 
   // Initialize Jina and set up facilitators
   const { askJina, makeFacilitators } = initJina();
-  const facilitators = makeFacilitators({ thoughtProcessNameList });
+  const facilitators = makeFacilitators({ thoughtProcessSpecificationList });
 
   // Interact with Jina to get wisdom
   const wisdom = await askJina({

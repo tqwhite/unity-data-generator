@@ -10,14 +10,14 @@ const qt = require('qtools-functional-library'); //qt.help({printOutput:true, qu
 
 const moduleFunction = function (args = {}) {
 
-	const { xLog, getConfig } = process.global;
-	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
+	const { xLog } = process.global;
 	
+	const {promptLibraryModulePath}=args;
 	
 	const iterativeGeneratorPrompt = (args) => {
 		const { employerModuleName } = args;
 
-		const promptLibrary = require(localConfig.promptLibraryModulePath)(); //'johns-maker', 'johns-review', 'tqs-maker', 'tqs-review', 'fix-problems'
+		const promptLibrary = require(promptLibraryModulePath)(); //'johns-maker', 'johns-review', 'tqs-maker', 'tqs-review', 'fix-problems'
 
 		if (!promptLibrary[employerModuleName]) {
 			xLog.error(

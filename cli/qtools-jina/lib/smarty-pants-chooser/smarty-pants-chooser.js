@@ -27,7 +27,7 @@ const qt = require('qtools-functional-library'); //qt.help({printOutput:true, qu
 
 const moduleFunction = function() {
 	const { xLog, getConfig } = process.global;
-	const {smartyPantsList} = getConfig(moduleName); //getConfig(`${moduleName}`);
+	const {smartyPantsList} = getConfig(`jina/${moduleName}`); //getConfig(`${moduleName}`);
 
 	const smartyPantsFactory = ({smartyPantsName}) => {
 		const {moduleName, accessParms, modelName}=smartyPantsList[smartyPantsName];

@@ -18,7 +18,8 @@ const validationList=[];
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function (args = {}) {
-	const { xLog } = process.global;
+	const { xLog, getConfig } = process.global;
+	const {promptLibraryModulePath}=getConfig(moduleName);
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
 
@@ -28,7 +29,7 @@ const moduleFunction = function (args = {}) {
 	// ================================================================================
 	// UTILITIES
 
-	const promptGenerator = require('../lib/prompt-generator')();
+	const promptGenerator = require('../lib/prompt-generator')({promptLibraryModulePath});
 
 	const formulatePromptList = (promptGenerator) => {
 		return ({ latestWisdom, elementSpecWorksheetJson } = {}) => {

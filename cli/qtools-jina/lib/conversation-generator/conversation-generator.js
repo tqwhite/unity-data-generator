@@ -20,9 +20,9 @@ const moduleFunction = function (
 	const localConfig = getConfig(moduleName); //getConfig(`${moduleName}`);
 	const thinkersList = getConfig('thinkers'); //thinkers is the entire prompting datastructure, has an element for each line in a thought process
 
-	const { thoughtProcesses, defaultThoughtProcess } = localConfig; //thought processes is the list of thinker modules
+	const { thinkerList} = localConfig; //thought processes is the list of thinker modules
 
-	const thoughtProcesslist = thoughtProcesses[thoughtProcessName];
+	const thoughtProcesslist = thinkerList[thoughtProcessName];
 
 	// ================================================================================
 	// WHERE THE RUBBER MEETS THE ROAD
@@ -59,6 +59,10 @@ const moduleFunction = function (
 
 			// --------------------------------------------------------------------------------
 			// INSTANTIATE AND EXECUTE THINKERS
+			
+			if(!(thoughtProcesslist instanceof Array)){
+				throw `thoughtProcesslist is empty. Usually means bad thinkerListGroupName in systemConfig.ini. [${moduleName}]`;
+			}
 
 			thoughtProcesslist.forEach((thoughtProcess) =>
 				taskList.push((args, next) => {
