@@ -67,12 +67,12 @@ const moduleFunction = function ({ xxx } = {}) {
 				'systemConfig.ini',
 			); //deployment copies target config to 'configs'; if qbook exists, it's dev system
 
-			if (fs.existsSync(qbookFilePath)) {
-				return qbookFilePath; // this one is special for TQ
-			}
-
 			if (fs.existsSync(homeUserNameFilePath)) {
 				return homeUserNameFilePath; // this one is any other developers
+			}
+
+			if (fs.existsSync(qbookFilePath)) {
+				return qbookFilePath; // this one is special for TQ
 			}
 
 			if (fs.existsSync(topOfDirFilePath)) {
