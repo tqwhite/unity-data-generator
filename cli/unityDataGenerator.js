@@ -28,7 +28,7 @@ const os = require('os');
 const fs = require('fs');
 
 // process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
-const initJina = require('qtools-ai-thought-processor/jina'); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
+const initAtp = require('qtools-ai-thought-processor/jina'); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 
 // =============================================================================
 // MODULE NAME DETERMINATION
@@ -44,11 +44,14 @@ const moduleName = path.basename(__filename, '.js');
   // =============================================================================
   // INITIALIZATION
 
-  // Access global variables set up by 'initJina'
+  // Access global variables set up by 'initAtp'
   const { xLog, getConfig, commandLineParameters } = process.global;
 
   // Get configuration specific to this module
-  let { thoughtProcessSpecificationList, outputsPath } = getConfig(moduleName);
+  let { outputsPath } = getConfig(moduleName);
+  
+  // Get configuration specific to qTools-AI
+  let { thoughtProcessConversationList } = getConfig('App_Specific_Thought_Process');
 
   // =============================================================================
   // COMMAND-LINE PARAMETERS PROCESSING
@@ -95,11 +98,11 @@ const moduleName = path.basename(__filename, '.js');
   // JINA INTERACTION
 
   // Initialize Jina and set up facilitators
-  const { askJina, makeFacilitators } = initJina();
-  const facilitators = makeFacilitators({ thoughtProcessSpecificationList });
+  const { findTheAnswer, makeFacilitators } = initAtp();
+  const facilitators = makeFacilitators({ thoughtProcessConversationList });
 
   // Interact with Jina to get wisdom
-  const wisdom = await askJina({
+  const wisdom = await findTheAnswer({
     facilitators,
     targetObjectNameList,
     debugLogName: targetObjectNamesString,

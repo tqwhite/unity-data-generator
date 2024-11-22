@@ -47,8 +47,8 @@ const moduleFunction = function ({ UNUSED } = {}) {
 
 	const jinaCore = require('./lib/jina-core');
 
-	const makeFacilitators = ({ thoughtProcessSpecificationList }) =>
-		thoughtProcessSpecificationList.map((thoughtProcessSpecification) =>
+	const makeFacilitators = ({ thoughtProcessConversationList }) =>
+		thoughtProcessConversationList.map((thoughtProcessSpecification) =>
 			require(
 				`./lib/facilitators/${thoughtProcessSpecification.facilitatorModuleName}`,
 			)({
@@ -58,7 +58,7 @@ const moduleFunction = function ({ UNUSED } = {}) {
 			}),
 		);
 
-	const askJina = async ({
+	const findTheAnswer = async ({
 		facilitators,
 		targetObjectNameList,
 		debugLogName,
@@ -108,7 +108,7 @@ const moduleFunction = function ({ UNUSED } = {}) {
 		return wisdom;
 	};
 
-	return { askJina, makeFacilitators };
+	return { findTheAnswer, makeFacilitators };
 	
 
 	
