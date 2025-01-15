@@ -18,23 +18,25 @@
  *
  * Authors: TQ White II (Justkidding, Inc.) and John Lovell (Access for Learning, LLC)
  */
-
 // =============================================================================
-// MODULE IMPORTS
+// SYSTEM IMPORTS
 
 // Import necessary modules
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
 
-// process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
-const initAtp = require('qtools-ai-thought-processor/jina'); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
-
 // =============================================================================
 // MODULE NAME DETERMINATION
 
 // Derive the module name from the current filename (without extension)
 const moduleName = path.basename(__filename, '.js');
+
+// =============================================================================
+// MODULE IMPORTS
+
+// process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
+const initAtp = require('qtools-ai-thought-processor/jina')({configFileBaseName:moduleName}); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 
 // =============================================================================
 // MAIN EXECUTION FUNCTION
@@ -98,7 +100,7 @@ const moduleName = path.basename(__filename, '.js');
   // JINA INTERACTION
 
   // Initialize Jina and set up facilitators
-  const { findTheAnswer, makeFacilitators } = initAtp();
+  const { findTheAnswer, makeFacilitators } = initAtp({configName:moduleName});
   const facilitators = makeFacilitators({ thoughtProcessConversationList });
 
   // Interact with Jina to get wisdom

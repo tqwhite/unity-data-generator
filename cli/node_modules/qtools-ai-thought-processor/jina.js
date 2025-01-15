@@ -120,10 +120,14 @@ const moduleFunction = function ({ UNUSED } = {}) {
 process.global = {};
 process.global.xLog = xLog;
 
-require('./lib/assemble-configuration-show-help-maybe-exit')({
-	configSegmentName: 'jina/system',
-	terminationFunction: process.exit,
-	callback: () => {},
-}); //contributes to process.global
+const initFunc = ({ configFileBaseName } = {}) => {
+	require('./lib/assemble-configuration-show-help-maybe-exit')({
+		configSegmentName: 'jina/system',
+		configFileBaseName,
+		terminationFunction: process.exit,
+		callback: () => {},
+	}); //contributes to process.global
+	return moduleFunction;
+};
 
-module.exports = moduleFunction;
+module.exports = (args) => initFunc(args);

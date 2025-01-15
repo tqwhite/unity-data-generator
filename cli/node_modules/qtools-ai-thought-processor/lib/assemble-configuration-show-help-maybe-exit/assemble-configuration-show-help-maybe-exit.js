@@ -21,7 +21,11 @@ const fs = require('fs');
 
 //START OF moduleFunction() ============================================================
 
-const moduleFunction = function ({ configSegmentName, callback }) {
+const moduleFunction = function ({
+	configSegmentName,
+	configFileBaseName,
+	callback,
+}) {
 	const { xLog } = process.global;
 	const validControls = [
 		'-help',
@@ -57,7 +61,7 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 			const getConfigActual = (allConfigs) => (segmentName) => ({
 				...allConfigs[segmentName],
 				_segmentName: segmentName,
-				_configFilePath:configFilePath
+				_configFilePath: configFilePath,
 			});
 
 			const getConfig = getConfigActual({
@@ -78,6 +82,7 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 			fileString: commandLineParameters.qtGetSurePath(
 				'values.overrideConfigPath[0]',
 			),
+			configFileBaseName,
 		});
 
 		if (!fs.existsSync(configFilePath)) {
@@ -126,8 +131,8 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 				}),
 			);
 			process.exit();
-// 			next('skipRestOfPipe');
-// 			return;
+			// 			next('skipRestOfPipe');
+			// 			return;
 		}
 
 		next('', args);
@@ -228,7 +233,6 @@ const moduleFunction = function ({ configSegmentName, callback }) {
 
 			process.global.getConfig = getConfig;
 			process.global.commandLineParameters = commandLineParameters;
-			
 
 			callback(err, {
 				allConfigs,

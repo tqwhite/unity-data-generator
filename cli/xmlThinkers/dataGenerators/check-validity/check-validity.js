@@ -31,6 +31,11 @@ const moduleFunction = function (args = {}) {
 
 	const accessSmartyPants = (currentXml, callback) => {
 		const localCallback = (err, validationMessage) => {
+			validationMessage={
+				pass:validationMessage.match(/is valid/i),
+				error:validationMessage
+			}
+			xLog.status(`WARN: matching 'is valid' rather than .pass`);
 			let isValid = false;
 
 			if (
