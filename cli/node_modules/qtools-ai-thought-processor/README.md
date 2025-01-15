@@ -21,7 +21,10 @@ To support the entire process, **qTools ATP provides several utilities** to make
 There is also a logging (xLog) facility that supports basic logging function but will also allow a Thinker (or any module) to write to a separate log file unique to that module for a specific program execution.  This usually contains raw prompts and responses.
 
 qTools ATP uses the [qTools-parse-command-line](https://www.npmjs.com/package/qtools-parse-command-line) to control the Thought Process. This can be used by the application as well. Application specific flags and help text can be added to the system.
+### Usage Example
 
+	const initAtp = require('qtools-ai-thought-processor/jina')({configFileBaseName:moduleName}); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
+	
 ### Configuration Example
 
 In this sample application, Thinkers parse data files and access external HTTP resources as well as execute various prompts to successively refine the result from various perspectives.
@@ -97,11 +100,9 @@ In this sample application, Thinkers parse data files and access external HTTP r
     [get-specification-data]
     spreadsheetPath = <!sourceFilesPath!>/ImplementationSpecification.xlsx
 
-
-
 ### Acknowledgment and Copyright
 
-Development of this open source software was supported by the fine people of Access for Learning, LLC supporting thei mission of educational data interoperability.
+Development of this open source software was supported by the fine people of Access for Learning, LLC supporting their mission of educational data interoperability.
 
     Copyright 2023 Access for Learning
     
