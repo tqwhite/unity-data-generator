@@ -1,6 +1,6 @@
 {
   "name": "qtools-ai-thought-processor",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "AI thought process framework",
   "main": "jina.js",
   "scripts": {

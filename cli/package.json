@@ -12,7 +12,7 @@
     "ajv": "^8.17.1",
     "fast-xml-parser": "^4.5.1",
     "html-entities": "^2.5.2",
-    "qtools-ai-thought-processor": "^1.0.6",
+    "qtools-ai-thought-processor": "^1.0.7",
     "qtools-config-file-processor": "^1.0.17",
     "qtools-functional-library": "^2.0.1",
     "qtools-parse-command-line": "^1.0.8",

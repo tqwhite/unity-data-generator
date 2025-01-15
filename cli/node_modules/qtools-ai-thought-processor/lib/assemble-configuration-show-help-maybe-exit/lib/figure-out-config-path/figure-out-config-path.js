@@ -14,7 +14,9 @@ However, this particular one is pretty close to universal.
 const moduleFunction = function ({ xxx } = {}) {
 	let { xLog, applicationBasePath } = process.global;
 	
+
 	
+
 	const findProjectRoot = ({
 		rootFolderName = 'system',
 		closest = true,
@@ -24,7 +26,10 @@ const moduleFunction = function ({ xxx } = {}) {
 			'$1',
 		);
 	
-	applicationBasePath = applicationBasePath?applicationBasePath:findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
+
+	applicationBasePath = applicationBasePath
+		? applicationBasePath
+		: findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
 
 	const getConfigPath = ({ fileString, configFileBaseName } = {}) => {
 		const configFilePath = path.join(
@@ -35,7 +40,7 @@ const moduleFunction = function ({ xxx } = {}) {
 		const moduleNameFilePath = path.join(
 			applicationBasePath,
 			'configs',
-			configFileBaseName?`${configFileBaseName}.ini`:'systemParameters.ini',
+			configFileBaseName ? `${configFileBaseName}.ini` : 'systemParameters.ini',
 		);
 
 		const qbookFilePath = path.join(
@@ -43,7 +48,7 @@ const moduleFunction = function ({ xxx } = {}) {
 			'configs',
 			'instanceSpecific',
 			'qbook',
-			configFileBaseName?`${configFileBaseName}.ini`:'systemParameters.ini',
+			configFileBaseName ? `${configFileBaseName}.ini` : 'systemParameters.ini',
 		); //deployment copies target config to 'configs'; if qbook exists, it's dev system
 
 		const homeUserNameFilePath = path.join(
@@ -51,7 +56,7 @@ const moduleFunction = function ({ xxx } = {}) {
 			'configs',
 			'instanceSpecific',
 			os.userInfo().username,
-			configFileBaseName?`${configFileBaseName}.ini`:'systemParameters.ini',
+			configFileBaseName ? `${configFileBaseName}.ini` : 'systemParameters.ini',
 		); //deployment copies target config to 'configs'; if qbook exists, it's dev system
 
 		if (fileString && fs.existsSync(fileString)) {
@@ -73,7 +78,17 @@ const moduleFunction = function ({ xxx } = {}) {
 		if (fs.existsSync(configFilePath)) {
 			return configFilePath; // normal deployment has config data at top level of directory so other config's secrets are preserved
 		}
-		return;
+		const filePaths = [
+			fileString,
+			qbookFilePath,
+			homeUserNameFilePath,
+			moduleNameFilePath,
+			configFilePath,
+		];
+		
+		xLog.status(`No configuration file found at any of these paths:\n    ${filePaths.join('\n    ')}\n`);
+		
+		throw 'No configuration file found';
 	};
 	return { getConfigPath };
 };
