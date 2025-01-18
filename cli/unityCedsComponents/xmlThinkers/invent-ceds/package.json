@@ -1,0 +1,11 @@
+{
+  "name": "invent-ceds",
+  "version": "1.0.0",
+  "description": "tq's jina-core personality for invent-ceds test data",
+  "main": "invent-ceds.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}
