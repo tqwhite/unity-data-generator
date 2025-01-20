@@ -12,9 +12,12 @@ const moduleFunction = function (args = {}) {
 
 	const { xLog } = process.global;
 	
+	
 	const {promptLibraryModulePath}=args;
 	
 	const iterativeGeneratorPrompt = (args) => {
+	args.elementSpecWorksheetJson=JSON.stringify(args.latestXml, '', '\t')
+		
 		const { employerModuleName } = args;
 
 		const promptLibrary = require(promptLibraryModulePath)(); //'johns-maker', 'johns-review', 'tqs-maker', 'tqs-review', 'fix-problems'

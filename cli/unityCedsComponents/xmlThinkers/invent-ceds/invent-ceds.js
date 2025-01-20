@@ -13,7 +13,7 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 
 const moduleFunction = function (args = {}) {
 	const { xLog, getConfig } = process.global;
-	const {promptLibraryModulePath}=getConfig(moduleName);
+	const { promptLibraryModulePath } = getConfig(moduleName);
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
 	const systemPrompt =
@@ -22,7 +22,9 @@ const moduleFunction = function (args = {}) {
 	// ================================================================================
 	// UTILITIES
 
-	const promptGenerator = require('../lib/prompt-generator')({promptLibraryModulePath});
+	const promptGenerator = require('../lib/prompt-generator')({
+		promptLibraryModulePath,
+	});
 
 	const formulatePromptList =
 		(promptGenerator) =>
@@ -52,15 +54,11 @@ const moduleFunction = function (args = {}) {
 
 	const executeRequest = (args, callback) => {
 		const taskList = new taskListPlus();
-
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const {
-				promptGenerator,
-				formulatePromptList,
-			} = args;
+			const { promptGenerator, formulatePromptList, sifElement } = args;
 
 			const promptElements = formulatePromptList(promptGenerator)(args);
 
@@ -99,9 +97,9 @@ const moduleFunction = function (args = {}) {
 				`\n\n\n${moduleName}---------------------------------------------------\n${rawWisdom}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
-			const tmp=extractionFunction(rawWisdom);
+			const tmp = extractionFunction(rawWisdom);
 			const { latestXml } = extractionFunction(rawWisdom);
-			const wisdom={...latestWisdom, latestXml};
+			const wisdom = { ...latestWisdom, latestXml };
 
 			next('', { ...args, wisdom });
 		});

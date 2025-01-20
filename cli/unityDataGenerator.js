@@ -26,6 +26,11 @@ const path = require('path');
 const os = require('os');
 const fs = require('fs');
 
+// --------------------------------------------------------------------------------
+// FIND PROJECT ROOT
+const findProjectRoot=({rootFolderName='system', closest=true}={})=>__dirname.replace(new RegExp(`^(.*${closest?'':'?'}\/${rootFolderName}).*$`), "$1");
+const applicationBasePath=findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
+
 // =============================================================================
 // MODULE NAME DETERMINATION
 
@@ -36,8 +41,10 @@ const moduleName = path.basename(__filename, '.js');
 // MODULE IMPORTS
 
 // process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
-const initAtp = require('qtools-ai-thought-processor/jina')({configFileBaseName:moduleName}); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
-
+const initAtp = require('qtools-ai-thought-processor/jina')({
+	configFileBaseName: moduleName,
+	applicationBasePath
+}); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 // =============================================================================
 // MAIN EXECUTION FUNCTION
 
