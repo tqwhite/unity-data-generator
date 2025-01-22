@@ -92,32 +92,21 @@ const moduleFunction =
 			: `defaultStrings`;
 		const workingFunction = () => {
 			return {
-				'invent-ceds': {
+				'invent-ceds-for-entire-object': {
 					extractionFunction:extractionFunction([getLatestXml]),
 					extractionParameters: {
 						frontDelimiter: `[START JSON SAMPLE]`,
 						backDelimiter: `[END JSON SAMPLE]`,
 					},
-					promptTemplate: require(`./stringsLib/${stringsVariation}/invent-ceds`)(),
+					promptTemplate: require(`./stringsLib/${stringsVariation}/invent-ceds-for-entire-object`)(),
 				},
-				'xml-review': {
+				'choose-correct-ceds': {
 					extractionFunction:extractionFunction([getLatestXml]),
 					extractionParameters: {
 						frontDelimiter: `[START JSON SAMPLE]`,
 						backDelimiter: `[END JSON SAMPLE]`,
 					},
-					promptTemplate: require(`./stringsLib/${stringsVariation}/review`)(),
-				},
-
-				'fix-problems': {
-					extractionFunction:extractionFunction([getLatestXml, getExplanation]),
-					extractionParameters: {
-						frontDelimiter: `[START JSON SAMPLE]`,
-						backDelimiter: `[END JSON SAMPLE]`,
-						explanationFrontDelimiter: `[START EXPLANATIONS]`,
-						explanationBackDelimiter: `[END EXPLANATIONS]`,
-					},
-					promptTemplate: require(`./stringsLib/${stringsVariation}/fix`)(),
+					promptTemplate: require(`./stringsLib/${stringsVariation}/choose-correct-ceds`)(),
 				},
 			};
 		};

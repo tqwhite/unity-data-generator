@@ -13,7 +13,7 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 
 const moduleFunction = function (args = {}) {
 	const { xLog, getConfig } = process.global;
-	const {promptLibraryModulePath}=getConfig(moduleName);
+	const { promptLibraryModulePath } = getConfig(moduleName);
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
 	const systemPrompt =
@@ -22,7 +22,9 @@ const moduleFunction = function (args = {}) {
 	// ================================================================================
 	// UTILITIES
 
-	const promptGenerator = require('../lib/prompt-generator')({promptLibraryModulePath});
+	const promptGenerator = require('../lib/prompt-generator')({
+		promptLibraryModulePath,
+	});
 
 	const formulatePromptList =
 		(promptGenerator) =>
@@ -42,7 +44,7 @@ const moduleFunction = function (args = {}) {
 		const localCallback = (err, result) => {
 			callback('', result);
 		};
-		promptList.unshift({ role: 'system', content: systemPrompt });
+		promptList.unshift({ role: 'user', content: systemPrompt });
 		smartyPants.accessExternalResource({ promptList }, localCallback); //in this case, smartyPants is gpt4-completion
 	};
 
@@ -57,10 +59,10 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const {
-				promptGenerator,
-				formulatePromptList,
-			} = args;
+			const { promptGenerator, formulatePromptList, sifElement } = args;
+
+			// args.latestWisdom.initialThinkerData is supplied by task-runner in qtools.ai()
+			args.latestWisdom.latestXml=args.latestWisdom.latestXml?args.latestWisdom.latestXml:args.latestWisdom.initialThinkerData;
 
 			const promptElements = formulatePromptList(promptGenerator)(args);
 
@@ -92,7 +94,6 @@ const moduleFunction = function (args = {}) {
 
 		taskList.push((args, next) => {
 			const { wisdom: rawWisdom, promptElements, latestWisdom } = args;
-
 			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
@@ -100,9 +101,9 @@ const moduleFunction = function (args = {}) {
 				`\n\n\n${moduleName}---------------------------------------------------\n${rawWisdom}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
-			const tmp=extractionFunction(rawWisdom);
-			const { latestXml } = extractionFunction(rawWisdom);
-			const wisdom={...latestWisdom, latestXml};
+			const tmp = extractionFunction(rawWisdom);
+			const { latestXml, initialThinkerData } = extractionFunction(rawWisdom);
+			const wisdom = { ...latestWisdom, latestXml };
 
 			next('', { ...args, wisdom });
 		});

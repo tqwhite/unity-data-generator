@@ -100,8 +100,10 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
 		process.exit(1);
 	}
 
+
+
 	const retrieveSpreadsheet =
-		require('./unityCedsComponents/xmlThinkers/get-specification-data.js')();
+		require('./unityCedsComponents/lib/get-specification-data')();
 
 	const demoFuncAsync = (args) => {
 		return new Promise((resolve, reject) => {
@@ -125,7 +127,7 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
 
 	// Determine the output file path
 	const outputFilePath =
-		outFile || path.join(outputsPath, `${targetObjectNamesString}.xml`);
+		outFile || path.join(outputsPath, `${targetObjectNamesString}.json`);
 
 	// Ensure the output directory exists
 	const outputDir = path.dirname(outputFilePath);
