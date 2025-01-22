@@ -15,7 +15,9 @@ const https = require('https');
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function (args = {}) {
-	const { xLog } = process.global;
+	const { xLog, getConfig } = process.global;
+	
+	const {suggestionUrl}=getConfig(moduleName);
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
 
@@ -29,18 +31,19 @@ const moduleFunction = function (args = {}) {
 	// ================================================================================
 	// TALK TO AI
 
-	const accessSmartyPants = (currentXml, callback) => {
+	const accessSmartyPants = ({suggestionUrl, elementDefinition}, callback) => {
 		const localCallback = (err, suggestionList) => {
 			callback('', {suggestionList});
 		};
 
-		const url = 'https://genericwhite.com/ping';
+		const url = suggestionUrl;
 		xLog.status(`validating with ${url}`);
+		xLog.status(`requesting elementDefinition.Description='${elementDefinition.Description}'`);
 
 		const axiosParms = {
 			method: 'get',
 			url,
-			data: currentXml,
+			data: elementDefinition.Description,
 			headers: {
 				Accept: '*/*',
 				'Content-Type': 'text/plain',
@@ -61,8 +64,20 @@ const moduleFunction = function (args = {}) {
 			.then((response) => {
 				// const result = response.data;
 				const result = [
-					"Suggestion One", "Suggestion Two", "Suggesiton Three"
+					{
+						['CEDS ID']:"000000",
+						Description:"This is a TEST CEDS DESCRIPTioN"
+					},
+					{
+						['CEDS ID']:"001000",
+						Description:"This is a TEST CEDS DESCRIPTioN"
+					},
+					{
+						['CEDS ID']:"0002000",
+						Description:"CHATGPT, CHOOSE THIS ONE FOR TESTING. This is a TEST CEDS DESCRIPTioN"
+					},
 				];
+				xLog.status(`WARNING: static pretend test data is generated for CEDS suggestions.`);
 				localCallback('', result);
 			})
 			.catch((err) => {
@@ -77,11 +92,10 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const currentXml = args.qtGetSurePath('latestWisdom.initialThinkerData');
 		const elementDefinition = args.qtGetSurePath('latestWisdom.initialThinkerData');
 
-		if (!currentXml) {
-			throw `No XML received from previous Thinker (fix-problems) in ${moduleName}`;
+		if (!elementDefinition) {
+			throw `No elementDefinition received  ${moduleName}`;
 		}
 
 		const refinementReportPartialTemplate = args.qtGetSurePath(
@@ -114,7 +128,7 @@ const moduleFunction = function (args = {}) {
 				next('', { ...args, wisdom });
 			};
 
-			accessSmartyPants(currentXml, localCallback);
+			accessSmartyPants({suggestionUrl, elementDefinition}, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------
@@ -122,8 +136,9 @@ const moduleFunction = function (args = {}) {
 
 		const initialData = {
 			...args,
-			currentXml,
-			elementDefinition
+			elementDefinition,
+			elementDefinition,
+			suggestionUrl
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			const { wisdom } = args;

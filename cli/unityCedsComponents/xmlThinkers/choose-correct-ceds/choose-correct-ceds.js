@@ -29,6 +29,10 @@ const moduleFunction = function (args = {}) {
 	const formulatePromptList =
 		(promptGenerator) =>
 		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
+
+			latestWisdom.elementDefinition=JSON.stringify(latestWisdom.elementDefinition, '', '\t');
+			latestWisdom.suggestionList=JSON.stringify(latestWisdom.suggestionList, '', '\t');
+		
 			return promptGenerator.iterativeGeneratorPrompt({
 				...latestWisdom,
 				employerModuleName: moduleName,

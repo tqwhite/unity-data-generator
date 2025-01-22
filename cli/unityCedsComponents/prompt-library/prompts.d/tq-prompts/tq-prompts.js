@@ -47,6 +47,7 @@ const moduleFunction =
 				const xmlContent = result.substring(result.indexOf('{'), result.lastIndexOf('}') + 1);
 				return {latestXml:xmlContent}
 			} else {
+				xLog.status(`JSON Missing in Response: ${inString}`)
 				return {latestXml:'JSON Missing in Response'}
 			}
 		};

@@ -7,52 +7,100 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); 
 const moduleFunction = ({ moduleName } = {}) => () => {
 
 	return `
-This is the quality control step in a process that is generating XML Test Data that matches a specification and has fictitious data values that resemble data that would occur in the real world. 
+This is the quality control step in a process that is choosing the correct CEDS ID parameter for a data specification.
 
-The requirements for the XML are specified in the Object Standard Definition below. Your goal is to examine the XML and make sure it is of the highest quality.
+GUIDANCE
 
-GUIDANCE FOR EVALUATING AND REVISING XML TO INSURE THAT IT IS CORRECT
+Read the object information and choose the suggestion that seems best.
 
-The main function is to compare the XML Test Data to the Object Standard Definition and REVISE THE XML TO INSURE THAT IT IS CONSISTENT, ACCURATELY REPRESENTS THE OBJECT STANDARD DEFINITION AND IS COHERENT.
-
-Being coherent is important. For this, coherence means that the fictitious data values align with each other in ways that make sense to the user of this testing data. For example, addresses of students should match that of the school. Within objects, the invented data needs to be consistent, eg, the student model has properties of first, last and full name. If the first is 'Joe' and the last is 'White', it would be incorrect to say the full name is 'Sam Smith'. The coherent value is 'Joe White'.
-
-The order of the XML elements is also important. You should revise the XML to insure that the elements appear in the same order as they appear in the Object Standard Definition.
-
-An IMPORTANT EXCEPTION to adhering to the Object Standard Definition is that the XML Test Data should NOT have a top level grouping object with multiple subordinates. IE, you should revise <things><thing>a</thing><thing></thing>b</things> to remove <things> and all but one of the <thing> elements. Choose the nicest looking one to keep.
-
-OBJECT STANDARD DEFINITION
+ELEMENT DEFINITION
 
 Here is the Object Standard Definition:
 
-<!elementSpecWorksheetJson!>
+<!elementDefinition!>
 
-XML TEST DATA
+SUGGESTION LIST
 
 Here is the XML Test Data for review:
 
-<!latestXml!>
+<!suggestionList!>
 
 PROCESS INSTRUCTIONS
 
-1) Calculate xPaths from the XML Test Data and compare the order to the order in the Object Standard Definition. Revise the XML Test Data to make the sequence correct. Please mention any issues with this in your response.
+1) Form a semantic understanding of the ELEMENT DEFINITION
 
-2) Look at each value in the XML Test Data and look for other values that relate to it. Use that to revise the entire XML Test Data so that everything is coherent in the sense mentioned above. Please mention any issues with this in your response.
+	a) Evaluate the names of the properties in the suggestion list and then consider the definitions. Especially notice the description.
 
-3) Look at the properties, refIds, codesets, other things with @ signs in the Object Standard Definition to make sure it is all of optimimum correctness.
+	b) Look at the segments of the xPath and factor them into your understanding.
 
-4) Think up other things you can do to make sure that the revised XML Test Data fulfills the Object Standard Definition and is coherent and easily understandable to a person using it. Please mention these ideas in the response.
+2) Compose a brief summary of your understanding of the meaning of the data that would be represented by a value structured according to the element definition.
+
+3) Read the SUGGESTION LIST and understand each of them.
+
+4) Based on the semantic understanding of the element defintion that you have formed, evaluate each potential definition in the suggestion list and choose the best answer.
 
 RESULT FORMATTING INSTRUCTIONS
 
-Wrap the finished XML with delimiters like this:
+The RESULT DATA should be the 
+	CEDS ID, 
+	The CEDS definition, 
+	the CEDS URL for that definition, 
+	the Object Standard xPath, 
+	its name, 
+	its definition,
+	your evaluation of how confident you are about the choice
+	an array containing the list of candidates you found
+
+Express the result in JSON as an ARRAY of these objects. Eg,
+
+{
+	CEDS:{
+		id: string,
+		type: string,
+		definition: string,
+		url: string
+	},
+	OBJECT:{
+		name: string,
+		definition: string,
+		xpath: string
+	},
+	CONFIDENCE: string
+	CANDIDATES:[
+		string,
+		string,
+		...
+	]
+}
+
+OR, if there is no viable CEDS definition, use this form:
+
+{
+	CEDS:{
+		error: 'NO CEDS DEFINITION FOUND'
+	},
+	OBJECT:{
+		name: string,
+		type: string,
+		definition: string,
+		xpath: string
+	},
+	CONFIDENCE: string
+	CANDIDATES:[]
+}
+
+RESULT FORMATTING INSTRUCTIONS
+
+Always wrap the XML part of your response in delimiters like this:
 
 <!frontDelimiter!>
- MERGED XML GOES HERE
+ RESULT DATA HERE
 <!backDelimiter!>
 
-There should be *nothing* except well-formed XML between those delimiters.
 
+EXPLANATION GOES HERE AT THE END
+
+There should be *nothing* except RESULT DATA between those delimiters. Explanation should follow.
 
 		`;
 };
