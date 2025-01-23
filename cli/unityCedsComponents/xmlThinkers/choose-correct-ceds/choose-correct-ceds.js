@@ -29,7 +29,6 @@ const moduleFunction = function (args = {}) {
 	const formulatePromptList =
 		(promptGenerator) =>
 		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
-
 			latestWisdom.elementDefinition=JSON.stringify(latestWisdom.elementDefinition, '', '\t');
 			latestWisdom.suggestionList=JSON.stringify(latestWisdom.suggestionList, '', '\t');
 		
@@ -107,7 +106,8 @@ const moduleFunction = function (args = {}) {
 			);
 			const tmp = extractionFunction(rawWisdom);
 			const { latestXml, initialThinkerData } = extractionFunction(rawWisdom);
-			const wisdom = { ...latestWisdom, latestXml };
+			const cedsRecommentation=JSON.parse(latestXml, '', '\t');
+			const wisdom = { ...latestWisdom, latestXml, cedsRecommentation };
 
 			next('', { ...args, wisdom });
 		});

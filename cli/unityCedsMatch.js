@@ -103,7 +103,7 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
 
 
 	const retrieveSpreadsheet =
-		require('./unityCedsComponents/lib/get-specification-data')();
+		require('./unityCedsComponents/lib/get-spreadsheet-data')();
 
 	const demoFuncAsync = (args) => {
 		return new Promise((resolve, reject) => {
@@ -145,7 +145,7 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
 	const { wisdom: spreadsheetData } = await demoFuncAsync({});
 	const { elementSpecWorksheetJson: spreadSheetJson } = spreadsheetData;
 	const sifObjectDefinition = JSON.parse(spreadSheetJson);
-	const newWisdom = [];
+	const cedsRecommendationList = [];
 
 	for (const sifElement of sifObjectDefinition) {
 		if (sifElement.Name.match(/@/) || sifElement.Type.match(/Type$/)) {
@@ -163,7 +163,7 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
 				initialThinkerData: sifElement,
 				debugLogName: targetObjectNamesString,
 			});
-			newWisdom.push(wisdom.latestXml);
+			cedsRecommendationList.push(wisdom.cedsRecommentation);
 		} catch (err) {
 			xLog.error(`Error: ${err.toString()}. Exit. No Output.`);
 			process.exit(1);
@@ -171,25 +171,26 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
 	}
 
 	// Get the latest refined XML
-	const refinedXml = newWisdom;
+	const cedsRecommendationListJson = JSON.stringify(cedsRecommendationList, '', '\t');
 
 	// =============================================================================
 	// OUTPUT HANDLING
 
 	// Optionally echo the refined XML to the console
 	if (commandLineParameters.switches.echoAlso) {
-		xLog.result(`\n\n${refinedXml.join(',\n')}\n\n`);
+		xLog.result(`\n\n${cedsRecommendationListJson}\n\n`);
 	}
 
 	// Save the process file (for logging or debugging)
 	xLog.saveProcessFile(
 		`${moduleName}_${path.basename(outputFilePath)}`,
-		refinedXml.join(',\n'),
+		cedsRecommendationListJson,
 	);
 
 	// Write the refined XML to the output file
-	fs.writeFileSync(outputFilePath, refinedXml.join(',\n'), 'utf-8');
+	fs.writeFileSync(outputFilePath, cedsRecommendationListJson, 'utf-8');
 
 	// Log the output file path
+	xLog.status(`Process file directory: ${xLog.getProcessFilesDirectory()}`);
 	xLog.status(`Output file path: ${outputFilePath}`);
 })(); // End of main execution function

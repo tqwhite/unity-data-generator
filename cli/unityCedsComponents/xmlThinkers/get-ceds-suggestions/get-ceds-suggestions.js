@@ -81,6 +81,7 @@ const moduleFunction = function (args = {}) {
 				localCallback('', result);
 			})
 			.catch((err) => {
+				xLog.status(`Error: ${err} ${suggestionUrl}`);
 				localCallback(
 					`${err.toString()} ${decodeURI(err.qtGetSurePath('response.data', 'no message'))}`,
 				);
@@ -112,7 +113,7 @@ const moduleFunction = function (args = {}) {
 		taskList.push((args, next) => {
 			const { latestWisdom, elementDefinition } = args;
 
-			const localCallback = (err, {suggestionList}={}) => {
+			const localCallback = (err, {suggestionList}=[]) => {
 
 				if (err) {
 					next(err, args); //next('skipRestOfPipe', args);

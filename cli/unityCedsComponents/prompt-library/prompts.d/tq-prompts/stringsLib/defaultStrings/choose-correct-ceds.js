@@ -13,7 +13,7 @@ GUIDANCE
 
 Read the object information and choose the suggestion that seems best.
 
-ELEMENT DEFINITION
+SIF ELEMENT DEFINITION
 
 Here is the Object Standard Definition:
 
@@ -27,13 +27,13 @@ Here is the XML Test Data for review:
 
 PROCESS INSTRUCTIONS
 
-1) Form a semantic understanding of the ELEMENT DEFINITION
+1) Form a semantic understanding of the SIF 
 
 	a) Evaluate the names of the properties in the suggestion list and then consider the definitions. Especially notice the description.
 
 	b) Look at the segments of the xPath and factor them into your understanding.
 
-2) Compose a brief summary of your understanding of the meaning of the data that would be represented by a value structured according to the element definition.
+2) Compose a brief summary of your understanding of the meaning of the data that would be represented by a value structured according to the sif element definition.
 
 3) Read the SUGGESTION LIST and understand each of them.
 
@@ -54,21 +54,21 @@ The RESULT DATA should be the
 Express the result in JSON as an ARRAY of these objects. Eg,
 
 {
-	CEDS:{
+	CEDS_RECOMMENDATION:{
 		id: string,
 		type: string,
 		definition: string,
 		url: string
 	},
-	OBJECT:{
+	SIF_ELEMENT:{
 		name: string,
 		definition: string,
 		xpath: string
 	},
 	CONFIDENCE: string
 	CANDIDATES:[
-		string,
-		string,
+		"candidate Description (CEDS ID: candidate ID)",
+		"candidate Description (CEDS ID: candidate ID)",
 		...
 	]
 }
@@ -77,7 +77,7 @@ OR, if there is no viable CEDS definition, use this form:
 
 {
 	CEDS:{
-		error: 'NO CEDS DEFINITION FOUND'
+		error: 'NO CEDS DEFINTION FOUND'
 	},
 	OBJECT:{
 		name: string,

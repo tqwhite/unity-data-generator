@@ -1,0 +1,11 @@
+{
+  "name": "answer-until-valid",
+  "version": "1.0.0",
+  "description": "do some RAG and cleanup on the finished object",
+  "main": "answer-until-valid.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}

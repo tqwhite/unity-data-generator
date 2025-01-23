@@ -1,0 +1,15 @@
+{
+  "name": "smarty-pants-chooser",
+  "version": "1.0.0",
+  "description": "abstract interface to AI systems",
+  "main": "smarty-pants-chooser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC",
+  "dependencies": {
+    "openai": "^4.52.7",
+    "punycode": "^2.3.1"
+  }
+}

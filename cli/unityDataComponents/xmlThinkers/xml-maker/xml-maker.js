@@ -92,7 +92,6 @@ const moduleFunction = function (args = {}) {
 
 		taskList.push((args, next) => {
 			const { wisdom: rawWisdom, promptElements, latestWisdom } = args;
-
 			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(

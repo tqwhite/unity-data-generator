@@ -1,7 +1,7 @@
 {
   "name": "choose-correct-ceds",
   "version": "1.0.0",
-  "description": "tq's jina-core personality for invent-ceds test data",
+  "description": "receive list of possible suggestions and choose the right one",
   "main": "choose-correct-ceds.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

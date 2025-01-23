@@ -79,7 +79,7 @@ OR, if there is no viable CEDS definition, use this form:
 
 {
 	CEDS:{
-		error: 'NO CEDS DEFINITION FOUND'
+		error: 'NO CEDS DEFINTION FOUND'
 	},
 	OBJECT:{
 		name: string,
