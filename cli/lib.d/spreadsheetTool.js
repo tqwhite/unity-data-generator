@@ -50,7 +50,7 @@ const moduleName = path.basename(__filename, '.js');
 const initAtp = require('qtools-ai-thought-processor/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
-	applicationControls: ['-loadDatabase'],
+	applicationControls: ['-loadDatabase', 'purgeBackupDbTables'],
 });
 
 // Initialize SQLite database
@@ -70,7 +70,7 @@ const initSqliteDatabase = (databaseFilePath) => {
 	const { xLog, getConfig, commandLineParameters } = process.global;
 
 	// Get configuration specific to this module
-	let { outputsPath, databaseFilePath } = getConfig(moduleName);
+	let { outputsPath, databaseFilePath, retainOnDbBackupPurge = 3 } = getConfig(moduleName);
 	
 	// If database path is not specified in config, use the embed-vector-tools one
 	if (!databaseFilePath) {
@@ -95,9 +95,13 @@ const initSqliteDatabase = (databaseFilePath) => {
 	const spreadsheetFile = commandLineParameters.qtGetSurePath('fileList[0]', '');
 	const outputPathArg = commandLineParameters.qtGetSurePath('fileList[1]', '');
 	const loadDatabaseMode = commandLineParameters.switches.loadDatabase;
+	const purgeBackupsMode = commandLineParameters.switches.purgeBackupDbTables;
 	
 	// Check parameters based on mode
-	if (loadDatabaseMode) {
+	if (purgeBackupsMode) {
+		// When purging backups, no other parameters are needed
+		// We'll handle this in a separate flow
+	} else if (loadDatabaseMode) {
 		// In load database mode, input file is required to update the database
 		if (!spreadsheetFile) {
 			xLog.error('Input spreadsheet file is required when using -loadDatabase. Use: spreadsheetTool -loadDatabase inputFile [outputDirectory]');
@@ -126,6 +130,7 @@ USAGE:
 OPTIONS:
   -list              List all sheets in the spreadsheet
   -loadDatabase      Load spreadsheet data INTO the database (by default, database is not updated)
+  -purgeBackupDbTables  Remove old database table backups, keeping only the most recent ones
   -echoAlso          Display the output in the console
   -help              Show this help message
 		`);
@@ -287,6 +292,38 @@ OPTIONS:
 			return rest;
 		});
 	};
+	
+	// Function to purge old database backup tables
+	const purgeBackupTables = (db, baseTableName, retainCount = 3) => {
+		// Find all backup tables for the specified base table
+		const allTablesSQL = `SELECT name FROM sqlite_master WHERE type='table' AND name LIKE '${baseTableName}_backup_%' ORDER BY name DESC`;
+		const backupTables = db.prepare(allTablesSQL).all();
+		
+		if (backupTables.length === 0) {
+			xLog.status(`No backup tables found for ${baseTableName}`);
+			return;
+		}
+		
+		// Keep the most recent ones based on retainCount
+		const tablesToKeep = backupTables.slice(0, retainCount);
+		const tablesToDelete = backupTables.slice(retainCount);
+		
+		xLog.status(`Found ${backupTables.length} backup tables, keeping ${tablesToKeep.length}, removing ${tablesToDelete.length}`);
+		
+		// Drop the older tables
+		if (tablesToDelete.length > 0) {
+			tablesToDelete.forEach(table => {
+				const dropSQL = `DROP TABLE "${table.name}"`;
+				db.prepare(dropSQL).run();
+				xLog.status(`Dropped backup table: ${table.name}`);
+			});
+		}
+		
+		return {
+			kept: tablesToKeep.map(t => t.name),
+			deleted: tablesToDelete.map(t => t.name)
+		};
+	};
 
 	// =============================================================================
 	// PROCESS SPREADSHEET
@@ -297,6 +334,27 @@ OPTIONS:
 		const tableName = 'naDataModel';
 		let resultData;
 		let jsonOutput;
+		
+		// Handle purge backups mode
+		if (purgeBackupsMode) {
+			try {
+				xLog.status(`Purging old backup tables for ${tableName}...`);
+				const purgeResult = purgeBackupTables(db, tableName, retainOnDbBackupPurge);
+				if (purgeResult && purgeResult.deleted && purgeResult.deleted.length > 0) {
+					xLog.status(`Successfully purged ${purgeResult.deleted.length} backup tables`);
+					xLog.status(`Kept the most recent ${purgeResult.kept.length} backups: ${purgeResult.kept.join(', ')}`);
+					xLog.status(`Deleted old backups: ${purgeResult.deleted.join(', ')}`);
+				} else {
+					xLog.status(`No backup tables were deleted. Either none found or all were within the retain count (${retainOnDbBackupPurge}).`);
+				}
+				db.close();
+				process.exit(0);
+			} catch (purgeError) {
+				xLog.error(`Error purging backup tables: ${purgeError.message}`);
+				db.close();
+				process.exit(1);
+			}
+		}
 		
 		try {
 			let spreadsheetData;
