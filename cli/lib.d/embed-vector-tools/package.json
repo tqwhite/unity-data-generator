@@ -1,0 +1,14 @@
+{
+  "name": "embed-vector-tools",
+  "version": "1.0.0",
+  "description": "utility functions for adding vector database records",
+  "main": "embedVectorTools.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}

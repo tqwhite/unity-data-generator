@@ -1,24 +1,20 @@
 {
-  "name": "unity-object-generator",
+  "name": "cli",
   "version": "1.0.0",
-  "description": "Make data objects for validation of Unity implementation",
-  "main": "unityDataGenerator.js",
+  "description": "Various command line programs",
+  "main": "initCli.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
-    "ajv": "^8.17.1",
-    "fast-xml-parser": "^4.5.1",
-    "html-entities": "^2.5.2",
-    "qtools-ai-thought-processor": "^1.0.8",
+    "better-sqlite3": "^11.8.1",
+    "openai": "^4.84.1",
+    "qtools-asynchronous-pipe-plus": "^1.0.4",
     "qtools-config-file-processor": "^1.0.17",
-    "qtools-functional-library": "^2.0.1",
+    "qtools-functional-library": "^2.0.2",
     "qtools-parse-command-line": "^1.0.8",
-    "uuid": "^11.0.5",
-    "xlsx": "^0.18.5",
-    "xml2js": "^0.6.2",
-    "xml2js-xpath": "^0.13.0"
+    "sqlite-vec": "^0.1.7-alpha.2"
   }
 }

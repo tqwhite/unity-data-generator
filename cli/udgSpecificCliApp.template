@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+'use strict';
+
+const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
+
+const qt = require('qtools-functional-library'); //also exposes qtLog(); qt.help({printOutput:true, queryString:'.*', sendJson:false});
+
+const os = require('os');
+const path = require('path');
+const fs = require('fs');
+
+console.log(`HELLO FROM ${__dirname}/${moduleName}`);
+
+// --------------------------------------------------------------------------------
+// FIND PROJECT ROOT
+const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
+	__dirname.replace(
+		new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
+		'$1',
+	);
+const applicationBasePath = findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
+
+const commandLineParser = require('qtools-parse-command-line');
+const commandLineParameters = commandLineParser.getParameters();
+
+// =============================================================================
+// MODULE IMPORTS
+
+// process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
+const initAtp = require('qtools-ai-thought-processor/jina')({
+	configFileBaseName: moduleName,
+	applicationBasePath,
+}); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
+
+//START OF moduleFunction() ============================================================
+const moduleFunction =
+	({ moduleName } = {}) =>
+	({ unused }) => {
+		const { xLog, getConfig, rawConfig, commandLineParameters } =
+			process.global;
+		const localConfig = getConfig(moduleName); //moduleName is closure
+		
+
+		xLog.status(
+			{ ['localConfig']: localConfig },
+			{ showHidden: false, depth: 4, colors: true },
+		);
+
+		return {};
+	};
+
+//END OF moduleFunction() ============================================================
+
+
+module.exports = moduleFunction({ moduleName })({}); //runs it right now
+//module.exports = moduleFunction({config, commandLineParameters, moduleName})();
+
