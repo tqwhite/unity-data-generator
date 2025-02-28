@@ -106,7 +106,7 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
 	
 
 	const retrieveSpreadsheet =
-		require('./unityCedsComponents/lib/get-spreadsheet-data')();
+		require('./lib/get-spreadsheet-data')();
 
 	const demoFuncAsync = (args) => {
 		return new Promise((resolve, reject) => {

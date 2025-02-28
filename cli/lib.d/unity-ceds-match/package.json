@@ -1,0 +1,14 @@
+{
+  "name": "unity-ceds-match",
+  "version": "1.0.0",
+  "description": "find semantic distances from input phrase to ceds data",
+  "main": "unityCedsMatch.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}
