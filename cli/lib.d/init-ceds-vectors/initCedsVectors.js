@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 
+// Suppress punycode deprecation warning
+process.noDeprecation = true;
+
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
 
 const qt = require('qtools-functional-library'); //also exposes qtLog(); qt.help({printOutput:true, queryString:'.*', sendJson:false});

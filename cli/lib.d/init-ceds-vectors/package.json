@@ -1,8 +1,8 @@
 {
-  "name": "embed-vector-tools",
+  "name": "init-ceds-vectors",
   "version": "1.0.0",
-  "description": "utility functions for adding vector database records",
-  "main": "embedVectorTools.js",
+  "description": "Calculate GPT embed vectors for CEDS elements",
+  "main": "initCedsVectors.js",
   "directories": {
     "lib": "lib"
   },

@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 
+// Suppress punycode deprecation warning
+process.noDeprecation = true;
+
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
 
 // const qt = require('qtools-functional-library'); //also exposes qtLog(); qt.help({printOutput:true, queryString:'.*', sendJson:false});
@@ -116,48 +119,55 @@ const moduleFunction =
 			const uninstallMode = process.argv.includes('-removeSymlinks');
 			const verbose = process.argv.includes('-verbose');
 
-			if (!fs.existsSync(symlinkDir)) {
-				if (uninstallMode) {
-					console.log(
-						`Symlink directory ${symlinkDir} does not exist. Nothing to uninstall.`,
-					);
-					return;
+			// Delete the target symlink directory if it exists
+			if (fs.existsSync(symlinkDir)) {
+				try {
+					// Remove all files in the directory first
+					const files = fs.readdirSync(symlinkDir);
+					for (const file of files) {
+						const filePath = path.join(symlinkDir, file);
+						if (fs.lstatSync(filePath).isSymbolicLink()) {
+							fs.unlinkSync(filePath);
+							verbose && console.log(`Removed existing symlink: ${filePath}`);
+						} else {
+							console.warn(`Skipping non-symlink file: ${filePath}`);
+						}
+					}
+					
+					// Remove the directory itself
+					fs.rmdirSync(symlinkDir);
+					verbose && console.log(`Removed existing symlink directory: ${symlinkDir}`);
+				} catch (error) {
+					console.error(`Error removing symlink directory ${symlinkDir}:`, error);
 				}
-				fs.mkdirSync(symlinkDir, { recursive: true });
 			}
+			
+			if (uninstallMode) {
+				console.log(`Symlinks in ${symlinkDir} have been removed.`);
+				return;
+			}
+			
+			// Create a fresh directory
+			fs.mkdirSync(symlinkDir, { recursive: true });
+			verbose && console.log(`Created new symlink directory: ${symlinkDir}`);
 
 			cliData.forEach(({ cliName }) => {
 				const symlinkPath = path.join(symlinkDir, cliName);
 
-				if (fs.existsSync(symlinkPath)) {
-					try {
-						const stat = fs.lstatSync(symlinkPath);
-						if (stat.isSymbolicLink()) {
-							fs.unlinkSync(symlinkPath);
-							verbose ||
-								!uninstallMode ||
-								console.error(`Symlink removed: ${symlinkPath}`);
-						}
-					} catch (error) {
-						console.error(`Error removing symlink for ${cliName}:`, error);
-					}
-				}
-
+				// We don't need to check for existing symlinks as we've already cleared the directory
 				if (!uninstallMode) {
 					try {
 						const { executablePath } = cliData.find(
 							(entry) => entry.cliName === cliName,
 						);
 						fs.symlinkSync(executablePath, symlinkPath);
-						!verbose ||
-							console.error(
-								`Symlink created: ${symlinkPath} -> ${executablePath}`,
-							);
+						verbose && console.log(`Symlink created: ${symlinkPath} -> ${executablePath}`);
 					} catch (error) {
 						console.error(`Error creating symlink for ${cliName}:`, error);
 					}
 				}
 			});
+			
 
 			return symlinkDir;
 		}

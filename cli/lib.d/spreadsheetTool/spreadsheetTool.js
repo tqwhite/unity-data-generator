@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 
+// Suppress punycode deprecation warning
+process.noDeprecation = true;
+
 /**
  * Copyright 2023 Access for Learning
  *
