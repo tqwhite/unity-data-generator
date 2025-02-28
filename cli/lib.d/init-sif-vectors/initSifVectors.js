@@ -37,23 +37,8 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
   applicationControls: ['-writeVectorDatabase', '--queryString'],
 });
 
-// Function to convert string refId to integer with minimal collision risk
-const refIdToInteger = (refId) => {
-  // Use SHA-256 for better collision resistance
-  const hash = crypto.createHash('sha256').update(String(refId)).digest('hex');
-  
-  // Create a unique integer identifier from the hash
-  // Taking a portion of the hash and converting it to a BigInt
-  // This gives us effectively unlimited distinct values
-  
-  // We're explicitly creating a BigInt from a hex string
-  // By using the '0x' prefix, JavaScript knows to interpret it as hexadecimal
-  const bigIntValue = BigInt('0x' + hash.substring(0, 12));
-  
-  // Return the BigInt directly - it will be properly handled as a SQLite INTEGER
-  // No need for modulo as BigInt can represent arbitrarily large integers
-  return bigIntValue;
-};
+// Note: refIdToInteger function has been removed since refIds are now directly numeric
+// and can be converted to BigInt without hashing
 
 const initVectorDatabase = (databaseFilePath, vectorTableName, xLog) => {
   const sqliteVec = require('sqlite-vec');
@@ -102,7 +87,6 @@ const moduleFunction =
       generateEmbeddings({
         openai,
         vectorDb,
-        refIdToInteger,
       }).workingFunction({
         sourceTableName,
         vectorTableName,
@@ -115,7 +99,6 @@ const moduleFunction =
       getClosestRecords({
         openai,
         vectorDb,
-        refIdToInteger,
       }).workingFunction({
         sourceTableName,
         vectorTableName,

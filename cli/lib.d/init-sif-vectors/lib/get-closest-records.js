@@ -10,7 +10,7 @@ const fs = require('fs');
 //START OF moduleFunction() ============================================================
 const moduleFunction =
   ({ moduleName } = {}) =>
-  ({ openai, vectorDb, refIdToInteger }) => {
+  ({ openai, vectorDb }) => {
     const { xLog, getConfig, rawConfig, commandLineParameters } =
       process.global;
     const localConfig = getConfig(moduleName);
@@ -48,11 +48,11 @@ const moduleFunction =
         // For a production system, you'd want to optimize this with a lookup table
         const allRecords = vectorDb.prepare(`SELECT * FROM ${sourceTableName}`).all();
         
-        // Find the record whose refId would hash to this rowid
+        // Find the record that matches this rowid
         const matchingRecord = allRecords.find(record => {
-          const calculatedRowid = refIdToInteger(record[sourcePrivateKeyName]);
-          // Convert to strings for comparison since BigInt === BigInt may not work as expected
-          return calculatedRowid.toString() === vectorChoice.rowid.toString();
+          // Simply compare the refId with the rowid, since they should now be the same value
+          // (refId is a numeric string that can be directly compared)
+          return record[sourcePrivateKeyName].toString() === vectorChoice.rowid.toString();
         }) || {};
         
         return { ...vectorChoice, record: matchingRecord };

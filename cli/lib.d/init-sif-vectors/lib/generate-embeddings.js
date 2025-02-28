@@ -10,7 +10,7 @@ const fs = require('fs');
 //START OF moduleFunction() ============================================================
 const moduleFunction =
   ({ moduleName } = {}) =>
-  ({ openai, vectorDb, refIdToInteger }) => {
+  ({ openai, vectorDb }) => {
     const { xLog, getConfig, rawConfig, commandLineParameters } =
       process.global;
     const { unused } = getConfig(moduleName);
@@ -122,10 +122,10 @@ const moduleFunction =
               encoding_format: 'float',
             });
             
-            // Convert string refId to integer (required for sqlite-vec)
-            // If refId is already an integer, refIdToInteger will still work
-            const rowid = refIdToInteger(record[sourcePrivateKeyName]);
-        
+            // The refId is already a numeric string, so we can convert it directly to BigInt
+            // This is compatible with the new refId format from spreadsheetTool
+            const rowid = BigInt(record[sourcePrivateKeyName]);
+            
             return {
               rowid,
               embedding: embedding.data[0].embedding,

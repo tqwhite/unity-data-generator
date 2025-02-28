@@ -54,9 +54,14 @@ async function saveData(databaseFilePath, spreadsheetData, tableName = DEFAULT_T
     // Create the table schema
     schemaManager.createTableSchema(db, tableName, spreadsheetData.data);
     
-    // Insert data with generated refIds
+    // Insert data with generated numeric refIds
     const processedData = spreadsheetData.data.map(record => {
-      return { ...record, refId: generateRefId(record) };
+      // Generate a numeric refId (stored as string for compatibility)
+      const refId = generateRefId(record);
+      return { 
+        ...record, 
+        refId: refId
+      };
     });
     
     // Perform batch insert as a transaction
@@ -91,9 +96,10 @@ async function readData(databaseFilePath, tableName = DEFAULT_TABLE_NAME) {
     // Read all rows from the table
     const rows = db.prepare(`SELECT * FROM "${tableName}"`).all();
     
-    // Remove refId from the results
+    // Remove only string refId from the results, keep refIdInt
     const cleanData = rows.map(row => {
       const { refId, ...rest } = row;
+      // Keep refIdInt if it exists, as it's useful for vector databases
       return rest;
     });
     
@@ -156,13 +162,20 @@ async function purgeBackups(databaseFilePath, retainCount, baseTableName = DEFAU
 /**
  * Generate a refId for a record
  * @param {Object} record - The record to generate an ID for
- * @returns {string} The generated refId
+ * @returns {string} Numeric refId as a string
  */
 function generateRefId(record) {
-  // Create a deterministic string from the record, excluding any refId
+  // Create a deterministic string from the record, excluding any existing refId
   const { refId, ...recordWithoutRefId } = record;
   const str = JSON.stringify(recordWithoutRefId);
-  return crypto.createHash('sha256').update(str).digest('hex').substring(0, 24);
+  
+  // Generate a SHA-256 hash of the record data
+  const hash = crypto.createHash('sha256').update(str).digest('hex');
+  
+  // Convert the first 12 characters of the hash to a numeric refId
+  // Using BigInt ensures it can represent large integers precisely
+  // Converting to string for storage compatibility
+  return BigInt('0x' + hash.substring(0, 12)).toString();
 }
 
 /**
