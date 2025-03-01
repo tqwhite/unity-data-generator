@@ -4,10 +4,10 @@
 // Suppress punycode deprecation warning
 process.noDeprecation = true;
 
-const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
+const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
 
-const qt = require('qtools-functional-library');
-const crypto = require('crypto');
+const qt = require('qtools-functional-library'); //also exposes qtLog(); qt.help({printOutput:true, queryString:'.*', sendJson:false});
+
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
@@ -15,15 +15,15 @@ const fs = require('fs');
 // --------------------------------------------------------------------------------
 // FIND PROJECT ROOT
 const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
-  __dirname.replace(
-    new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
-    '$1',
-  );
-const applicationBasePath = findProjectRoot();
+	__dirname.replace(
+		new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
+		'$1',
+	);
+const applicationBasePath = findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
 
 const commandLineParser = require('qtools-parse-command-line');
 const commandLineParameters = commandLineParser.getParameters({
-  applicationControls: ['-writeVectorDatabase'],
+	applicationControls: ['-writeVectorDatabase'],
 });
 const generateEmbeddings = require('./lib/generate-embeddings');
 const getClosestRecords = require('./lib/get-closest-records');
@@ -31,87 +31,86 @@ const getClosestRecords = require('./lib/get-closest-records');
 // =============================================================================
 // MODULE IMPORTS
 
-const initAtp = require('qtools-ai-thought-processor/jina')({
-  configFileBaseName: moduleName,
-  applicationBasePath,
-  applicationControls: ['-writeVectorDatabase', '--queryString'],
-});
+//HACKERY: from some reason, putting require('generate-embeddings') AFTER this causes sqlite to screw up
 
-// Note: refIdToInteger function has been removed since refIds are now directly numeric
-// and can be converted to BigInt without hashing
+// process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
+const initAtp = require('qtools-ai-thought-processor/jina')({
+	configFileBaseName: moduleName,
+	applicationBasePath,
+	applicationControls: ['-writeVectorDatabase', '--queryString'],
+}); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
+
 
 const initVectorDatabase = (databaseFilePath, vectorTableName, xLog) => {
-  const sqliteVec = require('sqlite-vec');
-  const db = require('better-sqlite3')(databaseFilePath, {});
-  sqliteVec.load(db);
-  return db;
+	const sqliteVec = require('sqlite-vec');
+	const db = require('better-sqlite3')(databaseFilePath, {});
+	sqliteVec.load(db);
+	return db;
 };
 
 //START OF moduleFunction() ============================================================
 const moduleFunction =
-  ({ moduleName } = {}) =>
-  ({ unused }) => {
-    const { xLog, getConfig, rawConfig, commandLineParameters } =
-      process.global;
-    const { databaseFilePath, openAiApiKey } = getConfig(moduleName);
+	({ moduleName } = {}) =>
+	({ unused }) => {
+		const { xLog, getConfig, rawConfig, commandLineParameters } =
+			process.global;
+		const { databaseFilePath, openAiApiKey } = getConfig(moduleName); //moduleName is closure
 
-    const initOpenAi = () => {
-      const OpenAI = require('openai');
-      const openai = new OpenAI({
-        apiKey: openAiApiKey,
-      });
-      return openai;
-    };
+		const initOpenAi = () => {
+			const OpenAI = require('openai');
+			const openai = new OpenAI({
+				apiKey: openAiApiKey,
+			});
+			return openai;
+		};
 
-    // ================================================================================
-    const openai = initOpenAi();
+		// ================================================================================
+		const openai = initOpenAi();
 
-    // ================================================================================
-    
-    // Configuration for SIF vectors
-    const sourceTableName = 'naDataModel';
-    const vectorTableName = 'sifElementVectors';
-    const sourcePrivateKeyName = 'refId';
-    // We'll concatenate Description and xPath for embedding
-    const sourceEmbeddableContentName = ['Description', 'XPath'];
-    
-    // Note: This tool is configured to only process the first 3 records
-    
-    const vectorDb = initVectorDatabase(
-      databaseFilePath,
-      vectorTableName,
-      xLog,
-    );
-    
-    if (commandLineParameters.switches.writeVectorDatabase) {
-      generateEmbeddings({
-        openai,
-        vectorDb,
-      }).workingFunction({
-        sourceTableName,
-        vectorTableName,
-        sourcePrivateKeyName,
-        sourceEmbeddableContentName,
-      });
-    }
-    
-    if (commandLineParameters.values.queryString) {
-      getClosestRecords({
-        openai,
-        vectorDb,
-      }).workingFunction({
-        sourceTableName,
-        vectorTableName,
-        sourcePrivateKeyName,
-        sourceEmbeddableContentName,
-      },
-      commandLineParameters.values.queryString.qtLast(),
-      );
-    }
+		// ================================================================================
+		
+		const sourceTableName = 'naDataModel';
+		const vectorTableName = 'sifElementVectors';
+		const sourcePrivateKeyName = 'refId';
+		const sourceEmbeddableContentName = ['Description', 'XPath'];
+		
+		const vectorDb = initVectorDatabase(
+			databaseFilePath,
+			vectorTableName,
+			xLog,
+		); // showVecVersion(db);
+		
+		if (commandLineParameters.switches.writeVectorDatabase) {
+			generateEmbeddings({
+				openai,
+				vectorDb,
+			}).workingFunction({
+				sourceTableName,
+				vectorTableName,
+				sourcePrivateKeyName,
+				sourceEmbeddableContentName,
+			});
+		}
+		if (commandLineParameters.values.queryString) {
+			getClosestRecords({
+				openai,
+				vectorDb,
+			}).workingFunction({
+				sourceTableName,
+				vectorTableName,
+				sourcePrivateKeyName,
+				sourceEmbeddableContentName,
+			},
+			commandLineParameters.values.queryString.qtLast(),
+				
+			);
+		}
 
-    return {};
-  };
+		return {};
+	};
 
 //END OF moduleFunction() ============================================================
 
-module.exports = moduleFunction({ moduleName })({}); // runs it right now
+
+module.exports = moduleFunction({ moduleName })({}); //runs it right now
+//module.exports = moduleFunction({config, commandLineParameters, moduleName})();

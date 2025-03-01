@@ -31,9 +31,8 @@ const moduleFunction =
 				`sqlite_version=${sqlite_version}, vec_version=${vec_version}`,
 			);
 		};
-		
-		const initVectorTables=(vectorDb, vectorTableName)=>{
-		
+
+		const initVectorTables = (vectorDb, vectorTableName) => {
 			const tableList = vectorDb
 				.prepare(
 					`SELECT name FROM sqlite_master WHERE name LIKE '${vectorTableName}%';`,
@@ -42,11 +41,13 @@ const moduleFunction =
 			if (tableList.length) {
 				xLog.status(`OVERWRITING preexisting ${vectorTableName}`);
 			}
-			tableList.forEach(({ name }) => vectorDb.exec(`drop table if exists ${name};`));
+			tableList.forEach(({ name }) =>
+				vectorDb.exec(`drop table if exists ${name};`),
+			);
 			vectorDb.exec(
 				`CREATE VIRTUAL TABLE ${vectorTableName} USING vec0(embedding float[1536])`,
 			);
-		}
+		};
 
 		const getEmbeddableData = (
 			vectorDb,
@@ -99,13 +100,13 @@ const moduleFunction =
 			const insertStmt = vectorDb.prepare(
 				`INSERT INTO ${vectorTableName}(rowid, embedding) VALUES (?, ?)`,
 			);
-			const interval=10;
-			let counter=0;
+			const interval = 10;
+			let counter = 0;
 			const writeVectors = vectorDb.transaction((vectorInput) => {
 				for (const [id, vector] of vectorInput) {
 					insertStmt.run(BigInt(id), new Float32Array(vector));
 					counter++;
-					if (counter%interval == 0){
+					if (counter % interval == 0) {
 						xLog.status(`processed ${counter} records`);
 					}
 				}
@@ -121,7 +122,7 @@ const moduleFunction =
 				sourcePrivateKeyName,
 				sourceEmbeddableContentName,
 			} = embeddingSpecs;
-			
+
 			initVectorTables(vectorDb, vectorTableName);
 
 			const embeddableData = getEmbeddableData(vectorDb, embeddingSpecs);
@@ -131,7 +132,7 @@ const moduleFunction =
 				embeddableData,
 				sourceEmbeddableContentName,
 			);
-			
+
 			xLog.status(`found ${embedding.data.length} embeddable records`);
 			putVectorsIntoDatabase({
 				vectorDb,
@@ -140,26 +141,8 @@ const moduleFunction =
 				sourcePrivateKeyName,
 				vectorTableName,
 			});
-
-// 			const question = '`graduation date`';
-// 
-// 			const queryEmbed = await openai.embeddings.create({
-// 				model: 'text-embedding-3-small',
-// 				input: question,
-// 				encoding_format: 'float',
-// 			});
-// 
-// 			const query = queryEmbed.data[0].embedding; //[0.3, 0.3, 0.3, 0.3];
-// 			const rows = vectorDb
-// 				.prepare(
-// 					`SELECT rowid as '${sourcePrivateKeyName}', distance FROM ${vectorTableName} WHERE embedding MATCH ? ORDER BY distance LIMIT 3`,
-// 				)
-// 				.all(new Float32Array(query));
-// 
-// 			console.log(rows);
 		};
 
-		xLog.status(`${moduleName} is initialized`);
 		return { workingFunction };
 	};
 

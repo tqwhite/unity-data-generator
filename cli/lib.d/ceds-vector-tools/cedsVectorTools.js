@@ -70,10 +70,11 @@ const moduleFunction =
 		// ================================================================================
 		
 		const sourceTableName = '_CEDSElements';
-		const vectorTableName = 'cedsElementVectors_test18';
+		const vectorTableName = 'cedsElementVectors';
 		const sourcePrivateKeyName = 'GlobalID';
 		const sourceEmbeddableContentName = 'Definition';
 		
+		xLog.status(`using data table ${databaseFilePath}:${vectorTableName}`);
 		const vectorDb = initVectorDatabase(
 			databaseFilePath,
 			vectorTableName,

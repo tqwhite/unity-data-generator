@@ -43,10 +43,7 @@ const fs = require('fs');
 //START OF moduleFunction() ============================================================
 const moduleFunction =
 	({ moduleName } = {}) =>
-	({
-				openai,
-				vectorDb,
-			}) => {
+	({ openai, vectorDb }) => {
 		const { xLog, getConfig, rawConfig, commandLineParameters } =
 			process.global;
 		const localConfig = getConfig(moduleName); //moduleName is closure
@@ -58,8 +55,7 @@ const moduleFunction =
 				sourcePrivateKeyName,
 				sourceEmbeddableContentName,
 			} = embeddingSpecs;
-			
-			
+
 			const queryEmbed = await openai.embeddings.create({
 				model: 'text-embedding-3-small',
 				input: queryString,
@@ -73,19 +69,24 @@ const moduleFunction =
 				)
 				.all(new Float32Array(query));
 
-			const answers=rows.map(vectorChoice=>{
-
-				const record=vectorDb.prepare(
-				`select * from ${sourceTableName} where ${sourcePrivateKeyName}=?`
-				).get(vectorChoice[sourcePrivateKeyName].toString().padStart(6, '0'));
-				return{...vectorChoice, record};
+			const answers = rows.map((vectorChoice) => {
+				const record = vectorDb
+					.prepare(
+						`select * from ${sourceTableName} where ${sourcePrivateKeyName}=?`,
+					)
+					.get(vectorChoice[sourcePrivateKeyName].toString().padStart(6, '0'));
+				return { ...vectorChoice, record };
 			});
-xLog.result(answers.map(item=>`${item.record.GlobalID} ${item.record.ElementName} ${item.record.Definition}`).join('\n'))
-
+			xLog.result(
+				answers
+					.map(
+						(item) =>
+							`${item.record.GlobalID} ${item.record.ElementName} ${item.record.Definition}`,
+					)
+					.join('\n'),
+			);
 		};
-		
 
-		xLog.status(`${moduleName} is initialized`);
 		return { workingFunction };
 	};
 
