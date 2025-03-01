@@ -41,7 +41,7 @@ async function initialize() {
   // If database path is not specified, try to find it
   if (!databaseFilePath) {
     // Try to get from embedVectorTools config
-    const embedVectorConfig = getConfig('embedVectorTools');
+    const embedVectorConfig = getConfig('init-ceds-vectors');
     databaseFilePath = embedVectorConfig ? embedVectorConfig.databaseFilePath : null;
     
     if (databaseFilePath) {

@@ -114,6 +114,7 @@ const moduleFunction = function (args = {}) {
 			
 
 			if (error) {
+				xLog.status(`Error: ${error}  [${moduleName} FV7EAuI2e4HRG5hnNs4j]`);
 				// Note: embedVector tools uses stderr as main logging output
 				callback(`${error}${stderr}`, {});
 				return;
@@ -122,7 +123,7 @@ const moduleFunction = function (args = {}) {
 			callback('', { suggestionList });
 		};
 
-		const shellString = `embedVectorTools --queryString='${elementDefinition.Description.replace(/\W*/g, '')} ${elementDefinition.XPath}'`;
+		const shellString = `initCedsVectors --queryString='${elementDefinition.Description.replace(/\W*/g, '')} ${elementDefinition.XPath}'`;
 
 		exec(shellString, localCallback);
 	};
