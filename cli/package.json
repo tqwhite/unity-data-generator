@@ -11,9 +11,10 @@
   "dependencies": {
     "better-sqlite3": "^11.8.1",
     "openai": "^4.84.1",
+    "qtools-ai-thought-processor": "^1.0.9",
     "qtools-asynchronous-pipe-plus": "^1.0.4",
     "qtools-config-file-processor": "^1.0.17",
-    "qtools-functional-library": "^2.0.2",
+    "qtools-functional-library": "^2.0.4",
     "qtools-parse-command-line": "^1.0.8",
     "sqlite-vec": "^0.1.7-alpha.2"
   }
