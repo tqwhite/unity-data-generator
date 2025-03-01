@@ -1,8 +1,8 @@
 {
-  "name": "init-sif-vectors",
+  "name": "sif-vector-tools",
   "version": "1.0.0",
-  "description": "initialize embed vectors for sif datamodel descriptions",
-  "main": "initSifVectors.js",
+  "description": "Tools for working with SIF datamodel embedding vectors",
+  "main": "sifVectorTools.js",
   "directories": {
     "lib": "lib"
   },
