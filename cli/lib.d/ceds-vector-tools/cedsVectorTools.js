@@ -114,4 +114,3 @@ const moduleFunction =
 
 module.exports = moduleFunction({ moduleName })({}); //runs it right now
 //module.exports = moduleFunction({config, commandLineParameters, moduleName})();
-

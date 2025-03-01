@@ -123,7 +123,7 @@ const moduleFunction = function (args = {}) {
 			callback('', { suggestionList });
 		};
 
-		const shellString = `initCedsVectors --queryString='${elementDefinition.Description.replace(/\W*/g, '')} ${elementDefinition.XPath}'`;
+		const shellString = `cedsVectorTools --queryString='${elementDefinition.Description.replace(/\W*/g, '')} ${elementDefinition.XPath}'`;
 
 		exec(shellString, localCallback);
 	};
