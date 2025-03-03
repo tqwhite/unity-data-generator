@@ -61,6 +61,8 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 		const initialData = { username, sqlDb, hxAccess, dataMapping };
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			const { user } = args;
+console.dir({['user']:user}, { showHidden: false, depth: 4, colors: true });
+
 			callback(err, user);
 		});
 	};

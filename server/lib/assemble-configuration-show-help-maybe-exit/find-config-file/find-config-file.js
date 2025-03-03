@@ -9,6 +9,18 @@ const os=require('os');
 
 const moduleFunction = function() {
 	const { xLog } = process.global;
+	
+		const findProjectRoot = ({
+		rootFolderName = 'system',
+		closest = true,
+	} = {}) =>
+		__dirname.replace(
+			new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
+			'$1',
+		);
+	const projectRoot = findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
+
+
 
 	const getConfig = (
 		{ configSegmentName, filePath, options = {} },
@@ -16,6 +28,7 @@ const moduleFunction = function() {
 	) => {
 		const configOptions = {
 				userSubstitutions: {
+				projectRoot,
 					remoteBasePath: '<!prodRemoteBasePath!>',
 					userHomeDir:os.homedir()
 				}

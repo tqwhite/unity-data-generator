@@ -12,14 +12,46 @@ export const useCedsStore = defineStore('ceds', {
     async fetchNameList() {
       this.isLoading = true;
       this.error = null;
+      
+      // Import LoginStore to get auth token
+      const { useLoginStore } = await import('@/stores/loginStore');
+      const LoginStore = useLoginStore();
+      
+      // Get the auth token header
+      const authHeader = LoginStore.getAuthTokenProperty;
+      console.log("DEBUG: Auth header for request:", authHeader);
+      
+      // First call debug auth endpoint to diagnose authentication issues
       try {
-        const response = await fetch('/api/ceds/fetchNameList');
+        console.log("DEBUG: Making auth debug request before fetchNameList");
+        const debugResponse = await fetch('/api/debug/auth', {
+          headers: authHeader
+        });
+        if (debugResponse.ok) {
+          const authInfo = await debugResponse.json();
+          console.log("DEBUG: Auth info from debug endpoint:", authInfo);
+        } else {
+          console.error("DEBUG: Auth debug endpoint failed:", debugResponse.status, debugResponse.statusText);
+        }
+      } catch (debugErr) {
+        console.error("DEBUG: Error calling auth debug endpoint:", debugErr);
+      }
+      
+      // Now make the actual fetch request with auth header
+      try {
+        console.log("DEBUG: Making fetchNameList request with auth header");
+        const response = await fetch('/api/ceds/fetchNameList', {
+          headers: authHeader
+        });
+        
+        console.log("DEBUG: fetchNameList response status:", response.status, response.statusText);
         
         if (!response.ok) {
           throw new Error(`Failed to fetch CEDS name list: ${response.statusText}`);
         }
         
         const data = await response.json();
+        console.log("DEBUG: fetchNameList successful, received items:", data.length);
         this.nameList = data;
       } catch (err) {
         this.error = err.message;
@@ -35,10 +67,19 @@ export const useCedsStore = defineStore('ceds', {
         return;
       }
       
+      // Import LoginStore to get auth token
+      const { useLoginStore } = await import('@/stores/loginStore');
+      const LoginStore = useLoginStore();
+      
+      // Get the auth token header
+      const authHeader = LoginStore.getAuthTokenProperty;
+      
       this.isLoading = true;
       this.error = null;
       try {
-        const response = await fetch(`/api/ceds/fetchData?refId=${encodeURIComponent(refId)}`);
+        const response = await fetch(`/api/ceds/fetchData?refId=${encodeURIComponent(refId)}`, {
+          headers: authHeader
+        });
         
         if (!response.ok) {
           throw new Error(`Failed to fetch CEDS data: ${response.statusText}`);
@@ -60,6 +101,13 @@ export const useCedsStore = defineStore('ceds', {
         return;
       }
       
+      // Import LoginStore to get auth token
+      const { useLoginStore } = await import('@/stores/loginStore');
+      const LoginStore = useLoginStore();
+      
+      // Get the auth token header
+      const authHeader = LoginStore.getAuthTokenProperty;
+      
       this.isLoading = true;
       this.error = null;
       try {
@@ -67,6 +115,7 @@ export const useCedsStore = defineStore('ceds', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            ...authHeader
           },
           body: JSON.stringify(data),
         });

@@ -16,7 +16,8 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	// INITIALIZATION
 
 	const { xLog, getConfig, rawConfig, commandLineParameters } = process.global;
-	const { rootPassword, builtinUserList, builtinsOnly, addBuiltinsToDatabase} = getConfig(moduleName); //moduleName is closure
+	const { rootPassword, builtinUserList, builtinsOnly, addBuiltinsToDatabase } =
+		getConfig(moduleName); //moduleName is closure
 
 	const { sqlDb, hxAccess, dataMapping } = passThroughParameters;
 
@@ -38,11 +39,14 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 			args.sqlDb.getTable('users', mergeArgs(args, next, 'userTable')),
 		);
 
-console.dir({['builtinUserList']:builtinUserList}, { showHidden: false, depth: 4, colors: true });
-
 		if (!builtinsOnly && addBuiltinsToDatabase) {
 			builtinUserList.forEach((userObj) => {
-				taskList.push((args, next) => args.userTable.saveObject({...userObj, source:'addedBuiltin'}, forwardArgs({ next, args })));
+				taskList.push((args, next) => {
+					args.userTable.saveObject(
+						{ ...userObj, source: 'addedBuiltin' },
+						forwardArgs({ next, args }),
+					);
+				});
 			});
 		}
 
@@ -73,7 +77,7 @@ console.dir({['builtinUserList']:builtinUserList}, { showHidden: false, depth: 4
 		taskList.push((args, next) => {
 			const { xQuery, builtinUserList } = args;
 			let { user } = args;
-			
+
 			if (!user) {
 				user = builtinUserList
 					.qtGetByProperty('username', xQuery.username, [])

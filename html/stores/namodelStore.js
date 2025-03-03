@@ -12,8 +12,18 @@ export const useNamodelStore = defineStore('namodel', {
     async fetchNameList() {
       this.isLoading = true;
       this.error = null;
+      
+      // Import LoginStore to get auth token
+      const { useLoginStore } = await import('@/stores/loginStore');
+      const LoginStore = useLoginStore();
+      
+      // Get the auth token header
+      const authHeader = LoginStore.getAuthTokenProperty;
+      
       try {
-        const response = await fetch('/api/namodel/fetchNameList');
+        const response = await fetch('/api/namodel/fetchNameList', {
+          headers: authHeader
+        });
         
         if (!response.ok) {
           throw new Error(`Failed to fetch NA Model name list: ${response.statusText}`);
@@ -35,10 +45,19 @@ export const useNamodelStore = defineStore('namodel', {
         return;
       }
       
+      // Import LoginStore to get auth token
+      const { useLoginStore } = await import('@/stores/loginStore');
+      const LoginStore = useLoginStore();
+      
+      // Get the auth token header
+      const authHeader = LoginStore.getAuthTokenProperty;
+      
       this.isLoading = true;
       this.error = null;
       try {
-        const response = await fetch(`/api/namodel/fetchData?refId=${encodeURIComponent(refId)}`);
+        const response = await fetch(`/api/namodel/fetchData?refId=${encodeURIComponent(refId)}`, {
+          headers: authHeader
+        });
         
         if (!response.ok) {
           throw new Error(`Failed to fetch NA Model data: ${response.statusText}`);
@@ -60,6 +79,13 @@ export const useNamodelStore = defineStore('namodel', {
         return;
       }
       
+      // Import LoginStore to get auth token
+      const { useLoginStore } = await import('@/stores/loginStore');
+      const LoginStore = useLoginStore();
+      
+      // Get the auth token header
+      const authHeader = LoginStore.getAuthTokenProperty;
+      
       this.isLoading = true;
       this.error = null;
       try {
@@ -67,6 +93,7 @@ export const useNamodelStore = defineStore('namodel', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            ...authHeader
           },
           body: JSON.stringify(data),
         });
