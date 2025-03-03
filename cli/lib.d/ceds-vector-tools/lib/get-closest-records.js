@@ -56,6 +56,9 @@ const moduleFunction =
 				sourceEmbeddableContentName,
 			} = embeddingSpecs;
 
+			const resultCount = commandLineParameters.values.resultCount ? 
+				parseInt(commandLineParameters.values.resultCount, 10) : 10;
+				
 			const queryEmbed = await openai.embeddings.create({
 				model: 'text-embedding-3-small',
 				input: queryString,
@@ -65,7 +68,7 @@ const moduleFunction =
 			const query = queryEmbed.data[0].embedding; //[0.3, 0.3, 0.3, 0.3];
 			const rows = vectorDb
 				.prepare(
-					`SELECT rowid as '${sourcePrivateKeyName}', distance FROM ${vectorTableName} WHERE embedding MATCH ? ORDER BY distance LIMIT 10`,
+					`SELECT rowid as '${sourcePrivateKeyName}', distance FROM ${vectorTableName} WHERE embedding MATCH ? ORDER BY distance LIMIT ${resultCount}`,
 				)
 				.all(new Float32Array(query));
 
