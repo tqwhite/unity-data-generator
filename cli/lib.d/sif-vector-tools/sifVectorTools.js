@@ -23,7 +23,7 @@ const applicationBasePath = findProjectRoot(); // call with {closest:false} if t
 
 const commandLineParser = require('qtools-parse-command-line');
 const commandLineParameters = commandLineParser.getParameters({
-	applicationControls: ['-writeVectorDatabase'],
+	applicationControls: ['-writeVectorDatabase', '-newDatabase', '--offset', '--limit'],
 });
 const generateEmbeddings = require('./lib/generate-embeddings');
 const getClosestRecords = require('./lib/get-closest-records');
@@ -37,7 +37,7 @@ const getClosestRecords = require('./lib/get-closest-records');
 const initAtp = require('qtools-ai-thought-processor/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
-	applicationControls: ['-writeVectorDatabase', '--queryString'],
+	applicationControls: ['-writeVectorDatabase', '-newDatabase', '--queryString', '--offset', '--limit'],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 
 

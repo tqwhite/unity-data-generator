@@ -39,7 +39,7 @@ const moduleFunction =
 			const query = queryEmbed.data[0].embedding;
 			const rows = vectorDb
 				.prepare(
-					`SELECT rowid as '${sourcePrivateKeyName}', distance FROM ${vectorTableName} WHERE embedding MATCH ? ORDER BY distance LIMIT 10`,
+					`SELECT rowid as '${sourcePrivateKeyName}', distance FROM ${vectorTableName} WHERE embedding MATCH ? ORDER BY distance LIMIT 5`,
 				)
 				.all(new Float32Array(query));
 
