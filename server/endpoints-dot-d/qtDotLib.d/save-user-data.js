@@ -31,7 +31,7 @@ const moduleFunction = function ({
 	// SERVICE FUNCTION
 	
 
-	const serviceFunction = (permissionValidator) => (xReq, xRes, next) => {
+	const saveDataFunction = (permissionValidator) => (xReq, xRes, next) => {
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
@@ -157,10 +157,6 @@ const moduleFunction = function ({
 	// ================================================================================
 	// Do the constructing
 
-	const method = 'post';
-	const thisEndpointName = 'saveUserData';
-	const routePath = `${routingPrefix}${thisEndpointName}`;
-	const name = routePath;
 
 	const permissionValidator = accessTokenHeaderTools.getValidator([
 		'client',
@@ -168,11 +164,12 @@ const moduleFunction = function ({
 		'super',
 		'firstTime',
 	]);
+	
 	addEndpoint({
-		name,
-		method,
-		routePath,
-		serviceFunction,
+		name:routePath,
+		method:'post',
+		routePath:`${routingPrefix}saveUserData`,
+		serviceFunction:saveDataFunction,
 		expressApp,
 		endpointsDotD,
 		permissionValidator,

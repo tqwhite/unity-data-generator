@@ -10,10 +10,15 @@
 		LoginStore.logout();
 	}
 
-	// Check if we're on the work page
-	const isWorkPage = computed(() => {
-		return router.currentRoute.value.path === '/work' || 
-		       router.currentRoute.value.path === '/work/';
+	// Check if we're on the tool pages
+	const isCedsPage = computed(() => {
+		return router.currentRoute.value.path === '/ceds' || 
+		       router.currentRoute.value.path === '/ceds/';
+	});
+	
+	const isNaModelPage = computed(() => {
+		return router.currentRoute.value.path === '/namodel' || 
+		       router.currentRoute.value.path === '/namodel/';
 	});
 
 	const reloadPage = () => {
@@ -37,12 +42,21 @@
 		<v-app-bar-title class="titleOrange">NA Data Model Tools</v-app-bar-title>
 
 		<v-btn
-			v-if="(LoginStore.loggedInUser.role === 'client') && !isWorkPage"
-			prepend-icon="mdi-image"
-			title="Get to Work"
-			:to="{ path: 'work' }"
+			v-if="!isCedsPage"
+			prepend-icon="mdi-database-search"
+			title="CEDS Tools"
+			:to="{ path: 'ceds' }"
 		>
-			Open Work.vue
+			CEDS
+		</v-btn>
+		
+		<v-btn
+			v-if="!isNaModelPage"
+			prepend-icon="mdi-database-search"
+			title="NA Model Tools"
+			:to="{ path: 'namodel' }"
+		>
+			NA Model
 		</v-btn>
 
 		<v-btn

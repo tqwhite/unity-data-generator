@@ -8,7 +8,7 @@
 		LoginStore.logout();
 	}
 
-	const message = 'hello from work.vue';
+	const message = 'CEDS Search and Vector Tools';
 
 	import { ref, computed } from 'vue';
 
