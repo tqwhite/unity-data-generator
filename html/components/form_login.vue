@@ -28,7 +28,7 @@
 		const tmp = await LoginStore.login()
 			.then((validLogin) => {
 				if (LoginStore.validUser) {
-					router.push('work');
+					router.push('namodel');
 				}
 			})
 			.catch((err) => {
