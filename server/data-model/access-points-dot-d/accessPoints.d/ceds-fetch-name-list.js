@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 'use strict';
 
-const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
+const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
+
 const qt = require('qtools-functional-library');
 const { pipeRunner, taskListPlus, mergeArgs, forwardArgs } = new require(
 	'qtools-asynchronous-pipe-plus',
 )();
-
-const os = require('os');
 
 //START OF moduleFunction() ============================================================
 
@@ -18,57 +17,66 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	const { xLog, getConfig, rawConfig, commandLineParameters } = process.global;
 	const localConfig = getConfig(moduleName); //moduleName is closure
 
-	const { sqlDb, hxAccess, dataMapping } = passThroughParameters;
+	const { sqlDb, mapper, dataMapping } = passThroughParameters;
 
 	// ================================================================================
 	// SERVICE FUNCTION
 
-	const serviceFunction = ({username}, callback) => {
-		if (typeof args == 'function') {
-			callback = args;
-			args = {};
-		}
-
+	const serviceFunction = (callback) => {
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
-		// TASKLIST ITEM TEMPLATE
-
-		taskList.push((args, next) =>
-			args.sqlDb.getTable('users', mergeArgs(args, next, 'userTable')),
-		);
-		// --------------------------------------------------------------------------------
-		// TASKLIST ITEM TEMPLATE
+		// TASK: Query database for CEDS element names
 
 		taskList.push((args, next) => {
-			const { username, userTable } = args;
+			const { sqlDb, dataMapping } = args;
 
-			const localCallback = (err, userList = []) => {
-				const user = userList.qtLast();
-		//		delete user.password;
-				
-				next(err, { ...args, user });
+			args.sqlDb.getTable('_CEDSElements', mergeArgs(args, next, 'cedsTable'));
+		});
+
+		taskList.push((args, next) => {
+			const { cedsTable } = args;
+
+			const localCallback = (err, rawResult = []) => {
+				if (err) {
+					next(err);
+					return;
+				}
+
+				// Transform results for nameList (id + name for selection)
+				const nameList = rawResult.map(item => ({
+					refId: item.GlobalID,
+					name: item.ElementName
+				}));
+
+				next('', { ...args, nameList });
 			};
 
-			const query = `select * from  <!tableName!> where username='${username}'`;
-
-			userTable.getData(query, { suppressStatementLog: true }, localCallback);
+			const query = `SELECT GlobalID, ElementName, refId FROM <!tableName!> ORDER BY ElementName`;
+			cedsTable.getData(query, { suppressStatementLog: true }, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------
 		// INIT AND EXECUTE THE PIPELINE
 
-		const initialData = { username, sqlDb, hxAccess, dataMapping };
+		const initialData = { sqlDb, mapper, dataMapping };
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { user } = args;
-			callback(err, user);
+			if (err) {
+				xLog.error(
+					`ceds-fetch-name-list FAILED: ${err} (${moduleName}.js)`,
+				);
+				callback(err);
+				return;
+			}
+
+			callback('', args.nameList || []);
 		});
 	};
 
 	// ================================================================================
 	// Access Point Constructor
 
-	const addEndpoint = ({ name, method, serviceFunction, dotD }) => {
+	const addEndpoint = ({ name, serviceFunction, dotD }) => {
 		dotD.logList.push(name);
 		dotD.library.add(name, serviceFunction);
 	};
@@ -76,7 +84,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	// ================================================================================
 	// Do the constructing
 
-	const name = moduleName;
+	const name = 'ceds-fetch-name-list';
 
 	addEndpoint({ name, serviceFunction, dotD });
 

@@ -42,16 +42,8 @@ const moduleFunction =
 				const authHeader = xReq.headers['authorization'];
 				const token = authHeader && authHeader.split(' ')[1]; // Get the token from 'Bearer <token>'
 				
-				// Debug auth header info
-				xLog.status(`AUTH DEBUG - Headers present: ${!!authHeader}`);
-				if (authHeader) {
-					xLog.status(`AUTH DEBUG - Auth header: ${authHeader.substring(0, 20)}...`);
-					xLog.status(`AUTH DEBUG - Token extracted: ${token ? token.substring(0, 10) + '...' : 'none'}`);
-				}
-				
 				if (!authHeader) {
 					// No token provided, set default authclaims
-					xLog.status(`AUTH DEBUG - No authorization header found, setting default public role`);
 					xReq.appValueSetter('authclaims', {
 						noToken: true,
 						user: { role: 'public' },
@@ -62,12 +54,10 @@ const moduleFunction =
 
 				try {
 					const authclaims = jwt.verify(token, secret);
-					xLog.status(`AUTH DEBUG - Token verified successfully`);
-					xLog.status(`AUTH DEBUG - Token user role: ${JSON.stringify(authclaims.user?.role)}`);
 					xReq.appValueSetter('authclaims', authclaims);
 					next('', { ...args, authclaims });
 				} catch (err) {
-					xLog.status(`AUTH DEBUG - Token verification error: ${err.toString()}`);
+					xLog.status(`token error: ${err.toString()}`);
 					next(`token error: ${err.toString()}`, args);
 				}
 			});
@@ -161,10 +151,6 @@ const moduleFunction =
 				const userRoles = typeof userRole === 'string' 
 					? userRole.split(',').map(r => r.trim()) 
 					: Array.isArray(userRole) ? userRole : [];
-				
-				// Debug logs to help diagnose issues
-				xLog.status(`DEBUG - User roles: ${JSON.stringify(userRoles)}`);
-				xLog.status(`DEBUG - Checking against permissions: ${JSON.stringify(permissionList)}`);
 				
 				// Check if any of the user's roles match any of the permitted roles
 				const isValid =

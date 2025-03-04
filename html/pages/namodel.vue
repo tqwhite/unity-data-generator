@@ -48,7 +48,7 @@
 			<v-container fluid class="fill-height">
 				<v-row no-gutters class="fill-height">
 					<!-- Left sidebar - List and selector -->
-					<v-col cols="3" class="border-r border-1">
+					<v-col cols="2" class="border-r border-1">
 						<v-card flat class="h-100">
 							<v-card-title class="text-h6 py-3 px-4">LIST</v-card-title>
 							
@@ -61,10 +61,11 @@
 								density="compact"
 								hide-details
 								class="mx-3 mb-3"
+								style="width: 20vw;"
 							></v-text-field>
 							
 							<!-- Selector list -->
-							<v-list class="overflow-y-auto" style="max-height: calc(100vh - 200px)">
+							<v-list class="overflow-y-auto" style="max-height: calc(100vh - 200px); width: 20vw;">
 								<v-list-item
 									v-for="item in filteredNameList"
 									:key="item.refId"
@@ -91,7 +92,7 @@
 					</v-col>
 					
 					<!-- Main content area -->
-					<v-col cols="9">
+					<v-col cols="6">
 						<v-card flat class="h-100">
 							<!-- Control buttons -->
 							<v-toolbar flat density="compact">
@@ -112,9 +113,9 @@
 									<v-icon color="error" size="64" class="mb-3">mdi-alert-circle</v-icon>
 									<div>{{ namodelStore.error }}</div>
 								</div>
-								<div v-else-if="namodelStore.currentData" class="w-100 h-100">
+								<div v-else-if="namodelStore.currentData" class="w-100 h-100 overflow-auto">
 									<!-- Data will be displayed here -->
-									<pre>{{ JSON.stringify(namodelStore.currentData, null, 2) }}</pre>
+									<pre style="text-align: left; width: 100%;">{{ JSON.stringify(namodelStore.currentData, null, 2) }}</pre>
 								</div>
 								<div v-else class="text-center">
 									<v-icon size="64" class="mb-3 text-medium-emphasis">mdi-database-search</v-icon>

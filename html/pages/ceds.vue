@@ -61,10 +61,11 @@
 								density="compact"
 								hide-details
 								class="mx-3 mb-3"
+								style="width: 20vw;"
 							></v-text-field>
 							
 							<!-- Selector list -->
-							<v-list class="overflow-y-auto" style="max-height: calc(100vh - 200px)">
+							<v-list class="overflow-y-auto" style="max-height: calc(100vh - 200px); width: 20vw;">
 								<v-list-item
 									v-for="item in filteredNameList"
 									:key="item.refId"
@@ -112,9 +113,9 @@
 									<v-icon color="error" size="64" class="mb-3">mdi-alert-circle</v-icon>
 									<div>{{ cedsStore.error }}</div>
 								</div>
-								<div v-else-if="cedsStore.currentData" class="w-100 h-100">
+								<div v-else-if="cedsStore.currentData" class="w-100 h-100 overflow-auto">
 									<!-- Data will be displayed here -->
-									<pre>{{ JSON.stringify(cedsStore.currentData, null, 2) }}</pre>
+									<pre style="text-align: left; width: 100%;">{{ JSON.stringify(cedsStore.currentData, null, 2) }}</pre>
 								</div>
 								<div v-else class="text-center">
 									<v-icon size="64" class="mb-3 text-medium-emphasis">mdi-database-search</v-icon>
