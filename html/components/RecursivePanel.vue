@@ -22,7 +22,7 @@ defineProps({ data: Object });
 .compact-panel :deep(.v-expansion-panel-title) {
   min-height: unset !important;
   padding: 4px 16px !important;
-  font-size: 0.95rem;
+  font-size: 0.55rem;
 }
 
 .compact-panel :deep(.v-expansion-panel-text__wrapper) {
