@@ -4,6 +4,7 @@ import { useCedsStore } from '@/stores/cedsStore';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import SelectionList from '@/components/selection-list.vue';
+import JsonTool from '@/components/tools/json-tool.vue';
 
 const LoginStore = useLoginStore();
 const cedsStore = useCedsStore();
@@ -50,22 +51,11 @@ const handleSelection = (refId) => {
 							
 							<!-- Tool area -->
 							<v-card-text class="d-flex justify-center align-center text-subtitle-1 text-medium-emphasis tool-area">
-								<div v-if="cedsStore.isLoading" class="text-center">
-									<v-progress-circular indeterminate size="64" class="mb-3"></v-progress-circular>
-									<div>Loading data...</div>
-								</div>
-								<div v-else-if="cedsStore.error" class="text-center text-error">
-									<v-icon color="error" size="64" class="mb-3">mdi-alert-circle</v-icon>
-									<div>{{ cedsStore.error }}</div>
-								</div>
-								<div v-else-if="cedsStore.currentData" class="w-100 h-100 overflow-auto content-container">
-									<!-- Data will be displayed here -->
-									<pre class="data-display">{{ JSON.stringify(cedsStore.currentData, null, 2) }}</pre>
-								</div>
-								<div v-else class="text-center">
-									<v-icon size="64" class="mb-3 text-medium-emphasis">mdi-database-search</v-icon>
-									<div>Select an item from the list to view details</div>
-								</div>
+								<json-tool 
+									:data="cedsStore.currentData"
+									:is-loading="cedsStore.isLoading"
+									:error="cedsStore.error"
+								/>
 							</v-card-text>
 						</v-card>
 					</v-col>
@@ -86,16 +76,5 @@ const handleSelection = (refId) => {
 .tool-area {
 	min-height: calc(100vh - 180px);
 }
-.data-display {
-	text-align: left;
-	width: 100%;
-	max-width: 100%;
-	white-space: pre-wrap;
-	word-wrap: break-word;
-}
-
-.content-container {
-	max-width: 100%;
-	overflow-x: hidden;
-}
+/* Styling now handled by the json-tool component */
 </style>
