@@ -31,8 +31,8 @@ const props = defineProps({
       <pre class="data-display">{{ JSON.stringify(data, null, 2) }}</pre>
     </div>
     <div v-else class="text-center">
-      <v-icon size="64" class="mb-3 text-medium-emphasis">mdi-database-search</v-icon>
-      <div>Select an item from the list to view details</div>
+      <v-icon size="64" class="mb-3 text-medium-emphasis">mdi-file-tree</v-icon>
+      <div>Select an item from the list to view details in outline format</div>
     </div>
   </div>
 </template>
@@ -52,7 +52,7 @@ const props = defineProps({
   max-width: 100%;
   white-space: pre-wrap;
   word-wrap: break-word;
-  color: #2196F3; /* Blue color for JSON */
+  color: #FF5722; /* Orange color for Outline */
 }
 
 .content-container {

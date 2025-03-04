@@ -5,6 +5,8 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import SelectionList from '@/components/selection-list.vue';
 import JsonTool from '@/components/tools/json-tool.vue';
+import SpreadsheetTool from '@/components/tools/spreadsheet-tool.vue';
+import OutlineTool from '@/components/tools/outline-tool.vue';
 
 const LoginStore = useLoginStore();
 const namodelStore = useNamodelStore();
@@ -17,9 +19,17 @@ if (router?.currentRoute.value.query.logout) {
 // Selected ID is now maintained by the selection-list component
 const selectedRefId = ref(null);
 
+// Selected tool - default to JSON tool
+const selectedTool = ref('json');
+
 // Handle selection from the component
 const handleSelection = (refId) => {
 	selectedRefId.value = refId;
+};
+
+// Handle tool selection
+const selectTool = (toolName) => {
+	selectedTool.value = toolName;
 };
 </script>
 
@@ -42,16 +52,51 @@ const handleSelection = (refId) => {
 						<v-card flat class="h-100">
 							<!-- Control buttons -->
 							<v-toolbar flat density="compact">
-								<v-toolbar-title>CONTROLS</v-toolbar-title>
 								<v-spacer></v-spacer>
-								<v-btn class="mr-2" variant="outlined">A</v-btn>
-								<v-btn class="mr-2" variant="outlined">B</v-btn>
-								<v-btn variant="outlined">C</v-btn>
+								<v-btn 
+									class="mr-2" 
+									variant="outlined" 
+									:disabled="selectedTool === 'json'"
+									@click="selectTool('json')"
+									prepend-icon="mdi-code-json"
+								>
+									JSON
+								</v-btn>
+								<v-btn 
+									class="mr-2" 
+									variant="outlined" 
+									:disabled="selectedTool === 'spreadsheet'"
+									@click="selectTool('spreadsheet')"
+									prepend-icon="mdi-table"
+								>
+									Spreadsheet
+								</v-btn>
+								<v-btn 
+									variant="outlined" 
+									:disabled="selectedTool === 'outline'"
+									@click="selectTool('outline')"
+									prepend-icon="mdi-file-tree"
+								>
+									Outline
+								</v-btn>
 							</v-toolbar>
 							
 							<!-- Tool area -->
 							<v-card-text class="d-flex justify-center align-center text-subtitle-1 text-medium-emphasis tool-area">
 								<json-tool 
+									v-if="selectedTool === 'json'"
+									:data="namodelStore.currentData"
+									:is-loading="namodelStore.isLoading"
+									:error="namodelStore.error"
+								/>
+								<spreadsheet-tool 
+									v-else-if="selectedTool === 'spreadsheet'"
+									:data="namodelStore.currentData"
+									:is-loading="namodelStore.isLoading"
+									:error="namodelStore.error"
+								/>
+								<outline-tool 
+									v-else-if="selectedTool === 'outline'"
 									:data="namodelStore.currentData"
 									:is-loading="namodelStore.isLoading"
 									:error="namodelStore.error"
