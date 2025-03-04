@@ -85,19 +85,21 @@ const selectTool = (toolName) => {
 							<v-card-text class="d-flex justify-center align-center text-subtitle-1 text-medium-emphasis tool-area">
 								<json-tool 
 									v-if="selectedTool === 'json'"
-									:data="namodelStore.currentData"
+									:data="namodelStore.combinedObject"
 									:is-loading="namodelStore.isLoading"
 									:error="namodelStore.error"
 								/>
 								<spreadsheet-tool 
 									v-else-if="selectedTool === 'spreadsheet'"
-									:data="namodelStore.currentData"
+									:data="namodelStore.listOfProperties"
+									:structuredData="namodelStore.combinedObject"
 									:is-loading="namodelStore.isLoading"
 									:error="namodelStore.error"
 								/>
 								<outline-tool 
 									v-else-if="selectedTool === 'outline'"
-									:data="namodelStore.currentData"
+									:data="namodelStore.listOfProperties"
+									:structuredData="namodelStore.combinedObject"
 									:is-loading="namodelStore.isLoading"
 									:error="namodelStore.error"
 								/>

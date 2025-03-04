@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
+import { toType, qtPutSurePath } from '@/plugins/qtools-functional-library';
 
 export const useCedsStore = defineStore('ceds', {
   state: () => ({
     nameList: [],
-    currentData: null,
+    listOfProperties: null,
+    combinedObject: null,
     isLoading: false,
     error: null,
   }),
@@ -64,7 +66,18 @@ export const useCedsStore = defineStore('ceds', {
         }
         
         const data = await response.json();
-        this.currentData = data;
+        
+        // Create the structured object from the flat list of properties
+        const structuredObject = {};
+        data.map(item => {
+          // For CEDS data - check if it has an XPath property, otherwise use a different path property if available
+          const path = item.XPath || item.path || `element.${item.id || item.name}`;
+          qtPutSurePath(structuredObject, path.replace(/\//g, '.'), item);
+        });
+        
+        // Store both representations for different use cases
+        this.listOfProperties = data;
+        this.combinedObject = structuredObject;
       } catch (err) {
         this.error = err.message;
         console.error('Error fetching CEDS data:', err);
@@ -103,7 +116,17 @@ export const useCedsStore = defineStore('ceds', {
         }
         
         const responseData = await response.json();
-        this.currentData = responseData;
+        
+        // Create the structured object from the flat list of properties
+        const structuredObject = {};
+        responseData.map(item => {
+          const path = item.XPath || item.path || `element.${item.id || item.name}`;
+          qtPutSurePath(structuredObject, path.replace(/\//g, '.'), item);
+        });
+        
+        // Store both representations
+        this.listOfProperties = responseData;
+        this.combinedObject = structuredObject;
         
         // Update name in the nameList if it exists
         const nameIndex = this.nameList.findIndex(item => item.refId === data.refId);
@@ -125,12 +148,13 @@ export const useCedsStore = defineStore('ceds', {
     },
     
     clearCurrentData() {
-      this.currentData = null;
+      this.listOfProperties = null;
+      this.combinedObject = null;
     }
   },
   
   getters: {
-    isDataLoaded: (state) => !!state.currentData,
+    isDataLoaded: (state) => !!state.listOfProperties,
     hasNameList: (state) => state.nameList.length > 0,
   }
 });

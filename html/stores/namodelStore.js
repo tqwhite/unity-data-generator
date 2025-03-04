@@ -4,7 +4,8 @@ import { toType, qtPutSurePath } from '@/plugins/qtools-functional-library';
 export const useNamodelStore = defineStore('namodel', {
 	state: () => ({
 		nameList: [],
-		currentData: null,
+		listOfProperties: null,
+		combinedObject: null,
 		isLoading: false,
 		error: null,
 	}),
@@ -73,14 +74,13 @@ export const useNamodelStore = defineStore('namodel', {
 
 				const data = await response.json();
 				
-				const combinedObject={}
-				const tmp=data.map(item=>qtPutSurePath(combinedObject, item.XPath.replace(/\//g, '.'), item));
+				// Create the structured object from the flat list of properties
+				const structuredObject = {};
+				data.map(item => qtPutSurePath(structuredObject, item.XPath.replace(/\//g, '.'), item));
 				
-
-console.dir({['combinedObject']:combinedObject}, { showHidden: false, depth: 4, colors: true });
-
-
-				this.currentData = data;
+				// Store both representations for different use cases
+				this.listOfProperties = data;
+				this.combinedObject = structuredObject;
 			} catch (err) {
 				this.error = err.message;
 				console.error('Error fetching NA Model data:', err);
@@ -121,7 +121,14 @@ console.dir({['combinedObject']:combinedObject}, { showHidden: false, depth: 4, 
 				}
 
 				const responseData = await response.json();
-				this.currentData = responseData;
+				
+				// Create the structured object from the flat list of properties
+				const structuredObject = {};
+				responseData.map(item => qtPutSurePath(structuredObject, item.XPath.replace(/\//g, '.'), item));
+				
+				// Store both representations
+				this.listOfProperties = responseData;
+				this.combinedObject = structuredObject;
 
 				// Update name in the nameList if it exists
 				const nameIndex = this.nameList.findIndex(
@@ -145,12 +152,13 @@ console.dir({['combinedObject']:combinedObject}, { showHidden: false, depth: 4, 
 		},
 
 		clearCurrentData() {
-			this.currentData = null;
+			this.listOfProperties = null;
+			this.combinedObject = null;
 		},
 	},
 
 	getters: {
-		isDataLoaded: (state) => !!state.currentData,
+		isDataLoaded: (state) => !!state.listOfProperties,
 		hasNameList: (state) => state.nameList.length > 0,
 	},
 });
