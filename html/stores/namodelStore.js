@@ -76,7 +76,26 @@ export const useNamodelStore = defineStore('namodel', {
 				
 				// Create the structured object from the flat list of properties
 				const structuredObject = {};
-				data.map(item => qtPutSurePath(structuredObject, item.XPath.replace(/\//g, '.'), item));
+				
+				// Process each item to build the nested object structure
+				data.forEach(item => {
+					// Skip items with no XPath
+					if (!item.XPath) return;
+					
+					// Remove the leading slash if it exists
+					const normalizedPath = item.XPath.startsWith('/') 
+						? item.XPath.substring(1) 
+						: item.XPath;
+					
+					// Split the path into segments
+					const pathSegments = normalizedPath.split('/');
+					
+					// Build the object path from XPath segments
+					const objectPath = pathSegments.join('.');
+					
+					// Add the item to the structured object
+					qtPutSurePath(structuredObject, objectPath, item);
+				});
 				
 				// Store both representations for different use cases
 				this.listOfProperties = data;
@@ -124,7 +143,26 @@ export const useNamodelStore = defineStore('namodel', {
 				
 				// Create the structured object from the flat list of properties
 				const structuredObject = {};
-				responseData.map(item => qtPutSurePath(structuredObject, item.XPath.replace(/\//g, '.'), item));
+				
+				// Process each item to build the nested object structure
+				responseData.forEach(item => {
+					// Skip items with no XPath
+					if (!item.XPath) return;
+					
+					// Remove the leading slash if it exists
+					const normalizedPath = item.XPath.startsWith('/') 
+						? item.XPath.substring(1) 
+						: item.XPath;
+					
+					// Split the path into segments
+					const pathSegments = normalizedPath.split('/');
+					
+					// Build the object path from XPath segments
+					const objectPath = pathSegments.join('.');
+					
+					// Add the item to the structured object
+					qtPutSurePath(structuredObject, objectPath, item);
+				});
 				
 				// Store both representations
 				this.listOfProperties = responseData;

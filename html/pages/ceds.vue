@@ -85,19 +85,19 @@ const selectTool = (toolName) => {
 							<v-card-text class="d-flex justify-center align-center text-subtitle-1 text-medium-emphasis tool-area">
 								<json-tool 
 									v-if="selectedTool === 'json'"
-									:data="cedsStore.combinedObject"
+									:workingData="cedsStore.combinedObject"
 									:is-loading="cedsStore.isLoading"
 									:error="cedsStore.error"
 								/>
 								<spreadsheet-tool 
 									v-else-if="selectedTool === 'spreadsheet'"
-									:data="cedsStore.listOfProperties"
+									:workingData="cedsStore.listOfProperties"
 									:is-loading="cedsStore.isLoading"
 									:error="cedsStore.error"
 								/>
 								<outline-tool 
 									v-else-if="selectedTool === 'outline'"
-									:data="cedsStore.combinedObject"
+									:workingData="cedsStore.combinedObject"
 									:is-loading="cedsStore.isLoading"
 									:error="cedsStore.error"
 								/>

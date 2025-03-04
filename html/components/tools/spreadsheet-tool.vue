@@ -1,7 +1,7 @@
 <script setup>
 // Props to receive the data and loading/error states
 const props = defineProps({
-  data: {
+  workingData: {
     type: [Object, Array],
     default: null
   },
@@ -26,9 +26,9 @@ const props = defineProps({
       <v-icon color="error" size="64" class="mb-3">mdi-alert-circle</v-icon>
       <div>{{ error }}</div>
     </div>
-    <div v-else-if="data" class="w-100 h-100 overflow-auto content-container">
+    <div v-else-if="workingData" class="w-100 h-100 overflow-auto content-container">
       <!-- Data will be displayed here -->
-      <pre class="data-display">{{ JSON.stringify(data, null, 2) }}</pre>
+      <pre class="data-display">{{ JSON.stringify(workingData, null, 2) }}</pre>
     </div>
     <div v-else class="text-center">
       <v-icon size="64" class="mb-3 text-medium-emphasis">mdi-table</v-icon>
