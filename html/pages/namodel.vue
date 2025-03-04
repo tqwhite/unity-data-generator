@@ -92,14 +92,12 @@ const selectTool = (toolName) => {
 								<spreadsheet-tool 
 									v-else-if="selectedTool === 'spreadsheet'"
 									:data="namodelStore.listOfProperties"
-									:structuredData="namodelStore.combinedObject"
 									:is-loading="namodelStore.isLoading"
 									:error="namodelStore.error"
 								/>
 								<outline-tool 
 									v-else-if="selectedTool === 'outline'"
 									:data="namodelStore.listOfProperties"
-									:structuredData="namodelStore.combinedObject"
 									:is-loading="namodelStore.isLoading"
 									:error="namodelStore.error"
 								/>

@@ -92,14 +92,12 @@ const selectTool = (toolName) => {
 								<spreadsheet-tool 
 									v-else-if="selectedTool === 'spreadsheet'"
 									:data="cedsStore.listOfProperties"
-									:structuredData="cedsStore.combinedObject"
 									:is-loading="cedsStore.isLoading"
 									:error="cedsStore.error"
 								/>
 								<outline-tool 
 									v-else-if="selectedTool === 'outline'"
-									:data="cedsStore.listOfProperties"
-									:structuredData="cedsStore.combinedObject"
+									:data="cedsStore.combinedObject"
 									:is-loading="cedsStore.isLoading"
 									:error="cedsStore.error"
 								/>
