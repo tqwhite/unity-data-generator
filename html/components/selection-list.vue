@@ -13,13 +13,13 @@ const props = defineProps({
 const emit = defineEmits(['select']);
 
 const selectedRefId = ref(null);
-const searchQuery = ref('');
+const filterText = ref('');
 
-// Filtered nameList based on search
+// Filtered nameList based on filter text
 const filteredNameList = computed(() => {
-  if (!searchQuery.value || !props.store.nameList) return props.store.nameList;
+  if (!filterText.value || !props.store.nameList) return props.store.nameList;
   
-  const query = searchQuery.value.toLowerCase();
+  const query = filterText.value.toLowerCase();
   return props.store.nameList.filter(item => 
     item.name?.toLowerCase().includes(query) || 
     item.refId?.toLowerCase().includes(query)
@@ -45,15 +45,16 @@ const selectItem = async (refId) => {
   <v-card flat class="h-100">
     <v-card-title class="text-h6 py-3 px-4">LIST</v-card-title>
     
-    <!-- Search box -->
+    <!-- Filter Tool -->
     <v-text-field
-      v-model="searchQuery"
-      label="Search"
-      prepend-inner-icon="mdi-magnify"
+      v-model="filterText"
+      label="Filter Tool"
+      prepend-inner-icon="mdi-filter-outline"
       variant="outlined"
       density="compact"
       hide-details
-      class="mx-3 mb-3 search-field"
+      class="mx-3 mb-3 filter-field"
+      placeholder="Filter items by text"
     ></v-text-field>
     
     <!-- Selector list -->
@@ -87,7 +88,7 @@ const selectItem = async (refId) => {
 .h-100 {
   height: 100%;
 }
-.search-field {
+.filter-field {
   width: 20vw;
 }
 .selector-list {
