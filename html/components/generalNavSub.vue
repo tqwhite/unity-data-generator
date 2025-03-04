@@ -20,6 +20,11 @@
 		return router.currentRoute.value.path === '/namodel' || 
 		       router.currentRoute.value.path === '/namodel/';
 	});
+	
+	const isUtilityExamplesPage = computed(() => {
+		return router.currentRoute.value.path === '/utility-examples' || 
+		       router.currentRoute.value.path === '/utility-examples/';
+	});
 
 	const reloadPage = () => {
 		window.location.href = window.location.href.replace(
