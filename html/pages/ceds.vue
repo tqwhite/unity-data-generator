@@ -29,7 +29,7 @@ const handleSelection = (refId) => {
 			<v-container fluid class="fill-height">
 				<v-row no-gutters class="fill-height">
 					<!-- Left sidebar with selection list component -->
-					<v-col cols="3" class="border-r border-1">
+					<v-col cols="auto" style="width: 320px; min-width: 320px; max-width: 320px;" class="border-r border-1">
 						<selection-list 
 							:store="cedsStore" 
 							@select="handleSelection"
@@ -37,7 +37,7 @@ const handleSelection = (refId) => {
 					</v-col>
 					
 					<!-- Main content area -->
-					<v-col cols="9">
+					<v-col style="flex: 1; min-width: 0; max-width: calc(100vw - 320px);">
 						<v-card flat class="h-100">
 							<!-- Control buttons -->
 							<v-toolbar flat density="compact">
@@ -58,7 +58,7 @@ const handleSelection = (refId) => {
 									<v-icon color="error" size="64" class="mb-3">mdi-alert-circle</v-icon>
 									<div>{{ cedsStore.error }}</div>
 								</div>
-								<div v-else-if="cedsStore.currentData" class="w-100 h-100 overflow-auto">
+								<div v-else-if="cedsStore.currentData" class="w-100 h-100 overflow-auto content-container">
 									<!-- Data will be displayed here -->
 									<pre class="data-display">{{ JSON.stringify(cedsStore.currentData, null, 2) }}</pre>
 								</div>
@@ -89,5 +89,13 @@ const handleSelection = (refId) => {
 .data-display {
 	text-align: left;
 	width: 100%;
+	max-width: 100%;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+.content-container {
+	max-width: 100%;
+	overflow-x: hidden;
 }
 </style>

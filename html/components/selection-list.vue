@@ -42,7 +42,7 @@ const selectItem = async (refId) => {
 </script>
 
 <template>
-  <v-card flat class="h-100">
+  <v-card flat class="h-100 selection-card">
     <v-card-title class="text-h6 py-3 px-4">LIST</v-card-title>
     
     <!-- Filter Tool -->
@@ -58,25 +58,27 @@ const selectItem = async (refId) => {
     ></v-text-field>
     
     <!-- Selector list -->
-    <v-list class="overflow-y-auto selector-list">
+    <v-list class="overflow-y-auto selector-list" density="compact">
       <v-list-item
         v-for="item in filteredNameList"
         :key="item.refId"
         :active="selectedRefId === item.refId"
         @click="selectItem(item.refId)"
+        density="compact"
+        class="py-1"
       >
-        <v-list-item-title>{{ item.name || item.refId }}</v-list-item-title>
+        <v-list-item-title class="text-body-2 text-truncate">{{ item.name || item.refId }}</v-list-item-title>
       </v-list-item>
       
-      <v-list-item v-if="props.store.isLoading">
-        <v-list-item-title>
-          <v-progress-circular indeterminate size="20" class="mr-2"></v-progress-circular>
+      <v-list-item v-if="props.store.isLoading" density="compact">
+        <v-list-item-title class="text-body-2">
+          <v-progress-circular indeterminate size="16" class="mr-2"></v-progress-circular>
           Loading...
         </v-list-item-title>
       </v-list-item>
       
-      <v-list-item v-else-if="filteredNameList.length === 0">
-        <v-list-item-title class="text-subtitle-2 text-medium-emphasis">
+      <v-list-item v-else-if="filteredNameList.length === 0" density="compact">
+        <v-list-item-title class="text-body-2 text-medium-emphasis">
           No items found
         </v-list-item-title>
       </v-list-item>
@@ -88,11 +90,27 @@ const selectItem = async (refId) => {
 .h-100 {
   height: 100%;
 }
+.selection-card {
+  width: 100%;
+  max-width: 300px;
+}
 .filter-field {
-  width: 20vw;
+  width: 100%;
+  max-width: 300px;
 }
 .selector-list {
   max-height: calc(100vh - 200px);
-  width: 20vw;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Reduce spacing between list items */
+:deep(.v-list-item__content) {
+  padding: 4px 0;
+}
+
+/* Make active items stand out with background color */
+:deep(.v-list-item--active) {
+  background-color: rgba(var(--v-theme-primary), 0.1);
 }
 </style>
