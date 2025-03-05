@@ -59,12 +59,22 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 
 				next('', { ...args, element });
 			};
-xLog.status(`HACK: goofball SheetName/refId swap here`);
+			xLog.status(`HACK: goofball SheetName/refId swap here`);
 			const query = `
-				SELECT refId, Name, Mandatory, Characteristics, Type,
-				Description, XPath, "CEDS ID" as CEDS_ID, 
-				Format, SheetName
+				SELECT
+					naDataModel.refId,
+					naDataModel.Name,
+					naDataModel.Mandatory,
+					naDataModel.Characteristics,
+					naDataModel.Type,
+					naDataModel.Description,
+					naDataModel.XPath,
+					naDataModel.Format,
+					naDataModel.SheetName,
+					"CEDS ID" as CEDS_ID,
+					_CEDSElements.Definition as 'cedsDefinition'
 				FROM <!tableName!> 
+				left join _CEDSElements on _CEDSElements.GlobalID=CEDS_ID
 				WHERE SheetName = '${refId}'
 			`;
 			naModelTable.getData(query, { suppressStatementLog: false }, localCallback);

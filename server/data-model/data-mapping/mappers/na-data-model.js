@@ -25,7 +25,8 @@ const moduleFunction =
 			['XPath']: 'XPath',
 			['CEDS ID']: 'CEDS_ID', // renamed to be code-friendly
 			['Format']: 'Format',
-			['SheetName']: 'SheetName'
+			['SheetName']: 'SheetName',
+			['cedsDefinition']:'cedsDefinition'
 		};
 
 		const basicMapper = baseMappingProcess(inputNameMapping);
