@@ -37,7 +37,7 @@ const getClosestRecords = require('./lib/get-closest-records');
 const initAtp = require('qtools-ai-thought-processor/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
-	applicationControls: ['-writeVectorDatabase', '--queryString', '--resultCount'],
+	applicationControls: ['-writeVectorDatabase', '--queryString', '--resultCount', '-json'],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 
 

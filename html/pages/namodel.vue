@@ -1,7 +1,7 @@
 <script setup>
 import { useLoginStore } from '@/stores/loginStore';
 import { useNamodelStore } from '@/stores/namodelStore';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import SelectionList from '@/components/selection-list.vue';
 import JsonTool from '@/components/tools/json-tool.vue';
@@ -31,6 +31,12 @@ const handleSelection = (refId) => {
 const selectTool = (toolName) => {
 	selectedTool.value = toolName;
 };
+
+// Fetch semantic distance results on component mount
+onMounted(async () => {
+	await namodelStore.fetchSemanticDistance("family name");
+	console.log("Semantic distance results:", namodelStore.semanticDistanceResults);
+});
 </script>
 
 <template>

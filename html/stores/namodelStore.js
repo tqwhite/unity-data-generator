@@ -6,7 +6,10 @@ export const useNamodelStore = defineStore('namodel', {
 		nameList: [],
 		listOfProperties: null,
 		combinedObject: null,
+		semanticDistanceResults: [],
 		isLoading: false,
+		isLoadingSemanticDistance: false,
+		semanticDistanceError: null,
 		error: null,
 	}),
 
@@ -193,10 +196,47 @@ export const useNamodelStore = defineStore('namodel', {
 			this.listOfProperties = null;
 			this.combinedObject = null;
 		},
+
+		async fetchSemanticDistance(queryString = "family name") {
+			this.isLoadingSemanticDistance = true;
+			this.semanticDistanceError = null;
+
+			// Import LoginStore to get auth token
+			const { useLoginStore } = await import('@/stores/loginStore');
+			const LoginStore = useLoginStore();
+
+			// Get the auth token header
+			const authHeader = LoginStore.getAuthTokenProperty;
+
+			try {
+				const response = await fetch(
+					`/api/ceds/semanticDistance?queryString=${encodeURIComponent(queryString)}`,
+					{
+						headers: authHeader,
+					}
+				);
+
+				if (!response.ok) {
+					throw new Error(
+						`Failed to fetch semantic distance data: ${response.statusText}`
+					);
+				}
+
+				const data = await response.json();
+				this.semanticDistanceResults = data;
+				return data;
+			} catch (err) {
+				this.semanticDistanceError = err.message;
+				console.error('Error fetching semantic distance data:', err);
+			} finally {
+				this.isLoadingSemanticDistance = false;
+			}
+		},
 	},
 
 	getters: {
 		isDataLoaded: (state) => !!state.listOfProperties,
 		hasNameList: (state) => state.nameList.length > 0,
+		hasSemanticDistanceResults: (state) => state.semanticDistanceResults.length > 0,
 	},
 });

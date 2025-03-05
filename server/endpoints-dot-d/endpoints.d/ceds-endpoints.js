@@ -65,7 +65,7 @@ const moduleFunction = function ({
 		});
 
 		taskList.push((args, next) => {
-			const { accessPointsDotD } = args;
+			const { accessPointsDotD, xReq } = args;
 
 			const localCallback = (err, nameList) => {
 				if (err) {

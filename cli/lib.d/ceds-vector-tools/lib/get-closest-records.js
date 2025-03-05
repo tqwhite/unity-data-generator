@@ -56,9 +56,10 @@ const moduleFunction =
 				sourceEmbeddableContentName,
 			} = embeddingSpecs;
 
-			const resultCount = commandLineParameters.values.resultCount ? 
-				parseInt(commandLineParameters.values.resultCount, 10) : 10;
-				
+			const resultCount = commandLineParameters.values.resultCount
+				? parseInt(commandLineParameters.values.resultCount, 10)
+				: 10;
+
 			const queryEmbed = await openai.embeddings.create({
 				model: 'text-embedding-3-small',
 				input: queryString,
@@ -80,14 +81,18 @@ const moduleFunction =
 					.get(vectorChoice[sourcePrivateKeyName].toString().padStart(6, '0'));
 				return { ...vectorChoice, record };
 			});
-			xLog.result(
-				answers
-					.map(
-						(item) =>
-							`${item.record.GlobalID} ${item.record.ElementName} ${item.record.Definition}`,
-					)
-					.join('\n'),
-			);
+			if (commandLineParameters.switches.json) {
+				xLog.result(JSON.stringify(answers, '', '\t'));
+			} else {
+				xLog.result(
+					answers
+						.map(
+							(item) =>
+								`${item.record.GlobalID} ${item.record.ElementName} ${item.record.Definition}`,
+						)
+						.join('\n'),
+				);
+			}
 		};
 
 		return { workingFunction };

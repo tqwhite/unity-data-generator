@@ -8,6 +8,8 @@ const { pipeRunner, taskListPlus, mergeArgs, forwardArgs } = new require(
 	'qtools-asynchronous-pipe-plus',
 )();
 
+const { exec, execSync } = require('child_process');
+
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function ({ dotD, passThroughParameters }) {
@@ -22,78 +24,43 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	// ================================================================================
 	// SERVICE FUNCTION
 
-	const serviceFunction = (refId, callback) => {
+	const serviceFunction = (xReq, callback) => {
+		
+
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
-		// TASK: Query database for NAModel element by refId
+		// TASK: Query database for CEDS element by xReq
 
 		taskList.push((args, next) => {
-			const { sqlDb, mapper, refId } = args;
+			const { sqlDb, mapper, xReq } = args;
+			const localCallback = (error, stdout, stderr) => {
+				
 
-			if (!refId) {
-				next('Missing refId parameter');
-				return;
-			}
-
-			args.sqlDb.getTable('naDataModel', mergeArgs(args, next, 'naModelTable'));
-		});
-
-		taskList.push((args, next) => {
-			const { naModelTable, dataMapping, refId } = args;
-			const naModelMapper = dataMapping['na-data-model'];
-
-			const localCallback = (err, rawResult = []) => {
-				if (err) {
-					next(err);
-					return;
-				}
-
-				if (!rawResult.length) {
-					next(`NA Model element with refId ${refId} not found`);
-					return;
-				}
-
-				// Map the result
-				const element = naModelMapper.map(rawResult);
-
-				next('', { ...args, element });
+				next(error, { ...args, result: stdout });
 			};
-			xLog.status(`HACK: goofball SheetName/refId swap here`);
-			const query = `
-				SELECT
-					naDataModel.refId,
-					naDataModel.Name,
-					naDataModel.Mandatory,
-					naDataModel.Characteristics,
-					naDataModel.Type,
-					naDataModel.Description,
-					naDataModel.XPath,
-					naDataModel.Format,
-					naDataModel.SheetName,
-					"CEDS ID" as CEDS_ID,
-					_CEDSElements.Definition as 'cedsDefinition'
-				FROM <!tableName!> 
-				left join _CEDSElements on _CEDSElements.GlobalID=CEDS_ID
-				WHERE SheetName = '${refId}'
-			`;
-			naModelTable.getData(query, { suppressStatementLog: true }, localCallback);
+
+
+			const queryString = xReq.query.queryString
+console.log(`queryString=${queryString}`);
+
+
+			const shellCommand = `/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/ceds-vector-tools/cedsVectorTools.js -json --queryString=${queryString}`;
+			exec(shellCommand, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------
 		// INIT AND EXECUTE THE PIPELINE
 
-		const initialData = { sqlDb, mapper, dataMapping, refId };
+		const initialData = { sqlDb, mapper, dataMapping, xReq };
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			if (err) {
-				xLog.error(
-					`namodel-fetch-data FAILED: ${err} (${moduleName}.js)`,
-				);
+				xLog.error(`FAILED: ${err} (${moduleName})`);
 				callback(err);
 				return;
 			}
 
-			callback('', args.element);
+			callback('', args.result);
 		});
 	};
 
@@ -108,7 +75,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	// ================================================================================
 	// Do the constructing
 
-	const name = 'namodel-fetch-data';
+	const name = 'ceds-semantic-distance';
 
 	addEndpoint({ name, serviceFunction, dotD });
 

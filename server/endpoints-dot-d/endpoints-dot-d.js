@@ -32,7 +32,7 @@ const moduleFunction = ({ expressApp, accessTokenHeaderTools, accessPointsDotD }
 		};
 
 		endpointsDotD.setLibraryPath(
-			path.join(__dirname, '/qtDotLib.d'),
+			path.join(__dirname, '/endpoints.d'),
 			localCallback
 		);
 	});
