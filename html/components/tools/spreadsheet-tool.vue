@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 
 // Props to receive the data and loading/error states
 const props = defineProps({
@@ -20,7 +20,11 @@ const props = defineProps({
 // Prepare data for data table
 const tableItems = ref([]);
 const tableHeaders = ref([]);
+const expandedHeaders = ref([]);
 const search = ref('');
+
+// Priority columns to show in main table
+const priorityColumns = ['Name', 'CEDS ID', 'Description'];
 
 // Debug helper to log actual properties
 const logDataStructure = () => {
@@ -40,23 +44,35 @@ const logDataStructure = () => {
   console.log('Sample data item:', items[0]);
 };
 
+// Ensure each item has a unique ID
+const processItems = (items) => {
+  return items.map((item, index) => ({
+    ...item,
+    _rowId: item.refId || item.id || `row-${index}`
+  }));
+};
+
 // Initialize the table data
 const initializeTable = () => {
   if (!props.workingData) {
     tableItems.value = [];
     tableHeaders.value = [];
+    expandedHeaders.value = [];
     return;
   }
   
   // Convert data to array format
+  let processedItems = [];
   if (Array.isArray(props.workingData)) {
-    tableItems.value = props.workingData;
+    processedItems = processItems(props.workingData);
   } else if (typeof props.workingData === 'object') {
-    tableItems.value = Object.values(props.workingData);
+    processedItems = processItems(Object.values(props.workingData));
   } else {
     tableItems.value = [];
     return;
   }
+  
+  tableItems.value = processedItems;
   
   if (tableItems.value.length === 0) return;
   
@@ -64,40 +80,52 @@ const initializeTable = () => {
   const allProperties = new Set();
   tableItems.value.forEach(item => {
     if (item && typeof item === 'object') {
-      Object.keys(item).forEach(key => allProperties.add(key));
-    }
-  });
-  
-  // Define the priority columns
-  const priorityKeys = ['Name', 'CEDS ID', 'Description'];
-  
-  // Create headers with priority columns first
-  const headers = [];
-  
-  // Add priority columns first
-  priorityKeys.forEach(key => {
-    if (allProperties.has(key)) {
-      headers.push({
-        title: key,
-        key: key,
-        align: 'start',
-        sortable: true
+      Object.keys(item).forEach(key => {
+        if (key !== '_rowId') { // Skip our added property
+          allProperties.add(key);
+        }
       });
-      allProperties.delete(key);
     }
   });
   
-  // Add remaining columns
+  // Create headers lists
+  const mainHeaders = [];
+  const otherHeaders = [];
+  
+  // Process properties
   Array.from(allProperties).forEach(key => {
-    headers.push({
+    const headerObj = {
       title: key,
       key: key,
       align: 'start',
       sortable: true
-    });
+    };
+
+    // Set widths for priority columns
+    if (key === 'Name') {
+      headerObj.width = '200px';
+    } else if (key === 'CEDS ID') {
+      headerObj.width = '120px';
+    } else if (key === 'Description') {
+      // Description will flex to fill available space and truncate if needed
+      headerObj.width = '100%';
+    }
+    
+    // Check if this is a priority column
+    if (priorityColumns.includes(key)) {
+      mainHeaders.push(headerObj);
+    } else {
+      otherHeaders.push(headerObj);
+    }
   });
   
-  tableHeaders.value = headers;
+  // Sort main headers by priority
+  mainHeaders.sort((a, b) => {
+    return priorityColumns.indexOf(a.title) - priorityColumns.indexOf(b.title);
+  });
+  
+  tableHeaders.value = mainHeaders;
+  expandedHeaders.value = otherHeaders;
 };
 
 // Filtered items based on search
@@ -149,21 +177,42 @@ watch(() => props.workingData, () => {
           class="mb-4"
         ></v-text-field>
         
-        <!-- Data table with horizontal scroll -->
+        <!-- Data table with expandable rows -->
         <div class="table-container">
           <v-data-table
             :headers="tableHeaders"
             :items="filteredItems"
+            item-value="_rowId"
             class="spreadsheet-table"
             density="compact"
             fixed-header
             height="calc(100vh - 180px)"
             :items-per-page="-1"
             hide-default-footer
+            show-expand
+            expand-icon-right
           >
-            <!-- Template for cells to prevent wrapping -->
+            <!-- Simple cell template to prevent wrapping -->
             <template v-for="header in tableHeaders" :key="header.key" v-slot:[`item.${header.key}`]="{ item }">
               <div class="no-wrap">{{ item[header.key] }}</div>
+            </template>
+            
+            <!-- Expanded row content -->
+            <template v-slot:expanded-row="{ columns, item }">
+              <tr>
+                <td :colspan="columns.length">
+                  <div class="expanded-content pa-3">
+                    <v-table density="compact" class="expanded-table">
+                      <tbody>
+                        <tr v-for="header in expandedHeaders" :key="header.key">
+                          <td class="property-name">{{ header.title }}</td>
+                          <td class="property-value">{{ item[header.key] }}</td>
+                        </tr>
+                      </tbody>
+                    </v-table>
+                  </div>
+                </td>
+              </tr>
             </template>
           </v-data-table>
         </div>
@@ -192,7 +241,6 @@ watch(() => props.workingData, () => {
 .content-container {
   max-width: 100%;
   width: 100%;
-  overflow-x: auto;
   padding-top: 0 !important;
   margin-top: 0 !important;
 }
@@ -200,7 +248,7 @@ watch(() => props.workingData, () => {
 .spreadsheet-table {
   width: 100%;
   border: 1px solid rgba(76, 175, 80, 0.2);
-  table-layout: auto;
+  table-layout: fixed;
 }
 
 /* Force cells not to wrap */
@@ -209,7 +257,7 @@ watch(() => props.workingData, () => {
 }
 
 :deep(.v-data-table__wrapper) {
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 /* Custom styling for table headers */
@@ -248,7 +296,35 @@ watch(() => props.workingData, () => {
 }
 
 .table-container {
-  overflow-x: auto;
+  overflow-x: hidden;
   width: 100%;
+}
+
+/* Expanded content styling */
+.expanded-content {
+  background-color: rgba(76, 175, 80, 0.05);
+  border-radius: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.expanded-table {
+  background-color: transparent !important;
+  border: none;
+}
+
+.property-name {
+  font-weight: bold;
+  width: 200px;
+  font-size: 10pt;
+  padding: 2px 8px !important;
+  vertical-align: top;
+}
+
+.property-value {
+  font-size: 10pt;
+  padding: 2px 8px !important;
+  white-space: normal !important;
+  word-break: break-word;
 }
 </style>
