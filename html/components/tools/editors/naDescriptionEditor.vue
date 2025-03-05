@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, computed } from 'vue';
 import { useNamodelStore } from '@/stores/namodelStore';
+import SemanticDistanceGrid from './lib/semanticDistanceGrid.vue';
 
 // Initialize the namodelStore
 const namodelStore = useNamodelStore();
@@ -44,49 +45,9 @@ const fetchSemanticResults = async () => {
     }
 };
 
-// Format semantic results as pretty JSON string
-const formattedSemanticResults = computed(() => {
-    if (namodelStore.semanticDistanceResults.length === 0) {
-        return "No results available";
-    }
-    return JSON.stringify(namodelStore.semanticDistanceResults, null, 2);
-});
+// No longer need the formatted results as it's handled in the SemanticDistanceGrid component
 
-// Calculate relative distances compared to the first item as integers
-const relativeDistances = computed(() => {
-    if (!namodelStore.semanticDistanceResults.length) return [];
-    
-    const results = [...namodelStore.semanticDistanceResults];
-    const firstDistance = parseFloat(results[0]?.distance || "0");
-    
-    // Convert the first distance to an integer by multiplying by 10000 and truncating
-    const baseIntValue = Math.floor(firstDistance * 10000);
-    
-    return results.map((item, index) => {
-        const currentDistance = parseFloat(item.distance || "0");
-        // Convert current distance to integer
-        const currentIntValue = Math.floor(currentDistance * 10000);
-        
-        if (index === 0) {
-            // First item shows the integer version of raw distance
-            return {
-                ...item,
-                relativeDistance: baseIntValue,
-                rawDistance: item.distance,
-                isRelative: false
-            };
-        } else {
-            // Other items show the integer difference from the first item
-            const relativeDiff = currentIntValue - baseIntValue;
-            return {
-                ...item,
-                relativeDistance: relativeDiff,
-                rawDistance: item.distance,
-                isRelative: true
-            };
-        }
-    });
-});
+// No longer need to process distances here as it's handled in the SemanticDistanceGrid component
 </script>
 
 <template>
@@ -117,55 +78,12 @@ const relativeDistances = computed(() => {
                 
                 <!-- Semantic distance results -->
                 <v-row v-if="item.Description && namodelStore.semanticDistanceResults.length > 0">
-                    <v-col cols="12">
-                        <v-card flat outlined class="mt-3">
-                            <v-card-title class="text-subtitle-2">
-                                Semantic Distance for: "{{ item.Description }}"
-                                <v-chip 
-                                    color="primary" 
-                                    class="ml-2" 
-                                    size="x-small"
-                                >
-                                    {{ namodelStore.semanticDistanceResults.length }} items
-                                </v-chip>
-                            </v-card-title>
-                            <v-card-text class="pt-0">
-                                <div v-if="namodelStore.semanticDistanceError" class="error-text">
-                                    {{ namodelStore.semanticDistanceError }}
-                                </div>
-                                <!-- Table display for semantic distance results -->
-                                <div class="table-container">
-                                    <v-table density="compact" class="semantic-results-table">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-right distance-cell">Distance <span class="multiplier">(×10k)</span></th>
-                                                <th class="text-left">Global ID</th>
-                                                <th class="text-left">Element Name</th>
-                                                <th class="text-left">Definition</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="(item, index) in relativeDistances" :key="index">
-                                                <td class="distance-cell text-right" :class="{'relative-distance': item.isRelative}">
-                                                    <template v-if="index === 0">
-                                                        {{ item.relativeDistance }}
-                                                    </template>
-                                                    <template v-else>
-                                                        {{ item.relativeDistance > 0 ? '+' : '' }}{{ item.relativeDistance }}
-                                                    </template>
-                                                </td>
-                                                <td>{{ item.record?.GlobalID || 'N/A' }}</td>
-                                                <td>{{ item.record?.ElementName || 'N/A' }}</td>
-                                                <td class="definition-cell">{{ item.record?.Definition || 'No definition available' }}</td>
-                                            </tr>
-                                            <tr v-if="namodelStore.semanticDistanceResults.length === 0">
-                                                <td colspan="4" class="text-center">No results available</td>
-                                            </tr>
-                                        </tbody>
-                                    </v-table>
-                                </div>
-                            </v-card-text>
-                        </v-card>
+                    <v-col cols="12" class="mt-3">
+                        <SemanticDistanceGrid
+                            :sourceText="item.Description"
+                            :results="namodelStore.semanticDistanceResults"
+                            :error="namodelStore.semanticDistanceError"
+                        />
                     </v-col>
                 </v-row>
             </v-card-text>
@@ -204,66 +122,5 @@ const relativeDistances = computed(() => {
 .item-xpath {
     font-family: monospace;
     color: #555;
-}
-
-.table-container {
-    max-height: 400px;
-    overflow-y: auto;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 4px;
-}
-
-.semantic-results-table {
-    border: none;
-    font-size: 0.75rem !important;
-}
-
-:deep(.semantic-results-table .v-table__wrapper) {
-    font-size: 0.75rem !important;
-}
-
-:deep(.semantic-results-table th) {
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
-    padding: 4px 8px !important;
-}
-
-:deep(.semantic-results-table td) {
-    font-size: 0.75rem !important;
-    padding: 4px 8px;
-}
-
-.definition-cell {
-    max-width: 400px;
-    white-space: normal !important;
-    word-break: normal;
-}
-
-.distance-cell {
-    font-family: monospace;
-    min-width: 100px;
-    line-height: 1.2;
-    padding-right: 64px !important;
-}
-
-.relative-distance {
-    color: #1976D2;
-}
-
-.distance-note {
-    font-size: 0.65rem;
-    color: #757575;
-    font-style: italic;
-    margin-left: 4px;
-}
-
-.multiplier {
-    font-size: 80%;
-    color: #333;
-}
-
-.error-text {
-    color: #f44336;
-    margin-bottom: 10px;
 }
 </style>
