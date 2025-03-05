@@ -108,7 +108,7 @@ const initializeTable = () => {
       headerObj.width = '120px';
     } else if (key === 'Description') {
       // Description will flex to fill available space and truncate if needed
-      headerObj.width = '100%';
+      //headerObj.width = '100%';
     }
     
     // Check if this is a priority column
@@ -247,8 +247,10 @@ watch(() => props.workingData, () => {
 
 .spreadsheet-table {
   width: 100%;
+  max-width: 100%;
   border: 1px solid rgba(76, 175, 80, 0.2);
   table-layout: fixed;
+  overflow-x: hidden !important;
 }
 
 /* Force cells not to wrap */
@@ -273,7 +275,7 @@ watch(() => props.workingData, () => {
 :deep(.v-data-table-row td) {
   border-bottom: 1px solid rgba(76, 175, 80, 0.1);
   white-space: nowrap !important;
-  max-width: 800px;
+  max-width: 100% !important;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 10pt;
@@ -297,7 +299,7 @@ watch(() => props.workingData, () => {
 
 .table-container {
   overflow-x: hidden;
-  width: 100%;
+  width: 70vw;
 }
 
 /* Expanded content styling */

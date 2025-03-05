@@ -48,8 +48,8 @@ const selectTool = (toolName) => {
 					</v-col>
 					
 					<!-- Main content area -->
-					<v-col style="flex: 1; min-width: 0; max-width: calc(100vw - 320px);">
-						<v-card flat class="h-100">
+					<v-col style="flex: 1; min-width: 0; max-width: calc(100vw - 320px); overflow-x: hidden;">
+						<v-card flat class="h-100" style="overflow-x: hidden;">
 							<!-- Control buttons -->
 							<v-toolbar flat density="compact">
 								<v-spacer></v-spacer>
@@ -82,7 +82,7 @@ const selectTool = (toolName) => {
 							</v-toolbar>
 							
 							<!-- Tool area -->
-							<v-card-text class="d-flex justify-center align-center text-subtitle-1 text-medium-emphasis tool-area">
+							<v-card-text class="d-flex justify-center align-center text-subtitle-1 text-medium-emphasis tool-area" style="overflow-x: hidden;">
 								<json-tool 
 									v-if="selectedTool === 'json'"
 									:workingData="namodelStore.combinedObject"
