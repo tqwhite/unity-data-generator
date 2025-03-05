@@ -92,25 +92,28 @@ const relativeDistances = computed(() => {
 <template>
     <v-dialog :model-value="show" @update:model-value="$emit('update:show', $event)" max-width="80vw">
         <v-card>
-            <v-card-title class="text-subtitle-1 d-flex justify-space-between py-2">
-                Edit Item
+            <v-card-title class="d-flex justify-end py-1 px-2">
                 <v-btn icon @click="closeEditor" size="small">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-card-title>
-            <v-card-text v-if="item">
-                <v-row>
-                    <v-col cols="12">
-                        <v-card-subtitle class="px-0 pt-0">Reference ID</v-card-subtitle>
-                        <div class="item-refid">{{ item.refId || item._rowId }}</div>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col cols="12">
-                        <v-card-subtitle class="px-0">Name</v-card-subtitle>
-                        <div class="item-name">{{ item.Name }}</div>
-                    </v-col>
-                </v-row>
+            <v-card-text v-if="item" class="pt-0 pb-2">
+                <v-table density="compact" class="item-info-table">
+                    <tbody>
+                        <tr>
+                            <td class="text-right info-label">Name:</td>
+                            <td class="item-name">{{ item.Name }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right info-label">Description:</td>
+                            <td class="item-description">{{ item.Description }}</td>
+                        </tr>
+                        <tr v-if="item.XPath">
+                            <td class="text-right info-label">XPath:</td>
+                            <td class="item-xpath">{{ item.XPath }}</td>
+                        </tr>
+                    </tbody>
+                </v-table>
                 
                 <!-- Semantic distance results -->
                 <v-row v-if="item.Description && namodelStore.semanticDistanceResults.length > 0">
@@ -171,17 +174,36 @@ const relativeDistances = computed(() => {
 </template>
 
 <style scoped>
-.item-refid {
-    font-weight: bold;
-    font-size: 1.1rem;
-    margin-bottom: 12px;
-    font-family: monospace;
+.item-info-table {
+    font-size: 0.8rem !important;
+    margin-bottom: 8px;
+}
+
+.item-info-table :deep(td) {
+    padding: 2px 4px !important;
+    height: auto !important;
+    border-bottom: none !important;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #666;
+    width: 100px;
+    vertical-align: top;
+    padding-top: 4px !important;
 }
 
 .item-name {
     font-weight: bold;
-    font-size: 1rem;
-    margin-bottom: 12px;
+}
+
+.item-description {
+    white-space: pre-wrap;
+}
+
+.item-xpath {
+    font-family: monospace;
+    color: #555;
 }
 
 .table-container {
