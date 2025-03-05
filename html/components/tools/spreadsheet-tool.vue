@@ -1,5 +1,6 @@
 <script setup>
 	import { ref, computed, watch, onMounted } from 'vue';
+import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 
 	// Props to receive the data and loading/error states
 	const props = defineProps({
@@ -22,6 +23,22 @@
 	const tableHeaders = ref([]);
 	const expandedHeaders = ref([]);
 	const search = ref('');
+	
+	// Modal control
+	const showModal = ref(false);
+	const selectedItem = ref(null);
+
+	// Function to open edit modal
+	const openEditModal = (item) => {
+		selectedItem.value = item;
+		showModal.value = true;
+	};
+
+	// Function to close modal
+	const closeModal = () => {
+		showModal.value = false;
+		selectedItem.value = null;
+	};
 
 	// Priority columns to show in main table
 	const priorityColumns = ['Name', 'CEDS ID', 'Description'];
@@ -182,6 +199,13 @@
 
 <template>
 	<div class="tool-container">
+		<!-- Editor Component -->
+		<NaDescriptionEditor 
+			:item="selectedItem" 
+			v-model:show="showModal" 
+			@close="closeModal"
+		/>
+		
 		<div v-if="isLoading" class="text-center">
 			<v-progress-circular
 				indeterminate
@@ -229,6 +253,15 @@
 							v-slot:[`item.${header.key}`]="{ item }"
 						>
 							<div class="no-wrap" :class="header.class">
+								<v-icon 
+									v-if="header.key === 'Description'" 
+									class="edit-icon mr-1" 
+									size="small" 
+									color="primary"
+									@click.stop="openEditModal(item)"
+								>
+									mdi-pencil
+								</v-icon>
 								<span v-html="item[header.key]"></span>
 							</div>
 						</template>
@@ -381,4 +414,15 @@
 		color: blue;
 		width: 40vw;
 	}
+	
+	.edit-icon {
+		cursor: pointer;
+		opacity: 0.7;
+		transition: opacity 0.2s;
+	}
+	
+	.edit-icon:hover {
+		opacity: 1;
+	}
+	
 </style>
