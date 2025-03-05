@@ -20,13 +20,21 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	const localConfig = getConfig(moduleName); //moduleName is closure
 
 	const { sqlDb, mapper, dataMapping } = passThroughParameters;
+	const escapeShellArg = (str) => {
+		return str.replace(/([$`"\\!#&*(){}[\]|<>?])/g, '\\$1');
+	};
+
+	// Example usage:
+	const query =
+		'The subject area code (i.e., the first two digits of the course classification code).';
+	console.log(escapeShellArg(query));
+
+	// Output: The subject area code $begin:math:text$i.e., the first two digits of the course classification code$end:math:text$.
 
 	// ================================================================================
 	// SERVICE FUNCTION
 
 	const serviceFunction = (xReq, callback) => {
-		
-
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
@@ -35,17 +43,15 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 		taskList.push((args, next) => {
 			const { sqlDb, mapper, xReq } = args;
 			const localCallback = (error, stdout, stderr) => {
-				
-
 				next(error, { ...args, result: stdout });
 			};
+			
 
+			const queryString = xReq.query.queryString;
+			console.log(`queryString=${queryString}`);
+			
 
-			const queryString = xReq.query.queryString
-console.log(`queryString=${queryString}`);
-
-
-			const shellCommand = `/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/ceds-vector-tools/cedsVectorTools.js -json --queryString=${queryString}`;
+			const shellCommand = escapeShellArg(`/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/ceds-vector-tools/cedsVectorTools.js -json --queryString=${queryString}`);
 			exec(shellCommand, localCallback);
 		});
 

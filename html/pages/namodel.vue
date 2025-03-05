@@ -32,11 +32,7 @@ const selectTool = (toolName) => {
 	selectedTool.value = toolName;
 };
 
-// Fetch semantic distance results on component mount
-onMounted(async () => {
-	await namodelStore.fetchSemanticDistance("family name");
-	console.log("Semantic distance results:", namodelStore.semanticDistanceResults);
-});
+// We'll fetch semantic distance data only when requested from the editor
 </script>
 
 <template>
