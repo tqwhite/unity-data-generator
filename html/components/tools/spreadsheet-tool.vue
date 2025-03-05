@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 // Props to receive the data and loading/error states
 const props = defineProps({
@@ -18,86 +18,112 @@ const props = defineProps({
 });
 
 // Prepare data for data table
-const items = ref([]);
-const headers = ref([]);
+const tableItems = ref([]);
+const tableHeaders = ref([]);
 const search = ref('');
 
-// Function to extract and order headers from data items
-const extractHeaders = (data) => {
-  if (!data || !Array.isArray(data) || data.length === 0) return [];
+// Debug helper to log actual properties
+const logDataStructure = () => {
+  if (!props.workingData) return;
   
-  // Collect all unique property names across all items
+  // Get the flat array of items
+  let items = [];
+  if (Array.isArray(props.workingData)) {
+    items = props.workingData;
+  } else if (typeof props.workingData === 'object') {
+    items = Object.values(props.workingData);
+  }
+  
+  if (items.length === 0) return;
+  
+  console.log('First data item properties:', Object.keys(items[0]));
+  console.log('Sample data item:', items[0]);
+};
+
+// Initialize the table data
+const initializeTable = () => {
+  if (!props.workingData) {
+    tableItems.value = [];
+    tableHeaders.value = [];
+    return;
+  }
+  
+  // Convert data to array format
+  if (Array.isArray(props.workingData)) {
+    tableItems.value = props.workingData;
+  } else if (typeof props.workingData === 'object') {
+    tableItems.value = Object.values(props.workingData);
+  } else {
+    tableItems.value = [];
+    return;
+  }
+  
+  if (tableItems.value.length === 0) return;
+  
+  // Get all unique properties across all items
   const allProperties = new Set();
-  data.forEach(item => {
+  tableItems.value.forEach(item => {
     if (item && typeof item === 'object') {
       Object.keys(item).forEach(key => allProperties.add(key));
     }
   });
   
-  // Define priority order for specific columns
-  const priorityOrder = ['Name', 'CEDS_ID', 'Description'];
+  // Define the priority columns
+  const priorityKeys = ['Name', 'CEDS ID', 'Description'];
   
-  // Create sorted header array with priority columns first
-  const sortedProperties = [
-    // First add the priority columns in order (if they exist in the data)
-    ...priorityOrder.filter(key => allProperties.has(key)),
-    
-    // Then add all other columns (excluding those already added)
-    ...Array.from(allProperties).filter(key => !priorityOrder.includes(key))
-  ];
+  // Create headers with priority columns first
+  const headers = [];
   
-  // Convert to header objects for v-data-table
-  return sortedProperties.map(key => ({
-    title: key,
-    key: key,
-    align: 'start',
-    sortable: true,
-    width: key === 'Description' ? '300px' : undefined, // Give Description more space
-    filterable: true
-  }));
+  // Add priority columns first
+  priorityKeys.forEach(key => {
+    if (allProperties.has(key)) {
+      headers.push({
+        title: key,
+        key: key,
+        align: 'start',
+        sortable: true
+      });
+      allProperties.delete(key);
+    }
+  });
+  
+  // Add remaining columns
+  Array.from(allProperties).forEach(key => {
+    headers.push({
+      title: key,
+      key: key,
+      align: 'start',
+      sortable: true
+    });
+  });
+  
+  tableHeaders.value = headers;
 };
 
-// Process data when it changes
-watch(() => props.workingData, (newData) => {
-  if (newData) {
-    // For array data, use directly
-    if (Array.isArray(newData)) {
-      items.value = newData;
-    } 
-    // For object data with array values (common pattern)
-    else if (typeof newData === 'object') {
-      // Check if this is an object of objects, each with a refId
-      const firstItemList = Object.values(newData);
-      if (firstItemList.length > 0 && typeof firstItemList[0] === 'object') {
-        items.value = firstItemList;
-      } else {
-        // Fallback to wrapping the single object in an array
-        items.value = [newData];
-      }
-    } else {
-      items.value = [];
-    }
-    
-    // Extract headers from the items
-    headers.value = extractHeaders(items.value);
-  } else {
-    items.value = [];
-    headers.value = [];
-  }
-}, { immediate: true });
-
-// Computed property for filtered items
+// Filtered items based on search
 const filteredItems = computed(() => {
-  if (!search.value) return items.value;
+  if (!search.value) return tableItems.value;
   
   const searchLower = search.value.toLowerCase();
-  return items.value.filter(item => {
+  return tableItems.value.filter(item => {
     return Object.values(item).some(value => {
       if (value === null || value === undefined) return false;
       return String(value).toLowerCase().includes(searchLower);
     });
   });
 });
+
+// Initialize on mount and when workingData changes
+onMounted(() => {
+  logDataStructure();
+  initializeTable();
+});
+
+// Watch for changes in workingData
+watch(() => props.workingData, () => {
+  logDataStructure();
+  initializeTable();
+}, { immediate: true });
 </script>
 
 <template>
@@ -110,8 +136,8 @@ const filteredItems = computed(() => {
       <v-icon color="error" size="64" class="mb-3">mdi-alert-circle</v-icon>
       <div>{{ error }}</div>
     </div>
-    <div v-else-if="workingData" class="w-100 h-100 overflow-auto content-container">
-      <!-- Data table view -->
+    <div v-else-if="workingData" class="w-100 h-100 content-container">
+      <!-- Basic search field -->
       <div class="pa-0">
         <v-text-field
           v-model="search"
@@ -123,27 +149,28 @@ const filteredItems = computed(() => {
           class="mb-4"
         ></v-text-field>
         
-        <v-data-table
-          :headers="headers"
-          :items="filteredItems"
-          :search="search"
-          class="spreadsheet-table"
-          density="compact"
-          fixed-header
-          height="calc(100vh - 180px)"
-          hover
-        >
-          <!-- Template for all cells to prevent wrapping -->
-          <template v-for="header in headers" :key="header.key" v-slot:[`item.${header.key}`]="{ item }">
-            <div class="no-wrap">{{ item[header.key] }}</div>
-          </template>
-          
-          <template v-slot:bottom>
-            <div class="text-center pt-2 pb-2">
-              <span class="text-caption">{{ filteredItems.length }} items</span>
-            </div>
-          </template>
-        </v-data-table>
+        <!-- Data table with horizontal scroll -->
+        <div class="table-container">
+          <v-data-table
+            :headers="tableHeaders"
+            :items="filteredItems"
+            class="spreadsheet-table"
+            density="compact"
+            fixed-header
+            height="calc(100vh - 180px)"
+            :items-per-page="-1"
+            hide-default-footer
+          >
+            <!-- Template for cells to prevent wrapping -->
+            <template v-for="header in tableHeaders" :key="header.key" v-slot:[`item.${header.key}`]="{ item }">
+              <div class="no-wrap">{{ item[header.key] }}</div>
+            </template>
+          </v-data-table>
+        </div>
+        
+        <div class="text-center pt-2">
+          <span class="text-caption">{{ tableItems.length }} items</span>
+        </div>
       </div>
     </div>
     <div v-else class="text-center">
@@ -176,6 +203,15 @@ const filteredItems = computed(() => {
   table-layout: auto;
 }
 
+/* Force cells not to wrap */
+:deep(.v-data-table) {
+  white-space: nowrap !important;
+}
+
+:deep(.v-data-table__wrapper) {
+  overflow-x: auto;
+}
+
 /* Custom styling for table headers */
 :deep(.v-data-table-header th) {
   font-weight: bold;
@@ -188,8 +224,8 @@ const filteredItems = computed(() => {
 /* Style for the table cells */
 :deep(.v-data-table-row td) {
   border-bottom: 1px solid rgba(76, 175, 80, 0.1);
-  white-space: nowrap;
-  max-width: 500px;
+  white-space: nowrap !important;
+  max-width: 800px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 10pt;
@@ -198,17 +234,21 @@ const filteredItems = computed(() => {
   min-height: 24px !important;
 }
 
-/* Prevent text wrapping in cells */
+/* Override v-data-table default padding */
+:deep(.v-data-table__td), 
+:deep(.v-data-table__th) {
+  padding: 0 4px !important;
+}
+
 .no-wrap {
-  white-space: nowrap;
+  white-space: nowrap !important;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0;
 }
 
-/* Override v-data-table default padding */
-:deep(.v-data-table__td), 
-:deep(.v-data-table__th) {
-  padding: 0 4px !important;
+.table-container {
+  overflow-x: auto;
+  width: 100%;
 }
 </style>
