@@ -43,19 +43,21 @@ const selectItem = async (refId) => {
 
 <template>
   <v-card flat class="h-100 selection-card">
-    <v-card-title class="text-h6 py-3 px-4">LIST</v-card-title>
+    <v-card-title class="text-h6 py-3 px-4"></v-card-title>
     
     <!-- Filter Tool -->
-    <v-text-field
-      v-model="filterText"
-      label="Filter Tool"
-      prepend-inner-icon="mdi-filter-outline"
-      variant="outlined"
-      density="compact"
-      hide-details
-      class="mx-3 mb-3 filter-field"
-      placeholder="Filter items by text"
-    ></v-text-field>
+    <div class="filter-container">
+      <v-text-field
+        v-model="filterText"
+        label="Filter"
+        prepend-inner-icon="mdi-filter-outline"
+        variant="outlined"
+        density="compact"
+        hide-details
+        class="mb-3 filter-field"
+        placeholder="Selection List Filter"
+      ></v-text-field>
+    </div>
     
     <!-- Selector list -->
     <v-list class="overflow-y-auto selector-list" density="compact">
@@ -94,9 +96,34 @@ const selectItem = async (refId) => {
   width: 100%;
   max-width: 300px;
 }
-.filter-field {
+.filter-container {
+  padding: 0 16px;
   width: 100%;
   max-width: 300px;
+  box-sizing: border-box;
+}
+.filter-field {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Match the color with spreadsheet-tool filter */
+:deep(.v-field__input::placeholder) {
+  color: rgba(0, 0, 0, 0.6) !important;
+  opacity: 0.7;
+}
+
+/* Match border styling */
+:deep(.v-field.v-field--variant-outlined .v-field__outline) {
+  color: rgba(0, 0, 0, 0.38) !important;
+}
+
+:deep(.v-field.v-field--variant-outlined:hover .v-field__outline) {
+  color: rgba(0, 0, 0, 0.86) !important;
+}
+
+:deep(.v-field.v-field--variant-outlined.v-field--focused .v-field__outline) {
+  color: var(--v-theme-primary) !important;
 }
 .selector-list {
   max-height: calc(100vh - 200px);

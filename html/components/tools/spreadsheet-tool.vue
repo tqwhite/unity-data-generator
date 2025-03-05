@@ -220,15 +220,16 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 		</div>
 		<div v-else-if="workingData" class="w-100 h-100 content-container">
 			<!-- Basic search field -->
-			<div class="pa-0">
+			<div class="filter-container pa-0">
 				<v-text-field
 					v-model="search"
-					append-icon="mdi-magnify"
-					label="Search"
-					single-line
+					prepend-inner-icon="mdi-filter-outline"
+					variant="outlined"
+					label="Filter"
 					hide-details
 					density="compact"
-					class="mb-4"
+					class="mb-3 filter-field"
+					placeholder="Property List Filter"
 				></v-text-field>
 
 				<!-- Data table with expandable rows -->
@@ -425,4 +426,33 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 		opacity: 1;
 	}
 	
+	.filter-container {
+		width: 100%;
+		max-width: 300px;
+		box-sizing: border-box;
+	}
+	
+	.filter-field {
+		width: 100% !important;
+		box-sizing: border-box;
+	}
+	
+	/* Ensure consistent styling with selection-list filter */
+	:deep(.v-field__input::placeholder) {
+		color: rgba(0, 0, 0, 0.6) !important;
+		opacity: 0.7;
+	}
+	
+	/* Match border styling */
+	:deep(.v-field.v-field--variant-outlined .v-field__outline) {
+		color: rgba(0, 0, 0, 0.38) !important;
+	}
+	
+	:deep(.v-field.v-field--variant-outlined:hover .v-field__outline) {
+		color: rgba(0, 0, 0, 0.86) !important;
+	}
+	
+	:deep(.v-field.v-field--variant-outlined.v-field--focused .v-field__outline) {
+		color: var(--v-theme-primary) !important;
+	}
 </style>

@@ -19,8 +19,8 @@ if (router?.currentRoute.value.query.logout) {
 // Selected ID is now maintained by the selection-list component
 const selectedRefId = ref(null);
 
-// Selected tool - default to JSON tool
-const selectedTool = ref('json');
+// Selected tool - default to Spreadsheet tool
+const selectedTool = ref('spreadsheet');
 
 // Handle selection from the component
 const handleSelection = (refId) => {
@@ -36,7 +36,7 @@ const selectTool = (toolName) => {
 <template>
 	<v-app>
 		<generalNavSub />
-		<v-main>
+		<v-main style="padding-top: 65px;">
 			<v-container fluid class="fill-height">
 				<v-row no-gutters class="fill-height">
 					<!-- Left sidebar with selection list component -->
@@ -51,17 +51,8 @@ const selectTool = (toolName) => {
 					<v-col style="flex: 1; min-width: 0; max-width: calc(100vw - 320px);">
 						<v-card flat class="h-100">
 							<!-- Control buttons -->
-							<v-toolbar flat density="compact">
+							<v-toolbar flat density="compact" color="white">
 								<v-spacer></v-spacer>
-								<v-btn 
-									class="mr-2" 
-									variant="outlined" 
-									:disabled="selectedTool === 'json'"
-									@click="selectTool('json')"
-									prepend-icon="mdi-code-json"
-								>
-									JSON
-								</v-btn>
 								<v-btn 
 									class="mr-2" 
 									variant="outlined" 
@@ -72,12 +63,21 @@ const selectTool = (toolName) => {
 									Spreadsheet
 								</v-btn>
 								<v-btn 
+									class="mr-2" 
 									variant="outlined" 
 									:disabled="selectedTool === 'outline'"
 									@click="selectTool('outline')"
 									prepend-icon="mdi-file-tree"
 								>
 									Outline
+								</v-btn>
+								<v-btn 
+									variant="outlined" 
+									:disabled="selectedTool === 'json'"
+									@click="selectTool('json')"
+									prepend-icon="mdi-code-json"
+								>
+									JSON
 								</v-btn>
 							</v-toolbar>
 							
