@@ -511,7 +511,7 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 	.filter-checkboxes {
 		display: flex;
 		flex-direction: row;
-		gap: 16px;
+		gap: 8px;
 		flex-grow: 1;
 	}
 	
@@ -521,12 +521,17 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 	}
 	
 	:deep(.filter-checkbox .v-label) {
-		font-size: 0.75rem;
+		font-size: 0.7rem;
 		opacity: 0.8;
 	}
 	
 	:deep(.filter-checkbox .v-selection-control) {
-		min-height: 24px;
+		min-height: 20px;
+		margin-right: -8px;
+	}
+	
+	:deep(.filter-checkbox .v-selection-control__wrapper) {
+		transform: scale(0.8);
 	}
 	
 	/* Ensure consistent styling with selection-list filter */
