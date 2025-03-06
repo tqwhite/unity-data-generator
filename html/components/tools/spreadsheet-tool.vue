@@ -24,6 +24,12 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 	const expandedHeaders = ref([]);
 	const search = ref('');
 	
+	// Filter checkboxes
+	const noAtFilter = ref(false);
+	const noTypesFilter = ref(false);
+	const noBlanksFilter = ref(false);
+	const noRefIdsFilter = ref(false);
+	
 	// Modal control
 	const showModal = ref(false);
 	const selectedItem = ref(null);
@@ -167,17 +173,39 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 		expandedHeaders.value = removeHoles(otherHeaders);
 	};
 
-	// Filtered items based on search
+	// Filtered items based on search and checkbox filters
 	const filteredItems = computed(() => {
-		if (!search.value) return tableItems.value;
-
-		const searchLower = search.value.toLowerCase();
-		return tableItems.value.filter((item) => {
-			return Object.values(item).some((value) => {
-				if (value === null || value === undefined) return false;
-				return String(value).toLowerCase().includes(searchLower);
+		let filtered = tableItems.value;
+		
+		// Apply text search filter
+		if (search.value) {
+			const searchLower = search.value.toLowerCase();
+			filtered = filtered.filter((item) => {
+				return Object.values(item).some((value) => {
+					if (value === null || value === undefined) return false;
+					return String(value).toLowerCase().includes(searchLower);
+				});
 			});
-		});
+		}
+		
+		// Apply checkbox filters
+		if (noAtFilter.value) {
+			filtered = filtered.filter(item => !item.Name?.match(/^@/));
+		}
+		
+		if (noTypesFilter.value) {
+			filtered = filtered.filter(item => !item.Type?.match(/type/i));
+		}
+		
+		if (noBlanksFilter.value) {
+			filtered = filtered.filter(item => item.Description !== '' && item.Description !== undefined);
+		}
+		
+		if (noRefIdsFilter.value) {
+			filtered = filtered.filter(item => !item.Name?.match(/refid/i));
+		}
+		
+		return filtered;
 	});
 
 	// Initialize on mount and when workingData changes
@@ -221,16 +249,50 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 		<div v-else-if="workingData" class="w-100 h-100 content-container">
 			<!-- Basic search field -->
 			<div class="filter-container pa-0">
-				<v-text-field
-					v-model="search"
-					prepend-inner-icon="mdi-filter-outline"
-					variant="outlined"
-					label="Filter"
-					hide-details
-					density="compact"
-					class="mb-3 filter-field"
-					placeholder="Property List Filter"
-				></v-text-field>
+				<div class="filter-row">
+					<v-text-field
+						v-model="search"
+						prepend-inner-icon="mdi-filter-outline"
+						variant="outlined"
+						label="Filter"
+						hide-details
+						density="compact"
+						class="filter-field"
+						placeholder="Property List Filter"
+					></v-text-field>
+					
+					<!-- Filter checkboxes -->
+					<div class="filter-checkboxes">
+						<v-checkbox
+							v-model="noAtFilter"
+							label="No @"
+							density="compact"
+							hide-details
+							class="filter-checkbox"
+						></v-checkbox>
+						<v-checkbox
+							v-model="noTypesFilter"
+							label="No Types"
+							density="compact"
+							hide-details
+							class="filter-checkbox"
+						></v-checkbox>
+						<v-checkbox
+							v-model="noBlanksFilter"
+							label="No Blanks"
+							density="compact"
+							hide-details
+							class="filter-checkbox"
+						></v-checkbox>
+						<v-checkbox
+							v-model="noRefIdsFilter"
+							label="No RefIds"
+							density="compact"
+							hide-details
+							class="filter-checkbox"
+						></v-checkbox>
+					</div>
+				</div>
 
 				<!-- Data table with expandable rows -->
 				<div class="table-container">
@@ -428,13 +490,43 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 	
 	.filter-container {
 		width: 100%;
-		max-width: 300px;
+		max-width: 100%;
 		box-sizing: border-box;
 	}
 	
+	.filter-row {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin-bottom: 12px;
+		gap: 16px;
+	}
+	
 	.filter-field {
-		width: 100% !important;
+		width: 300px !important;
+		flex-shrink: 0;
 		box-sizing: border-box;
+	}
+	
+	.filter-checkboxes {
+		display: flex;
+		flex-direction: row;
+		gap: 16px;
+		flex-grow: 1;
+	}
+	
+	.filter-checkbox {
+		margin: 0;
+		padding: 0;
+	}
+	
+	:deep(.filter-checkbox .v-label) {
+		font-size: 0.75rem;
+		opacity: 0.8;
+	}
+	
+	:deep(.filter-checkbox .v-selection-control) {
+		min-height: 24px;
 	}
 	
 	/* Ensure consistent styling with selection-list filter */
