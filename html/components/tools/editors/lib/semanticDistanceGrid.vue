@@ -57,7 +57,7 @@ const relativeDistances = computed(() => {
 
 <template>
     <v-card flat outlined>
-        <v-card-title class="text-subtitle-2">
+        <v-card-title class="text-subtitle-2 font-weight-bold">
             Semantic Distance for: "{{ sourceText }}"
             <v-chip 
                 color="primary" 
@@ -108,10 +108,9 @@ const relativeDistances = computed(() => {
 
 <style scoped>
 .table-container {
-    max-height: 400px;
-    overflow-y: auto;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 4px;
+    overflow: hidden;
 }
 
 .semantic-results-table {

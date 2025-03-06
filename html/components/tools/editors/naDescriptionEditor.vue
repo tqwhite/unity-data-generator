@@ -6,6 +6,9 @@ import SemanticDistanceGrid from './lib/semanticDistanceGrid.vue';
 // Initialize the namodelStore
 const namodelStore = useNamodelStore();
 
+// Custom query input
+const customQuery = ref("");
+
 // Define props for the editor component
 const props = defineProps({
     item: {
@@ -41,11 +44,33 @@ const fetchSemanticResults = async () => {
     if (!namodelStore.isLoadingSemanticDistance && props.item) {
         const queryString = props.item.Description || "";
         console.log(`Fetching semantic distance data for: "${queryString}"`);
-        await namodelStore.fetchSemanticDistance(queryString);
+        // Use the refId as the identifier for this query
+        const refId = props.item.refId || props.item.XPath || "default";
+        await namodelStore.fetchSemanticDistance(refId, queryString);
     }
 };
 
-// No longer need the formatted results as it's handled in the SemanticDistanceGrid component
+// Get semantic distance results for the current item
+const currentItemResults = computed(() => {
+    if (!props.item) return [];
+    const refId = props.item.refId || props.item.XPath || "default";
+    return namodelStore.getSemanticDistanceResults(refId);
+});
+
+// Function to fetch custom query
+const fetchCustomQuery = async () => {
+    if (!customQuery.value.trim() || !props.item) return;
+    
+    const queryString = customQuery.value.trim();
+    console.log(`Fetching semantic distance data for custom query: "${queryString}"`);
+    
+    // Use the refId as the identifier for this query
+    const refId = props.item.refId || props.item.XPath || "default";
+    await namodelStore.fetchSemanticDistance(refId, queryString);
+    
+    // Clear the input field after fetching
+    customQuery.value = "";
+};
 
 // No longer need to process distances here as it's handled in the SemanticDistanceGrid component
 </script>
@@ -76,16 +101,34 @@ const fetchSemanticResults = async () => {
                     </tbody>
                 </v-table>
                 
-                <!-- Semantic distance results -->
-                <v-row v-if="item.Description && namodelStore.semanticDistanceResults.length > 0">
-                    <v-col cols="12" class="mt-3">
-                        <SemanticDistanceGrid
-                            :sourceText="item.Description"
-                            :results="namodelStore.semanticDistanceResults"
-                            :error="namodelStore.semanticDistanceError"
-                        />
+                <!-- Query input for semantic distance -->
+                <v-row v-if="item.Description" class="mt-3 mb-0">
+                    <v-col cols="12">
+                        <v-text-field
+                            v-model="customQuery"
+                            label="Semantic Distance Query"
+                            hint="Enter a custom query to compare with CEDS terms"
+                            persistent-hint
+                            density="compact"
+                            variant="outlined"
+                            :append-inner-icon="customQuery.trim() ? 'mdi-magnify-plus' : 'mdi-magnify'"
+                            :append-inner-icon-color="customQuery.trim() ? 'primary' : undefined"
+                            @click:append-inner="fetchCustomQuery"
+                            @keyup.enter="fetchCustomQuery"
+                        ></v-text-field>
                     </v-col>
                 </v-row>
+                
+                <!-- Semantic distance results - displayed in reverse order (newest first) -->
+                <div v-if="item.Description && currentItemResults.length > 0">
+                    <div v-for="(resultData, index) in [...currentItemResults].reverse()" :key="index" class="mt-3">
+                        <SemanticDistanceGrid
+                            :sourceText="resultData.queryString"
+                            :results="resultData.resultSet"
+                            :error="namodelStore.semanticDistanceError"
+                        />
+                    </div>
+                </div>
             </v-card-text>
         </v-card>
     </v-dialog>

@@ -6,7 +6,7 @@ export const useNamodelStore = defineStore('namodel', {
 		nameList: [],
 		listOfProperties: null,
 		combinedObject: null,
-		semanticDistanceResults: [],
+		semanticDistanceResults: {}, // Changed from array to object with refId keys
 		isLoading: false,
 		isLoadingSemanticDistance: false,
 		semanticDistanceError: null,
@@ -197,7 +197,7 @@ export const useNamodelStore = defineStore('namodel', {
 			this.combinedObject = null;
 		},
 
-		async fetchSemanticDistance(queryString = "family name") {
+		async fetchSemanticDistance(refId, queryString = "family name") {
 			this.isLoadingSemanticDistance = true;
 			this.semanticDistanceError = null;
 
@@ -223,7 +223,18 @@ export const useNamodelStore = defineStore('namodel', {
 				}
 
 				const data = await response.json();
-				this.semanticDistanceResults = data;
+				
+				// Initialize the array for this refId if it doesn't exist
+				if (!this.semanticDistanceResults[refId]) {
+					this.semanticDistanceResults[refId] = [];
+				}
+				
+				// Add the new query results to the refId's array
+				this.semanticDistanceResults[refId].push({
+					queryString,
+					resultSet: data
+				});
+				
 				return data;
 			} catch (err) {
 				this.semanticDistanceError = err.message;
@@ -237,6 +248,8 @@ export const useNamodelStore = defineStore('namodel', {
 	getters: {
 		isDataLoaded: (state) => !!state.listOfProperties,
 		hasNameList: (state) => state.nameList.length > 0,
-		hasSemanticDistanceResults: (state) => state.semanticDistanceResults.length > 0,
+		hasSemanticDistanceResults: (state) => Object.keys(state.semanticDistanceResults).length > 0,
+		getSemanticDistanceResults: (state) => (refId) => state.semanticDistanceResults[refId] || [],
+		getSemanticDistanceError: (state) => state.semanticDistanceError,
 	},
 });
