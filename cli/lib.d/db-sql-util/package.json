@@ -1,0 +1,11 @@
+{
+  "name": "dbSqlUtil",
+  "version": "1.0.0",
+  "description": "apply a file full of sql statements to a sqlite database in batches",
+  "main": "dbSqlUtil.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}

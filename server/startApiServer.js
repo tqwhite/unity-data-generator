@@ -240,11 +240,11 @@ const projectRoot=findProjectRoot(); // call with {closest:false} if there are n
 // --------------------------------------------------------------------------------
 // UTILITIES 
 process.global = {};
-process.global.xLog = require('./lib/x-log');
+process.global.xLog = require(path.join(projectRoot, 'code/lib/x-log'));
 process.global.xLog.logToStdOut();
 process.global.projectRoot = projectRoot;
 
-const assembleConfigurationShowHelpMaybeExit = require('./lib/assemble-configuration-show-help-maybe-exit');
+const assembleConfigurationShowHelpMaybeExit = require(path.join(projectRoot, 'code/lib/assemble-configuration-show-help-maybe-exit'));
 
 assembleConfigurationShowHelpMaybeExit({ configName:moduleName, applicationControls:['-flagCity', '--flagValue'] }, moduleFunction({ moduleName }));
 
