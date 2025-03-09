@@ -36,7 +36,9 @@ DESCRIPTION
 
 CONTROLS
 
+-debug	Shows helpful messages from database processing system
 --databasePath=override_database_file_path
+--skip=N        skip the first N statements (for resuming after a previous run)
 
 -CEDS_Elements	process CEDS_Elements/CEDS-Elements-V12.0.0.0_SQLITE.sql
 -CEDS_IDS	process /CEDS_IDS/Populate-CEDS-Element-Tables_SQLITE.sql
@@ -53,6 +55,8 @@ OUTPUT
 EXAMPLES
 
 <!applicationName!> -help
+<!applicationName!> -CEDS_Elements
+<!applicationName!> -CEDS_IDS --skip=5000    # Resume processing at the 5001st statement
 
 
 

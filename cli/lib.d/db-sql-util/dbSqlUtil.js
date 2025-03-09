@@ -73,13 +73,29 @@ const moduleFunction =
 				break;
 			default:
 				xLog.error(`no switch supplied, choose -CEDS_IDS or -CEDS_Elements`);
+				process.exit(1);
 		}
 		
-		const sqlStatementList=fs.readFileSync(sqlStatementFilePath).toString().split(';');
+		if (!fs.existsSync(sqlStatementFilePath)) {
+			xLog.error(`SQL file not found at path: ${sqlStatementFilePath}`);
+			process.exit(1);
+		}
 		
-		const result=require('./lib/execute-sql-list')({sqlStatementList});
+		xLog.status(`Reading SQL from: ${sqlStatementFilePath}`);
 
-		xLog.status(`${moduleName} is initialized`);
+		const executeSqlList = require('./lib/execute-sql-list');
+		const result = executeSqlList({sqlStatementFilePath});
+		
+		if (result.errors > 0) {
+			xLog.error(`Execution completed with ${result.errors} errors`);
+			if (!commandLineParameters.switches.verbose) {
+				xLog.error('Run with -verbose to see error details');
+			}
+		} else {
+			xLog.status(`Successfully executed ${result.successful} SQL statements`);
+		}
+		
+		xLog.status(`${moduleName} completed`);
 	};
 
 //END OF moduleFunction() ============================================================
@@ -97,4 +113,3 @@ console.log(
 );
 module.exports = moduleFunction({ moduleName })({}); //runs it right now
 //module.exports = moduleFunction({config, commandLineParameters, moduleName})();
-

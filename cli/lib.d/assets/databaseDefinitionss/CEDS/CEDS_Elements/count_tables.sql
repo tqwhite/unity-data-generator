@@ -24,4 +24,12 @@ SELECT
 UNION ALL
 SELECT 
   'CEDS_Topic' AS table_name, 
-  (SELECT COUNT(*) FROM CEDS_Topic) AS row_count;
+  (SELECT COUNT(*) FROM CEDS_Topic) AS row_count
+UNION ALL
+SELECT 
+  '_CEDSElements' AS table_name, 
+  (SELECT COUNT(*) FROM _CEDSElements) AS row_count
+UNION ALL
+SELECT 
+  '_CEDStoNDSMapping' AS table_name, 
+  (SELECT COUNT(*) FROM _CEDStoNDSMapping) AS row_count;
