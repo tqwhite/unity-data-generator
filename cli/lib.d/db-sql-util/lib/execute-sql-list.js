@@ -137,7 +137,18 @@ const moduleFunction =
 		// Execute the statements in batches
 		const results = [];
 		const errors = [];
+		const errorLogs = [];
 		const BATCH_SIZE = 5000; // Process 5000 statements at a time
+		
+		// xLog.processLogDir is set up in the parent directory. It need not be done here.
+		
+		// Determine which SQL file is being processed for logging
+		let sqlFileName = "unknownSQL";
+		if (commandLineParameters.switches.CEDS_Elements) {
+			sqlFileName = "CEDS_Elements";
+		} else if (commandLineParameters.switches.CEDS_IDS) {
+			sqlFileName = "CEDS_IDS";
+		}
 		
 		// Get skip parameter if provided
 		const skipCount = commandLineParameters.values.skip
@@ -168,6 +179,9 @@ const moduleFunction =
 				try {
 					db.exec('BEGIN TRANSACTION;');
 					
+					// Clear batch error logs
+					errorLogs.length = 0;
+					
 					batchStatements.forEach((sql, batchIndex) => {
 						const globalIndex = startIndex + batchIndex;
 						try {
@@ -187,7 +201,15 @@ const moduleFunction =
 							results.push({ index: globalIndex, success: true });
 						} catch (error) {
 							const errorMessage = `Error in statement #${globalIndex + 1}: ${error.message}`;
-							errors.push({ index: globalIndex, sql, error: error.message });
+							const errorEntry = { 
+								index: globalIndex, 
+								statement: sql.substring(0, 500) + (sql.length > 500 ? '...' : ''),
+								error: error.message 
+							};
+							
+							errors.push(errorEntry);
+							// Only log SQL statements that cause errors
+							errorLogs.push(`--- Statement #${globalIndex + 1} ---\n${sql}\n\nError: ${error.message}\n\n`);
 							
 							if (!commandLineParameters.switches.silent) {
 								xLog.error(errorMessage);
@@ -211,6 +233,15 @@ const moduleFunction =
 					} else {
 						db.exec('ROLLBACK;');
 						xLog.error(`Batch ${currentBatch} rolled back due to ${errors.length} errors`);
+						
+						// Write error log for this batch - only if there are errors
+						if (errorLogs.length > 0) {
+							const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+							const logFileName = `${sqlFileName}_batch${currentBatch}_errors_${timestamp}.log`;
+							xLog.saveProcessFile(logFileName, errorLogs.join('\n'));
+							xLog.status(`Error details saved to logs/${logFileName}`);
+						}
+						
 						// Stop processing if there are errors
 						break;
 					}
@@ -227,6 +258,14 @@ const moduleFunction =
 		} finally {
 			db.close();
 			xLog.status('Database connection closed');
+			
+			// Write a summary of all errors to a log file if there were any
+			if (errors.length > 0) {
+				const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+				const summaryFileName = `${sqlFileName}_errors_summary_${timestamp}.json`;
+				xLog.saveProcessFile(summaryFileName, errors, { saveAsJson: true });
+				xLog.status(`Error summary saved to logs/${summaryFileName}`);
+			}
 		}
 		
 		const summary = {
@@ -235,22 +274,22 @@ const moduleFunction =
 			skipped: skipCount,
 			successful: results.length,
 			errors: errors.length,
-			errorDetails: errors,
+			errorDetails: errors.length > 0 ? `See logs directory for detailed error reports` : null,
 			nextSkip: startIndex < validSqlStatements.length ? startIndex : null
 		};
 		
 		xLog.status(
-			`SQL Execution Summary: ${summary.successful}/${summary.processed} processed statements executed successfully (${summary.skipped} skipped)`
+			`\nSQL Execution Summary: ${summary.successful}/${summary.processed} processed statements executed successfully (${summary.skipped} skipped)`
 		);
 		
-		if (summary.errors > 0 && commandLineParameters.switches.verbose) {
+		if (summary.errors > 0) {
 			xLog.error(
-				`Error details: ${JSON.stringify(summary.errorDetails, null, 2)}`,
+				`\nFound ${summary.errors} errors. Error details have been saved to the logs directory:\n${xLog.getProcessFilesDirectory()}.`
 			);
 		}
 		
 		if (summary.nextSkip !== null) {
-			xLog.status(`To continue from where processing stopped, use: --skip=${summary.nextSkip}`);
+			xLog.status(`To continue from where processing stopped, use: --skip=${summary.nextSkip}\n`);
 		}
 		
 		return summary;

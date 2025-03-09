@@ -43,7 +43,9 @@ const moduleFunction =
 		const { xLog, getConfig, rawConfig, commandLineParameters } =
 			process.global;
 		const { databaseFilePath, sqlPaths } = getConfig(moduleName); //moduleName is closure
-		
+
+		// Set up process file directory for error logging
+		xLog.setProcessFilesDirectory(`/tmp/${moduleName}`);
 
 		const workingDatabasePath = commandLineParameters.values.databasePath
 			? commandLineParameters.values.databasePath.qtFirst()
@@ -75,26 +77,23 @@ const moduleFunction =
 				xLog.error(`no switch supplied, choose -CEDS_IDS or -CEDS_Elements`);
 				process.exit(1);
 		}
-		
+
 		if (!fs.existsSync(sqlStatementFilePath)) {
 			xLog.error(`SQL file not found at path: ${sqlStatementFilePath}`);
 			process.exit(1);
 		}
-		
+
 		xLog.status(`Reading SQL from: ${sqlStatementFilePath}`);
 
 		const executeSqlList = require('./lib/execute-sql-list');
-		const result = executeSqlList({sqlStatementFilePath});
-		
+		const result = executeSqlList({ sqlStatementFilePath });
+
 		if (result.errors > 0) {
 			xLog.error(`Execution completed with ${result.errors} errors`);
-			if (!commandLineParameters.switches.verbose) {
-				xLog.error('Run with -verbose to see error details');
-			}
 		} else {
 			xLog.status(`Successfully executed ${result.successful} SQL statements`);
 		}
-		
+
 		xLog.status(`${moduleName} completed`);
 	};
 

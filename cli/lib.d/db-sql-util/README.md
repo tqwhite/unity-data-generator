@@ -6,9 +6,10 @@ A utility for executing SQL statements from files against SQLite databases, desi
 
 - Processes a file full of SQL statements, removes comments, and splits them on semicolons (properly handling semicolons in quotes)
 - Executes statements against a SQLite database in manageable batches
-- Provides progress reporting and error handling
+- Provides progress reporting and detailed error handling
 - Supports transaction management (auto-rollback on errors)
 - Allows resuming execution from a specific point with the --skip parameter
+- Logs all SQL errors to files for later analysis
 - Configurable via INI files
 
 ## Installation
@@ -88,6 +89,22 @@ RESTART INFO: To continue from the next batch, use:
 --skip=10000
 =============================================
 ```
+
+## Error Logging
+
+The utility automatically logs only SQL statements that cause errors to files in the `logs` directory:
+
+1. **Batch Error Logs**: Detailed logs containing only the SQL statements that caused errors
+   - Format: `[SQL_FILE]_batch[NUMBER]_errors_[TIMESTAMP].log`
+
+2. **Error Summary**: A JSON summary of all errors encountered during processing
+   - Format: `[SQL_FILE]_errors_summary_[TIMESTAMP].json`
+
+These logs provide:
+- Full SQL statements that caused errors
+- Detailed error messages
+- Statement indexes (for reference)
+- Timestamps for when errors occurred
 
 ## Dependencies
 
