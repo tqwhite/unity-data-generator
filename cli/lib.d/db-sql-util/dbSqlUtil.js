@@ -52,17 +52,14 @@ const moduleFunction =
 			: databaseFilePath;
 
 		console.log(`workingDatabasePath=${workingDatabasePath}`);
-		if (
-			commandLineParameters.switches.help ||
-			commandLineParameters.values.help
-		) {
-			require('./assets/help-and-exit')({
-				applicationName: moduleName,
-				version: '1.0',
-				configPath: rawConfig._meta.configurationSourceFilePath,
-				databaseFilePath,
-			});
-		}
+
+		require('./assets/help-and-exit')({
+			applicationName: moduleName,
+			version: '1.0',
+			configPath: rawConfig._meta.configurationSourceFilePath,
+			databaseFilePath,
+			errorMessage:''
+		}); //shows help and then process.exit()
 
 		let sqlStatementFilePath;
 		switch (true) {

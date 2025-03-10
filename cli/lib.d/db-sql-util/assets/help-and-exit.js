@@ -10,28 +10,38 @@ const path = require('path');
 const fs = require('fs');
 
 //START OF moduleFunction() ============================================================
-const moduleFunction = ({ moduleName } = {}) => (replaceObj={}) => {
-	const { xLog, getConfig, rawConfig, commandLineParameters } = process.global;
-	const localConfig = getConfig(moduleName); //moduleName is closure
+const moduleFunction =
+	({ moduleName } = {}) =>
+	(replaceObj = {}) => {
+		const { xLog, getConfig, rawConfig, commandLineParameters } =
+			process.global;
+		const localConfig = getConfig(moduleName); //moduleName is closure
 
-	const helpTemplate=`
+		if (
+			commandLineParameters.switches.help ||
+			commandLineParameters.values.help
+		) {
+			const helpTemplate = `
 ============================================================
 
 NAME
 
 	<!applicationName!> opens a file full of SQL statements, splits it on ;
 	and sends them to sqlite.
-	
+
+
 	If the file is very big and has lots of statements, it executes them in batches
 	and shows progress statements (unless -silent).
 
 DESCRIPTION
 
 	<!applicationName!> -CEDS_Elements|-CEDS_IDS [--databasePath]
-	
+
+
 	Unless overriden, the sqlite file path is:
 		<!databaseFilePath!>
-	
+
+
 	Configuration File Path: <!configPath!>
 
 CONTROLS
@@ -59,17 +69,17 @@ EXAMPLES
 <!applicationName!> -CEDS_IDS --skip=5000    # Resume processing at the 5001st statement
 
 
-
 [version: <!version!>]
 ============================================================
 <!errorMessage!>
 `;
-xLog.status(helpTemplate.qtTemplateReplace(replaceObj));
-
-};
+			xLog.status(helpTemplate.qtTemplateReplace(replaceObj));
+			process.exit();
+		}
+	};
 
 //END OF moduleFunction() ============================================================
 
 
-	module.exports = moduleFunction({ moduleName }); //returns initialized moduleFunction
+module.exports = moduleFunction({ moduleName }); //returns initialized moduleFunction
 

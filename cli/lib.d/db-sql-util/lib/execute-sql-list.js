@@ -7,6 +7,7 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 const Database = require('better-sqlite3');
+const parseSqlString = require('./parse-sql-string');
 
 //START OF moduleFunction() ============================================================
 const moduleFunction =
@@ -25,17 +26,6 @@ const moduleFunction =
 			xLog.error(`Error reading SQL file: ${error.message}`);
 			process.exit(1);
 		}
-		
-		// Pre-process SQL content to remove comments
-		xLog.status('Pre-processing SQL to remove comments...');
-		
-		// First, remove multi-line comments (/* ... */)
-		sqlContent = sqlContent.replace(/\/\*[\s\S]*?\*\//g, ' ');
-		
-		// Then, remove single-line comments (-- to end of line)
-		sqlContent = sqlContent.replace(/--.*$/gm, ' ');
-		
-		xLog.status('Comments removed from SQL');
 		
 		// Get database path
 		const workingDatabasePath = commandLineParameters.values.databasePath
@@ -73,55 +63,8 @@ const moduleFunction =
 			process.exit(1);
 		}
 
-		// Split the SQL content into individual statements by semicolons
-		// But be careful not to split on semicolons inside quotes
-		const validSqlStatements = [];
-		let currentStatement = '';
-		let inSingleQuote = false;
-		let inDoubleQuote = false;
-		let escaped = false;
-		
-		// Process SQL character by character to handle semicolons in quotes
-		for (let i = 0; i < sqlContent.length; i++) {
-			const char = sqlContent[i];
-			const prevChar = i > 0 ? sqlContent[i - 1] : '';
-			
-			// Handle escaping
-			if (char === '\\' && !escaped) {
-				escaped = true;
-				currentStatement += char;
-				continue;
-			}
-			
-			// Handle quotes
-			if (char === "'" && !escaped) {
-				inSingleQuote = !inSingleQuote;
-			} else if (char === '"' && !escaped) {
-				inDoubleQuote = !inDoubleQuote;
-			}
-			
-			// Handle semicolons outside of quotes
-			if (char === ';' && !inSingleQuote && !inDoubleQuote) {
-				const trimmed = currentStatement.trim();
-				if (trimmed.length > 0) {
-					validSqlStatements.push(trimmed);
-				}
-				currentStatement = '';
-			} else {
-				currentStatement += char;
-			}
-			
-			// Reset escape flag
-			if (escaped) {
-				escaped = false;
-			}
-		}
-		
-		// Add the last statement if it's not empty
-		const trimmed = currentStatement.trim();
-		if (trimmed.length > 0) {
-			validSqlStatements.push(trimmed);
-		}
+		// Use the parseSqlString module to parse SQL content into statements
+		const validSqlStatements = parseSqlString(sqlContent);
 		
 		xLog.status(`Found ${validSqlStatements.length} SQL statements to execute after preprocessing`);
 		
@@ -138,7 +81,7 @@ const moduleFunction =
 		const results = [];
 		const errors = [];
 		const errorLogs = [];
-		const BATCH_SIZE = 5000; // Process 5000 statements at a time
+		const BATCH_SIZE = 100; // Process 5000 statements at a time
 		
 		// xLog.processLogDir is set up in the parent directory. It need not be done here.
 		
@@ -177,7 +120,8 @@ const moduleFunction =
 				
 				// Execute batch in a transaction
 				try {
-					db.exec('BEGIN TRANSACTION;');
+					db.exec('PRAGMA foreign_keys = OFF;');
+					//db.exec('BEGIN TRANSACTION;');
 					
 					// Clear batch error logs
 					errorLogs.length = 0;
@@ -191,11 +135,8 @@ const moduleFunction =
 								}
 							}
 							
-							if (commandLineParameters.switches.debug) {
-								console.log(`\n=-=============   Executing SQL  ========================= [execute-sql-list.js.]\n`);
-								console.log(`${sql}`);
-								console.log(`\n=-=============   End SQL  ========================= [execute-sql-list.js.]\n`);
-							}
+							// In debug mode, we'll only log SQL that causes errors
+							// SQL statements will be logged in the catch block for errors
 							
 							const result = db.exec(sql);
 							results.push({ index: globalIndex, success: true });
@@ -212,14 +153,21 @@ const moduleFunction =
 							errorLogs.push(`--- Statement #${globalIndex + 1} ---\n${sql}\n\nError: ${error.message}\n\n`);
 							
 							if (!commandLineParameters.switches.silent) {
-								xLog.error(errorMessage);
-								xLog.error(`Problematic SQL: ${sql.substring(0, 100)}${sql.length > 100 ? '...' : ''}`);
+								xLog.error(`\n=-=============   ERROR IN SQL STATEMENT #${globalIndex + 1}  ========================= [execute-sql-list.js.]\n`);
+								xLog.error(`${sql}`);
+								xLog.error(`\n=-=--------------------------------------------------- [execute-sql-list.js.]\n`);
+								xLog.error(`ERROR: ${error.message}`);
+								console.log(`\n=-=============   End ERROR SQL  ========================= [execute-sql-list.js.]\n`);
+if (!error.message.match(/.* values for .* columns/) && !(error.message.match(/unrecognized token/) && sql.match(/ INTO CEDS_Term /))){
+console.log(' Debug Exit [execute-sql-list.js.]', {depth:4, colors:true}); process.exit(); //tqDebug
+}
+
 							}
 						}
 					});
 					
 					if (errors.length === 0) {
-						db.exec('COMMIT;');
+						//db.exec('COMMIT;');
 						xLog.status(`Batch ${currentBatch} committed successfully`);
 						
 						// Print restart information
@@ -231,7 +179,7 @@ const moduleFunction =
 							xLog.status(`=============================================\n`);
 						}
 					} else {
-						db.exec('ROLLBACK;');
+						//db.exec('ROLLBACK;');
 						xLog.error(`Batch ${currentBatch} rolled back due to ${errors.length} errors`);
 						
 						// Write error log for this batch - only if there are errors
@@ -243,12 +191,12 @@ const moduleFunction =
 						}
 						
 						// Stop processing if there are errors
-						break;
+						//break;
 					}
 				} catch (error) {
-					db.exec('ROLLBACK;');
+					//db.exec('ROLLBACK;');
 					xLog.error(`Batch ${currentBatch} transaction failed: ${error.message}`);
-					break;
+					//break;
 				}
 				
 				processedCount += batchStatements.length;
