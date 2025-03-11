@@ -52,7 +52,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 				next('', { ...args, nameList });
 			};
 
-			const query = `SELECT GlobalID, ElementName, refId FROM <!tableName!> ORDER BY ElementName`;
+			const query = `SELECT GlobalID, ElementName, GlobalID as refId FROM <!tableName!> ORDER BY ElementName`;
 			cedsTable.getData(query, { suppressStatementLog: true }, localCallback);
 		});
 

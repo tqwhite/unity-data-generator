@@ -1,0 +1,36 @@
+I've been working on an RDF processor CLI tool for converting RDF-XML data to JavaScript objects. The tool is in /Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/rdf-tester/rdfTester.js. 
+
+The current implementation successfully:
+1. Parses RDF-XML files using xml2js
+2. Extracts and separates both rdfs:Class and owl:Class elements
+3. Outputs classes to separate files (classObjects.json for rdfs:Class and owlClassObjects.json for owl:Class)
+4. Extracts properties (rdf:Property and rdfs:Property)
+5. Links properties to their respective classes via domain relationships
+6. Handles both RDFS and Schema.org namespaces for properties like domainIncludes and rangeIncludes
+7. Extracts additional metadata like prefLabel, notation, definition, and description
+
+We've also added support for:
+- Class hierarchies (superClasses)
+- Equivalent classes
+- Multiple domain and range formats
+
+Features I might want to enhance:
+1. Improve property linking with more sophisticated domain/range handling
+2. Add support for datatype properties vs. object properties
+3. Improve handling of blank nodes or complex class expressions
+4. Add support for OWL-specific features like restrictions
+5. Create options to filter or customize output based on command-line parameters
+6. Add visual output options (like generating diagrams)
+7. Optimize processing of very large RDF files
+8. Add support for additional RDF serialization formats (Turtle, JSON-LD, etc.)
+
+The tool processes CEDS (Common Education Data Standards) RDF files, extracting class and property definitions and organizing them into a structured JavaScript object format for easier use in JS applications.
+
+Main features implemented:
+- XML-to-JS conversion of RDF data
+- Extraction of classes with their metadata
+- Extraction of properties with their metadata
+- Linking properties to classes based on domain relationships
+- Support for both RDFS and Schema.org vocabularies
+- Separation of rdfs:Class and owl:Class elements
+- Multiple output files for different RDF elements

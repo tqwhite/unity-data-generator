@@ -60,8 +60,8 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 				next('', { ...args, element });
 			};
 
-			const query = `SELECT * FROM <!tableName!> WHERE GlobalID = '${refId}'`;
-			cedsTable.getData(query, { suppressStatementLog: true }, localCallback);
+			const query = `SELECT *, GlobalID as refId FROM <!tableName!> WHERE GlobalID = '${refId}'`;
+			cedsTable.getData(query, { suppressStatementLog: false }, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------

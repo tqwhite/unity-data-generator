@@ -1,0 +1,3163 @@
+[
+  {
+    "uri": "http://ceds.ed.gov/terms#BaseCEDSResource",
+    "name": "BaseCEDSResource",
+    "label": "Base CEDS Resource",
+    "comment": "\n\t\t\tThe BaseCEDSResource class represents the base resource in the Common Education Data Standards (CEDS) ontology. \n\t\t\tIt serves as the foundational class from which all other CEDS resource classes inherit common properties and attributes.\n\t\t\tSubclasses of BaseCEDSResource may include specific types of instructional resources, such as students, staff, courses, \n\t\t\tassessments, etc.\n\t\t",
+    "properties": [
+      {
+        "uri": "http://ceds.ed.gov/terms#hasRecordStatus",
+        "name": "hasRecordStatus",
+        "label": null,
+        "comment": "Has Record Status",
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdfs:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://ceds.ed.gov/terms#RecordStatus",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#hasDataCollection",
+        "name": "hasDataCollection",
+        "label": null,
+        "comment": "Has Record Status",
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdfs:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://ceds.ed.gov/terms#DataCollection",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#RecordStatus",
+    "name": "RecordStatus",
+    "label": "Record Status",
+    "comment": "\n\t\t\tTBD\n\t\t",
+    "properties": [
+      {
+        "uri": "http://ceds.ed.gov/terms#RecordStatusDate",
+        "name": "RecordStatusDate",
+        "label": null,
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdf:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://www.w3.org/2001/XMLSchema#dateTime",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#hasOrganization",
+        "name": "hasOrganization",
+        "label": "Has Organization",
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdfs:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://ceds.ed.gov/terms#Organization",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#createdByPerson",
+        "name": "createdByPerson",
+        "label": "Record Created By person",
+        "comment": "TBD",
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdfs:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://ceds.ed.gov/terms#Person",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#createdByOrganization",
+        "name": "createdByOrganization",
+        "label": "Record Created By Organization",
+        "comment": "TBD",
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdfs:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://ceds.ed.gov/terms#Organization",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#hasRecordStatusHistory",
+        "name": "hasRecordStatusHistory",
+        "label": null,
+        "comment": "Has Record Status History",
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdfs:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://ceds.ed.gov/terms#RecordStatusHistory",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#RecordStatusHistory",
+    "name": "RecordStatusHistory",
+    "label": "Record Status History",
+    "comment": "\n\t\t\tTBD\n\t\t",
+    "properties": [
+      {
+        "uri": "http://ceds.ed.gov/terms#RecordPKColumn",
+        "name": "RecordPKColumn",
+        "label": null,
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdf:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://www.w3.org/2001/XMLSchema#string",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#RecordStatusDate",
+        "name": "RecordStatusDate",
+        "label": null,
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdf:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://www.w3.org/2001/XMLSchema#dateTime",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#RecordTable",
+        "name": "RecordTable",
+        "label": null,
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdf:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://www.w3.org/2001/XMLSchema#string",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#hasOrganization",
+        "name": "hasOrganization",
+        "label": "Has Organization",
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdfs:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://ceds.ed.gov/terms#Organization",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#hasPerson",
+        "name": "hasPerson",
+        "label": "Has Person",
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdfs:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://ceds.ed.gov/terms#Person",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#hasRecordStatus",
+        "name": "hasRecordStatus",
+        "label": "Has RecordStatus",
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdfs:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://ceds.ed.gov/terms#RecordStatus",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#DataCollection",
+    "name": "DataCollection",
+    "label": "Data Collection",
+    "comment": "\n\t\t\tTBD\n\t\t",
+    "properties": [
+      {
+        "uri": "http://ceds.ed.gov/terms#DataCollectionAcademicSchoolYear",
+        "name": "DataCollectionAcademicSchoolYear",
+        "label": null,
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdf:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://www.w3.org/2001/XMLSchema#string",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#DataCollectionCloseDate",
+        "name": "DataCollectionCloseDate",
+        "label": null,
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdf:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://www.w3.org/2001/XMLSchema#dateTime",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#DataCollectionDescription",
+        "name": "DataCollectionDescription",
+        "label": null,
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdf:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://www.w3.org/2001/XMLSchema#string",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#DataCollectionName",
+        "name": "DataCollectionName",
+        "label": null,
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdf:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://www.w3.org/2001/XMLSchema#string",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#DataCollectionOpenDate",
+        "name": "DataCollectionOpenDate",
+        "label": null,
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdf:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://www.w3.org/2001/XMLSchema#dateTime",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#DataCollectionSchoolYear",
+        "name": "DataCollectionSchoolYear",
+        "label": null,
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdf:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://www.w3.org/2001/XMLSchema#string",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#SourceSystemDataCollectionIdentifier",
+        "name": "SourceSystemDataCollectionIdentifier",
+        "label": null,
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdf:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://www.w3.org/2001/XMLSchema#string",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      },
+      {
+        "uri": "http://ceds.ed.gov/terms#SourceSystemName",
+        "name": "SourceSystemName",
+        "label": null,
+        "comment": null,
+        "creator": "Common Education Data Standards",
+        "propertyType": "rdf:Property",
+        "domainType": "rdfs:domainIncludes",
+        "ranges": [
+          {
+            "uri": "http://www.w3.org/2001/XMLSchema#string",
+            "type": "rdfs:rangeIncludes"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200393",
+    "name": "C200393",
+    "label": "Accrediting Organization",
+    "comment": "An authority that reviews an organization's educational program and staff for quality, and certifies whether the organization meets a minimal set of standards.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200001",
+    "name": "C200001",
+    "label": "Activity",
+    "comment": "An organized activity, such as a co-curricular or extra-curricular activity that is offered at an education institution.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200002",
+    "name": "C200002",
+    "label": "Activity Recognition",
+    "comment": "Records of a person's participation in an organized activity, such as a co-curricular or extra-curricular activity that is offered at an education institution.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200003",
+    "name": "C200003",
+    "label": "Adult Education Course",
+    "comment": "Information about a Course specific to adult education.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200004",
+    "name": "C200004",
+    "label": "Adult Education Provider",
+    "comment": "Information about an organization specific to their role as an adult education provider.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200005",
+    "name": "C200005",
+    "label": "Adult Education Staff",
+    "comment": "Information about a person specific to their role as a staff member in an adult education context.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200006",
+    "name": "C200006",
+    "label": "Adult Education Student Academic Record",
+    "comment": "Information in a student's academic record specific to adult education program participation.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200007",
+    "name": "C200007",
+    "label": "Adult Education Student Employment",
+    "comment": "Information about student employment specific to the adult education context.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200392",
+    "name": "C200392",
+    "label": "Affiliated Institution",
+    "comment": "An institution that has an ongoing, functional relationship with the education institution in order to provide improved educational experiences to an individual and/or the school.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200008",
+    "name": "C200008",
+    "label": "Apip Interaction",
+    "comment": "Information defining an assessment item interaction that may be specified using the IMS Global Accessible Portable Item Protocol APIP(R) standards.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200009",
+    "name": "C200009",
+    "label": "Application",
+    "comment": "Information about a software application used for authentication and access.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200010",
+    "name": "C200010",
+    "label": "Assessment",
+    "comment": "An instrument used to evaluate a person typically having at-least one AssessmentForm, AssessmentSection, and AssessmentItem.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200012",
+    "name": "C200012",
+    "label": "Assessment Accommodation",
+    "comment": "Information defining a variation in the standard administration of a standardized assessment that may be avaibale to accomodate a special needs such as a physical or cognitive disability. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200013",
+    "name": "C200013",
+    "label": "Assessment Administration",
+    "comment": "Information for an assessment event or administration period.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200015",
+    "name": "C200015",
+    "label": "Assessment Asset",
+    "comment": "Information about content used to compose an Assessment Item, is referenced by an item but not part of the item content itself, or is content that is included as part of a section within an assessment form. Assets can be static content such as artwork or dynamic assets such as calculators or other tools.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200016",
+    "name": "C200016",
+    "label": "Assessment Early Learning Developmental Domain",
+    "comment": "Developmental domains related to early learning and used for assessing a child's kindergarten readiness.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200017",
+    "name": "C200017",
+    "label": "Assessment Form",
+    "comment": "An instance of an a sessment that can equate scores with another instance of that same assessment.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200019",
+    "name": "C200019",
+    "label": "Assessment Form Assessment Form Section",
+    "comment": "Information linking sections within an assessment form to the form and the order in which the sections are designed to be offered. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200020",
+    "name": "C200020",
+    "label": "Assessment Form Section",
+    "comment": "Information about a grouping of assessment items intended to be delivered together.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200022",
+    "name": "C200022",
+    "label": "Assessment Form Section Assessment Item",
+    "comment": "Information linking assessment items to an assessment form section.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200023",
+    "name": "C200023",
+    "label": "Assessment Item",
+    "comment": "A specific prompt that defines a question or protocol for a measurable activity that triggers a response from a person used to determine whether the person has mastered a learning objective.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200024",
+    "name": "C200024",
+    "label": "Assessment Item Apip",
+    "comment": "Accessible Portable Item Protocol information for an assessment item that may use the IMS Global APIP(R) standards.  ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200025",
+    "name": "C200025",
+    "label": "Assessment Item Apip Description",
+    "comment": "Accessible Portable Item Protocol description for an assessment item that may use the IMS Global APIP(R) standards.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200026",
+    "name": "C200026",
+    "label": "Assessment Item Characteristic",
+    "comment": "The type and value for a psychometric measure.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200027",
+    "name": "C200027",
+    "label": "Assessment Item Possible Response",
+    "comment": "Information about one of the possible responses that a person may give in response to an assessment item prompt.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200028",
+    "name": "C200028",
+    "label": "Assessment Item Response",
+    "comment": "AssessmentItemResponse includes information about a learner response and subsequent information about feedback and scoring of the response.  Some properties like DescriptiveFeedback are for support of a  formative assessment process. Some properties are used within intelligent tutoring systems such as HintCount and ScaffoldingItemFlag.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200029",
+    "name": "C200029",
+    "label": "Assessment Item Response Theory",
+    "comment": "Information representing the difficulty of an assessment itme and other measures of the relationship between any individuals' performances on the test item and the test takers' levels of performance on an overall measure of the ability that item was designed to measure.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200030",
+    "name": "C200030",
+    "label": "Assessment Item Rubric Criterion Result",
+    "comment": "Information about an assessment result or score derived using a rubic criterion.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200031",
+    "name": "C200031",
+    "label": "Assessment Language",
+    "comment": "The association of an Assessment to one or more languages.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200032",
+    "name": "C200032",
+    "label": "Assessment Need Apip Content",
+    "comment": "Used as part of an Assessment Personal Needs Profile to define the content preferences and representation.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200033",
+    "name": "C200033",
+    "label": "Assessment Need Apip Control",
+    "comment": "Used as part of an Assessment Personal Needs Profile to define the control attributes.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200034",
+    "name": "C200034",
+    "label": "Assessment Need Apip Display",
+    "comment": "Used as part of an Assessment Personal Needs Profile to define the display attributes.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200035",
+    "name": "C200035",
+    "label": "Assessment Need Braille",
+    "comment": "Defines as part of an Assessment Personal Needs Profile the attributes for Braille display",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200036",
+    "name": "C200036",
+    "label": "Assessment Need Screen Enhancement",
+    "comment": "Defines as part of an Assessment Personal Needs Profile the attributes for screen enhancement.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200037",
+    "name": "C200037",
+    "label": "Assessment Participant Session",
+    "comment": "Information about a specific person's participation in an Assessment Session.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200038",
+    "name": "C200038",
+    "label": "Assessment Performance Level",
+    "comment": "information about the performance levels that may be assigned to an Assessment Subtest Result and specifications for selecting the performance level based on a score. Four styles are supported:\n1) specification of performance level by lower and upper cut score,\n2) specification of performance level by lower cut score only,\n3) specification of performance level without any mapping to scores, and\n4) Specification of performance level by mapping to other scores.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200039",
+    "name": "C200039",
+    "label": "Assessment Personal Need Language Learner",
+    "comment": "Information that indicates a person's need related as a language learner that may be used to deternine the need for an assessment accomodation.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200040",
+    "name": "C200040",
+    "label": "Assessment Personal Need Screen Reader",
+    "comment": "Information that indicates a person's need that calls for use of a screen reader accomodation during assessment.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200041",
+    "name": "C200041",
+    "label": "Assessment Personal Needs Profile",
+    "comment": "An entity that includes information about the personal needs and preferences for assessment participants, based on the IMS Global (R) Accessible Portable Item Protocol (R)",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200042",
+    "name": "C200042",
+    "label": "Assessment Personal Needs Profile Content",
+    "comment": "An entity that includes information about the personal needs and preferences related to content presented within an assessment delivery.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200043",
+    "name": "C200043",
+    "label": "Assessment Personal Needs Profile Control",
+    "comment": "An entity that includes information about the personal needs and preferences related to control of presentation during delivery of assessments.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200044",
+    "name": "C200044",
+    "label": "Assessment Personal Needs Profile Display",
+    "comment": "An entity that includes information about the personal needs and preferences related to displays of assessment content.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200045",
+    "name": "C200045",
+    "label": "Assessment Personal Needs Profile Screen Enhancement",
+    "comment": "An entity that includes information about the personal needs and preferences related to screen enhancements during delivery of an assessment.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200046",
+    "name": "C200046",
+    "label": "Assessment Registration",
+    "comment": "Information related to a specific person registered for an Assessment Administration, assigned a specific  Assessment Form for participation in one or more Assessment Sessions.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200047",
+    "name": "C200047",
+    "label": "Assessment Result",
+    "comment": "An entity that includes information about a person's results from an assessment which may be for the entire assessment or one aspect of evaluation. The scoring method is defined by the related Assessment Subtest. The entity includes the score value and information about the score, such as a diagnostic statement.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200048",
+    "name": "C200048",
+    "label": "Assessment Result Rubric Criterion Result",
+    "comment": "This join links an assessment result record to a result defined within a RubricCriterion.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200049",
+    "name": "C200049",
+    "label": "Assessment Session",
+    "comment": "Information related to an instance of delivering an assessment during a specific period of time.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200050",
+    "name": "C200050",
+    "label": "Assessment Session Staff Role",
+    "comment": "Roles served related to the administration of an assessment session.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200051",
+    "name": "C200051",
+    "label": "Assessment Subtest",
+    "comment": "Information for scoring an Assessment Form based on a set of Assessment Item responses with explicit rules to produce an Assessment Subtest Result, which may be for the entire Assessment Form or one aspect of evaluation based on a subset of Assessment Items.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200052",
+    "name": "C200052",
+    "label": "Assessment Subtest Assessment Item",
+    "comment": "This join links an assessment subtest to an assessment item.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200053",
+    "name": "C200053",
+    "label": "Assessment Subtest Early Learning Developmental Domain",
+    "comment": "This join links an assessment subtest to an early learning developmental domain record.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200054",
+    "name": "C200054",
+    "label": "Authentication",
+    "comment": "An application or service that can authenticate the identity of a person. The CEDS entity that includes information about an authentication provider, the login identifier used to authenticate a person's identity, and other information related to authentication of a person's identity. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200055",
+    "name": "C200055",
+    "label": "Authorization",
+    "comment": "Information about a data system or application which an authenticated person may access. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200056",
+    "name": "C200056",
+    "label": "Authorization Document",
+    "comment": "Information about a document that authorizes a deision or plan such as a document authorizing an IEP.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200057",
+    "name": "C200057",
+    "label": "Board Membership",
+    "comment": "Information related to persons as board members within an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200058",
+    "name": "C200058",
+    "label": "Building Space",
+    "comment": "Information describing and defining the uses of space within a building.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200059",
+    "name": "C200059",
+    "label": "Building Space Utilization",
+    "comment": "Information about the capacity and assigned utilization of an area within a building including if the area is unassigned.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200060",
+    "name": "C200060",
+    "label": "Building System Category",
+    "comment": "Type of building within a school such as a playground, gym, or classroom.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200061",
+    "name": "C200061",
+    "label": "Building System Component",
+    "comment": "Information about a component of a system within a facility including the installation date, lifecycle cost, description, and useful life.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200062",
+    "name": "C200062",
+    "label": "Building System Component Service",
+    "comment": "Information that tracks the service record of a building system component.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200069",
+    "name": "C200069",
+    "label": "Campus",
+    "comment": "A location where the postsecondary institution provides services (admin, residential, education). May be virtual or physical. May be called by other terms (e.g., branch, location site regional campus).",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200090",
+    "name": "C200090",
+    "label": "Career And Technical Course",
+    "comment": "The organization of subject matter and related learning experiences provided for the instruction of students on a regular or systematic basis, usually for a predetermined period of time (e.g., a semester or two-week workshop) to an individual or group of students (e.g., a class). ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200091",
+    "name": "C200091",
+    "label": "Career And Technical Student Academic Record",
+    "comment": "Summary academic record information for a career and technical education student.  ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200021",
+    "name": "C200021",
+    "label": "Charter School Authorizing Organization",
+    "comment": "An organization responsible for authorizing charter schools.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200379",
+    "name": "C200379",
+    "label": "Charter School Management Organization",
+    "comment": "A separate legal entity that 1) contracts with one or more charter schools to manage, operate, and oversee the charter schools; or 2) holds a charter, or charters, to operate multiple charter schools. (see Charter School Management Organization Type)",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200063",
+    "name": "C200063",
+    "label": "Classroom",
+    "comment": "A room where educational services are provided by a school, school system, state, or other agency or entity.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200065",
+    "name": "C200065",
+    "label": "Competency Definition",
+    "comment": "A resource that states a capability or behavior that a person may learn or be able to do within a given context with references to potential levels of competence, a mastery threshold, and other contextualizing metadata.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200064",
+    "name": "C200064",
+    "label": "Competency Definition Association",
+    "comment": "The relation of competency definitions to other competency definitions and/or competency frameworks to competency frameworks to support competency maps or competency sub frameworks or linked controlled vocabulary terms as metadata to further define a competency definition. (In CEDS IDS CompetencyDefAssociation also provides a mechanism to link any other object in the model to a CompetencyDefinition, e.g. to RubricCriterion, LearningResource, Course, or AssessmentItem.)",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200067",
+    "name": "C200067",
+    "label": "Competency Framework",
+    "comment": "A resource that identifies a collection of logically related CompetencyDefinitions, CompetencyDefAssociations, and contextualizing metadata.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200068",
+    "name": "C200068",
+    "label": "Competency Set",
+    "comment": "CompetencySet supports defining criteria for award or recognition of a credential or micro-credential based on a person's attainment of one or more CompetencyFrameworkItem(s). The set may have a completion criteria specifying if all or some of the items are required. If only some are required  then Completion Criteria Threshold is used to specify how many. Competency Set may also include other Competency Sets so it is possible to make a rule such as \"the person must complete these three required competency items and 2 out of 3 of these items specified in this sub set.\"",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200071",
+    "name": "C200071",
+    "label": "Core Knowledge Area",
+    "comment": "The core knowledge areas addressed by a professional development activity most commonly used in the early learning domain.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C001209",
+    "name": "C001209",
+    "label": "County A N S I Code",
+    "comment": "County code as defined for the identification of counties and equivalent areas of the United States, Puerto Rico, and the insular areas as established by the American National Standards Institute (ANSI) Inter-National Committee for Information Technology Standards (INCITS) in specification BSR INCITS 31-200x or more current updates. See https://www.census.gov/library/reference/code-lists/ansi.html#par_statelist.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200072",
+    "name": "C200072",
+    "label": "Course",
+    "comment": "The organization of subject matter and related learning experiences provided for the instruction of students on a regular or systematic basis, usually for a predetermined period of time.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200073",
+    "name": "C200073",
+    "label": "Course Funding Source",
+    "comment": "The relationship between course and the financial account that would be used to fund the course.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200074",
+    "name": "C200074",
+    "label": "Course Section",
+    "comment": "CourseSection represents an instance of a course offered/delivered in a specific timeframe and/or place or through specific media or mode of study or to a specific section of students. (In the CEDS IDS, CourseSection is a subclass of organization that can be linked to persons and roles using Membership. Subclasses include K12 Course, PsCourse, CteCoure, AeCourse)",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200075",
+    "name": "C200075",
+    "label": "Course Section Assessment Reporting",
+    "comment": "The method(s) that the instructor of the course uses to report the performance and achievement of all students. It may be a qualitative method such as individualized teacher comments or a quantitative method such as a letter or a numerical grade. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200076",
+    "name": "C200076",
+    "label": "Course Section Level",
+    "comment": "Information about an education level associated with a Course Section.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200077",
+    "name": "C200077",
+    "label": "Course Section Location",
+    "comment": "The location where a Course Section meets.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200078",
+    "name": "C200078",
+    "label": "Course Section Schedule",
+    "comment": "CourseSectionSchedule contains the times and days that a class is scheduled to meet on a weekly basis. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200079",
+    "name": "C200079",
+    "label": "Credential Award",
+    "comment": "Information about the award of a credential to a person or organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200080",
+    "name": "C200080",
+    "label": "Credential Award Credit",
+    "comment": "Credential AwardCredit may be used to record a specific course instance(CousreSection) that a Person completed to qualify for a CredentialAward using MembershipId and/or it could use CredentialCriteriaCourseId to reference the course completed.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200081",
+    "name": "C200081",
+    "label": "Credential Award Evidence",
+    "comment": "CredentialAwardEvidence includes a statement or reference describing the evidence that the learner met the criteria for attainment of the achievement and may be related to an AssessmentResult.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200082",
+    "name": "C200082",
+    "label": "Credential Award Relationship",
+    "comment": "The relationship between two credential awards, genrally used to capture extentions to an award (e.g., An endorsement for a teaching license).",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200087",
+    "name": "C200087",
+    "label": "Credential Definition",
+    "comment": "Defines a qualification, achievement, personal or organizational quality, or aspect of an identity typically used to indicate suitability.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200083",
+    "name": "C200083",
+    "label": "Credential Definition Agent",
+    "comment": "Information linking a person or organization to a credential definition with the applicable role such as the author, publisher, or issuer or the credential.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200084",
+    "name": "C200084",
+    "label": "Credential Definition Category",
+    "comment": "Information about a category defined within a specified category system that is applicable to a credential.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200085",
+    "name": "C200085",
+    "label": "Credential Definition Criteria",
+    "comment": "Defines the criteria by which a credential may be issued.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200086",
+    "name": "C200086",
+    "label": "Credential Definition Identifier",
+    "comment": "Defines one or more identifiers for a credential defininition.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200391",
+    "name": "C200391",
+    "label": "Credentialing Organization",
+    "comment": "An institution, organization, federation, or other such group that is responsible for accrediting or endorsing an individual's preparation, skills, or performance.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200088",
+    "name": "C200088",
+    "label": "Credential Issuer",
+    "comment": "An organization or person that issues a credential.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200089",
+    "name": "C200089",
+    "label": "Credential Offered",
+    "comment": "Links a CredentialIssuer to a CredentialDefinition defining a credential offered by that entity.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200066",
+    "name": "C200066",
+    "label": "Early College",
+    "comment": "An institution in which all students participate in a comprehensive plan that integrates their high school course of study and an intentionally designed authentic postsecondary experience leading to their regular high school diploma, an official college transcript and transferable college credit towards a recognized postsecondary degree or credential.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200094",
+    "name": "C200094",
+    "label": "Early Learning Child Demographic",
+    "comment": "Person demographics properties specific to the early learning context.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200095",
+    "name": "C200095",
+    "label": "Early Learning Child Developmental Assessment",
+    "comment": "Information about an assessment used in the context of early learning.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200096",
+    "name": "C200096",
+    "label": "Early Learning Child Health",
+    "comment": "Person health properties specific to the early learning context.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200097",
+    "name": "C200097",
+    "label": "Early Learning Child Individualized Program",
+    "comment": "Individualized program properties specific to the early learning context.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200098",
+    "name": "C200098",
+    "label": "Early Learning Child Outcome Summary",
+    "comment": "The Child Outcomes Summary (COS) process is a way for states to measure the progress of preschool and pre-K students receiving IEP services.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200099",
+    "name": "C200099",
+    "label": "Early Learning Child Program Eligibility",
+    "comment": "Information about a child's eligibility status for services under vaious programs.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200100",
+    "name": "C200100",
+    "label": "Early Learning Child Service",
+    "comment": "Information about services offered and services received through early learning programs.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200101",
+    "name": "C200101",
+    "label": "Early Learning Child Services Application",
+    "comment": "Information about the application process for earliy learning services.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200102",
+    "name": "C200102",
+    "label": "Early Learning Child Transition Plan",
+    "comment": "Information about transitions plans and compliance events for children transitioning from IDEA part C to IDEA part B.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200103",
+    "name": "C200103",
+    "label": "Early Learning Class Section",
+    "comment": "A cohort of children receiving services together, or in some cases individually, usually for a predetermined amount of time, with at least one assigned primary teacher. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200104",
+    "name": "C200104",
+    "label": "Early Learning Class Section Service",
+    "comment": "The services provided in an early leaning class/section.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200105",
+    "name": "C200105",
+    "label": "Early Learning Course",
+    "comment": "The organization of early learning subject matter and related learning experiences provided for the instruction of children on a regular or systematic basis, usually for a predetermined period of time (e.g., a semester or two-week workshop) to an individual or group of children (e.g., a class or group).  This further defines course at the domain level.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200092",
+    "name": "C200092",
+    "label": "Early Learning Credential",
+    "comment": "The credential related to early childhood education or development held by a person.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200106",
+    "name": "C200106",
+    "label": "Early Learning Enrollment",
+    "comment": "Enrollment of early learners in a program, class, or section.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200107",
+    "name": "C200107",
+    "label": "Early Learning Enrollment Other Funding",
+    "comment": "Information about tyes of funding applied to a specific child recieving early learning services.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200108",
+    "name": "C200108",
+    "label": "Early Learning Facility Licensing",
+    "comment": "The status and attributes of the facility license for an early learning organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200110",
+    "name": "C200110",
+    "label": "Early Learning Organization",
+    "comment": "Properties of an organization specific to the early learning domain that are combined with general Organization properties.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200111",
+    "name": "C200111",
+    "label": "Early Learning Organization Availability",
+    "comment": "Information on the early learning organization's availability to include time, groups served, facilities, and environment.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200112",
+    "name": "C200112",
+    "label": "Early Learning Organization Funds",
+    "comment": "Information about sources of funds received by an early learning organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200113",
+    "name": "C200113",
+    "label": "Early Learning Organization Monitoring",
+    "comment": "Information about events such as site visits by which an early learning organization is monitored, such as for compliance.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200114",
+    "name": "C200114",
+    "label": "Early Learning Organization Student Responsibility",
+    "comment": "The responsibility of an early learning organization to a student.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200115",
+    "name": "C200115",
+    "label": "Early Learning Program Licensing",
+    "comment": "The status and attributes of the licensing for an early learning program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200093",
+    "name": "C200093",
+    "label": "Early Learning Program Type Offered",
+    "comment": "The type(s) of  early childhood programs offered.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200116",
+    "name": "C200116",
+    "label": "Early Learning Quality Initiative",
+    "comment": "Information about participation and scoring of quality retings for an early learning organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200117",
+    "name": "C200117",
+    "label": "Early Learning Quality Rating Improvement",
+    "comment": "The early learning organization's Quality Rating and Improvement System (QRIS) attributes.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200118",
+    "name": "C200118",
+    "label": "Early Learning Service Partner",
+    "comment": "Information about a service partner to an early learning organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200119",
+    "name": "C200119",
+    "label": "Early Learning Staff",
+    "comment": "Early learning staff attributes.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200120",
+    "name": "C200120",
+    "label": "Early Learning Staff Assignment",
+    "comment": "Information about a role to which an early learning staff member has been assigned.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200121",
+    "name": "C200121",
+    "label": "Early Learning Staff Education",
+    "comment": "Early childhood credentials and education credits held by an early learning staff member.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200122",
+    "name": "C200122",
+    "label": "Early Learning Staff Employment",
+    "comment": "Attributes for early learning staff employment.  Extends from Staff.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200390",
+    "name": "C200390",
+    "label": "Education Institution",
+    "comment": "A public or private institution, organization, or agency that provides instructional or support services to students or staff at any level.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200389",
+    "name": "C200389",
+    "label": "Education Organization Network",
+    "comment": "A self-organized membership network of peer-level educational organizations intended to provide shared services or collective procurement.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200109",
+    "name": "C200109",
+    "label": "Eligibility Evaluation",
+    "comment": "Information about an event used to determine a learner's eligibility to participate in a program or recieve services.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200227",
+    "name": "C200227",
+    "label": "Emergency Response Agency",
+    "comment": "The local, state, or federal agency that has primary responsibility for responding to an emergency situation.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200388",
+    "name": "C200388",
+    "label": "Employee Benefit Carrier",
+    "comment": "An organization or institution that administers benefit plans or services to a staff member.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200387",
+    "name": "C200387",
+    "label": "Employee Benefit Contributor",
+    "comment": "An individual or organization that contributes monetary, in kind, or other types of contributions to an employee's benefit plan.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200386",
+    "name": "C200386",
+    "label": "Employer",
+    "comment": "A business, firm, institution, or other organization for whom an individual works (including self-employment) in return for financial or other compensation.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200123",
+    "name": "C200123",
+    "label": "Facility",
+    "comment": "Information about a piece of land, a building site, a building, or part of a building owned by and/or used for activities of an organizational unit such as a school, school system, program, or institution. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200124",
+    "name": "C200124",
+    "label": "Facility Audit",
+    "comment": "Process that assesses the safety, quality, and utilization of a facility or building.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200125",
+    "name": "C200125",
+    "label": "Facility Compliance",
+    "comment": "Designation that assesses whether a facility or building meets safety and teaching standards set by the school district, state, and federal agencies.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200126",
+    "name": "C200126",
+    "label": "Facility Design",
+    "comment": "Layout of a facility or asset space.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200127",
+    "name": "C200127",
+    "label": "Facility Design Construction",
+    "comment": "Information about the construction of a facility or asset space.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200128",
+    "name": "C200128",
+    "label": "Facility Energy",
+    "comment": "Information about energy consumption of a facility.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200129",
+    "name": "C200129",
+    "label": "Facility Finance",
+    "comment": "Information about a facility's financial condition or status including replacement value, allowed indeptedness amount, insurance deductable, and public education mill rate if applicable.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200130",
+    "name": "C200130",
+    "label": "Facility Financial",
+    "comment": "Information about mortgage and lease costs of a facility.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200131",
+    "name": "C200131",
+    "label": "Facility Hazard",
+    "comment": "Information about hazardous conditions or materials at or near a facility.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200132",
+    "name": "C200132",
+    "label": "Facility Joint Use",
+    "comment": "How a facility is used by parties aside from a primary tenant such as school district.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200133",
+    "name": "C200133",
+    "label": "Facility Lease",
+    "comment": "An agreement of lending a capital asset.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200134",
+    "name": "C200134",
+    "label": "Facility Management",
+    "comment": "Way in which a facility is managed.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200135",
+    "name": "C200135",
+    "label": "Facility Management Plan",
+    "comment": "Information describing a financial management plan and metadata about the applicable types of plans.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200136",
+    "name": "C200136",
+    "label": "Facility Mandate",
+    "comment": "Defines types of mandates applicable to a facility.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200137",
+    "name": "C200137",
+    "label": "Facility Mortgage",
+    "comment": "Defines details about a mortgage of a facility including interest, total asset value, and type of mortgage.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200138",
+    "name": "C200138",
+    "label": "Facility Mortgage Fee",
+    "comment": "Defines the types of fees applicable to a facility mortgage.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200139",
+    "name": "C200139",
+    "label": "Facility School Design",
+    "comment": "Defines a type of school design applicable to a facility.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200140",
+    "name": "C200140",
+    "label": "Facility Site",
+    "comment": "Information about a site at which a facility exists.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200141",
+    "name": "C200141",
+    "label": "Facility Utilization",
+    "comment": "The ratio in which a facility is being utilized by the school district.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C000547",
+    "name": "C000547",
+    "label": "Federal Program Code",
+    "comment": "The unique five-digit number assigned to each federal program as listed in the Assistance Listings. See https://sam.gov/content/assistance-listings",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200142",
+    "name": "C200142",
+    "label": "Financial Account",
+    "comment": "Summary of financial transations that provides information to external financial statement users.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200143",
+    "name": "C200143",
+    "label": "Financial Account Program",
+    "comment": "The statutes and regulations regarding school accounting and how they differ from state to state.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200144",
+    "name": "C200144",
+    "label": "Financial Aid Application",
+    "comment": "An application for financial aid submitted by a current or prospective student/learner.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200145",
+    "name": "C200145",
+    "label": "Financial Aid Award",
+    "comment": "An award of financial aid for a student/learner.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200146",
+    "name": "C200146",
+    "label": "Goal",
+    "comment": "An entity that includes information about a goal set for a person or organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200147",
+    "name": "C200147",
+    "label": "Goal Measurement",
+    "comment": "Information that defines how a goal is to be measured. This may be included in a performance plan, learning plan or IEP.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200148",
+    "name": "C200148",
+    "label": "Goal Measurement Criterion",
+    "comment": "Information about a threshold or rule used with a measurement to determine if a goal has been reached. This may be included in a performance plan, learning plan or IEP.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200149",
+    "name": "C200149",
+    "label": "Goal Performance",
+    "comment": "Status at a point in time toward reaching a  specific planned goal. These detailed records may be included in a progress report, such as a progress report for an IEP.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200385",
+    "name": "C200385",
+    "label": "Governing Board",
+    "comment": "An institution that is responsible for the policy decisions of an educational entity.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200000",
+    "name": "C200000",
+    "label": "Grade Level",
+    "comment": "Grade levels offered by educational institutions.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200150",
+    "name": "C200150",
+    "label": "IDEAEligibility Evaluation Category",
+    "comment": "A category by which a learner's eligibility for participation in an IDEA program may be considered.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200384",
+    "name": "C200384",
+    "label": "IDEA Part C Lead Agency",
+    "comment": "The lead agency within a State/Jurisdiction responsible for administering IDEA Part C.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200151",
+    "name": "C200151",
+    "label": "IEP Authorization",
+    "comment": "Information about whether an evaluation has determined if a person is authorized to receive an IEP.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200152",
+    "name": "C200152",
+    "label": "IEP Authorization Rejected",
+    "comment": "Information about a case in which a student was authorized for an IEP but the IEP was rejected by a parent or legal guardian.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200153",
+    "name": "C200153",
+    "label": "IEP Present Level",
+    "comment": "A level of ability or performance used as a baseline in an IEP. These detailed records may be included in a progress report, such as a progress report for an IEP.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200154",
+    "name": "C200154",
+    "label": "Incident",
+    "comment": "The details for an incident involving a student or school.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200155",
+    "name": "C200155",
+    "label": "Incident Activity",
+    "comment": "Information about the activity or activies taking place during an incident.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200156",
+    "name": "C200156",
+    "label": "Incident Person",
+    "comment": "The relationship between a person and an Incident involving a student or school.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200157",
+    "name": "C200157",
+    "label": "Individualized Program",
+    "comment": "Information on the type, design, dates, and participation of a student in an individualized program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200158",
+    "name": "C200158",
+    "label": "Individualized Program Accessible Format",
+    "comment": "Information about accessible formats provided to students as part of an individualized program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200159",
+    "name": "C200159",
+    "label": "Individualized Program Accommodation",
+    "comment": "Information about an accomodation specified as part of an individualized program such as a screen reader or spoken instructions for a visually impaired student.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200160",
+    "name": "C200160",
+    "label": "Individualized Program Accommodation Subject",
+    "comment": "Specifies an academic subject for which an individualized program accomodation applies.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200161",
+    "name": "C200161",
+    "label": "Individualized Program Amendment",
+    "comment": "Information about the ammendment of an individualized program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200162",
+    "name": "C200162",
+    "label": "Individualized Program Assessment",
+    "comment": "Information about assessment for a student under an individualized program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200163",
+    "name": "C200163",
+    "label": "Individualized Program Assessment Accommodation",
+    "comment": "Information about an accomotation specified as part of an individualized program that specifically addresses the context of an assessment taken by the student such as a screen reader or spoken instructions for a visually impaired student.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200164",
+    "name": "C200164",
+    "label": "Individualized Program Eligibility",
+    "comment": "Information that defines the eligibility of a student to recieve indivudualized program services or accomodations such as through and IEP or 504 plan.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200165",
+    "name": "C200165",
+    "label": "Individualized Program Eligibility Evaluation",
+    "comment": "Information that defines an assessment of a student's eligibility to recieve indivudualized program services or accomodations such as through and IEP or 504 plan.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200166",
+    "name": "C200166",
+    "label": "Individualized Program Goal",
+    "comment": "Information about a goal set for a student within a indivudualized program or education plan. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200167",
+    "name": "C200167",
+    "label": "Individualized Program Meeting",
+    "comment": "Information that documents a meeting about a student related to a indivudualized program or education plan. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200168",
+    "name": "C200168",
+    "label": "Individualized Program Meeting Attendee",
+    "comment": "Information that documents the attendees at a meeting about a student related to a indivudualized program or education plan. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200169",
+    "name": "C200169",
+    "label": "Individualized Program Progress Goal",
+    "comment": "Links a detailed GoalPerformance record to the progress report, such as for an IEP.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200170",
+    "name": "C200170",
+    "label": "Individualized Program Progress Report",
+    "comment": "An instance of a progress report for an individualized program, such as an IEP.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200171",
+    "name": "C200171",
+    "label": "Individualized Program Progress Report Plan",
+    "comment": "Defines frequency and type of progress reporting specified in the plan as required in an IEP.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200172",
+    "name": "C200172",
+    "label": "Individualized Program Service",
+    "comment": "Information that defines a service that may be delivered to a student through an individualized program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200173",
+    "name": "C200173",
+    "label": "Individualized Program Services Received",
+    "comment": "Relationship between services received  and one or more individualized programs.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200383",
+    "name": "C200383",
+    "label": "Intermediate Educational Unit",
+    "comment": "A regional, multi-services public agency authorized by State law to develop, manage, and provide services, programs, or other support (e.g., construction, food services, technology services) to LEAs.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200174",
+    "name": "C200174",
+    "label": "IPEDS Finance",
+    "comment": "Information related to the Integrated Postsecondary Education Data System requirements for postsecondary financial data reporting.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200175",
+    "name": "C200175",
+    "label": "Job",
+    "comment": "An entity that represent any type of job.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200176",
+    "name": "C200176",
+    "label": "Job Competency",
+    "comment": "The relationship between a job and the competency or competencies required for that job.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200177",
+    "name": "C200177",
+    "label": "Job Credential",
+    "comment": "The relationship between a job and credential or credentials required for that job.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200178",
+    "name": "C200178",
+    "label": "Job Detail",
+    "comment": "Information about a job.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200179",
+    "name": "C200179",
+    "label": "Job Identifier",
+    "comment": "A unique number or alphanumeric code used to identify a job.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200180",
+    "name": "C200180",
+    "label": "Job Position",
+    "comment": "An entity that represents any type of job position. A job position represents an instance of a job.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200181",
+    "name": "C200181",
+    "label": "Job Position Detail",
+    "comment": "Information about the job position.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200182",
+    "name": "C200182",
+    "label": "Job Position Identifier",
+    "comment": "A unique number or alphanumeric code used to identify a job position.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200183",
+    "name": "C200183",
+    "label": "Job Position Status",
+    "comment": "Information defining the status of a job position.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200184",
+    "name": "C200184",
+    "label": "K12 Charter School Authorizer Agency",
+    "comment": "The relationship between a K12 Charter School and the Agency that authorized the school.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200185",
+    "name": "C200185",
+    "label": "K12 Charter School Management Organization",
+    "comment": "The relationship between a K12 Charter School and the organization that manages the school.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200186",
+    "name": "C200186",
+    "label": "K12 Course",
+    "comment": "The organization of subject matter and related learning experiences provided for the instruction of students on a regular or systematic basis, usually for a predetermined period of time (e.g., a semester or two-week workshop) to an individual or group of students (e.g., a class). ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200187",
+    "name": "C200187",
+    "label": "K12 Federal Fund Allocation",
+    "comment": "Information about the type and amount of allocation of federal funds to a K12 organization during a funding period.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200197",
+    "name": "C200197",
+    "label": "K12 Organization Student Responsibility",
+    "comment": "K12OrganizationStudentResponsibility handles CEDS elements \"Responsible School Type\" and \"Responsible District Type\". Different organizations may be responsible for attendance, accountability, funding, IEP, and transportation for a single enrollment.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200198",
+    "name": "C200198",
+    "label": "K12 Program Or Service",
+    "comment": "Information on the programs and services offered by an LEA or school.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200199",
+    "name": "C200199",
+    "label": "K12 School",
+    "comment": "Information specific to K12 Schools. (Organization and related tables have properties that are common.)",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200200",
+    "name": "C200200",
+    "label": "K12 School Corrective Action",
+    "comment": "The types of corrective actions utilized by a K12 school under ESEA as amended.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200201",
+    "name": "C200201",
+    "label": "K12 School Improvement",
+    "comment": "Information on the improvement status for a K12 school.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200202",
+    "name": "C200202",
+    "label": "K12 School Indicator Status",
+    "comment": "Information about a K-12 school's status that can be used to capture categories of accountability such as an indication of whether the school is identified by the state as amoung persistently lowest-achieving schools.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200203",
+    "name": "C200203",
+    "label": "K12 School Status",
+    "comment": "The collection of status values for a K12 school.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200207",
+    "name": "C200207",
+    "label": "K12 Staff Assignment",
+    "comment": "Describes a person's assignment to a K12 organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200208",
+    "name": "C200208",
+    "label": "K12 Staff Employment",
+    "comment": "Employment attributes for a K12 Staff Member.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200209",
+    "name": "C200209",
+    "label": "K12 Student Academic Honor",
+    "comment": "Academic distinctions earned or awarded to a K12 student.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200210",
+    "name": "C200210",
+    "label": "K12 Student Academic Record",
+    "comment": "The summary level academic record for a K12 student including graduation information.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200211",
+    "name": "C200211",
+    "label": "K12 Student Activity",
+    "comment": "Information linking a K12 student to activities they participate in.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200212",
+    "name": "C200212",
+    "label": "K12 Student Cohort",
+    "comment": "Information on the cohort for a K12 student.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200213",
+    "name": "C200213",
+    "label": "K12 Student Course Section",
+    "comment": "The attributes for a K12 student enrolled in a course section.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200214",
+    "name": "C200214",
+    "label": "K12 Student Course Section Mark",
+    "comment": "Defines information about a mark associated with a student for a course section, including flags to indicate if the mark is a final grade or a midterm grade.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200215",
+    "name": "C200215",
+    "label": "K12 Student Discipline",
+    "comment": "The detail information for the reason and action taken for a discipline event of a K12 student.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200216",
+    "name": "C200216",
+    "label": "K12 Student Dropout",
+    "comment": "Information about a student who has dropped out or potentially may have dropped out of a K12 school.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200217",
+    "name": "C200217",
+    "label": "K12 Student Dropout Reason",
+    "comment": "Information about the reason or reasons related to a student dropping out of a K12 school.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200218",
+    "name": "C200218",
+    "label": "K12 Student Employment",
+    "comment": "Employment information for a K12 Student.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200219",
+    "name": "C200219",
+    "label": "K12 Student Enrollment",
+    "comment": "Information about a student enrollment that is unique to the K12 context.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200220",
+    "name": "C200220",
+    "label": "K12 Student Graduation Plan",
+    "comment": "The plan of courses a K-12 student will take to graduate from high school. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200221",
+    "name": "C200221",
+    "label": "K12 Student Home Language Survey",
+    "comment": "Information captured on an English learner home language survey.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200222",
+    "name": "C200222",
+    "label": "K12 Student Literacy Assessment",
+    "comment": "Information about literacy assessment given to a K12 student.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200223",
+    "name": "C200223",
+    "label": "K12 Student Session",
+    "comment": "Information specific to a K12 student and session.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200224",
+    "name": "C200224",
+    "label": "K12 Title III Language Instruction",
+    "comment": "The collection of Title III language instructional programs offered by an LEA.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200225",
+    "name": "C200225",
+    "label": "Learner Action",
+    "comment": "LearnerAction is designed to handle clickstream data for online assessments and other experiences such as is used by intelligent tutoring systems. The model is compatible with the structure of data found in Experience API (xAPI) specification.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200226",
+    "name": "C200226",
+    "label": "Learner Activity",
+    "comment": "An entity with information about a learning activity that may be assigned to a learner, for example a homework assignment.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200228",
+    "name": "C200228",
+    "label": "Learning Resource",
+    "comment": "A persistent resource that has one or more physical or digital representations, and that explicitly involves, specifies or entails a learning activity or learning experience.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200229",
+    "name": "C200229",
+    "label": "Learning Resource Adaptation",
+    "comment": "Links a learning resource record to one or more available aptations based on this resource.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200230",
+    "name": "C200230",
+    "label": "Learning Resource Identifier",
+    "comment": "A unique number or alphanumeric code assigned to a learning resource by an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200231",
+    "name": "C200231",
+    "label": "Learning Resource Issued",
+    "comment": "Information related to issuing a learning resource to a person for a period of time.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200232",
+    "name": "C200232",
+    "label": "Learning Resource Media Feature",
+    "comment": "Links a learning resource record to one or more media features.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200233",
+    "name": "C200233",
+    "label": "Learning Resource Order",
+    "comment": "Information related to an organization ordering or purchasing a learning resource.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200234",
+    "name": "C200234",
+    "label": "Learning Resource Peer Rating",
+    "comment": "Information about a rating given to a learning resource. (LearningResourceAggregatePeerRating  is a CEDS Connection to also support aggregate ratings.) ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200235",
+    "name": "C200235",
+    "label": "Learning Resource Physical Media",
+    "comment": "Information about physical media on which the Learning Resource is delivered or available.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200236",
+    "name": "C200236",
+    "label": "Learning Resource Status",
+    "comment": "The current status of a learning resource owned or leased by an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200188",
+    "name": "C200188",
+    "label": "Local Education Agency",
+    "comment": "An administrative unit within K-12 education at the local level which exists primarily to operate schools or to contract for educational services. These units may or may not be co-extensive with county, city, or town boundaries. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200189",
+    "name": "C200189",
+    "label": "Local Education Agency Federal Funds",
+    "comment": "Information on the federal funds received and distributed by the LEA under various programs.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200190",
+    "name": "C200190",
+    "label": "Local Education Agency Federal Reporting",
+    "comment": "Federal reporting status values and counts for an LEA.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200191",
+    "name": "C200191",
+    "label": "Local Education Agency Policy",
+    "comment": "Information related to policies within a K12 location education agency.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200192",
+    "name": "C200192",
+    "label": "Local Education Agency PreK Eligibility",
+    "comment": "The groups of students for whom pre-kindergarten is available.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200193",
+    "name": "C200193",
+    "label": "Local Education Agency PreK Eligible Ages IDEA",
+    "comment": "The ages of children not served under IDEA to whom the LEA's pre-kindergarten services are available.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200194",
+    "name": "C200194",
+    "label": "Local Education Agency Safe Drug Free",
+    "comment": "Information about the LEA's performance under the Safe and Drug-Free Schools and Communities act.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200195",
+    "name": "C200195",
+    "label": "Local Education Agency Title III Professional Development",
+    "comment": "The type of Title III professional development utilized by an LEA.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200196",
+    "name": "C200196",
+    "label": "Local Education Agency Title I Support Service",
+    "comment": "The type of support services provided to students in Title I programs by an LEA. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200237",
+    "name": "C200237",
+    "label": "Location",
+    "comment": "A location such as a physical address or mailing address.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200238",
+    "name": "C200238",
+    "label": "Location Address",
+    "comment": "Location that contains a address, city, state, zip.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200257",
+    "name": "C200257",
+    "label": "Membership",
+    "comment": "The association that represents a Person’s Role within an Organization for a period of time.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200258",
+    "name": "C200258",
+    "label": "Membership Application",
+    "comment": "Information related to a person applying for a specifing role in an organization (e.g., applying for college, applying to be enrolled in a program).",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200259",
+    "name": "C200259",
+    "label": "Membership Full Time Equivalency",
+    "comment": "Information about the percentage of full-time equivalent work that a person contributes in a specific role for an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200260",
+    "name": "C200260",
+    "label": "Membership Relationship",
+    "comment": "The relationship between two Membership records.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C001756",
+    "name": "C001756",
+    "label": "O* NET- SOC Occupation Type",
+    "comment": "The O*NET-SOC taxonomy defines the set of occupations across the world of work based on the Standard Occupational Classification.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200239",
+    "name": "C200239",
+    "label": "Organization",
+    "comment": "An entity that represents any type of organization.  It includes information common to all types of organizations.  CEDS also defines specific types of organizations such as Early Learning Organization, K12 School and Post Secondary Institution.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200240",
+    "name": "C200240",
+    "label": "Organization Accreditation",
+    "comment": "The accreditation status of an organization and accreditation agency.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200241",
+    "name": "C200241",
+    "label": "Organization Calendar",
+    "comment": "OrganizationCalendar represents a calendar owned by an Organization. The details of the calendar are defined by OrganizationCalendarEvent, OrganizationCalendarDay, OrganizationCalendarSession, and OrganizationCalendarCrisis.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200242",
+    "name": "C200242",
+    "label": "Organization Calendar Crisis",
+    "comment": "OrganizationCalendarCrisis provides the unschehduled exceptions to the  calendar such as a natural disaster, that causes closing of a school or the displacement of students from a school or institution over multiple days, weeks or months.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200243",
+    "name": "C200243",
+    "label": "Organization Calendar Day",
+    "comment": "OrganzationCalendarDay is for naming days within the regular schedule.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200244",
+    "name": "C200244",
+    "label": "Organization Calendar Event",
+    "comment": "OrganizationCalendarEvent handles scheduled or unscheduled events such as holidays or closings that may interrupt the course section schedule on a specified date. See CEDS element definition and option set for Calendar Event Type.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200245",
+    "name": "C200245",
+    "label": "Organization Calendar Session",
+    "comment": "OrganizationCalendarSession provides the beginning and end date of the period of time, such as a term or semester. It has multiple uses. For example, it may be flagged as an \"attendance term\" with a value for DaysInSession, or the specific days applicable for attendance may be derived using OrganizationCalendarEvent. Early learning use cases use this entity to specify instructional session start and end times within the context of a day.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200247",
+    "name": "C200247",
+    "label": "Organization Email",
+    "comment": "An email address for an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200248",
+    "name": "C200248",
+    "label": "Organization Employee Benefit",
+    "comment": "Information about employee benefits linked to an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200249",
+    "name": "C200249",
+    "label": "Organization Enrollment Capacity",
+    "comment": "Information about the capacity for an enrollment in an organization such as school, program, or course.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200250",
+    "name": "C200250",
+    "label": "Organization Federal Accountability",
+    "comment": "Information on the status of the organization on various federal accountability measures.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200251",
+    "name": "C200251",
+    "label": "Organization Financial",
+    "comment": "The intersection of FinancialAccount and OrganizationCalendarSession (representing an AccountingPeriod) and containing the values for that accounting period.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200252",
+    "name": "C200252",
+    "label": "Organization Identifier",
+    "comment": " A unique number or alphanumeric code assigned to an organization by a school, school system, a state, or other agency or entity.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200253",
+    "name": "C200253",
+    "label": "Organization Image",
+    "comment": "An photo linked to an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200254",
+    "name": "C200254",
+    "label": "Organization Indicator",
+    "comment": "Describes any sort of indicator/metric/measure that is tracked at the organization level",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200255",
+    "name": "C200255",
+    "label": "Organization Jurisdiction",
+    "comment": "Information related to the jurisdiction of an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200246",
+    "name": "C200246",
+    "label": "Organization Name",
+    "comment": "Information about an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200256",
+    "name": "C200256",
+    "label": "Organization Operational Status",
+    "comment": "The classification of the operational condition of an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200261",
+    "name": "C200261",
+    "label": "Organization Policy",
+    "comment": "Organizational policies. Examples would include Immunization Policy, Referral Policy, Language Translation Policy, Employee Policy.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200262",
+    "name": "C200262",
+    "label": "Organization Population Served",
+    "comment": "Aggregate information related to persons being served by an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200263",
+    "name": "C200263",
+    "label": "Organization Program Type",
+    "comment": "The instructional or non-instructional programs, activities and procedures designed to accomplish a predetermined educational objective or set of objectives or to provide support services to person and/or the community.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200264",
+    "name": "C200264",
+    "label": "Organization Project Based Learning",
+    "comment": "Information related to project bassed learning offered by an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200265",
+    "name": "C200265",
+    "label": "Organization Relationship",
+    "comment": "The relationship of one organization to another.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200266",
+    "name": "C200266",
+    "label": "Organization Salary Schedule Criteria",
+    "comment": "Criteria defined by an organization used to determine a salary schedule.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200267",
+    "name": "C200267",
+    "label": "Organization Salary Schedule Criteria Value",
+    "comment": "The possible values associated with the criteria.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200268",
+    "name": "C200268",
+    "label": "Organization Salary Schedule Criteria Value Salary",
+    "comment": "The relationship between the salary schedule criteria value and the salary schedule salary value.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200269",
+    "name": "C200269",
+    "label": "Organization Salary Schedule Salary",
+    "comment": "The salary for the salary schedule and if relevant any occupation related classifications.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200270",
+    "name": "C200270",
+    "label": "Organization Service",
+    "comment": "Information about the types of services offered by an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200271",
+    "name": "C200271",
+    "label": "Organization Technical Assistance",
+    "comment": "Indicates the types of technical assistance being deliverd to an organization such as a provider of early learning services.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200273",
+    "name": "C200273",
+    "label": "Organization Website",
+    "comment": "The website URL for an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200274",
+    "name": "C200274",
+    "label": "Peer Rating System",
+    "comment": "The peer rating / scaling system used to rate a Learning Resource.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200275",
+    "name": "C200275",
+    "label": "Person",
+    "comment": "A person, including Students, Staff and Parents.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200276",
+    "name": "C200276",
+    "label": "Person Address Nces Side",
+    "comment": "Information related to the National Center for Education Statistics (NCES) spatially interpolated demographic estimate (SIDE) based on the address latitude and longitude location.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200277",
+    "name": "C200277",
+    "label": "Person Allergy",
+    "comment": "An alergy type associated with a person.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200376",
+    "name": "C200376",
+    "label": "Person Birth",
+    "comment": "Information related to the birth of a person",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200278",
+    "name": "C200278",
+    "label": "Person Birthplace",
+    "comment": "The city, state, and country where a person was born.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200279",
+    "name": "C200279",
+    "label": "Person Career Education Plan",
+    "comment": "Information about a career education plan for a person.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200014",
+    "name": "C200014",
+    "label": "Person Citizenship",
+    "comment": "Information about the citizenship status of a person",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200280",
+    "name": "C200280",
+    "label": "Person Credential",
+    "comment": "The credential awarded to a person.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200281",
+    "name": "C200281",
+    "label": "Person Degree Or Certificate",
+    "comment": "The name of the degree or certificate earned by an individual. This includes honorary degrees conferred upon an individual.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200282",
+    "name": "C200282",
+    "label": "Person Demographic Race",
+    "comment": "The associations of a person to a race.  Multiple associations are allowed.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200283",
+    "name": "C200283",
+    "label": "Person Digital Access",
+    "comment": "Information related to digitial accessiblity for a person.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200284",
+    "name": "C200284",
+    "label": "Person Digital Access Speed",
+    "comment": "Information related to the speed of digital access for a person.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200285",
+    "name": "C200285",
+    "label": "Person Disability",
+    "comment": "The disability status for an individual and their primary disability.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200286",
+    "name": "C200286",
+    "label": "Person Email Address",
+    "comment": "The electronic mail (e-mail) address for a person.  ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200287",
+    "name": "C200287",
+    "label": "Person Family",
+    "comment": "The attributes of a person's family.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200288",
+    "name": "C200288",
+    "label": "Person Health",
+    "comment": "Data points of a person's health",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200289",
+    "name": "C200289",
+    "label": "Person Health Birth",
+    "comment": "Data points of a person's health and status at time of birth.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200290",
+    "name": "C200290",
+    "label": "Person Homelessness",
+    "comment": "Persons who lack a fixed, regular, and adequate nighttime residence.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200291",
+    "name": "C200291",
+    "label": "Person Identifier",
+    "comment": "Identifiers assigned to an individual.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200292",
+    "name": "C200292",
+    "label": "Person Immunization",
+    "comment": "The immunizations that a person has satisfactorily received.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200293",
+    "name": "C200293",
+    "label": "Person Language",
+    "comment": "Languages that a person uses to communicate.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200294",
+    "name": "C200294",
+    "label": "Person Learning Device",
+    "comment": "Information related to learning devices used by a person.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200295",
+    "name": "C200295",
+    "label": "Person Master",
+    "comment": "A table used to link a Person records that represent the same person but may be from different sources and may reflect differences in details. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200296",
+    "name": "C200296",
+    "label": "Person Military",
+    "comment": "Information about a person's connections to the military.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200297",
+    "name": "C200297",
+    "label": "Person Military Campaigns",
+    "comment": "Information related to a military campaign in which the person has been involved during the service period.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200298",
+    "name": "C200298",
+    "label": "Person Military Deployment",
+    "comment": "Information related to military deployment for a person.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200299",
+    "name": "C200299",
+    "label": "Person Military Duties",
+    "comment": "Information related to duties encompassed within a period of military service.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200300",
+    "name": "C200300",
+    "label": "Person Military Expertise",
+    "comment": "Information related to expertise that the person developed during the service period.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200301",
+    "name": "C200301",
+    "label": "Person Military Honors",
+    "comment": "Information related to a military honor that the person received during the service period.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200302",
+    "name": "C200302",
+    "label": "Person Military Occupational Specialties",
+    "comment": "Information related to a military occupational specialty of a person.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200303",
+    "name": "C200303",
+    "label": "Person Military Service Locations",
+    "comment": "Information related to the duty stations (locations) encompassed within a period of military service.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200377",
+    "name": "C200377",
+    "label": "Person Name",
+    "comment": "Information related to the legal name of a person",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200304",
+    "name": "C200304",
+    "label": "Person Other Name",
+    "comment": "Other names or aliases for a person.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200305",
+    "name": "C200305",
+    "label": "Person Personal Information Verification",
+    "comment": "Information related to the type of personal information used (e.g., Birth Certificate) and for what purpose.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200306",
+    "name": "C200306",
+    "label": "Person Program Participation",
+    "comment": "Information about a person's participation in a program. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200307",
+    "name": "C200307",
+    "label": "Person Referral",
+    "comment": "Information about a person being reffered for evaluation, such as a student being reffered for evaluation for elligibility to receive services under IDEA.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200308",
+    "name": "C200308",
+    "label": "Person Relationship",
+    "comment": "Identifies two people and the nature of their relationship.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200378",
+    "name": "C200378",
+    "label": "Person Residency",
+    "comment": "Information related to the residency status of a person",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200011",
+    "name": "C200011",
+    "label": "Person Sex Gender",
+    "comment": "Information about the sex or gender of a person",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200309",
+    "name": "C200309",
+    "label": "Person Status",
+    "comment": "Identifies a status (yes/no) for a person for a status type.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200310",
+    "name": "C200310",
+    "label": "Person Transportation Eligibility",
+    "comment": "Information related to the eligibility of a person to be transported using public funds.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200328",
+    "name": "C200328",
+    "label": "Postsecondary Course",
+    "comment": "The organization of subject matter and related learning experiences provided for the instruction of students on a regular or systematic basis, usually for a predetermined period of time (e.g., a semester or two-week workshop) to an individual or group of students (e.g., a class). ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200329",
+    "name": "C200329",
+    "label": "Postsecondary Institution",
+    "comment": "An organization that provides educational programs for individuals who have completed or otherwise left educational programs in secondary school(s).",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200330",
+    "name": "C200330",
+    "label": "Postsecondary Price Of Attendance",
+    "comment": "The price of attendance data for a postsecondary institution and a given session.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200331",
+    "name": "C200331",
+    "label": "Postsecondary Program",
+    "comment": "The attributes for a postsecondary program that define the type program, the program length, and other requirements for a degree or certificate. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200332",
+    "name": "C200332",
+    "label": "Postsecondary Section",
+    "comment": "Information specific to a postsecondary course section as an extension of CourseSection.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200333",
+    "name": "C200333",
+    "label": "Postsecondary Section Location",
+    "comment": "Information about a location in which a postsecondary course section is delivered.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200334",
+    "name": "C200334",
+    "label": "Postsecondary Staff Employment",
+    "comment": "Attributes for postsecondary staff employment. Extends from Staff.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200335",
+    "name": "C200335",
+    "label": "Postsecondary Student Academic Award",
+    "comment": "An award conferred by a college, university, or other postsecondary education institution as official recognition for the successful completion of a program of study.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200336",
+    "name": "C200336",
+    "label": "Postsecondary Student Academic Record",
+    "comment": "The summary level academic record for a postsecondary student including graduation information.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200337",
+    "name": "C200337",
+    "label": "Postsecondary Student Admission Test",
+    "comment": "A student's performance on a test prepared and administered by an agency that is independent of any postsecondary education institution and is typically used for admissions purposes.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200338",
+    "name": "C200338",
+    "label": "Postsecondary Student Application",
+    "comment": "Information on an individual who submits an application for admission to a postsecondary institution.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200339",
+    "name": "C200339",
+    "label": "Postsecondary Student Cohort",
+    "comment": "Information about a cohort of postsecndary students. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200340",
+    "name": "C200340",
+    "label": "Postsecondary Student Course Section Mark",
+    "comment": "Marks in a gradebook for a student's participation in a postescondary course.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200341",
+    "name": "C200341",
+    "label": "Postsecondary Student Demographic",
+    "comment": "Additional attributes for a postsecondary student (beyond those demographic attributes stored in PersonDemographic)",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200342",
+    "name": "C200342",
+    "label": "Postsecondary Student Employment",
+    "comment": "Employment information for a postsecondary student.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200343",
+    "name": "C200343",
+    "label": "Postsecondary Student Enrollment",
+    "comment": "Attributes of a person enrolled at a postsecondary institution.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200344",
+    "name": "C200344",
+    "label": "Postsecondary Student Financial Aid",
+    "comment": "Information on a person who applies for financial aid to participate in postsecondary education.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200345",
+    "name": "C200345",
+    "label": "Postsecondary Student Program",
+    "comment": "The classification of a program of a postsecondary student.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200346",
+    "name": "C200346",
+    "label": "Postsecondary Student Section",
+    "comment": "A postsecondary student's performance in a class/section.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200070",
+    "name": "C200070",
+    "label": "Postsecondary System",
+    "comment": "A network of peer-level educational organizations intended to provide shared services or collective procurement.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200311",
+    "name": "C200311",
+    "label": "Professional Development Activity",
+    "comment": "An activity designed for the purpose of developing someone professionally. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200312",
+    "name": "C200312",
+    "label": "Professional Development Requirement",
+    "comment": "Information about a requirement that a person participate in professional development related to a specific professional role or assignment. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200313",
+    "name": "C200313",
+    "label": "Professional Development Session",
+    "comment": "Information about part or all of a Professional Development Activity scheduled for delivery within a single day.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200314",
+    "name": "C200314",
+    "label": "Professional Development Session Instructor",
+    "comment": "Information about an instructor assigned to a ProfessionalDevelopmentSession.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200382",
+    "name": "C200382",
+    "label": "Professional Membership Organization",
+    "comment": "An association or corporation established for the purpose of providing services on a nonprofit basis to its members.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200315",
+    "name": "C200315",
+    "label": "Program",
+    "comment": "A system of services, opportunities, or projects, designed to meet academic or non-academic needs. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C001922",
+    "name": "C001922",
+    "label": "Program Entry Reason",
+    "comment": "The documented or assumed reason a person is being served by a program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200316",
+    "name": "C200316",
+    "label": "Program Participation Adult Education",
+    "comment": "Information on a person participating in an adult education program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200317",
+    "name": "C200317",
+    "label": "Program Participation Attainment",
+    "comment": "Information related to outcomes in a program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200318",
+    "name": "C200318",
+    "label": "Program Participation Career And Technical",
+    "comment": "Information on a person participating in a career and technical education program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200319",
+    "name": "C200319",
+    "label": "Program Participation Food Service",
+    "comment": "Information on a person participating in a food service program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200320",
+    "name": "C200320",
+    "label": "Program Participation Migrant",
+    "comment": "Information on a person participating in a migrant student education program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200321",
+    "name": "C200321",
+    "label": "Program Participation Neglected",
+    "comment": "Information on a person participating in a neglected or delinquent student education program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200322",
+    "name": "C200322",
+    "label": "Program Participation Special Education",
+    "comment": "Information on a person participating in a special education program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200323",
+    "name": "C200323",
+    "label": "Program Participation Teacher Prep",
+    "comment": "Information on a person participating in a teacher preparation education program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200324",
+    "name": "C200324",
+    "label": "Program Participation Title I",
+    "comment": "Information on a person participating in a Title I education program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200325",
+    "name": "C200325",
+    "label": "Program Participation Title III English Learner",
+    "comment": "Information on a person participating in a Title III limited English proficiency education program.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200326",
+    "name": "C200326",
+    "label": "Program Participation WIOA",
+    "comment": "Information related to participation in workforce programs through the Workforce Innovation and Opportunity Act (WIOA).",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200327",
+    "name": "C200327",
+    "label": "Program Participation WIOA Barriers",
+    "comment": "Information related to barries to employment for a person who participated in programs through the Workforce Innovation and Opportunity Act (WIOA).",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200347",
+    "name": "C200347",
+    "label": "Quarterly Employment Record",
+    "comment": "Person-level employment and earnings information from quarterly employment and earnings-related data from sources such as State UI Wage Records, the Wage Record Interchange System, or the Federal Employment Data Exchange System (FEDES).",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200381",
+    "name": "C200381",
+    "label": "Recruiter",
+    "comment": "An organization responsible for identifying and/or selecting prospective employees to fill vacant positions in an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200394",
+    "name": "C200394",
+    "label": "Region",
+    "comment": "An area or other organizational construct that is identified by defined characteristics and is typically used to group other related organizations.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200348",
+    "name": "C200348",
+    "label": "Required Immunization",
+    "comment": "Immunizations required by an organization or governing body.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200349",
+    "name": "C200349",
+    "label": "Role",
+    "comment": "The list of roles for a person.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200350",
+    "name": "C200350",
+    "label": "Role Attendance",
+    "comment": "Aggregated attendance counts.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200351",
+    "name": "C200351",
+    "label": "Role Attendance Event",
+    "comment": "The attributes of a person's attendance during a given day. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200352",
+    "name": "C200352",
+    "label": "Role Status",
+    "comment": "RoleStatus supports cases such as when a student “applied” for enrollment in a Course Section, Program, or School/Institution, was “accepted,” and then was “enrolled.” Each status may have different begin and end dates.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200353",
+    "name": "C200353",
+    "label": "Rubric",
+    "comment": "A set of criteria or indicators that assist in determining whether an entity possesses a given competence or level of performance in a task or work product. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200354",
+    "name": "C200354",
+    "label": "Rubric Criterion",
+    "comment": "A single criterion by which one aspect of an entity’s competence may be evaluated.  ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200355",
+    "name": "C200355",
+    "label": "Rubric Criterion Level",
+    "comment": "A degree or level of competence.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200356",
+    "name": "C200356",
+    "label": "Service Frequency",
+    "comment": "Information about the schedule and frequency by which services are planned to be deliverd.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200357",
+    "name": "C200357",
+    "label": "Service Plan",
+    "comment": "A plan to provide services to a person, group, or a person's family, such as services delivered under Individualized Education Programs or Individualized Family Services Plans.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200358",
+    "name": "C200358",
+    "label": "Service Provided",
+    "comment": "Services available from an organization or person that may be linked ServicePlan and ServicesRecieved information.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200359",
+    "name": "C200359",
+    "label": "Service Provider",
+    "comment": "A subclass of organization that links the organization to a set of services it provides.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200359",
+    "name": "C200359",
+    "label": "Service Provider",
+    "comment": "An organization responsible for administering services to an individual or organization participating in a program or receiving services.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200360",
+    "name": "C200360",
+    "label": "Services Received",
+    "comment": "Information about services received such as services received by a student. May link individual services received to a service plan. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200361",
+    "name": "C200361",
+    "label": "Service Staff",
+    "comment": "Relationship to the person-role that provided the service.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200018",
+    "name": "C200018",
+    "label": "SHEEO Agency",
+    "comment": "An entity tasked with overseeing higher education in its state and is led by a state higher education executive officer.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200362",
+    "name": "C200362",
+    "label": "Staff Compensation",
+    "comment": "Information related to the compensation of staff members.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200363",
+    "name": "C200363",
+    "label": "Staff Compensation Funding Source",
+    "comment": "The relationship between the staff compensation and the financial account used for the compensation.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200364",
+    "name": "C200364",
+    "label": "Staff Credential",
+    "comment": "A credential held by a staff member.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200380",
+    "name": "C200380",
+    "label": "Staff Development Provider",
+    "comment": "An individual or organization who provides a planned, structured process through which an individual improves his or her job-related knowledge, skills, or attitudes. Such a process is deigned to enable a staff member to grow within a profession or organization or to attain an initial or additional credential.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200365",
+    "name": "C200365",
+    "label": "Staff Employment",
+    "comment": "Information on employment of a person by an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200366",
+    "name": "C200366",
+    "label": "Staff Evaluation",
+    "comment": "Evaluation of a staff member's performance.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200367",
+    "name": "C200367",
+    "label": "Staff Evaluation Part",
+    "comment": "Information about the score and sections of a staff evaluation assessment.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200368",
+    "name": "C200368",
+    "label": "Staff Experience",
+    "comment": "Number of years of experience for a staff member.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200369",
+    "name": "C200369",
+    "label": "Staff Professional Development Activity",
+    "comment": "Information about a person's participation in a professional development activity and outcomes from that participation that may be related to a Professional Development Requirement and one or more Professional Development Sessions. ",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200370",
+    "name": "C200370",
+    "label": "Staff Technical Assistance",
+    "comment": "Information about technical assitance provided to staff and type of assitance.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C000730",
+    "name": "C000730",
+    "label": "Standard Occupational Classification",
+    "comment": "A Bureau of Labor Statistics coding system for classifying occupations by work performed and, in some cases, on the skills, education and training needed to perform the work at a competent level.  See https://www.bls.gov/soc/2018/major_groups.htm.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200204",
+    "name": "C200204",
+    "label": "State Education Agency",
+    "comment": "The SEA is the state-level entity primarily responsible for the supervision of the state's public elementary and secondary schools.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200205",
+    "name": "C200205",
+    "label": "State Education Agency Alternate Fund Use",
+    "comment": "Purposes that funds available under ESEA section 6111 (Grants for State Assessments and Related Activities) were used for purposes other than the costs of the development of the State assessments and standards required by section 1111(b).",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200206",
+    "name": "C200206",
+    "label": "State Education Agency Federal Funds",
+    "comment": "Information on the federal funds received by the SEA.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200371",
+    "name": "C200371",
+    "label": "Teacher Education Credential Exam",
+    "comment": "The exam and score of a person on a teaching credential exam.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C000774",
+    "name": "C000774",
+    "label": "Teacher Education Credential Exam Score Type",
+    "comment": "An indication of the type of credential exam associated with a given exam score.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200372",
+    "name": "C200372",
+    "label": "Teacher Student Data Link Exclusion",
+    "comment": "Indicates that the student is excluded from calculation of value-added or growth attribution calculations used for teacher evaluation.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200272",
+    "name": "C200272",
+    "label": "Telephone",
+    "comment": "A telephone number for a person or an organization.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200373",
+    "name": "C200373",
+    "label": "Workforce Employment Quarterly Data",
+    "comment": "Person-level employment and earnings information from quarterly employment and earnings-related data from sources such as State UI Wage Records, the Wage Record Interchange System, or the Federal Employment Data Exchange System (FEDES).",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200374",
+    "name": "C200374",
+    "label": "Workforce Program Participant Cohort",
+    "comment": "Information about a specific cohort of workforce program participants.",
+    "properties": []
+  },
+  {
+    "uri": "http://ceds.ed.gov/terms#C200375",
+    "name": "C200375",
+    "label": "Workforce Program Participation",
+    "comment": "Information about instruction and/or services provided to a person through a workforce and/or an employment development program.",
+    "properties": []
+  }
+]
