@@ -4,7 +4,7 @@ defineProps({ data: Object });
 
 <template>
   <v-expansion-panel v-for="(value, key) in data" :key="key" class="compact-panel">
-    <v-expansion-panel-title class="compact-panel-title">{{ key }}</v-expansion-panel-title>
+    <v-expansion-panel-title class="compact-panel-title text-h6">{{ key }}</v-expansion-panel-title>
     <v-expansion-panel-text class="compact-panel-text">
       <template v-if="typeof value === 'object' && value !== null">
         <v-expansion-panels density="compact">
@@ -22,7 +22,6 @@ defineProps({ data: Object });
 .compact-panel :deep(.v-expansion-panel-title) {
   min-height: unset !important;
   padding: 4px 16px !important;
-  font-size: 0.55rem;
 }
 
 .compact-panel :deep(.v-expansion-panel-text__wrapper) {

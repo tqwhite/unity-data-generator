@@ -8,6 +8,11 @@ const props = defineProps({
         type: String,
         required: true
     },
+    // Original query text (for reference)
+    originalText: {
+        type: String,
+        default: ''
+    },
     // Results data array
     results: {
         type: Array,
@@ -67,6 +72,9 @@ const relativeDistances = computed(() => {
                 {{ results.length }} items
             </v-chip>
         </v-card-title>
+        <v-card-subtitle v-if="originalText && originalText !== sourceText" class="text-caption py-0">
+            <strong>Original input:</strong> "{{ originalText }}"
+        </v-card-subtitle>
         <v-card-text class="pt-0">
             <div v-if="error" class="error-text">
                 {{ error }}

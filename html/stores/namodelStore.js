@@ -76,30 +76,30 @@ export const useNamodelStore = defineStore('namodel', {
 				}
 
 				const data = await response.json();
-				
+
 				// Create the structured object from the flat list of properties
 				const structuredObject = {};
-				
+
 				// Process each item to build the nested object structure
-				data.forEach(item => {
+				data.forEach((item) => {
 					// Skip items with no XPath
 					if (!item.XPath) return;
-					
+
 					// Remove the leading slash if it exists
-					const normalizedPath = item.XPath.startsWith('/') 
-						? item.XPath.substring(1) 
+					const normalizedPath = item.XPath.startsWith('/')
+						? item.XPath.substring(1)
 						: item.XPath;
-					
+
 					// Split the path into segments
 					const pathSegments = normalizedPath.split('/');
-					
+
 					// Build the object path from XPath segments
 					const objectPath = pathSegments.join('.');
-					
+
 					// Add the item to the structured object
 					qtPutSurePath(structuredObject, objectPath, item);
 				});
-				
+
 				// Store both representations for different use cases
 				this.listOfProperties = data;
 				this.combinedObject = structuredObject;
@@ -143,30 +143,30 @@ export const useNamodelStore = defineStore('namodel', {
 				}
 
 				const responseData = await response.json();
-				
+
 				// Create the structured object from the flat list of properties
 				const structuredObject = {};
-				
+
 				// Process each item to build the nested object structure
-				responseData.forEach(item => {
+				responseData.forEach((item) => {
 					// Skip items with no XPath
 					if (!item.XPath) return;
-					
+
 					// Remove the leading slash if it exists
-					const normalizedPath = item.XPath.startsWith('/') 
-						? item.XPath.substring(1) 
+					const normalizedPath = item.XPath.startsWith('/')
+						? item.XPath.substring(1)
 						: item.XPath;
-					
+
 					// Split the path into segments
 					const pathSegments = normalizedPath.split('/');
-					
+
 					// Build the object path from XPath segments
 					const objectPath = pathSegments.join('.');
-					
+
 					// Add the item to the structured object
 					qtPutSurePath(structuredObject, objectPath, item);
 				});
-				
+
 				// Store both representations
 				this.listOfProperties = responseData;
 				this.combinedObject = structuredObject;
@@ -197,7 +197,7 @@ export const useNamodelStore = defineStore('namodel', {
 			this.combinedObject = null;
 		},
 
-		async fetchSemanticDistance(refId, queryString = "family name") {
+		async fetchSemanticDistance(refId, queryString = 'family name') {
 			this.isLoadingSemanticDistance = true;
 			this.semanticDistanceError = null;
 
@@ -208,33 +208,73 @@ export const useNamodelStore = defineStore('namodel', {
 			// Get the auth token header
 			const authHeader = LoginStore.getAuthTokenProperty;
 
+			// Check if queryString contains both description and XPath
+			const parts = queryString.split(' ');
+			let description = '';
+			let xpath = '';
+
+			// If queryString has XPath (has slashes), split it into description and xpath
+			if (queryString.includes('/')) {
+				// Find the index where XPath starts (first word with a slash)
+				const xpathStartIndex = parts.findIndex(part => part.includes('/'));
+				
+				if (xpathStartIndex !== -1) {
+					description = parts.slice(0, xpathStartIndex).join(' ');
+					xpath = parts.slice(xpathStartIndex).join(' ');
+				}
+			} else {
+				// If no XPath detected, use the whole string as description
+				description = queryString;
+			}
+
+			// Process XPath if it exists
+			let processedXPath = '';
+			if (xpath) {
+				// 1. Replace slashes with spaces
+				processedXPath = xpath.replace(/\//g, ' ').trim();
+				
+				// 2. Remove 'x' prefix from words
+				processedXPath = processedXPath.split(' ')
+					.map(word => word.replace(/^x/i, ''))
+					.join(' ');
+				
+				// 3. Split camelCase words
+				processedXPath = processedXPath
+					.replace(/([a-z])([A-Z])/g, '$1 $2')
+					.toLowerCase();
+			}
+
+			// Combine description with processed XPath
+			const processedQueryString = [description, processedXPath].filter(Boolean).join(' ').trim();
+
 			try {
 				const response = await fetch(
-					`/api/ceds/semanticDistance?queryString=${encodeURIComponent(queryString)}`,
+					`/api/ceds/semanticDistance?queryString=${encodeURIComponent(processedQueryString)}`,
 					{
 						headers: authHeader,
-					}
+					},
 				);
 
 				if (!response.ok) {
 					throw new Error(
-						`Failed to fetch semantic distance data: ${response.statusText}`
+						`Failed to fetch semantic distance data: ${response.statusText}`,
 					);
 				}
 
 				const data = await response.json();
-				
+
 				// Initialize the array for this refId if it doesn't exist
 				if (!this.semanticDistanceResults[refId]) {
 					this.semanticDistanceResults[refId] = [];
 				}
-				
+
 				// Add the new query results to the refId's array
 				this.semanticDistanceResults[refId].push({
-					queryString,
-					resultSet: data
+					queryString: processedQueryString,
+					originalQuery: queryString,
+					resultSet: data,
 				});
-				
+
 				return data;
 			} catch (err) {
 				this.semanticDistanceError = err.message;
@@ -248,8 +288,10 @@ export const useNamodelStore = defineStore('namodel', {
 	getters: {
 		isDataLoaded: (state) => !!state.listOfProperties,
 		hasNameList: (state) => state.nameList.length > 0,
-		hasSemanticDistanceResults: (state) => Object.keys(state.semanticDistanceResults).length > 0,
-		getSemanticDistanceResults: (state) => (refId) => state.semanticDistanceResults[refId] || [],
+		hasSemanticDistanceResults: (state) =>
+			Object.keys(state.semanticDistanceResults).length > 0,
+		getSemanticDistanceResults: (state) => (refId) =>
+			state.semanticDistanceResults[refId] || [],
 		getSemanticDistanceError: (state) => state.semanticDistanceError,
 	},
 });

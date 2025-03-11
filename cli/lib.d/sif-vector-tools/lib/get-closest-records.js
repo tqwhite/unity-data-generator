@@ -33,9 +33,33 @@ const moduleFunction =
 			const resultCount = commandLineParameters.values.resultCount ? 
 				parseInt(commandLineParameters.values.resultCount, 10) : 5;
 				
+			// Process query string the same way we process XPath values for consistency
+			const processQueryString = (value) => {
+				if (!value) return '';
+				
+				// Apply the same transformations as we do for XPath fields
+				// Step 1: Replace slashes with spaces
+				let processed = value.replace(/\//g, ' ');
+				
+				// Step 2: Split words on camel case
+				processed = processed.replace(/([a-z])([A-Z])/g, '$1 $2');
+				
+				// Step 3: Remove leading 'x' or 'X' characters from each word
+				processed = processed.split(' ')
+					.map(word => word.replace(/^[xX](?=[a-zA-Z])/g, ''))
+					.join(' ');
+				
+				return processed;
+			};
+			
+			// Apply the processing to the query string
+			const processedQueryString = processQueryString(queryString);
+			xLog.status(`Original query: "${queryString}"`);
+			xLog.status(`Processed query: "${processedQueryString}"`);
+			
 			const queryEmbed = await openai.embeddings.create({
 				model: 'text-embedding-3-small',
-				input: queryString,
+				input: processedQueryString,
 				encoding_format: 'float',
 			});
 
@@ -53,12 +77,14 @@ const moduleFunction =
 				return { ...vectorChoice, record };
 			});
 			
-			// Format output similar to CEDS but with SIF-specific fields
-			xLog.result(answers.map(item => {
+			// Format output similar to CEDS but with SIF-specific fields and distance score
+			xLog.status(`Found ${answers.length} matches, sorted by distance (lowest/best match first):`);
+			xLog.result(answers.map((item, index) => {
 				const description = item.record.Description || '';
 				const xpath = item.record.XPath || '';
 				const refId = item.record.refId || '';
-				return `${refId} ${description} ${xpath}`;
+				const distance = item.distance.toFixed(6); // Format distance to 6 decimal places
+				return `${index+1}. [score: ${distance}] ${refId} ${description} ${xpath}`;
 			}).join('\n'));
 		};
 		

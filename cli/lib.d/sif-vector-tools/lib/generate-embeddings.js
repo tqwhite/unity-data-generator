@@ -116,22 +116,58 @@ const moduleFunction =
 			embeddableData,
 			sourceEmbeddableContentName,
 		) => {
-			const transformForOpenAi = (
-				embeddableData,
-				sourceEmbeddableContentName,
-			) => {
-				return embeddableData.map((item) => {
-					if (Array.isArray(sourceEmbeddableContentName)) {
-						// Join the values of multiple fields with a space
-						return sourceEmbeddableContentName
-							.map(field => item[field] || '')
-							.filter(value => value)
-							.join(' ');
-					} else {
-						return item[sourceEmbeddableContentName] || '';
-					}
-				});
-			};
+				// Helper function to process XPath values
+				const processXPathValue = (value) => {
+					if (!value) return '';
+					
+					// Step 1: Replace slashes with spaces
+					let processed = value.replace(/\//g, ' ');
+					
+					// Step 2: Split words on camel case
+					// Insert spaces before capital letters that are preceded by lowercase letters
+					// This handles camelCase -> camel Case
+					processed = processed.replace(/([a-z])([A-Z])/g, '$1 $2');
+					
+					// Step 3: Remove leading 'x' or 'X' characters from each word
+					// Split into words, process each word, then rejoin
+					processed = processed.split(' ')
+						.map(word => {
+							// Remove leading 'x' or 'X' from words
+							return word.replace(/^[xX](?=[a-zA-Z])/g, '');
+						})
+						.join(' ');
+					
+					return processed;
+				};
+				
+				const transformForOpenAi = (
+					embeddableData,
+					sourceEmbeddableContentName,
+				) => {
+					return embeddableData.map((item) => {
+						if (Array.isArray(sourceEmbeddableContentName)) {
+							// Join the values of multiple fields with a space
+							return sourceEmbeddableContentName
+								.map(field => {
+									let value = item[field] || '';
+									// Apply enhanced processing to XPath field
+									if (field === 'XPath' && value) {
+										value = processXPathValue(value);
+									}
+									return value;
+								})
+								.filter(value => value)
+								.join(' ');
+						} else {
+							let value = item[sourceEmbeddableContentName] || '';
+							// Apply enhanced processing if this is the XPath field
+							if (sourceEmbeddableContentName === 'XPath' && value) {
+								value = processXPathValue(value);
+							}
+							return value;
+						}
+					});
+				};
 
 			const embedding = await openai.embeddings.create({
 				model: 'text-embedding-3-small',
@@ -157,14 +193,28 @@ const moduleFunction =
 			const insertStmt = vectorDb.prepare(
 				`INSERT INTO ${vectorTableName}(rowid, embedding) VALUES (?, ?)`,
 			);
-			const interval=10;
+			
+			// Create a delete statement to remove existing records before inserting
+			const deleteStmt = vectorDb.prepare(
+				`DELETE FROM ${vectorTableName} WHERE rowid = ?`
+			);
+			
+			const interval=500;
 			let counter=0;
+			
 			const writeVectors = vectorDb.transaction((vectorInput) => {
 				for (const [id, vector] of vectorInput) {
-					insertStmt.run(BigInt(id), new Float32Array(vector));
-					counter++;
-					if (counter%interval == 0){
-						xLog.status(`processed ${counter} records`);
+					try {
+						// Delete any existing record with this ID first to avoid UNIQUE constraint errors
+						deleteStmt.run(BigInt(id));
+						// Then insert the new record
+						insertStmt.run(BigInt(id), new Float32Array(vector));
+						counter++;
+						if (counter%interval == 0){
+							xLog.status(`processed ${counter} records`);
+						}
+					} catch (error) {
+						xLog.error(`Error processing record ${id}: ${error.message}`);
 					}
 				}
 			})(vectorInput);
@@ -175,7 +225,15 @@ const moduleFunction =
 		};
 
 		// ================================================================================
-
+		
+		// Get the total count of records to process
+		const getTotalRecordCount = (vectorDb, sourceTableName) => {
+			const result = vectorDb
+				.prepare(`SELECT COUNT(*) as count FROM ${sourceTableName}`)
+				.get();
+			return result.count;
+		};
+		
 		const workingFunction = async (embeddingSpecs) => {
 			const {
 				sourceTableName,
@@ -184,33 +242,80 @@ const moduleFunction =
 				sourceEmbeddableContentName,
 			} = embeddingSpecs;
 			
-			// Get offset and limit from command line parameters or use defaults
-			const offset = commandLineParameters.values.offset ? 
+			// Set batch size to 1000 records per API call
+			const BATCH_SIZE = 1000;
+			
+			// Use command line offset if provided, otherwise start from 0
+			let currentOffset = commandLineParameters.values.offset ? 
 				parseInt(commandLineParameters.values.offset, 10) : 0;
-			const limit = commandLineParameters.values.limit ? 
-				parseInt(commandLineParameters.values.limit, 10) : 3;
-					
+			
 			// Check if we should create a new database or add to existing
 			const createNew = commandLineParameters.switches.newDatabase || false;
 			
+			// Initialize the vector table
 			initVectorTables(vectorDb, vectorTableName, createNew);
-
-			const embeddableData = getEmbeddableData(vectorDb, embeddingSpecs, { offset, limit });
-
-			const embedding = await getEmbeddingVectors(
-				openai,
-				embeddableData,
-				sourceEmbeddableContentName,
-			);
 			
-			xLog.status(`found ${embedding.data.length} embeddable records`);
-			putVectorsIntoDatabase({
-				vectorDb,
-				embedding,
-				embeddableData,
-				sourcePrivateKeyName,
-				vectorTableName,
-			});
+			// Get total records to process
+			const totalRecords = getTotalRecordCount(vectorDb, sourceTableName);
+			xLog.status(`Total records to process: ${totalRecords}`);
+			
+			// Calculate remaining records based on offset
+			const remainingRecords = totalRecords - currentOffset;
+			
+			if (remainingRecords <= 0) {
+				xLog.status(`No records to process starting from offset ${currentOffset}`);
+				return;
+			}
+			
+			// Process in batches
+			let processedCount = 0;
+			let totalProcessed = 0;
+			
+			// Process batches until we've done all remaining records
+			while (processedCount < remainingRecords) {
+				// Determine the batch size (limit) for this iteration
+				const batchSize = Math.min(BATCH_SIZE, remainingRecords - processedCount);
+				
+				xLog.status(`Processing batch of ${batchSize} records starting at offset ${currentOffset} (${totalProcessed}/${remainingRecords} completed)`);
+				
+				// Get the current batch of data
+				const embeddableData = getEmbeddableData(vectorDb, embeddingSpecs, { 
+					offset: currentOffset, 
+					limit: batchSize 
+				});
+				
+				if (embeddableData.length === 0) {
+					xLog.status(`No more records to process.`);
+					break;
+				}
+				
+				// Get embeddings for this batch
+				const embedding = await getEmbeddingVectors(
+					openai,
+					embeddableData,
+					sourceEmbeddableContentName,
+				);
+				
+				xLog.status(`Got ${embedding.data.length} embeddings from OpenAI API`);
+				
+				// Store the embeddings in the database
+				putVectorsIntoDatabase({
+					vectorDb,
+					embedding,
+					embeddableData,
+					sourcePrivateKeyName,
+					vectorTableName,
+				});
+				
+				// Update counters
+				processedCount += embeddableData.length;
+				totalProcessed += embeddableData.length;
+				currentOffset += embeddableData.length;
+				
+				xLog.status(`Batch complete. Total processed: ${totalProcessed}/${remainingRecords}`);
+			}
+			
+			xLog.status(`Processing complete. Total records processed: ${totalProcessed}`);
 		};
 
 		xLog.status(`${moduleName} is initialized`);
