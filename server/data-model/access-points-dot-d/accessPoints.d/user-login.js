@@ -68,7 +68,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 
 			const query = `select * from  <!tableName!> where username='${xQuery.username}'`;
 
-			userTable.getData(query, { suppressStatementLog: true }, localCallback);
+			userTable.getData(query, { suppressStatementLog: true, noTableNameOk:true }, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------

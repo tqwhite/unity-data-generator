@@ -27,7 +27,6 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 
 		// --------------------------------------------------------------------------------
 		// TASK: Query database for CEDS element by refId
-
 		taskList.push((args, next) => {
 			const { sqlDb, mapper, refId } = args;
 
@@ -41,7 +40,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 
 		taskList.push((args, next) => {
 			const { cedsTable, dataMapping, refId } = args;
-			const cedsMapper = dataMapping['ceds-elements'];
+			const cedsMapper = dataMapping['ceds-schema-main'];
 
 			const localCallback = (err, rawResult = []) => {
 				if (err) {
@@ -60,8 +59,8 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 				next('', { ...args, element });
 			};
 
-			const query = `SELECT *, GlobalID as refId FROM <!tableName!> WHERE GlobalID = '${refId}'`;
-			cedsTable.getData(query, { suppressStatementLog: false }, localCallback);
+			const query = cedsMapper.getSql('getOne', args);
+			cedsTable.getData(query, { suppressStatementLog: true, noTableNameOk:true }, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------
@@ -71,7 +70,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			if (err) {
 				xLog.error(
-					`ceds-fetch-data FAILED: ${err} (${moduleName}.js)`,
+					`ceds-fetch-object-data FAILED: ${err} (${moduleName}.js)`,
 				);
 				callback(err);
 				return;
@@ -92,7 +91,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	// ================================================================================
 	// Do the constructing
 
-	const name = 'ceds-fetch-data';
+	const name = 'ceds-fetch-object-data';
 
 	addEndpoint({ name, serviceFunction, dotD });
 

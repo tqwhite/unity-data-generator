@@ -77,7 +77,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 				left join _CEDSElements on _CEDSElements.GlobalID=CEDS_ID
 				WHERE SheetName = '${refId}'
 			`;
-			naModelTable.getData(query, { suppressStatementLog: true }, localCallback);
+			naModelTable.getData(query, { suppressStatementLog: true, noTableNameOk:true }, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------

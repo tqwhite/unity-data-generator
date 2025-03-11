@@ -36,6 +36,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 
 		taskList.push((args, next) => {
 			const { cedsTable } = args;
+			const cedsMapper = dataMapping['ceds-schema-main'];
 
 			const localCallback = (err, rawResult = []) => {
 				if (err) {
@@ -43,17 +44,14 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 					return;
 				}
 
-				// Transform results for nameList (id + name for selection)
-				const nameList = rawResult.map(item => ({
-					refId: item.GlobalID,
-					name: item.ElementName
-				}));
+				
+				const nameList = cedsMapper.map(rawResult);
 
-				next('', { ...args, nameList });
+				next('', { ...args, nameList, cedsMapper });
 			};
 
-			const query = `SELECT GlobalID, ElementName, GlobalID as refId FROM <!tableName!> ORDER BY ElementName`;
-			cedsTable.getData(query, { suppressStatementLog: true }, localCallback);
+			const query = cedsMapper.getSql('nameList', args);
+			cedsTable.getData(query, { suppressStatementLog: true, noTableNameOk:true }, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------

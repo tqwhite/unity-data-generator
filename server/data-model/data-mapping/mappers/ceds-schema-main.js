@@ -17,7 +17,7 @@ const moduleFunction =
 		// Map all columns from _CEDSElements table
 		const inputNameMapping = {
 			['GlobalID']: 'GlobalID',
-			['ElementName']: 'ElementName',
+			['name']: 'ElementName', //UI uses name for selectionList and therefore generally
 			['AltName']: 'AltName',
 			['Definition']: 'Definition',
 			['Format']: 'Format',
@@ -48,18 +48,19 @@ const moduleFunction =
 		};
 		
 		
-		const getSql = (replaceObject = {}) => {
-			const sql = `
-				SELECT 
-					GlobalID, ElementName, AltName, Definition, 
-					Format, HasOptionSet, UsageNotes, URL, 
-					Version, TermID, ChangedInThisVersionInd, ChangeNotes, refId
-				FROM _CEDSElements
-				WHERE 1=1
-				-- REPLACEMENTS GO HERE
-			`;
+		const getSql = (queryName, replaceObject = {}) => {
+			if (typeof(queryName)=='object'){
+				replaceObject=queryName;
+				queryName='default'
+			}
+			const queries={
+			default:`SELECT *, GlobalID as refId FROM _CEDSElements WHERE GlobalID = '<!refId!>'`,
+			getOne:`SELECT *, GlobalID as refId FROM _CEDSElements WHERE GlobalID = '<!refId!>'`,
+			nameList:`SELECT GlobalID, ElementName, GlobalID as refId FROM _CEDSElements ORDER BY ElementName`
+			}
+			const sql = queries[queryName];
 			
-			return sql.replace(/-- REPLACEMENTS GO HERE/, Object.keys(replaceObject).map(key => replaceObject[key]).join('\n'));
+			return sql.qtTemplateReplace(replaceObject);;
 		};
 
 		return { map: mapper, getSql };

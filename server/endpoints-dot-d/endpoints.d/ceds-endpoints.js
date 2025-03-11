@@ -146,7 +146,7 @@ const moduleFunction = function ({
 				next(err, { ...args, data });
 			};
 			
-			accessPointsDotD['ceds-fetch-data'](refId, localCallback);
+			accessPointsDotD['ceds-fetch-object-data'](refId, localCallback);
 		});
 
 		// INIT AND EXECUTE THE PIPELINE
@@ -283,16 +283,6 @@ const moduleFunction = function ({
 		accessTokenHeaderTools,
 	});
 
-	addEndpoint({
-		name: 'cedsSaveData',
-		method: 'post',
-		routePath: `${routingPrefix}ceds/saveData`,
-		serviceFunction: saveDataFunction,
-		expressApp,
-		endpointsDotD,
-		permissionValidator,
-		accessTokenHeaderTools,
-	});
 
 	return {};
 };

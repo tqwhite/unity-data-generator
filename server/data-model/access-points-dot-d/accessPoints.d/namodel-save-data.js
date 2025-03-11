@@ -137,14 +137,14 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 						Format, SheetName
 						FROM <!tableName!> WHERE refId = '${refId}'
 					`;
-					naModelTable.getData(getQuery, { suppressStatementLog: true }, getCallback);
+					naModelTable.getData(getQuery, { suppressStatementLog: true, noTableNameOk:true }, getCallback);
 				};
 
-				naModelTable.executeStatement(query, { suppressStatementLog: true }, updateCallback);
+				naModelTable.executeStatement(query, { suppressStatementLog: true, noTableNameOk:true }, updateCallback);
 			};
 
 			const checkQuery = `SELECT refId FROM <!tableName!> WHERE refId = '${dataToSave.refId}'`;
-			naModelTable.getData(checkQuery, { suppressStatementLog: true }, checkCallback);
+			naModelTable.getData(checkQuery, { suppressStatementLog: true, noTableNameOk:true }, checkCallback);
 		});
 
 		// --------------------------------------------------------------------------------

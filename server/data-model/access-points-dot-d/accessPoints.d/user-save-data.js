@@ -52,7 +52,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	
 			userTable.saveObject(
 				dbData,
-				{ suppressStatementLog: true },
+				{ suppressStatementLog: true, noTableNameOk:true },
 				localCallback,
 			);
 		});
@@ -71,7 +71,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 
 			const query = `select * from  <!tableName!> where refId='${refId}'`;
 
-			userTable.getData(query, { suppressStatementLog: true }, localCallback);
+			userTable.getData(query, { suppressStatementLog: true, noTableNameOk:true }, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------
