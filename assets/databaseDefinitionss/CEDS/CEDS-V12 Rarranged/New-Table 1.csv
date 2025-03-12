@@ -1,0 +1,1444 @@
+Element Name,Definition,Option Set,Domain -> Entity -> Category,Status,Format,Change Notes,Usage Notes,Global ID,Alternate Name,Technical Name,Use Case/Connection,URL
+Accessible Format Issued Begin Date,The date the student was issued any accessible format(s).,None,K12 -> K12 Student -> Individualized Program -> Accommodation ,New,YYYY-MM-DD,Added new element to DES.,,002090,,AccessibleFormatIssuedBeginDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24995
+Accessible Format Issued End Date,The end date for the issuance of accessible format(s) to the student.,None,K12 -> K12 Student -> Individualized Program -> Accommodation ,New,YYYY-MM-DD,Added new element to DES.,,002091,,AccessibleFormatIssuedEndDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24996
+Accessible Format Issued Indicator,An indication that the student was issued an accessible format according to their IEP or 504 Plan. ,"Yes
+No
+","K12 -> K12 Student -> Individualized Program -> Accommodation 
+
+Learning Resources -> Learning Resource ",New,Option Set,Added new element to DES.,,002088,,AccessibleFormatIssuedIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24997
+Accessible Format Required Indicator,An indication that the student requires an accessible format according to their IEP or 504 Plan.,"Yes
+No
+Unknown
+",K12 -> K12 Student -> Individualized Program -> Accommodation ,New,Option Set,Added new element to DES.,,002092,,AccessibleFormatRequiredIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24998
+Accessible Format Type,An alternative manner or form that gives an eligible person access to the work when the copy or phonorecord in the accessible format is used exclusively by the eligible person to permit him or her to have access as feasibly and comfortably as a person without such disability (20 U.S.C. § 121(d)(1)).,"1000 - Audio
+1001 - Audio Described Video
+1002 - Braille
+1003 - Captioned Video
+1004 - Digital Text
+1005 - Large Print
+1006 - Tactile Graphics
+1007 - Text Transcripts of Audio
+1008 - Video with Synchronized American Sign Language (ASL)
+","K12 -> K12 Student -> Individualized Program -> Accommodation 
+
+Learning Resources -> Learning Resource ",New,Option Set,Added new element to DES.,,002089,,AccessibleFormatType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24999
+Adjusted Exit or Withdrawal Type,An adjustment of the last known circumstances under which the student exited from membership in an educational institution.,"01928 - Completed grade 12, but did not meet all graduation requirements
+01922 - Completed school with other credentials
+03509 - Completed with a state-recognized equivalency certificate
+73064 - Died
+01927 - Discontinued schooling
+03503 - Enrolled in a foreign exchange program
+01930 - Enrolled in a postsecondary early admission program
+03505 - Exited
+01925 - Expelled or involuntarily withdrawn
+01921 - Graduated with regular, advanced, International Baccalaureate, or other type of diploma
+73066 - Matriculation to another school in the same local education agency
+03502 - Not enrolled, eligible to return
+01931 - Not enrolled, unknown status
+73061 - Officially withdrew and enrolled in a workforce training program
+73060 - Officially withdrew and enrolled in ABE, adult secondary education, or adult ESL program
+73065 - Permanently incapacitated
+01926 - Reached maximum age for services
+73062 - Student is expected to return to the same school
+03508 - Student is in a charter school managed by the same local education agency
+01907 - Student is in a different public school in the same local education agency
+03499 - Student is in the same LEA, receiving education services, but is not assigned to a particular school
+73068 - Transfer to a private school in the state
+01919 - Transferred to a charter school in a different LEA in the state
+73063 - Transferred to a charter school in a different state
+01912 - Transferred to a private, non-religiously-affiliated school in a different state
+01910 - Transferred to a private, non-religiously-affiliated school within the geographic boundaries as the same local education agency
+01911 - Transferred to a private, non-religiously-affiliated school within the geographic boundaries of a different LEA in the same state
+01915 - Transferred to a private, religiously-affiliated school in a different state
+01914 - Transferred to a private, religiously-affiliated school within the geographic boundaries of a different LEA in the same state
+01913 - Transferred to a private, religiously-affiliated school within the geographic boundaries of the same local education agency
+01908 - Transferred to a public school in a different local education agency in the same state
+01909 - Transferred to a public school in a different state
+01916 - Transferred to a school outside of the country
+73067 - Transferred to a school outside of the state
+01917 - Transferred to an institution
+01918 - Transferred to home schooling
+01924 - Withdrawn due to illness
+09999 - Other
+",K12 -> K12 Student -> Enrollment ,New,Option Set,Added new element to DES.,"There are extended periods of time where information collected about a student can change, but for which there may not be another enrollment record. Summer is a good example of this. At the end of the school year, the Exit or Withdrawal Reason for the student may be 73062 - Student is expected to return to the same school. Then halfway through the summer, the student moves out of state - 01909 - Transferred to a public school in a different state. There is a need to capture this adjusted exit information while still retaining the original exit or withdrawal type. This element serves that purpose and should always be used in conjunction with an existing Exit or Withdrawal Type and enrollment record.",002017,,AdjustedExitOrWithdrawalType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25000
+Attendance Event Duration Day,The duration of the attendance event captured as one whole day or a portion of a day.,None,"Adult Education -> Course Section -> Attendance 
+
+Career and Technical -> Course Section -> Attendance 
+
+Early Learning -> Early Learning Class/Group 
+
+Early Learning -> Early Learning Staff -> Attendance 
+
+K12 -> Course Section -> Attendance 
+
+K12 -> K12 Staff -> Attendance 
+
+K12 -> K12 Student -> Attendance ",New,Numeric - up to 2 decimal places,Added new element to DES.,"When used to capture daily attendance, 1.0 would represent a whole day. Other examples would include 0.5 as a half-day and 0.33 as one-third of a day. For capturing course section attendance, the recommendation would be to use the element ""Attendance Event Duration Minutes"".",002098,,AttendanceEventDurationDay,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25001
+Attendance Event Duration Hours,The duration of the attendance event in hours.,None,"Adult Education -> Course Section -> Attendance 
+
+Career and Technical -> Course Section -> Attendance 
+
+Early Learning -> Early Learning Class/Group 
+
+Early Learning -> Early Learning Staff -> Attendance 
+
+K12 -> Course Section -> Attendance 
+
+K12 -> K12 Staff -> Attendance 
+
+K12 -> K12 Student -> Attendance ",New,Numeric - up to 2 decimal places,Added new element to DES.,,002015,,AttendanceEventDurationHours,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25002
+Attendance Event Duration Minutes,The duration of the attendance event in minutes.,None,"Adult Education -> Course Section -> Attendance 
+
+Career and Technical -> Course Section -> Attendance 
+
+Early Learning -> Early Learning Class/Group 
+
+Early Learning -> Early Learning Staff -> Attendance 
+
+K12 -> Course Section -> Attendance 
+
+K12 -> K12 Staff -> Attendance 
+
+K12 -> K12 Student -> Attendance ",New,Numeric - up to 2 decimal places,Added new element to DES.,,002014,,AttendanceEventDurationMinutes,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25003
+Board Member Position Type,The position or role the person performs on the board.,"Chair - Chair
+Member - Member
+Secretary - Secretary
+Treasurer - Treasurer
+ViceChair - Vice Chair
+Other - Other
+","Early Learning -> Early Learning Organization -> Board 
+
+K12 -> Organization -> Board 
+
+Postsecondary -> Organization -> Board ",New,Option Set,Added new element to DES.,,002104,,BoardMemberPositionType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25004
+Board Member Term End Date,The date on which the board member's term ends.,None,"Early Learning -> Early Learning Organization -> Board 
+
+K12 -> Organization -> Board 
+
+Postsecondary -> Organization -> Board ",New,YYYY-MM-DD,Added new element to DES.,,002103,,BoardMemberTermEndDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25005
+Board Member Term Start Date,The date on which the board member's term begins.,None,"Early Learning -> Early Learning Organization -> Board 
+
+K12 -> Organization -> Board 
+
+Postsecondary -> Organization -> Board ",New,YYYY-MM-DD,Added new element to DES.,,002102,,BoardMemberTermStartDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25006
+Board Membership Type,The type of membership for the board member.,"Appointed - Appointed
+Elected - Elected
+Other - Other
+","Early Learning -> Early Learning Organization -> Board 
+
+K12 -> Organization -> Board 
+
+Postsecondary -> Organization -> Board ",New,Option Set,Added new element to DES.,,002105,,BoardMembershipType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25007
+Chronic Student Absenteeism Indicator,Indicates whether a student was absent 10% or more school days during the school year with an absence being defined as a student not physically on school grounds and was not participating in instruction or instruction-related activities at an approved off-grounds location for at least half the school day.,"Yes
+No
+",K12 -> K12 Student -> Attendance ,New,Option Set,Added new element to DES.,,002022,,ChronicStudentAbsenteeismIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25008
+Coding System Organization Type,The type of organization that created the coding system for this element.,"LEA - Local Education Agency
+SEA - State Education Agency
+Other - Other
+","Early Learning -> Early Learning Organization -> Job 
+
+K12 -> K12 School -> Job 
+
+K12 -> LEA -> Job 
+
+K12 -> Organization -> Job 
+
+K12 -> SEA -> Job 
+
+Postsecondary -> Organization -> Job ",New,Option Set,Added new element to DES.,,002073,,CodingSystemOrganizationType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25009
+Course Funding Program Allowed,An indication of permission for allocation of a course funding program's funds for the support of a course.,"Yes
+No
+Unknown
+","K12 -> Course Section 
+
+K12 -> K12 Course ",New,Option Set,Added new element to DES.,This element is used in relation to the element Course Funding Program.,002065,,CourseFundingProgramAllowed,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25010
+Credential Award Relationship,The nature of a credential award's relationship to another credential award.,"1000 - Extension
+",Credentials -> Credential Award ,New,Option Set,Added new element to DES.,,002081,,CredentialAwardRelationship,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25011
+Delinquent Program Type,"The type of delinquent programs under Title I, Part D, Subpart 1 (State Agency) of ESEA as amended or under Title I, Part D, Subpart 2 (LEA) of ESEA, as amended.","ADLTCORR - Adult Correction
+CMNTYDAYPRG - Community day programs
+GRPHOMES - Group Homes
+JUVDET - Juvenile detention centers
+JUVLNGTRMFAC - Long-term secure juvenile facility
+RNCHWLDRNSCMPS - Ranch/wilderness camps
+RSDNTLTRTMTCTRS - Residential treatment centers
+SHELTERS - Shelters
+OTHER - Other programs
+",K12 -> K12 Student -> Neglected or Delinquent ,New,Option Set,Added new element to DES.,,002085,,DelinquentProgramType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25012
+Diversity Equity Inclusion Policy Indicator,"Indicates whether or not the program has a written policy addressing diversity, equity and inclusion (DEI).","Yes
+No
+",Early Learning -> EL Organization -> Policies ,New,Option Set,Added new element to DES.,,002016,,DEIPolicyIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25013
+Dropout Reason Type,The reason or reasons the student dropped out of school.,"1002 - Absenteeism
+1001 - Academic issues
+1003 - Adult Education Program
+1004 - Adult High School Enrollment
+1010 - Care for a family member
+1009 - Childcare
+1025 - Compulsory attendance age
+1006 - Discipline or Behavioral issues
+1011 - Disengaged
+1007 - Employment necessity
+1008 - Employment preference
+1016 - Home environment instability
+1015 - Illness or health-related issues
+1017 - Incarceration without high school diploma services
+1012 - Lack of expectations
+1018 - Language barrier
+1019 - Marriage
+1020 - Moved
+1013 - Permanent expulsion
+1005 - Postsecondary enrollment
+1021 - Pregnancy
+1023 - Psychological or emotional issues
+1014 - Removal
+1022 - Runaway
+1000 - Substance abuse
+1024 - Unknown
+9999 - Other
+","Early Learning -> Early Learning Child -> Enrollment 
+
+K12 -> K12 Student -> Enrollment ",New,Option Set,Added new element to DES.,,002113,,DropoutReasonType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25014
+Education Job Type,A broad categorization of the job as it relates to education.,"1000 - Instructional
+1002 - Non-Instructional Support and Services
+1001 - Student Support Staff
+9999 - Other
+","Early Learning -> Early Learning Organization -> Job 
+
+K12 -> K12 School -> Job 
+
+K12 -> LEA -> Job 
+
+K12 -> Organization -> Job 
+
+K12 -> SEA -> Job 
+
+Postsecondary -> Organization -> Job ",New,Option Set,Added new element to DES.,,002074,,EducationJobType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25015
+Facility Joint Use Description,A description explaining the details of an organization's shared facility arrangement.,None,Facilities -> Facility -> Utilization ,New,Alphanumeric - 300 characters maximum,Added new element to DES.,,002112,,FacilityJointUseDescription,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25016
+Facility Joint Use Indicator,An indication that an organization shares a facility or space within a facility with another organization.,"Yes
+No
+",Facilities -> Facility -> Utilization ,New,Option Set,Added new element to DES.,,002111,,FacilityJointUseIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25017
+Financial Account GASB Revenue Classification,The classification of Governmental Accounting Standards Board (GASB) revenues.,"100 - Charges for Services
+400 - General Revenue
+300 - Program-specific capital grants and contributions.
+200 - Program-specific operating grants and contributions
+","K12 -> K12 School -> Finance  
+
+K12 -> LEA -> Finance  ",New,Option Set,Added new element to DES.,,002066,,FinancialAccountGASBRevenueClassification,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25018
+Financial Account Local GASB Revenue Classification,A local code used to classify Governmental Accounting Standards Board (GASB) revenues.,"Other - Other
+","K12 -> K12 School -> Finance  
+
+K12 -> LEA -> Finance  ",New,Option Set,Added new element to DES.,,002067,,FinancialAccountLocalGASBRevenueClassification,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25019
+Funding Source Amount,The amount of financial support contributed by a specific funding or revenue stream.,None,"Adult Education -> Adult Education Staff -> Employment 
+
+Career and Technical -> CTE Staff -> Employment 
+
+Early Learning -> Early Learning Organization -> Finance 
+
+Early Learning -> Early Learning Program -> Finance 
+
+Early Learning -> Early Learning Staff -> Employment 
+
+K12 -> K12 School -> Finance 
+
+K12 -> K12 Staff -> Employment 
+
+K12 -> LEA -> Finance 
+
+K12 -> Program -> Finance 
+
+K12 -> SEA -> Finance 
+
+Postsecondary -> PS Institution -> Finance 
+
+Postsecondary -> PS Staff -> Employment ",New,Alphanumeric - 40 characters maximum,Added new element to DES.,"The funding source, usually an organization, is related to either another organization that is receiving the funding or to a person such as in the case of employment.",002059,,FundingSourceAmount,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25020
+Funding Source Percentage,The proportion or percentage of financial support or resources contributed by a specific funding or revenue stream in relation to the total funding.,None,"Adult Education -> Adult Education Staff -> Employment 
+
+Career and Technical -> CTE Staff -> Employment 
+
+Early Learning -> Early Learning Organization -> Finance 
+
+Early Learning -> Early Learning Program -> Finance 
+
+Early Learning -> Early Learning Staff -> Employment 
+
+K12 -> K12 School -> Finance 
+
+K12 -> K12 Staff -> Employment 
+
+K12 -> LEA -> Finance 
+
+K12 -> Program -> Finance 
+
+K12 -> SEA -> Finance 
+
+Postsecondary -> PS Institution -> Finance 
+
+Postsecondary -> PS Staff -> Employment ",New,Numeric - up to 2 digits after decimal place,Added new element to DES.,"The funding source, usually an organization, is related to either another organization that is receiving the funding or to a person such as in the case of employment.",002058,,FundingSourcePercentage,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25021
+High Grade Level,The highest grade level when referring to grade levels as a range.,"Prenatal - Prenatal
+Birth - Birth
+IT - Infant/toddler
+PR - Preschool
+PK - Prekindergarten
+TK - Transitional Kindergarten
+KG - Kindergarten
+01 - First grade
+02 - Second grade
+03 - Third grade
+04 - Fourth grade
+05 - Fifth grade
+06 - Sixth grade
+07 - Seventh grade
+08 - Eighth grade
+09 - Ninth grade
+10 - Tenth grade
+11 - Eleventh grade
+12 - Twelfth grade
+13 - Grade 13
+PS - Postsecondary
+UG - Ungraded
+AE - Adult Education
+Other - Other
+",Credentials -> Credential Definition ,New,Option Set,Added new element to DES.,,002083,,HighGradeLevel,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25022
+High Quality Instructional Material Indicator,An indication of whether the related learning resource meets requirements to be considered high quality instructional material as defined by the organization assigning the indicator.,"Yes
+No
+Unknown
+",Learning Resources -> Learning Resource ,New,Option Set,Added new element to DES.,,002032,,HighQualityInstructionalMaterialIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25023
+Incident Activity,The activity taking place during the occurrence. ,"Eating - Eating
+IndividualIndependent - Individual/Independent
+LargeGroup - Large Group
+Playtime - Playtime
+RestTime - Rest Time
+SmallGroup - Small Group
+Transition - Transition
+",K12 -> Incident ,New,Option Set,Added new element to DES.,,002110,,IncidentActivity,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25024
+Instructional Minutes Per Day,The number of instructional minutes in the day in which the school is normally in session.,None,K12 -> K12 School -> Session ,New,Integer- greater than or equal to 0,Added new element to DES.,,002099,,InstructionalMinutesPerDay,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25025
+Job Identification System,A coding scheme that is used by an organization for identification and record keeping purposes to refer to a job.,"LEA - Local Education Agency assigned number
+School - School-assigned number
+SEA - State Education Agency assigned number
+Other - Other
+","Early Learning -> Early Learning Organization -> Job 
+
+K12 -> K12 School -> Job 
+
+K12 -> LEA -> Job 
+
+K12 -> Organization -> Job 
+
+K12 -> SEA -> Job 
+
+Postsecondary -> Organization -> Job ",New,Option Set,Added new element to DES.,,002070,,JobIdentificationSystem,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25026
+Job Identifier,A unique number or alphanumeric code used to identify a job.,None,"Early Learning -> Early Learning Organization -> Job 
+
+K12 -> K12 School -> Job 
+
+K12 -> LEA -> Job 
+
+K12 -> Organization -> Job 
+
+K12 -> SEA -> Job 
+
+Postsecondary -> Organization -> Job ",New,Alphanumeric - 40 characters maximum,Added new element to DES.,,002069,,JobIdentifier,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25027
+Job Position Expected Start Date,"The date, determined by the organization, on which they anticipate the selected individual to commence their role within the organization.",None,"Early Learning -> Early Learning Organization -> Job 
+
+K12 -> K12 School -> Job 
+
+K12 -> LEA -> Job 
+
+K12 -> Organization -> Job 
+
+K12 -> SEA -> Job 
+
+Postsecondary -> Organization -> Job ",New,YYYY-MM-DD,Added new element to DES.,,002077,,JobPositionExpectedStartDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25028
+Job Position Identification System,A coding scheme that is used by an organization for identification and record keeping purposes to refer to a job position.,"LEA - Local Education Agency assigned number
+School - School-assigned number
+SEA - State Education Agency assigned number
+Other - Other
+","Early Learning -> Early Learning Organization -> Job 
+
+K12 -> K12 School -> Job 
+
+K12 -> LEA -> Job 
+
+K12 -> Organization -> Job 
+
+K12 -> SEA -> Job 
+
+Postsecondary -> Organization -> Job ",New,Option Set,Added new element to DES.,,002076,,JobPositionIdentificationSystem,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25029
+Job Position Identifier,A unique number or alphanumeric code used to identify a job position.,None,"Early Learning -> Early Learning Organization -> Job 
+
+K12 -> K12 School -> Job 
+
+K12 -> LEA -> Job 
+
+K12 -> Organization -> Job 
+
+K12 -> SEA -> Job 
+
+Postsecondary -> Organization -> Job ",New,Alphanumeric - 40 characters maximum,Added new element to DES.,,002075,,JobPositionIdentifier,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25030
+Job Position Status,A value defining the status of the job position.,"Active - Active
+Approved - Approved
+Cancelled - Cancelled
+Filled - Filled
+Frozen - Frozen
+","Early Learning -> Early Learning Organization -> Job 
+
+K12 -> K12 School -> Job 
+
+K12 -> LEA -> Job 
+
+K12 -> Organization -> Job 
+
+K12 -> SEA -> Job 
+
+Postsecondary -> Organization -> Job ",New,Option Set,Added new element to DES.,,002078,,JobPositionStatus,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25031
+Job Position Status Cancelled Reason,The reason why the job position was given the job position status of cancelled.,"1001 - Budgetary Reduction
+1003 - Enrollment Changes
+1002 - Organizational Restructure
+1004 - Specific Grant or Funding Expiration
+9999 - Other
+","Early Learning -> Early Learning Organization -> Job 
+
+K12 -> K12 School -> Job 
+
+K12 -> LEA -> Job 
+
+K12 -> Organization -> Job 
+
+K12 -> SEA -> Job 
+
+Postsecondary -> Organization -> Job ",New,Option Set,Added new element to DES.,To be used in conjunction with the element Job Position Status.,002080,,JobPositionStatusCancelledReason,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25032
+Job Position Status Date,The effective date of the job position status.,None,"Early Learning -> Early Learning Organization -> Job 
+
+K12 -> K12 School -> Job 
+
+K12 -> LEA -> Job 
+
+K12 -> Organization -> Job 
+
+K12 -> SEA -> Job 
+
+Postsecondary -> Organization -> Job ",New,YYYY-MM-DD,Added new element to DES.,Used in conjunction with the element Job Position Status.,002079,,JobPositionStatusDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25033
+LEA GFSA Assurance of Compliance Indicator,"Indicates if a Local Education Agency (LEA) has provided an assurance that it is in compliance with the State law requiring that a student who brings a firearm to school, or possesses a firearm at school, be expelled for one year, except that such State law shall allow the chief administering officer of a local educational agency to modify such expulsion requirement for a student on a case-by-case basis if such modification is in writing.","Not Provided - Not Provided
+Provided - Provided
+",K12 -> LEA -> Compliance ,New,Option Set,Added new element to DES.,This data is part of the requirement for LEAs to adhere to the Gun Free Schools Act (GFSA).,002096,,LEAGFSAAssuranceofComplianceIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25034
+LEA GFSA Policy Assurance Indicator,Indicates if a Local Education Agency has provided an assurance that it is in compliance with the requirement in Section 4141(h) that an LEA receiving ESEA funds have in place a policy requiring referral to the criminal justice or juvenile delinquency system of any student who brings a firearm to a school or possesses a firearm at school. ,"Not Provided - Not Provided
+Provided - Provided
+",K12 -> LEA -> Compliance ,New,Option Set,Added new element to DES.,This data is part of the requirement for LEAs to adhere to the Gun Free Schools Act (GFSA).,002097,,LEAGFSAPolicyAssuranceIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25035
+Learning Resource Identification System,A coding scheme that is used for identification and record-keeping purposes to refer to a learning resource.,"ISBN - International Standard Book Number
+Other - Other
+",Learning Resources -> Learning Resource ,New,Option Set,Added new element to DES.,,002028,,LearningResourceIdentificationSystem,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25036
+Learning Resource Identifier,A unique number or alphanumeric code assigned to a learning resource by an organization.,None,Learning Resources -> Learning Resource ,New,Alphanumeric - 40 characters maximum,Added new element to DES.,,002027,,LearningResourceIdentifier,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25037
+Learning Resource Issued Date,The date the learning resource was issued to the student.,None,Learning Resources -> Learning Resource ,New,YYYY-MM-DD,Added new element to DES.,,002093,,LearningResourceIssuedDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25038
+Learning Resource Ordered Date,The date the learning resource was ordered for the student.,None,Learning Resources -> Learning Resource ,New,YYYY-MM-DD,Added new element to DES.,,002095,,LearningResourceOrderedDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25039
+Learning Resource Received Date,The date the learning resource was received by the organization that placed the order. ,None,Learning Resources -> Learning Resource ,New,YYYY-MM-DD,Added new element to DES.,,002094,,LearningResourceReceivedDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25040
+Learning Resource Status,The status of the Learning Resource as of the status start date.,"Active - Active
+Disposal - Disposal
+PendingTransfer - Pending transfer
+Surplus - Surplus
+Other - Other
+",Learning Resources -> Learning Resource ,New,Option Set,Added new element to DES.,,002031,,LearningResourceStatus,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25041
+Learning Resource Status Quantity,The total number of a specific related learning resource for each distinct learning resource status.,None,Learning Resources -> Learning Resource ,New,Integer - greater than or equal to 0,Added new element to DES.,,002033,,LearningResourceStatusQuantity,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25042
+Local Job Category,A local code used to describe and classify the job.,"Other - Other
+","Early Learning -> Early Learning Organization -> Job 
+
+K12 -> K12 School -> Job 
+
+K12 -> LEA -> Job 
+
+K12 -> Organization -> Job 
+
+K12 -> SEA -> Job 
+
+Postsecondary -> Organization -> Job ",New,Option Set,Added new element to DES.,,002071,,LocalJobCategory,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25043
+Local Job Function,A local code indicating the broad business activity supported by the job.,"Other - Other
+","Early Learning -> Early Learning Organization -> Job 
+
+K12 -> K12 School -> Job 
+
+K12 -> LEA -> Job 
+
+K12 -> Organization -> Job 
+
+K12 -> SEA -> Job 
+
+Postsecondary -> Organization -> Job ",New,Option Set,Added new element to DES.,,002072,,LocalJobFunction,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25044
+Low Grade Level,The lowest grade level when referring to grade levels as a range.,"Prenatal - Prenatal
+Birth - Birth
+IT - Infant/toddler
+PR - Preschool
+PK - Prekindergarten
+TK - Transitional Kindergarten
+KG - Kindergarten
+01 - First grade
+02 - Second grade
+03 - Third grade
+04 - Fourth grade
+05 - Fifth grade
+06 - Sixth grade
+07 - Seventh grade
+08 - Eighth grade
+09 - Ninth grade
+10 - Tenth grade
+11 - Eleventh grade
+12 - Twelfth grade
+13 - Grade 13
+PS - Postsecondary
+UG - Ungraded
+AE - Adult Education
+Other - Other
+",Credentials -> Credential Definition ,New,Option Set,Added new element to DES.,,002082,,LowGradeLevel,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25045
+Lunch Minutes Per Day,The number of lunch minutes in the day in which the school is normally in session.,None,K12 -> K12 School -> Session ,New,Integer- greater than or equal to 0,Added new element to DES.,,002100,,LunchMinutesPerDay,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25046
+Military Campaigns,A military campaign in which the person has been involved during the service period.,"None - None
+GulfWar - The Gulf War (1990-1991)
+IraqWar - The Iraq War (2003-2011)
+KoreanWar - The Korean War (1950-1953)
+VietnamWar - The Vietnam War (1955-1975)
+WarInAfganistan - The War in Afghanistan (2001-2021)
+Unknown - Unknown
+WorldWarII - World War II (1939-1945)
+Other - Other
+","Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Option Set,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002050,,MilitaryCampaigns,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25047
+Military Country,The unique two character International Organization for Standardization (ISO) code for the country in whose military a person serves or served.,"AF - AFGHANISTAN
+AX - ÅLAND ISLANDS
+AL - ALBANIA
+DZ - ALGERIA
+AS - AMERICAN SAMOA
+AD - ANDORRA
+AO - ANGOLA
+AI - ANGUILLA
+AQ - ANTARCTICA
+AG - ANTIGUA AND BARBUDA
+AR - ARGENTINA
+AM - ARMENIA
+AW - ARUBA
+AU - AUSTRALIA
+AT - AUSTRIA
+AZ - AZERBAIJAN
+BS - BAHAMAS
+BH - BAHRAIN
+BD - BANGLADESH
+BB - BARBADOS
+BY - BELARUS
+BE - BELGIUM
+BZ - BELIZE
+BJ - BENIN
+BM - BERMUDA
+BT - BHUTAN
+BO - BOLIVIA (PLURINATIONAL STATE OF)
+BQ - BONAIRE, SINT EUSTATIUS AND SABA
+BA - BOSNIA AND HERZEGOVINA
+BW - BOTSWANA
+BV - BOUVET ISLAND
+BR - BRAZIL
+IO - BRITISH INDIAN OCEAN TERRITORY
+BN - BRUNEI DARUSSALAM
+BG - BULGARIA
+BF - BURKINA FASO
+BI - BURUNDI
+CV - CABO VERDE
+KH - CAMBODIA
+CM - CAMEROON
+CA - CANADA
+KY - CAYMAN ISLANDS
+CF - CENTRAL AFRICAN REPUBLIC
+TD - CHAD
+CL - CHILE
+CN - CHINA
+CX - CHRISTMAS ISLAND
+CC - COCOS (KEELING) ISLANDS
+CO - COLOMBIA
+KM - COMOROS
+CG - CONGO
+CD - CONGO, DEMOCRATIC REPUBLIC OF THE
+CK - COOK ISLANDS
+CR - COSTA RICA
+CI - CÔTE D'IVOIRE
+HR - CROATIA
+CU - CUBA
+CW - CURAÇAO
+CY - CYPRUS
+CZ - CZECHIA
+DK - DENMARK
+DJ - DJIBOUTI
+DM - DOMINICA
+DO - DOMINICAN REPUBLIC
+EC - ECUADOR
+EG - EGYPT
+SV - EL SALVADOR
+GQ - EQUATORIAL GUINEA
+ER - ERITREA
+EE - ESTONIA
+SZ - ESWATINI
+ET - ETHIOPIA
+FK - FALKLAND ISLANDS (MALVINAS)
+FO - FAROE ISLANDS
+FJ - FIJI
+FI - FINLAND
+FR - FRANCE
+GF - FRENCH GUIANA
+PF - FRENCH POLYNESIA
+TF - FRENCH SOUTHERN TERRITORIES
+GA - GABON
+GM - GAMBIA
+GE - GEORGIA
+DE - GERMANY
+GH - GHANA
+GI - GIBRALTAR
+GR - GREECE
+GL - GREENLAND
+GD - GRENADA
+GP - GUADELOUPE
+GU - GUAM
+GT - GUATEMALA
+GG - GUERNSEY
+GN - GUINEA
+GW - GUINEA-BISSAU
+GY - GUYANA
+HT - HAITI
+HM - HEARD ISLAND AND MCDONALD ISLANDS
+VA - HOLY SEE
+HN - HONDURAS
+HK - HONG KONG
+HU - HUNGARY
+IS - ICELAND
+IN - INDIA
+ID - INDONESIA
+IR - IRAN (ISLAMIC REPUBLIC OF)
+IQ - IRAQ
+IE - IRELAND
+IM - ISLE OF MAN
+IL - ISRAEL
+IT - ITALY
+JM - JAMAICA
+JP - JAPAN
+JE - JERSEY
+JO - JORDAN
+KZ - KAZAKHSTAN
+KE - KENYA
+KI - KIRIBATI
+KP - KOREA (DEMOCRATIC PEOPLE'S REPUBLIC OF)
+KR - KOREA, REPUBLIC OF
+KW - KUWAIT
+KG - KYRGYZSTAN
+LA - LAO PEOPLE'S DEMOCRATIC REPUBLIC
+LV - LATVIA
+LB - LEBANON
+LS - LESOTHO
+LR - LIBERIA
+LY - LIBYA
+LI - LIECHTENSTEIN
+LT - LITHUANIA
+LU - LUXEMBOURG
+MO - MACAO
+MG - MADAGASCAR
+MW - MALAWI
+MY - MALAYSIA
+MV - MALDIVES
+ML - MALI
+MT - MALTA
+MH - MARSHALL ISLANDS
+MQ - MARTINIQUE
+MR - MAURITANIA
+MU - MAURITIUS
+YT - MAYOTTE
+MX - MEXICO
+FM - MICRONESIA (FEDERATED STATES OF)
+MD - MOLDOVA, REPUBLIC OF
+MC - MONACO
+MN - MONGOLIA
+ME - MONTENEGRO
+MS - MONTSERRAT
+MA - MOROCCO
+MZ - MOZAMBIQUE
+MM - MYANMAR
+NA - NAMIBIA
+NR - NAURU
+NP - NEPAL
+NL - NETHERLANDS
+NC - NEW CALEDONIA
+NZ - NEW ZEALAND
+NI - NICARAGUA
+NE - NIGER
+NG - NIGERIA
+NU - NIUE
+NF - NORFOLK ISLAND
+MK - NORTH MACEDONIA
+MP - NORTHERN MARIANA ISLANDS
+NO - NORWAY
+OM - OMAN
+PK - PAKISTAN
+PW - PALAU
+PS - PALESTINE, STATE OF
+PA - PANAMA
+PG - PAPUA NEW GUINEA
+PY - PARAGUAY
+PE - PERU
+PH - PHILIPPINES
+PN - PITCAIRN
+PL - POLAND
+PT - PORTUGAL
+PR - PUERTO RICO
+QA - QATAR
+RE - RÉUNION
+RO - ROMANIA
+RU - RUSSIAN FEDERATION
+RW - RWANDA
+BL - SAINT BARTHÉLEMY
+SH - SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA
+KN - SAINT KITTS AND NEVIS
+LC - SAINT LUCIA
+MF - SAINT MARTIN (FRENCH PART)
+PM - SAINT PIERRE AND MIQUELON
+VC - SAINT VINCENT AND THE GRENADINES
+WS - SAMOA
+SM - SAN MARINO
+ST - SAO TOME AND PRINCIPE
+SA - SAUDI ARABIA
+SN - SENEGAL
+RS - SERBIA
+SC - SEYCHELLES
+SL - SIERRA LEONE
+SG - SINGAPORE
+SX - SINT MAARTEN (DUTCH PART)
+SK - SLOVAKIA
+SI - SLOVENIA
+SB - SOLOMON ISLANDS
+SO - SOMALIA
+ZA - SOUTH AFRICA
+GS - SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+SS - SOUTH SUDAN
+ES - SPAIN
+LK - SRI LANKA
+SD - SUDAN
+SR - SURINAME
+SJ - SVALBARD AND JAN MAYEN
+SE - SWEDEN
+CH - SWITZERLAND
+SY - SYRIAN ARAB REPUBLIC
+TW - TAIWAN
+TJ - TAJIKISTAN
+TZ - TANZANIA, UNITED REPUBLIC OF
+TH - THAILAND
+TL - TIMOR-LESTE
+TG - TOGO
+TK - TOKELAU
+TO - TONGA
+TT - TRINIDAD AND TOBAGO
+TN - TUNISIA
+TR - TURKEY
+TM - TURKMENISTAN
+TC - TURKS AND CAICOS ISLANDS
+TV - TUVALU
+UG - UGANDA
+UA - UKRAINE
+AE - UNITED ARAB EMIRATES
+GB - UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND
+UM - UNITED STATES MINOR OUTLYING ISLANDS
+US - UNITED STATES OF AMERICA
+UY - URUGUAY
+UZ - UZBEKISTAN
+VU - VANUATU
+VE - VENEZUELA (BOLIVARIAN REPUBLIC OF)
+VN - VIET NAM
+VG - VIRGIN ISLANDS (BRITISH)
+VI - VIRGIN ISLANDS (U.S.)
+WF - WALLIS AND FUTUNA
+EH - WESTERN SAHARA
+YE - YEMEN
+ZM - ZAMBIA
+ZW - ZIMBABWE
+","Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Option Set,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. The CEDS Country Code option set comes from the ISO 3166 standard, the short name for Officially assigned codes. Discontinued codes from the ISO standard are not included in the CEDS list. This element is intended to show when a person is serving or has served in another country's military, not the country in which they serve as part of the US Military.",002034,,MilitaryCountry,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25048
+Military Current Rank,The rank a person currently holds as part of active service. Do not use this indicator if the person is no longer holding this rank.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric - 40 characters maximum,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002048,,MilitaryCurrentRank,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25049
+Military Deployment Activity Code,The codes of any activities performed by the person while deployed in the military.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric - 200 characters maximum,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002055,,MilitaryDeploymentActivityCode,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25050
+Military Deployment Activity Name,The names of any activities performed by the person while deployed in the military.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric - 400 characters maximum,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002056,,MilitaryDeploymentActivityName,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25051
+Military Deployment Description,A textual description of the person's military deployment.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric - 200 characters maximum,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002052,,MilitaryDeploymentDescription,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25052
+Military Deployment End Date,The date when a person's military deployment ended.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,YYYY-MM-DD or YYYY-MM,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002043,,MilitaryDeploymentEndDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25053
+Military Deployment Order Description,A textual description of the person's military deployment order.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric - 200 characters maximum,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002053,,MilitaryDeploymentOrderDescription,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25054
+Military Deployment Requested By,A textual description of an entity that requested the person's military deployment.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric - 100 characters maximum,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002054,,MilitaryDeploymentRequestedBy,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25055
+Military Deployment Start Date,The date when a person's military deployment started.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,YYYY-MM-DD or YYYY-MM,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002042,,MilitaryDeploymentStartDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25056
+Military Deployment Status Code,Deployment status code issued to military personnel by the U.S. military.,"AvailableForDeployment - Available for deployment
+CurrentlyDeployed - Currently deployed
+NonDeployable - Nondeployable
+PermanentDeploymentExemption - Permanent deployment exemption
+RetiredOrSeparatedFromMilitaryService - Retired or separated from military service
+Temporary exemption from deployment - Temporary deployment exemption
+","Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Option Set,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002051,,MilitaryDeploymentStatusCode,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25057
+Military Discharge Category,A kind of discharge a person received from military services.,"AdministrativeDischarge - Administrative discharge
+BadConductDischarge - Bad conduct discharge
+DishonorableDischarge - Dishonorable discharge
+EntryLevelSeparation - Entry level separation
+GeneralDischargeUnderHonorableConditions - General discharge under honorable conditions
+HonorableDischarge - Honorable discharge
+MedicalDischarge - Medical discharge
+OtherThanHonorableDischarge - Other than honorable discharge
+RetirementDischarge - Retirement discharge
+","Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Option Set,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002044,,MilitaryDischargeCategory,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25058
+Military Discharge Date,The date when a person was released from further military obligations.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,YYYY-MM-DD or YYYY-MM,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002040,,MilitaryDischargeDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25059
+Military Discharge Rank,A rank at time a person was discharged from military service.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric - 40 characters maximum,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002046,,MilitaryDischargeRank,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25060
+Military Duties,A description of the duties encompassed within a period of military service.,"AdministrativeDuties - Administrative duties
+CombatAndMissions - Combat and missions
+LogisticsAndSupplyChainManagement - Logistics and supply chain management
+MaintenanceAndRepairs - Maintenance and repairs
+OperationsAndTraining - Operations and training
+Unknown - Unknown
+Other - Other
+","Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Option Set,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002037,,MilitaryDuties,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25061
+Military Expertise,A list of expertise that the person developed during the service period.,"CommunicationSkills - Communication skills
+CulturalAwareness - Cultural awareness
+LeadershipAndManagement - Leadership and management
+LogisticsAndMaintenance - Logistics and maintenance
+SecurityAndSafety - Security and safety
+TechnicalSkills - Technical skills
+Unknown - Unknown
+","Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Option Set,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002036,,MilitaryExpertise,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25062
+Military Highest Rank,The highest rank achieved by a person in military service.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric - 40 characters maximum,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002047,,MilitaryHighestRank,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25063
+Military Honors,A military honor that the person received during the service period.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric - 40 characters maximum,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002049,,MilitaryHonors,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25064
+Military Induction Date,The date when a person was inducted into active military service.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,YYYY-MM-DD or YYYY-MM,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002039,,MilitaryInductionDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25065
+Military Induction Rank,A rank at the time a person started their military experience.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric - 40 characters maximum,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002045,,MilitaryInductionRank,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25066
+Military Occupational Specialties ,A military occupational specialty of a person. ,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric - 200 characters maximum,Added new element to DES.,"This is a code or an identifier of an occupation applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. The complete list of MOS for each branch of the U.S. military can be found on their respective websites. In addition, there are other resources available that provide information on how MOS relate to civilian jobs, such as the crosswalk tools available on the Department of Veterans Affairs website: https://www.myhealth.va.gov/mhv-portal-web/dod-military-service-information-faqs#civilianjobs. ",002035,,MilitaryOccupationalSpecialties,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25067
+Military Release Date,The date a person was released from active military service.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,YYYY-MM-DD or YYYY-MM,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002041,,MilitaryReleaseDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25068
+Military Service Locations,A description of the duty stations (locations) encompassed within a period of military service.,None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002038,,MilitaryServiceLocations,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25069
+Military Service Number,"The military service number or identifier of the person as defined by the country, branch, and/or division.",None,"Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Alphanumeric - 40 characters maximum,Added new element to DES.,"This identifier is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements.",002114,,MilitaryServiceNumber,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25070
+Most Prevalent Level of Institution,A classification of a postsecondary institution's most prevalent level.,"FourYearDegreeConferred - Four-year based on degrees conferred
+FourYearDegreeOffered - Four-year based on degrees offered
+FourYearFunding - Four-year based on funding
+TwoYearDegreeConferred - Two-year based on degrees conferred
+TwoYearDegreeOffered - Two-year based on degrees offered
+TwoYearFunding - Two-year based on funding
+Other - Other
+",Postsecondary -> PS Institution -> Institution Characteristics ,New,Option Set,Added new element to DES.,,002025,,MostPrevalentLevelOfInstitution,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25071
+National Guard Indicator,A person's current membership status in the United States National Guard. ,"Yes
+No
+Unknown
+","Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",New,Option Set,Added new element to DES.,"This element is applicable for specifying more details when using indicators related to U.S. Military service, such as Military Connected Student Indicator, Active Military Status Indicator, Military Veteran Status Indicator and Military Enlistment After Exit elements. ",002057,,NationalGuardIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25072
+Neglected Program Type,"The type of neglected programs under Title I, Part D, Subpart 1 (State Agency) of ESEA as amended.","CMNTYDAYPRG - Community Day Programs
+GRPHOMES - Group Homes
+RSDNTLTRTMTHOME - Residential Treatment Home
+SHELTERS - Shelters
+OTHER - Other Programs
+",K12 -> K12 Student -> Neglected or Delinquent ,New,Option Set,Added new element to DES.,,002084,,NeglectedProgramType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25073
+Organization Jurisdiction Square Miles,"The total area, measured in square miles, over which an organization holds administrative or governing authority, including regions under its regulatory, operational, or legal control. ",None,"Early Learning -> Early Learning Organization -> Organization Characteristics 
+
+K12 -> K12 School -> Organization Characteristics 
+
+K12 -> LEA -> Organization Characteristics 
+
+K12 -> Organization -> Organization Characteristics 
+
+K12 -> SEA -> Organization Characteristics 
+
+Postsecondary -> Organization -> Organization Characteristics ",New,Numeric - up to 4 digits after decimal place,Added new element to DES.,,002063,,OrganizationJurisdictionSquareMiles,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25074
+Part B Postsecondary Outcomes Indicator,An indication of the status of a person within one year of leaving secondary school and who had an individualized education program in effect at the time they left secondary school.,"1002 - Competitively employed within one year
+1001 - Higher education within one year
+9998 - Not engaged Part B outcomes
+1004 - Other employment within one year
+1003 - Other postsecondary education or training within one year
+9997 - Unknown
+9999 - Other
+",K12 -> K12 Student -> IDEA ,New,Option Set,Added new element to DES.,,002086,,PartBPostsecondaryOutcomesIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25075
+Perkins Post-Program Placement Indicator,An indication of the post-program status of a CTE Concentrator in the second quarter after exiting from secondary education.,"1001 - Advanced training
+1010 - Employment
+1002 - Military service
+1101 - National or community service
+1003 - National or community service or Peace Corps
+9998 - Not engaged Perkins Post-Program Placement
+1009 - Peace Corps
+1007 - Postsecondary associate degree
+1008 - Postsecondary baccalaureate degree
+1006 - Postsecondary certificate
+1005 - Postsecondary education
+9997 - Unknown
+9999 - Other
+",Career and Technical -> CTE Student -> Program Participation ,New,Option Set,Added new element to DES.,,002087,,PerkinsPostProgramPlacementIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25076
+Projected High School Diploma Type,The type of projected diploma/credential a person would be awarded in recognition of his/her completion of the curricular requirements.,"00812 - Alternative credential
+00819 - Career and Technical Education certificate
+00813 - Certificate of attendance
+00814 - Certificate of completion
+00807 - Endorsed/advanced diploma
+00816 - General Educational Development (GED) credential
+00815 - High school equivalency credential, other than GED
+00809 - International Baccalaureate
+00810 - Modified diploma
+00811 - Other diploma
+00818 - Post graduate certificate (grade 13)
+00808 - Regents diploma
+00806 - Regular High School Diploma
+75000 - State Defined Alternate Diploma
+","Adult Education -> AE Student -> Academic Record -> Academic Award 
+
+Career and Technical -> CTE Student -> Academic Record -> Academic Award 
+
+K12 -> K12 Student -> Academic Record -> Academic Award 
+
+Postsecondary -> PS Student -> K12 Transcript 
+
+Workforce -> Workforce Program Participant -> Academic Record -> Academic Award ",New,Option Set,Added new element to DES.,,002026,,ProjectedHighSchoolDiplomaType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25077
+Recess Minutes Per Day,The number of recess minutes in the day in which the school is normally in session.,None,K12 -> K12 School -> Session ,New,Integer- greater than or equal to 0,Added new element to DES.,,002101,,RecessMinutesPerDay,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25078
+Record Reference Identification System,A coding scheme that is used for identification and record-keeping purposes to refer to a record.,"System - System-assigned
+Other - Other
+",Implementation Variables -> Data Process ,New,Option Set,Added new element to DES.,,002030,,RecordReferenceIdentificationSystem,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25079
+Record Reference Identifier,A unique number or alphanumeric code assigned to a record.,None,Implementation Variables -> Data Process ,New,Alphanumeric - 40 characters maximum,Added new element to DES.,,002029,,RecordReferenceIdentifier,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25080
+Salary Schedule Criterion Description,A description given to a specific criterion used to determine a salary provided or offered.,None,"Early Learning -> EL Organization -> Organization Information 
+
+K12 -> Organization -> Organization Information 
+
+Postsecondary -> Organization -> Organization Information ",New,Alphanumeric,Added new element to DES.,,002107,,SalaryScheduleCriterionDescription,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25081
+Salary Schedule Criterion Name,A name given to a specific criterion used to determine a salary provided or offered.,None,"Early Learning -> EL Organization -> Organization Information 
+
+K12 -> Organization -> Organization Information 
+
+Postsecondary -> Organization -> Organization Information ",New,Alphanumeric - 60 characters maximum,Added new element to DES.,,002106,,SalaryScheduleCriterionName,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25082
+Salary Schedule Criterion Value,A unique value or code assigned to a salary schedule criterion used to differentiate between the achievable levels of the criterion.,None,"Early Learning -> EL Organization -> Organization Information 
+
+K12 -> Organization -> Organization Information 
+
+Postsecondary -> Organization -> Organization Information ",New,Alphanumeric - 60 characters maximum,Added new element to DES.,,002108,,SalaryScheduleCriterionValue,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25083
+Salary Schedule Salary Value,The salary or wage determined by the salary schedule criteria.,None,"Early Learning -> EL Organization -> Organization Information 
+
+K12 -> Organization -> Organization Information 
+
+Postsecondary -> Organization -> Organization Information ",New,Numeric - up to 2 digits after decimal place,Added new element to DES.,,002109,,SalaryScheduleSalaryValue,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25084
+Sequence of Course,Where a specific course lies when it is part of a consecutive sequence of courses. ,None,"K12 -> Course Section -> Course 
+
+K12 -> K12 Course ",New,Alphanumeric- 10 characters maximum,Added new element to DES.,"For example: if a school offers 4 years of Theater, Theater 3 within this school would be indicated in the sequence elements as 3 4, denoting the 3rd part of a 4-part sequence of courses.",002023,,SequenceOfCourse,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25085
+Session Sequence Number,The position of this session in a sequence of sessions.,None,"Adult Education -> Course Section 
+
+Career and Technical -> Course Section 
+
+K12 -> Course Section 
+
+K12 -> K12 School -> Session ",New,Numeric,Added new element to DES.,,002021,,SessionSequenceNumber,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25086
+Staff Compensation Annual Supplement Description,A description of the annual supplement awarded to a staff member.,None,"Early Learning -> Early Learning Staff -> Employment 
+
+K12 -> K12 Staff -> Employment ",New,Alphanumeric - 300 characters maximum,Added new element to DES.,Used in relation to the element Staff Compensation Annual Supplement.,002064,,StaffCompensationAnnualSupplementDescription,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25087
+Student Dropout Status,An indication of the status of this student as dropout.,"Potential - Potential Dropout
+Reported - Reported Dropout
+VerifiedReported - Verified Reported Dropout
+","Early Learning -> Early Learning Child -> Enrollment 
+
+K12 -> K12 Student -> Enrollment ",New,Option Set,Added new element to DES.,,002068,,StudentDropoutStatus,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25088
+Teen Parent Indicator,The child's parent or guardian is a teen parent between ages 10 to 19 years.,"Yes
+No
+Unknown
+",Early Learning -> EL Child -> Demographic ,New,Option Set,Added new element to DES.,,002062,,TeenParentIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25089
+Temperature Controlled Building Area,"The sum of the Building Area capable of being regulated and maintained within a specific temperature range for a designated purpose, employing heating, cooling, insulation, or climate control systems.",None,Facilities -> Facility -> Identification ,New,Alphanumeric - 30 characters maximum,Added new element to DES.,Use in conjunction with the element: Building Area.,002024,,TemperatureControlledBuildingArea,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25090
+Transportation Public Expense Eligibility Type,The type of eligibility for transporting a person at public expense.,"75000 - Eligible
+02069 - Eligible because of disability
+02068 - Eligible because of distance
+02071 - Eligible because of hazardous conditions
+02074 - Not eligible
+09999 - Other
+",K12 -> K12 Student -> Transportation ,New,Option Set,Added new element to DES.,,002018,,TransportationPublicExpenseEligibilityType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25091
+Transportation State Aid Qualification Type,The qualification status for the transportation of a person that entitles an organization to receive state transportation aid.,"02067 - Does not qualify
+02065 - Qualifies for regular state aid
+02066 - Qualifies for special education aid
+09999 - Other
+",K12 -> K12 Student -> Transportation ,New,Option Set,Added new element to DES.,,002020,,TransportationStateAidQualificationType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25092
+Transportation Status Type,The transportation status of the person.,"02062 - Not at public expense
+02064 - Not transported
+02060 - Public expense
+02061 - Reduced public expense
+02063 - Room board or payment
+09999 - Other
+",K12 -> K12 Student -> Transportation ,New,Option Set,Added new element to DES.,,002019,,TransportationStatusType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25093
+Years of Prior Professional Experience,The total number of years that an individual has previously held a similar professional position in one or more education institutions prior to the current school year.,None,K12 -> K12 Staff -> Credential or License ,New,Numeric - up to 2 digits after decimal place,Added new element to DES.,,002061,,YearsOfPriorProfessionalExperience,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25094
+Years of Total Experience,The total number of years that a person has held this position or a similar position in one or more organizations.,None,K12 -> K12 Staff -> Credential or License ,New,Numeric - up to 2 digits after decimal place,Added new element to DES.,,002060,,YearsOfTotalExperience,,https://ceds.ed.gov/cedselementdetails.aspx?termid=25095

@@ -109,6 +109,14 @@ const moduleFunction =
 					},
 					promptTemplate: require(`./stringsLib/${stringsVariation}/choose-correct-ceds`)(),
 				},
+				'choose-ai-correct-ceds': {
+					extractionFunction:extractionFunction([getLatestXml]),
+					extractionParameters: {
+						frontDelimiter: `[START JSON SAMPLE]`,
+						backDelimiter: `[END JSON SAMPLE]`,
+					},
+					promptTemplate: require(`./stringsLib/${stringsVariation}/choose-ai-correct-ceds`)(),
+				},
 			};
 		};
 

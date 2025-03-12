@@ -13,7 +13,7 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 
 const moduleFunction = function (args = {}) {
 	const { xLog, getConfig } = process.global;
-	const { promptLibraryModulePath } = getConfig(moduleName);
+	const { promptLibraryModulePath, promptName } = getConfig(moduleName);
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
 	const systemPrompt =
@@ -29,12 +29,20 @@ const moduleFunction = function (args = {}) {
 	const formulatePromptList =
 		(promptGenerator) =>
 		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
-			latestWisdom.elementDefinition=JSON.stringify(latestWisdom.elementDefinition, '', '\t');
-			latestWisdom.suggestionList=JSON.stringify(latestWisdom.suggestionList, '', '\t');
-		
+			latestWisdom.elementDefinition = JSON.stringify(
+				latestWisdom.elementDefinition,
+				'',
+				'\t',
+			);
+			latestWisdom.suggestionList = JSON.stringify(
+				latestWisdom.suggestionList,
+				'',
+				'\t',
+			);
+
 			return promptGenerator.iterativeGeneratorPrompt({
 				...latestWisdom,
-				employerModuleName: moduleName,
+				employerModuleName: promptName?promptName:moduleName,
 			});
 		};
 
@@ -56,6 +64,10 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
+
+		
+		args.latestWisdom.elementDefinition=args.latestWisdom.elementDefinition?args.latestWisdom.elementDefinition:args.latestWisdom.initialThinkerData; //allows this to oeprate as the first step
+		
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
@@ -65,7 +77,9 @@ const moduleFunction = function (args = {}) {
 			const { promptGenerator, formulatePromptList, sifElement } = args;
 
 			// args.latestWisdom.initialThinkerData is supplied by task-runner in qtools.ai()
-			args.latestWisdom.latestXml=args.latestWisdom.latestXml?args.latestWisdom.latestXml:args.latestWisdom.initialThinkerData;
+			args.latestWisdom.latestXml = args.latestWisdom.latestXml
+				? args.latestWisdom.latestXml
+				: args.latestWisdom.initialThinkerData;
 
 			const promptElements = formulatePromptList(promptGenerator)(args);
 
@@ -89,6 +103,7 @@ const moduleFunction = function (args = {}) {
 				next(err, { ...args, ...result });
 			};
 
+
 			accessSmartyPants({ promptList, systemPrompt }, localCallback);
 		});
 
@@ -104,10 +119,21 @@ const moduleFunction = function (args = {}) {
 				`\n\n\n${moduleName}---------------------------------------------------\n${rawWisdom}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
-			const tmp = extractionFunction(rawWisdom);
-			const { latestXml, initialThinkerData } = extractionFunction(rawWisdom);
-			const cedsRecommentation=JSON.parse(latestXml, '', '\t');
-			const wisdom = { ...latestWisdom, latestXml, cedsRecommentation };
+
+			let wisdom;
+			try {
+				const tmp = extractionFunction(rawWisdom);
+				const { latestXml, initialThinkerData } = extractionFunction(rawWisdom);
+				const cedsRecommentation = JSON.parse(latestXml, '', '\t');
+				wisdom = { ...latestWisdom, latestXml, cedsRecommentation };
+			} catch (err) {
+				xLog.error(
+					{ ['rawWisdom']: rawWisdom },
+					{ showHidden: false, depth: 4, colors: true },
+				);
+				throw err;
+				
+			}
 
 			next('', { ...args, wisdom });
 		});

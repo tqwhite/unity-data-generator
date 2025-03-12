@@ -155,7 +155,7 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
 			continue; // Skip objects matching the conditions
 		}
 
-		sifElement.origCedsId = sifElement['CEDS ID'];
+	//	sifElement.origCedsId = sifElement['CEDS ID'];
 
 		if (sifElement['CEDS ID']) {
 			xLog.status(

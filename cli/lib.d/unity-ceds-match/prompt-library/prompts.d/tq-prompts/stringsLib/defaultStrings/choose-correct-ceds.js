@@ -105,6 +105,7 @@ EXPLANATION GOES HERE AT THE END
 
 There should be *nothing* except RESULT DATA between those delimiters. Explanation should follow.
 
+(note: this prompt is named: choose-correct-ceds)
 		`;
 };
 

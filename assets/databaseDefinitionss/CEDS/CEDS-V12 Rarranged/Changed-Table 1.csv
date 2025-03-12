@@ -1,0 +1,2301 @@
+Element Name,Definition,Option Set,Domain -> Entity -> Category,Status,Format,Change Notes,Usage Notes,Global ID,Alternate Name,Technical Name,Use Case/Connection,URL
+Academic Term Designator,The academic term for which the data apply.,"Fall - Fall
+Winter - Winter
+WinterIntersession - Winter Intersession
+Spring - Spring
+Summer - Summer
+Summer1 - Summer 1
+Summer2 - Summer 2
+SpringIntersession - Spring Intersession
+Other - Other
+","Postsecondary -> PS Student -> Academic Record
+
+Postsecondary -> PS Student -> Term Enrollment
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,,Add new DES location,"Needs to be used in combination with Predominant Calendar System element in order to determine if the option set is referring to a semester, quarter, or some other term length.",000727,,AcademicTermDesignator,"Postsecondary Education -> Complete College America
+Postsecondary Education -> Student Achievement Measure",https://ceds.ed.gov/cedselementdetails.aspx?termid=23703
+Academic Year Designator,The academic year for which the data apply.,None,"Postsecondary -> PS Student -> Academic Record
+
+Postsecondary -> PS Student -> Term Enrollment
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,YYYY-YYYY,Add new DES location,,000726,,AcademicYearDesignator,"Postsecondary Education -> Complete College America
+Postsecondary Education -> Student Achievement Measure",https://ceds.ed.gov/cedselementdetails.aspx?termid=23702
+Active Military Status Indicator,"Indicates whether a person is an active member of the active duty forces, national guard, or reserve forces.","NotActive - Not Active
+Active - Active
+Unknown - Unknown
+NationalGuardOrReserve - National Guard Or Reserve
+","Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",Updated,,"Modify element name, defintion, technical name, option set, and DES locations",,001577,,ActiveMilitaryStatusIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24556
+Address Apartment Room or Suite Number,"The apartment, room, or suite number of an address.",None,"Adult Education -> AE Staff -> Contact -> Address
+
+Adult Education -> AE Student -> Contact -> Address
+
+Career and Technical -> CTE Staff -> Contact -> Address
+
+Career and Technical -> CTE Student -> Contact -> Address
+
+Early Learning -> Early Learning Child -> Contact -> Address
+
+Early Learning -> Early Learning Organization -> Address
+
+Early Learning -> Early Learning Organization -> Contact -> Address
+
+Early Learning -> Early Learning Program -> Address
+
+Early Learning -> Early Learning Staff -> Contact -> Address
+
+Early Learning -> Early Learning Staff -> Professional Development -> Instructor
+
+Early Learning -> Early Learning Staff -> Professional Development Activity -> Session - Location
+
+Early Learning -> Parent/Guardian -> Contact -> Address
+
+Facilities -> Facility -> Address
+
+K12 -> K12 School -> Address
+
+K12 -> K12 Staff -> Contact -> Address
+
+K12 -> K12 Staff -> Professional Development -> Instructor
+
+K12 -> K12 Staff -> Professional Development Activity -> Session - Location
+
+K12 -> K12 Student -> Contact -> Address
+
+K12 -> LEA -> Address
+
+K12 -> Organization -> Address
+
+K12 -> Organization -> Contact -> Address
+
+K12 -> Parent/Guardian -> Contact -> Address
+
+K12 -> Program -> Address
+
+K12 -> SEA -> Address
+
+K12 -> SEA -> Contact -> Address
+
+Postsecondary -> Organization -> Address
+
+Postsecondary -> Organization -> Contact -> Address
+
+Postsecondary -> Parent/Guardian -> Contact -> Address
+
+Postsecondary -> PS Institution -> Address
+
+Postsecondary -> PS Staff -> Contact -> Address
+
+Postsecondary -> PS Student -> Contact -> Address
+
+Workforce -> Workforce Program -> Address 
+CHR",Updated,Alphanumeric - 60 characters maximum,Add new DES location,,000019,,AddressApartmentRoomOrSuiteNumber,"Early Learning -> Licensing
+Early Learning -> Program Compliance
+Early Learning -> Program Entry
+Early Learning -> Staff Quality
+Early Learning -> Workforce Development
+K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+Postsecondary Education -> Complete College America
+Postsecondary Education -> IPEDS",https://ceds.ed.gov/cedselementdetails.aspx?termid=23019
+Address City,The name of the city in which an address is located.,None,"Adult Education -> AE Staff -> Contact -> Address
+
+Adult Education -> AE Student -> Contact -> Address
+
+Career and Technical -> CTE Staff -> Contact -> Address
+
+Career and Technical -> CTE Student -> Contact -> Address
+
+Early Learning -> Early Learning Child -> Contact -> Address
+
+Early Learning -> Early Learning Organization -> Address
+
+Early Learning -> Early Learning Organization -> Contact -> Address
+
+Early Learning -> Early Learning Program -> Address
+
+Early Learning -> Early Learning Staff -> Contact -> Address
+
+Early Learning -> Early Learning Staff -> Professional Development -> Instructor
+
+Early Learning -> Early Learning Staff -> Professional Development Activity -> Session - Location
+
+Early Learning -> Parent/Guardian -> Contact -> Address
+
+Facilities -> Facility -> Address
+
+K12 -> K12 School -> Address
+
+K12 -> K12 Staff -> Contact -> Address
+
+K12 -> K12 Staff -> Professional Development -> Instructor
+
+K12 -> K12 Staff -> Professional Development Activity -> Session - Location
+
+K12 -> K12 Student -> Contact -> Address
+
+K12 -> LEA -> Address
+
+K12 -> Organization -> Address
+
+K12 -> Organization -> Contact -> Address
+
+K12 -> Parent/Guardian -> Contact -> Address
+
+K12 -> Program -> Address
+
+K12 -> SEA -> Address
+
+K12 -> SEA -> Contact -> Address
+
+Postsecondary -> Organization -> Address
+
+Postsecondary -> Organization -> Contact -> Address
+
+Postsecondary -> Parent/Guardian -> Contact -> Address
+
+Postsecondary -> PS Institution -> Address
+
+Postsecondary -> PS Staff -> Contact -> Address
+
+Postsecondary -> PS Student -> Contact -> Address
+
+Workforce -> Workforce Program -> Address 
+CHR",Updated,Alphanumeric - 30 characters maximum,Add new DES location,,000040,,AddressCity,"Early Learning -> Licensing
+Early Learning -> Program Compliance
+Early Learning -> Program Entry
+Early Learning -> Staff Quality
+Early Learning -> Workforce Development
+K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+Postsecondary Education -> Complete College America
+Postsecondary Education -> IPEDS",https://ceds.ed.gov/cedselementdetails.aspx?termid=23040
+Address County Name,"The name of the county, parish, borough, or comparable unit (within a state) in which an address is located.",None,"Adult Education -> AE Staff -> Contact -> Address
+
+Adult Education -> AE Student -> Contact -> Address
+
+Career and Technical -> CTE Staff -> Contact -> Address
+
+Career and Technical -> CTE Student -> Contact -> Address
+
+Early Learning -> Early Learning Child -> Contact -> Address
+
+Early Learning -> Early Learning Organization -> Address
+
+Early Learning -> Early Learning Organization -> Contact -> Address
+
+Early Learning -> Early Learning Program -> Address
+
+Early Learning -> Early Learning Staff -> Contact -> Address
+
+Early Learning -> Parent/Guardian -> Contact -> Address
+
+Facilities -> Facility -> Address
+
+K12 -> K12 School -> Address
+
+K12 -> K12 Staff -> Contact -> Address
+
+K12 -> K12 Student -> Contact -> Address
+
+K12 -> LEA -> Address
+
+K12 -> Organization -> Address
+
+K12 -> Organization -> Contact -> Address
+
+K12 -> Parent/Guardian -> Contact -> Address
+
+K12 -> Program -> Address
+
+K12 -> SEA -> Contact -> Address
+
+Postsecondary -> Organization -> Address
+
+Postsecondary -> Organization -> Contact -> Address
+
+Postsecondary -> Parent/Guardian -> Contact -> Address
+
+Postsecondary -> PS Institution -> Address
+
+Postsecondary -> PS Staff -> Contact -> Address
+
+Postsecondary -> PS Student -> Contact -> Address
+
+Workforce -> Workforce Program -> Address 
+
+Workforce -> Workforce Program Participant -> Contact -> Address",Updated,Alphanumeric - 30 characters maximum,Add new DES location,,000190,,AddressCountyName,"Early Learning -> Licensing
+Early Learning -> Program Compliance
+Early Learning -> Program Entry
+Early Learning -> Staff Quality
+Early Learning -> Workforce Development
+K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+Postsecondary Education -> Complete College America
+Postsecondary Education -> IPEDS",https://ceds.ed.gov/cedselementdetails.aspx?termid=23190
+Address Postal Code,A number that identifies each postal delivery area in the United States used as a portion of an address.,None,"Adult Education -> AE Staff -> Contact -> Address
+
+Adult Education -> AE Student -> Contact -> Address
+
+Career and Technical -> CTE Staff -> Contact -> Address
+
+Career and Technical -> CTE Student -> Contact -> Address
+
+Early Learning -> Early Learning Child -> Contact -> Address
+
+Early Learning -> Early Learning Organization -> Address
+
+Early Learning -> Early Learning Organization -> Contact -> Address
+
+Early Learning -> Early Learning Program -> Address
+
+Early Learning -> Early Learning Staff -> Contact -> Address
+
+Early Learning -> Early Learning Staff -> Professional Development -> Instructor
+
+Early Learning -> Early Learning Staff -> Professional Development Activity -> Session - Location
+
+Early Learning -> Parent/Guardian -> Contact -> Address
+
+Facilities -> Facility -> Address
+
+K12 -> K12 School -> Address
+
+K12 -> K12 Staff -> Contact -> Address
+
+K12 -> K12 Staff -> Professional Development -> Instructor
+
+K12 -> K12 Staff -> Professional Development Activity -> Session - Location
+
+K12 -> K12 Student -> Contact -> Address
+
+K12 -> LEA -> Address
+
+K12 -> Organization -> Address
+
+K12 -> Organization -> Contact -> Address
+
+K12 -> Parent/Guardian -> Contact -> Address
+
+K12 -> Program -> Address
+
+K12 -> SEA -> Address
+
+K12 -> SEA -> Contact -> Address
+
+Postsecondary -> Organization -> Address
+
+Postsecondary -> Organization -> Contact -> Address
+
+Postsecondary -> Parent/Guardian -> Contact -> Address
+
+Postsecondary -> PS Institution -> Address
+
+Postsecondary -> PS Staff -> Contact -> Address
+
+Postsecondary -> PS Student -> Contact -> Address
+
+Workforce -> Workforce Program -> Address 
+CHR",Updated,Alphanumeric - 17 characters maximum,Add new DES location,,000214,,AddressPostalCode,"Early Learning -> Licensing
+Early Learning -> Program Compliance
+Early Learning -> Program Entry
+Early Learning -> Staff Quality
+Early Learning -> Workforce Development
+K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+Postsecondary Education -> Complete College America
+Postsecondary Education -> IPEDS",https://ceds.ed.gov/cedselementdetails.aspx?termid=23214
+Address Type for Organization,The type of address listed for an organization.,"Mailing - Mailing
+Physical - Physical
+Shipping - Shipping
+","Early Learning -> Early Learning Organization -> Address
+
+Early Learning -> Early Learning Organization -> Contact -> Address
+
+Early Learning -> Early Learning Program -> Address
+
+Facilities -> Facility -> Address
+
+K12 -> K12 School -> Address
+
+K12 -> LEA -> Address
+
+K12 -> Organization -> Address
+
+K12 -> Organization -> Contact -> Address
+
+K12 -> Program -> Address
+
+K12 -> SEA -> Address
+
+Postsecondary -> Organization -> Address
+
+Postsecondary -> Organization -> Contact -> Address
+
+Postsecondary -> PS Institution -> Address
+
+Workforce -> Workforce Program -> Address ",Updated,Alphanumeric - 30 characters maximum,Add new DES location,,001066,,AddressTypeForOrganization,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange",https://ceds.ed.gov/cedselementdetails.aspx?termid=23644
+Assessment Identification System,"A coding scheme that is used for identification and record-keeping purposes by schools, social services, or other agencies to refer to an assessment.","School - School-assigned number
+District - District-assigned number
+State - State-assigned number
+Federal - Federal identification number
+OtherFederal - Other federally assigned number
+TestContractor - Test contractor assigned assessment number
+Other - Other
+","Assessments -> Assessment
+
+Assessments -> Assessment Administration
+
+Assessments -> Assessment Registration
+
+Credentials -> Credential Award
+
+K12 -> K12 Course -> End of Course Requirement ",Updated,,Add new DES location,,000365,,AssessmentIdentificationSystem,"K-12 -> High School Feedback Report
+K-12 -> High School Generated Transcript
+K-12 -> LEA Assessments
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+K-12 -> SEA Assessments",https://ceds.ed.gov/cedselementdetails.aspx?termid=23158
+Assessment Identifier,"A unique number or alphanumeric code assigned to an assessment by a school, school system, a state, or other agency or entity.  This may be the publisher identifier.",None,"Assessments -> Assessment
+
+Assessments -> Assessment Administration
+
+Assessments -> Assessment Registration 
+
+Credentials -> Credential Award
+
+K12 -> K12 Course -> End of Course Requirement ",Updated,Alphanumeric - 100 characters maximum,Add new DES location,"CEDS ""Identifier"" elements reflect the intent of the XSD:Token format, i.e. a string in which carriage return, line feed, and tab characters have been removed as well as any internal sequences of two or more spaces and any leading or trailing spaces. <br/><br/>An Identifier MAY be a Universally Unique Identifier (UUID) / Globally Unique Identifier (GUID), i.e.128-bit unique identifiers generated according to the algorithms and encoding standards of RFC 4122.",001067,,AssessmentIdentifier,"College Readiness
+K-12 -> High School Feedback Report
+K-12 -> High School Generated Transcript
+K-12 -> LEA Assessments
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+K-12 -> SEA Assessments
+School Readiness",https://ceds.ed.gov/cedselementdetails.aspx?termid=23152
+Assessment Subtest Title,The name or title of the subtest.,None,Assessments -> Assessment Subtest,Updated,300 characters maximum,Modify element format maximum length,,000275,,AssessmentSubtestTitle,"College Readiness
+K-12 -> High School Generated Transcript
+K-12 -> LEA Assessments
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+K-12 -> SEA Assessments
+Postsecondary Education -> Transition
+School Readiness",https://ceds.ed.gov/cedselementdetails.aspx?termid=23275
+Assessment Type,The category of an assessment based on format and content.,"AchievementTest - Achievement test
+AdvancedPlacementTest - Advanced placement test
+AlternateAssessmentELL - Alternate assessment/ELL
+AlternateAssessmentGradeLevelStandards - Alternate assessment/grade-level standards
+AlternativeAssessmentModifiedStandards - Alternative assessment/modified standards
+AptitudeTest - Aptitude Test
+Benchmark - Benchmark
+CognitiveAndPerceptualSkills - Cognitive and perceptual skills test
+ComputerAdaptiveTest - Computer Adaptive Test
+DevelopmentalObservation - Developmental observation
+Diagnostic - Diagnostic
+DirectAssessment - Direct Assessment
+Formative - Formative
+GrowthMeasure - Growth Measure
+Interim - Interim
+KindergartenReadiness - Kindergarten Readiness
+LanguageProficiency - Language proficiency test
+MentalAbility - Mental ability (intelligence) test
+Observation - Observation
+ParentReport - Parent Report
+PerformanceAssessment - Performance assessment
+PortfolioAssessment - Portfolio assessment
+PrekindergartenReadiness - Prekindergarten Readiness
+ReadingReadiness - Reading readiness test
+Screening - Screening
+TeacherReport - Teacher Report
+AlternateAssessmentAlternateStandards - Alternate assessment/alternate standards
+WorkplaceSkills - Workplace skills
+Other - Other
+",Assessments -> Assessment,Updated,,Add new option to option set,,000029,,AssessmentType,"College Readiness
+K-12 -> LEA Assessments
+K-12 -> SEA Assessments
+School Readiness",https://ceds.ed.gov/cedselementdetails.aspx?termid=23029
+Awaiting Foster Care Status,An indication of whether this child is awaiting foster care.,"Yes
+No
+","Career and Technical -> CTE Student -> Status
+
+Early Learning -> Early Learning Child -> Status
+
+K12 -> K12 Student -> Status
+
+Postsecondary -> PS Student -> Status
+
+Workforce -> Workforce Program Participant -> Status ",Updated,,Add new DES location,,001929,,AwaitingFosterCareStatus,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24903
+Calendar Event Type,A type of scheduled or unscheduled calendar event.,"EmergencyDay - Emergency day
+Holiday - Holiday
+InstructionalDay - Instructional day
+Other - Other
+Strike - Strike
+LateArrivalEarlyDismissal - Student late arrival/early dismissal
+TeacherOnlyDay - Teacher only day
+",K12 -> Calendar -> Event,Updated,,Added new option to existing option set,,000603,,CalendarEventType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=23596
+Career and Technical Education Completer,An indication of a student who reached a state-defined threshold of a career and technical education program/pathway.,"Yes
+No
+","Career and Technical -> CTE Student -> Academic Record
+
+K12 -> K12 Student -> Academic Record
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,,Add new DES location,,000036,CTE Completer,CTECompleter,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange",https://ceds.ed.gov/cedselementdetails.aspx?termid=23036
+Career Education Plan Date,The date on which an individual's professional development career plan was last updated.,None,"Career and Technical -> CTE Student -> Career Education Plan
+
+Early Learning -> Early Learning Child -> Individualized Program
+
+Early Learning -> Early Learning Staff -> Professional Development
+
+K12 -> K12 Staff -> Professional Development
+
+K12 -> K12 Student -> Academic Record
+
+K12 -> K12 Student -> Individualized Program
+
+Postsecondary -> PS Staff -> Professional Development
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,YYYY-MM-DD,Add new DES location,,001289,,CareerEducationPlanDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24255
+Career Education Plan Type,An indication of whether an individual completed an individualized guidance and counseling plan,"Education - Education plan
+Career - Career plan
+Both - Both education and career plan
+Other - Other
+","Career and Technical -> CTE Student -> Career Education Plan
+
+Early Learning -> Early Learning Child -> Individualized Program
+
+Early Learning -> Early Learning Staff -> Professional Development
+
+K12 -> K12 Staff -> Professional Development
+
+K12 -> K12 Student -> Academic Record
+
+K12 -> K12 Student -> Individualized Program
+
+Postsecondary -> PS Staff -> Professional Development
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,,Add new DES location,,001290,,CareerEducationPlanType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24256
+Child Identification System,"A coding scheme that is used for identification and record-keeping purposes by programs, schools, social services, or other agencies to refer to a child.","CanadianSIN - Canadian Social Insurance Number
+District - District-assigned number
+Family - Family unit number
+Federal - Federal identification number
+NationalMigrant - National migrant number
+School - School-assigned number
+SSN - Social Security Administration number
+State - State-assigned number
+StateMigrant - State migrant number
+Program - Program-assigned number
+BirthCertificate - Birth certificate number
+","Early Learning -> Early Learning Child -> Identity -> Identification
+
+Early Learning -> Parent/Guardian -> Relationship",Updated,,Added new option to existing option set,,000785,,ChildIdentificationSystem,"Early Learning -> Access to Services
+Early Learning -> Program Quality
+Early Learning -> Staff Quality
+School Readiness",https://ceds.ed.gov/cedselementdetails.aspx?termid=23782
+Classification of Instructional Program Code,A six-digit code in the form xx.xxxx that identifies instructional program specialties within educational institutions.,CIP codes are available at: https://nces.ed.gov/ipeds/cipcode/browse.aspx?y=55.,"Adult Education -> AE Student -> Academic Record -> Academic Award
+
+Adult Education -> Course Section -> Course
+
+Career and Technical -> Course Section -> Course
+
+Career and Technical -> CTE Student -> Academic Record -> Academic Award
+
+Career and Technical -> CTE Student -> Program Participation
+
+Credentials -> Credential Definition
+
+K12 -> K12 Course 
+
+Postsecondary -> Course Section -> Course
+
+Postsecondary -> PS Institution -> Program
+
+Postsecondary -> PS Student -> Academic Record -> Academic Award
+
+Postsecondary -> PS Student -> Institution Enrollment -> Prior Academic Award
+
+Postsecondary -> PS Student -> Institution Enrollment -> Program
+
+Workforce -> Workforce Program Participant -> Academic Record -> Academic Award",Updated,Option Set,Updated link to newer version of CIP Codes,,000043,CIP Code,CIPCode,"K-12 -> High School Feedback Report
+Postsecondary Education -> Complete College America
+Postsecondary Education -> IPEDS
+Postsecondary Education -> Transition",https://ceds.ed.gov/cedselementdetails.aspx?termid=23043
+Classification of Instructional Program Version,The version of CIP being reported.,"CIP1980 - CIP 1980
+CIP1985 - CIP 1985
+CIP1990 - CIP 1990
+CIP2000 - CIP 2000
+CIP2010 - CIP 2010
+CIP2020 - CIP 2020
+","Adult Education -> AE Student -> Academic Record -> Academic Award
+
+Adult Education -> Course Section -> Course
+
+Career and Technical -> Course Section -> Course
+
+Career and Technical -> CTE Student -> Academic Record -> Academic Award
+
+Career and Technical -> CTE Student -> Program Participation 
+
+Credentials -> Credential Definition 
+
+K12 -> K12 Course 
+
+Postsecondary -> Course Section -> Course
+
+Postsecondary -> PS Institution -> Program
+
+Postsecondary -> PS Student -> Academic Record -> Academic Award
+
+Postsecondary -> PS Student -> Institution Enrollment -> Prior Academic Award
+
+Postsecondary -> PS Student -> Institution Enrollment -> Program
+
+Workforce -> Workforce Program Participant -> Academic Record -> Academic Award",Updated,,"Added new option to existing option set, add new DES locations",,000045,CIP Version,CIPVersion,"Postsecondary Education -> Complete College America
+Postsecondary Education -> IPEDS",https://ceds.ed.gov/cedselementdetails.aspx?termid=23045
+Cohort Graduation Year,The year the cohort is expected to graduate.,None,"K12 -> K12 Student -> Enrollment
+
+Postsecondary -> PS Student -> Demographic
+
+Workforce -> Workforce Program Participant -> Demographic ",Updated,YYYY,Add new DES location,,000584,,CohortGraduationYear,"K-12 -> EDFacts
+Persistence and Attainment of Nontraditional Students",https://ceds.ed.gov/cedselementdetails.aspx?termid=23577
+Course Begin Date,"The year, month and day an instance of a course officially began.",None,"Adult Education -> Course Section -> Course
+
+Career and Technical -> Course Section -> Course
+
+Early Learning -> Early Learning Class/Group
+
+K12 -> K12 Course 
+
+Postsecondary -> Course Section -> Course",Updated,YYYY-MM-DD,Add new DES location,,000054,,CourseBeginDate,"K-12 -> High School Feedback Report
+Postsecondary Education -> Transition",https://ceds.ed.gov/cedselementdetails.aspx?termid=23054
+Course Code System,A system that is used to identify the organization of subject matter and related learning experiences provided for the instruction of students.,"Intermediate - Intermediate agency course code
+LEA - LEA course code
+NCES - NCES Pilot Standard National Course Classification System for Secondary Education Codes
+Other - Other
+SCED - School Codes for the Exchange of Data (SCED) course code
+School - School course code
+State - State course code
+University - University course code
+","Adult Education -> Course Section -> Course
+
+Career and Technical -> Course
+
+Career and Technical -> Course Section -> Course
+
+Early Learning -> Early Learning Class/Group
+
+K12 -> Course Section -> Course
+
+K12 -> K12 Course
+
+K12 -> K12 Student -> Academic Record
+
+K12 -> K12 Student -> Graduation Plan -> Course
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,,Add new DES location,,000056,,CourseCodeSystem,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+K-12 -> Teacher-Student Data Link -> Class Section",https://ceds.ed.gov/cedselementdetails.aspx?termid=23056
+Course Description,A description of the course content and/or goals. Reference may be made to state or national content standards.,None,"Adult Education -> Course Section
+
+Career and Technical -> Course
+
+Career and Technical -> Course Section
+
+K12 -> Course Section
+
+K12 -> K12 Course",Updated,Alphanumeric-1024 characters maximum,Update format,,000517,,CourseDescription,,https://ceds.ed.gov/cedselementdetails.aspx?termid=23508
+Course End Date,"The year, month and day an instance of a course ends.",None,"Adult Education -> Course Section -> Course
+
+Career and Technical -> Course Section -> Course
+
+Early Learning -> Early Learning Class/Group
+
+K12 -> K12 Course 
+
+Postsecondary -> Course Section -> Course",Updated,YYYY-MM-DD,Add new DES location,"All CEDS Exit and End Dates represent the last day of the date range specified, such as the last day that a person was enrolled, participated, or received services.",000059,,CourseEndDate,"K-12 -> High School Feedback Report
+Postsecondary Education -> Transition",https://ceds.ed.gov/cedselementdetails.aspx?termid=23059
+Course Identifier,The actual code that identifies the organization of subject matter and related learning experiences provided for the instruction of students.,None,"Adult Education -> Course Section -> Course
+
+Career and Technical -> Course
+
+Career and Technical -> Course Section -> Course
+
+K12 -> Course Section -> Course
+
+K12 -> K12 Course
+
+K12 -> K12 Student -> Academic Record
+
+K12 -> K12 Student -> Graduation Plan -> Course
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,Alphanumeric - 40 characters maximum,Add new DES location,"CEDS ""Identifier"" elements reflect the intent of the XSD:Token format, i.e. a string in which carriage return, line feed, and tab characters have been removed as well as any internal sequences of two or more spaces and any leading or trailing spaces. <br/><br/>An Identifier MAY be a Universally Unique Identifier (UUID) / Globally Unique Identifier (GUID), i.e.128-bit unique identifiers generated according to the algorithms and encoding standards of RFC 4122.",000055,,CourseIdentifier,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+K-12 -> Teacher-Student Data Link -> Class Section
+Postsecondary Education -> Transition",https://ceds.ed.gov/cedselementdetails.aspx?termid=23055
+Course Repeat Code,Indicates that an academic course has been repeated by a student and how that repeat is to be computed in the student's academic grade average.,"RepeatCounted - Repeated, counted in grade point average
+RepeatNotCounted - Repeated, not counted in grade point average
+ReplacementCounted - Replacement counted
+ReplacedNotCounted - Replacement not counted
+RepeatOtherInstitution - Repeated, other institution
+NotCountedOther - Other, not counted in GPA (e.g., used for academic forgiveness or clemency).
+","Adult Education -> Course Section
+
+Career and Technical -> Course Section
+
+K12 -> K12 Student -> Academic Record
+
+Postsecondary -> Course Section
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,,Add new DES location,,000065,,CourseRepeatCode,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange",https://ceds.ed.gov/cedselementdetails.aspx?termid=23065
+Course Section Maximum Capacity,The maximum number of students the Course Section can maintain.,None,"Adult Education -> Course Section
+
+Career and Technical -> Course Section
+
+K12 -> Course Section
+
+K12 -> K12 Course 
+
+Postsecondary -> Course Section",Updated,Integer - greater than or equal to 0,Add new DES location,,001655,,CourseSectionMaximumCapacity,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24636
+Course Section Time Required for Completion,"The actual or estimated number of clock minutes required for course completion. This number is especially important for career and technical education course and may represent (in minutes) the clock hour requirement of the course, the number of minutes (or clock hours) of class time per week, times the number of equivalent weeks the class typically meets.",None,"Adult Education -> Course Section
+
+Career and Technical -> Course Section
+
+K12 -> Course Section
+
+K12 -> K12 Course ",Updated,Integer - greater than or equal to 0,Add new DES location,,000101,,CourseSectionTimeRequiredForCompletion,K-12 -> Teacher-Student Data Link -> Class Section,https://ceds.ed.gov/cedselementdetails.aspx?termid=23101
+Course Title,"The descriptive name given to a course of study offered in a school or other institution or organization. In departmentalized classes at the elementary, secondary, and postsecondary levels (and for staff development activities), this refers to the name by which a course is identified (e.g., American History, English III). For elementary and other non-departmentalized classes, it refers to any portion of the instruction for which a grade or report is assigned (e.g., reading, composition, spelling, and language arts).",None,"Adult Education -> Course Section -> Course
+
+Career and Technical -> Course
+
+Career and Technical -> Course Section -> Course
+
+K12 -> Course Section -> Course
+
+K12 -> K12 Course
+
+K12 -> K12 Student -> Academic Record
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,Alphanumeric - 60 characters maximum,Add new DES location,,000067,,CourseTitle,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+K-12 -> Teacher-Student Data Link -> Class Section",https://ceds.ed.gov/cedselementdetails.aspx?termid=23067
+Credential Type,An indication of the category of credential a person holds.,"Certification - Certification
+Endorsement - Endorsement
+Licensure - Licensure
+Other - Other
+Registration - Registration
+HighSchoolDiploma - High School Diploma
+HighSchoolDiplomaDistinction - High School Diploma Distinction
+","Career and Technical -> CTE Staff -> Credential or License
+
+Credentials -> Credential Definition 
+
+Early Learning -> Early Learning Staff -> Credential or License
+
+K12 -> K12 Staff -> Credential or License",Updated,,Added new option to existing option set and add new DES location,,000071,,CredentialType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=23071
+Credit Unit Type,The type of credits or units of value awarded for the completion of a course.,"00585 - Carnegie unit
+00586 - Semester hour credit
+00587 - Trimester hour credit
+00588 - Quarter hour credit
+00589 - Quinmester hour credit
+00590 - Mini-term hour credit
+00591 - Summer term hour credit
+00592 - Intersession hour credit
+00595 - Long session hour credit
+00596 - Twelve month hour credit
+00597 - Career and Technical Education credit
+73062 - Adult high school credit
+00599 - Credit by examination
+00600 - Correspondence credit
+00601 - Converted occupational experience credit
+09999 - Other
+75001 - Certificate credit
+75002 - Degree credit
+75003 - Continuing education credit
+75004 - Professional development hours
+","Adult Education -> Course Section -> Course
+
+Career and Technical -> Course
+
+Career and Technical -> Course Section -> Course
+
+K12 -> Course Section -> Course
+
+K12 -> K12 Student -> Academic Record
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,,Add new DES location,,000072,,CreditUnitType,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange",https://ceds.ed.gov/cedselementdetails.aspx?termid=23072
+Credits Earned Cumulative,The cumulative number of credits a person earns by completing courses or examinations during their enrollment in the current education institution as well as those credits transferred from an education institution in which the person had been previously enrolled.,None,"K12 -> K12 Student -> Academic Record
+
+Postsecondary -> PS Student -> Academic Record
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,Numeric - up to 2 digits after decimal place,Add new DES location,,000074,,CreditsEarnedCumulative,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange",https://ceds.ed.gov/cedselementdetails.aspx?termid=23074
+Degree or Certificate Conferring Date,"The year, month and day on which a person received a degree or certificate.",None,"Adult Education -> AE Staff -> Education
+
+Career and Technical -> CTE Student -> Academic Record
+
+Early Learning -> Early Learning Staff -> Education
+
+K12 -> K12 Staff -> Education
+
+Postsecondary -> PS Staff -> Credential or License
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,YYYY-MM-DD,Add new DES location,,000344,,DegreeOrCertificateConferringDate,"Early Learning -> Program Compliance
+Early Learning -> Staff Quality
+Early Learning -> Workforce Development",https://ceds.ed.gov/cedselementdetails.aspx?termid=23343
+Degree or Certificate Title or Subject,The name of the degree or certificate earned by a person. This includes honorary degrees conferred upon an individual.,None,"Adult Education -> AE Staff -> Education
+
+Career and Technical -> CTE Student -> Academic Record
+
+Early Learning -> Early Learning Staff -> Education
+
+K12 -> K12 Staff -> Education
+
+Postsecondary -> PS Staff -> Credential or License
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,Alphanumeric - 45 characters maximum,Add new DES location,,000342,,DegreeOrCertificateTitleOrSubject,"Early Learning -> Program Compliance
+Early Learning -> Staff Quality
+Early Learning -> Workforce Development",https://ceds.ed.gov/cedselementdetails.aspx?termid=23341
+Degree or Certificate Type,The type of degree or certificate earned by a person.,"73063 - Adult education certification, endorsement, or degree
+01050 - Associate's degree (two years or more)
+01051 - Bachelor's (Baccalaureate) degree
+01057 - Doctoral (Doctor's) degree
+01053 - First-professional degree
+01047 - Formal award, certificate or diploma (less than one year)
+01048 - Formal award, certificate or diploma (more than or equal to one year)
+01052 - Graduate certificate
+01045 - High school diploma or the equivalent (e.g., GED or recognized home school)
+01054 - Master's degree (e.g., M.A., M.S., M. Eng., M.Ed., M.S.W., M.B.A., M.L.S.)
+01056 - Post-professional degree
+01049 - Some college but no degree
+01055 - Specialist's degree (e.g., Ed.S.)
+00819 - Career and Technical Education certificate
+09999 - Other
+","Adult Education -> AE Staff -> Education
+
+Career and Technical -> CTE Student -> Academic Record
+
+Early Learning -> Early Learning Staff -> Education
+
+K12 -> K12 Staff -> Education
+
+Postsecondary -> PS Staff -> Credential or License
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,,Add new DES location,,000343,,DegreeOrCertificateType,"Early Learning -> Program Compliance
+Early Learning -> Staff Quality
+Early Learning -> Workforce Development",https://ceds.ed.gov/cedselementdetails.aspx?termid=23342
+Disciplinary Action Taken,Identifies the consequences of an incident for the student(s) involved in an incident as perpetrator(s).,"03071 - Bus suspension
+03072 - Change of placement (long-term)
+03073 - Change of placement (reassignment), pending an expulsion hearing
+03074 - Change of placement (reassignment), resulting from an expulsion hearing
+03075 - Change of placement (reassignment), temporary
+03076 - Community service
+03077 - Conference with and warning to student
+03078 - Conference with and warning to student and parent/guardian
+03079 - Confiscation of contraband
+03080 - Conflict resolution or anger management services mandated
+03081 - Corporal punishment
+03082 - Counseling mandated
+03083 - Demerit
+03084 - Detention
+03085 - Expulsion recommendation
+03086 - Expulsion with services
+03087 - Expulsion without services
+03120 - Interim removal to alternative educational setting
+03088 - Juvenile justice referral
+03089 - Law enforcement referral
+03090 - Letter of apology
+03091 - Loss of privileges
+13357 - Mechanical Restraint
+03105 - No action
+09998 - None
+09999 - Other
+03092 - Physical activity
+13358 - Physical Restraint
+75000 - Placed in juvenile detention center
+03158 - Removal by a hearing officer
+03093 - Reprimand
+03094 - Restitution
+03095 - Saturday school
+03096 - School probation
+75001 - School-related arrest
+13359 - Seclusion
+03097 - Substance abuse counseling mandated
+03098 - Substance abuse treatment mandated
+03099 - Suspension after school
+03100 - Suspension, in-school
+03154 - Suspension, out of school, greater than 10 consecutive school days
+03155 - Suspension, out of school, separate days cumulating to more than 10 school days
+03101 - Suspension, out-of-school, with services
+03102 - Suspension, out-of-school, without services
+03157 - Unilateral removal - drug incident
+03156 - Unilateral removal - weapon incident
+09997 - Unknown
+03103 - Unsatisfactory behavior grade
+03104 - Work detail
+","K12 -> Incident
+
+K12 -> K12 Student -> Discipline",Updated,,Added new option to existing option set,,000488,,DisciplinaryActionTaken,K-12 -> Civil Rights Data Collection,https://ceds.ed.gov/cedselementdetails.aspx?termid=23479
+Dislocated Worker Status,"An individual who has been terminated or laid off, or who has received a notice of termination or layoff from employment, or an individual who was self-employed but is unemployed as a result of general economic conditions in the community in which the individual resides or because of natural disasters.","Yes
+No
+","Adult Education -> AE Student -> Status
+
+Workforce -> Workforce Program Participant -> Status ",Updated,,Add new DES location,,000776,,DislocatedWorkerStatus,,https://ceds.ed.gov/cedselementdetails.aspx?termid=23759
+Early Childhood Program Enrollment Type,The system outlining activities and procedures based on a set of required services and standards in which the child is enrolled.,"HeadStart - Head Start
+EarlyHeadStart - Early Head Start
+StatePreschool - State Preschool
+PublicPreschool - Public Preschool
+PrivatePreschool - Private Preschool
+EarlyChildhoodSpecialEducation - Early Childhood Special Education (619)
+HomeVisiting - Home Visiting
+ChildCare - Child Care
+EarlyInterventionPartC - Early Intervention Services Part C
+Other - Other
+None - None
+FamilyChildCare - Family Child Care
+HomeBasedInformalCare - Home-Based Informal Care
+MigrantHeadStart - Migrant Head Start
+PrivatePreKindergarten - Private Pre-Kindergarten
+PublicPreKindergarten - Public Pre-Kindergarten
+","Early Learning -> Early Learning Child -> Program
+
+Early Learning -> Early Learning Organization -> Organization Information",Updated,,"Added new option to existing option set, change option set",,000829,,EarlyChildhoodProgramEnrollmentType,Early Learning -> Program Quality,https://ceds.ed.gov/cedselementdetails.aspx?termid=23829
+Electronic Mail Address Type,The type of electronic mail (e-mail) address listed for a person or organization.,"Home - Home/personal
+Work - Work
+Organizational - Organizational address
+Other - Other
+","Adult Education -> AE Staff -> Contact -> Email
+
+Adult Education -> AE Student -> Contact -> Email
+
+Career and Technical -> CTE Staff -> Contact -> Email
+
+Career and Technical -> CTE Student -> Contact -> Email
+
+Early Learning -> Early Learning Child -> Contact -> Email
+
+Early Learning -> Early Learning Organization -> Contact -> Email
+
+Early Learning -> Early Learning Staff -> Contact -> Email
+
+Early Learning -> Parent/Guardian -> Contact -> Email
+
+K12 -> K12 Staff -> Contact -> Email
+
+K12 -> K12 Student -> Contact -> Email
+
+K12 -> Organization -> Contact -> Email
+
+K12 -> Parent/Guardian -> Contact -> Email
+
+K12 -> SEA -> Contact -> Email
+
+Postsecondary -> Organization -> Contact -> Email
+
+Postsecondary -> Parent/Guardian -> Contact -> Email
+
+Postsecondary -> PS Staff -> Contact -> Email
+
+Postsecondary -> PS Student -> Contact -> Email
+
+Workforce -> Workforce Program Participant -> Contact -> Email",Updated,,Change option for Organizational address,,000089,Email Address Type,ElectronicMailAddressType,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange",https://ceds.ed.gov/cedselementdetails.aspx?termid=23089
+Employment Separation Reason,The primary reason for the termination of the employment relationship.,"01391 - Change of assignment
+89604 - Compensation
+01404 - Death
+01401 - Falsified application form
+01400 - Continued absence or tardiness
+01402 - Credential revoked or suspended
+01399 - Misconduct
+01403 - Unsatisfactory work performance
+01398 - Unsuitability
+01390 - Family/personal relocation
+01392 - Formal study or research
+01394 - Homemaking/caring for a family member
+01393 - Illness/disability
+01395 - Budgetary reduction
+01397 - Decreased workload
+01396 - Organizational restructuring
+09999 - Other
+01405 - Personal reason
+01389 - Retirement
+73201 - Termination with Cause
+73202 - Leave Planning to Return
+73203 - Leave Not Planning to Return
+09997 - Unknown
+73204 - Dissatisfied with teaching
+73206 - End of Term (Participate Learning)
+73205 - End of Term (Teach For America)
+73207 - Interim contract ended -not rehired
+73208 - Non-renewal (probationary contract ended)
+73209 - Re-employed retired teacher resigned
+73210 - Resigned due to career change
+73211 - Resigned due to movement required by Military Orders
+","Adult Education -> AE Staff -> Employment
+
+Career and Technical -> CTE Staff -> Employment
+
+Early Learning -> Early Learning Staff -> Employment
+
+K12 -> K12 Staff -> Employment
+
+Postsecondary -> PS Staff -> Employment
+
+Workforce -> Workforce Program Participant -> Employment ",Updated,,Add new DES location,,000620,,EmploymentSeparationReason,,https://ceds.ed.gov/cedselementdetails.aspx?termid=23613
+Employment Separation Type,A designation of the type of separation occurring between a person and the organization.,"Involuntary - Involuntary separation
+MutualAgreement - Mutual agreement
+Other - Other
+Voluntary - Voluntary separation
+","Early Learning -> Early Learning Staff -> Employment
+
+K12 -> K12 Staff -> Employment
+
+Workforce -> Workforce Program Participant -> Employment ",Updated,,Add new DES location,,000621,,EmploymentSeparationType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=23614
+Employment Status,The condition under which a person has agreed to serve as an employee.,"01384 - Contingent upon funding
+01379 - Contractual
+06071 - Employed or affiliated with outside agency part-time
+01383 - Employed or affiliated with outside organization
+01385 - Non-contractual
+09999 - Other
+01378 - Probationary
+06070 - Self-employed part-time
+01380 - Substitute/temporary
+01381 - Tenured or permanent
+01382 - Volunteer/no contract
+","Early Learning -> Early Learning Staff -> Employment
+
+K12 -> K12 Staff -> Employment
+
+Workforce -> Workforce Program Participant -> Employment ",Updated,,Add new DES location,,000347,,EmploymentStatus,"Early Learning -> Program Compliance
+Early Learning -> Staff Quality
+Early Learning -> Workforce Development",https://ceds.ed.gov/cedselementdetails.aspx?termid=23346
+Entry Type,The process by which a student enters a school during a given academic session.,"01821 - Transfer from a public school in the same local education agency
+01822 - Transfer from a public school in a different local education agency in the same state
+01823 - Transfer from a public school in a different state
+01824 - Transfer from a private, non-religiously-affiliated school in the same local education agency
+01825 - Transfer from a private, non-religiously-affiliated school in a different LEA in the same state
+01826 - Transfer from a private, non-religiously-affiliated school in a different state
+01827 - Transfer from a private, religiously-affiliated school in the same local education agency
+01828 - Transfer from a private, religiously-affiliated school in a different LEA in the same state
+01829 - Transfer from a private, religiously-affiliated school in a different state
+01830 - Transfer from a school outside of the country
+01831 - Transfer from an institution
+01832 - Transfer from a charter school
+01833 - Transfer from home schooling
+01835 - Re-entry from the same school with no interruption of schooling
+01836 - Re-entry after a voluntary withdrawal
+01837 - Re-entry after an involuntary withdrawal
+01838 - Original entry into a United States school
+01839 - Original entry into a United States school from a foreign country with no interruption in schooling
+01840 - Original entry into a United States school from a foreign country with an interruption in schooling
+09999 - Other
+74001 - Initial Enrollment for the School Year
+74002 - Transfer from a private school in the state
+74003 - Transfer from a school outside of state
+",K12 -> K12 Student -> Enrollment,Updated,,Added new option to existing option set,,000099,,EntryType,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange",https://ceds.ed.gov/cedselementdetails.aspx?termid=23099
+Exit or Withdrawal Type,The circumstances under which the student exited from membership in an educational institution. ,"01907 - Student is in a different public school in the same local education agency
+01908 - Transferred to a public school in a different local education agency in the same state
+01909 - Transferred to a public school in a different state
+01910 - Transferred to a private, non-religiously-affiliated school within the geographic boundaries as the same local education agency
+01911 - Transferred to a private, non-religiously-affiliated school within the geographic boundaries of a different LEA in the same state
+01912 - Transferred to a private, non-religiously-affiliated school in a different state
+01913 - Transferred to a private, religiously-affiliated school within the geographic boundaries of the same local education agency
+01914 - Transferred to a private, religiously-affiliated school within the geographic boundaries of a different LEA in the same state
+01915 - Transferred to a private, religiously-affiliated school in a different state
+01916 - Transferred to a school outside of the country
+01917 - Transferred to an institution
+01918 - Transferred to home schooling
+01919 - Transferred to a charter school in a different LEA in the state
+01921 - Graduated with regular, advanced, International Baccalaureate, or other type of diploma
+01922 - Completed school with other credentials
+01924 - Withdrawn due to illness
+01925 - Expelled or involuntarily withdrawn
+01926 - Reached maximum age for services
+01927 - Discontinued schooling
+01928 - Completed grade 12, but did not meet all graduation requirements
+01930 - Enrolled in a postsecondary early admission program
+01931 - Not enrolled, unknown status
+03499 - Student is in the same LEA, receiving education services, but is not assigned to a particular school
+03502 - Not enrolled, eligible to return
+03503 - Enrolled in a foreign exchange program
+03505 - Exited
+03508 - Student is in a charter school managed by the same local education agency
+03509 - Completed with a state-recognized equivalency certificate
+09999 - Other
+73060 - Officially withdrew and enrolled in ABE, adult secondary education, or adult ESL program
+73061 - Officially withdrew and enrolled in a workforce training program
+73064 - Died
+73065 - Permanently incapacitated
+73062 - Student is expected to return to the same school
+73063 - Transferred to a charter school in a different state
+73066 - Matriculation to another school in the same local education agency
+73068 - Transfer to a private school in the state
+73067 - Transferred to a school outside of the state
+",K12 -> K12 Student -> Enrollment,Updated,,Added new option to existing option set,"The purpose of this element is to track the circumstances related to an exit from membership. There are multiple use cases related to this element, some for longitudinal purposes, some for funding, some for live transactional systems. The descriptions and definitions are intended to meet those needs. Four often misunderstood options are explained below:<BR/>  1.  09999 - Other. Other is intended to indicate that CEDS has not yet defined a circumstance in which this exit occurred.<BR/>  2.  03505 - Exited. Unlike ""09999 - Other"", the ""Exited"" option is intended to be used for administrative purposes such as a mid-year grade level change. <BR/>  3.  01931 - Not enrolled, unknown status. This is to be used as a placeholder while additional exit information is collected or to track students who are known to have Discontinued Schooling (dropped out) separate from students whose whereabouts are unknown.<BR/>  4.  03502 - Not enrolled, eligible to return. Different than the 01931 code, the status of this student is not unknown; however, the institution is required to exit the student from membership for an extended period. It is expected the student will reenroll in the same institution following this extended period.",000110,,ExitOrWithdrawalType,"K-12 -> EDFacts
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange",https://ceds.ed.gov/cedselementdetails.aspx?termid=23110
+Grade Level When Course Taken,Student's grade level at time of course.,"IT - Infant/toddler
+PR - Preschool
+PK - Prekindergarten
+TK - Transitional Kindergarten
+KG - Kindergarten
+01 - First grade
+02 - Second grade
+03 - Third grade
+04 - Fourth grade
+05 - Fifth grade
+06 - Sixth grade
+07 - Seventh grade
+08 - Eighth grade
+09 - Ninth grade
+10 - Tenth grade
+11 - Eleventh grade
+12 - Twelfth grade
+13 - Grade 13
+PS - Postsecondary
+UG - Ungraded
+AE - Adult Education
+Other - Other
+","K12 -> Course Section -> Enrollment
+
+K12 -> K12 Student -> Academic Record
+
+K12 -> K12 Student -> Graduation Plan -> Course
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,,Add new DES location,,000125,,GradeLevelWhenCourseTaken,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange",https://ceds.ed.gov/cedselementdetails.aspx?termid=23125
+Gun Free Schools Act Reporting Status,"An indication of whether the school or local education agency (LEA) submitted a Gun-Free Schools Act (GFSA) of 1994 report to the state, as defined by Title 18, Section 921.","YesReportingOffenses - Yes, with reporting of one or more students for an offense
+YesNoReportedOffenses - Yes, with no reported offenses
+No - No
+NA - Not applicable
+","K12 -> K12 School -> Compliance 
+
+K12 -> LEA -> Accountability
+
+K12 -> LEA -> Compliance ",Updated,,Add new DES location,,000134,,GunFreeSchoolsActReportingStatus,K-12 -> EDFacts,https://ceds.ed.gov/cedselementdetails.aspx?termid=23134
+High School Diploma Distinction Type,The distinction of the diploma or credential that is awarded to a student in recognition of their completion of the curricular requirements.,"Minimum - Minimum
+Recommended - Recommended
+Distinguished - Distinguished
+OpenEnrollment - Open Enrollment
+MagnaCumLaude - Magna cum laude
+SummaCumLaude - Summa cum laude
+CareerandTechnical - Career and Technical
+SealofBiliteracy - Seal of Biliteracy
+Other - Other
+","Adult Education -> AE Student -> Academic Record -> Academic Award
+
+Career and Technical -> CTE Student -> Academic Record -> Academic Award
+
+K12 -> K12 Student -> Academic Record -> Academic Award
+
+Workforce -> Workforce Program Participant -> Academic Record -> Academic Award",Updated,,Add new options to option set,,000713,,HighSchoolDiplomaDistinctionType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=23689
+High School Diploma Type,The type of diploma/credential that is awarded to a person in recognition of his/her completion of the curricular requirements.,"00806 - Regular High School Diploma
+00807 - Endorsed/advanced diploma
+00808 - Regents diploma
+00809 - International Baccalaureate
+00810 - Modified diploma
+00811 - Other diploma
+00812 - Alternative credential
+00813 - Certificate of attendance
+00814 - Certificate of completion
+00815 - High school equivalency credential, other than GED
+00816 - General Educational Development (GED) credential
+00818 - Post graduate certificate (grade 13)
+00819 - Career and Technical Education certificate
+75000 - State Defined Alternate Diploma
+","Adult Education -> AE Student -> Academic Record -> Academic Award
+
+Career and Technical -> CTE Student -> Academic Record -> Academic Award
+
+K12 -> K12 Student -> Academic Record -> Academic Award
+
+Postsecondary -> PS Student -> K12 Transcript
+
+Workforce -> Workforce Program Participant -> Academic Record -> Academic Award",Updated,,"Added new option to existing option set, change option set","Use ""Other Diploma"" instead of ""Other"" option.",000138,,HighSchoolDiplomaType,"K-12 -> High School Feedback Report
+K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+Persistence and Attainment of Nontraditional Students
+Postsecondary Education -> IPEDS
+Postsecondary Education -> Transition",https://ceds.ed.gov/cedselementdetails.aspx?termid=23138
+Highest Level of Education Completed,"The extent of formal instruction a person has received (e.g., the highest grade in school completed or its equivalent or the highest degree received).","01043 - No school completed 
+00788 - Preschool 
+00805 - Kindergarten 
+00790 - First grade 
+00791 - Second grade 
+00792 - Third grade 
+00793 - Fourth grade 
+00794 - Fifth grade 
+00795 - Sixth grade 
+00796 - Seventh grade 
+00798 - Eighth grade 
+00799 - Ninth grade 
+00800 - Tenth grade 
+00801 - Eleventh Grade 
+01809 - 12th grade, no diploma 
+01044 - High school diploma 
+02408 - High school completers (e.g., certificate of attendance) 
+02409 - High school equivalency (e.g., GED) 
+00819 - Career and Technical Education certificate
+00803 - Grade 13
+01049 - Some college but no degree 
+01047 - Formal award, certificate or diploma (less than one year) 
+01048 - Formal award, certificate or diploma (more than or equal to one year) 
+01050 - Associate's degree (two years or more) 
+73063 - Adult education certification, endorsement, or degree
+01051 - Bachelor's (Baccalaureate) degree 
+01054 - Master's degree (e.g., M.A., M.S., M. Eng., M.Ed., M.S.W., M.B.A., M.L.S.) 
+01055 - Specialist's degree (e.g., Ed.S.) 
+73081 - Post-master’s certificate
+01052 - Graduate certificate 
+01057 - Doctoral (Doctor's) degree 
+01053 - First-professional degree 
+01056 - Post-professional degree 
+73082 - Doctor’s degree-research/scholarship
+73083 - Doctor’s degree-professional practice
+73084 - Doctor’s degree-other
+73085 - Doctor’s degree-research/scholarship
+09999 - Other
+","Adult Education -> AE Staff -> Credential
+
+Adult Education -> AE Staff -> Education
+
+Adult Education -> AE Student -> Academic Record
+
+Early Learning -> Early Learning Staff -> Education
+
+Early Learning -> Parent/Guardian -> Education
+
+K12 -> K12 Staff -> Credential or License
+
+K12 -> K12 Staff -> Education
+
+K12 -> Parent/Guardian -> Education
+
+Postsecondary -> PS Staff -> Education
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,,Add new DES location,,000141,,HighestLevelOfEducationCompleted,"Early Learning -> Program Compliance
+Early Learning -> Program Entry
+Early Learning -> Staff Quality
+K-12 -> Teacher Compensation Survey",https://ceds.ed.gov/cedselementdetails.aspx?termid=23141
+Hire Date,"The year, month and day on which a person was hired for a position, or consecutive positions within the same organization and job classification.",None,"Adult Education -> AE Staff -> Employment
+
+Early Learning -> Early Learning Staff -> Employment
+
+K12 -> K12 Staff -> Employment
+
+Postsecondary -> PS Staff -> Employment
+
+Workforce -> Workforce Program Participant -> Employment ",Updated,YYYY-MM-DD,Add new DES location,"This is the Hire Date beginning consecutive employment with the current employer in the same Professional-Educational Job Classification. A person may change positions within the same organization and job classification without triggering a new hire date. For example a teacher originally hire to teach 3rd grade may be reassigned to 4th grade.  However, a change of job classifications, e.g. from teacher to principal, would trigger a new Hire Date.",000143,,HireDate,"Early Learning -> Program Compliance
+Early Learning -> Staff Quality
+Early Learning -> Workforce Development
+K-12 -> Teacher Compensation Survey
+Postsecondary Education -> IPEDS -> HR",https://ceds.ed.gov/cedselementdetails.aspx?termid=23143
+Homeless Unaccompanied Youth Status,"A homeless unaccompanied youth is a youth who is not in the physical custody of a parent or guardian and who fits the McKinney-Vento definition of homeless.  Students must be both unaccompanied and homeless to be included as unaccompanied homeless youth. There is no age range specified for an unaccompanied youth in the law. The upper age range is determined by what a state defines as school age, unless the child is in special education. The upper age range for students in special education may extend to 22 years of age. There is no lower age range. Therefore, as an example, a young child not in the physical custody of a parent or guardian, though living with a caregiver, and is living in a situation that is not fixed, regular, and adequate, would be identified as a homeless unaccompanied youth.","Yes
+No
+",K12 -> K12 Student -> Homeless,Updated,,"Add usage note, update defintion",Homelessness Status and Primary Nighttime Residence should be known in order to collect this additional information.,000148,,HomelessUnaccompaniedYouthStatus,K-12 -> EDFacts,https://ceds.ed.gov/cedselementdetails.aspx?termid=23148
+Homelessness Status,"Children and youth who lack a fixed, regular, and adequate nighttime residence. Homeless children and youth include: 1) children and youth who are sharing the housing of other persons due to loss of housing, economic hardship, or a similar reason; are living in motels, hotels, trailer parks, or camping grounds due to the lack of alternative adequate accommodations; are living in emergency or transitional shelters; are abandoned in hospitals; or are awaiting foster care placement; 2) children and youth who have a primary nighttime residence that is a public or private place not designed for or originally used as a regular sleeping accommodation for human beings; or 3) children and youths who are living in cars, parks, public spaces, abandoned buildings, substandard housing, bus or train stations, or similar settings. 4) migratory children who qualify as homeless because the children are living in circumstances described in the above. (See Section 103 of the McKinney Act for a more detailed description of this data element).","Yes
+No
+","Early Learning -> Early Learning Child -> Demographic
+
+K12 -> K12 Student -> Homeless
+
+Postsecondary -> PS Student -> Homeless",Updated,,Add usage note,Use of this element for EDFacts reporting beginning in school year 2022-2023 must include student enrollment. This element does not indicate if the student was served under the McKinney-Vento Act.,000149,,HomelessnessStatus,"Early Learning -> Program Compliance
+Early Learning -> Program Entry
+K-12 -> EDFacts
+K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange",https://ceds.ed.gov/cedselementdetails.aspx?termid=23149
+Hourly Wage,Hourly wage associated with the employment position being reported.,None,"Early Learning -> Early Learning Staff -> Employment
+
+Workforce -> Workforce Program Participant -> Employment ",Updated,Numeric - up to 2 digits after decimal place,Add new DES location,,000797,,HourlyWage,Early Learning -> Staff Quality,https://ceds.ed.gov/cedselementdetails.aspx?termid=23796
+Hours Worked Per Week,The number of hours worked per week in employment.,None,"Early Learning -> Early Learning Staff -> Employment
+
+Workforce -> Workforce Program Participant -> Employment ",Updated,Numeric - up to 2 digits after decimal place,Add new DES location,,000796,,HoursWorkedPerWeek,Early Learning -> Staff Quality,https://ceds.ed.gov/cedselementdetails.aspx?termid=23795
+Incident Behavior,Categories of behavior coded for use in describing an incident.,"04618 - Alcohol
+04625 - Arson
+75004 - Assault
+04626 - Attendance Policy Violation
+04632 - Battery
+75005 - Bullying
+04633 - Burglary/Breaking and Entering
+04634 - Disorderly Conduct
+75000 - Domestic Assault
+04635 - Drugs Excluding Alcohol and Tobacco
+75006 - Electronic Bullying
+04645 - Fighting
+13354 - Harassment or bullying on the basis of disability
+13355 - Harassment or bullying on the basis of race, color, or national origin
+13356 - Harassment or bullying on the basis of sex
+04646 - Harassment, Nonsexual
+04650 - Harassment, Sexual
+75003 - Hazing
+04651 - Homicide
+04652 - Inappropriate Use of Medication
+04659 - Insubordination
+04660 - Kidnapping
+04661 - Obscene Behavior
+04669 - Physical Altercation, Minor
+75007 - Rape or Attempted Rape
+04670 - Robbery
+04671 - School Threat
+04677 - Sexual Battery (sexual assault)
+04678 - Sexual Offenses, Other (lewd behavior, indecent exposure)
+75001 - Stalking
+04682 - Theft
+04686 - Threat/Intimidation
+04692 - Tobacco Possession or Use
+04699 - Trespassing
+75002 - Unlawful Restraint
+04700 - Vandalism
+04704 - Violation of School Rules
+04705 - Weapons Possession
+",K12 -> Incident,Updated,,Added new option to existing option set,,000509,,IncidentBehavior,,https://ceds.ed.gov/cedselementdetails.aspx?termid=23500
+Instructional Minutes,"The total number of instruction minutes in a given session, as determined by time in class, time on task (e.g., engaged in a class), or as estimated by a qualified course designer.",None,"K12 -> Course Section 
+
+K12 -> K12 School -> Session
+
+K12 -> Program -> Implementation",Updated,Integer - greater than or equal to 0,Add new DES location,,000499,,InstructionalMinutes,,https://ceds.ed.gov/cedselementdetails.aspx?termid=23490
+ISO 639-3 Language Code,The code for the specific language or dialect that a person uses to communicate.,See URL column,"Adult Education -> AE Staff -> Language
+
+Adult Education -> AE Student -> Language
+
+Assessments -> Assessment
+
+Assessments -> Assessment Asset
+
+Career and Technical -> CTE Staff -> Language
+
+Career and Technical -> CTE Student -> Language
+
+Early Learning -> Early Learning Child -> Language
+
+Early Learning -> Early Learning Staff -> Language
+
+Early Learning -> Parent/Guardian -> Language
+
+K12 -> K12 Staff -> Language
+
+K12 -> K12 Student -> Language
+
+K12 -> Parent/Guardian -> Language
+
+Postsecondary -> Parent/Guardian -> Language
+
+Postsecondary -> PS Staff -> Language
+
+Postsecondary -> PS Student -> Language
+
+Workforce -> Workforce Program Participant -> Language",Updated,,"Add new option set, change option set","The CEDS ISO 639-3 Language Code option set comes from the <a href=""http://www-01.sil.org/iso639-3/default.asp"">ISO 639-3 standard</a>, the Latin-1 download.  Only living language code types from the ISO standard are included in the CEDS list.  Special scope and discontinued codes are excluded.",001637,,ISO6393LanguageCode,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24618
+Low-income Status,"A person who receives or is a member of a family who receives a total family income in the 6 months prior to enrollment of 70 percent of the income standard for a family of that size or that does not exceed the poverty line, or the person is receiving or is a member of a family who is receiving cash assistance payments from Federal, State, or local agencies or food stamps, or the person can be designated as homeless under the McKinney Act.","Yes
+No
+","Adult Education -> AE Student -> Status
+
+Workforce -> Workforce Program Participant -> Status ",Updated,,Add new DES location,,000775,,LowIncomeStatus,,https://ceds.ed.gov/cedselementdetails.aspx?termid=23758
+Military Connected Student Indicator,"An indication that the student’s parent or guardian is on Active Duty, in the National Guard, or in the Reserve components of the United States military services","NotMilitaryConnected - Not Military Connected
+ActiveDuty - Active Duty
+NationalGuardOrReserve - National Guard Or Reserve
+Unknown - Unknown
+","Early Learning -> Early Learning Child -> Demographic
+
+K12 -> K12 Student -> Demographic
+
+Postsecondary -> PS Student -> Status
+
+Workforce -> Workforce Program Participant -> Demographic ",Updated,,Add new DES location,,001576,,MilitaryConnectedStudentIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24555
+Military Veteran Status Indicator,"An indication that a person is a veteran who served on Active Duty, in the National Guard, or in the Reserve components of the United States military services.","NotVeteran - Not a Veteran
+Veteran - Veteran
+Unknown - Unknown
+","Adult Education -> AE Staff -> Military 
+
+Adult Education -> AE Student -> Military 
+
+Early Learning -> Early Learning Staff -> Military 
+
+Early Learning -> Parent/Guardian -> Military 
+
+K12 -> K12 Staff -> Military 
+
+K12 -> K12 Student -> Military 
+
+K12 -> Parent/Guardian -> Military 
+
+Postsecondary -> Parent/Guardian -> Military 
+
+Postsecondary -> PS Staff -> Military 
+
+Postsecondary -> PS Student -> Military 
+
+Workforce -> Workforce Program Participant -> Military ",Updated,,"Modify element name, defintion, technical name, option set, and DES locations",,001578,,MilitaryVeteranStatusIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24557
+Neglected or Delinquent Program Type,"The type of program under ESEA Title I, Part D, Subpart 1 (state programs) or Subpart 2 (LEA).","NeglectedPrograms - Neglected programs
+JuvenileDetention - Juvenile Detention
+JuvenileCorrection - Juvenile Correction
+AdultCorrection - Adult Correction
+AtRiskPrograms - At-risk programs
+OtherPrograms - Other Programs
+DelinquentPrograms - Delinquent Programs
+",K12 -> K12 Student -> Neglected or Delinquent,Updated,,Add new option to option set,,000194,,NeglectedOrDelinquentProgramType,K-12 -> EDFacts,https://ceds.ed.gov/cedselementdetails.aspx?termid=23194
+Organization Identification System,"A coding scheme that is used for identification and record-keeping purposes by schools, social services, or other agencies to refer to an organization.","School - School-assigned number
+ACT - College Board/ACT program code set of PK-grade 12 institutions
+LEA - Local Education Agency assigned number
+SEA - State Education Agency assigned number
+NCES - National Center for Education Statistics assigned number
+FEIN - Federal employer identification number
+DUNS - Dun and Bradstreet number
+OtherFederal - Other federally assigned number
+Other - Other
+LicenseNumber - License Number
+SAM - System for Award Management Unique Entity Identifier
+","Credentials -> Credential Award -> Credential Issuer
+
+Credentials -> Credential Definition Agent
+
+Credentials -> Credential Offered
+
+Early Learning -> Early Learning Child -> Enrollment
+
+Early Learning -> Early Learning Child -> Program
+
+Early Learning -> Early Learning Organization -> Identification
+
+Early Learning -> Early Learning Program
+
+Facilities -> Facility -> Identification
+
+K12 -> K12 School -> Directory -> Charter School Authorizer
+
+K12 -> K12 School -> Directory -> Charter School Management Organization
+
+K12 -> K12 Student -> Enrollment
+
+K12 -> K12 Student -> Individualized Program -> Services -> Service Provider
+
+K12 -> LEA -> Programs and Services
+
+K12 -> Organization -> Identification
+
+K12 -> Program
+
+Postsecondary -> Organization -> Identification
+
+Workforce -> Workforce Program -> Identification ",Updated,,Add new DES location,,000827,,OrganizationIdentificationSystem,Early Learning -> Program Quality,https://ceds.ed.gov/cedselementdetails.aspx?termid=23827
+Organization Name,"The name of a non-person entity such as an organization, institution, agency or business.",None,"Early Learning -> Early Learning Organization -> Identification
+
+Early Learning -> Early Learning Program
+
+Early Learning -> Early Learning Staff -> Employment
+
+Facilities -> Facility -> Identification
+
+K12 -> LEA -> Identification
+
+K12 -> Organization -> Identification
+
+K12 -> Program
+
+K12 -> SEA -> Identification
+
+Postsecondary -> Organization -> Identification
+
+Workforce -> Workforce Program -> Identification ",Updated,Alphanumeric - 60 characters maximum,Add new DES location,,000204,,OrganizationName,Early Learning -> Staff Quality,https://ceds.ed.gov/cedselementdetails.aspx?termid=23204
+Organization Type,The type of educational organization or entity.,"Employer - Employer
+K12School - K12 School
+LEA - Local Education Agency (LEA)
+IEU - Intermediate Educational Unit (IEU)
+SEA - State Education Agency (SEA)
+Recruiter - Recruiter
+EmployeeBenefitCarrier - Employee Benefit Carrier
+EmployeeBenefitContributor - Employee Benefit Contributor
+ProfessionalMembershipOrganization - Professional Membership Organization
+EducationInstitution - Education Institution
+StaffDevelopmentProvider - Staff Development Provider
+Facility - Facility
+Course - Course
+CourseSection - Course Section
+Program - Program
+PostsecondaryInstitution - Postsecondary Institution
+AdultEducationProvider - Adult Education Provider
+ServiceProvider - Service Provider
+AffiliatedInstitution - Affiliated Institution
+GoverningBoard - Governing Board
+CredentialingOrganization - Credentialing Organization
+AccreditingOrganization - Accrediting Organization
+EducationOrganizationNetwork - Education Organization Network
+IDEAPartCLeadAgency -  IDEA Part C Lead Agency
+CharterSchoolManagementOrganization - Charter School Management Organization
+CharterSchoolAuthorizingOrganization - Charter School Authorizing Organization
+EmergencyResponseAgency - Emergency Response Agency
+EarlyCollege - Early College
+Campus - Campus
+PostsecondarySystem - Postsecondary System
+SHEEOAgency - SHEEO Agency
+Region - Region
+","Early Learning -> Early Learning Organization -> Identification
+
+Facilities -> Facility -> Identification
+
+K12 -> K12 School -> Identification
+
+K12 -> LEA -> Identification
+
+K12 -> Organization -> Identification
+
+K12 -> SEA -> Identification
+
+Postsecondary -> Organization -> Identification
+
+Workforce -> Workforce Program -> Identification ",Updated,,"Added new option to existing option set, add new DES location",This element is used in data models that are normalized and identifies the primary role of the organization.,001156,,OrganizationType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24165
+Out of Workforce Indicator,"An individual: (A) who is a displaced homemaker, as defined in section 3 of the Workforce Innovation and Opportunity Act (29 U.S.C. 3102); or (B) who (i)(I) has worked primarily without remuneration to care for a home and family, and for that reason has diminished marketable skills; or (II) is a parent whose youngest dependent child will become ineligible to receive assistance under part A of title IV of the Social Security Act (42 U.S.C. 601 et seq.) not later than 2 years after the date on which the parent applies for assistance under such title; and (ii) is unemployed or underemployed and is experiencing difficulty in obtaining or upgrading employment.","Yes
+No
+Unknown
+","Adult Education -> AE Student -> Status
+
+Career and Technical -> CTE Student -> Program Participation
+
+Postsecondary -> PS Student -> CTE
+
+Workforce -> Workforce Program Participant -> Program Participation ",Updated,,Add new DES location,,001930,,OutOfWorkforceIndicator,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24908
+Person Identification System,A coding scheme that is used for identification of a person.,"SSN - Social Security Administration number
+USVisa - US government Visa number
+PIN - Personal identification number
+Federal - Federal identification number
+DriversLicense - Driver's license number
+Medicaid - Medicaid number
+HealthRecord - Health record number
+ProfessionalCertificate - Professional certificate or license number
+School - School-assigned number
+District - District-assigned number
+State - State-assigned number
+Institution - Institution-assigned number
+OtherFederal - Other federally assigned number
+SelectiveService - Selective Service Number
+CanadianSIN - Canadian Social Insurance Number
+BirthCertificate - Birth certificate number
+Other - Other
+","Assessments -> Assessment Result -> Scorer
+
+Credentials -> Credential Award -> Credential Issuer
+
+Credentials -> Credential Definition Agent
+
+Early Learning -> Parent/Guardian -> Identity -> Identification
+
+Early Learning -> Parent/Guardian -> Relationship
+
+K12 -> K12 Student -> Individualized Program -> Authorization
+
+K12 -> K12 Student -> Individualized Program -> Eligibility -> Authorization
+
+K12 -> K12 Student -> Individualized Program -> Services -> Service Provider
+
+K12 -> Parent/Guardian -> Identity -> Identification
+
+K12 -> Parent/Guardian -> Relationship
+
+Postsecondary -> Parent/Guardian -> Identity -> Identification
+
+Postsecondary -> Parent/Guardian -> Relationship
+
+Postsecondary -> PS Student -> Academic Record -> Academic Award -> Endorser
+
+Postsecondary -> PS Student -> Academic Record -> Academic Award -> Thesis or Dissertation Advisor
+
+Postsecondary -> PS Student -> Institution Enrollment -> Prior Academic Award -> Endorser
+
+Postsecondary -> PS Student -> Institution Enrollment -> Prior Academic Award -> Thesis or Dissertation Advisor
+
+Workforce -> Quarterly Employment Record
+
+Workforce -> Workforce Program Participant -> Identity -> Identification",Updated,,Added new option to existing option set,,001571,,PersonIdentificationSystem,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24550
+Position Title,The descriptive name of a person's position.,None,"Early Learning -> Early Learning Organization -> Contact
+
+Early Learning -> Early Learning Staff -> Assignment
+
+Early Learning -> Early Learning Staff -> Professional Development -> Instructor
+
+K12 -> K12 Staff -> Employment
+
+K12 -> K12 Staff -> Professional Development -> Instructor
+
+K12 -> Organization -> Contact
+
+K12 -> SEA -> Contact
+
+Postsecondary -> Organization -> Contact
+
+Postsecondary -> PS Staff -> Employment
+
+Workforce -> Workforce Program Participant -> Employment ",Updated,Alphanumeric - 45 characters maximum,Add new DES location,,000213,,PositionTitle,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange",https://ceds.ed.gov/cedselementdetails.aspx?termid=23213
+Postsecondary Enrollment Action,"The action taken with respect to postsecondary enrollment by the student who graduated from the school, LEA or state in the past two years.","NoInformation - No information
+Enrolled - Enrolled
+NotEnrolled - Not enrolled
+","K12 -> K12 Student -> Academic Record
+
+Workforce -> Workforce Program Participant -> Academic Record ",Updated,,Add new DES location,,000586,,PostsecondaryEnrollmentAction,K-12 -> EDFacts,https://ceds.ed.gov/cedselementdetails.aspx?termid=23579
+Program Type,The system outlining instructional or non-instructional activities and procedures designed to accomplish a predetermined educational objective or set of objectives or to provide support services to a person and/or the community.,"73056 - Adult Basic Education
+73058 - Adult English as a Second Language
+73057 - Adult Secondary Education
+04961 - Alternative Education
+04932 - Athletics
+04923 - Bilingual education program
+04906 - Career and Technical Education
+04931 - Cocurricular programs
+04958 - College preparatory
+04945 - Community service program
+04944 - Community/junior college education program
+04922 - Compensatory services for disadvantaged students
+73059 - Continuing Education
+04956 - Counseling services
+14609 - Early Head Start
+04928 - English as a second language (ESL) program
+04919 - Even Start
+04955 - Extended day/child care services
+75000 - Foster Care
+04930 - Gifted and talented program
+04918 - Head start
+04963 - Health Services Program
+04957 - Immigrant education
+04921 - Indian education
+04959 - International Baccalaureate
+04962 - Library/Media Services Program
+04960 - Magnet/Special Program Emphasis
+04920 - Migrant education
+04887 - Regular education
+04964 - Remedial education
+04967 - Section 504 Placement
+04966 - Service learning
+04888 - Special Education Services
+04954 - Student retention/ Dropout Prevention
+04953 - Substance abuse education/prevention
+73204 - Targeted intervention program
+04968 - Teacher professional development / Mentoring
+04917 - Technical preparatory
+75001 - Title I
+73090 - Work-based Learning Opportunities
+75014 - Autism program
+75015 - Early childhood special education tier one program
+09999 - Other
+75016 - Early childhood special education tier two program
+75002 - Early College
+75006 - Emotional disturbance program
+75008 - Hearing impairment program
+75017 - K12 Resource Program
+75003 - Mild cognitive disability program
+75004 - Moderate cognitive disability program
+75012 - Multiple disabilities program
+75011 - Orthopedic impairment
+75010 - Other health impairment
+75005 - Significant cognitive disability program
+75007 - Specific learning disability program
+75013 - Speech or language impairment program
+75009 - Visual impairment program
+75018 - Hospital
+76000 - McKinney-Vento Homeless
+77000 - Title III LIEP
+75019 - Neglected or delinquent
+75020 - TANF
+","Career and Technical -> Program
+
+Early Learning -> Early Learning Child -> Program
+
+Early Learning -> Early Learning Class/Group
+
+Early Learning -> Early Learning Organization -> Directory
+
+Early Learning -> Early Learning Program
+
+K12 -> K12 School -> Directory
+
+K12 -> K12 Student -> Program
+
+K12 -> Program -> Implementation",Updated,,Add new option to option set,,000225,,ProgramType,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange",https://ceds.ed.gov/cedselementdetails.aspx?termid=23225
+Responsible District Type,The type of responsibility the district has for the student.,"Accountability - Accountability
+Attendance - Attendance
+Funding - Funding
+Graduation - Graduation
+IndividualizedEducationProgram - Individualized education program (IEP)
+Transportation - Transportation
+IEPServiceProvider - Individualized education program service provider
+Assessment - Assessment
+Instruction - Instruction
+Resident - Resident
+","K12 -> Course Section -> Enrollment
+
+K12 -> K12 Student -> Enrollment",Updated,,Added new option to existing option set,,000594,,ResponsibleDistrictType,K-12 -> EDFacts,https://ceds.ed.gov/cedselementdetails.aspx?termid=23587
+Responsible Organization Type,The type of responsibility the organization has for the student.,"Accountability - Accountability
+Attendance - Attendance
+Funding - Funding
+Graduation - Graduation
+IndividualizedEducationProgram - Individualized education program (IEP)
+Transportation - Transportation
+IEPServiceProvider - Individualized education program service provider
+Assessment - Assessment
+Instruction - Instruction
+Resident - Resident
+","Early Learning -> Early Learning Child -> Enrollment
+
+Early Learning -> Early Learning Child -> Program
+
+K12 -> Course Section -> Enrollment 
+
+K12 -> K12 Student -> Enrollment",Updated,,"Added new option to existing option set, change option set, add new DES locations",This may be used to specify responsibility when the organization is not a school (Responsible School) or school district (Responsible District).,001467,,ResponsibleOrganizationType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24439
+Responsible School Type,The type of services/instruction the school is responsible for providing to the student.,"Accountability - Accountability
+Attendance - Attendance
+Funding - Funding
+Graduation - Graduation
+IndividualizedEducationProgram - Individualized education program (IEP)
+Transportation - Transportation
+IEPServiceProvider - Individualized education program service provider
+Assessment - Assessment
+Instruction - Instruction
+Resident - Resident
+","Early Learning -> Early Learning Child -> Enrollment
+
+Early Learning -> Early Learning Class/Group
+
+K12 -> Course Section -> Enrollment
+
+K12 -> K12 Student -> Enrollment",Updated,,Added new option to existing option set,,000595,,ResponsibleSchoolType,K-12 -> EDFacts,https://ceds.ed.gov/cedselementdetails.aspx?termid=23588
+Role,A description of the way in which a person relates to an organization.,"AEStaff - AE Staff
+AEStudent - AE Student
+CTEStaff - CTE Staff
+CTEStudent - CTE Student
+ELChild - EL Child
+ELStaff - EL Staff
+K12Staff - K12 Staff
+K12Student - K12 Student
+ParentGuardian - Parent/Guardian
+PSApplicant - PS Applicant
+PSStaff - PS Staff
+PSStudent - PS Student
+WorkforceProgramParticipant - Workforce Program Participant
+ChiefStateSchoolOfficer - Chief State School Officer
+SchoolBoardMember - School Board Member
+","Adult Education -> AE Staff -> Employment
+
+Adult Education -> AE Student -> Employment
+
+Adult Education -> AE Student -> Program Participation
+
+Career and Technical -> CTE Staff -> Employment
+
+Career and Technical -> CTE Student -> Program Participation
+
+Early Learning -> Early Learning Child -> Enrollment
+
+Early Learning -> Early Learning Child -> Individualized Program
+
+Early Learning -> Early Learning Child -> Program
+
+Early Learning -> Early Learning Staff -> Employment
+
+K12 -> K12 Staff -> Employment
+
+K12 -> K12 Student -> Employment
+
+K12 -> K12 Student -> Enrollment
+
+K12 -> K12 Student -> Individualized Program
+
+K12 -> K12 Student -> Program
+
+Postsecondary -> PS Staff -> Employment
+
+Postsecondary -> PS Student -> Employment
+
+Postsecondary -> PS Student -> Institution Enrollment
+
+Postsecondary -> PS Student -> Institution Enrollment -> Program
+
+Workforce -> Workforce Program Participant -> Employment
+
+Workforce -> Workforce Program Participant -> Program Participation",Updated,,Added new option to existing option set,,001946,,Role,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24959
+Rural Residency Status,"A person who resides in a place with a population of less than 2,500 that is not near any metropolitan area with a population greater than 50,000, or in a city with adjacent areas of high density.","Yes
+No
+","Adult Education -> AE Student -> Status
+
+K12 -> K12 Student -> Demographic ",Updated,,Add new DES location,,000778,,RuralResidencyStatus,,https://ceds.ed.gov/cedselementdetails.aspx?termid=23761
+School Courses for the Exchange of Data Course Code,The five-digit SCED code. The first two-digits of the code represent the Course Subject Area and the next three digits identify the course number. These identifiers are fairly general but provide enough specificity to identify the course's topic and to distinguish it from other courses in that subject area.,See URL column,"Career and Technical -> Course
+
+Early Learning -> Early Learning Class/Group
+
+K12 -> K12 Course
+
+K12 -> K12 Student -> Graduation Plan -> Course
+
+Learning Resources -> Learning Resource ",Updated,,Add new DES location,"<a href=""https://nces.ed.gov/forum/SCED.asp"">https://nces.ed.gov/forum/SCED.asp</a>",001517,SCED Course Code,SCEDCourseCode,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24490
+School Courses for the Exchange of Data Course Subject Area,The intended major subject area of the education course.,"01 - English Language and Literature
+02 - Mathematics
+03 - Life and Physical Sciences
+04 - Social Sciences and History
+05 - Visual and Performing Arts
+07 - Religious Education and Theology
+08 - Physical, Health, and Safety Education
+09 - Military Science
+10 - Information Technology
+11 - Communication and Audio/Visual Technology
+12 - Business and Marketing
+13 - Manufacturing
+14 - Health Care Sciences
+15 - Public, Protective, and Government Service
+16 - Hospitality and Tourism
+17 - Architecture and Construction
+18 - Agriculture, Food, and Natural Resources
+19 - Human Services
+20 - Transportation, Distribution and Logistics
+21 - Engineering and Technology
+22 - Miscellaneous
+23 - Non-Subject-Specific
+24 - World Languages
+","Career and Technical -> Course
+
+Early Learning -> Early Learning Class/Group
+
+K12 -> K12 Course
+
+K12 -> K12 Student -> Graduation Plan -> Course
+
+K12 -> K12 Student -> Graduation Plan -> Subject Area
+
+K12 -> K12 Student -> Individualized Program -> Accommodation
+
+Learning Resources -> Learning Resource ",Updated,,Add new DES location,This is a compilation of Secondary Course Subject Area and Prior to Secondary Course Subject Area.  This version merges SCED and pSCED.,001518,SCED Course Subject Area,SCEDCourseSubjectArea,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24491
+Special Education Exit Reason,The reason children who were in special education at the start of the reporting period were not in special education at the end of the reporting period.,"HighSchoolDiploma - Graduated with regular high school diploma
+ReceivedCertificate - Received a certificate
+ReachedMaximumAge - Reached maximum age
+Died - Died
+MovedAndContinuing - Moved, known to be continuing
+DroppedOut - Dropped out
+Transferred - Transferred to regular education
+PartCNoLongerEligible - No longer eligible for Part C prior to reaching age three.
+PartBEligibleExitingPartC - Part B eligible, exiting Part C.
+PartBEligibleContinuingPartC - Part B eligible, continuing in Part C.
+PartBEligibilityNotDeterminedExitingPartC - Part B eligibility not determined.
+WithdrawalByParent - Withdrawal by parent (or guardian).
+MovedOutOfState - Moved out of State
+Unreachable - Attempts to contact the parent and/or child were unsuccessful.
+GraduatedAlternateDiploma - Graduated with an alternate diploma
+NotPartBEligibleExitingPartCWithoutReferrals - Not eligible for Part B, exit with no referrals.
+NotPartBEligibleExitingPartCWithReferrals - Not eligible for Part B, exit with referrals to other programs.
+","Early Learning -> Early Learning Child -> Services
+
+K12 -> K12 Student -> IDEA",Updated,,Change option set,,000260,,SpecialEducationExitReason,K-12 -> EDFacts,https://ceds.ed.gov/cedselementdetails.aspx?termid=23260
+Staff Member Identification System,"A coding scheme that is used for identification and record-keeping purposes by schools, social services, registry, or other agencies to refer to a staff member.","SSN - Social Security Administration number
+USVisa - US government Visa number
+PIN - Personal identification number
+Federal - Federal identification number
+DriversLicense - Driver's license number
+Medicaid - Medicaid number
+HealthRecord - Health record number
+ProfessionalCertificate - Professional certificate or license number
+School - School-assigned number
+District - District-assigned number
+State - State-assigned number
+OtherFederal - Other federally assigned number
+SelectiveService - Selective Service Number
+CanadianSIN - Canadian Social Insurance Number
+Other - Other
+BirthCertificate - Birth certificate number
+","Adult Education -> AE Staff -> Identity -> Identification
+
+Adult Education -> Course Section -> Staff
+
+Career and Technical -> Course Section -> Staff
+
+Career and Technical -> CTE Staff -> Identity -> Identification
+
+Early Learning -> Early Learning Class/Group -> Staff
+
+Early Learning -> Early Learning Staff -> Identity -> Identification
+
+Early Learning -> Early Learning Staff -> Professional Development -> Instructor
+
+K12 -> Course Section -> Staff
+
+K12 -> K12 Staff -> Identity -> Identification
+
+K12 -> K12 Staff -> Professional Development -> Instructor
+
+Postsecondary -> Course Section -> Staff
+
+Postsecondary -> PS Staff -> Identity -> Identification",Updated,,Added new option to existing option set,,001074,,StaffMemberIdentificationSystem,"Early Learning -> Staff Quality
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+K-12 -> Teacher Compensation Survey
+K-12 -> Teacher-Student Data Link -> Staff Assignment",https://ceds.ed.gov/cedselementdetails.aspx?termid=23162
+Standard Occupational Classification,"A Bureau of Labor Statistics coding system for classifying occupations by work performed and, in some cases, on the skills, education and training needed to perform the work at a competent level.  See https://www.bls.gov/soc/2018/major_groups.htm.",None,"Career and Technical -> CTE Staff -> Employment
+
+Career and Technical -> CTE Student -> Demographic
+
+Early Learning -> Early Learning Staff -> Employment
+
+Early Learning -> Parent/Guardian -> Demographic
+
+K12 -> K12 Staff -> Employment
+
+K12 -> K12 Student -> Demographic
+
+K12 -> Parent/Guardian -> Demographic
+
+Postsecondary -> Parent/Guardian -> Demographic
+
+Postsecondary -> PS Staff -> Employment
+
+Postsecondary -> PS Student -> Demographic
+
+Workforce -> Workforce Program Participant -> Demographic 
+
+Workforce -> Workforce Program Participant -> Employment",Updated,##-####,Add new DES location,,000730,,StandardOccupationalClassification,Postsecondary Education -> IPEDS -> HR,https://ceds.ed.gov/cedselementdetails.aspx?termid=23707
+State Abbreviation,The abbreviation for the state (within the United States) or outlying area in which an address is located.,"AK - Alaska
+AL - Alabama
+AR - Arkansas
+AS - American Samoa
+AZ - Arizona
+CA - California
+CO - Colorado
+CT - Connecticut
+DC - District of Columbia
+DE - Delaware
+FL - Florida
+FM - Federated States of Micronesia
+GA - Georgia
+GU - Guam
+HI - Hawaii
+IA - Iowa
+ID - Idaho
+IL - Illinois
+IN - Indiana
+KS - Kansas
+KY - Kentucky
+LA - Louisiana
+MA - Massachusetts
+MD - Maryland
+ME - Maine
+MH - Marshall Islands
+MI - Michigan
+MN - Minnesota
+MO - Missouri
+MP - Northern Marianas
+MS - Mississippi
+MT - Montana
+NC - North Carolina
+ND - North Dakota
+NE - Nebraska
+NH - New Hampshire
+NJ - New Jersey
+NM - New Mexico
+NV - Nevada
+NY - New York
+OH - Ohio
+OK - Oklahoma
+OR - Oregon
+PA - Pennsylvania
+PR - Puerto Rico
+PW - Palau
+RI - Rhode Island
+SC - South Carolina
+SD - South Dakota
+TN - Tennessee
+TX - Texas
+UT - Utah
+VA - Virginia
+VI - Virgin Islands
+VT - Vermont
+WA - Washington
+WI - Wisconsin
+WV - West Virginia
+WY - Wyoming
+AA - Armed Forces America
+AE - Armed Forces Africa, Canada, Europe, and Mideast
+AP - Armed Forces Pacific
+BI - Bureau of Indian Affairs
+DD - Department of Defense Domestic
+DO - Department of Defense Overseas
+","Adult Education -> AE Staff -> Contact -> Address
+
+Adult Education -> AE Student -> Contact -> Address
+
+Career and Technical -> CTE Staff -> Contact -> Address
+
+Career and Technical -> CTE Student -> Contact -> Address
+
+Early Learning -> Early Learning Child -> Contact -> Address
+
+Early Learning -> Early Learning Organization -> Address
+
+Early Learning -> Early Learning Organization -> Contact -> Address
+
+Early Learning -> Early Learning Program -> Address
+
+Early Learning -> Early Learning Staff -> Contact -> Address
+
+Early Learning -> Early Learning Staff -> Professional Development -> Instructor
+
+Early Learning -> Early Learning Staff -> Professional Development Activity -> Session - Location
+
+Early Learning -> Parent/Guardian -> Contact -> Address
+
+Facilities -> Facility -> Address
+
+K12 -> K12 School -> Address
+
+K12 -> K12 Staff -> Contact -> Address
+
+K12 -> K12 Staff -> Professional Development -> Instructor
+
+K12 -> K12 Staff -> Professional Development Activity -> Session - Location
+
+K12 -> K12 Student -> Contact -> Address
+
+K12 -> LEA -> Address
+
+K12 -> Organization -> Address
+
+K12 -> Organization -> Contact -> Address
+
+K12 -> Parent/Guardian -> Contact -> Address
+
+K12 -> Program -> Address
+
+K12 -> SEA -> Address
+
+K12 -> SEA -> Contact -> Address
+
+Postsecondary -> Organization -> Address
+
+Postsecondary -> Organization -> Contact -> Address
+
+Postsecondary -> Parent/Guardian -> Contact -> Address
+
+Postsecondary -> PS Institution -> Address
+
+Postsecondary -> PS Staff -> Contact -> Address
+
+Postsecondary -> PS Student -> Contact -> Address
+
+Workforce -> Workforce Program -> Address 
+CHR",Updated,,Add new DES location,,000267,,StateAbbreviation,"Early Learning -> Licensing
+Early Learning -> Program Compliance
+Early Learning -> Program Entry
+Early Learning -> Staff Quality
+Early Learning -> Workforce Development
+K-12 -> High School Feedback Report
+K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+K-12 -> Teacher Compensation Survey
+Postsecondary Education -> Complete College America
+Postsecondary Education -> IPEDS
+Postsecondary Education -> Transition",https://ceds.ed.gov/cedselementdetails.aspx?termid=23267
+Status End Date,"The last year, month, day, and optionally time when a status applied.",None,"K12 -> K12 Student -> Disability 
+
+K12 -> K12 Student -> Economically Disadvantaged
+
+K12 -> K12 Student -> Homeless
+
+K12 -> K12 Student -> Immigrant
+
+Learning Resources -> Learning Resource 
+
+Postsecondary -> PS Student -> Economically Disadvantaged
+
+Postsecondary -> PS Student -> Homeless",Updated,YYYY-MM-DDTHH:MM:SS,"Modify element definition, format and add new DES location","This element reflects the end date for a person's status rather than that person's participation in a program. Use Program Participation Exit Date if referring to a person's participation in a program or receipt of services. Status dates and program participation dates don't need to align, they are for different purposes. For example, for a homeless student the Status Begin Date and Status End Date elements are used to record when the student began being homeless to the date when the student ceased being homeless.  The student may begin receiving services under a program for homeless students after becoming homeless and that program may continue to provide services after the student ceases to have the status of ""homeless"" and therefore have a Program Participation Start Date and Program Participation Exit Date that are different from the status dates.  Students under the McKinney-Vento may continue to receive services until the end of a school year even if they become stably housed at some point during the year.",001228,,StatusEndDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24193
+Status Start Date,"The year, month, day and optionally time, that a status became applicable.",None,"K12 -> K12 Student -> Disability 
+
+K12 -> K12 Student -> Economically Disadvantaged
+
+K12 -> K12 Student -> Homeless
+
+K12 -> K12 Student -> Immigrant
+
+Learning Resources -> Learning Resource 
+
+Postsecondary -> PS Student -> Economically Disadvantaged
+
+Postsecondary -> PS Student -> Homeless",Updated,YYYY-MM-DDTHH:MM:SS,"Modify element definition, format and add new DES location",,001227,,StatusStartDate,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24192
+Student Identification System,"A coding scheme that is used for identification and record-keeping purposes by schools, social services, or other agencies to refer to a student.","CanadianSIN - Canadian Social Insurance Number
+District - District-assigned number
+Family - Family unit number
+Federal - Federal identification number
+NationalMigrant - National migrant number
+School - School-assigned number
+SSN - Social Security Administration number
+State - State-assigned number
+StateMigrant - State migrant number
+BirthCertificate - Birth certificate number
+","Adult Education -> AE Student -> Identity -> Identification
+
+Adult Education -> Course Section -> Enrollment
+
+Career and Technical -> Course Section -> Enrollment
+
+Career and Technical -> CTE Student -> Identity -> Identification
+
+Early Learning -> Early Learning Class/Group
+
+Early Learning -> Parent/Guardian -> Relationship
+
+K12 -> Course Section -> Enrollment
+
+K12 -> K12 Student -> Identity -> Identification
+
+K12 -> K12 Student -> Migrant
+
+K12 -> Parent/Guardian -> Relationship
+
+Postsecondary -> Course Section -> Enrollment
+
+Postsecondary -> PS Student -> Identity -> Identification
+
+Postsecondary -> PS Student -> K12 Transcript",Updated,,Added new option to existing option set,,001075,,StudentIdentificationSystem,"K-12 -> High School Generated Transcript
+K-12 -> LEA-to-LEA Student Record Exchange
+K-12 -> LEA-to-SEA Student Record Exchange
+K-12 -> Teacher-Student Data Link -> Enrollment
+Postsecondary Education -> Transition",https://ceds.ed.gov/cedselementdetails.aspx?termid=23163
+Student Support Service Type,"Type of related or ancillary services offered or provided to a person or a group of persons within the formal educational system or by an outside agency which provides non-instructional services to support the general welfare of students. This includes physical and emotional health, the ability to select an appropriate course of study, admission to appropriate educational programs, and the ability to adjust to and remain in school through the completion of programs. In serving a student with an identified disability, related services include developmental, corrective, or supportive services required to ensure that the person benefits from special education.","00290 - Adaptive physical education
+00291 - Art therapy
+00292 - Assistive technology services
+00293 - Audiological services
+73050 - Augmentative Communication Service
+73051 - Autism Spectrum Disorder Service
+73052 - Behavior and Behavioral Consultation Service
+73053 - Braille Service
+00889 - Career and technical education rehabilitation training and job placement
+00878 - Case management services
+00295 - Children's protective services
+00881 - Communication services
+73057 - Community based career training
+73056 - Community based career training for Special Education
+00882 - Community recreational services
+73048 - Curriculum planning
+00334 - Developmental childcare program
+73047 - Early Intervention / Early Childhood Special Education Special Service
+00297 - Early intervention services
+00298 - Educational therapy
+73054 - ESL/Migrant Service
+00299 - Family counseling
+00333 - Family training, counseling, and home visits
+00303 - Health care
+73060 - Homebound or Hospitalized
+00883 - Independent living
+73058 - Individual career education
+73059 - Individual career education for special education
+73049 - Instructional Aide/Assistant/Intervener Service
+00304 - Interpretation for the hearing impaired
+00332 - Medical services only for diagnostic or evaluation purposes
+00305 - Mental health counseling
+00884 - Mental health services
+00306 - Music therapy
+00300 - National School Nutrition programs
+00308 - Note-taking assistance
+00335 - Nursing service
+00336 - Nutrition services
+00309 - Occupational therapy
+00310 - Orientation and mobility services
+09999 - Other
+00311 - Parenting skills assistance
+00312 - Peer services
+00313 - Physical therapy
+00331 - Psychological services
+00314 - Reader service
+00315 - Recreation service
+00318 - Rehabilitation counseling services
+00885 - Residential services
+73046 - Respite Care
+00319 - School clothing
+00302 - School counseling
+00320 - School health nursing services
+73061 - School Psychologist
+00294 - Service coordination (case management services)
+00337 - Social work services
+00321 - Special transportation
+00322 - Speech-language therapy
+00323 - Study skills assistance
+00324 - Substance abuse education/prevention
+00886 - Supported employment services
+73062 - Teacher consultant for autism
+73064 - Teacher Consultant for disturbance emotional
+73066 - Teacher consultant for hearing impairment
+73063 - Teacher Consultant for intellectual disability
+73068 - Teacher consultant for orthopedic impairment
+73069 - Teacher consultant for other health impairment
+73065 - Teacher consultant for specifical learning disability
+73067 - Teacher consultant for visual impairment
+00887 - Technological aids
+00325 - Teen/adolescent family planning
+00326 - Test assistance
+00327 - Translation/interpreter services
+00888 - Transportation services
+00329 - Tutoring services
+00330 - Vision services
+73055 - Work-based Learning
+73070 - Extended school year services
+","Early Learning -> Early Learning Child -> Individualized Program
+
+Early Learning -> Early Learning Organization -> Site Level Characteristics
+
+K12 -> K12 School -> Institution Characteristics
+
+K12 -> K12 Student -> Individualized Program
+
+K12 -> K12 Student -> Individualized Program -> Services
+
+Postsecondary -> PS Institution -> Program
+
+Postsecondary -> PS Student -> Program Participation
+
+Workforce -> Workforce Program Participant -> Program Participation ",Updated,,"Add new option to option set, add new DES location","At the organization level, this element indicates the services offered to students. At the person level, this element indicates the services received by students.",000273,,StudentSupportServiceType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=23273
+Visa Type,An indicator of a non-US citizen's Visa type.,"F1 - Foreign Student Visa
+M1 - Foreign Student pursuing vocational or non-academic studies Visa
+H1 - Employment Visa
+B1 - Business Visa
+B2 - Tourist Visa
+J1 - Exchange Scholar Visa
+OV - Other Visa
+","Postsecondary -> PS Student -> Demographic
+
+Workforce -> Workforce Program Participant -> Demographic ",Updated,,Add new DES location,,000196,,VisaType,Postsecondary Education -> IPEDS,https://ceds.ed.gov/cedselementdetails.aspx?termid=23196
+Wage Collection Code,Method used for the collection of wage data for an employment record.,"01 - Collected as an hourly wage amount
+02 - Collected as salary and converted to an hourly wage amount
+03 - Collected in both methods but method not tracked on an individual record
+99 - Wage data not present
+","Early Learning -> Early Learning Staff -> Employment
+
+Workforce -> Workforce Program Participant -> Employment ",Updated,,Add new DES location,,000798,,WageCollectionCode,Early Learning -> Staff Quality,https://ceds.ed.gov/cedselementdetails.aspx?termid=23797
+Wage Verification Code,An indication of whether the wage information has been verified.,"01 - Verified
+02 - Not verified
+03 - Wage data not present
+","Early Learning -> Early Learning Staff -> Employment
+
+Workforce -> Workforce Program Participant -> Employment ",Updated,,Add new DES location,,000819,,WageVerificationCode,Early Learning -> Staff Quality,https://ceds.ed.gov/cedselementdetails.aspx?termid=23818
+Weapon Type,Identifies the type of weapon used during an incident.,"Firearm - Firearm
+Handgun - Handgun
+Shotgun - Shotgun
+Rifle - Rifle
+OtherFirearm - Other Firearm
+Knife - Knife
+KnifeLessThanTwoPointFiveInches - Knife Less Than 2.5 Inches
+KnifeLessThanThreeInches - Knife Less Than Three Inches
+KnifeGreaterThanThreeInches - Knife Greater Than Three Inches
+OtherSharpObject - Other sharp object
+OtherObject - Other object
+Substance - Substance used as weapon
+OtherWeapon - Other weapon
+None - None
+Unknown - Unknown weapon
+BBGun - BB Gun
+DestructiveDevice - Destructive Device
+IEPServiceProvider - Individualized education program service provider
+",K12 -> Incident,Updated,,"Added new option to existing option set, change option set","See Forum Guide to Crime, Violence, and Discipline Incident Data http://nces.ed.gov/pubs2011/2011806.pdf Forum Guide.",001211,,WeaponType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24178
+Weeks Employed Per Year,The number of weeks employed by year.,None,"Early Learning -> Early Learning Staff -> Employment
+
+Workforce -> Workforce Program Participant -> Employment ",Updated,Integer,Add new DES location,,001498,,WeeksEmployedPerYear,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24470
+WIOA Barriers to Employment,A self-identified barrier as defined by the Workforce Innovation and Opportunity Act (WIOA) that is presumed to affect placement of a participant in unsubsidized employment.,"805 - Cultural barriers
+807 - Displaced Caregiver
+803 - English language learner
+601 - Exhausting Temporary Assistance for Needy Families (TANF) within 2 years
+801 - Ex-offender
+800 - Homeless or runaway youth
+202 - Individual with disabilities
+402 - Long-term unemployed
+804 - Low literacy level
+802 - Low-income
+808 - Migrant and seasonal farmworker
+806 - Single parent
+798 - Current Foster Care Youth
+799 - Former Foster Care Youth
+","Adult Education -> AE Student -> Program Participation
+
+Workforce -> Workforce Program Participant -> Demographic ",Updated,,"Add new option to option set, change option set, and add new DES location",,001940,,WIOABarrierstoEmployment,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24969
+Work-based Learning Opportunity Type,The type of work-based learning opportunity a student participated in.,"Apprenticeship - Apprenticeship
+ClinicalWork - Clinical work experience
+CooperativeEducation - Cooperative education
+JobShadowing - Job shadowing
+Mentorship - Mentorship
+NonPaidInternship - Non-Paid Internship
+OnTheJob - On-the-Job
+PaidInternship - Paid internship
+ServiceLearning - Service learning
+SupervisedAgricultural - Supervised agricultural experience
+UnpaidInternship - Unpaid internship
+Entrepreneurship - Entrepreneurship
+SchoolBasedEnterprise - School-Based Enterprise
+SimulatedWorksite - Simulated Worksite
+Other - Other
+","Adult Education -> Course Section
+
+Career and Technical -> Course Section
+
+Career and Technical -> CTE Student -> Program Participation
+
+K12 -> Course Section 
+
+K12 -> K12 Course
+
+K12 -> K12 Student -> Program
+
+Postsecondary -> Course Section
+
+Postsecondary -> PS Student -> Program Participation",Updated,,Added new option to existing option set and add new DES location,,001499,,WorkBasedLearningOpportunityType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24471
+Workforce Program Type,The type of workforce and employment development program that an individual is participating in.,"01 - Labor Exchange Services
+02 - Adult Workforce Investment Act Program
+03 - Dislocated Worker Workforce Investment Act Program
+04 - Youth Workforce Investment Act Program
+05 - Job Corps
+06 - Adult Education and Literacy
+07 - National Farmworker Jobs Program
+08 - Indian and Native American Programs
+09 - Veteran's Programs
+10 - Trade Adjustment Assistance Program
+11 - YouthBuild Program
+12 - Title V Older Worker Program
+13 - Registered Apprenticeship
+14 - Non-traditional Apprenticeship
+15 - Vocational Rehabilitation
+16 - Food Stamp Employment and Training Program
+17 - TANF Employment and Training Program
+18 - Other On-The-Job training Program
+19 - Other Workforce Related Employment and Training Program
+99 - No identified services
+20 - Reentry workforce and education program
+",Workforce -> Workforce Program Participant -> Program Participation,Updated,,Add new option to option set,"A reference period for identifying program participation during or after enrollment in secondary education, postsecondary education, or adult education will have to be defined by the agency in collaboration with other agency partners.  At this point this element is intended only to indicate program participation and does not delve into programmatic details, persistence, or completion.",000997,,WorkforceProgramType,,https://ceds.ed.gov/cedselementdetails.aspx?termid=24000

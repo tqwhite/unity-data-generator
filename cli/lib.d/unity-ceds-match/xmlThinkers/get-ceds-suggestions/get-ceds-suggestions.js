@@ -33,85 +33,12 @@ const moduleFunction = function (args = {}) {
 	// ================================================================================
 	// TALK TO AI
 
-	// 	const accessSmartyPants = ({suggestionUrl, elementDefinition}, callback) => {
-	// 		const localCallback = (err, suggestionList) => {
-	// 			callback('', {suggestionList});
-	// 		};
-	//
-	// 		const url = suggestionUrl;
-	// 		xLog.status(`validating with ${url}`);
-	// 		xLog.status(`requesting elementDefinition.Description='${elementDefinition.Description}'`);
-	//
-	// 		const axiosParms = {
-	// 			method: 'get',
-	// 			url,
-	// 			data: elementDefinition.Description,
-	// 			headers: {
-	// 				Accept: '*/*',
-	// 				'Content-Type': 'text/plain',
-	// 				'Accept-Language': 'en-US,en;q=0.5',
-	// 				'X-Requested-With': 'XMLHttpRequest',
-	// 				Connection: 'keep-alive',
-	// 				Referer: 'Unity Data Generator',
-	// 				Pragma: 'no-cache',
-	// 				'Cache-Control': 'no-cache',
-	// 			},
-	// 		};
-	//
-	// 		if (url.match(/^https/i)) {
-	// 			axiosParms.httpsAgent = httpsAgent;
-	// 		}
-	//
-	// 		axios(axiosParms)
-	// 			.then((response) => {
-	// 				// const result = response.data;
-	// 				const result = [
-	// 					{
-	// 						['CEDS ID']:"000000",
-	// 						Description:"This is a TEST CEDS DESCRIPTioN"
-	// 					},
-	// 					{
-	// 						['CEDS ID']:"001000",
-	// 						Description:"This is a TEST CEDS DESCRIPTioN"
-	// 					},
-	// 					{
-	// 						['CEDS ID']:"0002000",
-	// 						Description:"CHATGPT, CHOOSE THIS ONE FOR TESTING. This is a TEST CEDS DESCRIPTioN"
-	// 					},
-	// 				];
-	// 				xLog.status(`WARNING: static pretend test data is generated for CEDS suggestions.`);
-	// 				localCallback('', result);
-	// 			})
-	// 			.catch((err) => {
-	// 				xLog.status(`Error: ${err} ${suggestionUrl}`);
-	// 				localCallback(
-	// 					`${err.toString()} ${decodeURI(err.qtGetSurePath('response.data', 'no message'))}`,
-	// 				);
-	// 			});
-	// 	};
-
-	// ================================================================================
-	// TALK TO AI
-
 	const accessSmartyPants = (
 		{ suggestionUrl, elementDefinition },
 		callback,
 	) => {
 		const localCallback = (error, stdout, stderr) => {
 			const suggestionList = stdout.split('\n');
-
-			// console.log(`\n=-=============   stdout  ========================= [get-ceds-suggestions.js.moduleFunction]\n`);
-			//
-			//
-			// console.log(`stdout=${stdout}`);
-			// if (!stdout){
-			//
-			// console.dir({['elementDefinition']:elementDefinition}, { showHidden: false, depth: 4, colors: true });
-			//
-			// }
-			//
-			// console.log(`\n=-=============   stdout  ========================= [get-ceds-suggestions.js.moduleFunction]\n`);
-			
 
 			if (error) {
 				xLog.status(`Error: ${error}  [${moduleName} FV7EAuI2e4HRG5hnNs4j]`);
