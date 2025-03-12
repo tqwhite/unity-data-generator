@@ -196,7 +196,10 @@ export const useLoginStore = defineStore('loginStore', {
 		// Getter for authentication token property
 
 		getAuthTokenProperty: (state) => {
-			return { Authorization: `Bearer ${state.authtoken}` };
+			// Only return Authorization header if authtoken exists and is not empty/undefined
+			return state.authtoken && typeof state.authtoken === 'string' && state.authtoken.trim() !== '' 
+				? { Authorization: `Bearer ${state.authtoken}` } 
+				: {};
 		},
 	},
 });

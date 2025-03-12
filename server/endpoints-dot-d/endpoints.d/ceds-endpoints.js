@@ -255,9 +255,7 @@ const moduleFunction = function ({
 	// Do the constructing
 
 	const permissionValidator = accessTokenHeaderTools.getValidator([
-		'client',
-		'admin',
-		'super',
+		'public',
 	]);
 	
 	// Add all CEDS endpoints

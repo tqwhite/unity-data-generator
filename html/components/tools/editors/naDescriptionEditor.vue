@@ -148,8 +148,8 @@ const fetchCustomQuery = async () => {
                             <td class="text-right info-label">XPath:</td>
                             <td class="item-xpath">{{ item.XPath }}</td>
                         </tr>
-                        <tr v-if="cedsData">
-                            <td class="text-right info-label">Existing CEDS:</td>
+                        <tr v-if="cedsData" class="ceds-row">
+                            <td class="text-right info-label">Existing<br>CEDS:</td>
                             <td class="item-ceds-data">
                                 <div class="ceds-content">
                                     <div class="ceds-header">
@@ -160,9 +160,23 @@ const fetchCustomQuery = async () => {
                                 </div>
                             </td>
                         </tr>
-                        <tr v-if="isLoadingCedsData">
+                        <tr v-if="isLoadingCedsData" class="ceds-row">
                             <td class="text-right info-label">Existing CEDS:</td>
                             <td><v-progress-linear indeterminate color="primary" height="2"></v-progress-linear></td>
+                        </tr>
+                        <!-- CEDS Matches Information -->
+                        <tr v-if="item.cedsMatchesGlobalID" class="ceds-row ceds-match-row">
+                            <td class="text-right info-label">CEDS<br>Match:</td>
+                            <td class="item-ceds-data">
+                                <div class="ceds-content">
+                                    <div class="ceds-header">
+                                        <span class="ceds-id">{{ item.cedsMatchesGlobalID }}</span>
+                                        <span class="ceds-name">{{ item.cedsMatchesElementName }}</span>
+                                    </div>
+                                    <div class="ceds-definition">[{{ item.cedsMatchesGlobalID }}] {{ item.cedsMatchesDefinition }}</div>
+                                    <div class="ceds-confidence">Confidence: <span class="confidence-badge">{{ item.cedsMatchesConfidence }}</span></div>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </v-table>
@@ -277,5 +291,27 @@ const fetchCustomQuery = async () => {
     padding-left: 4px;
     white-space: pre-wrap;
     line-height: 1.2;
+}
+
+.ceds-confidence {
+    margin-top: 4px;
+    font-size: 0.8rem;
+}
+
+.confidence-badge {
+    background-color: rgba(33, 150, 243, 0.15);
+    color: #0d47a1;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+.ceds-row td {
+    padding-top: 10px !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+.ceds-match-row td {
+    padding-top: 10px !important;
 }
 </style>

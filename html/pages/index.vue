@@ -1,7 +1,8 @@
 <script setup>
 	import { useLoginStore } from '@/stores/loginStore';
-	const LoginStore = useLoginStore();
 	import { useRouter } from 'vue-router';
+	
+	const LoginStore = useLoginStore();
 	const router = useRouter();
 
 	if (router?.currentRoute.value.query.logout) {

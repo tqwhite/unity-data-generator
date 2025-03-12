@@ -47,7 +47,7 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 	};
 
 	// Priority columns to show in main table
-	const priorityColumns = ['Name', 'CEDS ID', 'Description'];
+	const priorityColumns = ['Name', 'CEDS ID', 'Match', 'Description'];
 
 	// Debug helper to log actual properties
 	const logDataStructure = () => {
@@ -69,6 +69,8 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 		return items.map((item, index) => ({
 			...item,
 			_rowId: item.refId || item.id || `row-${index}`,
+			// Add virtual Match column that displays cedsMatchesConfidence
+			Match: item.cedsMatchesConfidence || ''
 		}));
 	};
 
@@ -108,8 +110,9 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 				});
 			}
 		});
-
-console.dir({['allProperties']:allProperties}, { showHidden: false, depth: 4, colors: true });
+		
+		// Add virtual "Match" column that will display cedsMatchesConfidence
+		allProperties.add('Match');
 
 		// Create headers lists
 		const mainHeaders = [];
@@ -145,6 +148,9 @@ console.dir({['allProperties']:allProperties}, { showHidden: false, depth: 4, co
 			} else if (key === 'CEDS ID') {
 				headerObj.width = '120px';
 				headerObj.class = 'small-col';
+			} else if (key === 'Match') {
+				headerObj.width = '80px';
+				headerObj.class = 'match-col';
 			} else if (key === 'Description') {
 				// Description will flex to fill available space and truncate if needed
 				headerObj.width = '100px';
@@ -339,8 +345,31 @@ console.dir({['allProperties']:allProperties}, { showHidden: false, depth: 4, co
 										<v-table density="compact" class="expanded-table">
 											<tbody>
 												<tr v-for="header in expandedHeaders" :key="header.key">
-													<td class="property-name">{{ header.title }}</td>
-													<td class="property-value"><span v-html="item[header.key]"></span></td>
+													<td class="property-name">
+														{{ header.key === 'cedsDefinition' ? 'CEDS Assigned Definition' : header.title }}
+													</td>
+													<td class="property-value">
+														<span v-if="header.key === 'cedsDefinition' && item.cedsDefinition && item['CEDS ID']" v-html="'[' + item['CEDS ID'] + '] ' + item.cedsDefinition"></span>
+														<span v-else v-html="item[header.key]"></span>
+													</td>
+												</tr>
+												
+												<!-- CEDS Matches Information -->
+												<tr v-if="item.cedsMatchesGlobalID">
+													<td class="property-name">CEDS Matched ID</td>
+													<td class="property-value"><span v-html="item.cedsMatchesGlobalID"></span></td>
+												</tr>
+												<tr v-if="item.cedsMatchesElementName">
+													<td class="property-name">CEDS Element Name</td>
+													<td class="property-value"><span v-html="item.cedsMatchesElementName"></span></td>
+												</tr>
+												<tr v-if="item.cedsMatchesDefinition">
+													<td class="property-name">CEDS Definition</td>
+													<td class="property-value"><span v-html="item.cedsMatchesDefinition"></span></td>
+												</tr>
+												<tr v-if="item.cedsMatchesConfidence">
+													<td class="property-name">CEDS Match Confidence</td>
+													<td class="property-value"><span v-html="item.cedsMatchesConfidence"></span></td>
 												</tr>
 											</tbody>
 										</v-table>
@@ -475,6 +504,12 @@ console.dir({['allProperties']:allProperties}, { showHidden: false, depth: 4, co
 		boder: 1pt solid red;
 		width: 10vw;
 	}
+	
+	.match-col {
+		color: blue;
+		width: 7vw;
+	}
+	
 	.description-col {
 		color: blue;
 		width: 40vw;

@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia';
-import { toType, qtPutSurePath } from '@/plugins/qtools-functional-library';
+import { qtPutSurePath } from '@/plugins/qtools-functional-library';
 
 export const useNamodelStore = defineStore('namodel', {
 	state: () => ({
 		nameList: [],
 		listOfProperties: null,
 		combinedObject: null,
-		semanticDistanceResults: {}, // Changed from array to object with refId keys
 		isLoading: false,
+		error: null,
 		isLoadingSemanticDistance: false,
 		semanticDistanceError: null,
-		error: null,
+		semanticDistanceResults: {},
 	}),
 
 	actions: {
@@ -70,39 +70,20 @@ export const useNamodelStore = defineStore('namodel', {
 				);
 
 				if (!response.ok) {
-					throw new Error(
-						`Failed to fetch NA Model data: ${response.statusText}`,
-					);
+					throw new Error(`Failed to fetch NA Model data: ${response.statusText}`);
 				}
 
 				const data = await response.json();
 
 				// Create the structured object from the flat list of properties
-				const structuredObject = {};
-
-				// Process each item to build the nested object structure
-				data.forEach((item) => {
-					// Skip items with no XPath
-					if (!item.XPath) return;
-
-					// Remove the leading slash if it exists
-					const normalizedPath = item.XPath.startsWith('/')
-						? item.XPath.substring(1)
-						: item.XPath;
-
-					// Split the path into segments
-					const pathSegments = normalizedPath.split('/');
-
-					// Build the object path from XPath segments
-					const objectPath = pathSegments.join('.');
-
-					// Add the item to the structured object
-					qtPutSurePath(structuredObject, objectPath, item);
+				const listOfProperties = [];
+				Object.keys(data).map((name) => {
+					listOfProperties.push(data[name]);
 				});
 
 				// Store both representations for different use cases
-				this.listOfProperties = data;
-				this.combinedObject = structuredObject;
+				this.listOfProperties = listOfProperties;
+				this.combinedObject = data;
 			} catch (err) {
 				this.error = err.message;
 				console.error('Error fetching NA Model data:', err);
@@ -137,34 +118,17 @@ export const useNamodelStore = defineStore('namodel', {
 				});
 
 				if (!response.ok) {
-					throw new Error(
-						`Failed to save NA Model data: ${response.statusText}`,
-					);
+					throw new Error(`Failed to save NA Model data: ${response.statusText}`);
 				}
 
 				const responseData = await response.json();
 
 				// Create the structured object from the flat list of properties
 				const structuredObject = {};
-
-				// Process each item to build the nested object structure
-				responseData.forEach((item) => {
-					// Skip items with no XPath
-					if (!item.XPath) return;
-
-					// Remove the leading slash if it exists
-					const normalizedPath = item.XPath.startsWith('/')
-						? item.XPath.substring(1)
-						: item.XPath;
-
-					// Split the path into segments
-					const pathSegments = normalizedPath.split('/');
-
-					// Build the object path from XPath segments
-					const objectPath = pathSegments.join('.');
-
-					// Add the item to the structured object
-					qtPutSurePath(structuredObject, objectPath, item);
+				responseData.map((item) => {
+					const path =
+						item.XPath || item.path || `element.${item.id || item.name}`;
+					qtPutSurePath(structuredObject, path.replace(/\//g, '.'), item);
 				});
 
 				// Store both representations
@@ -205,8 +169,9 @@ export const useNamodelStore = defineStore('namodel', {
 			const { useLoginStore } = await import('@/stores/loginStore');
 			const LoginStore = useLoginStore();
 
-			// Get the auth token header
-			const authHeader = LoginStore.getAuthTokenProperty;
+			// Get the auth token header if user is logged in, otherwise empty object
+			// CEDS endpoints are marked as public so we don't need a token
+			const authHeader = LoginStore.validUser ? LoginStore.getAuthTokenProperty : {};
 
 			// Check if queryString contains both description and XPath
 			const parts = queryString.split(' ');
@@ -227,21 +192,15 @@ export const useNamodelStore = defineStore('namodel', {
 				description = queryString;
 			}
 
-			// Process XPath if it exists
+			// Process XPath to make it more searchable
 			let processedXPath = '';
 			if (xpath) {
-				// 1. Replace slashes with spaces
-				processedXPath = xpath.replace(/\//g, ' ').trim();
-				
-				// 2. Remove 'x' prefix from words
-				processedXPath = processedXPath.split(' ')
-					.map(word => word.replace(/^x/i, ''))
-					.join(' ');
-				
-				// 3. Split camelCase words
-				processedXPath = processedXPath
-					.replace(/([a-z])([A-Z])/g, '$1 $2')
-					.toLowerCase();
+				// Extract meaningful parts from XPath, replace slashes with spaces
+				processedXPath = xpath
+					.replace(/\//g, ' ')
+					.replace(/([a-z])([A-Z])/g, '$1 $2') // Add space between camelCase
+					.replace(/\s+/g, ' ') // Normalize spaces
+					.trim();
 			}
 
 			// Combine description with processed XPath
@@ -263,17 +222,26 @@ export const useNamodelStore = defineStore('namodel', {
 
 				const data = await response.json();
 
-				// Initialize the array for this refId if it doesn't exist
+				// Store the response in our state, keyed by refId for this specific query
+				const resultItem = {
+					queryString: processedQueryString,
+					originalQuery: queryString,
+					timestamp: new Date().toISOString(),
+					resultSet: data,
+				};
+
+				// Initialize array for this refId if it doesn't exist
 				if (!this.semanticDistanceResults[refId]) {
 					this.semanticDistanceResults[refId] = [];
 				}
 
-				// Add the new query results to the refId's array
-				this.semanticDistanceResults[refId].push({
-					queryString: processedQueryString,
-					originalQuery: queryString,
-					resultSet: data,
-				});
+				// Add new result
+				this.semanticDistanceResults[refId].push(resultItem);
+
+				// Limit to last 5 queries per refId
+				if (this.semanticDistanceResults[refId].length > 5) {
+					this.semanticDistanceResults[refId] = this.semanticDistanceResults[refId].slice(-5);
+				}
 
 				return data;
 			} catch (err) {
@@ -283,15 +251,15 @@ export const useNamodelStore = defineStore('namodel', {
 				this.isLoadingSemanticDistance = false;
 			}
 		},
+		
+		// Get semantic distance results for a specific entity
+		getSemanticDistanceResults(refId) {
+			return this.semanticDistanceResults[refId] || [];
+		},
 	},
 
 	getters: {
 		isDataLoaded: (state) => !!state.listOfProperties,
 		hasNameList: (state) => state.nameList.length > 0,
-		hasSemanticDistanceResults: (state) =>
-			Object.keys(state.semanticDistanceResults).length > 0,
-		getSemanticDistanceResults: (state) => (refId) =>
-			state.semanticDistanceResults[refId] || [],
-		getSemanticDistanceError: (state) => state.semanticDistanceError,
 	},
 });

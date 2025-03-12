@@ -28,7 +28,23 @@
 		const tmp = await LoginStore.login()
 			.then((validLogin) => {
 				if (LoginStore.validUser) {
-					router.push('namodel');
+					// Check if there's a returnTo parameter in the URL
+					const returnTo = router.currentRoute.value.query.returnTo;
+					
+					// If returnTo is present and not the root page, navigate to it
+					if (returnTo && returnTo !== '/' && returnTo !== '/welcomePage') {
+						router.push(returnTo);
+					} 
+					// If user is on ceds page, stay there
+					else if (router.currentRoute.value.path === '/ceds') {
+						// Stay on ceds page, no navigation needed
+					}
+					// Otherwise, if user is on root/login/welcome page, go to NA Model
+					else if (router.currentRoute.value.path === '/' || 
+					         router.currentRoute.value.path === '/welcomePage') {
+						router.push('namodel');
+					}
+					// For other pages, stay on the current page
 				}
 			})
 			.catch((err) => {

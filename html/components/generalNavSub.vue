@@ -41,11 +41,10 @@
 	</div>
 
 	<!-- Navigation bar -->
-	<v-app-bar app elevation="0" class="border-bottom border-1"
-		v-if="true || LoginStore.validUser"
-	>
+	<v-app-bar app elevation="0" class="border-bottom border-1">
 		<v-app-bar-title class="titleOrange">NA Data Model Tools</v-app-bar-title>
 
+		<!-- CEDS button (always visible) -->
 		<v-btn
 			v-if="!isCedsPage"
 			prepend-icon="mdi-database-search"
@@ -55,8 +54,19 @@
 			CEDS
 		</v-btn>
 		
+		<!-- Login button (visible when not logged in) -->
 		<v-btn
-			v-if="!isNaModelPage"
+			v-if="!LoginStore.validUser"
+			prepend-icon="mdi-login"
+			title="Login"
+			:to="{ path: '/', query: { login: true, returnTo: router.currentRoute.value.path } }"
+		>
+			Login
+		</v-btn>
+		
+		<!-- NA Model button (visible only when logged in) -->
+		<v-btn
+			v-if="LoginStore.validUser && !isNaModelPage"
 			prepend-icon="mdi-database-search"
 			title="NA Model Tools"
 			:to="{ path: 'namodel' }"
@@ -64,7 +74,9 @@
 			NA Model
 		</v-btn>
 
+		<!-- Profile button (visible only when logged in) -->
 		<v-btn
+			v-if="LoginStore.validUser"
 			prepend-icon="mdi-account"
 			title="Profile"
 			:to="{ path: 'utility', query: { purpose: 'profile' } }"
@@ -75,7 +87,13 @@
 			<span v-else>{{ LoginStore.loggedInUser.username }}</span>
 		</v-btn>
 
-		<v-btn prepend-icon="mdi-logout" title="Logout" @click="reloadPage">
+		<!-- Logout button (visible only when logged in) -->
+		<v-btn 
+			v-if="LoginStore.validUser"
+			prepend-icon="mdi-logout" 
+			title="Logout" 
+			@click="reloadPage"
+		>
 			Logout
 		</v-btn>
 	</v-app-bar>

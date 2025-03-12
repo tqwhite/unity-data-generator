@@ -19,8 +19,9 @@ export const useCedsStore = defineStore('ceds', {
 			const { useLoginStore } = await import('@/stores/loginStore');
 			const LoginStore = useLoginStore();
 
-			// Get the auth token header
-			const authHeader = LoginStore.getAuthTokenProperty;
+			// Get the auth token header if user is logged in, otherwise empty object
+			// CEDS endpoints are marked as public so we don't need a token
+			const authHeader = LoginStore.validUser ? LoginStore.getAuthTokenProperty : {};
 
 			try {
 				const response = await fetch('/api/ceds/fetchNameList', {
@@ -53,8 +54,9 @@ export const useCedsStore = defineStore('ceds', {
 			const { useLoginStore } = await import('@/stores/loginStore');
 			const LoginStore = useLoginStore();
 
-			// Get the auth token header
-			const authHeader = LoginStore.getAuthTokenProperty;
+			// Get the auth token header if user is logged in, otherwise empty object
+			// CEDS endpoints are marked as public so we don't need a token
+			const authHeader = LoginStore.validUser ? LoginStore.getAuthTokenProperty : {};
 
 			this.isLoading = true;
 			this.error = null;
@@ -99,7 +101,14 @@ export const useCedsStore = defineStore('ceds', {
 			const { useLoginStore } = await import('@/stores/loginStore');
 			const LoginStore = useLoginStore();
 
-			// Get the auth token header
+			// For save operations, we require authentication - this is not public
+			if (!LoginStore.validUser) {
+				this.error = "Authentication required for saving data";
+				console.error('Authentication required for saving data');
+				return;
+			}
+
+			// Get the auth token property - this should include the token since we've verified validUser
 			const authHeader = LoginStore.getAuthTokenProperty;
 
 			this.isLoading = true;
