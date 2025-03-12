@@ -60,6 +60,9 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 				next('', { ...args, element });
 			};
 			xLog.status(`HACK: goofball SheetName/refId swap here`);
+			
+			
+			
 			const query = `
 				SELECT
 					naDataModel.refId,
@@ -71,13 +74,38 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 					naDataModel.XPath,
 					naDataModel.Format,
 					naDataModel.SheetName,
-					"CEDS ID" as CEDS_ID,
-					_CEDSElements.Definition as 'cedsDefinition'
-				FROM <!tableName!> 
-				left join _CEDSElements on _CEDSElements.GlobalID=CEDS_ID
+					naDataModel.[CEDS ID],
+					_CEDSElements.Definition as 'cedsDefinition',
+					cedsMatches.GlobalID as 'cedsMatchesGlobalID',
+					cedsMatches.Definition as 'cedsMatchesDefinition',
+					cedsMatches.ElementName as 'cedsMatchesElementName',
+					unityCedsMatches.confidence as 'cedsMatchesConfidence'
+				FROM naDataModel 
+				left join _CEDSElements on _CEDSElements.GlobalID=naDataModel.[CEDS ID]
+				left join unityCedsMatches on unityCedsMatches.naDataModelRefId=naDataModel.refId
+				left join _CEDSElements as cedsMatches on cedsMatches.GlobalID=unityCedsMatches._CEDSElementsRefId
 				WHERE SheetName = '${refId}'
 			`;
-			naModelTable.getData(query, { suppressStatementLog: true, noTableNameOk:true }, localCallback);
+			
+			
+			const queryDISCARD = `
+				SELECT
+					naDataModel.refId,
+					naDataModel.Name,
+					naDataModel.Mandatory,
+					naDataModel.Characteristics,
+					naDataModel.Type,
+					naDataModel.Description,
+					naDataModel.XPath,
+					naDataModel.Format,
+					naDataModel.SheetName,
+					naDataModel.[CEDS ID],
+					_CEDSElements.Definition as 'cedsDefinition'
+				FROM <!tableName!> 
+				left join _CEDSElements on _CEDSElements.GlobalID=naDataModel.[CEDS ID]
+				WHERE SheetName = '${refId}'
+			`;
+			naModelTable.getData(query, { suppressStatementLog: false, noTableNameOk:true }, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------

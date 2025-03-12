@@ -63,7 +63,7 @@ const moduleFunction = function ({
 		taskList.push((args, next) =>
 			args.permissionValidator(
 				xReq.appValueGetter('authclaims'),
-				{ showDetails: true },
+				{ showDetails: false },
 				forwardArgs({ next, args }),
 			),
 		);

@@ -51,6 +51,8 @@ const moduleName = path.basename(__filename, '.js');
 const initAtp = require('qtools-ai-thought-processor/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
+		applicationControls: ['-loadDatabase'],
+
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 
 // =============================================================================
@@ -64,7 +66,7 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
 	const { xLog, getConfig, commandLineParameters } = process.global;
 
 	// Get configuration specific to this module
-	let { outputsPath } = getConfig(moduleName);
+	let { outputsPath, databaseFilePath } = getConfig(moduleName);
 
 	// Get configuration specific to qTools-AI
 	let { thoughtProcessConversationList } = getConfig(
@@ -73,6 +75,16 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
 
 	// =============================================================================
 	// COMMAND-LINE PARAMETERS PROCESSING
+
+	// Check for help flag
+	if (commandLineParameters.switches.help) {
+		const helpText = require('./xmlThinkers/think-about-matching-with-ceds/help-text')(moduleName);
+		xLog.result(helpText);
+		process.exit(0);
+	}
+
+	// Check if database loading is requested
+	const loadDatabase = commandLineParameters.switches.loadDatabase;
 
 	// Retrieve the output file path from command-line parameters
 	const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
@@ -103,7 +115,12 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
 		process.exit(1);
 	}
 	
-	
+	// Import the database saver if loading to database is requested
+	let dbSaver;
+	if (loadDatabase) {
+		dbSaver = require('./lib/database/dbSaver');
+		xLog.status(`Database integration enabled, will save to ${databaseFilePath}`);
+	}
 
 	const retrieveSpreadsheet =
 		require('./lib/get-spreadsheet-data')();
@@ -209,4 +226,18 @@ const initAtp = require('qtools-ai-thought-processor/jina')({
 	// Log the output file path
 	xLog.status(`Process file directory: ${xLog.getProcessFilesDirectory()}`);
 	xLog.status(`Output file path: ${outputFilePath}`);
+	
+	// =============================================================================
+	// DATABASE SAVING
+	
+	// Save to database if the -loadDatabase flag is used
+	if (loadDatabase && cedsRecommendationList.length > 0) {
+		try {
+			xLog.status('Saving CEDS match results to database...');
+			const stats = await dbSaver.saveCedsMatches(databaseFilePath, cedsRecommendationList);
+			xLog.status(`Database save complete: ${stats.inserted} inserted, ${stats.updated} updated, ${stats.skipped} skipped (out of ${stats.total} total)`);
+		} catch (err) {
+			xLog.error(`Database save error: ${err.message}`);
+		}
+	}
 })(); // End of main execution function

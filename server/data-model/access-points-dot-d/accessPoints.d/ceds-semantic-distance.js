@@ -27,7 +27,11 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	// Example usage:
 	const query =
 		'The subject area code (i.e., the first two digits of the course classification code).';
-	console.log(escapeShellArg(query));
+	
+
+	const apostropheEscape = (str) => {
+		return str.replace(/'/g, "''");
+	};
 
 	// Output: The subject area code $begin:math:text$i.e., the first two digits of the course classification code$end:math:text$.
 
@@ -45,13 +49,15 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 			const localCallback = (error, stdout, stderr) => {
 				next(error, { ...args, result: stdout });
 			};
-			
 
 			const queryString = xReq.query.queryString;
-			console.log(`queryString=${queryString}`);
-			
+			const shellCommand = escapeShellArg(
+				`/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/ceds-vector-tools/cedsVectorTools.js -json --queryString='${apostropheEscape(queryString)}'`,
+			);
 
-			const shellCommand = escapeShellArg(`/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/ceds-vector-tools/cedsVectorTools.js -json --queryString=${queryString}`);
+			xLog.status(`shellCommand: ${shellCommand}`);
+
+			xLog.status(shellCommand);
 			exec(shellCommand, localCallback);
 		});
 

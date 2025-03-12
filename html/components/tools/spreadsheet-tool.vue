@@ -109,6 +109,8 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 			}
 		});
 
+console.dir({['allProperties']:allProperties}, { showHidden: false, depth: 4, colors: true });
+
 		// Create headers lists
 		const mainHeaders = [];
 		const otherHeaders = [];

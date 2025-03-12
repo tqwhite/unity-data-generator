@@ -33,7 +33,8 @@ const moduleFunction =
 		
 
 		const recordMapper = (inObj, direction = 'forward') => {
-			const outObj = basicMapper(inObj, {direction});
+			const outObj = inObj; //basicMapper(inObj, {direction});
+
 			return outObj;
 		};
 		

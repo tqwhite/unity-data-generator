@@ -30,6 +30,9 @@ const moduleFunction = function (args = {}) {
 		rejectUnauthorized: false,
 	});
 
+	const apostropheEscape = (str) => {
+		return str.replace(/'/g, "''");
+	};
 	// ================================================================================
 	// TALK TO AI
 
@@ -50,7 +53,8 @@ const moduleFunction = function (args = {}) {
 			callback('', { suggestionList });
 		};
 
-		const shellString = `cedsVectorTools --queryString='${elementDefinition.Description.replace(/\W*/g, '')} ${elementDefinition.XPath}'`;
+		const shellString = `cedsVectorTools --queryString='${apostropheEscape(elementDefinition.Description)} ${apostropheEscape(elementDefinition.XPath)}'`;
+
 
 		exec(shellString, localCallback);
 	};

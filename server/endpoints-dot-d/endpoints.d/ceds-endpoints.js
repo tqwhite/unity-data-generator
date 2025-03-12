@@ -101,7 +101,7 @@ const moduleFunction = function ({
 		taskList.push((args, next) =>
 			args.permissionValidator(
 				xReq.appValueGetter('authclaims'),
-				{ showDetails: true },
+				{ showDetails: false },
 				forwardArgs({ next, args }),
 			),
 		);
@@ -173,7 +173,7 @@ const moduleFunction = function ({
 		taskList.push((args, next) =>
 			args.permissionValidator(
 				xReq.appValueGetter('authclaims'),
-				{ showDetails: true },
+				{ showDetails: false },
 				forwardArgs({ next, args }),
 			),
 		);
@@ -262,7 +262,7 @@ const moduleFunction = function ({
 	
 	// Add all CEDS endpoints
 	addEndpoint({
-		name: 'cedsNameList',
+		name: 'ceds/NameList',
 		method: 'get',
 		routePath: `${routingPrefix}ceds/fetchNameList`,
 		serviceFunction: fetchNameListFunction,
@@ -273,7 +273,7 @@ const moduleFunction = function ({
 	});
 
 	addEndpoint({
-		name: 'cedsFetchData',
+		name: 'ceds/FetchData',
 		method: 'get',
 		routePath: `${routingPrefix}ceds/fetchData`,
 		serviceFunction: fetchDataFunction,

@@ -40,6 +40,11 @@ function initDatabase(databaseFilePath) {
  * @param {Object} spreadsheetData - Data from the spreadsheet
  * @param {string} tableName - Name of the table to save to (optional)
  * @returns {Promise<void>}
+ * 
+ * Note: All records will be saved with:
+ * - refId: A hash generated from the XPath value
+ * - createdAt: Timestamp when the record was created
+ * - updatedAt: Timestamp when the record was last updated
  */
 async function saveData(databaseFilePath, spreadsheetData, tableName = DEFAULT_TABLE_NAME) {
   const { xLog } = process.global;
@@ -51,18 +56,21 @@ async function saveData(databaseFilePath, spreadsheetData, tableName = DEFAULT_T
     // Backup existing table if it exists
     tableBackup.backupTable(db, tableName);
     
-    // Create the table schema
-    schemaManager.createTableSchema(db, tableName, spreadsheetData.data);
-    
-    // Insert data with generated numeric refIds
+    // Process data with generated numeric refIds, createdAt and updatedAt timestamps
+    const currentTimestamp = new Date().toISOString();
     const processedData = spreadsheetData.data.map(record => {
       // Generate a numeric refId (stored as string for compatibility)
       const refId = generateRefId(record);
       return { 
         ...record, 
-        refId: refId
+        refId: refId,
+        createdAt: currentTimestamp,
+        updatedAt: currentTimestamp
       };
     });
+    
+    // Create the table schema using the processed data that includes the timestamp fields
+    schemaManager.createTableSchema(db, tableName, processedData);
     
     // Perform batch insert as a transaction
     insertDataTransaction(db, tableName, processedData);
@@ -163,14 +171,16 @@ async function purgeBackups(databaseFilePath, retainCount, baseTableName = DEFAU
  * Generate a refId for a record
  * @param {Object} record - The record to generate an ID for
  * @returns {string} Numeric refId as a string
+ * 
+ * Note: The refId is generated based only on the XPath value to ensure
+ * records with the same XPath always have the same refId.
  */
 function generateRefId(record) {
-  // Create a deterministic string from the record, excluding any existing refId
-  const { refId, ...recordWithoutRefId } = record;
-  const str = JSON.stringify(recordWithoutRefId);
+  // Use only the XPath value for generating the refId
+  const xpathValue = record.XPath || '';
   
-  // Generate a SHA-256 hash of the record data
-  const hash = crypto.createHash('sha256').update(str).digest('hex');
+  // Generate a SHA-256 hash of the XPath value
+  const hash = crypto.createHash('sha256').update(xpathValue).digest('hex');
   
   // Convert the first 12 characters of the hash to a numeric refId
   // Using BigInt ensures it can represent large integers precisely
