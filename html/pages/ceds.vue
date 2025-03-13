@@ -3,10 +3,12 @@ import { useLoginStore } from '@/stores/loginStore';
 import { useCedsStore } from '@/stores/cedsStore';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import SelectionList from '@/components/selection-list.vue';
+
 import JsonTool from '@/components/tools/json-tool.vue';
 import SpreadsheetTool from '@/components/tools/spreadsheet-tool.vue';
 import OutlineTool from '@/components/tools/outline-tool.vue';
+import CedsSearch from '@/components/tools/ceds-search.vue';
+import CedsBrowse from '@/components/tools/ceds-browse.vue';
 
 const LoginStore = useLoginStore();
 const cedsStore = useCedsStore();
@@ -16,16 +18,8 @@ if (router?.currentRoute.value.query.logout) {
 	LoginStore.logout();
 }
 
-// Selected ID is now maintained by the selection-list component
-const selectedRefId = ref(null);
-
-// Selected tool - default to Spreadsheet tool
-const selectedTool = ref('spreadsheet');
-
-// Handle selection from the component
-const handleSelection = (refId) => {
-	selectedRefId.value = refId;
-};
+// Selected tool - default to Search tool
+const selectedTool = ref('search');
 
 // Handle tool selection
 const selectTool = (toolName) => {
@@ -39,16 +33,8 @@ const selectTool = (toolName) => {
 		<v-main style="padding-top: 65px;">
 			<v-container fluid class="fill-height">
 				<v-row no-gutters class="fill-height">
-					<!-- Left sidebar with selection list component -->
-					<v-col cols="auto" style="width: 320px; min-width: 320px; max-width: 320px;" class="border-r border-1">
-						<selection-list 
-							:store="cedsStore" 
-							@select="handleSelection"
-						/>
-					</v-col>
-					
 					<!-- Main content area -->
-					<v-col style="flex: 1; min-width: 0; max-width: calc(100vw - 320px);">
+					<v-col style="flex: 1;">
 						<v-card flat class="h-100">
 							<!-- Control buttons -->
 							<v-toolbar flat density="compact" color="white">
@@ -56,20 +42,20 @@ const selectTool = (toolName) => {
 								<v-btn 
 									class="mr-2" 
 									variant="outlined" 
-									:disabled="selectedTool === 'spreadsheet'"
-									@click="selectTool('spreadsheet')"
-									prepend-icon="mdi-table"
+									:disabled="selectedTool === 'search'"
+									@click="selectTool('search')"
+									prepend-icon="mdi-magnify"
 								>
-									Spreadsheet
+									Search
 								</v-btn>
 								<v-btn 
 									class="mr-2" 
 									variant="outlined" 
-									:disabled="selectedTool === 'outline'"
-									@click="selectTool('outline')"
+									:disabled="selectedTool === 'browse'"
+									@click="selectTool('browse')"
 									prepend-icon="mdi-file-tree"
 								>
-									Outline
+									Browse
 								</v-btn>
 								<v-btn 
 									variant="outlined" 
@@ -89,14 +75,14 @@ const selectTool = (toolName) => {
 									:is-loading="cedsStore.isLoading"
 									:error="cedsStore.error"
 								/>
-								<spreadsheet-tool 
-									v-else-if="selectedTool === 'spreadsheet'"
+								<ceds-search 
+									v-else-if="selectedTool === 'search'"
 									:workingData="cedsStore.listOfProperties"
 									:is-loading="cedsStore.isLoading"
 									:error="cedsStore.error"
 								/>
-								<outline-tool 
-									v-else-if="selectedTool === 'outline'"
+								<ceds-browse 
+									v-else-if="selectedTool === 'browse'"
 									:workingData="cedsStore.combinedObject"
 									:is-loading="cedsStore.isLoading"
 									:error="cedsStore.error"
