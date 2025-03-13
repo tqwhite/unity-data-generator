@@ -8,6 +8,9 @@ export const useCedsStore = defineStore('ceds', {
 		combinedObject: null,
 		isLoading: false,
 		error: null,
+		isLoadingSemanticDistance: false,
+		semanticDistanceError: null,
+		semanticDistanceResults: {},
 	}),
 
 	actions: {
@@ -165,6 +168,72 @@ export const useCedsStore = defineStore('ceds', {
 		clearCurrentData() {
 			this.listOfProperties = null;
 			this.combinedObject = null;
+		},
+		
+		async fetchSemanticDistance(searchId, queryString) {
+			this.isLoadingSemanticDistance = true;
+			this.semanticDistanceError = null;
+
+			// Import LoginStore to get auth token
+			const { useLoginStore } = await import('@/stores/loginStore');
+			const LoginStore = useLoginStore();
+
+			// Get the auth token header if user is logged in, otherwise empty object
+			// CEDS endpoints are marked as public so we don't need a token
+			const authHeader = LoginStore.validUser ? LoginStore.getAuthTokenProperty : {};
+
+			// Process the query string for better search results
+			const processedQueryString = queryString.trim();
+
+			try {
+				const response = await fetch(
+					`/api/ceds/semanticDistance?queryString=${encodeURIComponent(processedQueryString)}`,
+					{
+						headers: authHeader,
+					},
+				);
+
+				if (!response.ok) {
+					throw new Error(
+						`Failed to fetch semantic distance data: ${response.statusText}`,
+					);
+				}
+
+				const data = await response.json();
+
+				// Store the response in our state, keyed by searchId for this specific query
+				const resultItem = {
+					queryString: processedQueryString,
+					originalQuery: queryString,
+					timestamp: new Date().toISOString(),
+					resultSet: data,
+				};
+
+				// Initialize array for this searchId if it doesn't exist
+				if (!this.semanticDistanceResults[searchId]) {
+					this.semanticDistanceResults[searchId] = [];
+				}
+
+				// Add new result
+				this.semanticDistanceResults[searchId].push(resultItem);
+
+				// Limit to last 5 queries per searchId
+				if (this.semanticDistanceResults[searchId].length > 5) {
+					this.semanticDistanceResults[searchId] = this.semanticDistanceResults[searchId].slice(-5);
+				}
+
+				return data;
+			} catch (err) {
+				this.semanticDistanceError = err.message;
+				console.error('Error fetching semantic distance data:', err);
+			} finally {
+				this.isLoadingSemanticDistance = false;
+			}
+		},
+		
+		// Get semantic distance results for a specific search ID
+		getSemanticDistanceResults(searchId) {
+			return this.semanticDistanceResults[searchId] || [];
 		},
 	},
 

@@ -84,7 +84,6 @@ const relativeDistances = computed(() => {
                 <v-table density="compact" class="semantic-results-table">
                     <thead>
                         <tr>
-                            <th class="text-right">Distance <span class="multiplier">(×10k)</span></th>
                             <th class="text-left">Global ID</th>
                             <th class="text-left">Element Name</th>
                             <th class="text-left">Definition</th>
@@ -92,20 +91,12 @@ const relativeDistances = computed(() => {
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in relativeDistances" :key="index">
-                            <td class="distance-cell text-right" :class="{'relative-distance': item.isRelative}">
-                                <template v-if="index === 0">
-                                    {{ item.relativeDistance }}
-                                </template>
-                                <template v-else>
-                                    {{ item.relativeDistance > 0 ? '+' : '' }}{{ item.relativeDistance }}
-                                </template>
-                            </td>
                             <td>{{ item.record?.GlobalID || 'N/A' }}</td>
                             <td>{{ item.record?.ElementName || 'N/A' }}</td>
                             <td class="definition-cell">{{ item.record?.Definition || 'No definition available' }}</td>
                         </tr>
                         <tr v-if="results.length === 0">
-                            <td colspan="4" class="text-center">No results available</td>
+                            <td colspan="3" class="text-center">No results available</td>
                         </tr>
                     </tbody>
                 </v-table>
@@ -147,21 +138,6 @@ const relativeDistances = computed(() => {
     word-break: normal;
 }
 
-.distance-cell {
-    font-family: monospace;
-    min-width: 100px;
-    line-height: 1.2;
-    padding-right: 32px !important;
-}
-
-.relative-distance {
-    color: #1976D2;
-}
-
-.multiplier {
-    font-size: 80%;
-    color: #333;
-}
 
 .error-text {
     color: #f44336;

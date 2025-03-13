@@ -57,14 +57,6 @@ const selectTool = (toolName) => {
 								>
 									Browse
 								</v-btn>
-								<v-btn 
-									variant="outlined" 
-									:disabled="selectedTool === 'json'"
-									@click="selectTool('json')"
-									prepend-icon="mdi-code-json"
-								>
-									JSON
-								</v-btn>
 							</v-toolbar>
 							
 							<!-- Tool area -->
