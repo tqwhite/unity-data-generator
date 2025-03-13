@@ -11,6 +11,9 @@ export const useCedsStore = defineStore('ceds', {
 		isLoadingSemanticDistance: false,
 		semanticDistanceError: null,
 		semanticDistanceResults: {},
+		ontologyClasses: null,
+		isLoadingOntologyClasses: false,
+		ontologyClassesError: null,
 	}),
 
 	actions: {
@@ -235,10 +238,46 @@ export const useCedsStore = defineStore('ceds', {
 		getSemanticDistanceResults(searchId) {
 			return this.semanticDistanceResults[searchId] || [];
 		},
+		
+		// Fetch CEDS ontology classes from the server
+		async fetchOntologyClasses() {
+			this.isLoadingOntologyClasses = true;
+			this.ontologyClassesError = null;
+
+			// Import LoginStore to get auth token
+			const { useLoginStore } = await import('@/stores/loginStore');
+			const LoginStore = useLoginStore();
+
+			// Get the auth token header if user is logged in, otherwise empty object
+			// CEDS endpoints are marked as public so we don't need a token
+			const authHeader = LoginStore.validUser ? LoginStore.getAuthTokenProperty : {};
+
+			try {
+				const response = await fetch('/api/ceds/fetchOntologyClasses', {
+					headers: authHeader,
+				});
+
+				if (!response.ok) {
+					throw new Error(
+						`Failed to fetch CEDS ontology classes: ${response.statusText}`,
+					);
+				}
+
+				const data = await response.json();
+				this.ontologyClasses = data;
+				return data;
+			} catch (err) {
+				this.ontologyClassesError = err.message;
+				console.error('Error fetching CEDS ontology classes:', err);
+			} finally {
+				this.isLoadingOntologyClasses = false;
+			}
+		},
 	},
 
 	getters: {
 		isDataLoaded: (state) => !!state.listOfProperties,
 		hasNameList: (state) => state.nameList.length > 0,
+		hasOntologyClasses: (state) => !!state.ontologyClasses,
 	},
 });

@@ -30,6 +30,71 @@ const moduleFunction = function ({
 	// ================================================================================
 	// SERVICE FUNCTIONS
 	
+	const fetchOntologyClassesFunction = (permissionValidator) => (xReq, xRes, next) => {
+		const taskList = new taskListPlus();
+
+		taskList.push((args, next) =>
+			args.permissionValidator(
+				xReq.appValueGetter('authclaims'),
+				{ showDetails: false },
+				forwardArgs({ next, args }),
+			),
+		);
+
+		taskList.push((args, next) => {
+			const { accessTokenHeaderTools } = args;
+
+			const localCallback = (err) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-fetchOntologyClasses-01)`, args);
+					return;
+				}
+				next('', args);
+			};
+
+			accessTokenHeaderTools.refreshauthtoken(
+				{
+					xReq,
+					xRes,
+					payloadValues: {
+						source: 'ceds-fetchOntologyClasses',
+					},
+				},
+				localCallback,
+			);
+		});
+
+		taskList.push((args, next) => {
+			const { accessPointsDotD } = args;
+
+			const localCallback = (err, ontologyData) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-fetchOntologyClasses-02)`, args);
+					return;
+				}
+				next(err, { ...args, ontologyData });
+			};
+			
+			accessPointsDotD['fetch-ceds-ontology-classes'](localCallback);
+		});
+
+		// INIT AND EXECUTE THE PIPELINE
+		const initialData = {
+			accessPointsDotD,
+			permissionValidator,
+			accessTokenHeaderTools,
+		};
+		
+		pipeRunner(taskList.getList(), initialData, (err, args) => {
+			if (err) {
+				xRes.status(500).send(`${err.toString()}`);
+				return;
+			}
+
+			xRes.send(args.ontologyData);
+		});
+	};
+	
 	const fetchNameListFunction = (permissionValidator) => (xReq, xRes, next) => {
 		const taskList = new taskListPlus();
 
@@ -275,6 +340,17 @@ const moduleFunction = function ({
 		method: 'get',
 		routePath: `${routingPrefix}ceds/fetchData`,
 		serviceFunction: fetchDataFunction,
+		expressApp,
+		endpointsDotD,
+		permissionValidator,
+		accessTokenHeaderTools,
+	});
+	
+	addEndpoint({
+		name: 'ceds/FetchOntologyClasses',
+		method: 'get',
+		routePath: `${routingPrefix}ceds/fetchOntologyClasses`,
+		serviceFunction: fetchOntologyClassesFunction,
 		expressApp,
 		endpointsDotD,
 		permissionValidator,
