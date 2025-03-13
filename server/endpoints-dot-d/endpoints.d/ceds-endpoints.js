@@ -91,7 +91,7 @@ const moduleFunction = function ({
 				return;
 			}
 
-			xRes.send(args.ontologyData);
+			xRes.json(args.ontologyData);
 		});
 	};
 	

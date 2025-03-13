@@ -28,6 +28,63 @@
 	const isExpanding = ref(false);
 	const isCollapsing = ref(false);
 	
+	// Create a hierarchical structure based on XPath values
+	const hierarchicalData = computed(() => {
+		if (!props.workingData) return null;
+		
+		// Create an empty hierarchy object
+		const hierarchy = {};
+		
+		// We need to convert the 'combined object' from flat to hierarchical
+		// Get all items from the workingData (which is already in combined format)
+		const allItems = props.workingData;
+		
+		// Process each item based on its XPath
+		Object.values(allItems).forEach(item => {
+			if (!item.XPath) return; // Skip items without XPath
+			
+			// Split the XPath into parts, removing empty entries
+			// e.g. "/root/child/grandchild" -> ["root", "child", "grandchild"]
+			const parts = item.XPath.split('/').filter(part => part);
+			
+			// If no valid parts, skip
+			if (parts.length === 0) return;
+			
+			// Start at the root of our hierarchy
+			let current = hierarchy;
+			
+			// Navigate through each part of the path
+			for (let i = 0; i < parts.length; i++) {
+				const part = parts[i];
+				
+				// If we're at the final part, store the actual item
+				if (i === parts.length - 1) {
+					// Use the part as a key, add metadata to display the item nicely
+					current[part] = {
+						_metadata: {
+							name: item.Name || part,
+							description: item.Description || '',
+							xpath: item.XPath || '',
+							type: item.Type || '',
+							characteristics: item.Characteristics || '',
+							cedsId: item['CEDS ID'] || '',
+						},
+						_data: item
+					};
+				} else {
+					// Create the nested object path if it doesn't exist
+					if (!current[part]) {
+						current[part] = {};
+					}
+					// Move to the next level
+					current = current[part];
+				}
+			}
+		});
+		
+		return hierarchy;
+	});
+	
 	// Calculate the total number of nodes in the tree
 	const totalNodeCount = computed(() => {
 		// Function to recursively count objects
@@ -39,6 +96,9 @@
 			
 			// If it's an object, add the counts of all its properties
 			if (typeof obj === 'object' && obj !== null) {
+				// Skip _metadata and _data properties
+				const keys = Object.keys(obj).filter(key => key !== '_metadata' && key !== '_data');
+				
 				// For arrays, count each element
 				if (Array.isArray(obj)) {
 					obj.forEach(item => {
@@ -46,7 +106,7 @@
 					});
 				} else {
 					// For objects, count each property
-					Object.keys(obj).forEach(key => {
+					keys.forEach(key => {
 						count += countNodes(obj[key]);
 					});
 				}
@@ -56,13 +116,13 @@
 		};
 		
 		// Start counting from the root
-		return props.workingData ? countNodes(props.workingData) - 1 : 0; // Subtract 1 to not count the root itself
+		return hierarchicalData.value ? countNodes(hierarchicalData.value) - 1 : 0; // Subtract 1 to not count the root itself
 	});
 	
 	// Get the number of top-level nodes
 	const topLevelNodeCount = computed(() => {
-		if (!props.workingData) return 0;
-		return Object.keys(props.workingData).length;
+		if (!hierarchicalData.value) return 0;
+		return Object.keys(hierarchicalData.value).length;
 	});
 	
 	// Text to display for node counts
@@ -145,7 +205,7 @@
 			<div>{{ error }}</div>
 		</div>
 		<div
-			v-else-if="workingData"
+			v-else-if="hierarchicalData"
 			class="w-100 h-100 overflow-auto content-container"
 		>
 			<!-- Controls for expanding/collapsing -->
@@ -205,17 +265,17 @@
 				density="compact" 
 				class="mt-1 pt-0" 
 				multiple 
-				:model-value="expandAll ? Array.from({ length: Object.keys(workingData || {}).length }, (_, i) => i) : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]"
+				:model-value="expandAll ? Array.from({ length: Object.keys(hierarchicalData || {}).length }, (_, i) => i) : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]"
 			>
 				<RecursivePanel 
-					:data="workingData" 
+					:data="hierarchicalData" 
 					:level="1" 
 					:default-expanded="defaultExpanded"
 					:expand-all="expandAll"
 				/>
 			</v-expansion-panels>
 
-			<!-- pre class="data-display">{{ JSON.stringify(workingData, null, 2) }}</pre -->
+			<!-- pre class="data-display">{{ JSON.stringify(hierarchicalData, null, 2) }}</pre -->
 		</div>
 		<div v-else class="text-center">
 			<v-icon size="64" class="mb-3 text-medium-emphasis">mdi-file-tree</v-icon>
