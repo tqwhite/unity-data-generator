@@ -66,6 +66,9 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 				return;
 			}
 
+
+console.dir({['args.ontologyData[55]']:args.ontologyData[55]}, { showHidden: false, depth: 4, colors: true });
+
 			callback('', args.ontologyData || []);
 		});
 	};

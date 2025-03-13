@@ -100,8 +100,12 @@ const searchResults = computed(() => {
       <div v-else-if="!cedsStore.isLoadingSemanticDistance && searchQuery.trim() === ''" class="empty-state">
         <v-icon icon="mdi-database-search" size="64" color="grey-lighten-1" class="mb-4"></v-icon>
         <h3 class="text-h6 text-grey-darken-1">Search for CEDS Terms</h3>
-        <p class="text-body-1 text-grey-darken-1">
-          Enter keywords above to find semantically related CEDS terms.
+        <p class="text-body-1 text-grey-darken-1" style='width:50%;text-align:left;'>
+          This search tool uses AI techniques to encode the meaning of words into a mathematical 'idea space'.
+          <br><br>
+          Semantic distance refers to the proximity of ideas in that idea space. Ideas that are close should be closer in meaning that those that are far away.
+          <br><br>
+          This tool looks for the CEDS codes whose description has an idea that is close to the phrase you enter in the 'idea space'. It shows the results in distance order, closest first.
         </p>
       </div>
       

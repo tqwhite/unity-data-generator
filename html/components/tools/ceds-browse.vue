@@ -73,17 +73,6 @@ const collapseAll = () => {
 };
 
 // No longer need manual toggle function since v-expansion-panels handles it
-
-// Format date strings
-const formatDate = (dateString) => {
-  if (!dateString) return '';
-  try {
-    const date = new Date(dateString);
-    return date.toLocaleDateString();
-  } catch (e) {
-    return dateString;
-  }
-};
 </script>
 
 <template>
@@ -174,50 +163,26 @@ const formatDate = (dateString) => {
               </v-expansion-panel-title>
               
               <v-expansion-panel-text>
-                <div class="class-details mb-4">
-                  <div class="detail-item" v-if="cls.refId">
-                    <div class="detail-label">Reference ID:</div>
-                    <div class="detail-value">{{ cls.refId }}</div>
+                <div class="metadata-section mb-4">
+                  <div class="metadata-item">
+                    <div class="metadata-label">Definition:</div>
+                    <div class="metadata-value">{{ cls.definition || cls.description || cls.comment || cls.label || 'No definition available' }}</div>
                   </div>
-                  <div class="detail-item" v-if="cls.uri">
-                    <div class="detail-label">URI:</div>
-                    <div class="detail-value">{{ cls.uri }}</div>
+                  <div class="metadata-item" v-if="cls.prefLabel">
+                    <div class="metadata-label">Preferred Label:</div>
+                    <div class="metadata-value">{{ cls.prefLabel }}</div>
                   </div>
-                  <div class="detail-item" v-if="cls.label">
-                    <div class="detail-label">Label:</div>
-                    <div class="detail-value">{{ cls.label }}</div>
+                  <div class="metadata-item" v-if="cls.notation">
+                    <div class="metadata-label">Notation:</div>
+                    <div class="metadata-value metadata-code">{{ cls.notation }}</div>
                   </div>
-                  <div class="detail-item" v-if="cls.prefLabel">
-                    <div class="detail-label">Preferred Label:</div>
-                    <div class="detail-value">{{ cls.prefLabel }}</div>
+                  <div class="metadata-item" v-if="cls.uri">
+                    <div class="metadata-label">URI:</div>
+                    <div class="metadata-value metadata-uri">{{ cls.uri }}</div>
                   </div>
-                  <div class="detail-item" v-if="cls.notation">
-                    <div class="detail-label">Notation:</div>
-                    <div class="detail-value">{{ cls.notation }}</div>
-                  </div>
-                  <div class="detail-item" v-if="cls.definition">
-                    <div class="detail-label">Definition:</div>
-                    <div class="detail-value">{{ cls.definition }}</div>
-                  </div>
-                  <div class="detail-item" v-if="cls.description">
-                    <div class="detail-label">Description:</div>
-                    <div class="detail-value">{{ cls.description }}</div>
-                  </div>
-                  <div class="detail-item" v-if="cls.comment">
-                    <div class="detail-label">Comment:</div>
-                    <div class="detail-value">{{ cls.comment }}</div>
-                  </div>
-                  <div class="detail-item" v-if="cls.classType">
-                    <div class="detail-label">Class Type:</div>
-                    <div class="detail-value">{{ cls.classType }}</div>
-                  </div>
-                  <div class="detail-item" v-if="cls.createdAt">
-                    <div class="detail-label">Created:</div>
-                    <div class="detail-value">{{ formatDate(cls.createdAt) }}</div>
-                  </div>
-                  <div class="detail-item" v-if="cls.updatedAt">
-                    <div class="detail-label">Updated:</div>
-                    <div class="detail-value">{{ formatDate(cls.updatedAt) }}</div>
+                  <div class="metadata-item" v-if="cls.classType">
+                    <div class="metadata-label">Class Type:</div>
+                    <div class="metadata-value">{{ cls.classType }}</div>
                   </div>
                 </div>
                 
@@ -242,46 +207,26 @@ const formatDate = (dateString) => {
                       </v-expansion-panel-title>
                       
                       <v-expansion-panel-text>
-                        <div class="property-details">
-                          <div class="detail-item" v-if="prop.refId">
-                            <div class="detail-label">Reference ID:</div>
-                            <div class="detail-value">{{ prop.refId }}</div>
+                        <div class="metadata-section">
+                          <div class="metadata-item">
+                            <div class="metadata-label">Definition:</div>
+                            <div class="metadata-value">{{ prop.definition || prop.description || prop.comment || prop.label || 'No definition available' }}</div>
                           </div>
-                          <div class="detail-item" v-if="prop.uri">
-                            <div class="detail-label">URI:</div>
-                            <div class="detail-value">{{ prop.uri }}</div>
+                          <div class="metadata-item" v-if="prop.prefLabel">
+                            <div class="metadata-label">Preferred Label:</div>
+                            <div class="metadata-value">{{ prop.prefLabel }}</div>
                           </div>
-                          <div class="detail-item" v-if="prop.label">
-                            <div class="detail-label">Label:</div>
-                            <div class="detail-value">{{ prop.label }}</div>
+                          <div class="metadata-item" v-if="prop.notation">
+                            <div class="metadata-label">Notation:</div>
+                            <div class="metadata-value metadata-code">{{ prop.notation }}</div>
                           </div>
-                          <div class="detail-item" v-if="prop.prefLabel">
-                            <div class="detail-label">Preferred Label:</div>
-                            <div class="detail-value">{{ prop.prefLabel }}</div>
+                          <div class="metadata-item" v-if="prop.uri">
+                            <div class="metadata-label">URI:</div>
+                            <div class="metadata-value metadata-uri">{{ prop.uri }}</div>
                           </div>
-                          <div class="detail-item" v-if="prop.notation">
-                            <div class="detail-label">Notation:</div>
-                            <div class="detail-value">{{ prop.notation }}</div>
-                          </div>
-                          <div class="detail-item" v-if="prop.definition">
-                            <div class="detail-label">Definition:</div>
-                            <div class="detail-value">{{ prop.definition }}</div>
-                          </div>
-                          <div class="detail-item" v-if="prop.description">
-                            <div class="detail-label">Description:</div>
-                            <div class="detail-value">{{ prop.description }}</div>
-                          </div>
-                          <div class="detail-item" v-if="prop.comment">
-                            <div class="detail-label">Comment:</div>
-                            <div class="detail-value">{{ prop.comment }}</div>
-                          </div>
-                          <div class="detail-item" v-if="prop.createdAt">
-                            <div class="detail-label">Created:</div>
-                            <div class="detail-value">{{ formatDate(prop.createdAt) }}</div>
-                          </div>
-                          <div class="detail-item" v-if="prop.updatedAt">
-                            <div class="detail-label">Updated:</div>
-                            <div class="detail-value">{{ formatDate(prop.updatedAt) }}</div>
+                          <div class="metadata-item" v-if="prop.propertyType">
+                            <div class="metadata-label">Property Type:</div>
+                            <div class="metadata-value">{{ prop.propertyType }}</div>
                           </div>
                         </div>
                       </v-expansion-panel-text>
@@ -339,22 +284,46 @@ const formatDate = (dateString) => {
   border-radius: 8px;
 }
 
-.class-details,
-.property-details {
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  row-gap: 8px;
-  column-gap: 12px;
+/* Metadata section styling */
+.metadata-section {
+  margin-top: 4px;
+  margin-bottom: 12px;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 4px;
+  border-left: 3px solid rgba(0, 0, 0, 0.1);
 }
 
-.detail-label {
+.metadata-item {
+  display: flex;
+  margin-bottom: 6px;
+}
+
+.metadata-label {
   font-weight: 500;
-  color: #666;
+  color: #555;
+  min-width: 120px;
+  margin-right: 10px;
   text-align: right;
 }
 
-.detail-value {
+.metadata-value {
   color: #333;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.metadata-code {
+  font-family: monospace;
+  color: #0d47a1;
+  font-size: 0.9em;
+}
+
+.metadata-uri {
+  font-family: monospace;
+  font-size: 0.9em;
+  color: #006064;
+  word-break: break-all;
 }
 
 .properties-section {
