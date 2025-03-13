@@ -25,6 +25,12 @@
 		return router.currentRoute.value.path === '/utility-examples' || 
 		       router.currentRoute.value.path === '/utility-examples/';
 	});
+	
+	const isWelcomePage = computed(() => {
+		return router.currentRoute.value.path === '/' || 
+		       router.currentRoute.value.path === '/welcomePage' ||
+		       router.currentRoute.value.path === '/welcomePage/';
+	});
 
 	const reloadPage = () => {
 		window.location.href = window.location.href.replace(
@@ -42,7 +48,11 @@
 
 	<!-- Navigation bar -->
 	<v-app-bar app elevation="0" class="border-bottom border-1">
-		<v-app-bar-title class="titleOrange">NA Data Model Tools</v-app-bar-title>
+		<v-app-bar-title class="titleOrange">
+			<template v-if="isCedsPage">CEDS Search and Browse</template>
+			<template v-else-if="isNaModelPage">NA Data Model Tools</template>
+			<template v-else></template>
+		</v-app-bar-title>
 
 		<!-- CEDS button (always visible) -->
 		<v-btn
