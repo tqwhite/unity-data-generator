@@ -47,11 +47,19 @@ const moduleName = path.basename(__filename, '.js');
 // =============================================================================
 // MODULE IMPORTS
 
+
+//unityCedsMatch_AI_Only
+
+let configFileBaseName=moduleName;
+if (process.argv.includes('-aiOnly')){
+configFileBaseName='unityCedsMatch_AI_Only';
+}
+
 // process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
 const initAtp = require('qtools-ai-thought-processor/jina')({
-	configFileBaseName: moduleName,
+	configFileBaseName,
 	applicationBasePath,
-		applicationControls: ['-loadDatabase'],
+		applicationControls: ['-loadDatabase', '-aiOnly'],
 
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 

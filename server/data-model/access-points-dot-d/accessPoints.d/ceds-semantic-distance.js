@@ -17,7 +17,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	// INITIALIZATION
 
 	const { xLog, getConfig, rawConfig, commandLineParameters } = process.global;
-	const localConfig = getConfig(moduleName); //moduleName is closure
+	const { cedsVectorToolsFilePath } = getConfig(moduleName); //moduleName is closure
 
 	const { sqlDb, mapper, dataMapping } = passThroughParameters;
 	const escapeShellArg = (str) => {
@@ -52,7 +52,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 
 			const queryString = xReq.query.queryString;
 			const shellCommand = escapeShellArg(
-				`/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/ceds-vector-tools/cedsVectorTools.js -json --queryString='${apostropheEscape(queryString)}'`,
+				`${cedsVectorToolsFilePath} -json --queryString='${apostropheEscape(queryString)}'`,
 			);
 
 			xLog.status(`shellCommand: ${shellCommand}`);

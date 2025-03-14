@@ -1,11 +1,6 @@
 {
   "dependencies": {
     "express": "^4.21.1",
-    "jsonwebtoken": "^9.0.2",
-    "qtools-asynchronous-pipe-plus": "^1.0.4",
-    "qtools-config-file-processor": "^1.0.17",
-    "qtools-functional-library": "^2.0.1",
-    "qtools-library-dot-d": "^1.0.3",
-    "qtools-parse-command-line": "^1.0.8"
+    "jsonwebtoken": "^9.0.2"
   }
 }

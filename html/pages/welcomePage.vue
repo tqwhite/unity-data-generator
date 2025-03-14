@@ -11,13 +11,13 @@ const LoginStore = useLoginStore();
         <v-row justify="center">
           <v-col cols="12" md="8" lg="6">
             <v-card class="mt-10 pa-6" elevation="3">
-              <v-card-title class="text-h4 mb-4">Welcome to A4L Unity Data Generator</v-card-title>
+              <v-card-title class="text-h5 mb-4">Welcome to A4L Unity CEDS Project</v-card-title>
               
               <v-card-text class="text-body-1">
                 <p class="mb-3">
-                  The A4L Unity Data Generator is a tool for working with educational data standards and models. 
+                  The A4L Unity CEDS Project is a tool for working with educational data standards and models. 
                   This platform helps users explore and map Common Education Data Standards (CEDS) to 
-                  the North American (NA) data model.
+                  the SIF Unity Data Model.
                 </p>
 
                 <p class="mb-3">
@@ -26,35 +26,7 @@ const LoginStore = useLoginStore();
 
                 <ul class="mb-5">
                   <li>Browse and search CEDS elements</li>
-                  <li>View NA data model elements and relationships</li>
-                  <li>Generate mappings between CEDS and NA data models</li>
-                  <li>Analyze semantic similarities between data elements</li>
                 </ul>
-
-                <div class="highlighted-section pa-4 mb-4 rounded">
-                  <h3 class="text-h6 mb-2">Explore CEDS Dataset</h3>
-                  <p>
-                    <strong>No login required!</strong> Click on the CEDS button in the navigation bar 
-                    to access the Common Education Data Standards database. Browse through standardized 
-                    education data elements and their definitions.
-                  </p>
-                  <p class="mt-2">
-                    <v-icon color="info" class="mr-1">mdi-new-box</v-icon>
-                    <strong>Coming Soon:</strong> AI-powered semantic search that helps you find relevant CEDS elements 
-                    based on natural language descriptions and context. Our advanced semantic distance tools will 
-                    make finding the right data elements easier than ever!
-                  </p>
-                </div>
-
-                <p class="mb-3">
-                  <strong>Getting Started:</strong>
-                </p>
-                <p>
-                  Use the navigation buttons above to explore CEDS or log in for full access to all features 
-                  including the NA model tools.
-                </p>
-              </v-card-text>
-              
               <v-card-actions class="justify-center gap-3">
                 <v-btn
                   color="secondary"
@@ -64,6 +36,15 @@ const LoginStore = useLoginStore();
                 >
                   Explore CEDS
                 </v-btn>
+       
+              </v-card-actions>
+                <ul class="mb-5">
+                  <li>View NA data model elements and relationships</li>
+                  <li>Generate mappings between CEDS and NA data models</li>
+                  <li>Analyze semantic similarities between data elements</li>
+                </ul>
+              <v-card-actions class="justify-center gap-3">
+      
                 
                 <v-btn
                   v-if="!LoginStore.validUser"
@@ -72,9 +53,14 @@ const LoginStore = useLoginStore();
                   prepend-icon="mdi-login"
                   :to="{ path: '/', query: { login: true } }"
                 >
-                  Login for Full Access
+                  Explore Unity Data Model
                 </v-btn>
               </v-card-actions>
+
+   
+              </v-card-text>
+              
+  
             </v-card>
           </v-col>
         </v-row>

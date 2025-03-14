@@ -43,7 +43,7 @@
 <template>
 	<!-- Top banner (not an app bar) -->
 	<div class="banner justify-center align-center">
-		<h1 class="banner-title">A4L Unity Data Generator</h1>
+		<h1 class="banner-title">A4L Unity CEDS Project</h1>
 	</div>
 
 	<!-- Navigation bar -->
