@@ -16,7 +16,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	// INITIALIZATION
 
 	const { xLog, getConfig, rawConfig, commandLineParameters } = process.global;
-	const { rootPassword, builtinUserList, builtinsOnly, addBuiltinsToDatabase } =
+	const { rootPassword, builtinUserList=[], builtinsOnly, addBuiltinsToDatabase } =
 		getConfig(moduleName); //moduleName is closure
 
 	const { sqlDb, hxAccess, dataMapping } = passThroughParameters;

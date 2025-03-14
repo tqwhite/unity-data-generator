@@ -166,7 +166,7 @@ const fetchCustomQuery = async () => {
                         </tr>
                         <!-- CEDS Matches Information -->
                         <tr v-if="item.cedsMatchesGlobalID" class="ceds-row ceds-match-row">
-                            <td class="text-right info-label">CEDS<br>Match:</td>
+                            <td class="text-right info-label">CEDS<br>AI Match:</td>
                             <td class="item-ceds-data">
                                 <div class="ceds-content">
                                     <div class="ceds-header">

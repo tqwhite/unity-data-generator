@@ -39,12 +39,10 @@
 					else if (router.currentRoute.value.path === '/ceds') {
 						// Stay on ceds page, no navigation needed
 					}
-					// Otherwise, if user is on root/login/welcome page, go to NA Model
-					else if (router.currentRoute.value.path === '/' || 
-					         router.currentRoute.value.path === '/welcomePage') {
+					// Default: always go to NA Model for logged in users
+					else {
 						router.push('namodel');
 					}
-					// For other pages, stay on the current page
 				}
 			})
 			.catch((err) => {

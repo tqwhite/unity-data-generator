@@ -51,7 +51,7 @@ const LoginStore = useLoginStore();
                   color="primary"
                   size="large"
                   prepend-icon="mdi-login"
-                  :to="{ path: '/', query: { login: true } }"
+                  :to="{ path: '/', query: { login: true, returnTo: '/namodel' } }"
                 >
                   Explore Unity Data Model
                 </v-btn>

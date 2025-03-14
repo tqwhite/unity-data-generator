@@ -495,13 +495,11 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 
 	.small-col {
 		color: red;
-		boder: 1pt solid red;
 		width: 5vw;
 	}
 
 	.mid-col {
 		color: red;
-		boder: 1pt solid red;
 		width: 10vw;
 	}
 	
