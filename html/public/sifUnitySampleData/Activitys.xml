@@ -1,0 +1,199 @@
+<Activitys xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <Activity RefId="123e4567-e89b-12d3-a456-426614174000">
+        <Title>Introduction to Algebra</Title>
+        <Preamble>This activity introduces basic algebraic concepts.</Preamble>
+        <TechnicalRequirements>
+            <TechnicalRequirement>Windows 10 or higher</TechnicalRequirement>
+            <TechnicalRequirement>Internet connection</TechnicalRequirement>
+        </TechnicalRequirements>
+        <SoftwareRequirementList>
+            <SoftwareRequirement>
+                <SoftwareTitle>GeoGebra</SoftwareTitle>
+                <Version>6.0</Version>
+                <Vendor>GeoGebra Inc.</Vendor>
+                <OS>Windows 10</OS>
+            </SoftwareRequirement>
+        </SoftwareRequirementList>
+        <EssentialMaterials>
+            <EssentialMaterial>Textbook: Algebra I</EssentialMaterial>
+            <EssentialMaterial>Calculator</EssentialMaterial>
+        </EssentialMaterials>
+        <LearningObjectives>
+            <LearningObjective>Understand basic algebraic operations</LearningObjective>
+            <LearningObjective>Solve simple equations</LearningObjective>
+        </LearningObjectives>
+        <LearningStandards>
+            <LearningStandardItemRefId>987e6543-e21b-12d3-a456-426614174001</LearningStandardItemRefId>
+        </LearningStandards>
+        <SubjectArea>
+            <Code Codeset="http://example.com/codeset">MA</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">MA01</OtherCode>
+                <OtherCode Codeset="Local">ALG101</OtherCode>
+            </OtherCodeList>
+        </SubjectArea>
+        <Prerequisites>
+            <Prerequisite>Basic arithmetic skills</Prerequisite>
+        </Prerequisites>
+        <Students>
+            <StudentPersonalRefId>456e7890-e89b-12d3-a456-426614174002</StudentPersonalRefId>
+        </Students>
+        <SourceObjects>
+            <SourceObject SIF_RefObject="Textbook" SIF_RefObjectCodeset="http://example.com/codeset">123e4567-e89b-12d3-a456-426614174003</SourceObject>
+        </SourceObjects>
+        <Points>100</Points>
+        <ActivityTime>
+            <CreationDate>2023-10-01</CreationDate>
+            <Duration Units="hours" UnitsCodeset="http://example.com/codeset">2</Duration>
+            <StartDate>2023-10-05</StartDate>
+            <FinishDate>2023-10-06</FinishDate>
+            <DueDate>2023-10-10</DueDate>
+        </ActivityTime>
+        <AssessmentRefId>789e0123-e89b-12d3-a456-426614174004</AssessmentRefId>
+        <MaxAttemptsAllowed>3</MaxAttemptsAllowed>
+        <ActivityWeight>0.2</ActivityWeight>
+        <Evaluation EvaluationType="Inline" EvaluationTypeCodeset="http://example.com/codeset">
+            <Description>Inline evaluation for algebra understanding</Description>
+        </Evaluation>
+        <LearningResources>
+            <LearningResourceRefId>321e6543-e89b-12d3-a456-426614174005</LearningResourceRefId>
+        </LearningResources>
+        <SIF_Metadata>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Semester</Type>
+                    <Code>2023FALL</Code>
+                    <Name>Fall Semester 2023</Name>
+                    <Value>2023-09-01 to 2023-12-15</Value>
+                    <StartDateTime>2023-09-01T08:00:00</StartDateTime>
+                    <EndDateTime>2023-12-15T17:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>THXGIVING</Code>
+                            <Name>Thanksgiving Break</Name>
+                            <Value>2023-11-23 to 2023-11-24</Value>
+                            <StartDateTime>2023-11-23T00:00:00</StartDateTime>
+                            <EndDateTime>2023-11-24T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+            <LifeCycle>
+                <Created>
+                    <DateTime>2023-10-01T09:00:00</DateTime>
+                    <Creators>
+                        <Creator>
+                            <Name>John Doe</Name>
+                            <ID>john.doe@example.com</ID>
+                        </Creator>
+                    </Creators>
+                </Created>
+                <ModificationHistory>
+                    <Modified>
+                        <By>Jane Smith</By>
+                        <DateTime>2023-10-02T10:00:00</DateTime>
+                        <Description>Updated learning objectives</Description>
+                    </Modified>
+                </ModificationHistory>
+                <TimeElements>
+                    <TimeElement>
+                        <Type>Quarter</Type>
+                        <Code>2023Q4</Code>
+                        <Name>Fourth Quarter 2023</Name>
+                        <Value>2023-10-01 to 2023-12-31</Value>
+                        <StartDateTime>2023-10-01T00:00:00</StartDateTime>
+                        <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                        <SpanGaps>
+                            <SpanGap>
+                                <Type>Winter Break</Type>
+                                <Code>WINTERBRK</Code>
+                                <Name>Winter Break</Name>
+                                <Value>2023-12-24 to 2023-12-31</Value>
+                                <StartDateTime>2023-12-24T00:00:00</StartDateTime>
+                                <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                            </SpanGap>
+                        </SpanGaps>
+                        <IsCurrent>true</IsCurrent>
+                    </TimeElement>
+                </TimeElements>
+            </LifeCycle>
+            <RightsElements>
+                <RightsElement>
+                    <Cost>false</Cost>
+                    <FeesForUse>
+                        <FeeForUse>
+                            <UseType>Classroom</UseType>
+                            <MeteringType>None</MeteringType>
+                            <MeteringURL>http://example.com/metering</MeteringURL>
+                            <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/codeset">0.00</PerUseCharge>
+                        </FeeForUse>
+                    </FeesForUse>
+                    <CopyrightStatement>© 2023 Example School</CopyrightStatement>
+                    <TermsOfUse>For educational use only</TermsOfUse>
+                </RightsElement>
+            </RightsElements>
+            <EducationFilter>
+                <MediaTypes>
+                    <MediaType>Text</MediaType>
+                    <MediaType>Interactive</MediaType>
+                </MediaTypes>
+                <GradeLevels>
+                    <GradeLevel>
+                        <Code Codeset="http://example.com/codeset">09</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">HS09</OtherCode>
+                            <OtherCode Codeset="Local">9thGrade</OtherCode>
+                        </OtherCodeList>
+                    </GradeLevel>
+                </GradeLevels>
+                <SubjectAreas>
+                    <SubjectArea>
+                        <Code Codeset="http://example.com/codeset">MA</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">MA01</OtherCode>
+                            <OtherCode Codeset="Local">ALG101</OtherCode>
+                        </OtherCodeList>
+                    </SubjectArea>
+                </SubjectAreas>
+                <InterestLevels>
+                    <InterestLevel>
+                        <Code Codeset="http://example.com/codeset">09</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">HS09</OtherCode>
+                            <OtherCode Codeset="Local">9thGrade</OtherCode>
+                        </OtherCodeList>
+                    </InterestLevel>
+                </InterestLevels>
+                <LearningStandardItems>
+                    <LearningStandardItemRefId>987e6543-e21b-12d3-a456-426614174001</LearningStandardItemRefId>
+                    <LearningStandardItemRefId>654e3210-e21b-12d3-a456-426614174006</LearningStandardItemRefId>
+                </LearningStandardItems>
+                <BloomsTaxonomyLevels>
+                    <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+                </BloomsTaxonomyLevels>
+                <MultipleIntelligences>
+                    <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                </MultipleIntelligences>
+                <InstructionalStrategies>
+                    <InstructionalStrategy>Problem-Based Learning</InstructionalStrategy>
+                </InstructionalStrategies>
+                <Title>Algebra Basics</Title>
+                <Summary>This content covers the basics of algebra.</Summary>
+                <LearningObjectives>
+                    <LearningObjective>Understand basic algebraic operations</LearningObjective>
+                    <LearningObjective>Solve simple equations</LearningObjective>
+                </LearningObjectives>
+                <ResourceTypes>
+                    <ResourceType>Textbook</ResourceType>
+                    <ResourceType>Software</ResourceType>
+                </ResourceTypes>
+            </EducationFilter>
+        </SIF_Metadata>
+        <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="CustomElement1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+            <SIF_ExtendedElement Name="CustomElement2">Value2</SIF_ExtendedElement>
+        </SIF_ExtendedElements>
+    </Activity>
+</Activitys>

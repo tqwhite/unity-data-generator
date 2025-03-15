@@ -1,0 +1,164 @@
+<StudentMeal xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" StudentPersonalRefId="123e4567-e89b-12d3-a456-426614174001">
+    <MealStatus Type="Free" TypeCodeset="http://example.com/codeset">
+        <StartDate>2023-09-01</StartDate>
+        <EndDate>2023-12-31</EndDate>
+        <SchoolYear>2024</SchoolYear>
+    </MealStatus>
+    <HistoricalMealStatus>
+        <MealStatus Type="Reduced" TypeCodeset="http://example.com/codeset">
+            <StartDate>2022-09-01</StartDate>
+            <EndDate>2023-06-30</EndDate>
+            <SchoolYear>2023</SchoolYear>
+        </MealStatus>
+    </HistoricalMealStatus>
+    <LastBreakfastDate>2023-10-15</LastBreakfastDate>
+    <LastLunchDate>2023-10-15</LastLunchDate>
+    <Amounts>
+        <Amount Type="Cash" TypeCodeset="http://example.com/codeset" Credits="0" Currency="USD" CurrencyCodeset="http://example.com/currency">
+            5.00
+        </Amount>
+        <Amount Type="LunchCredit" TypeCodeset="http://example.com/codeset" Credits="10" Currency="USD" CurrencyCodeset="http://example.com/currency">
+            0.00
+        </Amount>
+    </Amounts>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>SY2024</Code>
+                <Name>2023-2024 School Year</Name>
+                <Value>2024</Value>
+                <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>WinterBreak</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-02</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-02T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-08-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-09-15T14:30:00</DateTime>
+                    <Description>Updated meal status</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Semester</Type>
+                    <Code>Fall2023</Code>
+                    <Name>Fall Semester 2023</Name>
+                    <Value>2023</Value>
+                    <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Break</Type>
+                            <Code>Thanksgiving</Code>
+                            <Name>Thanksgiving Break</Name>
+                            <Value>2023-11-23 to 2023-11-24</Value>
+                            <StartDateTime>2023-11-23T00:00:00</StartDateTime>
+                            <EndDateTime>2023-11-24T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational use only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/gradelevel">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">5th Grade</OtherCode>
+                        <OtherCode Codeset="StateProvince">Grade 5</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/subjectarea">01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        <OtherCode Codeset="StateProvince">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/interestlevel">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Intermediate</OtherCode>
+                        <OtherCode Codeset="StateProvince">Level 5</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174002</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+                <BloomsTaxonomyLevel>Applying</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                <MultipleIntelligence>Visual-Spatial</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+                <InstructionalStrategy>Direct Instruction</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Algebra</Title>
+            <Summary>This course covers the basics of algebra, including variables, equations, and functions.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand basic algebraic concepts</LearningObjective>
+                <LearningObjective>Solve simple equations</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StudentMeal>

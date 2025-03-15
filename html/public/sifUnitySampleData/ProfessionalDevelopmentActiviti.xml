@@ -1,0 +1,154 @@
+<ProfessionalDevelopmentActivities xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" ActivityProviderRefId="123e4567-e89b-12d3-a456-426614174001">
+    <ProfessionalDevelopmentProgramRefId>123e4567-e89b-12d3-a456-426614174002</ProfessionalDevelopmentProgramRefId>
+    <LearningStandardItems>
+        <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+        <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+    </LearningStandardItems>
+    <LocalId>PD-101</LocalId>
+    <StartDate>2023-01-15</StartDate>
+    <EndDate>2023-03-15</EndDate>
+    <Description>Advanced Teaching Strategies</Description>
+    <ClockHours>40.5</ClockHours>
+    <Credits>3.0</Credits>
+    <Stipend Currency="USD" CurrencyCodeset="http://example.com/currency">500.00</Stipend>
+    <FundingSource>State Education Grant</FundingSource>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>Semester</Type>
+                <Code>2023S1</Code>
+                <Name>Spring Semester 2023</Name>
+                <Value>Spring 2023</Value>
+                <StartDateTime>2023-01-15T08:00:00</StartDateTime>
+                <EndDateTime>2023-03-15T17:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>2023H1</Code>
+                        <Name>Spring Break</Name>
+                        <Value>Spring Break 2023</Value>
+                        <StartDateTime>2023-02-20T00:00:00</StartDateTime>
+                        <EndDateTime>2023-02-24T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2022-12-01T10:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-01-10T15:00:00</DateTime>
+                    <Description>Initial setup and configuration</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Academic Year</Type>
+                    <Code>2023AY</Code>
+                    <Name>Academic Year 2023</Name>
+                    <Value>2023</Value>
+                    <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Summer Break</Type>
+                            <Code>2023SB</Code>
+                            <Name>Summer Break</Name>
+                            <Value>Summer Break 2023</Value>
+                            <StartDateTime>2023-06-01T00:00:00</StartDateTime>
+                            <EndDateTime>2023-08-31T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>Per Student</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">10.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example Education</CopyrightStatement>
+                <TermsOfUse>Use for educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Video</MediaType>
+                <MediaType>Text</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/gradelevels">09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">HS-Freshman</OtherCode>
+                        <OtherCode Codeset="Local">9th Grade</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/subjectareas">01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Mathematics</OtherCode>
+                        <OtherCode Codeset="Local">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/interestlevels">HS</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">High School</OtherCode>
+                        <OtherCode Codeset="Local">Secondary</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174005</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174006</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+                <BloomsTaxonomyLevel>Analysis</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                <MultipleIntelligence>Visual-Spatial</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+                <InstructionalStrategy>Problem-Based Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Advanced Teaching Strategies</Title>
+            <Summary>This course provides advanced strategies for effective teaching in high school settings.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Enhance classroom management skills</LearningObjective>
+                <LearningObjective>Develop effective lesson plans</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Course Material</ResourceType>
+                <ResourceType>Supplementary Reading</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="AdditionalInfo" SIF_Action="Delete">This is additional information.</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</ProfessionalDevelopmentActivities>

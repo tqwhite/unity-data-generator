@@ -1,0 +1,186 @@
+<StudentLEARelationship xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" StudentPersonalRefId="123e4567-e89b-12d3-a456-426614174001" LEAInfoRefId="123e4567-e89b-12d3-a456-426614174002" SchoolYear="2023">
+    <MembershipType Codeset="http://example.com/codeset">Full-time</MembershipType>
+    <LEARelationshipType>
+        <ResidencyStatus>
+            <Code Codeset="http://example.com/codeset">01652</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">SP123</OtherCode>
+                <OtherCode Codeset="Local">LC456</OtherCode>
+            </OtherCodeList>
+        </ResidencyStatus>
+        <ProvidingInstruction>true</ProvidingInstruction>
+        <ProvidingServices>false</ProvidingServices>
+        <FinanciallyResponsible>true</FinanciallyResponsible>
+    </LEARelationshipType>
+    <EntryDate>2023-08-15</EntryDate>
+    <EntryType>
+        <Code Codeset="http://example.com/codeset">01821</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">SP789</OtherCode>
+            <OtherCode Codeset="Local">LC012</OtherCode>
+        </OtherCodeList>
+    </EntryType>
+    <ExitDate>2024-06-10</ExitDate>
+    <ExitType>
+        <Code Codeset="http://example.com/codeset">01907</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">SP345</OtherCode>
+            <OtherCode Codeset="Local">LC678</OtherCode>
+        </OtherCodeList>
+    </ExitType>
+    <ExitStatus>
+        <Code Codeset="http://example.com/codeset">Permanent</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">SP901</OtherCode>
+            <OtherCode Codeset="Local">LC234</OtherCode>
+        </OtherCodeList>
+    </ExitStatus>
+    <NonResidentAttendReason Codeset="http://example.com/codeset">Special Program</NonResidentAttendReason>
+    <GradeLevel>
+        <Code Codeset="http://example.com/codeset">05</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">SP567</OtherCode>
+            <OtherCode Codeset="Local">LC890</OtherCode>
+        </OtherCodeList>
+    </GradeLevel>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023-2024 School Year</Name>
+                <Value>2023-08-15 to 2024-06-10</Value>
+                <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                <EndDateTime>2024-06-10T15:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>HLD2023</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-05</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-07-01T10:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Data System</Name>
+                        <ID>system@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Admin</By>
+                    <DateTime>2023-09-01T12:00:00</DateTime>
+                    <Description>Initial data entry</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>2023-08-15 to 2023-10-15</Value>
+                    <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                    <EndDateTime>2023-10-15T15:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Weekend</Type>
+                            <Code>WKND</Code>
+                            <Name>Weekends</Name>
+                            <Value>Every Saturday and Sunday</Value>
+                            <StartDateTime>2023-08-19T00:00:00</StartDateTime>
+                            <EndDateTime>2023-10-15T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/codeset">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP567</OtherCode>
+                        <OtherCode Codeset="Local">LC890</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/codeset">01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP123</OtherCode>
+                        <OtherCode Codeset="Local">LC456</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/codeset">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP567</OtherCode>
+                        <OtherCode Codeset="Local">LC890</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+                <BloomsTaxonomyLevel>Applying</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                <MultipleIntelligence>Visual-Spatial</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+                <InstructionalStrategy>Direct Instruction</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Mathematics</Title>
+            <Summary>This course covers basic mathematical concepts for grade 5 students.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand basic arithmetic operations</LearningObjective>
+                <LearningObjective>Apply mathematical reasoning to solve problems</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StudentLEARelationship>

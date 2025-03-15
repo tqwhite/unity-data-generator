@@ -1,0 +1,249 @@
+<DisciplineIncident RefId="123e4567-e89b-12d3-a456-426614174000" SchoolYear="2023" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <AgencyReporting SIF_RefObject="SchoolInfo">123e4567-e89b-12d3-a456-426614174001</AgencyReporting>
+    <IncidentNumber>INC-2023-001</IncidentNumber>
+    <IncidentDate>2023-09-15</IncidentDate>
+    <IncidentTime Type="DuringSchoolHours" TypeCodeset="http://example.com/codeset">10:30:00</IncidentTime>
+    <IncidentLocation Type="Classroom" TypeCodeset="http://example.com/locationcodeset">Room 101</IncidentLocation>
+    <IncidentLocationRefId SIF_RefObject="LocationInfo">456e7890-e12b-34d5-f678-901234567890</IncidentLocationRefId>
+    <IncidentCost>$200</IncidentCost>
+    <IncidentReporter Type="Teacher" TypeCodeset="http://example.com/reporterType">
+        <Name Type="04">
+            <Prefix>Mr.</Prefix>
+            <LastName>Smith</LastName>
+            <FirstName>John</FirstName>
+            <MiddleName>A.</MiddleName>
+            <Suffix>Jr.</Suffix>
+            <PreferredName>Johnny</PreferredName>
+            <SortName>Smith, John</SortName>
+            <FullName>Mr. John A. Smith Jr.</FullName>
+        </Name>
+        <SIF_RefId SIF_RefObject="StaffPersonal">789e0123-e45b-67d8-f901-234567890123</SIF_RefId>
+    </IncidentReporter>
+    <RelatedToList>
+        <RelatedTo Codeset="http://example.com/relatedToCodeset">04618</RelatedTo>
+        <RelatedTo Codeset="http://example.com/relatedToCodeset">04625</RelatedTo>
+    </RelatedToList>
+    <WeaponTypeList>
+        <WeaponType Codeset="http://example.com/weaponTypeCodeset">Handguns</WeaponType>
+        <WeaponType Codeset="http://example.com/weaponTypeCodeset">Other</WeaponType>
+    </WeaponTypeList>
+    <IncidentCategory>
+        <Code>DrugRelated</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">SP123</OtherCode>
+            <OtherCode Codeset="Local">LC456</OtherCode>
+        </OtherCodeList>
+        <CodeComment>Possession of illegal substances</CodeComment>
+    </IncidentCategory>
+    <OffenderList>
+        <Offender Type="Student" TypeCodeset="http://example.com/offenderType">
+            <Name Type="04">
+                <Prefix>Ms.</Prefix>
+                <LastName>Johnson</LastName>
+                <FirstName>Emily</FirstName>
+                <MiddleName>R.</MiddleName>
+                <Suffix>III</Suffix>
+                <PreferredName>Em</PreferredName>
+                <SortName>Johnson, Emily</SortName>
+                <FullName>Ms. Emily R. Johnson III</FullName>
+            </Name>
+            <SIF_RefId SIF_RefObject="StudentPersonal">890e1234-e56b-78d9-f012-345678901234</SIF_RefId>
+            <Injury Codeset="http://example.com/injuryCodeset">MinorInjury</Injury>
+            <ManifestationDetermination>
+                <MeetingHeld>Yes</MeetingHeld>
+                <MeetingDate>2023-09-20</MeetingDate>
+                <DueToDisability>No</DueToDisability>
+                <MeetingOutcome>Hearing completed</MeetingOutcome>
+            </ManifestationDetermination>
+            <ActionList>
+                <Action>
+                    <Code>03071</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">LC789</OtherCode>
+                        <OtherCode Codeset="Other">OC012</OtherCode>
+                    </OtherCodeList>
+                    <StartDate>2023-09-21</StartDate>
+                    <EndDate>2023-09-25</EndDate>
+                    <Duration>5.0</Duration>
+                    <ZeroTolerance>No</ZeroTolerance>
+                    <PoliceNotification>Yes</PoliceNotification>
+                    <Arrest>No</Arrest>
+                    <AlternativeEducation>Yes</AlternativeEducation>
+                </Action>
+            </ActionList>
+            <WeaponTypeList>
+                <WeaponType Codeset="http://example.com/weaponTypeCodeset">RiflesShotguns</WeaponType>
+                <WeaponType Codeset="http://example.com/weaponTypeCodeset">Multiple</WeaponType>
+            </WeaponTypeList>
+            <RelatedToList>
+                <RelatedTo Codeset="http://example.com/relatedToCodeset">04632</RelatedTo>
+                <RelatedTo Codeset="http://example.com/relatedToCodeset">04633</RelatedTo>
+            </RelatedToList>
+        </Offender>
+    </OffenderList>
+    <VictimList>
+        <Victim Type="Student" TypeCodeset="http://example.com/victimType">
+            <Name Type="04">
+                <Prefix>Mr.</Prefix>
+                <LastName>Brown</LastName>
+                <FirstName>Michael</FirstName>
+                <MiddleName>T.</MiddleName>
+                <Suffix>Sr.</Suffix>
+                <PreferredName>Mike</PreferredName>
+                <SortName>Brown, Michael</SortName>
+                <FullName>Mr. Michael T. Brown Sr.</FullName>
+            </Name>
+            <SIF_RefId SIF_RefObject="StudentPersonal">901e2345-e67b-89d0-f123-456789012345</SIF_RefId>
+            <Injury Codeset="http://example.com/injuryCodeset">NoInjury</Injury>
+        </Victim>
+    </VictimList>
+    <IncidentDescription>A student was found in possession of illegal substances during school hours in Room 101.</IncidentDescription>
+    <IncidentActionList>
+        <IncidentAction>
+            <StartDate>2023-09-21</StartDate>
+            <EndDate>2023-09-25</EndDate>
+            <Duration>5.0</Duration>
+            <ZeroTolerance>Yes</ZeroTolerance>
+            <PoliceNotification>Yes</PoliceNotification>
+            <Arrest>No</Arrest>
+        </IncidentAction>
+    </IncidentActionList>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>2023</Code>
+                <Name>2023 School Year</Name>
+                <Value>2023</Value>
+                <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>WinterBreak</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-05</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-09-15T11:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Discipline System</Name>
+                        <ID>discipline@school.org</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>admin@school.org</By>
+                    <DateTime>2023-09-16T09:00:00</DateTime>
+                    <Description>Initial entry of incident data</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>Q1</Value>
+                    <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-10-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Weekend</Type>
+                            <Code>Weekend</Code>
+                            <Name>Weekend</Name>
+                            <Value>Every Saturday and Sunday</Value>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currencyCodeset">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Springfield High School</CopyrightStatement>
+                <TermsOfUse>For educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Freshman</OtherCode>
+                        <OtherCode Codeset="Other">9th Grade</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        <OtherCode Codeset="Other">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">High</OtherCode>
+                        <OtherCode Codeset="Other">9th Grade Interest</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>234e5678-e89b-12d3-a456-426614174001</LearningStandardItemRefId>
+                <LearningStandardItemRefId>345e6789-e89b-12d3-a456-426614174002</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+                <BloomsTaxonomyLevel>Applying</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical</MultipleIntelligence>
+                <MultipleIntelligence>Visual</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+                <InstructionalStrategy>Direct Instruction</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Incident Report</Title>
+            <Summary>Summary of the incident involving illegal substances.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand the consequences of drug possession.</LearningObjective>
+                <LearningObjective>Promote a drug-free environment.</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Document</ResourceType>
+                <ResourceType>Presentation</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="AdditionalInfo" SIF_Action="Delete">Extra details about the incident.</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="FollowUpActions">Counseling session scheduled.</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</DisciplineIncident>

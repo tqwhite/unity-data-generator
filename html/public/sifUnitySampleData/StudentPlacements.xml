@@ -1,0 +1,200 @@
+<StudentPlacement xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" StudentParticipationRefId="123e4567-e89b-12d3-a456-426614174001" StudentPersonalRefId="123e4567-e89b-12d3-a456-426614174002">
+    <StudentPlacementAsOfDate>2023-10-01</StudentPlacementAsOfDate>
+    <Service>
+        <Code Codeset="http://example.com/codeset">SpecialEducation</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">SE123</OtherCode>
+            <OtherCode Codeset="Local">LE456</OtherCode>
+        </OtherCodeList>
+    </Service>
+    <ServiceCategory>Instruction</ServiceCategory>
+    <ServiceFundingSources>
+        <ServiceFundingSource>
+            <Code Codeset="http://example.com/fundingsource">FederalGrant</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">FG789</OtherCode>
+                <OtherCode Codeset="Local">LG012</OtherCode>
+            </OtherCodeList>
+        </ServiceFundingSource>
+    </ServiceFundingSources>
+    <ServicingPublicAgency SIF_RefObject="LEAInfo">123e4567-e89b-12d3-a456-426614174005</ServicingPublicAgency>
+    <ServicingSchool SIF_RefObject="SchoolInfo">123e4567-e89b-12d3-a456-426614174006</ServicingSchool>
+    <SchoolWhereServiceDelivered SIF_RefObject="SchoolInfo">123e4567-e89b-12d3-a456-426614174007</SchoolWhereServiceDelivered>
+    <ServiceProviderType>
+        <Code Codeset="http://example.com/provider">PhysicalTherapist</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">PT345</OtherCode>
+            <OtherCode Codeset="Local">LT678</OtherCode>
+        </OtherCodeList>
+    </ServiceProviderType>
+    <AgencyType>Health Services Agency</AgencyType>
+    <ServiceProviderName>Dr. John Doe</ServiceProviderName>
+    <ServiceSetting>
+        <Code Codeset="http://example.com/servicesetting">ResourceRoom</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">RR901</OtherCode>
+            <OtherCode Codeset="Local">LR234</OtherCode>
+        </OtherCodeList>
+    </ServiceSetting>
+    <WhenServiceProvided>
+        <Code Codeset="http://example.com/servicetime">DuringSchoolHours</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">DSH567</OtherCode>
+            <OtherCode Codeset="Local">LSH890</OtherCode>
+        </OtherCodeList>
+    </WhenServiceProvided>
+    <LatestStartDate>2023-09-01</LatestStartDate>
+    <StartDate>2023-09-05</StartDate>
+    <EndDate>2024-06-15</EndDate>
+    <FrequencyTime>
+        <Code Codeset="http://example.com/frequency">Weekly</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">W123</OtherCode>
+            <OtherCode Codeset="Local">LW456</OtherCode>
+        </OtherCodeList>
+    </FrequencyTime>
+    <DirectTime UnitOfMeasure="Minutes" UnitOfMeasureCodeset="http://example.com/unit">60</DirectTime>
+    <IndirectTime UnitOfMeasure="Minutes" UnitOfMeasureCodeset="http://example.com/unit">30</IndirectTime>
+    <TotalServiceDuration UnitOfMeasure="Minutes" UnitOfMeasureCodeset="http://example.com/unit">90</TotalServiceDuration>
+    <IncludedInSpecialEducationFTE>true</IncludedInSpecialEducationFTE>
+    <SpecialNeedsTransportation>false</SpecialNeedsTransportation>
+    <AssistiveTechnology>true</AssistiveTechnology>
+    <EntryPerson>Jane Smith</EntryPerson>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>SY2023</Code>
+                <Name>2023-2024 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-09-01T08:00:00</StartDateTime>
+                <EndDateTime>2024-06-15T15:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>HLD2023</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-05</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-10-01T10:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>System Admin</Name>
+                        <ID>admin@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>System Admin</By>
+                    <DateTime>2023-10-15T12:00:00</DateTime>
+                    <Description>Initial creation of student placement record.</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>2023-09-01 to 2023-11-30</Value>
+                    <StartDateTime>2023-09-01T08:00:00</StartDateTime>
+                    <EndDateTime>2023-11-30T15:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Break</Type>
+                            <Code>BRK2023</Code>
+                            <Name>Fall Break</Name>
+                            <Value>2023-10-10 to 2023-10-14</Value>
+                            <StartDateTime>2023-10-10T00:00:00</StartDateTime>
+                            <EndDateTime>2023-10-14T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Springfield School District</CopyrightStatement>
+                <TermsOfUse>For educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Video</MediaType>
+                <MediaType>Text</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">G9</OtherCode>
+                        <OtherCode Codeset="Local">L9</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Math</OtherCode>
+                        <OtherCode Codeset="Local">Algebra</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">IL9</OtherCode>
+                        <OtherCode Codeset="Local">LIL9</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Algebra I Course</Title>
+            <Summary>This course covers the basics of algebra including variables, equations, and functions.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand and apply algebraic concepts.</LearningObjective>
+                <LearningObjective>Solve linear equations and inequalities.</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Module</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1">CustomValue1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">CustomValue2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StudentPlacement>

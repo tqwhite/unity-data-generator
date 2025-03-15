@@ -1,0 +1,164 @@
+<BusInfos xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <BusInfo RefId="123e4567-e89b-12d3-a456-426614174000">
+        <VehicleNumber>Bus-101</VehicleNumber>
+        <SeatingCapacity>50</SeatingCapacity>
+        <Contractor>ABC Transport Services</Contractor>
+        <EquipmentList>
+            <Equipment>
+                <BusEquipmentRefId>987e6543-b21a-34c5-d678-123456789abc</BusEquipmentRefId>
+                <Count>2</Count>
+            </Equipment>
+            <Equipment>
+                <BusEquipmentRefId>654e3210-c98b-76d5-e432-abcdef123456</BusEquipmentRefId>
+                <Count>1</Count>
+            </Equipment>
+        </EquipmentList>
+        <ManufactureYear>2015</ManufactureYear>
+        <VehicleIdentificationNumber>1HGBH41JXMN109186</VehicleIdentificationNumber>
+        <LicensePlateNumber>XYZ-1234</LicensePlateNumber>
+        <SIF_Metadata>
+            <TimeElements>
+                <TimeElement>
+                    <Type>School Year</Type>
+                    <Code>SY2023</Code>
+                    <Name>2023-2024 School Year</Name>
+                    <Value>2023-2024</Value>
+                    <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                    <EndDateTime>2024-06-15T15:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>HOL2023</Code>
+                            <Name>Winter Break</Name>
+                            <Value>Winter Break 2023</Value>
+                            <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                            <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                        </SpanGap>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>SPR2024</Code>
+                            <Name>Spring Break</Name>
+                            <Value>Spring Break 2024</Value>
+                            <StartDateTime>2024-03-25T00:00:00</StartDateTime>
+                            <EndDateTime>2024-03-29T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+            <LifeCycle>
+                <Created>
+                    <DateTime>2023-07-01T10:00:00</DateTime>
+                    <Creators>
+                        <Creator>
+                            <Name>Data System</Name>
+                            <ID>system@school.org</ID>
+                        </Creator>
+                    </Creators>
+                </Created>
+                <ModificationHistory>
+                    <Modified>
+                        <By>admin@school.org</By>
+                        <DateTime>2023-09-01T12:00:00</DateTime>
+                        <Description>Initial data entry</Description>
+                    </Modified>
+                </ModificationHistory>
+                <TimeElements>
+                    <TimeElement>
+                        <Type>Academic Term</Type>
+                        <Code>TERM1</Code>
+                        <Name>First Semester</Name>
+                        <Value>2023-2024 First Semester</Value>
+                        <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                        <EndDateTime>2023-12-19T15:00:00</EndDateTime>
+                        <SpanGaps>
+                            <SpanGap>
+                                <Type>Exam</Type>
+                                <Code>EXAM2023</Code>
+                                <Name>Midterm Exams</Name>
+                                <Value>Midterm Exams 2023</Value>
+                                <StartDateTime>2023-10-15T00:00:00</StartDateTime>
+                                <EndDateTime>2023-10-20T23:59:59</EndDateTime>
+                            </SpanGap>
+                        </SpanGaps>
+                        <IsCurrent>true</IsCurrent>
+                    </TimeElement>
+                </TimeElements>
+            </LifeCycle>
+            <RightsElements>
+                <RightsElement>
+                    <Cost>false</Cost>
+                    <FeesForUse>
+                        <FeeForUse>
+                            <UseType>Classroom</UseType>
+                            <MeteringType>Flat</MeteringType>
+                            <MeteringURL>http://example.com/metering</MeteringURL>
+                            <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                        </FeeForUse>
+                    </FeesForUse>
+                    <CopyrightStatement>© 2023 ABC Transport Services</CopyrightStatement>
+                    <TermsOfUse>Use of this bus is subject to school policies.</TermsOfUse>
+                </RightsElement>
+            </RightsElements>
+            <EducationFilter>
+                <MediaTypes>
+                    <MediaType>Audio</MediaType>
+                    <MediaType>Video</MediaType>
+                </MediaTypes>
+                <GradeLevels>
+                    <GradeLevel>
+                        <Code Codeset="http://example.com/grades">05</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="Local">Fifth Grade</OtherCode>
+                            <OtherCode Codeset="StateProvince">5th</OtherCode>
+                        </OtherCodeList>
+                    </GradeLevel>
+                </GradeLevels>
+                <SubjectAreas>
+                    <SubjectArea>
+                        <Code Codeset="http://example.com/subjects">01</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="Local">Mathematics</OtherCode>
+                            <OtherCode Codeset="Text">Math</OtherCode>
+                        </OtherCodeList>
+                    </SubjectArea>
+                </SubjectAreas>
+                <InterestLevels>
+                    <InterestLevel>
+                        <Code Codeset="http://example.com/interest">05</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="Local">Intermediate</OtherCode>
+                            <OtherCode Codeset="Text">Middle School</OtherCode>
+                        </OtherCodeList>
+                    </InterestLevel>
+                </InterestLevels>
+                <LearningStandardItems>
+                    <LearningStandardItemRefId>abc12345-6789-0abc-def0-1234567890ab</LearningStandardItemRefId>
+                    <LearningStandardItemRefId>def67890-1234-5abc-6789-abcdef012345</LearningStandardItemRefId>
+                </LearningStandardItems>
+                <BloomsTaxonomyLevels>
+                    <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+                </BloomsTaxonomyLevels>
+                <MultipleIntelligences>
+                    <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                </MultipleIntelligences>
+                <InstructionalStrategies>
+                    <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+                </InstructionalStrategies>
+                <Title>Bus Safety and Regulations</Title>
+                <Summary>This document outlines the safety and regulations for school bus operations.</Summary>
+                <LearningObjectives>
+                    <LearningObjective>Understand bus safety protocols</LearningObjective>
+                    <LearningObjective>Recognize emergency procedures</LearningObjective>
+                </LearningObjectives>
+                <ResourceTypes>
+                    <ResourceType>Document</ResourceType>
+                    <ResourceType>Guide</ResourceType>
+                </ResourceTypes>
+            </EducationFilter>
+        </SIF_Metadata>
+        <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="AdditionalInfo" SIF_Action="Delete">Extra data not needed</SIF_ExtendedElement>
+        </SIF_ExtendedElements>
+    </BusInfo>
+</BusInfos>

@@ -1,0 +1,213 @@
+<EmployeeRecertification RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <StateProvinceId>CA123456</StateProvinceId>
+    <SSN>123-45-6789</SSN>
+    <Name Type="04">
+        <Prefix>Mr.</Prefix>
+        <LastName>Smith</LastName>
+        <FirstName>John</FirstName>
+        <MiddleName>A.</MiddleName>
+        <Suffix>Jr.</Suffix>
+        <PreferredName>Johnny</PreferredName>
+        <SortName>Smith, John</SortName>
+        <FullName>John A. Smith Jr.</FullName>
+    </Name>
+    <Demographics>
+        <RaceList>
+            <Race>
+                <Code Codeset="http://example.com/racecodes">White</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="StateProvince">CA-W</OtherCode>
+                    <OtherCode Codeset="Local">Local-W</OtherCode>
+                </OtherCodeList>
+                <Proportion>0.75</Proportion>
+            </Race>
+        </RaceList>
+        <HispanicLatino>No</HispanicLatino>
+        <RaceEthnicityDeclined>No</RaceEthnicityDeclined>
+        <Gender>Male</Gender>
+        <BirthDate>1980-05-15</BirthDate>
+        <BirthDateVerification>Verified</BirthDateVerification>
+        <PlaceOfBirth>Los Angeles</PlaceOfBirth>
+        <CountyOfBirth>Los Angeles</CountyOfBirth>
+        <StateOfBirth>CA</StateOfBirth>
+        <CountryOfBirth>US</CountryOfBirth>
+        <CountriesOfCitizenship>
+            <CountryOfCitizenship>US</CountryOfCitizenship>
+        </CountriesOfCitizenship>
+        <CountriesOfResidency>
+            <CountryOfResidency>US</CountryOfResidency>
+        </CountriesOfResidency>
+        <CountryArrivalDate>1980-06-01</CountryArrivalDate>
+        <CitizenshipStatus>Citizen</CitizenshipStatus>
+        <EnglishProficiency>
+            <Code>Yes</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">CA-EN</OtherCode>
+                <OtherCode Codeset="Local">Local-EN</OtherCode>
+            </OtherCodeList>
+        </EnglishProficiency>
+        <LanguageList>
+            <Language>
+                <Code>eng</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="StateProvince">CA-ENG</OtherCode>
+                    <OtherCode Codeset="Local">Local-ENG</OtherCode>
+                </OtherCodeList>
+                <LanguageType>Primary</LanguageType>
+                <Dialect>American</Dialect>
+            </Language>
+        </LanguageList>
+        <DwellingArrangement>
+            <Code>Urban</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">CA-URB</OtherCode>
+                <OtherCode Codeset="Local">Local-URB</OtherCode>
+            </OtherCodeList>
+        </DwellingArrangement>
+        <MaritalStatus>Married</MaritalStatus>
+        <MilitaryConnectedStudent>NotMilitaryConnected</MilitaryConnectedStudent>
+    </Demographics>
+    <ActivityName>Advanced Mathematics</ActivityName>
+    <ActivityType>Course</ActivityType>
+    <ActivityHours>120.5</ActivityHours>
+    <Earned Type="Credits">3.0</Earned>
+    <DateFrom>2023-01-10</DateFrom>
+    <DateTo>2023-05-20</DateTo>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>Semester</Type>
+                <Code>2023S1</Code>
+                <Name>Spring Semester 2023</Name>
+                <Value>2023-01-10 to 2023-05-20</Value>
+                <StartDateTime>2023-01-10T08:00:00</StartDateTime>
+                <EndDateTime>2023-05-20T17:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Break</Type>
+                        <Code>SpringBreak</Code>
+                        <Name>Spring Break</Name>
+                        <Value>2023-03-20 to 2023-03-24</Value>
+                        <StartDateTime>2023-03-20T00:00:00</StartDateTime>
+                        <EndDateTime>2023-03-24T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Education System</Name>
+                        <ID>edu-system@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Admin</By>
+                    <DateTime>2023-02-15T14:30:00</DateTime>
+                    <Description>Updated course details</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Academic Year</Type>
+                    <Code>2023AY</Code>
+                    <Name>Academic Year 2023</Name>
+                    <Value>2023-01-01 to 2023-12-31</Value>
+                    <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>WinterBreak</Code>
+                            <Name>Winter Break</Name>
+                            <Value>2023-12-20 to 2023-12-31</Value>
+                            <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                            <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Educational</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Education System</CopyrightStatement>
+                <TermsOfUse>For educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>12</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">CA-12</OtherCode>
+                        <OtherCode Codeset="Local">Local-12</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>MA</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">CA-MA</OtherCode>
+                        <OtherCode Codeset="Local">Local-MA</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>12</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">CA-12</OtherCode>
+                        <OtherCode Codeset="Local">Local-12</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174001</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174002</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Analysis</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Problem-Based Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Advanced Mathematics Course</Title>
+            <Summary>This course covers advanced topics in mathematics including calculus and linear algebra.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand advanced calculus concepts</LearningObjective>
+                <LearningObjective>Apply linear algebra techniques</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Module</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</EmployeeRecertification>

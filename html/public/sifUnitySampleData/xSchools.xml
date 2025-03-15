@@ -1,0 +1,65 @@
+<xSchool refId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <leaRefId>987e6543-e21b-12d3-a456-426614174000</leaRefId>
+    <lea refId="987e6543-e21b-12d3-a456-426614174000">
+        <localId>LEA-001</localId>
+        <leaRefId>987e6543-e21b-12d3-a456-426614174000</leaRefId>
+        <stateProvinceId>SP-001</stateProvinceId>
+        <ncesId>NCES-001</ncesId>
+        <leaName>Fictitious Local Education Agency</leaName>
+        <address>
+            <addressType>Mailing</addressType>
+            <line1>123 Main St</line1>
+            <line2>Suite 100</line2>
+            <city>Springfield</city>
+            <stateProvince>IL</stateProvince>
+            <countryCode>US</countryCode>
+            <postalCode>62701</postalCode>
+        </address>
+        <phoneNumber>
+            <phoneNumberType>Work</phoneNumberType>
+            <number>217-555-1234</number>
+            <primaryIndicator>true</primaryIndicator>
+        </phoneNumber>
+        <otherPhoneNumbers>
+            <phoneNumber>
+                <phoneNumberType>Fax</phoneNumberType>
+                <number>217-555-5678</number>
+                <primaryIndicator>false</primaryIndicator>
+            </phoneNumber>
+        </otherPhoneNumbers>
+    </lea>
+    <localId>SCH-001</localId>
+    <stateProvinceId>SP-002</stateProvinceId>
+    <otherIds>
+        <otherId>
+            <type>School</type>
+            <id>OID-001</id>
+        </otherId>
+    </otherIds>
+    <schoolName>Fictitious High School</schoolName>
+    <gradeLevels>
+        <gradeLevel>09</gradeLevel>
+        <gradeLevel>10</gradeLevel>
+    </gradeLevels>
+    <address>
+        <addressType>Physical</addressType>
+        <line1>456 Elm St</line1>
+        <line2></line2>
+        <city>Springfield</city>
+        <stateProvince>IL</stateProvince>
+        <countryCode>US</countryCode>
+        <postalCode>62702</postalCode>
+    </address>
+    <phoneNumber>
+        <phoneNumberType>Work</phoneNumberType>
+        <number>217-555-6789</number>
+        <primaryIndicator>true</primaryIndicator>
+    </phoneNumber>
+    <otherPhoneNumbers>
+        <phoneNumber>
+            <phoneNumberType>Mobile</phoneNumberType>
+            <number>217-555-9876</number>
+            <primaryIndicator>false</primaryIndicator>
+        </phoneNumber>
+    </otherPhoneNumbers>
+</xSchool>

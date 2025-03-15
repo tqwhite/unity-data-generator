@@ -1,0 +1,28 @@
+<xLea refId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <localId>LEA-001</localId>
+    <leaRefId>123e4567-e89b-12d3-a456-426614174001</leaRefId>
+    <stateProvinceId>SP-001</stateProvinceId>
+    <ncesId>NCES-001</ncesId>
+    <leaName>Fictitious School District</leaName>
+    <address>
+        <addressType>Mailing</addressType>
+        <line1>123 Main St</line1>
+        <line2>Suite 100</line2>
+        <city>Springfield</city>
+        <stateProvince>IL</stateProvince>
+        <countryCode>US</countryCode>
+        <postalCode>62701</postalCode>
+    </address>
+    <phoneNumber>
+        <phoneNumberType>Work</phoneNumberType>
+        <number>217-555-1234</number>
+        <primaryIndicator>true</primaryIndicator>
+    </phoneNumber>
+    <otherPhoneNumbers>
+        <phoneNumber>
+            <phoneNumberType>Mobile</phoneNumberType>
+            <number>217-555-5678</number>
+            <primaryIndicator>false</primaryIndicator>
+        </phoneNumber>
+    </otherPhoneNumbers>
+</xLea>

@@ -1,0 +1,144 @@
+<StudentDailyAttendance xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" StudentPersonalRefId="123e4567-e89b-12d3-a456-426614174001" SchoolInfoRefId="123e4567-e89b-12d3-a456-426614174002" Date="2023-09-15" SchoolYear="2023">
+    <AttendanceCodeInfoRefId>123e4567-e89b-12d3-a456-426614174003</AttendanceCodeInfoRefId>
+    <TimeIn>08:00:00</TimeIn>
+    <TimeOut>15:00:00</TimeOut>
+    <AttendanceNote>Present for all classes</AttendanceNote>
+    <InstructionalDeliveryMode Codeset="http://example.com/codeset">In-Person</InstructionalDeliveryMode>
+    <ExpectationsMet>true</ExpectationsMet>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>Day</Type>
+                <Code>20230915</Code>
+                <Name>Attendance Day</Name>
+                <Value>September 15, 2023</Value>
+                <StartDateTime>2023-09-15T08:00:00</StartDateTime>
+                <EndDateTime>2023-09-15T15:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>None</Type>
+                        <Code>000</Code>
+                        <Name>No Gaps</Name>
+                        <Value>Continuous</Value>
+                        <StartDateTime>2023-09-15T08:00:00</StartDateTime>
+                        <EndDateTime>2023-09-15T15:00:00</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-09-15T07:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Attendance System</Name>
+                        <ID>attendance@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>System Admin</By>
+                    <DateTime>2023-09-15T16:00:00</DateTime>
+                    <Description>Initial entry</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Day</Type>
+                    <Code>20230915</Code>
+                    <Name>Attendance Day</Name>
+                    <Value>September 15, 2023</Value>
+                    <StartDateTime>2023-09-15T08:00:00</StartDateTime>
+                    <EndDateTime>2023-09-15T15:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>None</Type>
+                            <Code>000</Code>
+                            <Name>No Gaps</Name>
+                            <Value>Continuous</Value>
+                            <StartDateTime>2023-09-15T08:00:00</StartDateTime>
+                            <EndDateTime>2023-09-15T15:00:00</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational purposes only</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/gradelevel">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Fifth Grade</OtherCode>
+                        <OtherCode Codeset="StateProvince">5th</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/subjectarea">01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        <OtherCode Codeset="StateProvince">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/interestlevel">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Intermediate</OtherCode>
+                        <OtherCode Codeset="StateProvince">Mid</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174005</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Daily Attendance Record</Title>
+            <Summary>Attendance record for September 15, 2023</Summary>
+            <LearningObjectives>
+                <LearningObjective>Improve attendance tracking</LearningObjective>
+                <LearningObjective>Ensure accurate records</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Attendance Data</ResourceType>
+                <ResourceType>School Records</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StudentDailyAttendance>

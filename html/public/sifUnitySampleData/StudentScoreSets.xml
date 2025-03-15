@@ -1,0 +1,147 @@
+<StudentScoreSets xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <StudentScoreSet RefId="123e4567-e89b-12d3-a456-426614174000" ScoreMetric="00512" ScoreMetricCodeset="http://example.com/codeset" AssessmentAdministrationRefId="123e4567-e89b-12d3-a456-426614174001" StudentPersonalRefId="123e4567-e89b-12d3-a456-426614174002" AssessmentRegistrationRefId="123e4567-e89b-12d3-a456-426614174003">
+        <Scores>
+            <Score AssessmentSubTestRefId="123e4567-e89b-12d3-a456-426614174004">
+                <ScoreValue>85</ScoreValue>
+                <DiagnosticStatement>Good performance with room for improvement in algebra.</DiagnosticStatement>
+                <Description>Proficient</Description>
+                <NumberOfResponses>50</NumberOfResponses>
+            </Score>
+        </Scores>
+        <SIF_Metadata>
+            <TimeElements>
+                <TimeElement>
+                    <Type>SchoolYear</Type>
+                    <Code>2023-2024</Code>
+                    <Name>Academic Year</Name>
+                    <Value>2023-2024</Value>
+                    <StartDateTime>2023-08-15T00:00:00</StartDateTime>
+                    <EndDateTime>2024-06-15T00:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>WinterBreak</Code>
+                            <Name>Winter Break</Name>
+                            <Value>Winter Break 2023</Value>
+                            <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                            <EndDateTime>2024-01-05T00:00:00</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+            <LifeCycle>
+                <Created>
+                    <DateTime>2023-09-01T08:00:00</DateTime>
+                    <Creators>
+                        <Creator>
+                            <Name>John Doe</Name>
+                            <ID>john.doe@example.com</ID>
+                        </Creator>
+                    </Creators>
+                </Created>
+                <ModificationHistory>
+                    <Modified>
+                        <By>Jane Smith</By>
+                        <DateTime>2023-10-01T10:00:00</DateTime>
+                        <Description>Updated score values</Description>
+                    </Modified>
+                </ModificationHistory>
+                <TimeElements>
+                    <TimeElement>
+                        <Type>Quarter</Type>
+                        <Code>Q1</Code>
+                        <Name>First Quarter</Name>
+                        <Value>Q1 2023</Value>
+                        <StartDateTime>2023-08-15T00:00:00</StartDateTime>
+                        <EndDateTime>2023-10-15T00:00:00</EndDateTime>
+                        <SpanGaps>
+                            <SpanGap>
+                                <Type>Weekend</Type>
+                                <Code>Weekend</Code>
+                                <Name>Weekend</Name>
+                                <Value>Weekend</Value>
+                            </SpanGap>
+                        </SpanGaps>
+                        <IsCurrent>true</IsCurrent>
+                    </TimeElement>
+                </TimeElements>
+            </LifeCycle>
+            <RightsElements>
+                <RightsElement>
+                    <Cost>false</Cost>
+                    <FeesForUse>
+                        <FeeForUse>
+                            <UseType>Classroom</UseType>
+                            <MeteringType>None</MeteringType>
+                            <MeteringURL>http://example.com/metering</MeteringURL>
+                            <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                        </FeeForUse>
+                    </FeesForUse>
+                    <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                    <TermsOfUse>For educational purposes only.</TermsOfUse>
+                </RightsElement>
+            </RightsElements>
+            <EducationFilter>
+                <MediaTypes>
+                    <MediaType>Text</MediaType>
+                    <MediaType>Video</MediaType>
+                </MediaTypes>
+                <GradeLevels>
+                    <GradeLevel>
+                        <Code Codeset="http://example.com/gradelevels">08</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="Local">MiddleSchool</OtherCode>
+                            <OtherCode Codeset="StateProvince">MS</OtherCode>
+                        </OtherCodeList>
+                    </GradeLevel>
+                </GradeLevels>
+                <SubjectAreas>
+                    <SubjectArea>
+                        <Code Codeset="http://example.com/subjectareas">Math</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="Local">Mathematics</OtherCode>
+                            <OtherCode Codeset="StateProvince">MTH</OtherCode>
+                        </OtherCodeList>
+                    </SubjectArea>
+                </SubjectAreas>
+                <InterestLevels>
+                    <InterestLevel>
+                        <Code Codeset="http://example.com/interestlevels">08</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="Local">MiddleSchool</OtherCode>
+                            <OtherCode Codeset="StateProvince">MS</OtherCode>
+                        </OtherCodeList>
+                    </InterestLevel>
+                </InterestLevels>
+                <LearningStandardItems>
+                    <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174006</LearningStandardItemRefId>
+                    <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174007</LearningStandardItemRefId>
+                </LearningStandardItems>
+                <BloomsTaxonomyLevels>
+                    <BloomsTaxonomyLevel Codeset="http://example.com/blooms">Application</BloomsTaxonomyLevel>
+                </BloomsTaxonomyLevels>
+                <MultipleIntelligences>
+                    <MultipleIntelligence Codeset="http://example.com/intelligences">Logical</MultipleIntelligence>
+                </MultipleIntelligences>
+                <InstructionalStrategies>
+                    <InstructionalStrategy Codeset="http://example.com/strategies">CollaborativeLearning</InstructionalStrategy>
+                </InstructionalStrategies>
+                <Title>Mathematics Assessment</Title>
+                <Summary>This assessment covers basic algebra and geometry concepts.</Summary>
+                <LearningObjectives>
+                    <LearningObjective>Understand algebraic expressions</LearningObjective>
+                    <LearningObjective>Apply geometric principles</LearningObjective>
+                </LearningObjectives>
+                <ResourceTypes>
+                    <ResourceType>Assessment</ResourceType>
+                    <ResourceType>Worksheet</ResourceType>
+                </ResourceTypes>
+            </EducationFilter>
+        </SIF_Metadata>
+        <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="CustomElement1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+            <SIF_ExtendedElement Name="CustomElement2">Value2</SIF_ExtendedElement>
+        </SIF_ExtendedElements>
+    </StudentScoreSet>
+</StudentScoreSets>

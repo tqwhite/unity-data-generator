@@ -1,0 +1,45 @@
+<xStaff refId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <name>
+        <type>LegalName</type>
+        <prefix>Dr.</prefix>
+        <familyName>Smith</familyName>
+        <givenName>John</givenName>
+        <middleName>Alexander</middleName>
+        <suffix>Jr.</suffix>
+    </name>
+    <localId>JS12345</localId>
+    <loginId>john.smith</loginId>
+    <stateProvinceId>SP123456</stateProvinceId>
+    <otherIds>
+        <otherId>
+            <type>SSN</type>
+            <id>987-65-4320</id>
+        </otherId>
+        <otherId>
+            <type>DriversLicense</type>
+            <id>D1234567</id>
+        </otherId>
+    </otherIds>
+    <sex>Male</sex>
+    <email>
+        <emailType>Work</emailType>
+        <emailAddress>john.smith@fakeschool.edu</emailAddress>
+    </email>
+    <primaryAssignment>
+        <leaRefId>123e4567-e89b-12d3-a456-426614174001</leaRefId>
+        <schoolRefId>123e4567-e89b-12d3-a456-426614174002</schoolRefId>
+        <jobFunction>Secondary Teachers</jobFunction>
+    </primaryAssignment>
+    <otherAssignments>
+        <staffPersonAssignment>
+            <leaRefId>123e4567-e89b-12d3-a456-426614174003</leaRefId>
+            <schoolRefId>123e4567-e89b-12d3-a456-426614174004</schoolRefId>
+            <jobFunction>Special Education Teachers</jobFunction>
+        </staffPersonAssignment>
+        <staffPersonAssignment>
+            <leaRefId>123e4567-e89b-12d3-a456-426614174005</leaRefId>
+            <schoolRefId>123e4567-e89b-12d3-a456-426614174006</schoolRefId>
+            <jobFunction>School Counselors</jobFunction>
+        </staffPersonAssignment>
+    </otherAssignments>
+</xStaff>

@@ -1,0 +1,3 @@
+<SEAAccountability xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" SEAInfoRefId="987e6543-b21c-34d5-f678-123456789abc">
+    <HighSchoolGraduationRateIndicatorStatus Codeset="http://example.com/codeset">MetGoal</HighSchoolGraduationRateIndicatorStatus>
+</SEAAccountability>

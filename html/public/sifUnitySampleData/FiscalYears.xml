@@ -1,0 +1,144 @@
+<FiscalYear RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <Description>Fiscal Year 2023-2024</Description>
+    <StartDate>2023-07-01</StartDate>
+    <EndDate>2024-06-30</EndDate>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023-2024 School Year</Name>
+                <Value>July 2023 to June 2024</Value>
+                <StartDateTime>2023-07-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>HOL2023</Code>
+                        <Name>Winter Break</Name>
+                        <Value>December 2023</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-02T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-06-01T10:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-08-15T14:30:00</DateTime>
+                    <Description>Updated fiscal year details</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>July to September</Value>
+                    <StartDateTime>2023-07-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-09-30T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Break</Type>
+                            <Code>BRK2023</Code>
+                            <Name>Fall Break</Name>
+                            <Value>October 2023</Value>
+                            <StartDateTime>2023-10-01T00:00:00</StartDateTime>
+                            <EndDateTime>2023-10-07T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>false</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>Flat</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">10.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>Use for educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/gradecodeset">06</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Middle School</OtherCode>
+                        <OtherCode Codeset="StateProvince">MS</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/subjectcodeset">01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        <OtherCode Codeset="StateProvince">MATH</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/interestcodeset">07</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">High Interest</OtherCode>
+                        <OtherCode Codeset="StateProvince">HI</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>abcdef12-3456-7890-abcd-ef1234567890</LearningStandardItemRefId>
+                <LearningStandardItemRefId>12345678-90ab-cdef-1234-567890abcdef</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+                <BloomsTaxonomyLevel>Applying</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                <MultipleIntelligence>Visual-Spatial</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+                <InstructionalStrategy>Direct Instruction</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Comprehensive Educational Plan</Title>
+            <Summary>This document outlines the educational strategies and objectives for the fiscal year 2023-2024.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Enhance critical thinking skills</LearningObjective>
+                <LearningObjective>Improve mathematical proficiency</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Digital</ResourceType>
+                <ResourceType>Print</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="AdditionalInfo">Extra curricular activities included</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</FiscalYear>

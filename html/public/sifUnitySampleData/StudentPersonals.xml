@@ -1,0 +1,282 @@
+<StudentPersonal xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000">
+    <LocalId>STU12345</LocalId>
+    <StateProvinceId>CA1234567</StateProvinceId>
+    <Name Type="Legal" TypeCodeset="http://example.com/codeset/nameType">
+        <Prefix>Mr.</Prefix>
+        <LastName>Doe</LastName>
+        <FirstName>John</FirstName>
+        <MiddleName>A</MiddleName>
+        <Suffix>Jr.</Suffix>
+        <PreferredName>Johnny</PreferredName>
+        <SortName>Doe, John</SortName>
+        <FullName>John A. Doe Jr.</FullName>
+    </Name>
+    <Demographics>
+        <RaceList>
+            <Race>
+                <Code Codeset="http://example.com/codeset/race">White</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="StateProvince">WHT</OtherCode>
+                </OtherCodeList>
+                <Proportion>1.0</Proportion>
+            </Race>
+        </RaceList>
+        <HispanicLatino Codeset="http://example.com/codeset/hispanicLatino">No</HispanicLatino>
+        <RaceEthnicityDeclined>No</RaceEthnicityDeclined>
+        <Gender Codeset="http://example.com/codeset/gender">Male</Gender>
+        <BirthDate>2005-06-15</BirthDate>
+        <BirthDateVerification Codeset="http://example.com/codeset/birthDateVerification">Verified</BirthDateVerification>
+        <PlaceOfBirth>Los Angeles</PlaceOfBirth>
+        <CountyOfBirth>US</CountyOfBirth>
+        <StateOfBirth Codeset="http://example.com/codeset/stateOfBirth">CA</StateOfBirth>
+        <CountryOfBirth Codeset="http://example.com/codeset/countryOfBirth">US</CountryOfBirth>
+        <CountriesOfCitizenship>
+            <CountryOfCitizenship Codeset="http://example.com/codeset/countryOfCitizenship">US</CountryOfCitizenship>
+        </CountriesOfCitizenship>
+        <CountriesOfResidency>
+            <CountryOfResidency Codeset="http://example.com/codeset/countryOfResidency">US</CountryOfResidency>
+        </CountriesOfResidency>
+        <CountryArrivalDate>2005-06-15</CountryArrivalDate>
+        <CitizenshipStatus Codeset="http://example.com/codeset/citizenshipStatus">Citizen</CitizenshipStatus>
+        <EnglishProficiency>
+            <Code Codeset="http://example.com/codeset/englishProficiency">Yes</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">ENG</OtherCode>
+            </OtherCodeList>
+        </EnglishProficiency>
+        <LanguageList>
+            <Language>
+                <Code Codeset="http://example.com/codeset/language">eng</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="StateProvince">ENG</OtherCode>
+                </OtherCodeList>
+                <LanguageType Codeset="http://example.com/codeset/languageType">Primary</LanguageType>
+                <Dialect>American English</Dialect>
+            </Language>
+        </LanguageList>
+        <DwellingArrangement>
+            <Code Codeset="http://example.com/codeset/dwellingArrangement">House</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">HSE</OtherCode>
+            </OtherCodeList>
+        </DwellingArrangement>
+        <MaritalStatus>Single</MaritalStatus>
+        <MilitaryConnectedStudent>NotMilitaryConnected</MilitaryConnectedStudent>
+    </Demographics>
+    <RemoteLearningLocationProfileList>
+        <RemoteLearningLocationProfile>
+            <LocationName>Home</LocationName>
+            <PrimaryIndicator>Yes</PrimaryIndicator>
+            <PrimaryLearningDevice Codeset="http://example.com/codeset/primaryLearningDevice">Laptop</PrimaryLearningDevice>
+            <PrimaryLearningDeviceAccess Codeset="http://example.com/codeset/primaryLearningDeviceAccess">NotShared</PrimaryLearningDeviceAccess>
+            <PrimaryLearningDeviceProvider Codeset="http://example.com/codeset/primaryLearningDeviceProvider">School</PrimaryLearningDeviceProvider>
+            <InternetAccess Codeset="http://example.com/codeset/internetAccess">Yes</InternetAccess>
+            <InternetAccessBarrier Codeset="http://example.com/codeset/internetAccessBarrier">None</InternetAccessBarrier>
+            <InternetAccessType Codeset="http://example.com/codeset/internetAccessType">Broadband</InternetAccessType>
+            <InternetPerformance Codeset="http://example.com/codeset/internetPerformance">Good</InternetPerformance>
+            <AddressRefId>123e4567-e89b-12d3-a456-426614174001</AddressRefId>
+        </RemoteLearningLocationProfile>
+    </RemoteLearningLocationProfileList>
+    <AddressList>
+        <Address Type="Mailing" TypeCodeset="http://example.com/codeset/addressType">
+            <Street>
+                <Line1>123 Main St</Line1>
+                <Line2>Apt 4B</Line2>
+                <Complex>Greenwood Complex</Complex>
+                <StreetNumber>123</StreetNumber>
+                <StreetPrefix>NE</StreetPrefix>
+                <StreetName>Main</StreetName>
+                <StreetType>St</StreetType>
+                <StreetSuffix>SW</StreetSuffix>
+                <ApartmentType>Suite</ApartmentType>
+                <ApartmentNumberPrefix>#</ApartmentNumberPrefix>
+                <ApartmentNumber>4B</ApartmentNumber>
+                <ApartmentNumberSuffix>A</ApartmentNumberSuffix>
+            </Street>
+            <City>Los Angeles</City>
+            <County>Los Angeles</County>
+            <StateProvince Codeset="http://example.com/codeset/stateProvince">CA</StateProvince>
+            <StateANSICode Codeset="http://example.com/codeset/stateANSICode">06</StateANSICode>
+            <Country Codeset="http://example.com/codeset/country">US</Country>
+            <PostalCode>90001</PostalCode>
+            <GridLocation>
+                <Latitude>34.0522</Latitude>
+                <Longitude>-118.2437</Longitude>
+            </GridLocation>
+            <AddressRefId>123e4567-e89b-12d3-a456-426614174001</AddressRefId>
+        </Address>
+    </AddressList>
+    <AddressRefIdList>
+        <AddressRefId AddressRole="Residential">123e4567-e89b-12d3-a456-426614174001</AddressRefId>
+    </AddressRefIdList>
+    <PhoneNumberList>
+        <PhoneNumber Type="Home" TypeCodeset="http://example.com/codeset/phoneType">
+            <Number>(555) 123-4567</Number>
+            <Extension>123</Extension>
+            <ListedStatus>Yes</ListedStatus>
+        </PhoneNumber>
+    </PhoneNumberList>
+    <EmailList>
+        <Email Type="Home" TypeCodeset="http://example.com/codeset/emailType">john.doe@example.com</Email>
+    </EmailList>
+    <CohortYear>2020</CohortYear>
+    <ProjectedGraduationYear>2024</ProjectedGraduationYear>
+    <OnTimeGraduationYear>2024</OnTimeGraduationYear>
+    <GraduationDate>2024-06-15</GraduationDate>
+    <MostRecent>
+        <SchoolLocalId>SL12345</SchoolLocalId>
+        <HomeroomLocalId>HR6789</HomeroomLocalId>
+        <GradeLevel>
+            <Code Codeset="http://example.com/codeset/gradeLevel">11</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">11th</OtherCode>
+            </OtherCodeList>
+        </GradeLevel>
+    </MostRecent>
+    <AcceptableUsePolicy Codeset="http://example.com/codeset/acceptableUsePolicy">Yes</AcceptableUsePolicy>
+    <IDEA Codeset="http://example.com/codeset/idea">Yes</IDEA>
+    <Migrant Codeset="http://example.com/codeset/migrant">No</Migrant>
+    <Title1 Codeset="http://example.com/codeset/title1">Yes</Title1>
+    <GiftedTalented Codeset="http://example.com/codeset/giftedTalented">Yes</GiftedTalented>
+    <EconomicDisadvantage Codeset="http://example.com/codeset/economicDisadvantage">No</EconomicDisadvantage>
+    <ELL Codeset="http://example.com/codeset/ell">No</ELL>
+    <Homeless Codeset="http://example.com/codeset/homeless">No</Homeless>
+    <HomelessServicedIndicator Codeset="http://example.com/codeset/homelessServicedIndicator">No</HomelessServicedIndicator>
+    <Section504 Codeset="http://example.com/codeset/section504">No</Section504>
+    <VocationalConcentrator Codeset="http://example.com/codeset/vocationalConcentrator">No</VocationalConcentrator>
+    <Immigrant Codeset="http://example.com/codeset/immigrant">No</Immigrant>
+    <NeglectedDelinquent Codeset="http://example.com/codeset/neglectedDelinquent">No</NeglectedDelinquent>
+    <FirstUSEnrollment>2010-09-01</FirstUSEnrollment>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>2023</Code>
+                <Name>Current School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>WinterBreak</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-02</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-02T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>School Management System</Name>
+                        <ID>sms@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Admin</By>
+                    <DateTime>2023-06-01T15:30:00</DateTime>
+                    <Description>Updated student information</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Semester</Type>
+                    <Code>2023S1</Code>
+                    <Name>First Semester</Name>
+                    <Value>2023-09-01 to 2023-12-19</Value>
+                    <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-12-19T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Midterm</Type>
+                            <Code>MidtermBreak</Code>
+                            <Name>Midterm Break</Name>
+                            <Value>2023-10-15 to 2023-10-20</Value>
+                            <StartDateTime>2023-10-15T00:00:00</StartDateTime>
+                            <EndDateTime>2023-10-20T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Educational</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/codeset/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 School District</CopyrightStatement>
+                <TermsOfUse>For educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/codeset/gradeLevel">11</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">11th</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/codeset/subjectArea">Math</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">MAT</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/codeset/interestLevel">High</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">HGH</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174002</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel Codeset="http://example.com/codeset/bloomsTaxonomyLevel">Application</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence Codeset="http://example.com/codeset/multipleIntelligence">Logical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy Codeset="http://example.com/codeset/instructionalStrategy">Collaborative</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Algebra II</Title>
+            <Summary>An advanced course in algebra covering quadratic equations, functions, and polynomials.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand quadratic equations</LearningObjective>
+                <LearningObjective>Apply polynomial functions</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Custom Value 1</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StudentPersonal>

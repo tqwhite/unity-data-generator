@@ -1,0 +1,153 @@
+<IdMApplication RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <Name>EduApp</Name>
+    <URI>http://www.eduapp.com</URI>
+    <DefaultFunction>Student Management</DefaultFunction>
+    <FunctionList>
+        <Function>Attendance Tracking</Function>
+        <Function>Grade Reporting</Function>
+    </FunctionList>
+    <DefaultIdentityProvider>987e6543-e21b-12d3-a456-426614174001</DefaultIdentityProvider>
+    <IdentityProviderList>
+        <IdentityProvider>987e6543-e21b-12d3-a456-426614174002</IdentityProvider>
+        <IdentityProvider>987e6543-e21b-12d3-a456-426614174003</IdentityProvider>
+    </IdentityProviderList>
+    <StartDate>2023-01-01</StartDate>
+    <EndDate>2023-12-31</EndDate>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023 School Year</Name>
+                <Value>2023</Value>
+                <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Summer Break</Type>
+                        <Code>SB2023</Code>
+                        <Name>Summer 2023</Name>
+                        <Value>June to August</Value>
+                        <StartDateTime>2023-06-01T00:00:00</StartDateTime>
+                        <EndDateTime>2023-08-31T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T00:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>System Admin</Name>
+                        <ID>admin@eduapp.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>System Admin</By>
+                    <DateTime>2023-06-01T12:00:00</DateTime>
+                    <Description>Updated for summer break</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>January to March</Value>
+                    <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-03-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Winter Break</Type>
+                            <Code>WB2023</Code>
+                            <Name>Winter 2023</Name>
+                            <Value>December</Value>
+                            <StartDateTime>2023-12-01T00:00:00</StartDateTime>
+                            <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>false</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://www.eduapp.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://www.currencycodes.com">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 EduApp Inc.</CopyrightStatement>
+                <TermsOfUse>Use for educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>06</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Middle School</OtherCode>
+                        <OtherCode Codeset="StateProvince">MS</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        <OtherCode Codeset="StateProvince">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>06</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Middle School</OtherCode>
+                        <OtherCode Codeset="StateProvince">MS</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>456e7890-e12b-12d3-a456-426614174004</LearningStandardItemRefId>
+                <LearningStandardItemRefId>456e7890-e12b-12d3-a456-426614174005</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Algebra</Title>
+            <Summary>This course covers basic algebraic concepts.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand algebraic expressions</LearningObjective>
+                <LearningObjective>Solve linear equations</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Interactive</ResourceType>
+                <ResourceType>Worksheet</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</IdMApplication>

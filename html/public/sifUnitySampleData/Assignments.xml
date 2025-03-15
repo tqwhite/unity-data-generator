@@ -1,0 +1,176 @@
+<Assignment RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <Students>
+        <StudentPersonalRefId>123e4567-e89b-12d3-a456-426614174001</StudentPersonalRefId>
+    </Students>
+    <StaffPersonalRefId>123e4567-e89b-12d3-a456-426614174003</StaffPersonalRefId>
+    <TechnicalRequirements>
+        <TechnicalRequirement>Windows 10</TechnicalRequirement>
+    </TechnicalRequirements>
+    <SoftwareRequirementList>
+        <SoftwareRequirement>
+            <SoftwareTitle>Flash</SoftwareTitle>
+            <Version>32.0</Version>
+            <Vendor>Adobe</Vendor>
+            <OS>Windows 10</OS>
+        </SoftwareRequirement>
+    </SoftwareRequirementList>
+    <EssentialMaterials>
+        <EssentialMaterial>Textbook</EssentialMaterial>
+    </EssentialMaterials>
+    <Title>Math Assignment 1</Title>
+    <Preamble>This assignment covers basic algebra concepts.</Preamble>
+    <LearningObjectives>
+        <LearningObjective>Understand algebraic expressions</LearningObjective>
+    </LearningObjectives>
+    <LearningStandards>
+        <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+    </LearningStandards>
+    <Prerequisites>
+        <Prerequisite>Basic arithmetic skills</Prerequisite>
+    </Prerequisites>
+    <SourceObjects>
+        <SourceObject SIF_RefObject="Textbook" SIF_RefObjectCodeset="http://example.com/codeset">
+            123e4567-e89b-12d3-a456-426614174006
+        </SourceObject>
+    </SourceObjects>
+    <AssignmentTime>
+        <CreationDate>2023-01-15</CreationDate>
+        <Duration Units="hours" UnitsCodeset="http://example.com/units">2</Duration>
+        <StartDate>2023-01-20</StartDate>
+        <StartTime>09:00:00</StartTime>
+        <DueDate>2023-01-27</DueDate>
+        <DueTime>17:00:00</DueTime>
+        <AdministrationDate>2023-01-21</AdministrationDate>
+    </AssignmentTime>
+    <MaxAttemptsAllowed>3</MaxAttemptsAllowed>
+    <AddToGradeBookFlag>true</AddToGradeBookFlag>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>Semester</Type>
+                <Code>2023S1</Code>
+                <Name>Spring Semester 2023</Name>
+                <Value>Spring 2023</Value>
+                <StartDateTime>2023-01-10T00:00:00</StartDateTime>
+                <EndDateTime>2023-05-15T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>SpringBreak</Code>
+                        <Name>Spring Break</Name>
+                        <Value>Week off</Value>
+                        <StartDateTime>2023-03-15T00:00:00</StartDateTime>
+                        <EndDateTime>2023-03-22T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-10T08:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-01-12T10:00:00</DateTime>
+                    <Description>Updated due date</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>2023Q1</Code>
+                    <Name>First Quarter 2023</Name>
+                    <Value>Q1 2023</Value>
+                    <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-03-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Maintenance</Type>
+                            <Code>SystemUpdate</Code>
+                            <Name>System Update</Name>
+                            <Value>Scheduled downtime</Value>
+                            <StartDateTime>2023-02-10T02:00:00</StartDateTime>
+                            <EndDateTime>2023-02-10T04:00:00</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>FlatRate</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">10.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School</CopyrightStatement>
+                <TermsOfUse>For educational use only</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/gradelevels">09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">HS9</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/subjectareas">MA</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/interestlevels">09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">HS9</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174008</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Problem-Based Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Algebra Basics</Title>
+            <Summary>This content covers the basics of algebra including variables and equations.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Develop problem-solving skills</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Worksheet</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</Assignment>

@@ -1,0 +1,276 @@
+<StudentParticipation xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" StudentPersonalRefId="123e4567-e89b-12d3-a456-426614174001">
+    <StudentParticipationAsOfDate>2023-10-01</StudentParticipationAsOfDate>
+    <ProgramType>
+        <Code Codeset="http://example.com/codeset/program">SpecialEducation</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">SPED123</OtherCode>
+            <OtherCode Codeset="Local">LESPED456</OtherCode>
+        </OtherCodeList>
+    </ProgramType>
+    <ProgramIdentifier>SPED-2023-001</ProgramIdentifier>
+    <ProgramName>Special Education Program</ProgramName>
+    <ProgramFundingSources>
+        <ProgramFundingSource>
+            <Code Codeset="http://example.com/codeset/funding">FederalGrant</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">FG123</OtherCode>
+                <OtherCode Codeset="Local">LFG456</OtherCode>
+            </OtherCodeList>
+        </ProgramFundingSource>
+    </ProgramFundingSources>
+    <ManagingPublicAgency SIF_RefObject="LEAInfo">123e4567-e89b-12d3-a456-426614174004</ManagingPublicAgency>
+    <ManagingSchool SIF_RefObject="SchoolInfo">123e4567-e89b-12d3-a456-426614174005</ManagingSchool>
+    <PartCTransitionMeetingNotHeldReasons>
+        <PartCTransitionMeetingNotHeldReason>
+            <Code Codeset="http://example.com/codeset/reason">ParentUnavailable</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">PU123</OtherCode>
+                <OtherCode Codeset="Local">LPU456</OtherCode>
+            </OtherCodeList>
+        </PartCTransitionMeetingNotHeldReason>
+    </PartCTransitionMeetingNotHeldReasons>
+    <PartCTransitionMeetingDate>2023-09-15</PartCTransitionMeetingDate>
+    <PartCTransitionMeetingOutcomes>
+        <PartCTransitionMeetingOutcome>
+            <Code Codeset="http://example.com/codeset/outcome">PlanApproved</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">PA123</OtherCode>
+                <OtherCode Codeset="Local">LPA456</OtherCode>
+            </OtherCodeList>
+        </PartCTransitionMeetingOutcome>
+    </PartCTransitionMeetingOutcomes>
+    <ReferralDate>2023-08-01</ReferralDate>
+    <ReferralSource>
+        <Code Codeset="http://example.com/codeset/referral">TeacherReferral</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">TR123</OtherCode>
+            <OtherCode Codeset="Local">LTR456</OtherCode>
+        </OtherCodeList>
+    </ReferralSource>
+    <ProgramStatus>
+        <Code Codeset="http://example.com/codeset/status">Active</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">ACT123</OtherCode>
+            <OtherCode Codeset="Local">LACT456</OtherCode>
+        </OtherCodeList>
+    </ProgramStatus>
+    <GiftedEligibilityCriteria>StateCode123</GiftedEligibilityCriteria>
+    <EvaluationParentalConsentDate>2023-08-15</EvaluationParentalConsentDate>
+    <EvaluationDate>2023-09-01</EvaluationDate>
+    <EvaluationExtensionDate>2023-09-10</EvaluationExtensionDate>
+    <ExtensionComments>Parent requested extension due to scheduling conflicts.</ExtensionComments>
+    <ReevaluationDate>2024-08-01</ReevaluationDate>
+    <ExceptionalityCategories>
+        <ExceptionalityCategory>
+            <Code Codeset="http://example.com/codeset/exceptionality">SLD</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">SLD123</OtherCode>
+                <OtherCode Codeset="Local">LSLD456</OtherCode>
+            </OtherCodeList>
+            <ExceptionalityPriority>Primary</ExceptionalityPriority>
+        </ExceptionalityCategory>
+    </ExceptionalityCategories>
+    <ProgramEligibilityDate>2023-09-05</ProgramEligibilityDate>
+    <ProgramPlanType>
+        <Code Codeset="http://example.com/codeset/plan">Yes</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">YES123</OtherCode>
+            <OtherCode Codeset="Local">LYES456</OtherCode>
+        </OtherCodeList>
+    </ProgramPlanType>
+    <ProgramPlanDate>2023-09-10</ProgramPlanDate>
+    <ProgramPlanEffectiveDate>2023-09-15</ProgramPlanEffectiveDate>
+    <NOREPDate>2023-09-12</NOREPDate>
+    <PlacementParentalConsentDate>2023-09-14</PlacementParentalConsentDate>
+    <ProgramPlacementDate>2023-09-20</ProgramPlacementDate>
+    <ProgramPlacementReason>Identified need for additional support in reading and math.</ProgramPlacementReason>
+    <LeastRestrictiveEnvironment>
+        <Code Codeset="http://example.com/codeset/environment">Inclusion</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">INC123</OtherCode>
+            <OtherCode Codeset="Local">LINC456</OtherCode>
+        </OtherCodeList>
+    </LeastRestrictiveEnvironment>
+    <ExtendedSchoolYear>true</ExtendedSchoolYear>
+    <ExtendedDay>false</ExtendedDay>
+    <ProgramAvailability>
+        <Code Codeset="http://example.com/codeset/availability">FullTime</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">FT123</OtherCode>
+            <OtherCode Codeset="Local">LFT456</OtherCode>
+        </OtherCodeList>
+    </ProgramAvailability>
+    <PrivateNotPlacedByPublic>false</PrivateNotPlacedByPublic>
+    <ProgramReviewDate>2024-09-01</ProgramReviewDate>
+    <FBADate>2023-09-25</FBADate>
+    <BIPDate>2023-09-30</BIPDate>
+    <ProgramExitDate>2024-06-15</ProgramExitDate>
+    <ProgramExitReason>
+        <Code Codeset="http://example.com/codeset/exitreason">GraduatedAlternateDiploma</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">GAD123</OtherCode>
+            <OtherCode Codeset="Local">LGAD456</OtherCode>
+        </OtherCodeList>
+    </ProgramExitReason>
+    <ProjectedExitDate>2024-06-01</ProjectedExitDate>
+    <ProjectedExitReason Codeset="StateProvince">06262</ProjectedExitReason>
+    <PlannedAssessmentParticipation Codeset="StateProvince">02226</PlannedAssessmentParticipation>
+    <TransitionPlanning Codeset="StateProvince">02222</TransitionPlanning>
+    <StudentSpecialEducationFTE>0.5</StudentSpecialEducationFTE>
+    <EntryPerson>Jane Doe</EntryPerson>
+    <ParticipationContact>John Smith</ParticipationContact>
+    <AdditionalProgramAvailabilityList>
+        <ProgramAvailability>
+            <Code Codeset="http://example.com/codeset/availability">PartTime</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">PT123</OtherCode>
+                <OtherCode Codeset="Local">LPT456</OtherCode>
+            </OtherCodeList>
+        </ProgramAvailability>
+    </AdditionalProgramAvailabilityList>
+    <CaseManager>Emily Johnson</CaseManager>
+    <FreeAndReducedStatus>Free</FreeAndReducedStatus>
+    <CertifiedLunchProgram Codeset="http://example.com/codeset/lunch">Yes</CertifiedLunchProgram>
+    <PerkinsLEPStatus Codeset="http://example.com/codeset/perkins">LEP123</PerkinsLEPStatus>
+    <TitleIIIAccountabilityProgressStatus Codeset="http://example.com/codeset/titleIII">T3APS123</TitleIIIAccountabilityProgressStatus>
+    <TitleIIIImmigrantParticipationStatus Codeset="http://example.com/codeset/titleIII">T3IPS123</TitleIIIImmigrantParticipationStatus>
+    <NeglectedOrDelinquentAchievementIndicator Codeset="http://example.com/codeset/neglected">NDAI123</NeglectedOrDelinquentAchievementIndicator>
+    <NeglectedOrDelinquentAcademicOutcomeIndicator Codeset="http://example.com/codeset/neglected">NDAOI123</NeglectedOrDelinquentAcademicOutcomeIndicator>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>SY2023</Code>
+                <Name>2023-2024 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                <EndDateTime>2024-06-15T15:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>WinterBreak</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-05</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-10-01T10:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Data Entry System</Name>
+                        <ID>system@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>AdminUser</By>
+                    <DateTime>2023-10-05T12:00:00</DateTime>
+                    <Description>Initial data entry</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>2023-08-15 to 2023-10-15</Value>
+                    <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                    <EndDateTime>2023-10-15T15:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Weekend</Type>
+                            <Code>WeekendGap</Code>
+                            <Name>Weekend</Name>
+                            <Value>Every Saturday and Sunday</Value>
+                            <StartDateTime>2023-08-19T00:00:00</StartDateTime>
+                            <EndDateTime>2023-08-20T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/codeset/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Springfield School District</CopyrightStatement>
+                <TermsOfUse>For educational use only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/codeset/grade">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">FifthGrade</OtherCode>
+                        <OtherCode Codeset="Local">5th</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/codeset/subject">Math</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">MATH123</OtherCode>
+                        <OtherCode Codeset="Local">LMATH456</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/codeset/interest">Intermediate</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">INT123</OtherCode>
+                        <OtherCode Codeset="Local">LINT456</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174002</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>CollaborativeLearning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Math Curriculum</Title>
+            <Summary>This curriculum covers basic arithmetic and introductory algebra.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand basic arithmetic operations</LearningObjective>
+                <LearningObjective>Apply arithmetic to solve real-world problems</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Workbook</ResourceType>
+                <ResourceType>OnlineCourse</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1">CustomValue1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">CustomValue2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StudentParticipation>

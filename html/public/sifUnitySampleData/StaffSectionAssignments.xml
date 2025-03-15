@@ -1,0 +1,151 @@
+<StaffSectionAssignment RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <StaffPersonalRefId>123e4567-e89b-12d3-a456-426614174001</StaffPersonalRefId>
+    <SectionInfoRefId>123e4567-e89b-12d3-a456-426614174002</SectionInfoRefId>
+    <AssignmentStartDate>2023-08-15T08:00:00</AssignmentStartDate>
+    <AssignmentEndDate>2024-06-15T15:00:00</AssignmentEndDate>
+    <TeacherOfRecord Codeset="http://example.com/codeset/teacherOfRecord">Yes</TeacherOfRecord>
+    <Roles>
+        <Role Codeset="http://example.com/codeset/roles">Lead Teacher</Role>
+        <Role Codeset="http://example.com/codeset/roles">Mentor</Role>
+    </Roles>
+    <PercentResponsible>100</PercentResponsible>
+    <TeacherInexperiencedStatus Codeset="http://example.com/codeset/teacherInexperiencedStatus">TCHINEXPRNCD</TeacherInexperiencedStatus>
+    <TeacherOutOfFieldStatus Codeset="http://example.com/codeset/teacherOutOfFieldStatus">TCHINFLD</TeacherOutOfFieldStatus>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023-2024 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                <EndDateTime>2024-06-15T15:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>HOL2023</Code>
+                        <Name>Winter Break</Name>
+                        <Value>Winter Break 2023</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-07-01T10:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Data System</Name>
+                        <ID>system@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Admin</By>
+                    <DateTime>2023-09-01T12:00:00</DateTime>
+                    <Description>Initial data entry</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>Q1 2023</Value>
+                    <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                    <EndDateTime>2023-10-15T15:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Weekend</Type>
+                            <Code>WE2023</Code>
+                            <Name>Weekends</Name>
+                            <Value>All weekends</Value>
+                            <StartDateTime>2023-08-19T00:00:00</StartDateTime>
+                            <EndDateTime>2023-08-20T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/codeset/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational use only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>06</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP06</OtherCode>
+                        <OtherCode Codeset="Local">LC06</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP01</OtherCode>
+                        <OtherCode Codeset="Local">LC01</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>06</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP06</OtherCode>
+                        <OtherCode Codeset="Local">LC06</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Mathematics</Title>
+            <Summary>This course covers basic mathematical concepts.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand basic arithmetic operations</LearningObjective>
+                <LearningObjective>Develop problem-solving skills</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomElement1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomElement2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StaffSectionAssignment>

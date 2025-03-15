@@ -1,0 +1,11 @@
+<SchoolAccountability xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" SchoolInfoRefId="123e4567-e89b-12d3-a456-426614174001">
+    <GunFreeSchoolsActReportingStatus Codeset="http://example.com/codeset/gunfreeschools">YesReportingOffenses</GunFreeSchoolsActReportingStatus>
+    <HighSchoolGraduationRateIndicatorStatus Codeset="http://example.com/codeset/graduationrate">Achieved</HighSchoolGraduationRateIndicatorStatus>
+    <PersistentlyDangerousStatus Codeset="http://example.com/codeset/dangerousstatus">NotDangerous</PersistentlyDangerousStatus>
+    <ProficiencyTargetStatusForMath Codeset="http://example.com/codeset/mathproficiency">Met</ProficiencyTargetStatusForMath>
+    <ProficiencyTargetStatusForReadingAndLanguageArts Codeset="http://example.com/codeset/readingproficiency">NotMet</ProficiencyTargetStatusForReadingAndLanguageArts>
+    <SchoolOperationalStatus Codeset="http://example.com/codeset/operationalstatus">Operational</SchoolOperationalStatus>
+    <ReconstitutedStatus Codeset="http://example.com/codeset/reconstitutedstatus">NotReconstituted</ReconstitutedStatus>
+    <SchoolImprovementExitDate>2023-06-15</SchoolImprovementExitDate>
+    <SchoolImprovementFundsStatus Codeset="http://example.com/codeset/improvementfunds">Received</SchoolImprovementFundsStatus>
+</SchoolAccountability>

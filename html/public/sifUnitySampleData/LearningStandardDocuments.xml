@@ -1,0 +1,190 @@
+<LearningStandardDocuments xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <LearningStandardDocument RefId="123e4567-e89b-12d3-a456-426614174000">
+        <RefURI>http://example.com/standards/123e4567-e89b-12d3-a456-426614174000</RefURI>
+        <Title>Washington Essential Academic Learning Requirements</Title>
+        <ShortName>WA EALR</ShortName>
+        <DocumentVersion>1.0</DocumentVersion>
+        <Description>This document outlines the essential academic learning requirements for Washington state.</Description>
+        <Source Codeset="http://example.com/codeset/source">State Education Department</Source>
+        <Organizations>
+            <Organization>Washington State Board of Education</Organization>
+            <Organization>Office of Superintendent of Public Instruction</Organization>
+        </Organizations>
+        <Authors>
+            <Author>Jane Doe</Author>
+            <Author>John Smith</Author>
+        </Authors>
+        <OrganizationContactPoint>contact@education.wa.gov</OrganizationContactPoint>
+        <SubjectAreas>
+            <SubjectArea>
+                <Code Codeset="http://example.com/codeset/subject">01</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="StateProvince">WA01</OtherCode>
+                    <OtherCode Codeset="Local">Local01</OtherCode>
+                </OtherCodeList>
+            </SubjectArea>
+        </SubjectAreas>
+        <DocumentStatus Codeset="http://example.com/codeset/status">Active</DocumentStatus>
+        <DocumentDate>2023-01-15</DocumentDate>
+        <LocalAdoptionDate>2023-02-01</LocalAdoptionDate>
+        <LocalArchiveDate>2025-12-31</LocalArchiveDate>
+        <EndOfLifeDate>2026-01-01</EndOfLifeDate>
+        <Copyright>
+            <Date>2023-01-01</Date>
+            <Holder>Washington State Board of Education</Holder>
+        </Copyright>
+        <GradeLevels>
+            <GradeLevel>
+                <Code Codeset="http://example.com/codeset/grade">05</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="StateProvince">WA05</OtherCode>
+                    <OtherCode Codeset="Local">Local05</OtherCode>
+                </OtherCodeList>
+            </GradeLevel>
+        </GradeLevels>
+        <RepositoryDate>2023-01-20</RepositoryDate>
+        <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174001</LearningStandardItemRefId>
+        <RelatedLearningStandards>
+            <LearningStandardDocumentRefId>123e4567-e89b-12d3-a456-426614174002</LearningStandardDocumentRefId>
+        </RelatedLearningStandards>
+        <SIF_Metadata>
+            <TimeElements>
+                <TimeElement>
+                    <Type>School Year</Type>
+                    <Code>SY2023</Code>
+                    <Name>2023 School Year</Name>
+                    <Value>2023-2024</Value>
+                    <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                    <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>WinterBreak</Code>
+                            <Name>Winter Break</Name>
+                            <Value>2023-12-20 to 2024-01-02</Value>
+                            <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                            <EndDateTime>2024-01-02T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+            <LifeCycle>
+                <Created>
+                    <DateTime>2023-01-01T12:00:00</DateTime>
+                    <Creators>
+                        <Creator>
+                            <Name>Education System</Name>
+                            <ID>system@education.wa.gov</ID>
+                        </Creator>
+                    </Creators>
+                </Created>
+                <ModificationHistory>
+                    <Modified>
+                        <By>admin@education.wa.gov</By>
+                        <DateTime>2023-02-15T14:30:00</DateTime>
+                        <Description>Initial document creation</Description>
+                    </Modified>
+                </ModificationHistory>
+                <TimeElements>
+                    <TimeElement>
+                        <Type>Quarter</Type>
+                        <Code>Q1</Code>
+                        <Name>First Quarter</Name>
+                        <Value>2023-09-01 to 2023-11-30</Value>
+                        <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                        <EndDateTime>2023-11-30T23:59:59</EndDateTime>
+                        <SpanGaps>
+                            <SpanGap>
+                                <Type>Break</Type>
+                                <Code>FallBreak</Code>
+                                <Name>Fall Break</Name>
+                                <Value>2023-10-15 to 2023-10-20</Value>
+                                <StartDateTime>2023-10-15T00:00:00</StartDateTime>
+                                <EndDateTime>2023-10-20T23:59:59</EndDateTime>
+                            </SpanGap>
+                        </SpanGaps>
+                        <IsCurrent>true</IsCurrent>
+                    </TimeElement>
+                </TimeElements>
+            </LifeCycle>
+            <RightsElements>
+                <RightsElement>
+                    <Cost>false</Cost>
+                    <FeesForUse>
+                        <FeeForUse>
+                            <UseType>Classroom</UseType>
+                            <MeteringType>None</MeteringType>
+                            <MeteringURL>http://example.com/metering</MeteringURL>
+                            <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/codeset/currency">0.00</PerUseCharge>
+                        </FeeForUse>
+                    </FeesForUse>
+                    <CopyrightStatement>© 2023 Washington State Board of Education</CopyrightStatement>
+                    <TermsOfUse>For educational use only.</TermsOfUse>
+                </RightsElement>
+            </RightsElements>
+            <EducationFilter>
+                <MediaTypes>
+                    <MediaType>Text</MediaType>
+                    <MediaType>Video</MediaType>
+                </MediaTypes>
+                <GradeLevels>
+                    <GradeLevel>
+                        <Code Codeset="http://example.com/codeset/grade">05</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">WA05</OtherCode>
+                            <OtherCode Codeset="Local">Local05</OtherCode>
+                        </OtherCodeList>
+                    </GradeLevel>
+                </GradeLevels>
+                <SubjectAreas>
+                    <SubjectArea>
+                        <Code Codeset="http://example.com/codeset/subject">01</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">WA01</OtherCode>
+                            <OtherCode Codeset="Local">Local01</OtherCode>
+                        </OtherCodeList>
+                    </SubjectArea>
+                </SubjectAreas>
+                <InterestLevels>
+                    <InterestLevel>
+                        <Code Codeset="http://example.com/codeset/interest">05</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">WA05</OtherCode>
+                            <OtherCode Codeset="Local">Local05</OtherCode>
+                        </OtherCodeList>
+                    </InterestLevel>
+                </InterestLevels>
+                <LearningStandardItems>
+                    <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+                    <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+                </LearningStandardItems>
+                <BloomsTaxonomyLevels>
+                    <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+                    <BloomsTaxonomyLevel>Applying</BloomsTaxonomyLevel>
+                </BloomsTaxonomyLevels>
+                <MultipleIntelligences>
+                    <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                    <MultipleIntelligence>Visual-Spatial</MultipleIntelligence>
+                </MultipleIntelligences>
+                <InstructionalStrategies>
+                    <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+                    <InstructionalStrategy>Direct Instruction</InstructionalStrategy>
+                </InstructionalStrategies>
+                <Title>Washington State Learning Standards</Title>
+                <Summary>This document provides a comprehensive overview of the learning standards for Washington state.</Summary>
+                <LearningObjectives>
+                    <LearningObjective>Develop critical thinking skills</LearningObjective>
+                    <LearningObjective>Enhance problem-solving abilities</LearningObjective>
+                </LearningObjectives>
+                <ResourceTypes>
+                    <ResourceType>Curriculum</ResourceType>
+                    <ResourceType>Assessment</ResourceType>
+                </ResourceTypes>
+            </EducationFilter>
+        </SIF_Metadata>
+        <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="AdditionalInfo" SIF_Action="Delete">This is additional information.</SIF_ExtendedElement>
+        </SIF_ExtendedElements>
+    </LearningStandardDocument>
+</LearningStandardDocuments>

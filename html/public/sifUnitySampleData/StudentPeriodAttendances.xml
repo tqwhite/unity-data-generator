@@ -1,0 +1,148 @@
+<StudentPeriodAttendance xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" StudentPersonalRefId="123e4567-e89b-12d3-a456-426614174001" SectionInfoRefId="123e4567-e89b-12d3-a456-426614174002" SchoolInfoRefId="123e4567-e89b-12d3-a456-426614174003" Date="2023-10-01">
+    <TimetablePeriod>4D</TimetablePeriod>
+    <TimeIn>08:00:00</TimeIn>
+    <TimeOut>09:00:00</TimeOut>
+    <AttendanceCode AttendanceCodeInfoRefId="123e4567-e89b-12d3-a456-426614174004">Present</AttendanceCode>
+    <AuditInfo>
+        <CreationUser Type="Teacher" TypeCodeset="http://example.com/codeset">
+            <UserId>teacher123</UserId>
+        </CreationUser>
+        <CreationDateTime>2023-10-01T08:00:00</CreationDateTime>
+    </AuditInfo>
+    <AttendanceComment>On time and attentive</AttendanceComment>
+    <InstructionalDeliveryMode Codeset="http://example.com/codeset">In-Person</InstructionalDeliveryMode>
+    <ExpectationsMet>true</ExpectationsMet>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>Period</Type>
+                <Code>2023Q1</Code>
+                <Name>First Quarter</Name>
+                <Value>2023-2024 School Year</Value>
+                <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>THXG</Code>
+                        <Name>Thanksgiving Break</Name>
+                        <Value>Thanksgiving Holiday</Value>
+                        <StartDateTime>2023-11-23T00:00:00</StartDateTime>
+                        <EndDateTime>2023-11-24T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-09-01T00:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>School Management System</Name>
+                        <ID>sms@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>admin123</By>
+                    <DateTime>2023-10-01T09:00:00</DateTime>
+                    <Description>Initial attendance record creation</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Semester</Type>
+                    <Code>2023S1</Code>
+                    <Name>Fall Semester</Name>
+                    <Value>2023-2024 School Year</Value>
+                    <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Break</Type>
+                            <Code>WINBRK</Code>
+                            <Name>Winter Break</Name>
+                            <Value>Winter Holiday</Value>
+                            <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                            <EndDateTime>2024-01-02T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational purposes only</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Fifth Grade</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Mathematics</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Intermediate</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174005</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174006</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Mathematics Class</Title>
+            <Summary>Introduction to basic arithmetic operations</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand addition and subtraction</LearningObjective>
+                <LearningObjective>Apply multiplication and division</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Worksheet</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StudentPeriodAttendance>

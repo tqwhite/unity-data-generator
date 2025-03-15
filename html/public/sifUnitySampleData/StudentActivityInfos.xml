@@ -1,0 +1,171 @@
+<StudentActivityInfos xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <StudentActivityInfo RefId="123e4567-e89b-12d3-a456-426614174000">
+        <Title>Chess Club</Title>
+        <Description>Weekly chess club meetings to improve strategic thinking.</Description>
+        <StudentActivityType>
+            <Code Codeset="http://example.com/codeset">CHESS</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="Local">CC01</OtherCode>
+                <OtherCode Codeset="Text">Chess Club</OtherCode>
+            </OtherCodeList>
+        </StudentActivityType>
+        <StudentActivityLevel>Intermediate</StudentActivityLevel>
+        <GradeLevels>
+            <GradeLevel>
+                <Code Codeset="http://example.com/gradecodeset">09</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="StateProvince">HS09</OtherCode>
+                    <OtherCode Codeset="Local">9th Grade</OtherCode>
+                </OtherCodeList>
+            </GradeLevel>
+            <GradeLevel>
+                <Code Codeset="http://example.com/gradecodeset">10</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="StateProvince">HS10</OtherCode>
+                    <OtherCode Codeset="Local">10th Grade</OtherCode>
+                </OtherCodeList>
+            </GradeLevel>
+        </GradeLevels>
+        <CurricularStatus Codeset="http://example.com/curricularstatus">Extra-curricular</CurricularStatus>
+        <Location Type="RoomInfo" TypeCodeset="http://example.com/locationtypes">
+            <LocationName>Room 101</LocationName>
+            <LocationRefId SIF_RefObject="RoomInfo">456e7890-e12b-34d5-a678-426614174001</LocationRefId>
+        </Location>
+        <SIF_Metadata>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Weekly</Type>
+                    <Code>WEEKLY</Code>
+                    <Name>Weekly Meeting</Name>
+                    <Value>Every Wednesday</Value>
+                    <StartDateTime>2023-09-01T15:00:00</StartDateTime>
+                    <EndDateTime>2023-09-01T17:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>HOLIDAY</Code>
+                            <Name>School Holiday</Name>
+                            <Value>No Meeting</Value>
+                            <StartDateTime>2023-12-25T00:00:00</StartDateTime>
+                            <EndDateTime>2023-12-26T00:00:00</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+            <LifeCycle>
+                <Created>
+                    <DateTime>2023-08-01T10:00:00</DateTime>
+                    <Creators>
+                        <Creator>
+                            <Name>John Doe</Name>
+                            <ID>john.doe@example.com</ID>
+                        </Creator>
+                    </Creators>
+                </Created>
+                <ModificationHistory>
+                    <Modified>
+                        <By>Jane Smith</By>
+                        <DateTime>2023-09-15T12:00:00</DateTime>
+                        <Description>Updated meeting time</Description>
+                    </Modified>
+                </ModificationHistory>
+                <TimeElements>
+                    <TimeElement>
+                        <Type>Semester</Type>
+                        <Code>SEMESTER</Code>
+                        <Name>Fall Semester</Name>
+                        <Value>2023</Value>
+                        <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                        <EndDateTime>2023-12-15T00:00:00</EndDateTime>
+                        <SpanGaps>
+                            <SpanGap>
+                                <Type>Break</Type>
+                                <Code>BREAK</Code>
+                                <Name>Thanksgiving Break</Name>
+                                <Value>No Classes</Value>
+                                <StartDateTime>2023-11-23T00:00:00</StartDateTime>
+                                <EndDateTime>2023-11-24T00:00:00</EndDateTime>
+                            </SpanGap>
+                        </SpanGaps>
+                        <IsCurrent>true</IsCurrent>
+                    </TimeElement>
+                </TimeElements>
+            </LifeCycle>
+            <RightsElements>
+                <RightsElement>
+                    <Cost>false</Cost>
+                    <FeesForUse>
+                        <FeeForUse>
+                            <UseType>School Use</UseType>
+                            <MeteringType>None</MeteringType>
+                            <MeteringURL>http://example.com/metering</MeteringURL>
+                            <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">0.00</PerUseCharge>
+                        </FeeForUse>
+                    </FeesForUse>
+                    <CopyrightStatement>© 2023 Chess Club</CopyrightStatement>
+                    <TermsOfUse>For educational purposes only.</TermsOfUse>
+                </RightsElement>
+            </RightsElements>
+            <EducationFilter>
+                <MediaTypes>
+                    <MediaType>Text</MediaType>
+                    <MediaType>Video</MediaType>
+                </MediaTypes>
+                <GradeLevels>
+                    <GradeLevel>
+                        <Code Codeset="http://example.com/gradecodeset">09</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">HS09</OtherCode>
+                            <OtherCode Codeset="Local">9th Grade</OtherCode>
+                        </OtherCodeList>
+                    </GradeLevel>
+                </GradeLevels>
+                <SubjectAreas>
+                    <SubjectArea>
+                        <Code Codeset="http://example.com/subjectcodeset">MA</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">MATH</OtherCode>
+                            <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        </OtherCodeList>
+                    </SubjectArea>
+                </SubjectAreas>
+                <InterestLevels>
+                    <InterestLevel>
+                        <Code Codeset="http://example.com/interestcodeset">09</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">HS09</OtherCode>
+                            <OtherCode Codeset="Local">9th Grade</OtherCode>
+                        </OtherCodeList>
+                    </InterestLevel>
+                </InterestLevels>
+                <LearningStandardItems>
+                    <LearningStandardItemRefId>789e0123-e45b-67d8-a901-426614174002</LearningStandardItemRefId>
+                    <LearningStandardItemRefId>890e1234-e56b-78d9-a012-426614174003</LearningStandardItemRefId>
+                </LearningStandardItems>
+                <BloomsTaxonomyLevels>
+                    <BloomsTaxonomyLevel>Analysis</BloomsTaxonomyLevel>
+                </BloomsTaxonomyLevels>
+                <MultipleIntelligences>
+                    <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                </MultipleIntelligences>
+                <InstructionalStrategies>
+                    <InstructionalStrategy>Problem Solving</InstructionalStrategy>
+                </InstructionalStrategies>
+                <Title>Chess Club Activities</Title>
+                <Summary>Engaging students in strategic thinking through chess.</Summary>
+                <LearningObjectives>
+                    <LearningObjective>Improve strategic thinking</LearningObjective>
+                    <LearningObjective>Enhance problem-solving skills</LearningObjective>
+                </LearningObjectives>
+                <ResourceTypes>
+                    <ResourceType>Activity</ResourceType>
+                    <ResourceType>Workshop</ResourceType>
+                </ResourceTypes>
+            </EducationFilter>
+        </SIF_Metadata>
+        <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="ExtraInfo" SIF_Action="Delete">Additional details about the activity.</SIF_ExtendedElement>
+        </SIF_ExtendedElements>
+    </StudentActivityInfo>
+</StudentActivityInfos>

@@ -1,0 +1,147 @@
+<ProfessionalDevelopmentProgram RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <LearningStandardItems>
+        <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174001</LearningStandardItemRefId>
+        <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174002</LearningStandardItemRefId>
+    </LearningStandardItems>
+    <LocalProgramId>PD-001</LocalProgramId>
+    <ProgramName>Advanced Teaching Techniques</ProgramName>
+    <ProgramType>System Training</ProgramType>
+    <FundingSource>Federal Grant</FundingSource>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Summer Break</Type>
+                        <Code>SB2023</Code>
+                        <Name>Summer 2023</Name>
+                        <Value>Summer Break</Value>
+                        <StartDateTime>2023-06-01T00:00:00</StartDateTime>
+                        <EndDateTime>2023-08-01T00:00:00</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-02-01T15:00:00</DateTime>
+                    <Description>Initial creation of the program</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>Q1 2023</Value>
+                    <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-03-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Winter Break</Type>
+                            <Code>WB2023</Code>
+                            <Name>Winter 2023</Name>
+                            <Value>Winter Break</Value>
+                            <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                            <EndDateTime>2024-01-05T00:00:00</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>false</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>Flat</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">50.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example Corp</CopyrightStatement>
+                <TermsOfUse>Use for educational purposes only</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Video</MediaType>
+                <MediaType>Text</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/gradelevels">09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">HS-09</OtherCode>
+                        <OtherCode Codeset="Local">Local-09</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/subjectareas">01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Math-01</OtherCode>
+                        <OtherCode Codeset="Local">Local-Math-01</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/interestlevels">09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">HS-Interest-09</OtherCode>
+                        <OtherCode Codeset="Local">Local-Interest-09</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Advanced Math Techniques</Title>
+            <Summary>This program focuses on advanced mathematical concepts and teaching strategies.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Enhance problem-solving skills</LearningObjective>
+                <LearningObjective>Develop critical thinking</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Online Course</ResourceType>
+                <ResourceType>Workshop</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomElement1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomElement2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</ProfessionalDevelopmentProgram>

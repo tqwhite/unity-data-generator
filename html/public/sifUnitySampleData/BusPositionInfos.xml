@@ -1,0 +1,167 @@
+<BusPositionInfo RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <Date>2023-10-15</Date>
+    <Time>08:30:00</Time>
+    <GridLocation>
+        <Latitude>40.712776</Latitude>
+        <Longitude>-74.005974</Longitude>
+    </GridLocation>
+    <TelematicsId>TM123456789</TelematicsId>
+    <TelemetryList>
+        <Telemetry>EngineOn</Telemetry>
+        <Telemetry>DoorClosed</Telemetry>
+    </TelemetryList>
+    <BusDriver>
+        <Name Type="04">
+            <Prefix>Mr.</Prefix>
+            <LastName>Smith</LastName>
+            <FirstName>John</FirstName>
+            <MiddleName>A</MiddleName>
+            <Suffix>Jr.</Suffix>
+            <PreferredName>Johnny</PreferredName>
+            <SortName>Smith, John</SortName>
+            <FullName>John A. Smith Jr.</FullName>
+        </Name>
+        <EmployeePersonalRefId>987e6543-b21c-34d5-f678-123456789abc</EmployeePersonalRefId>
+        <Status Codeset="http://example.com/codeset">OnDuty</Status>
+    </BusDriver>
+    <BusStaffList>
+        <BusStaff>
+            <Name Type="04">
+                <Prefix>Ms.</Prefix>
+                <LastName>Johnson</LastName>
+                <FirstName>Emily</FirstName>
+                <MiddleName>B</MiddleName>
+                <Suffix>III</Suffix>
+                <PreferredName>Em</PreferredName>
+                <SortName>Johnson, Emily</SortName>
+                <FullName>Emily B. Johnson III</FullName>
+            </Name>
+            <EmployeePersonalRefId>654e3210-c98b-76d5-e432-abcdef123456</EmployeePersonalRefId>
+            <Status Codeset="http://example.com/codeset">OnBoard</Status>
+        </BusStaff>
+    </BusStaffList>
+    <RouteStatus>
+        <BusRouteInfoRefId>456e7890-a12b-34c5-d678-abcdef987654</BusRouteInfoRefId>
+        <Status>Active</Status>
+    </RouteStatus>
+    <Odometer Unit="miles" UnitCodeset="http://example.com/unitcodeset">12000</Odometer>
+    <Speedometer Unit="mph" UnitCodeset="http://example.com/unitcodeset">55</Speedometer>
+    <Students>
+        <Student>
+            <StudentPersonalRefId>789e0123-f45b-67c8-d901-23456789abcd</StudentPersonalRefId>
+            <Status Codeset="http://example.com/codeset">On</Status>
+        </Student>
+    </Students>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>2023-2024</Code>
+                <Name>Academic Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>WinterBreak</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-02</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-02T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-10-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Bus Tracking System</Name>
+                        <ID>bus-tracking@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>SystemAdmin</By>
+                    <DateTime>2023-10-10T15:30:00</DateTime>
+                    <Description>Updated bus route information</Description>
+                </Modified>
+            </ModificationHistory>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>FlatRate</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Bus Tracking Inc.</CopyrightStatement>
+                <TermsOfUse>For educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Video</MediaType>
+                <MediaType>Audio</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">5th Grade</OtherCode>
+                        <OtherCode Codeset="Local">Grade 5</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Mathematics</OtherCode>
+                        <OtherCode Codeset="Local">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Intermediate</OtherCode>
+                        <OtherCode Codeset="Local">Middle</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>abc12345-6789-0abc-def0-1234567890ab</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Bus Safety and Operations</Title>
+            <Summary>This content covers the safety protocols and operational procedures for school buses.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand bus safety rules</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Guide</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomElement1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</BusPositionInfo>

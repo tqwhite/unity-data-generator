@@ -1,0 +1,143 @@
+<Payment RefId="123e4567-e89b-12d3-a456-426614174000" BillingRefId="123e4567-e89b-12d3-a456-426614174001" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <ReceivedDate>2023-10-01</ReceivedDate>
+    <ReceivedAmount Currency="USD" CurrencyCodeset="http://example.com/currency-codeset">150.00</ReceivedAmount>
+    <ReceivedTransactionId>TXN123456789</ReceivedTransactionId>
+    <TransactionDescription>Payment for October tuition</TransactionDescription>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023-2024 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>HOL2023</Code>
+                        <Name>Winter Break</Name>
+                        <Value>Winter Break 2023</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-10-01T10:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>EduSys</Name>
+                        <ID>edusys@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>AdminUser</By>
+                    <DateTime>2023-10-02T12:00:00</DateTime>
+                    <Description>Updated transaction description</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>Q1 2023</Value>
+                    <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-11-30T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Maintenance</Type>
+                            <Code>MT2023</Code>
+                            <Name>System Maintenance</Name>
+                            <Value>Maintenance Period</Value>
+                            <StartDateTime>2023-10-15T00:00:00</StartDateTime>
+                            <EndDateTime>2023-10-16T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>Flat</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency-codeset">10.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 EduSys</CopyrightStatement>
+                <TermsOfUse>Standard educational use</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Video</MediaType>
+                <MediaType>Text</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/grade-codeset">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP05</OtherCode>
+                        <OtherCode Codeset="Local">LC05</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/subject-codeset">01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP01</OtherCode>
+                        <OtherCode Codeset="Local">LC01</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/interest-codeset">06</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP06</OtherCode>
+                        <OtherCode Codeset="Local">LC06</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174002</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Algebra</Title>
+            <Summary>This course covers basic algebraic concepts.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand basic algebraic operations</LearningObjective>
+                <LearningObjective>Solve simple equations</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</Payment>

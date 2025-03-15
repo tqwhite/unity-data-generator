@@ -1,0 +1,54 @@
+<xRoster refId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <courseRefId>223e4567-e89b-12d3-a456-426614174001</courseRefId>
+    <courseTitle>American History</courseTitle>
+    <sectionRefId>323e4567-e89b-12d3-a456-426614174002</sectionRefId>
+    <subject>History</subject>
+    <schoolRefId>423e4567-e89b-12d3-a456-426614174003</schoolRefId>
+    <schoolSectionId>HIST101-01</schoolSectionId>
+    <schoolYear>2023</schoolYear>
+    <meetingTimes>
+        <meetingTime>
+            <timeTableDay>A</timeTableDay>
+            <classMeetingDays>
+                <bellScheduleDay>Monday</bellScheduleDay>
+            </classMeetingDays>
+            <timeTablePeriod>1st Period</timeTablePeriod>
+            <roomNumber>101</roomNumber>
+            <classBeginningTime>08:00:00</classBeginningTime>
+            <classEndingTime>09:30:00</classEndingTime>
+            <sessionCode>Fall2023</sessionCode>
+            <instructionalDeliveryMode>In-Person</instructionalDeliveryMode>
+            <schoolCalendarRefId>523e4567-e89b-12d3-a456-426614174004</schoolCalendarRefId>
+        </meetingTime>
+    </meetingTimes>
+    <students>
+        <studentReference>
+            <refId>623e4567-e89b-12d3-a456-426614174005</refId>
+            <localId>STU12345</localId>
+            <givenName>John</givenName>
+            <familyName>Doe</familyName>
+        </studentReference>
+    </students>
+    <primaryStaff>
+        <staffPersonReference>
+            <refId>823e4567-e89b-12d3-a456-426614174007</refId>
+            <localId>STAFF001</localId>
+            <givenName>Emily</givenName>
+            <familyName>Johnson</familyName>
+        </staffPersonReference>
+        <teacherOfRecord>true</teacherOfRecord>
+        <percentResponsible>100.0</percentResponsible>
+    </primaryStaff>
+    <otherStaffs>
+        <otherStaff>
+            <staffPersonReference>
+                <refId>923e4567-e89b-12d3-a456-426614174008</refId>
+                <localId>STAFF002</localId>
+                <givenName>Michael</givenName>
+                <familyName>Brown</familyName>
+            </staffPersonReference>
+            <teacherOfRecord>false</teacherOfRecord>
+            <percentResponsible>50.0</percentResponsible>
+        </otherStaff>
+    </otherStaffs>
+</xRoster>

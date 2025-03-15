@@ -1,0 +1,141 @@
+<FinancialClass xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000">
+    <Name>Basic Education Funding</Name>
+    <Description>Funding for basic educational needs</Description>
+    <ClassType>Public</ClassType>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>HOL2023</Code>
+                        <Name>Winter Break</Name>
+                        <Value>Winter Break 2023</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-02T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-07-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-09-15T09:30:00</DateTime>
+                    <Description>Updated funding details</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>Q1 2023</Value>
+                    <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-10-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Maintenance</Type>
+                            <Code>MT2023</Code>
+                            <Name>System Maintenance</Name>
+                            <Value>Maintenance Period</Value>
+                            <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                            <EndDateTime>2023-09-02T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>false</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>Flat</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">10.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example Education</CopyrightStatement>
+                <TermsOfUse>Use for educational purposes only</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">5th Grade</OtherCode>
+                        <OtherCode Codeset="StateProvince">Grade 5</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        <OtherCode Codeset="StateProvince">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>08</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Middle School</OtherCode>
+                        <OtherCode Codeset="StateProvince">Junior High</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>abcdef12-3456-7890-abcd-ef1234567890</LearningStandardItemRefId>
+                <LearningStandardItemRefId>12345678-90ab-cdef-1234-567890abcdef</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Algebra</Title>
+            <Summary>This course covers basic algebraic concepts.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand algebraic expressions</LearningObjective>
+                <LearningObjective>Solve linear equations</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="AdditionalInfo" SIF_Action="Delete">Extra details about the financial class</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</FinancialClass>

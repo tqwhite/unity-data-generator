@@ -1,0 +1,137 @@
+<Billings xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <Billing RefId="123e4567-e89b-12d3-a456-426614174000">
+        <BilledEntity SIF_RefObject="StudentPersonal">abcdef12-3456-7890-abcd-ef1234567890</BilledEntity>
+        <BillingDate>2023-10-15</BillingDate>
+        <TransactionDescription>Tuition Fee for Fall Semester</TransactionDescription>
+        <BilledAmount Currency="USD" CurrencyCodeset="http://example.com/currency-codes">1500.00</BilledAmount>
+        <SIF_Metadata>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Semester</Type>
+                    <Code>FALL2023</Code>
+                    <Name>Fall Semester 2023</Name>
+                    <Value>2023-09-01 to 2023-12-15</Value>
+                    <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-12-15T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>THXGIVING</Code>
+                            <Name>Thanksgiving Break</Name>
+                            <Value>2023-11-23 to 2023-11-24</Value>
+                            <StartDateTime>2023-11-23T00:00:00</StartDateTime>
+                            <EndDateTime>2023-11-24T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+            <LifeCycle>
+                <Created>
+                    <DateTime>2023-10-01T10:00:00</DateTime>
+                    <Creators>
+                        <Creator>
+                            <Name>Billing System</Name>
+                            <ID>billing@example.com</ID>
+                        </Creator>
+                    </Creators>
+                </Created>
+                <ModificationHistory>
+                    <Modified>
+                        <By>admin@example.com</By>
+                        <DateTime>2023-10-10T15:00:00</DateTime>
+                        <Description>Updated billing amount</Description>
+                    </Modified>
+                </ModificationHistory>
+                <TimeElements>
+                    <TimeElement>
+                        <Type>Billing Cycle</Type>
+                        <Code>2023CYCLE</Code>
+                        <Name>2023 Billing Cycle</Name>
+                        <Value>2023-01-01 to 2023-12-31</Value>
+                        <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                        <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                        <SpanGaps>
+                            <SpanGap>
+                                <Type>Maintenance</Type>
+                                <Code>SYSUPGRADE</Code>
+                                <Name>System Upgrade</Name>
+                                <Value>2023-07-01</Value>
+                                <StartDateTime>2023-07-01T00:00:00</StartDateTime>
+                                <EndDateTime>2023-07-01T23:59:59</EndDateTime>
+                            </SpanGap>
+                        </SpanGaps>
+                        <IsCurrent>true</IsCurrent>
+                    </TimeElement>
+                </TimeElements>
+            </LifeCycle>
+            <RightsElements>
+                <RightsElement>
+                    <Cost>false</Cost>
+                    <FeesForUse>
+                        <FeeForUse>
+                            <UseType>Classroom</UseType>
+                            <MeteringType>FlatRate</MeteringType>
+                            <MeteringURL>http://example.com/metering</MeteringURL>
+                            <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency-codes">50.00</PerUseCharge>
+                        </FeeForUse>
+                    </FeesForUse>
+                    <CopyrightStatement>© 2023 Example School</CopyrightStatement>
+                    <TermsOfUse>Use for educational purposes only.</TermsOfUse>
+                </RightsElement>
+            </RightsElements>
+            <EducationFilter>
+                <MediaTypes>
+                    <MediaType>Textbook</MediaType>
+                </MediaTypes>
+                <GradeLevels>
+                    <GradeLevel>
+                        <Code Codeset="http://example.com/grade-codes">09</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">HS-Freshman</OtherCode>
+                        </OtherCodeList>
+                    </GradeLevel>
+                </GradeLevels>
+                <SubjectAreas>
+                    <SubjectArea>
+                        <Code Codeset="http://example.com/subject-codes">01</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        </OtherCodeList>
+                    </SubjectArea>
+                </SubjectAreas>
+                <InterestLevels>
+                    <InterestLevel>
+                        <Code Codeset="http://example.com/interest-codes">09</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="Text">High School</OtherCode>
+                        </OtherCodeList>
+                    </InterestLevel>
+                </InterestLevels>
+                <LearningStandardItems>
+                    <LearningStandardItemRefId>abcdef12-3456-7890-abcd-ef1234567890</LearningStandardItemRefId>
+                </LearningStandardItems>
+                <BloomsTaxonomyLevels>
+                    <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+                </BloomsTaxonomyLevels>
+                <MultipleIntelligences>
+                    <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                </MultipleIntelligences>
+                <InstructionalStrategies>
+                    <InstructionalStrategy>Problem-Based Learning</InstructionalStrategy>
+                </InstructionalStrategies>
+                <Title>Algebra I</Title>
+                <Summary>Introduction to Algebra concepts and problem-solving techniques.</Summary>
+                <LearningObjectives>
+                    <LearningObjective>Understand basic algebraic principles</LearningObjective>
+                </LearningObjectives>
+                <ResourceTypes>
+                    <ResourceType>Digital</ResourceType>
+                </ResourceTypes>
+            </EducationFilter>
+        </SIF_Metadata>
+        <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        </SIF_ExtendedElements>
+    </Billing>
+</Billings>

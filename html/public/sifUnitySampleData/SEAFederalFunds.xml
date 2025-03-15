@@ -1,0 +1,10 @@
+<SEAFederalFunds xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <SEAFederalFund RefId="123e4567-e89b-12d3-a456-426614174000" SEAInfoRefId="123e4567-e89b-12d3-a456-426614174001">
+        <FederalProgramList>
+            <FederalProgram>
+                <Code>12345</Code>
+                <FundingAllocation>500000.00</FundingAllocation>
+            </FederalProgram>
+        </FederalProgramList>
+    </SEAFederalFund>
+</SEAFederalFunds>

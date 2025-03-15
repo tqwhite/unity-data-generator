@@ -1,0 +1,190 @@
+<ItemCharacteristics xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" AssessmentItemRefId="123e4567-e89b-12d3-a456-426614174001" AssessmentFormRefId="123e4567-e89b-12d3-a456-426614174002">
+    <PercentCorrect>85.5</PercentCorrect>
+    <SampleSize>200</SampleSize>
+    <SampleDescription>National Sample</SampleDescription>
+    <Measurements>
+        <Measurement MeasurementCode="MC001" MeasurementCodeCodeset="http://example.com/codeset">
+            <MeasurementDescription>Standard Deviation</MeasurementDescription>
+            <ScaleValue>5.0</ScaleValue>
+            <Min>0</Min>
+            <Max>10</Max>
+            <Optimal>7</Optimal>
+        </Measurement>
+        <Measurement MeasurementCode="MC002" MeasurementCodeCodeset="http://example.com/codeset">
+            <MeasurementDescription>Mean Score</MeasurementDescription>
+            <ScaleValue>6.5</ScaleValue>
+            <Min>0</Min>
+            <Max>10</Max>
+            <Optimal>8</Optimal>
+        </Measurement>
+    </Measurements>
+    <Descriptive>
+        <PValue>0.75</PValue>
+        <SampleSize>150</SampleSize>
+        <PointBiserial>0.45</PointBiserial>
+        <Biserial>0.50</Biserial>
+        <DiscriminationIndex>0.60</DiscriminationIndex>
+    </Descriptive>
+    <DifferentialItemAnalysis>
+        <CMH>0.30</CMH>
+        <MH>0.25</MH>
+    </DifferentialItemAnalysis>
+    <ResponseChoicePattern>
+        <Choice>
+            <ChoiceLabel>A</ChoiceLabel>
+            <Responses>50</Responses>
+        </Choice>
+        <Choice>
+            <ChoiceLabel>B</ChoiceLabel>
+            <Responses>100</Responses>
+        </Choice>
+    </ResponseChoicePattern>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>HLD</Code>
+                        <Name>Winter Break</Name>
+                        <Value>Winter Break 2023</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>HLD</Code>
+                        <Name>Spring Break</Name>
+                        <Value>Spring Break 2024</Value>
+                        <StartDateTime>2024-03-25T00:00:00</StartDateTime>
+                        <EndDateTime>2024-03-29T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-06-01T15:00:00</DateTime>
+                    <Description>Updated sample size</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>Q1 2023</Value>
+                    <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-10-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Weekend</Type>
+                            <Code>WE</Code>
+                            <Name>Labor Day Weekend</Name>
+                            <Value>Labor Day 2023</Value>
+                            <StartDateTime>2023-09-02T00:00:00</StartDateTime>
+                            <EndDateTime>2023-09-04T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>Flat</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">10.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example Corp. All rights reserved.</CopyrightStatement>
+                <TermsOfUse>Use for educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/gradelevels">06</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Middle School</OtherCode>
+                        <OtherCode Codeset="StateProvince">MS</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/subjectareas">01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        <OtherCode Codeset="StateProvince">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/interestlevels">07</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">High Interest</OtherCode>
+                        <OtherCode Codeset="StateProvince">HI</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Analysis</BloomsTaxonomyLevel>
+                <BloomsTaxonomyLevel>Evaluation</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                <MultipleIntelligence>Visual-Spatial</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+                <InstructionalStrategy>Direct Instruction</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Algebra</Title>
+            <Summary>This course covers the basics of algebra including variables, equations, and functions.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand the concept of variables</LearningObjective>
+                <LearningObjective>Solve linear equations</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomElement1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomElement2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</ItemCharacteristics>

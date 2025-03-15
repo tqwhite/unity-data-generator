@@ -1,0 +1,185 @@
+<LibraryPatronStatus RefId="123e4567-e89b-12d3-a456-426614174000" LibraryType="Student" SIF_RefId="123e4567-e89b-12d3-a456-426614174001" SIF_RefObject="Student" SIF_RefObjectCodeset="http://example.com/codeset" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <ElectronicIdList>
+        <ElectronicId Type="LibraryCard" TypeCodeset="http://example.com/typecodeset">EID123456</ElectronicId>
+        <ElectronicId Type="StudentID" TypeCodeset="http://example.com/typecodeset">SID654321</ElectronicId>
+    </ElectronicIdList>
+    <TransactionList>
+        <Transaction>
+            <ItemInfo Type="Book" TypeCodeset="http://example.com/itemtypecodeset">
+                <Title>The Great Gatsby</Title>
+                <Author>F. Scott Fitzgerald</Author>
+                <ElectronicId Type="ISBN" TypeCodeset="http://example.com/isbncodeset">9780743273565</ElectronicId>
+                <CallNumber>823.912 FIT</CallNumber>
+                <Price Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">15.99</Price>
+            </ItemInfo>
+            <CheckoutInfo>
+                <ReturnBy>2023-12-01T10:00:00</ReturnBy>
+            </CheckoutInfo>
+            <FineInfoList>
+                <FineInfo Type="Late" TypeCodeset="http://example.com/finecodeset">
+                    <Assessed>2023-11-15T09:00:00</Assessed>
+                    <Description>Late return fine</Description>
+                    <Amount Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">5.00</Amount>
+                    <Reference>FINE12345</Reference>
+                </FineInfo>
+            </FineInfoList>
+            <HoldInfoList>
+                <HoldInfo Type="Reserve" TypeCodeset="http://example.com/holdcodeset">
+                    <DatePlaced>2023-10-20</DatePlaced>
+                    <DateNeeded>2023-11-01</DateNeeded>
+                    <MadeAvailable>2023-10-25</MadeAvailable>
+                    <Expires>2023-11-05</Expires>
+                </HoldInfo>
+            </HoldInfoList>
+        </Transaction>
+    </TransactionList>
+    <MessageList>
+        <Message Priority="High" PriorityCodeset="http://example.com/prioritycodeset">
+            <Sent>2023-10-15T08:30:00</Sent>
+            <Text>Your reserved book is now available for pickup.</Text>
+        </Message>
+    </MessageList>
+    <NumberOfCheckouts>3</NumberOfCheckouts>
+    <NumberOfOverdues>1</NumberOfOverdues>
+    <NumberOfFines>1</NumberOfFines>
+    <FineAmount Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">5.00</FineAmount>
+    <NumberOfRefunds>0</NumberOfRefunds>
+    <RefundAmount Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">0.00</RefundAmount>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>Semester</Type>
+                <Code>2023FALL</Code>
+                <Name>Fall Semester 2023</Name>
+                <Value>2023-09-01 to 2023-12-15</Value>
+                <StartDateTime>2023-09-01T00:00:00</StartDateTime>
+                <EndDateTime>2023-12-15T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>THXGIVING</Code>
+                        <Name>Thanksgiving Break</Name>
+                        <Value>2023-11-23 to 2023-11-24</Value>
+                        <StartDateTime>2023-11-23T00:00:00</StartDateTime>
+                        <EndDateTime>2023-11-24T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-09-01T08:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Library System</Name>
+                        <ID>library@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Admin</By>
+                    <DateTime>2023-10-01T12:00:00</DateTime>
+                    <Description>Updated checkout information</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Academic Year</Type>
+                    <Code>2023-2024</Code>
+                    <Name>Academic Year 2023-2024</Name>
+                    <Value>2023-08-15 to 2024-06-15</Value>
+                    <StartDateTime>2023-08-15T00:00:00</StartDateTime>
+                    <EndDateTime>2024-06-15T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Winter Break</Type>
+                            <Code>WINTERBRK</Code>
+                            <Name>Winter Break</Name>
+                            <Value>2023-12-20 to 2024-01-05</Value>
+                            <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                            <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>Unlimited</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example Library</CopyrightStatement>
+                <TermsOfUse>Use for educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Book</MediaType>
+                <MediaType>eBook</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">HS9</OtherCode>
+                        <OtherCode Codeset="Local">Freshman</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">ENG</OtherCode>
+                        <OtherCode Codeset="Local">English</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">HS9</OtherCode>
+                        <OtherCode Codeset="Local">Freshman</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174002</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Verbal-Linguistic</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Library Resources for Freshmen</Title>
+            <Summary>A collection of resources tailored for 9th-grade students.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Improve reading comprehension</LearningObjective>
+                <LearningObjective>Develop critical thinking skills</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</LibraryPatronStatus>

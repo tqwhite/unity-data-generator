@@ -1,0 +1,198 @@
+<LearningStandardItem RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <RefURI>http://example.com/standard/123e4567-e89b-12d3-a456-426614174000</RefURI>
+    <ShortName>Math Standard</ShortName>
+    <ItemVersion>1.0</ItemVersion>
+    <Description>This standard covers basic algebraic concepts.</Description>
+    <StandardSettingBody>
+        <Country Codeset="http://example.com/codeset/country">USA</Country>
+        <StateProvince Codeset="http://example.com/codeset/state">CA</StateProvince>
+        <NCESId>123456</NCESId>
+        <SettingBodyName>California Department of Education</SettingBodyName>
+    </StandardSettingBody>
+    <StandardHierarchyLevel>
+        <Number>1</Number>
+        <Description>Course</Description>
+    </StandardHierarchyLevel>
+    <PredecessorItems>
+        <LearningStandardItemRefId>223e4567-e89b-12d3-a456-426614174001</LearningStandardItemRefId>
+    </PredecessorItems>
+    <StatementCodes>
+        <StatementCode>ALG-101</StatementCode>
+    </StatementCodes>
+    <Statements>
+        <Statement>Understand and apply basic algebraic operations.</Statement>
+    </Statements>
+    <GradeLevels>
+        <GradeLevel>
+            <Code Codeset="http://example.com/codeset/grade">09</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">CA-09</OtherCode>
+            </OtherCodeList>
+        </GradeLevel>
+    </GradeLevels>
+    <SubjectArea>
+        <Code Codeset="http://example.com/codeset/subject">MA</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="Local">Local-Math</OtherCode>
+        </OtherCodeList>
+    </SubjectArea>
+    <StandardIdentifier>
+        <YearCreated>2023</YearCreated>
+        <SubjectArea>
+            <Code Codeset="http://example.com/codeset/subject">MA</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="Local">Local-Math</OtherCode>
+            </OtherCodeList>
+        </SubjectArea>
+        <StandardNumber>1</StandardNumber>
+        <GradeLevels>
+            <GradeLevel>
+                <Code Codeset="http://example.com/codeset/grade">09</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="StateProvince">CA-09</OtherCode>
+                </OtherCodeList>
+            </GradeLevel>
+        </GradeLevels>
+        <Benchmark>Represent an unknown quantity as a variable using a symbol.</Benchmark>
+        <AlternateIdentificationCodes>
+            <AlternateIdentificationCode>ALG-101-CA</AlternateIdentificationCode>
+        </AlternateIdentificationCodes>
+        <Organization>California Department of Education</Organization>
+    </StandardIdentifier>
+    <LearningStandardDocumentRefId>323e4567-e89b-12d3-a456-426614174002</LearningStandardDocumentRefId>
+    <RelatedLearningStandardItems>
+        <LearningStandardItemRefId RelationshipType="Prerequisite" Codeset="http://example.com/codeset/relationship">423e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+    </RelatedLearningStandardItems>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023-2024 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-15T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-15T00:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>WinterBreak</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2 weeks</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-03T00:00:00</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T00:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-06-01T00:00:00</DateTime>
+                    <Description>Updated standard description.</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>2023-Q1</Value>
+                    <StartDateTime>2023-08-15T00:00:00</StartDateTime>
+                    <EndDateTime>2023-10-15T00:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>LaborDay</Code>
+                            <Name>Labor Day</Name>
+                            <Value>1 day</Value>
+                            <StartDateTime>2023-09-04T00:00:00</StartDateTime>
+                            <EndDateTime>2023-09-05T00:00:00</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/codeset/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 California Department of Education</CopyrightStatement>
+                <TermsOfUse>For educational use only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/codeset/grade">09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">CA-09</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/codeset/subject">MA</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Local-Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/codeset/grade">09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">CA-09</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>523e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Problem Solving</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Algebra Basics</Title>
+            <Summary>This content covers the basics of algebra including variables and equations.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand variables and their use in equations.</LearningObjective>
+                <LearningObjective>Solve basic algebraic equations.</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Lesson Plan</ResourceType>
+                <ResourceType>Interactive Exercise</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="AdditionalInfo" SIF_Action="Delete">This is additional information.</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</LearningStandardItem>

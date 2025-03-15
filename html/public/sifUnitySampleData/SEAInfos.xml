@@ -1,0 +1,306 @@
+<SEAInfo RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <LocalId>SEA-001</LocalId>
+    <NCESId>123456</NCESId>
+    <SEAName>Fictitious State Education Agency</SEAName>
+    <SEAURL>http://www.fictitioussea.org</SEAURL>
+    <CSSOContact>
+        <Name Type="04">
+            <Prefix>Dr.</Prefix>
+            <LastName>Smith</LastName>
+            <FirstName>John</FirstName>
+            <MiddleName>A</MiddleName>
+            <Suffix>Jr.</Suffix>
+            <PreferredName>Johnny</PreferredName>
+            <SortName>Smith, John</SortName>
+            <FullName>Dr. John A. Smith Jr.</FullName>
+        </Name>
+        <PositionTitle>Chief State School Officer</PositionTitle>
+        <Role>Administrator</Role>
+        <Address Type="Mailing">
+            <Street>
+                <Line1>123 Main St</Line1>
+                <Line2>Suite 100</Line2>
+                <Complex>Education Complex</Complex>
+                <StreetNumber>123</StreetNumber>
+                <StreetPrefix>NE</StreetPrefix>
+                <StreetName>Main</StreetName>
+                <StreetType>St</StreetType>
+                <StreetSuffix>NW</StreetSuffix>
+                <ApartmentType>Suite</ApartmentType>
+                <ApartmentNumberPrefix>Apt</ApartmentNumberPrefix>
+                <ApartmentNumber>100</ApartmentNumber>
+                <ApartmentNumberSuffix>A</ApartmentNumberSuffix>
+            </Street>
+            <City>Springfield</City>
+            <County>Greene</County>
+            <StateProvince Codeset="http://example.com/codeset">MO</StateProvince>
+            <StateANSICode Codeset="http://example.com/codeset">29</StateANSICode>
+            <Country Codeset="http://example.com/codeset">US</Country>
+            <PostalCode>65802</PostalCode>
+            <GridLocation>
+                <Latitude>37.208957</Latitude>
+                <Longitude>-93.292299</Longitude>
+            </GridLocation>
+            <AddressRefId>123e4567-e89b-12d3-a456-426614174001</AddressRefId>
+        </Address>
+        <EmailList>
+            <Email Type="Work" SIF_Action="Delete">john.smith@fictitioussea.org</Email>
+            <Email Type="Home">johnny.smith@gmail.com</Email>
+        </EmailList>
+        <PhoneNumberList>
+            <PhoneNumber Type="Work">
+                <Number>555-123-4567</Number>
+                <Extension>101</Extension>
+                <ListedStatus>Public</ListedStatus>
+            </PhoneNumber>
+            <PhoneNumber Type="Mobile">
+                <Number>555-987-6543</Number>
+                <ListedStatus>Private</ListedStatus>
+            </PhoneNumber>
+        </PhoneNumberList>
+    </CSSOContact>
+    <SEAContactList>
+        <SEAContact>
+            <PublishInDirectory Codeset="http://example.com/codeset">Yes</PublishInDirectory>
+            <ContactInfo>
+                <Name Type="04">
+                    <Prefix>Ms.</Prefix>
+                    <LastName>Johnson</LastName>
+                    <FirstName>Emily</FirstName>
+                    <MiddleName>B</MiddleName>
+                    <Suffix>III</Suffix>
+                    <PreferredName>Em</PreferredName>
+                    <SortName>Johnson, Emily</SortName>
+                    <FullName>Ms. Emily B. Johnson III</FullName>
+                </Name>
+                <PositionTitle>Assistant Director</PositionTitle>
+                <Role>Support</Role>
+                <Address Type="Physical">
+                    <Street>
+                        <Line1>456 Elm St</Line1>
+                        <Line2>Building B</Line2>
+                        <Complex>Education Park</Complex>
+                        <StreetNumber>456</StreetNumber>
+                        <StreetPrefix>SW</StreetPrefix>
+                        <StreetName>Elm</StreetName>
+                        <StreetType>St</StreetType>
+                        <StreetSuffix>SE</StreetSuffix>
+                        <ApartmentType>Unit</ApartmentType>
+                        <ApartmentNumberPrefix>Unit</ApartmentNumberPrefix>
+                        <ApartmentNumber>202</ApartmentNumber>
+                        <ApartmentNumberSuffix>B</ApartmentNumberSuffix>
+                    </Street>
+                    <City>Springfield</City>
+                    <County>Greene</County>
+                    <StateProvince Codeset="http://example.com/codeset">MO</StateProvince>
+                    <StateANSICode Codeset="http://example.com/codeset">29</StateANSICode>
+                    <Country Codeset="http://example.com/codeset">US</Country>
+                    <PostalCode>65803</PostalCode>
+                    <GridLocation>
+                        <Latitude>37.215326</Latitude>
+                        <Longitude>-93.298243</Longitude>
+                    </GridLocation>
+                    <AddressRefId>123e4567-e89b-12d3-a456-426614174002</AddressRefId>
+                </Address>
+                <EmailList>
+                    <Email Type="Work">emily.johnson@fictitioussea.org</Email>
+                    <Email Type="Other">em.johnson@yahoo.com</Email>
+                </EmailList>
+                <PhoneNumberList>
+                    <PhoneNumber Type="Work">
+                        <Number>555-234-5678</Number>
+                        <Extension>202</Extension>
+                        <ListedStatus>Public</ListedStatus>
+                    </PhoneNumber>
+                    <PhoneNumber Type="Fax">
+                        <Number>555-876-5432</Number>
+                        <ListedStatus>Public</ListedStatus>
+                    </PhoneNumber>
+                </PhoneNumberList>
+            </ContactInfo>
+        </SEAContact>
+    </SEAContactList>
+    <PhoneNumberList>
+        <PhoneNumber Type="Fax">
+            <Number>555-321-4321</Number>
+            <Extension>303</Extension>
+            <ListedStatus>Public</ListedStatus>
+        </PhoneNumber>
+        <PhoneNumber Type="Other">
+            <Number>555-654-3210</Number>
+            <ListedStatus>Private</ListedStatus>
+        </PhoneNumber>
+    </PhoneNumberList>
+    <AddressList>
+        <Address Type="Billing">
+            <Street>
+                <Line1>789 Oak St</Line1>
+                <Line2>Floor 3</Line2>
+                <Complex>Education Tower</Complex>
+                <StreetNumber>789</StreetNumber>
+                <StreetPrefix>NW</StreetPrefix>
+                <StreetName>Oak</StreetName>
+                <StreetType>St</StreetType>
+                <StreetSuffix>NE</StreetSuffix>
+                <ApartmentType>Office</ApartmentType>
+                <ApartmentNumberPrefix>Room</ApartmentNumberPrefix>
+                <ApartmentNumber>303</ApartmentNumber>
+                <ApartmentNumberSuffix>C</ApartmentNumberSuffix>
+            </Street>
+            <City>Springfield</City>
+            <County>Greene</County>
+            <StateProvince Codeset="http://example.com/codeset">MO</StateProvince>
+            <StateANSICode Codeset="http://example.com/codeset">29</StateANSICode>
+            <Country Codeset="http://example.com/codeset">US</Country>
+            <PostalCode>65804</PostalCode>
+            <GridLocation>
+                <Latitude>37.209999</Latitude>
+                <Longitude>-93.294444</Longitude>
+            </GridLocation>
+            <AddressRefId>123e4567-e89b-12d3-a456-426614174003</AddressRefId>
+        </Address>
+    </AddressList>
+    <EDENInfo>
+        <FIPSStateCode>29</FIPSStateCode>
+        <AgencyIdNumber>MO-SEA-001</AgencyIdNumber>
+    </EDENInfo>
+    <CTEGraduationRateInclusion>IncludedAsGraduated</CTEGraduationRateInclusion>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>2023-2024</Code>
+                <Name>Current Academic Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-15T00:00:00</StartDateTime>
+                <EndDateTime>2024-05-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>WinterBreak</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-05</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Data Creation Service</Name>
+                        <ID>service@fictitioussea.org</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>admin@fictitioussea.org</By>
+                    <DateTime>2023-06-01T15:30:00</DateTime>
+                    <Description>Updated contact information</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>2023-08-15 to 2023-10-15</Value>
+                    <StartDateTime>2023-08-15T00:00:00</StartDateTime>
+                    <EndDateTime>2023-10-15T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Weekend</Type>
+                            <Code>Weekend</Code>
+                            <Name>Weekend Break</Name>
+                            <Value>Every Saturday and Sunday</Value>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>false</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Fictitious SEA</CopyrightStatement>
+                <TermsOfUse>Use for educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">HS-Freshman</OtherCode>
+                        <OtherCode Codeset="Local">9th Grade</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Math</OtherCode>
+                        <OtherCode Codeset="Local">Algebra</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">High</OtherCode>
+                        <OtherCode Codeset="Local">Advanced</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174005</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+                <BloomsTaxonomyLevel>Analysis</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                <MultipleIntelligence>Visual-Spatial</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+                <InstructionalStrategy>Direct Instruction</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Algebra</Title>
+            <Summary>This course covers the basics of algebra including variables, equations, and functions.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand the concept of variables</LearningObjective>
+                <LearningObjective>Solve linear equations</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</SEAInfo>

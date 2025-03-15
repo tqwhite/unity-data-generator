@@ -1,0 +1,164 @@
+<FinancialBudget RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <ReportDate>2023-10-15</ReportDate>
+    <StateProvinceId>CA12345</StateProvinceId>
+    <FiscalYear>2023</FiscalYear>
+    <BudgetAccounts>
+        <BudgetAccount>
+            <AccountClass Codeset="http://example.com/codeset">General Fund</AccountClass>
+            <FundBreakdown>Education Fund</FundBreakdown>
+            <FunctionBreakdown>Instructional Services</FunctionBreakdown>
+            <ObjectBreakdown>Supplies</ObjectBreakdown>
+            <BudgetAmount>50000</BudgetAmount>
+        </BudgetAccount>
+    </BudgetAccounts>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>Fiscal Year</Type>
+                <Code>FY2023</Code>
+                <Name>Fiscal Year 2023</Name>
+                <Value>2023</Value>
+                <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Quarter</Type>
+                        <Code>Q1</Code>
+                        <Name>First Quarter</Name>
+                        <Value>2023-Q1</Value>
+                        <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                        <EndDateTime>2023-03-31T23:59:59</EndDateTime>
+                    </SpanGap>
+                    <SpanGap>
+                        <Type>Quarter</Type>
+                        <Code>Q2</Code>
+                        <Name>Second Quarter</Name>
+                        <Value>2023-Q2</Value>
+                        <StartDateTime>2023-04-01T00:00:00</StartDateTime>
+                        <EndDateTime>2023-06-30T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-10-01T10:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Data Generator Service</Name>
+                        <ID>service@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Admin User</By>
+                    <DateTime>2023-10-10T15:30:00</DateTime>
+                    <Description>Initial data entry</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Update Cycle</Type>
+                    <Code>UC2023</Code>
+                    <Name>Update Cycle 2023</Name>
+                    <Value>2023</Value>
+                    <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Month</Type>
+                            <Code>Jan</Code>
+                            <Name>January</Name>
+                            <Value>2023-01</Value>
+                            <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                            <EndDateTime>2023-01-31T23:59:59</EndDateTime>
+                        </SpanGap>
+                        <SpanGap>
+                            <Type>Month</Type>
+                            <Code>Feb</Code>
+                            <Name>February</Name>
+                            <Value>2023-02</Value>
+                            <StartDateTime>2023-02-01T00:00:00</StartDateTime>
+                            <EndDateTime>2023-02-28T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>Standard</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">10.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example Corp. All rights reserved.</CopyrightStatement>
+                <TermsOfUse>Use for educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>06</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP06</OtherCode>
+                        <OtherCode Codeset="Local">L06</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP01</OtherCode>
+                        <OtherCode Codeset="Local">L01</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>08</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP08</OtherCode>
+                        <OtherCode Codeset="Local">L08</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174001</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Annual Financial Budget Report</Title>
+            <Summary>This report provides a detailed overview of the financial budget for the fiscal year 2023.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand budget allocation</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Document</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="AdditionalInfo" SIF_Action="Delete">Extra data not needed</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="Notes">Budget approved by board</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</FinancialBudget>

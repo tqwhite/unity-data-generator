@@ -1,0 +1,158 @@
+<LocationInfo xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" LocationType="School" LocationTypeCodeset="http://example.com/codeset">
+    <SiteCategory>Public</SiteCategory>
+    <Name>Springfield Elementary School</Name>
+    <Description>A fictional elementary school in Springfield.</Description>
+    <LocalId>SES-001</LocalId>
+    <IdentificationInfoList>
+        <IdentificationInfo Code="NCES" CodeCodeset="http://example.com/codeset">123456789</IdentificationInfo>
+        <IdentificationInfo Code="StateUniversitySystem" CodeCodeset="http://example.com/codeset">987654321</IdentificationInfo>
+    </IdentificationInfoList>
+    <LEAInfoRefId>123e4567-e89b-12d3-a456-426614174001</LEAInfoRefId>
+    <OtherLEAs>
+        <LEAInfoRefId>123e4567-e89b-12d3-a456-426614174002</LEAInfoRefId>
+    </OtherLEAs>
+    <ParentLocationInfo SIF_RefObject="LocationInfo">123e4567-e89b-12d3-a456-426614174003</ParentLocationInfo>
+    <SchoolInfoRefId>123e4567-e89b-12d3-a456-426614174004</SchoolInfoRefId>
+    <AddressList>
+        <Address Type="Mailing" TypeCodeset="http://example.com/codeset">
+            <Street>
+                <Line1>742 Evergreen Terrace</Line1>
+                <Line2>Suite 101</Line2>
+                <StreetNumber>742</StreetNumber>
+                <StreetName>Evergreen</StreetName>
+                <StreetType>Terrace</StreetType>
+            </Street>
+            <City>Springfield</City>
+            <County>Simpson County</County>
+            <StateProvince Codeset="http://example.com/codeset">IL</StateProvince>
+            <StateANSICode Codeset="http://example.com/codeset">17</StateANSICode>
+            <Country Codeset="http://example.com/codeset">USA</Country>
+            <PostalCode>62704</PostalCode>
+            <GridLocation>
+                <Latitude>39.7817</Latitude>
+                <Longitude>-89.6501</Longitude>
+            </GridLocation>
+        </Address>
+    </AddressList>
+    <PhoneNumberList>
+        <PhoneNumber Type="Work" TypeCodeset="http://example.com/codeset">
+            <Number>(217) 555-1234</Number>
+            <Extension>101</Extension>
+            <ListedStatus>Public</ListedStatus>
+        </PhoneNumber>
+    </PhoneNumberList>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>2023-2024</Code>
+                <Name>Current School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                <EndDateTime>2024-05-25T15:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>WinterBreak</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-05</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Data System</Name>
+                        <ID>system@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Admin</By>
+                    <DateTime>2023-06-01T09:00:00</DateTime>
+                    <Description>Updated school address</Description>
+                </Modified>
+            </ModificationHistory>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/codeset">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Springfield School District</CopyrightStatement>
+                <TermsOfUse>For educational use only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">IL-05</OtherCode>
+                        <OtherCode Codeset="Local">Local-05</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">IL-Math</OtherCode>
+                        <OtherCode Codeset="Local">Local-Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">IL-05</OtherCode>
+                        <OtherCode Codeset="Local">Local-05</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174005</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174006</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Springfield Elementary Curriculum</Title>
+            <Summary>An overview of the curriculum offered at Springfield Elementary School.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Develop critical thinking skills</LearningObjective>
+                <LearningObjective>Enhance problem-solving abilities</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="ExtraCurricularActivities">Sports, Music, Art</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</LocationInfo>

@@ -1,0 +1,290 @@
+<StudentContact RefId="123e4567-e89b-12d3-a456-426614174000" StudentPersonalRefId="123e4567-e89b-12d3-a456-426614174001" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <LocalId>SC-001</LocalId>
+    <OtherIdList>
+        <OtherId Type="StateID" TypeCodeset="http://example.com/codeset/stateid">ST123456</OtherId>
+        <OtherId Type="LocalID" TypeCodeset="http://example.com/codeset/localid">LC654321</OtherId>
+    </OtherIdList>
+    <Name Type="Legal" TypeCodeset="http://example.com/codeset/name">
+        <Prefix>Mr.</Prefix>
+        <LastName>Smith</LastName>
+        <FirstName>John</FirstName>
+        <MiddleName>Alexander</MiddleName>
+        <Suffix>Jr.</Suffix>
+        <PreferredName>Johnny</PreferredName>
+        <SortName>Smith, John</SortName>
+        <FullName>John Alexander Smith Jr.</FullName>
+    </Name>
+    <OtherNames>
+        <Name SIF_Action="Delete" Type="Nickname" TypeCodeset="http://example.com/codeset/nickname">
+            <Prefix>Mr.</Prefix>
+            <LastName>Smithy</LastName>
+            <FirstName>Johnny</FirstName>
+            <MiddleName>A.</MiddleName>
+            <Suffix>Jr.</Suffix>
+            <PreferredName>Johnny</PreferredName>
+            <SortName>Smithy, Johnny</SortName>
+            <FullName>Johnny A. Smithy Jr.</FullName>
+        </Name>
+    </OtherNames>
+    <Demographics>
+        <RaceList>
+            <Race>
+                <Code>White</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="Local">WHT</OtherCode>
+                    <OtherCode Codeset="StateProvince">01</OtherCode>
+                </OtherCodeList>
+                <Proportion>1.0</Proportion>
+            </Race>
+        </RaceList>
+        <HispanicLatino>No</HispanicLatino>
+        <RaceEthnicityDeclined>No</RaceEthnicityDeclined>
+        <Gender>Male</Gender>
+        <BirthDate>2005-06-15</BirthDate>
+        <BirthDateVerification>Verified</BirthDateVerification>
+        <PlaceOfBirth>Springfield</PlaceOfBirth>
+        <CountyOfBirth>US</CountyOfBirth>
+        <StateOfBirth>IL</StateOfBirth>
+        <CountryOfBirth>US</CountryOfBirth>
+        <CountriesOfCitizenship>
+            <CountryOfCitizenship>US</CountryOfCitizenship>
+        </CountriesOfCitizenship>
+        <CountriesOfResidency>
+            <CountryOfResidency>US</CountryOfResidency>
+        </CountriesOfResidency>
+        <CountryArrivalDate>2005-06-20</CountryArrivalDate>
+        <CitizenshipStatus>Citizen</CitizenshipStatus>
+        <EnglishProficiency>
+            <Code>Yes</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="Local">ENG</OtherCode>
+                <OtherCode Codeset="StateProvince">02</OtherCode>
+            </OtherCodeList>
+        </EnglishProficiency>
+        <LanguageList>
+            <Language>
+                <Code>eng</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="Local">EN</OtherCode>
+                    <OtherCode Codeset="StateProvince">03</OtherCode>
+                </OtherCodeList>
+                <LanguageType>Primary</LanguageType>
+                <Dialect>American</Dialect>
+            </Language>
+        </LanguageList>
+        <DwellingArrangement>
+            <Code>Home</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="Local">HME</OtherCode>
+                <OtherCode Codeset="StateProvince">04</OtherCode>
+            </OtherCodeList>
+        </DwellingArrangement>
+        <MaritalStatus>Single</MaritalStatus>
+        <MilitaryConnectedStudent>NotMilitaryConnected</MilitaryConnectedStudent>
+    </Demographics>
+    <AddressList>
+        <Address SIF_Action="Delete" Type="Mailing" TypeCodeset="http://example.com/codeset/address">
+            <Street>
+                <Line1>123 Main St</Line1>
+                <Line2>Apt 4B</Line2>
+                <Complex>Springfield Complex</Complex>
+                <StreetNumber>123</StreetNumber>
+                <StreetPrefix>NE</StreetPrefix>
+                <StreetName>Main</StreetName>
+                <StreetType>St</StreetType>
+                <StreetSuffix>SW</StreetSuffix>
+                <ApartmentType>Suite</ApartmentType>
+                <ApartmentNumberPrefix>#</ApartmentNumberPrefix>
+                <ApartmentNumber>4B</ApartmentNumber>
+                <ApartmentNumberSuffix>A</ApartmentNumberSuffix>
+            </Street>
+            <City>Springfield</City>
+            <County>Sangamon</County>
+            <StateProvince>IL</StateProvince>
+            <StateANSICode>17</StateANSICode>
+            <Country>US</Country>
+            <PostalCode>62701</PostalCode>
+            <GridLocation>
+                <Latitude>39.7817</Latitude>
+                <Longitude>-89.6501</Longitude>
+            </GridLocation>
+            <AddressRefId>123e4567-e89b-12d3-a456-426614174002</AddressRefId>
+        </Address>
+    </AddressList>
+    <PhoneNumberList>
+        <PhoneNumber SIF_Action="Delete" Type="Home" TypeCodeset="http://example.com/codeset/phone">
+            <Number>(217) 555-1234</Number>
+            <Extension>101</Extension>
+            <ListedStatus>Listed</ListedStatus>
+        </PhoneNumber>
+        <PhoneNumber Type="Mobile" TypeCodeset="http://example.com/codeset/phone">
+            <Number>(217) 555-5678</Number>
+            <ListedStatus>Unlisted</ListedStatus>
+        </PhoneNumber>
+    </PhoneNumberList>
+    <EmailList>
+        <Email SIF_Action="Delete" Type="Home" TypeCodeset="http://example.com/codeset/email">john.smith@example.com</Email>
+        <Email Type="Work" TypeCodeset="http://example.com/codeset/email">john.smith@workplace.com</Email>
+    </EmailList>
+    <Relationship>
+        <Code>Father</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="Local">FTH</OtherCode>
+            <OtherCode Codeset="StateProvince">05</OtherCode>
+        </OtherCodeList>
+    </Relationship>
+    <EmployerType>Private</EmployerType>
+    <EducationalLevel>Bachelor's Degree</EducationalLevel>
+    <ContactFlags>
+        <ParentLegalGuardian>Yes</ParentLegalGuardian>
+        <PickupRights>Yes</PickupRights>
+        <LivesWith>Yes</LivesWith>
+        <AccessToRecords>Yes</AccessToRecords>
+        <EmergencyContact>Yes</EmergencyContact>
+        <HasCustody>Yes</HasCustody>
+        <DisciplinaryContact>No</DisciplinaryContact>
+        <PrimaryCareProvider>No</PrimaryCareProvider>
+        <Other>None</Other>
+    </ContactFlags>
+    <ContactSequence>1</ContactSequence>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>2023</Code>
+                <Name>2023-2024 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                <EndDateTime>2024-05-30T15:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>WinterBreak</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-05</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Data Entry System</Name>
+                        <ID>dataentry@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>admin@example.com</By>
+                    <DateTime>2023-06-01T09:00:00</DateTime>
+                    <Description>Updated contact information</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>2023-08-15 to 2023-10-15</Value>
+                    <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                    <EndDateTime>2023-10-15T15:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Weekend</Type>
+                            <Code>SatSun</Code>
+                            <Name>Saturday and Sunday</Name>
+                            <Value>Weekly</Value>
+                            <StartDateTime>2023-08-19T00:00:00</StartDateTime>
+                            <EndDateTime>2023-08-20T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/codeset/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational use only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Freshman</OtherCode>
+                        <OtherCode Codeset="StateProvince">06</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Math</OtherCode>
+                        <OtherCode Codeset="StateProvince">07</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">High</OtherCode>
+                        <OtherCode Codeset="StateProvince">08</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+                <BloomsTaxonomyLevel>Analysis</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                <MultipleIntelligence>Visual-Spatial</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+                <InstructionalStrategy>Direct Instruction</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Algebra</Title>
+            <Summary>This course covers the basics of algebra including variables, equations, and functions.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand the concept of variables</LearningObjective>
+                <LearningObjective>Solve linear equations</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">CustomValue1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">CustomValue2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StudentContact>

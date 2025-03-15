@@ -1,0 +1,13 @@
+<StudentMigrant xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" StudentInfoRefId="123e4567-e89b-12d3-a456-426614174001">
+    <ServicesType Codeset="http://example.com/codeset/services">CounselingServices</ServicesType>
+    <PrioritizedForServices Codeset="http://example.com/codeset/prioritized">Yes</PrioritizedForServices>
+    <QualifyingArrivalDate>2021-06-15</QualifyingArrivalDate>
+    <ProgramStartDate>2021-07-01</ProgramStartDate>
+    <ProgramExitDate>2022-06-30</ProgramExitDate>
+    <ContinuationOfServicesReason Codeset="http://example.com/codeset/continuationReason">FamilyRelocation</ContinuationOfServicesReason>
+    <ContinuationOfServicesStatus Codeset="http://example.com/codeset/continuationStatus">Active</ContinuationOfServicesStatus>
+    <LastQualifyingMoveDate>2021-05-20</LastQualifyingMoveDate>
+    <ExpirationDate>2024-06-15</ExpirationDate>
+    <EnrollmentType Codeset="http://example.com/codeset/enrollmentType">FullTime</EnrollmentType>
+    <ParticipationStatus Codeset="http://example.com/codeset/participationStatus">Participating</ParticipationStatus>
+</StudentMigrant>

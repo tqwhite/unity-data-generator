@@ -1,0 +1,154 @@
+<AssessmentItem xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" AssessmentFormRefId="123e4567-e89b-12d3-a456-426614174001" ResponseType="MultipleChoice" ResponseTypeCodeset="http://example.com/codeset">
+    <ItemLabel>Item001</ItemLabel>
+    <ItemName>Basic Math Question</ItemName>
+    <LearningStandardItems>
+        <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174002</LearningStandardItemRefId>
+    </LearningStandardItems>
+    <Stimulus>
+        <TextData>What is 2 + 2?</TextData>
+    </Stimulus>
+    <Stem>
+        <TextData>Calculate the sum of 2 and 2.</TextData>
+    </Stem>
+    <ResponseChoices>
+        <Choice>
+            <ChoiceLabel>A</ChoiceLabel>
+            <ChoiceContent>
+                <TextData>3</TextData>
+            </ChoiceContent>
+            <CreditValue>0.0</CreditValue>
+        </Choice>
+        <Choice>
+            <ChoiceLabel>B</ChoiceLabel>
+            <ChoiceContent>
+                <TextData>4</TextData>
+            </ChoiceContent>
+            <CreditValue>1.0</CreditValue>
+        </Choice>
+    </ResponseChoices>
+    <ItemScoreMaximum>1</ItemScoreMaximum>
+    <ItemScoreMinimum>0</ItemScoreMinimum>
+    <PerformanceLevels>
+        <PerformanceLevel LevelName="Proficient" LevelIdentifier="PL1">
+            <CutScores ScoreMetric="00512" ScoreMetricCodeset="http://example.com/scoremetric">
+                <LowerCut>0.7</LowerCut>
+                <UpperCut>1.0</UpperCut>
+            </CutScores>
+        </PerformanceLevel>
+    </PerformanceLevels>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>2023-2024</Code>
+                <Name>Academic Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>WinterBreak</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-05</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-07-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Test Creator</Name>
+                        <ID>creator@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Test Modifier</By>
+                    <DateTime>2023-09-01T12:00:00</DateTime>
+                    <Description>Initial creation of the assessment item.</Description>
+                </Modified>
+            </ModificationHistory>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example Corp. All rights reserved.</CopyrightStatement>
+                <TermsOfUse>Use for educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Interactive</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Grade 5</OtherCode>
+                        <OtherCode Codeset="Local">Fifth Grade</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Mathematics</OtherCode>
+                        <OtherCode Codeset="Local">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Grade 5</OtherCode>
+                        <OtherCode Codeset="Local">Fifth Grade</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Problem Solving</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Basic Math Assessment</Title>
+            <Summary>This assessment item tests basic addition skills.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand basic addition</LearningObjective>
+                <LearningObjective>Apply addition in problem-solving</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Assessment</ResourceType>
+                <ResourceType>Worksheet</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="DifficultyLevel" SIF_Action="Delete">Easy</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</AssessmentItem>

@@ -1,0 +1,143 @@
+<FoodserviceItem RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <LocalId>FSI-001</LocalId>
+    <Description>Fresh Apple</Description>
+    <ElectronicIdList>
+        <ElectronicId Type="UPC" TypeCodeset="http://example.com/codeset">012345678905</ElectronicId>
+        <ElectronicId Type="SKU" TypeCodeset="http://example.com/codeset">APL-001</ElectronicId>
+    </ElectronicIdList>
+    <ItemCategory>Fruits</ItemCategory>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>2023-2024</Code>
+                <Name>Academic Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>Winter Break</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-02</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-02T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-07-15T10:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-09-01T12:00:00</DateTime>
+                    <Description>Updated item description</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>2023-08-01 to 2023-10-31</Value>
+                    <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-10-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Weekend</Type>
+                            <Code>Saturday-Sunday</Code>
+                            <Name>Weekend</Name>
+                            <Value>Every Saturday and Sunday</Value>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational use only</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Image</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/gradelevel">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Fifth Grade</OtherCode>
+                        <OtherCode Codeset="StateProvince">Grade 5</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/subjectarea">01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        <OtherCode Codeset="Text">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/interestlevel">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Intermediate</OtherCode>
+                        <OtherCode Codeset="Text">Level 5</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>abcdef12-3456-7890-abcd-ef1234567890</LearningStandardItemRefId>
+                <LearningStandardItemRefId>12345678-90ab-cdef-1234-567890abcdef</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Fractions</Title>
+            <Summary>This module covers the basics of fractions, including addition and subtraction.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand the concept of fractions</LearningObjective>
+                <LearningObjective>Perform basic operations with fractions</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Lesson Plan</ResourceType>
+                <ResourceType>Worksheet</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="NutritionalInfo" SIF_Action="Delete">Calories: 95</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</FoodserviceItem>

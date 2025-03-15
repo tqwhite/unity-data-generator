@@ -1,0 +1,158 @@
+<StudentContactRelationship xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" StudentPersonalRefId="123e4567-e89b-12d3-a456-426614174001" StudentContactPersonalRefId="123e4567-e89b-12d3-a456-426614174002">
+    <Relationship>
+        <Code Codeset="http://example.com/codeset/relationship">Parent</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">Guardian</OtherCode>
+            <OtherCode Codeset="Local">Emergency Contact</OtherCode>
+        </OtherCodeList>
+    </Relationship>
+    <ContactFlags>
+        <ParentLegalGuardian Codeset="http://example.com/codeset/parental">Yes</ParentLegalGuardian>
+        <PickupRights Codeset="http://example.com/codeset/pickup">Yes</PickupRights>
+        <LivesWith Codeset="http://example.com/codeset/liveswith">Yes</LivesWith>
+        <AccessToRecords Codeset="http://example.com/codeset/access">Yes</AccessToRecords>
+        <EmergencyContact Codeset="http://example.com/codeset/emergency">Yes</EmergencyContact>
+        <HasCustody Codeset="http://example.com/codeset/custody">Yes</HasCustody>
+        <DisciplinaryContact Codeset="http://example.com/codeset/disciplinary">No</DisciplinaryContact>
+        <PrimaryCareProvider Codeset="http://example.com/codeset/primarycare">No</PrimaryCareProvider>
+        <Other Codeset="http://example.com/codeset/other">No</Other>
+    </ContactFlags>
+    <ContactSequence>1</ContactSequence>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>2023-2024</Code>
+                <Name>Current Academic Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-15T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-15T00:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>WinterBreak</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-05</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T00:00:00</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-08-01T09:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>School Management System</Name>
+                        <ID>sms@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>admin@example.com</By>
+                    <DateTime>2023-09-01T10:00:00</DateTime>
+                    <Description>Updated contact information</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Semester</Type>
+                    <Code>Fall2023</Code>
+                    <Name>Fall Semester</Name>
+                    <Value>2023-08-15 to 2023-12-19</Value>
+                    <StartDateTime>2023-08-15T00:00:00</StartDateTime>
+                    <EndDateTime>2023-12-19T00:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Midterm</Type>
+                            <Code>MidtermBreak</Code>
+                            <Name>Midterm Break</Name>
+                            <Value>2023-10-15 to 2023-10-20</Value>
+                            <StartDateTime>2023-10-15T00:00:00</StartDateTime>
+                            <EndDateTime>2023-10-20T00:00:00</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/codeset/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational use only</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/codeset/gradelevel">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Fifth Grade</OtherCode>
+                        <OtherCode Codeset="Text">5th Grade</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/codeset/subjectarea">Math</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        <OtherCode Codeset="Text">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/codeset/interestlevel">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Intermediate</OtherCode>
+                        <OtherCode Codeset="Text">Level 5</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Mathematics Curriculum</Title>
+            <Summary>An overview of the fifth-grade mathematics curriculum.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Develop problem-solving skills</LearningObjective>
+                <LearningObjective>Understand basic algebraic concepts</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StudentContactRelationship>

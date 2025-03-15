@@ -1,0 +1,131 @@
+<FoodserviceMilkSales RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <SchoolInfoRefId>987e6543-e21b-12d3-a456-426614174001</SchoolInfoRefId>
+    <Date>2023-10-15</Date>
+    <Program Type="LunchProgram" TypeCodeset="http://example.com/codeset">150.75</Program>
+    <SaleQuantities>
+        <SaleQuantity>
+            <Value>200</Value>
+            <MealStatus Type="Free" TypeCodeset="http://example.com/mealstatus">
+                <StartDate>2023-09-01</StartDate>
+                <EndDate>2023-12-31</EndDate>
+                <SchoolYear>2024</SchoolYear>
+            </MealStatus>
+            <SaleUnit>Carton</SaleUnit>
+            <ChargeToChild Currency="USD" CurrencyCodeset="http://example.com/currency">0.50</ChargeToChild>
+        </SaleQuantity>
+    </SaleQuantities>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>Daily</Type>
+                <Code>20231015</Code>
+                <Name>Daily Sales</Name>
+                <Value>150.75</Value>
+                <StartDateTime>2023-10-15T08:00:00</StartDateTime>
+                <EndDateTime>2023-10-15T16:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Lunch</Type>
+                        <Code>LunchPeriod</Code>
+                        <Name>Lunch Time</Name>
+                        <Value>11:30-12:30</Value>
+                        <StartDateTime>2023-10-15T11:30:00</StartDateTime>
+                        <EndDateTime>2023-10-15T12:30:00</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-10-15T08:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>SystemAdmin</Name>
+                        <ID>admin@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>SystemAdmin</By>
+                    <DateTime>2023-10-15T09:00:00</DateTime>
+                    <Description>Initial data entry</Description>
+                </Modified>
+            </ModificationHistory>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Educational</UseType>
+                        <MeteringType>None</MeteringType>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Image</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Fifth Grade</OtherCode>
+                        <OtherCode Codeset="StateProvince">Grade 5</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        <OtherCode Codeset="StateProvince">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Intermediate</OtherCode>
+                        <OtherCode Codeset="StateProvince">Middle</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>456e7890-e12b-12d3-a456-426614174002</LearningStandardItemRefId>
+                <LearningStandardItemRefId>789e0123-e34b-12d3-a456-426614174003</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Milk Sales Report</Title>
+            <Summary>Daily milk sales report for the school cafeteria.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand the sales process</LearningObjective>
+                <LearningObjective>Analyze daily sales data</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Report</ResourceType>
+                <ResourceType>Data</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="AdditionalInfo" SIF_Action="Delete">Extra data not needed</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</FoodserviceMilkSales>

@@ -1,0 +1,193 @@
+<ContentCatalogs xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <ContentCatalog RefId="123e4567-e89b-12d3-a456-426614174000">
+        <ContentObject>
+            <SourceObject SIF_RefObject="LearningResource">123e4567-e89b-12d3-a456-426614174002</SourceObject>
+            <Location ReferenceType="URI">http://example.com/resource</Location>
+        </ContentObject>
+        <Status>Available</Status>
+        <Title>Introduction to Algebra</Title>
+        <Description>This textbook is intended for grade 9 students and covers basic algebraic concepts.</Description>
+        <Author>John Doe</Author>
+        <LanguageCode Codeset="http://example.com/language-codes">en</LanguageCode>
+        <GradeLevels>
+            <GradeLevel>
+                <Code Codeset="http://example.com/grade-codes">09</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="StateProvince">CA-09</OtherCode>
+                </OtherCodeList>
+            </GradeLevel>
+        </GradeLevels>
+        <SubjectAreas>
+            <SubjectArea>
+                <Code Codeset="http://example.com/subject-codes">MA</Code>
+                <OtherCodeList>
+                    <OtherCode Codeset="Local">Math-101</OtherCode>
+                </OtherCodeList>
+            </SubjectArea>
+        </SubjectAreas>
+        <MediaTypes>
+            <MediaType>application/pdf</MediaType>
+        </MediaTypes>
+        <LearningStandards>
+            <Document>
+                <Title>Common Core State Standards</Title>
+                <StandardsSettingBody>
+                    <Country Codeset="http://example.com/country-codes">US</Country>
+                    <StateProvince Codeset="http://example.com/state-codes">Yes</StateProvince>
+                    <NCESId>123456</NCESId>
+                    <SettingBodyName>National Governors Association</SettingBodyName>
+                </StandardsSettingBody>
+                <StatementCodes>
+                    <StatementCode>CCSS.MATH.CONTENT.HSA.REI.A.1</StatementCode>
+                </StatementCodes>
+            </Document>
+        </LearningStandards>
+        <InstructionalLevel>High School</InstructionalLevel>
+        <TechnicalRequirements>
+            <TechnicalRequirement>Windows 10</TechnicalRequirement>
+        </TechnicalRequirements>
+        <Duration Units="hours" UnitsCodeset="http://example.com/time-units">5</Duration>
+        <CurriculumHierarchyList>
+            <CurriculumHierarchy>
+                <Level>1</Level>
+                <Description>Basic Algebra</Description>
+                <ParentLevel>0</ParentLevel>
+            </CurriculumHierarchy>
+        </CurriculumHierarchyList>
+        <Prerequisites>
+            <Prerequisite>Basic Arithmetic</Prerequisite>
+        </Prerequisites>
+        <Adaptations>None</Adaptations>
+        <Size>5MB</Size>
+        <Cost Currency="USD" CurrencyCodeset="http://example.com/currency-codes">20.00</Cost>
+        <SIF_Metadata>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Semester</Type>
+                    <Code>2023S1</Code>
+                    <Name>Spring Semester 2023</Name>
+                    <Value>2023-01-15 to 2023-05-15</Value>
+                    <StartDateTime>2023-01-15T00:00:00</StartDateTime>
+                    <EndDateTime>2023-05-15T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>SpringBreak</Code>
+                            <Name>Spring Break</Name>
+                            <Value>2023-03-20 to 2023-03-24</Value>
+                            <StartDateTime>2023-03-20T00:00:00</StartDateTime>
+                            <EndDateTime>2023-03-24T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+            <LifeCycle>
+                <Created>
+                    <DateTime>2023-01-01T12:00:00</DateTime>
+                    <Creators>
+                        <Creator>
+                            <Name>Content Creation Team</Name>
+                            <ID>creator@example.com</ID>
+                        </Creator>
+                    </Creators>
+                </Created>
+                <ModificationHistory>
+                    <Modified>
+                        <By>editor@example.com</By>
+                        <DateTime>2023-02-01T15:00:00</DateTime>
+                        <Description>Updated content for clarity</Description>
+                    </Modified>
+                </ModificationHistory>
+                <TimeElements>
+                    <TimeElement>
+                        <Type>Quarter</Type>
+                        <Code>2023Q1</Code>
+                        <Name>First Quarter 2023</Name>
+                        <Value>2023-01-01 to 2023-03-31</Value>
+                        <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                        <EndDateTime>2023-03-31T23:59:59</EndDateTime>
+                        <SpanGaps>
+                            <SpanGap>
+                                <Type>Maintenance</Type>
+                                <Code>SystemUpdate</Code>
+                                <Name>System Update</Name>
+                                <Value>2023-02-15</Value>
+                                <StartDateTime>2023-02-15T00:00:00</StartDateTime>
+                                <EndDateTime>2023-02-15T23:59:59</EndDateTime>
+                            </SpanGap>
+                        </SpanGaps>
+                        <IsCurrent>true</IsCurrent>
+                    </TimeElement>
+                </TimeElements>
+            </LifeCycle>
+            <RightsElements>
+                <RightsElement>
+                    <Cost>false</Cost>
+                    <FeesForUse>
+                        <FeeForUse>
+                            <UseType>Classroom</UseType>
+                            <MeteringType>PerStudent</MeteringType>
+                            <MeteringURL>http://example.com/metering</MeteringURL>
+                            <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency-codes">5.00</PerUseCharge>
+                        </FeeForUse>
+                    </FeesForUse>
+                    <CopyrightStatement>© 2023 Example Publishing</CopyrightStatement>
+                    <TermsOfUse>For educational use only</TermsOfUse>
+                </RightsElement>
+            </RightsElements>
+            <EducationFilter>
+                <MediaTypes>
+                    <MediaType>application/pdf</MediaType>
+                </MediaTypes>
+                <GradeLevels>
+                    <GradeLevel>
+                        <Code Codeset="http://example.com/grade-codes">09</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">CA-09</OtherCode>
+                        </OtherCodeList>
+                    </GradeLevel>
+                </GradeLevels>
+                <SubjectAreas>
+                    <SubjectArea>
+                        <Code Codeset="http://example.com/subject-codes">MA</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="Local">Math-101</OtherCode>
+                        </OtherCodeList>
+                    </SubjectArea>
+                </SubjectAreas>
+                <InterestLevels>
+                    <InterestLevel>
+                        <Code Codeset="http://example.com/interest-codes">09</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="Local">HighInterest</OtherCode>
+                        </OtherCodeList>
+                    </InterestLevel>
+                </InterestLevels>
+                <LearningStandardItems>
+                    <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174001</LearningStandardItemRefId>
+                </LearningStandardItems>
+                <BloomsTaxonomyLevels>
+                    <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+                </BloomsTaxonomyLevels>
+                <MultipleIntelligences>
+                    <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                </MultipleIntelligences>
+                <InstructionalStrategies>
+                    <InstructionalStrategy>Problem-Based Learning</InstructionalStrategy>
+                </InstructionalStrategies>
+                <Title>Algebra Basics</Title>
+                <Summary>This resource provides foundational knowledge in algebra for high school students.</Summary>
+                <LearningObjectives>
+                    <LearningObjective>Understand and apply basic algebraic principles</LearningObjective>
+                </LearningObjectives>
+                <ResourceTypes>
+                    <ResourceType>Textbook</ResourceType>
+                </ResourceTypes>
+            </EducationFilter>
+        </SIF_Metadata>
+        <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="CustomElement1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        </SIF_ExtendedElements>
+    </ContentCatalog>
+</ContentCatalogs>

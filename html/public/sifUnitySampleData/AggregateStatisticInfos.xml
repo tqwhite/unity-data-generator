@@ -1,0 +1,154 @@
+<AggregateStatisticInfo RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <StatisticName>Average Test Scores</StatisticName>
+    <CalculationRule Type="Mean" TypeCodeset="http://example.com/codeset">Calculate the mean of all test scores</CalculationRule>
+    <ApprovalDate>2023-01-01</ApprovalDate>
+    <ExpirationDate>2024-01-01</ExpirationDate>
+    <ExclusionRules>
+        <ExclusionRule Type="ExcludeAbsentees" TypeCodeset="http://example.com/codeset">Exclude students absent on test day</ExclusionRule>
+    </ExclusionRules>
+    <Source>SIS</Source>
+    <EffectiveDate>2023-01-01</EffectiveDate>
+    <DiscontinueDate>2024-01-01</DiscontinueDate>
+    <Location Type="School" TypeCodeset="http://example.com/codeset">
+        <LocationName>Springfield High School</LocationName>
+        <LocationRefId SIF_RefObject="SchoolInfo">987e6543-e21b-12d3-a456-426614174001</LocationRefId>
+    </Location>
+    <Measure Codeset="http://example.com/codeset">Percentage</Measure>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>2023-2024</Code>
+                <Name>Academic Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>Winter Break</Code>
+                        <Name>Winter Break</Name>
+                        <Value>Winter Break</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-02T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Data System</Name>
+                        <ID>system@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>admin@example.com</By>
+                    <DateTime>2023-06-01T12:00:00</DateTime>
+                    <Description>Updated calculation rule</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>First Quarter</Value>
+                    <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-10-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>Labor Day</Code>
+                            <Name>Labor Day</Name>
+                            <Value>Labor Day</Value>
+                            <StartDateTime>2023-09-04T00:00:00</StartDateTime>
+                            <EndDateTime>2023-09-04T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Springfield High School</CopyrightStatement>
+                <TermsOfUse>For educational purposes only</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/gradelevel">09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Freshman</OtherCode>
+                        <OtherCode Codeset="Local">9th Grade</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/subjectarea">01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Mathematics</OtherCode>
+                        <OtherCode Codeset="Local">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/interestlevel">09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">High School</OtherCode>
+                        <OtherCode Codeset="Local">Secondary</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>456e7890-e12b-12d3-a456-426614174002</LearningStandardItemRefId>
+                <LearningStandardItemRefId>789e0123-e34b-12d3-a456-426614174003</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Algebra</Title>
+            <Summary>This course covers the basics of algebra including variables, equations, and functions.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand and apply basic algebraic concepts</LearningObjective>
+                <LearningObjective>Solve linear equations and inequalities</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomElement1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomElement2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</AggregateStatisticInfo>

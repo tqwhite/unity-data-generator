@@ -1,0 +1,171 @@
+<StaffEvaluation RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <StaffPersonalRefId>123e4567-e89b-12d3-a456-426614174001</StaffPersonalRefId>
+    <SchoolInfoRefId>123e4567-e89b-12d3-a456-426614174002</SchoolInfoRefId>
+    <NCESId>123456789</NCESId>
+    <EvaluatorStateProvinceId>SP123456</EvaluatorStateProvinceId>
+    <BargainingUnit>Teachers Union</BargainingUnit>
+    <EvaluationCycleName>Annual Review</EvaluationCycleName>
+    <EvaluationPreconferenceDate>2023-01-15</EvaluationPreconferenceDate>
+    <ProjectedEvaluationDate>2023-02-15</ProjectedEvaluationDate>
+    <EvaluationDate>2023-02-20</EvaluationDate>
+    <EvaluationPostconferenceDate>2023-03-01</EvaluationPostconferenceDate>
+    <EvaluationSystem>PerformancePro</EvaluationSystem>
+    <EvaluationParts>
+        <EvaluationPart>
+            <Name>Classroom Management</Name>
+            <Score>4</Score>
+            <Scale>5</Scale>
+        </EvaluationPart>
+        <EvaluationPart>
+            <Name>Instructional Delivery</Name>
+            <Score>3</Score>
+            <Scale>5</Scale>
+        </EvaluationPart>
+    </EvaluationParts>
+    <EvaluationHolisticScore>3.5</EvaluationHolisticScore>
+    <EvaluationHolisticScale>5</EvaluationHolisticScale>
+    <EvaluationRecommendation>
+        <Code>Continue Employment</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="StateProvince">CE123</OtherCode>
+            <OtherCode Codeset="Local">LE456</OtherCode>
+        </OtherCodeList>
+    </EvaluationRecommendation>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023 School Year</Name>
+                <Value>2023</Value>
+                <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Summer Break</Type>
+                        <Code>SB2023</Code>
+                        <Name>Summer 2023</Name>
+                        <Value>3 months</Value>
+                        <StartDateTime>2023-06-01T00:00:00</StartDateTime>
+                        <EndDateTime>2023-08-31T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T10:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Evaluation System</Name>
+                        <ID>evalsys@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>AdminUser</By>
+                    <DateTime>2023-02-21T15:00:00</DateTime>
+                    <Description>Updated evaluation scores</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>Q1 2023</Value>
+                    <StartDateTime>2023-01-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-03-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Winter Break</Type>
+                            <Code>WB2023</Code>
+                            <Name>Winter 2023</Name>
+                            <Value>2 weeks</Value>
+                            <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                            <EndDateTime>2023-12-31T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example Corp</CopyrightStatement>
+                <TermsOfUse>For educational use only</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Video</MediaType>
+                <MediaType>Text</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">G5</OtherCode>
+                        <OtherCode Codeset="Local">Grade5</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Math</OtherCode>
+                        <OtherCode Codeset="Local">Mathematics</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">IL5</OtherCode>
+                        <OtherCode Codeset="Local">Interest5</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Mathematics Evaluation</Title>
+            <Summary>This evaluation covers the mathematics teaching strategies and classroom management.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Improve student engagement</LearningObjective>
+                <LearningObjective>Enhance problem-solving skills</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Digital</ResourceType>
+                <ResourceType>Printed</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomElement1">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomElement2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StaffEvaluation>

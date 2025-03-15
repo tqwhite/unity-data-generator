@@ -1,0 +1,161 @@
+<StudentResponseSet RefId="123e4567-e89b-12d3-a456-426614174000" AssessmentAdministrationRefId="123e4567-e89b-12d3-a456-426614174001" StudentPersonalRefId="123e4567-e89b-12d3-a456-426614174002" AssessmentRegistrationRefId="123e4567-e89b-12d3-a456-426614174003" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <Items>
+        <Item AssessmentItemRefId="123e4567-e89b-12d3-a456-426614174004">
+            <Response>42</Response>
+            <ResponseLocation>http://example.com/response/42</ResponseLocation>
+            <ResponseStatus Codeset="http://example.com/codeset">Correct</ResponseStatus>
+            <ResponseTime>PT5M</ResponseTime>
+            <ItemNumber>1</ItemNumber>
+            <ItemName>Math Question 1</ItemName>
+            <DiagnosticStatement>Basic arithmetic question</DiagnosticStatement>
+            <NumberOfAttempts>1</NumberOfAttempts>
+            <ItemScore>5</ItemScore>
+            <ItemAidSetUsed>Calculator</ItemAidSetUsed>
+        </Item>
+    </Items>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>2023-2024</Code>
+                <Name>Academic Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>WinterBreak</Code>
+                        <Name>Winter Break</Name>
+                        <Value>Winter Break 2023</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>SpringBreak</Code>
+                        <Name>Spring Break</Name>
+                        <Value>Spring Break 2024</Value>
+                        <StartDateTime>2024-03-25T00:00:00</StartDateTime>
+                        <EndDateTime>2024-03-29T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-09-01T08:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-10-01T10:00:00</DateTime>
+                    <Description>Updated response status</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Semester</Type>
+                    <Code>Fall2023</Code>
+                    <Name>Fall Semester</Name>
+                    <Value>Fall 2023</Value>
+                    <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-12-15T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>Thanksgiving</Code>
+                            <Name>Thanksgiving Break</Name>
+                            <Value>Thanksgiving 2023</Value>
+                            <StartDateTime>2023-11-23T00:00:00</StartDateTime>
+                            <EndDateTime>2023-11-24T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational purposes only</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Fifth Grade</OtherCode>
+                        <OtherCode Codeset="StateProvince">Grade 5</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Mathematics</OtherCode>
+                        <OtherCode Codeset="Text">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Intermediate</OtherCode>
+                        <OtherCode Codeset="Text">Middle School</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174006</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174007</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Problem Solving</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Math and Science Assessment</Title>
+            <Summary>An assessment covering basic math and science concepts.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand basic arithmetic operations</LearningObjective>
+                <LearningObjective>Identify true or false statements in biology</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Assessment</ResourceType>
+                <ResourceType>Worksheet</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomElement1">CustomValue1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomElement2" SIF_Action="Delete">CustomValue2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StudentResponseSet>

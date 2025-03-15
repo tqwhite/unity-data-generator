@@ -1,0 +1,237 @@
+<LearningResource RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <Name>Introduction to American History</Name>
+    <Author>Educational Publishing Co.</Author>
+    <Contacts>
+        <Contact>
+            <Name Type="04" TypeCodeset="http://example.com/codeset">
+                <Prefix>Dr.</Prefix>
+                <LastName>Smith</LastName>
+                <FirstName>John</FirstName>
+                <MiddleName>A.</MiddleName>
+                <Suffix>Jr.</Suffix>
+                <PreferredName>Johnny</PreferredName>
+                <SortName>Smith, John A.</SortName>
+                <FullName>Dr. John A. Smith Jr.</FullName>
+            </Name>
+            <Address Type="Mailing" TypeCodeset="http://example.com/addresscodeset">
+                <Street>
+                    <Line1>123 Main St</Line1>
+                    <Line2>Suite 100</Line2>
+                    <Complex>Main Office Complex</Complex>
+                    <StreetNumber>123</StreetNumber>
+                    <StreetName>Main</StreetName>
+                    <StreetType>St</StreetType>
+                    <ApartmentType>Suite</ApartmentType>
+                    <ApartmentNumber>100</ApartmentNumber>
+                </Street>
+                <City>Springfield</City>
+                <County>Greene</County>
+                <StateProvince Codeset="http://example.com/statecodeset">MO</StateProvince>
+                <StateANSICode Codeset="http://example.com/ansicodeset">29</StateANSICode>
+                <Country Codeset="http://example.com/countrycodeset">US</Country>
+                <PostalCode>65804</PostalCode>
+                <GridLocation>
+                    <Latitude>37.208957</Latitude>
+                    <Longitude>-93.292299</Longitude>
+                </GridLocation>
+                <AddressRefId>987e6543-e21b-12d3-a456-426614174001</AddressRefId>
+            </Address>
+            <PhoneNumber Type="Work" TypeCodeset="http://example.com/phonecodeset">
+                <Number>(417) 555-1234</Number>
+                <Extension>101</Extension>
+                <ListedStatus>Public</ListedStatus>
+            </PhoneNumber>
+            <Email Type="Work" TypeCodeset="http://example.com/emailcodeset">john.smith@educo.com</Email>
+        </Contact>
+    </Contacts>
+    <Location ReferenceType="URI">http://example.com/resource/location</Location>
+    <Status>Available</Status>
+    <Description>This textbook is intended for grade 4 social studies students and addresses the history of the United States from its founding to the present day.</Description>
+    <GradeLevels>
+        <GradeLevel>
+            <Code>04</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">MO-04</OtherCode>
+            </OtherCodeList>
+        </GradeLevel>
+    </GradeLevels>
+    <SubjectAreas>
+        <SubjectArea>
+            <Code>01</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="Local">HIST-01</OtherCode>
+            </OtherCodeList>
+        </SubjectArea>
+    </SubjectAreas>
+    <MediaTypes>
+        <MediaType>application/pdf</MediaType>
+    </MediaTypes>
+    <UseAgreement>Standard educational use agreement applies.</UseAgreement>
+    <AgreementDate>2023-01-15</AgreementDate>
+    <Approvals>
+        <Approval>
+            <Organization>State Education Board</Organization>
+            <Date>2023-02-01</Date>
+        </Approval>
+    </Approvals>
+    <Evaluations>
+        <Evaluation RefId="456e7890-e21b-12d3-a456-426614174002">
+            <Description>Comprehensive evaluation of the resource's educational value.</Description>
+            <Date>2023-03-10</Date>
+            <Name Type="04">
+                <Prefix>Prof.</Prefix>
+                <LastName>Johnson</LastName>
+                <FirstName>Emily</FirstName>
+                <MiddleName>B.</MiddleName>
+                <Suffix>PhD</Suffix>
+                <PreferredName>Em</PreferredName>
+                <SortName>Johnson, Emily B.</SortName>
+                <FullName>Prof. Emily B. Johnson PhD</FullName>
+            </Name>
+        </Evaluation>
+    </Evaluations>
+    <Components>
+        <Component>
+            <Name>Chapter 1: The Founding of America</Name>
+            <Reference>Section 1, pages 1-20</Reference>
+            <Description>Introduction to the early settlers and the founding of the United States.</Description>
+            <Strategies>
+                <Strategy>Interactive discussion</Strategy>
+            </Strategies>
+            <AssociatedObjects>
+                <AssociatedObject SIF_RefObject="Textbook">123e4567-e89b-12d3-a456-426614174005</AssociatedObject>
+            </AssociatedObjects>
+        </Component>
+    </Components>
+    <LearningStandards>
+        <LearningStandardItemRefId>789e0123-e21b-12d3-a456-426614174003</LearningStandardItemRefId>
+    </LearningStandards>
+    <LearningResourcePackageRefId>321e6543-e21b-12d3-a456-426614174004</LearningResourcePackageRefId>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>2023-2024</Code>
+                <Name>Academic Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-15T00:00:00</StartDateTime>
+                <EndDateTime>2024-05-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>Winter Break</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-05</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Content Creation Service</Name>
+                        <ID>creator@educo.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Editor</By>
+                    <DateTime>2023-02-15T14:30:00</DateTime>
+                    <Description>Updated chapter references and page numbers.</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>2023-08-15 to 2023-10-15</Value>
+                    <StartDateTime>2023-08-15T00:00:00</StartDateTime>
+                    <EndDateTime>2023-10-15T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Weekend</Type>
+                            <Code>Sat-Sun</Code>
+                            <Name>Weekend</Name>
+                            <Value>Every Saturday and Sunday</Value>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Educational Publishing Co.</CopyrightStatement>
+                <TermsOfUse>Use is restricted to educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>application/pdf</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>04</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">MO-04</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">HIST-01</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>04</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Text">Intermediate</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>789e0123-e21b-12d3-a456-426614174003</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>American History Textbook</Title>
+            <Summary>A comprehensive guide to American history for grade 4 students.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand the founding principles of the United States.</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</LearningResource>

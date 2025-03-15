@@ -1,0 +1,203 @@
+<VendorInfo xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000">
+    <Name>Acme Educational Services</Name>
+    <ContactInfo>
+        <Name Type="04">
+            <Prefix>Mr.</Prefix>
+            <LastName>Smith</LastName>
+            <FirstName>John</FirstName>
+            <MiddleName>A.</MiddleName>
+            <Suffix>Jr.</Suffix>
+            <PreferredName>Johnny</PreferredName>
+            <SortName>Smith, John</SortName>
+            <FullName>John A. Smith Jr.</FullName>
+        </Name>
+        <PositionTitle>Director of Sales</PositionTitle>
+        <Role>Primary Contact</Role>
+        <Address Type="Mailing">
+            <Street>
+                <Line1>123 Main St</Line1>
+                <Line2>Suite 400</Line2>
+                <Complex>Business Plaza</Complex>
+                <StreetNumber>123</StreetNumber>
+                <StreetPrefix>NE</StreetPrefix>
+                <StreetName>Main</StreetName>
+                <StreetType>St</StreetType>
+                <StreetSuffix>SW</StreetSuffix>
+                <ApartmentType>Suite</ApartmentType>
+                <ApartmentNumberPrefix>Apt</ApartmentNumberPrefix>
+                <ApartmentNumber>400</ApartmentNumber>
+                <ApartmentNumberSuffix>B</ApartmentNumberSuffix>
+            </Street>
+            <City>Springfield</City>
+            <County>Greene</County>
+            <StateProvince Codeset="http://example.com/codeset">MO</StateProvince>
+            <StateANSICode Codeset="http://example.com/codeset">29</StateANSICode>
+            <Country Codeset="http://example.com/codeset">USA</Country>
+            <PostalCode>65804</PostalCode>
+            <GridLocation>
+                <Latitude>37.208957</Latitude>
+                <Longitude>-93.292299</Longitude>
+            </GridLocation>
+            <AddressRefId>123e4567-e89b-12d3-a456-426614174001</AddressRefId>
+        </Address>
+        <EmailList>
+            <Email Type="Work">john.smith@acmeedu.com</Email>
+            <Email Type="Home">johnny.smith@gmail.com</Email>
+        </EmailList>
+        <PhoneNumberList>
+            <PhoneNumber Type="Work">
+                <Number>555-123-4567</Number>
+                <Extension>101</Extension>
+                <ListedStatus>Public</ListedStatus>
+            </PhoneNumber>
+            <PhoneNumber Type="Mobile">
+                <Number>555-987-6543</Number>
+                <ListedStatus>Private</ListedStatus>
+            </PhoneNumber>
+        </PhoneNumberList>
+    </ContactInfo>
+    <CustomerId>ACME-001</CustomerId>
+    <EmployeePersonalRefId>123e4567-e89b-12d3-a456-426614174002</EmployeePersonalRefId>
+    <Send1099>true</Send1099>
+    <FederalTaxId Code="TIN" CodeCodeset="http://example.com/codeset">12-3456789</FederalTaxId>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023-2024 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-05-31T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>HOL2023</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-02</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-02T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>System Admin</Name>
+                        <ID>admin@acmeedu.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>System Update</By>
+                    <DateTime>2023-06-01T15:30:00</DateTime>
+                    <Description>Updated contact information</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>2023-08-01 to 2023-10-31</Value>
+                    <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-10-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Break</Type>
+                            <Code>BRK2023</Code>
+                            <Name>Fall Break</Name>
+                            <Value>2023-10-10 to 2023-10-14</Value>
+                            <StartDateTime>2023-10-10T00:00:00</StartDateTime>
+                            <EndDateTime>2023-10-14T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>false</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>true</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>Per Student</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/codeset">5.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Acme Educational Services</CopyrightStatement>
+                <TermsOfUse>Use is subject to terms and conditions.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Video</MediaType>
+                <MediaType>Interactive</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP05</OtherCode>
+                        <OtherCode Codeset="Local">LC05</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP01</OtherCode>
+                        <OtherCode Codeset="Local">LC01</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>06</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP06</OtherCode>
+                        <OtherCode Codeset="Local">LC06</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+                <BloomsTaxonomyLevel>Applying</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                <MultipleIntelligence>Visual-Spatial</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Project-Based Learning</InstructionalStrategy>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Algebra</Title>
+            <Summary>This course provides an introduction to algebraic concepts and problem-solving techniques.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand basic algebraic operations</LearningObjective>
+                <LearningObjective>Solve linear equations</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Course</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomField1">Value1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomField2">Value2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</VendorInfo>

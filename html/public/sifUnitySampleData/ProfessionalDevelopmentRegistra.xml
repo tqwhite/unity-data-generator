@@ -1,0 +1,142 @@
+<ProfessionalDevelopmentRegistrations xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <ProfessionalDevelopmentRegistration RefId="123e4567-e89b-12d3-a456-426614174000" EmployeePersonalRefId="987e6543-e21b-12d3-a456-426614174001">
+        <RegistrationStatus Codeset="http://example.com/codeset">Registered</RegistrationStatus>
+        <ProfessionalDevelopmentActivityRefId>456e7890-e12b-12d3-a456-426614174002</ProfessionalDevelopmentActivityRefId>
+        <ProfessionalDevelopmentProgramRefId>789e0123-e34b-12d3-a456-426614174003</ProfessionalDevelopmentProgramRefId>
+        <PaidAmount Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">150.00</PaidAmount>
+        <Stipend Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">50.00</Stipend>
+        <SIF_Metadata>
+            <TimeElements>
+                <TimeElement>
+                    <Type>School Year</Type>
+                    <Code>SY2023</Code>
+                    <Name>2023 School Year</Name>
+                    <Value>2023-2024</Value>
+                    <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                    <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>HOL2023</Code>
+                            <Name>Winter Break</Name>
+                            <Value>Winter Break 2023</Value>
+                            <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                            <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+            <LifeCycle>
+                <Created>
+                    <DateTime>2023-07-15T10:00:00</DateTime>
+                    <Creators>
+                        <Creator>
+                            <Name>John Doe</Name>
+                            <ID>john.doe@example.com</ID>
+                        </Creator>
+                    </Creators>
+                </Created>
+                <ModificationHistory>
+                    <Modified>
+                        <By>Jane Smith</By>
+                        <DateTime>2023-09-01T12:00:00</DateTime>
+                        <Description>Updated registration status</Description>
+                    </Modified>
+                </ModificationHistory>
+                <TimeElements>
+                    <TimeElement>
+                        <Type>Quarter</Type>
+                        <Code>Q1</Code>
+                        <Name>First Quarter</Name>
+                        <Value>Q1 2023</Value>
+                        <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                        <EndDateTime>2023-10-31T23:59:59</EndDateTime>
+                        <SpanGaps>
+                            <SpanGap>
+                                <Type>Maintenance</Type>
+                                <Code>MT2023</Code>
+                                <Name>System Maintenance</Name>
+                                <Value>System Maintenance 2023</Value>
+                                <StartDateTime>2023-09-15T00:00:00</StartDateTime>
+                                <EndDateTime>2023-09-16T23:59:59</EndDateTime>
+                            </SpanGap>
+                        </SpanGaps>
+                        <IsCurrent>true</IsCurrent>
+                    </TimeElement>
+                </TimeElements>
+            </LifeCycle>
+            <RightsElements>
+                <RightsElement>
+                    <Cost>false</Cost>
+                    <FeesForUse>
+                        <FeeForUse>
+                            <UseType>Classroom</UseType>
+                            <MeteringType>None</MeteringType>
+                            <MeteringURL>http://example.com/metering</MeteringURL>
+                            <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">0.00</PerUseCharge>
+                        </FeeForUse>
+                    </FeesForUse>
+                    <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                    <TermsOfUse>Use for educational purposes only.</TermsOfUse>
+                </RightsElement>
+            </RightsElements>
+            <EducationFilter>
+                <MediaTypes>
+                    <MediaType>Video</MediaType>
+                </MediaTypes>
+                <GradeLevels>
+                    <GradeLevel>
+                        <Code Codeset="http://example.com/gradecodeset">05</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="Local">5th Grade</OtherCode>
+                        </OtherCodeList>
+                    </GradeLevel>
+                </GradeLevels>
+                <SubjectAreas>
+                    <SubjectArea>
+                        <Code Codeset="http://example.com/subjectcodeset">01</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">Mathematics</OtherCode>
+                        </OtherCodeList>
+                    </SubjectArea>
+                </SubjectAreas>
+                <InterestLevels>
+                    <InterestLevel>
+                        <Code Codeset="http://example.com/interestcodeset">05</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="Local">Intermediate</OtherCode>
+                        </OtherCodeList>
+                    </InterestLevel>
+                </InterestLevels>
+                <LearningStandardItems>
+                    <LearningStandardItemRefId>234e5678-e12b-12d3-a456-426614174004</LearningStandardItemRefId>
+                    <LearningStandardItemRefId>345e6789-e12b-12d3-a456-426614174005</LearningStandardItemRefId>
+                </LearningStandardItems>
+                <BloomsTaxonomyLevels>
+                    <BloomsTaxonomyLevel Codeset="http://example.com/bloomscodeset">Application</BloomsTaxonomyLevel>
+                </BloomsTaxonomyLevels>
+                <MultipleIntelligences>
+                    <MultipleIntelligence Codeset="http://example.com/intelligencecodeset">Logical-Mathematical</MultipleIntelligence>
+                </MultipleIntelligences>
+                <InstructionalStrategies>
+                    <InstructionalStrategy Codeset="http://example.com/strategycodeset">Collaborative Learning</InstructionalStrategy>
+                </InstructionalStrategies>
+                <Title>Advanced Mathematics Workshop</Title>
+                <Summary>This workshop covers advanced topics in mathematics for 5th-grade teachers.</Summary>
+                <LearningObjectives>
+                    <LearningObjective>Enhance problem-solving skills</LearningObjective>
+                    <LearningObjective>Develop critical thinking</LearningObjective>
+                </LearningObjectives>
+                <ResourceTypes>
+                    <ResourceType>Workshop</ResourceType>
+                    <ResourceType>Seminar</ResourceType>
+                </ResourceTypes>
+            </EducationFilter>
+        </SIF_Metadata>
+        <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="CustomField1" SIF_Action="Delete">Value1</SIF_ExtendedElement>
+            <SIF_ExtendedElement Name="CustomField2">Value2</SIF_ExtendedElement>
+        </SIF_ExtendedElements>
+    </ProfessionalDevelopmentRegistration>
+</ProfessionalDevelopmentRegistrations>

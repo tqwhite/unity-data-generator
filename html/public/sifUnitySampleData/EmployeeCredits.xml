@@ -1,0 +1,140 @@
+<EmployeeCredit RefId="123e4567-e89b-12d3-a456-426614174000" EmployeePersonalRefId="123e4567-e89b-12d3-a456-426614174001" ProfessionalDevelopmentActivitiesRefId="123e4567-e89b-12d3-a456-426614174002" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <EndDate>2023-10-15</EndDate>
+    <Earned Type="Credit" TypeCodeset="http://example.com/codeset">3</Earned>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>Semester</Type>
+                <Code>2023FALL</Code>
+                <Name>Fall Semester 2023</Name>
+                <Value>2023-09-01 to 2023-12-15</Value>
+                <StartDateTime>2023-09-01T08:00:00</StartDateTime>
+                <EndDateTime>2023-12-15T17:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>THXGIVING</Code>
+                        <Name>Thanksgiving Break</Name>
+                        <Value>2023-11-23 to 2023-11-24</Value>
+                        <StartDateTime>2023-11-23T00:00:00</StartDateTime>
+                        <EndDateTime>2023-11-24T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-08-01T09:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-09-15T10:30:00</DateTime>
+                    <Description>Updated credit details</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Academic Year</Type>
+                    <Code>2023-2024</Code>
+                    <Name>Academic Year 2023-2024</Name>
+                    <Value>2023-08-01 to 2024-07-31</Value>
+                    <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                    <EndDateTime>2024-07-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Summer Break</Type>
+                            <Code>SUMMER</Code>
+                            <Name>Summer Break</Name>
+                            <Value>2024-06-01 to 2024-07-31</Value>
+                            <StartDateTime>2024-06-01T00:00:00</StartDateTime>
+                            <EndDateTime>2024-07-31T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>false</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>Flat</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">50.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational use only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Video</MediaType>
+                <MediaType>Text</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">HS9</OtherCode>
+                        <OtherCode Codeset="Local">Freshman</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">MATH</OtherCode>
+                        <OtherCode Codeset="Local">Algebra</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">HS9</OtherCode>
+                        <OtherCode Codeset="Local">Freshman</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Algebra I Course</Title>
+            <Summary>This course covers the basics of algebra including variables, equations, and functions.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand algebraic expressions</LearningObjective>
+                <LearningObjective>Solve linear equations</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+                <ResourceType>Online Module</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="AdditionalInfo" SIF_Action="Delete">Extra details about the course</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</EmployeeCredit>

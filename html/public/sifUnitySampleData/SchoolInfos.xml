@@ -1,0 +1,137 @@
+<SchoolInfos xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <SchoolInfo RefId="123e4567-e89b-12d3-a456-426614174000">
+        <LocalId>School-001</LocalId>
+        <StateProvinceId>SP-12345</StateProvinceId>
+        <StateProvinceIdSystem Codeset="http://example.com/codeset">NCES</StateProvinceIdSystem>
+        <NCESId>123456789</NCESId>
+        <SchoolName>Springfield Elementary School</SchoolName>
+        <LEAInfoRefId>987e6543-e21b-12d3-a456-426614174000</LEAInfoRefId>
+        <OtherLEA SIF_RefObject="LEAInfo">987e6543-e21b-12d3-a456-426614174001</OtherLEA>
+        <SchoolType Codeset="http://example.com/codeset">Public</SchoolType>
+        <SchoolFocusList>
+            <SchoolFocus Codeset="http://example.com/codeset">STEM</SchoolFocus>
+            <SchoolFocus Codeset="http://example.com/codeset">Arts</SchoolFocus>
+        </SchoolFocusList>
+        <SchoolURL>http://www.springfieldelementary.edu</SchoolURL>
+        <SchoolDesignationList>
+            <SchoolDesignation Codeset="http://example.com/codeset">Charter</SchoolDesignation>
+            <SchoolDesignation Codeset="http://example.com/codeset">Magnet</SchoolDesignation>
+        </SchoolDesignationList>
+        <PrincipalInfo>
+            <ContactName>John Doe</ContactName>
+            <ContactTitle>Principal</ContactTitle>
+        </PrincipalInfo>
+        <SchoolContactList>
+            <SchoolContact>
+                <PublishInDirectory>Yes</PublishInDirectory>
+                <ContactInfo>
+                    <Name Type="04">
+                        <Prefix>Mr.</Prefix>
+                        <LastName>Smith</LastName>
+                        <FirstName>James</FirstName>
+                        <MiddleName>A.</MiddleName>
+                        <Suffix>Jr.</Suffix>
+                        <PreferredName>Jim</PreferredName>
+                        <SortName>Smith, James</SortName>
+                        <FullName>James A. Smith Jr.</FullName>
+                    </Name>
+                    <PositionTitle>Vice Principal</PositionTitle>
+                    <Role>Administrator</Role>
+                    <Address Type="Mailing">
+                        <Street>
+                            <Line1>742 Evergreen Terrace</Line1>
+                            <Line2>Suite 101</Line2>
+                            <StreetNumber>742</StreetNumber>
+                            <StreetName>Evergreen</StreetName>
+                            <StreetType>Terrace</StreetType>
+                        </Street>
+                        <City>Springfield</City>
+                        <County>Greene</County>
+                        <StateProvince Codeset="http://example.com/codeset">IL</StateProvince>
+                        <StateANSICode Codeset="http://example.com/codeset">17</StateANSICode>
+                        <Country Codeset="http://example.com/codeset">US</Country>
+                        <PostalCode>62704</PostalCode>
+                        <GridLocation>
+                            <Latitude>39.7817</Latitude>
+                            <Longitude>-89.6501</Longitude>
+                        </GridLocation>
+                    </Address>
+                    <EmailList>
+                        <Email Type="Work">james.smith@springfieldelementary.edu</Email>
+                    </EmailList>
+                    <PhoneNumberList>
+                        <PhoneNumber Type="Work">
+                            <Number>(217) 555-1234</Number>
+                            <Extension>101</Extension>
+                            <ListedStatus>Public</ListedStatus>
+                        </PhoneNumber>
+                    </PhoneNumberList>
+                </ContactInfo>
+            </SchoolContact>
+        </SchoolContactList>
+        <AddressList>
+            <Address Type="Physical">
+                <Street>
+                    <Line1>742 Evergreen Terrace</Line1>
+                    <Line2>Building A</Line2>
+                    <StreetNumber>742</StreetNumber>
+                    <StreetName>Evergreen</StreetName>
+                    <StreetType>Terrace</StreetType>
+                </Street>
+                <City>Springfield</City>
+                <County>Greene</County>
+                <StateProvince Codeset="http://example.com/codeset">IL</StateProvince>
+                <StateANSICode Codeset="http://example.com/codeset">17</StateANSICode>
+                <Country Codeset="http://example.com/codeset">US</Country>
+                <PostalCode>62704</PostalCode>
+                <GridLocation>
+                    <Latitude>39.7817</Latitude>
+                    <Longitude>-89.6501</Longitude>
+                </GridLocation>
+            </Address>
+        </AddressList>
+        <PhoneNumberList>
+            <PhoneNumber Type="Main">
+                <Number>(217) 555-5678</Number>
+                <ListedStatus>Public</ListedStatus>
+            </PhoneNumber>
+        </PhoneNumberList>
+        <IdentificationInfoList>
+            <IdentificationInfo Code="NCES" CodeCodeset="http://example.com/codeset">123456789</IdentificationInfo>
+        </IdentificationInfoList>
+        <OperationalStatus Codeset="http://example.com/codeset">Open</OperationalStatus>
+        <OperationalStatusDate>2023-09-01</OperationalStatusDate>
+        <SIF_Metadata>
+            <TimeElements>
+                <TimeElement>
+                    <Type>School Year</Type>
+                    <Code>2023-2024</Code>
+                    <Name>Current School Year</Name>
+                    <Value>2023-2024</Value>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+            <LifeCycle>
+                <Created>
+                    <DateTime>2023-01-01T08:00:00</DateTime>
+                    <Creators>
+                        <Creator>
+                            <Name>Data System</Name>
+                            <ID>system@springfieldelementary.edu</ID>
+                        </Creator>
+                    </Creators>
+                </Created>
+                <ModificationHistory>
+                    <Modified>
+                        <By>admin@springfieldelementary.edu</By>
+                        <DateTime>2023-09-01T09:00:00</DateTime>
+                        <Description>Initial data entry</Description>
+                    </Modified>
+                </ModificationHistory>
+            </LifeCycle>
+        </SIF_Metadata>
+        <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="ExtraCurricularActivities">Basketball, Chess Club</SIF_ExtendedElement>
+        </SIF_ExtendedElements>
+    </SchoolInfo>
+</SchoolInfos>

@@ -1,0 +1,63 @@
+<PersonPrivacyObligationDocument RefId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <ParentRefId>123e4567-e89b-12d3-a456-426614174001</ParentRefId>
+    <ParentObjectTypeName>Student</ParentObjectTypeName>
+    <SchoolYear>2023</SchoolYear>
+    <StartDate>2023-08-15</StartDate>
+    <EndDate>2024-06-15</EndDate>
+    <SettingLocationList>
+        <SettingLocation>
+            <SettingLocationName>Main Campus</SettingLocationName>
+            <SettingLocationType>School</SettingLocationType>
+            <SettingLocationRefId>123e4567-e89b-12d3-a456-426614174002</SettingLocationRefId>
+            <SettingLocationObjectTypeName>School</SettingLocationObjectTypeName>
+        </SettingLocation>
+    </SettingLocationList>
+    <ContactForRequestsRefId>123e4567-e89b-12d3-a456-426614174004</ContactForRequestsRefId>
+    <ContactForRequestsObjectTypeName>Administrator</ContactForRequestsObjectTypeName>
+    <ConsentToSharingOfData>
+        <DataDomainObligationList>
+            <DataDomainObligation>
+                <DataDomain>Academic Records</DataDomain>
+                <DomainComments>Includes grades and transcripts</DomainComments>
+                <ShareWithList>
+                    <ShareWith>
+                        <ShareWithParty>Local Education Agency</ShareWithParty>
+                        <ShareWithPurpose>Compliance with state regulations</ShareWithPurpose>
+                        <ShareWithRole>LEA</ShareWithRole>
+                        <PermissionToOnShare>Y</PermissionToOnShare>
+                    </ShareWith>
+                </ShareWithList>
+                <DoNotShareWithList>
+                    <DoNotShareWith>
+                        <DoNotShareWithParty>Commercial Entities</DoNotShareWithParty>
+                        <DoNotShareWithPurpose>Privacy concerns</DoNotShareWithPurpose>
+                        <DoNotShareWithRole>ServiceProvider</DoNotShareWithRole>
+                    </DoNotShareWith>
+                </DoNotShareWithList>
+            </DataDomainObligation>
+        </DataDomainObligationList>
+        <NeverShareWithList>
+            <NeverShareWith>
+                <NeverShareWithParty>Social Media Platforms</NeverShareWithParty>
+                <NeverShareWithPurpose>Data protection</NeverShareWithPurpose>
+                <NeverShareWithRole>ServiceProvider</NeverShareWithRole>
+            </NeverShareWith>
+        </NeverShareWithList>
+    </ConsentToSharingOfData>
+    <PermissionToParticipateList>
+        <PermissionToParticipate>
+            <PermissionCategory>Extracurricular Activities</PermissionCategory>
+            <Permission>Participation in sports</Permission>
+            <PermissionValue>Y</PermissionValue>
+            <PermissionStartDate>2023-09-01</PermissionStartDate>
+            <PermissionEndDate>2024-05-30</PermissionEndDate>
+        </PermissionToParticipate>
+    </PermissionToParticipateList>
+    <ApplicableLawList>
+        <ApplicableLaw>
+            <ApplicableCountry>US</ApplicableCountry>
+            <ApplicableLawName>FERPA</ApplicableLawName>
+            <ApplicableLawURL>https://www2.ed.gov/policy/gen/guid/fpco/ferpa/index.html</ApplicableLawURL>
+        </ApplicableLaw>
+    </ApplicableLawList>
+</PersonPrivacyObligationDocument>

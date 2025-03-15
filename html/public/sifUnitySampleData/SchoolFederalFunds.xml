@@ -1,0 +1,7 @@
+<SchoolFederalFunds xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <SchoolFederalFund RefId="123e4567-e89b-12d3-a456-426614174000" SchoolInfoRefId="123e4567-e89b-12d3-a456-426614174001">
+        <ConsolidatedMEPFundsStatus Codeset="http://example.com/codeset/mepfunds">Yes</ConsolidatedMEPFundsStatus>
+        <SchoolImprovementAllocation>150000.00</SchoolImprovementAllocation>
+        <SchoolImprovementGrantInterventionType Codeset="http://example.com/codeset/interventiontype">Transformation</SchoolImprovementGrantInterventionType>
+    </SchoolFederalFund>
+</SchoolFederalFunds>

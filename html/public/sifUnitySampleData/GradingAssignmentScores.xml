@@ -1,0 +1,155 @@
+<GradingAssignmentScores xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <GradingAssignmentScore RefId="123e4567-e89b-12d3-a456-426614174000" StudentPersonalRefId="123e4567-e89b-12d3-a456-426614174001" SectionInfoRefId="123e4567-e89b-12d3-a456-426614174002" SchoolInfoRefId="123e4567-e89b-12d3-a456-426614174003" GradingAssignmentRefId="123e4567-e89b-12d3-a456-426614174004">
+        <ScorePoints>85</ScorePoints>
+        <ScorePointsFloat>85.5</ScorePointsFloat>
+        <ScorePercent>85.5</ScorePercent>
+        <ScoreLetter>B</ScoreLetter>
+        <ScoreEmptyReason>completed</ScoreEmptyReason>
+        <ScoreDescription>Midterm Exam Score</ScoreDescription>
+        <LearningStandardItemList>
+            <LearningStandardItem>
+                <LearningStandardRefId ObjectType="LearningStandardItem">123e4567-e89b-12d3-a456-426614174005</LearningStandardRefId>
+            </LearningStandardItem>
+        </LearningStandardItemList>
+        <SIF_Metadata>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Semester</Type>
+                    <Code>2023S1</Code>
+                    <Name>Spring Semester</Name>
+                    <Value>2023</Value>
+                    <StartDateTime>2023-01-10T08:00:00</StartDateTime>
+                    <EndDateTime>2023-05-15T17:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Holiday</Type>
+                            <Code>SpringBreak</Code>
+                            <Name>Spring Break</Name>
+                            <Value>2023</Value>
+                            <StartDateTime>2023-03-20T00:00:00</StartDateTime>
+                            <EndDateTime>2023-03-24T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+            <LifeCycle>
+                <Created>
+                    <DateTime>2023-01-01T09:00:00</DateTime>
+                    <Creators>
+                        <Creator>
+                            <Name>John Doe</Name>
+                            <ID>john.doe@example.com</ID>
+                        </Creator>
+                    </Creators>
+                </Created>
+                <ModificationHistory>
+                    <Modified>
+                        <By>Jane Smith</By>
+                        <DateTime>2023-02-15T10:00:00</DateTime>
+                        <Description>Updated score after re-evaluation</Description>
+                    </Modified>
+                </ModificationHistory>
+                <TimeElements>
+                    <TimeElement>
+                        <Type>Quarter</Type>
+                        <Code>Q1</Code>
+                        <Name>First Quarter</Name>
+                        <Value>2023</Value>
+                        <StartDateTime>2023-01-10T08:00:00</StartDateTime>
+                        <EndDateTime>2023-03-31T17:00:00</EndDateTime>
+                        <SpanGaps>
+                            <SpanGap>
+                                <Type>Maintenance</Type>
+                                <Code>SystemUpdate</Code>
+                                <Name>System Update</Name>
+                                <Value>2023</Value>
+                                <StartDateTime>2023-02-20T00:00:00</StartDateTime>
+                                <EndDateTime>2023-02-21T23:59:59</EndDateTime>
+                            </SpanGap>
+                        </SpanGaps>
+                        <IsCurrent>false</IsCurrent>
+                    </TimeElement>
+                </TimeElements>
+            </LifeCycle>
+            <RightsElements>
+                <RightsElement>
+                    <Cost>false</Cost>
+                    <FeesForUse>
+                        <FeeForUse>
+                            <UseType>Classroom</UseType>
+                            <MeteringType>None</MeteringType>
+                            <MeteringURL>http://example.com/metering</MeteringURL>
+                            <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                        </FeeForUse>
+                    </FeesForUse>
+                    <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                    <TermsOfUse>For educational purposes only.</TermsOfUse>
+                </RightsElement>
+            </RightsElements>
+            <EducationFilter>
+                <MediaTypes>
+                    <MediaType>Text</MediaType>
+                    <MediaType>Video</MediaType>
+                </MediaTypes>
+                <GradeLevels>
+                    <GradeLevel>
+                        <Code>09</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">SP09</OtherCode>
+                            <OtherCode Codeset="Local">LC09</OtherCode>
+                        </OtherCodeList>
+                    </GradeLevel>
+                </GradeLevels>
+                <SubjectAreas>
+                    <SubjectArea>
+                        <Code>01</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">SP01</OtherCode>
+                            <OtherCode Codeset="Local">LC01</OtherCode>
+                        </OtherCodeList>
+                    </SubjectArea>
+                </SubjectAreas>
+                <InterestLevels>
+                    <InterestLevel>
+                        <Code>09</Code>
+                        <OtherCodeList>
+                            <OtherCode Codeset="StateProvince">SP09</OtherCode>
+                            <OtherCode Codeset="Local">LC09</OtherCode>
+                        </OtherCodeList>
+                    </InterestLevel>
+                </InterestLevels>
+                <LearningStandardItems>
+                    <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174006</LearningStandardItemRefId>
+                    <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174007</LearningStandardItemRefId>
+                </LearningStandardItems>
+                <BloomsTaxonomyLevels>
+                    <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+                    <BloomsTaxonomyLevel>Applying</BloomsTaxonomyLevel>
+                </BloomsTaxonomyLevels>
+                <MultipleIntelligences>
+                    <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                    <MultipleIntelligence>Visual-Spatial</MultipleIntelligence>
+                </MultipleIntelligences>
+                <InstructionalStrategies>
+                    <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+                    <InstructionalStrategy>Direct Instruction</InstructionalStrategy>
+                </InstructionalStrategies>
+                <Title>Introduction to Algebra</Title>
+                <Summary>This course covers the basics of algebra including variables, equations, and functions.</Summary>
+                <LearningObjectives>
+                    <LearningObjective>Understand algebraic expressions</LearningObjective>
+                    <LearningObjective>Solve linear equations</LearningObjective>
+                </LearningObjectives>
+                <ResourceTypes>
+                    <ResourceType>Textbook</ResourceType>
+                    <ResourceType>Online Course</ResourceType>
+                </ResourceTypes>
+            </EducationFilter>
+        </SIF_Metadata>
+        <SIF_ExtendedElements>
+            <SIF_ExtendedElement Name="ExtraCredit" SIF_Action="Delete">5</SIF_ExtendedElement>
+            <SIF_ExtendedElement Name="ParticipationScore">10</SIF_ExtendedElement>
+        </SIF_ExtendedElements>
+    </GradingAssignmentScore>
+</GradingAssignmentScores>

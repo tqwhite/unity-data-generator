@@ -1,0 +1,169 @@
+<CalendarDate xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" Date="2023-09-01" CalendarSummaryRefId="123e4567-e89b-12d3-a456-426614174001" SchoolInfoRefId="123e4567-e89b-12d3-a456-426614174002" SchoolYear="2023">
+    <CalendarDateType>
+        <Code Codeset="http://example.com/codeset">InstructionalDay</Code>
+        <OtherCodeList>
+            <OtherCode Codeset="Local">LocalCode123</OtherCode>
+            <OtherCode Codeset="StateProvince">StateCode456</OtherCode>
+        </OtherCodeList>
+    </CalendarDateType>
+    <CalendarDateNumber>1</CalendarDateNumber>
+    <StudentAttendance>
+        <CountsTowardAttendance Codeset="http://example.com/codeset">Yes</CountsTowardAttendance>
+        <AttendanceValue>1.0</AttendanceValue>
+    </StudentAttendance>
+    <TeacherAttendance>
+        <CountsTowardAttendance Codeset="http://example.com/codeset">Yes</CountsTowardAttendance>
+        <AttendanceValue>1.0</AttendanceValue>
+    </TeacherAttendance>
+    <AdministratorAttendance>
+        <CountsTowardAttendance Codeset="http://example.com/codeset">Yes</CountsTowardAttendance>
+        <AttendanceValue>1.0</AttendanceValue>
+    </AdministratorAttendance>
+    <BellScheduleDayList>
+        <BellScheduleDay>
+            <BellScheduleRefId>123e4567-e89b-12d3-a456-426614174003</BellScheduleRefId>
+            <TimetableDayIdentifier>Day1</TimetableDayIdentifier>
+        </BellScheduleDay>
+    </BellScheduleDayList>
+    <InstructionalDeliveryModeList>
+        <InstructionalDeliveryMode>InPerson</InstructionalDeliveryMode>
+        <InstructionalDeliveryMode>Online</InstructionalDeliveryMode>
+    </InstructionalDeliveryModeList>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>SY2023</Code>
+                <Name>2023 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-09-01T08:00:00</StartDateTime>
+                <EndDateTime>2024-06-15T15:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>HLD2023</Code>
+                        <Name>Winter Break</Name>
+                        <Value>2023-12-20 to 2024-01-02</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-02T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-08-01T09:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-08-15T10:00:00</DateTime>
+                    <Description>Initial creation of calendar date</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>2023-09-01 to 2023-11-30</Value>
+                    <StartDateTime>2023-09-01T08:00:00</StartDateTime>
+                    <EndDateTime>2023-11-30T15:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Break</Type>
+                            <Code>BRK2023</Code>
+                            <Name>Fall Break</Name>
+                            <Value>2023-10-15 to 2023-10-20</Value>
+                            <StartDateTime>2023-10-15T00:00:00</StartDateTime>
+                            <EndDateTime>2023-10-20T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Grade5</OtherCode>
+                        <OtherCode Codeset="StateProvince">G5</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Math</OtherCode>
+                        <OtherCode Codeset="StateProvince">MTH</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="Local">Intermediate</OtherCode>
+                        <OtherCode Codeset="StateProvince">Int</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174005</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Introduction to Fractions</Title>
+            <Summary>This lesson covers the basics of fractions for 5th-grade students.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand the concept of fractions</LearningObjective>
+                <LearningObjective>Identify and create equivalent fractions</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Worksheet</ResourceType>
+                <ResourceType>Interactive Activity</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomElement1" SIF_Action="Delete">CustomValue1</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="CustomElement2">CustomValue2</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</CalendarDate>

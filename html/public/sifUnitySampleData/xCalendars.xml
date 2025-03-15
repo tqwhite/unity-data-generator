@@ -1,0 +1,18 @@
+<xCalendars xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <xCalendar refId="123e4567-e89b-12d3-a456-426614174000">
+        <schoolRefId>789e1234-e89b-12d3-a456-426614174111</schoolRefId>
+        <schoolYear>2023</schoolYear>
+        <sessions>
+            <session>
+                <sessionType>Semester</sessionType>
+                <sessionCode>SEM1</sessionCode>
+                <description>First semester of the academic year</description>
+                <markingTerm>true</markingTerm>
+                <schedulingTerm>false</schedulingTerm>
+                <linkedSessionCode>SC1</linkedSessionCode>
+                <startDate>2023-08-15</startDate>
+                <endDate>2023-12-20</endDate>
+            </session>
+        </sessions>
+    </xCalendar>
+</xCalendars>

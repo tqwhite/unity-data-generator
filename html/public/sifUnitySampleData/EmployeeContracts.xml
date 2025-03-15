@@ -1,0 +1,147 @@
+<EmployeeContract RefId="123e4567-e89b-12d3-a456-426614174000" EmployeePersonalRefId="123e4567-e89b-12d3-a456-426614174001" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <BaseSalary Currency="USD" CurrencyCodeset="http://example.com/currency-codeset">50000</BaseSalary>
+    <ContractStartDate>2023-08-01</ContractStartDate>
+    <ContractEndDate>2024-07-31</ContractEndDate>
+    <ContractTerm Codeset="http://example.com/contract-term-codeset">1</ContractTerm>
+    <ContractDays>200</ContractDays>
+    <AssignmentDays>180</AssignmentDays>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023-2024 School Year</Name>
+                <Value>Full Year</Value>
+                <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-07-31T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Summer Break</Type>
+                        <Code>SB2023</Code>
+                        <Name>Summer Break 2023</Name>
+                        <Value>2 Months</Value>
+                        <StartDateTime>2023-06-01T00:00:00</StartDateTime>
+                        <EndDateTime>2023-07-31T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-07-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>HR System</Name>
+                        <ID>hrsystem@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>admin@example.com</By>
+                    <DateTime>2023-09-01T09:00:00</DateTime>
+                    <Description>Updated contract terms</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>3 Months</Value>
+                    <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                    <EndDateTime>2023-10-31T23:59:59</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Winter Break</Type>
+                            <Code>WB2023</Code>
+                            <Name>Winter Break 2023</Name>
+                            <Value>2 Weeks</Value>
+                            <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                            <EndDateTime>2024-01-03T23:59:59</EndDateTime>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>Flat</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency-codeset">10</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>For educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/grade-level-codeset">06</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Middle School</OtherCode>
+                        <OtherCode Codeset="Local">Junior High</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/subject-area-codeset">01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Mathematics</OtherCode>
+                        <OtherCode Codeset="Local">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/interest-level-codeset">06</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Middle School</OtherCode>
+                        <OtherCode Codeset="Local">Junior High</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174002</LearningStandardItemRefId>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174003</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Understanding</BloomsTaxonomyLevel>
+                <BloomsTaxonomyLevel>Applying</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                <MultipleIntelligence>Visual-Spatial</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+                <InstructionalStrategy>Direct Instruction</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Mathematics Curriculum</Title>
+            <Summary>An overview of the mathematics curriculum for middle school students.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand basic algebraic concepts</LearningObjective>
+                <LearningObjective>Apply mathematical reasoning to solve problems</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Curriculum</ResourceType>
+                <ResourceType>Lesson Plan</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="AdditionalInfo" SIF_Action="Delete">Extra data not needed</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</EmployeeContract>

@@ -1,0 +1,15 @@
+<xCourse refId="123e4567-e89b-12d3-a456-426614174000" xmlns="http://www.sifassociation.org/datamodel/na/4.x">
+    <schoolRefId>987e6543-e21b-12d3-a456-426614174001</schoolRefId>
+    <schoolCourseId>ENG101</schoolCourseId>
+    <leaCourseId>ENG101-DIST</leaCourseId>
+    <courseTitle>Introduction to English Literature</courseTitle>
+    <description>This course covers the basics of English literature, including major authors and works from various periods.</description>
+    <subject>English</subject>
+    <applicableEducationLevels>
+        <applicableEducationLevel>09</applicableEducationLevel>
+        <applicableEducationLevel>10</applicableEducationLevel>
+    </applicableEducationLevels>
+    <scedCourseCode>01001</scedCourseCode>
+    <scedCourseLevelCode>B</scedCourseLevelCode>
+    <scedCourseSubjectAreaCode>01</scedCourseSubjectAreaCode>
+</xCourse>

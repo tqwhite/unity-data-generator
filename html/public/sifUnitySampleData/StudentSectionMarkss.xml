@@ -1,0 +1,124 @@
+<StudentSectionMarks xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" StudentPersonalRefId="123e4567-e89b-12d3-a456-426614174001" SectionInfoRefId="123e4567-e89b-12d3-a456-426614174002" TermInfoRefId="123e4567-e89b-12d3-a456-426614174003" SchoolInfoRefId="123e4567-e89b-12d3-a456-426614174004">
+    <IsFinal>true</IsFinal>
+    <MarkList>
+        <Mark MarkInfoRefId="123e4567-e89b-12d3-a456-426614174005">
+            <Percentage>85.0</Percentage>
+            <Numeric>85.0</Numeric>
+            <Letter>B</Letter>
+            <Narrative>Good performance with room for improvement.</Narrative>
+        </Mark>
+    </MarkList>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>Semester</Type>
+                <Code>2023S1</Code>
+                <Name>Spring Semester 2023</Name>
+                <Value>2023 Spring</Value>
+                <StartDateTime>2023-01-10T08:00:00</StartDateTime>
+                <EndDateTime>2023-05-20T17:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>SPRING_BREAK</Code>
+                        <Name>Spring Break</Name>
+                        <Value>One week break</Value>
+                        <StartDateTime>2023-03-20T00:00:00</StartDateTime>
+                        <EndDateTime>2023-03-27T00:00:00</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-01-01T09:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-02-15T10:30:00</DateTime>
+                    <Description>Updated grades after midterm exams.</Description>
+                </Modified>
+            </ModificationHistory>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>FlatRate</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">10.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>Use for educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Video</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">9th Grade</OtherCode>
+                        <OtherCode Codeset="Local">Freshman</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Mathematics</OtherCode>
+                        <OtherCode Codeset="Local">Algebra</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>09</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">High School</OtherCode>
+                        <OtherCode Codeset="Local">Secondary</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174007</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Algebra I Course</Title>
+            <Summary>This course covers the basics of algebra including variables, equations, and functions.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand and apply algebraic concepts.</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Textbook</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="ExtraCurricular" SIF_Action="Delete">Basketball</SIF_ExtendedElement>
+        <SIF_ExtendedElement Name="HonorRoll">Yes</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</StudentSectionMarks>

@@ -1,0 +1,31 @@
+<Address xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000">
+    <GridLocation>
+        <Latitude>40.712776</Latitude>
+        <Longitude>-74.005974</Longitude>
+    </GridLocation>
+    <AddressType Codeset="http://example.com/codeset/addressType">Mailing</AddressType>
+    <LocalId>
+        <IdType Codeset="http://example.com/codeset/idType">SchoolID</IdType>
+        <IdValue>NYC12345</IdValue>
+    </LocalId>
+    <Street>
+        <Line1>123 Main St</Line1>
+        <Line2>Suite 100</Line2>
+        <Line3>Building A</Line3>
+        <Complex>Central Complex</Complex>
+        <StreetNumber>123</StreetNumber>
+        <StreetPrefix>N</StreetPrefix>
+        <StreetName>Main</StreetName>
+        <StreetType>St</StreetType>
+        <StreetSuffix>NW</StreetSuffix>
+        <ApartmentType>Unit</ApartmentType>
+        <ApartmentNumberPrefix>Apt</ApartmentNumberPrefix>
+        <ApartmentNumber>101</ApartmentNumber>
+        <ApartmentNumberSuffix>B</ApartmentNumberSuffix>
+    </Street>
+    <City>New York</City>
+    <Subregion Codeset="http://example.com/codeset/subregion">Manhattan</Subregion>
+    <StateProvince Codeset="http://example.com/codeset/stateProvince">NY</StateProvince>
+    <Country Codeset="http://example.com/codeset/country">USA</Country>
+    <PostalCode>10001</PostalCode>
+</Address>

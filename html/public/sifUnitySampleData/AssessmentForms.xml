@@ -1,0 +1,132 @@
+<AssessmentForm xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000" AssessmentRefId="123e4567-e89b-12d3-a456-426614174001">
+    <AssessmentType Codeset="http://example.com/codeset">AchievementTest</AssessmentType>
+    <FormName>Math Assessment Form A</FormName>
+    <FormNumbers>
+        <FormNumber>MA-001</FormNumber>
+    </FormNumbers>
+    <Level>05</Level>
+    <Period>2023-2024</Period>
+    <GradeLevels>
+        <GradeLevel>
+            <Code Codeset="http://example.com/gradecodeset">05</Code>
+            <OtherCodeList>
+                <OtherCode Codeset="StateProvince">SP-05</OtherCode>
+                <OtherCode Codeset="Local">LC-05</OtherCode>
+            </OtherCodeList>
+        </GradeLevel>
+    </GradeLevels>
+    <AssessmentSubTestRefIds>
+        <AssessmentSubTestRefId>123e4567-e89b-12d3-a456-426614174002</AssessmentSubTestRefId>
+    </AssessmentSubTestRefIds>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>SchoolYear</Type>
+                <Code>SY-2023</Code>
+                <Name>2023 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-01T00:00:00</StartDateTime>
+                <EndDateTime>2024-06-30T23:59:59</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>HLD-01</Code>
+                        <Name>Winter Break</Name>
+                        <Value>Winter Break 2023</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-07-01T12:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>John Doe</Name>
+                        <ID>john.doe@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>Jane Smith</By>
+                    <DateTime>2023-09-15T15:30:00</DateTime>
+                    <Description>Updated assessment form details</Description>
+                </Modified>
+            </ModificationHistory>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>PerStudent</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currencycodeset">5.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 Example School District</CopyrightStatement>
+                <TermsOfUse>Use for educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Print</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code Codeset="http://example.com/gradecodeset">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP-05</OtherCode>
+                        <OtherCode Codeset="Local">LC-05</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code Codeset="http://example.com/subjectcodeset">MATH</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP-MATH</OtherCode>
+                        <OtherCode Codeset="Local">LC-MATH</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code Codeset="http://example.com/interestcodeset">05</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">SP-05</OtherCode>
+                        <OtherCode Codeset="Local">LC-05</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>123e4567-e89b-12d3-a456-426614174004</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Problem-Based Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Math Assessment for Grade 5</Title>
+            <Summary>This assessment covers basic arithmetic and geometry for Grade 5 students.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand basic arithmetic operations</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Assessment</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="CustomElement1" SIF_Action="Delete">Custom Value 1</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</AssessmentForm>

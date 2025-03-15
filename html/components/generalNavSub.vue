@@ -21,6 +21,11 @@
 		       router.currentRoute.value.path === '/namodel/';
 	});
 	
+	const isAboutPage = computed(() => {
+		return router.currentRoute.value.path === '/about' || 
+		       router.currentRoute.value.path === '/about/';
+	});
+	
 	const isUtilityExamplesPage = computed(() => {
 		return router.currentRoute.value.path === '/utility-examples' || 
 		       router.currentRoute.value.path === '/utility-examples/';
@@ -51,9 +56,12 @@
 		<v-app-bar-title class="titleOrange">
 			<template v-if="isCedsPage">CEDS Search and Browse</template>
 			<template v-else-if="isNaModelPage">NA Data Model Tools</template>
+			<template v-else-if="isAboutPage">About</template>
 			<template v-else></template>
 		</v-app-bar-title>
 
+		<v-spacer></v-spacer>
+		
 		<!-- CEDS button (always visible) -->
 		<v-btn
 			v-if="!isCedsPage"
@@ -64,16 +72,6 @@
 			CEDS
 		</v-btn>
 		
-		<!-- Login button (visible when not logged in) -->
-		<v-btn
-			v-if="!LoginStore.validUser"
-			prepend-icon="mdi-login"
-			title="Login"
-			:to="{ path: '/', query: { login: true, returnTo: router.currentRoute.value.path } }"
-		>
-			Login
-		</v-btn>
-		
 		<!-- NA Model button (visible only when logged in) -->
 		<v-btn
 			v-if="LoginStore.validUser && !isNaModelPage"
@@ -82,6 +80,16 @@
 			:to="{ path: 'namodel' }"
 		>
 			NA Model
+		</v-btn>
+		
+		<!-- Login button (visible when not logged in) -->
+		<v-btn
+			v-if="!LoginStore.validUser"
+			prepend-icon="mdi-login"
+			title="Login"
+			:to="{ path: '/', query: { login: true, returnTo: router.currentRoute.value.path } }"
+		>
+			Login
 		</v-btn>
 
 		<!-- Profile button (visible only when logged in) -->
@@ -105,6 +113,15 @@
 			@click="reloadPage"
 		>
 			Logout
+		</v-btn>
+		
+		<!-- About button (always visible, right-aligned) -->
+		<v-btn
+			v-if="!isAboutPage"
+			prepend-icon="mdi-information-outline"
+			title="About"
+			:to="{ path: 'about' }"
+		>
 		</v-btn>
 	</v-app-bar>
 </template>

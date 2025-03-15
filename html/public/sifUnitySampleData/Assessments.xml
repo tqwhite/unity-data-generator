@@ -1,0 +1,151 @@
+<Assessment xmlns="http://www.sifassociation.org/datamodel/na/4.x" RefId="123e4567-e89b-12d3-a456-426614174000">
+    <Name>Mathematics Proficiency Test</Name>
+    <ShortName>Math Test</ShortName>
+    <AssessmentId>MT-2023-001</AssessmentId>
+    <AssessmentIdSystem Codeset="http://example.com/codeset">State</AssessmentIdSystem>
+    <AssessmentPackageRefId>987e6543-b21c-34d5-f678-123456789abc</AssessmentPackageRefId>
+    <AssessmentDescriptors>
+        <AssessmentDescriptor Codeset="http://example.com/codeset">AchievementTest</AssessmentDescriptor>
+        <AssessmentDescriptor Codeset="http://example.com/codeset">Benchmark</AssessmentDescriptor>
+    </AssessmentDescriptors>
+    <AssessmentPurpose>00050</AssessmentPurpose>
+    <AssessmentFamilyTitle>Statewide Assessment Series</AssessmentFamilyTitle>
+    <AssessmentFamilyShortName>SAS</AssessmentFamilyShortName>
+    <SIF_Metadata>
+        <TimeElements>
+            <TimeElement>
+                <Type>School Year</Type>
+                <Code>SY2023</Code>
+                <Name>2023 School Year</Name>
+                <Value>2023-2024</Value>
+                <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                <EndDateTime>2024-06-15T17:00:00</EndDateTime>
+                <SpanGaps>
+                    <SpanGap>
+                        <Type>Holiday</Type>
+                        <Code>HOL2023</Code>
+                        <Name>Winter Break</Name>
+                        <Value>Winter Break 2023</Value>
+                        <StartDateTime>2023-12-20T00:00:00</StartDateTime>
+                        <EndDateTime>2024-01-05T23:59:59</EndDateTime>
+                    </SpanGap>
+                </SpanGaps>
+                <IsCurrent>true</IsCurrent>
+            </TimeElement>
+        </TimeElements>
+        <LifeCycle>
+            <Created>
+                <DateTime>2023-07-01T09:00:00</DateTime>
+                <Creators>
+                    <Creator>
+                        <Name>Assessment Creation Service</Name>
+                        <ID>creator@example.com</ID>
+                    </Creator>
+                </Creators>
+            </Created>
+            <ModificationHistory>
+                <Modified>
+                    <By>System Update</By>
+                    <DateTime>2023-09-01T10:00:00</DateTime>
+                    <Description>Initial data entry</Description>
+                </Modified>
+            </ModificationHistory>
+            <TimeElements>
+                <TimeElement>
+                    <Type>Quarter</Type>
+                    <Code>Q1</Code>
+                    <Name>First Quarter</Name>
+                    <Value>Q1 2023</Value>
+                    <StartDateTime>2023-08-15T08:00:00</StartDateTime>
+                    <EndDateTime>2023-10-15T17:00:00</EndDateTime>
+                    <SpanGaps>
+                        <SpanGap>
+                            <Type>Weekend</Type>
+                            <Code>WE2023</Code>
+                            <Name>Weekends</Name>
+                            <Value>All weekends</Value>
+                        </SpanGap>
+                    </SpanGaps>
+                    <IsCurrent>true</IsCurrent>
+                </TimeElement>
+            </TimeElements>
+        </LifeCycle>
+        <RightsElements>
+            <RightsElement>
+                <Cost>false</Cost>
+                <FeesForUse>
+                    <FeeForUse>
+                        <UseType>Classroom</UseType>
+                        <MeteringType>None</MeteringType>
+                        <MeteringURL>http://example.com/metering</MeteringURL>
+                        <PerUseCharge Currency="USD" CurrencyCodeset="http://example.com/currency">0.00</PerUseCharge>
+                    </FeeForUse>
+                </FeesForUse>
+                <CopyrightStatement>© 2023 State Education Department</CopyrightStatement>
+                <TermsOfUse>For educational purposes only.</TermsOfUse>
+            </RightsElement>
+        </RightsElements>
+        <EducationFilter>
+            <MediaTypes>
+                <MediaType>Text</MediaType>
+                <MediaType>Interactive</MediaType>
+            </MediaTypes>
+            <GradeLevels>
+                <GradeLevel>
+                    <Code>08</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Grade 8</OtherCode>
+                        <OtherCode Codeset="Local">Middle School</OtherCode>
+                    </OtherCodeList>
+                </GradeLevel>
+            </GradeLevels>
+            <SubjectAreas>
+                <SubjectArea>
+                    <Code>01</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Mathematics</OtherCode>
+                        <OtherCode Codeset="Local">Math</OtherCode>
+                    </OtherCodeList>
+                </SubjectArea>
+            </SubjectAreas>
+            <InterestLevels>
+                <InterestLevel>
+                    <Code>08</Code>
+                    <OtherCodeList>
+                        <OtherCode Codeset="StateProvince">Middle School</OtherCode>
+                        <OtherCode Codeset="Local">Junior High</OtherCode>
+                    </OtherCodeList>
+                </InterestLevel>
+            </InterestLevels>
+            <LearningStandardItems>
+                <LearningStandardItemRefId>abc12345-6789-0abc-def0-1234567890ab</LearningStandardItemRefId>
+                <LearningStandardItemRefId>def67890-1234-5abc-def0-0987654321ab</LearningStandardItemRefId>
+            </LearningStandardItems>
+            <BloomsTaxonomyLevels>
+                <BloomsTaxonomyLevel>Application</BloomsTaxonomyLevel>
+                <BloomsTaxonomyLevel>Analysis</BloomsTaxonomyLevel>
+            </BloomsTaxonomyLevels>
+            <MultipleIntelligences>
+                <MultipleIntelligence>Logical-Mathematical</MultipleIntelligence>
+                <MultipleIntelligence>Spatial</MultipleIntelligence>
+            </MultipleIntelligences>
+            <InstructionalStrategies>
+                <InstructionalStrategy>Problem Solving</InstructionalStrategy>
+                <InstructionalStrategy>Collaborative Learning</InstructionalStrategy>
+            </InstructionalStrategies>
+            <Title>Mathematics Proficiency Test</Title>
+            <Summary>This assessment evaluates students' proficiency in mathematics at the 8th-grade level.</Summary>
+            <LearningObjectives>
+                <LearningObjective>Understand and apply mathematical concepts</LearningObjective>
+                <LearningObjective>Analyze and solve mathematical problems</LearningObjective>
+            </LearningObjectives>
+            <ResourceTypes>
+                <ResourceType>Assessment</ResourceType>
+                <ResourceType>Practice Test</ResourceType>
+            </ResourceTypes>
+        </EducationFilter>
+    </SIF_Metadata>
+    <SIF_ExtendedElements>
+        <SIF_ExtendedElement Name="AdditionalInfo" SIF_Action="Delete">Extra data not needed</SIF_ExtendedElement>
+    </SIF_ExtendedElements>
+</Assessment>
