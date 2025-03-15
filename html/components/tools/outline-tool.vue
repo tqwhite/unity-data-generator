@@ -1,6 +1,7 @@
 <script setup>
 	import { ref, computed } from 'vue';
 	import RecursivePanel from '@/components/RecursivePanel.vue';
+	import SampleObjectPanel from '@/components/tools/SampleObjectPanel.vue';
 	
 	// Props to receive the data and loading/error states
 	const props = defineProps({
@@ -27,6 +28,14 @@
 	const expandAll = ref(false);
 	const isExpanding = ref(false);
 	const isCollapsing = ref(false);
+	
+	// State for sample object panel
+	const showSampleObject = ref(false);
+	const sampleObject = computed(() => {
+		return props.workingData ? 
+			(Array.isArray(props.workingData) ? props.workingData[0] : props.workingData) : 
+			{};
+	});
 	
 	// Create a hierarchical structure based on XPath values
 	const hierarchicalData = computed(() => {
@@ -188,6 +197,16 @@
 			}, 800); // Keep spinner visible for at least 800ms for feedback
 		}, 50); // Small delay to ensure UI updates
 	};
+	
+	// Function to open the sample object panel
+	const openSampleObjectPanel = () => {
+		showSampleObject.value = true;
+	};
+	
+	// Function to close the sample object panel
+	const closeSampleObjectPanel = () => {
+		showSampleObject.value = false;
+	};
 </script>
 
 <template>
@@ -208,8 +227,25 @@
 			v-else-if="hierarchicalData"
 			class="w-100 h-100 overflow-auto content-container"
 		>
-			<!-- Controls for expanding/collapsing -->
+			<!-- Controls for the outline view -->
 			<div class="expansion-controls">
+				<!-- Sample Object Button - Left Aligned -->
+				<v-btn
+					density="compact"
+					variant="text"
+					size="small"
+					color="primary"
+					@click="openSampleObjectPanel"
+					:disabled="!workingData"
+					class="sample-object-btn mr-2"
+					title="Sample Object"
+				>
+					<v-icon size="small" class="mr-1">mdi-file-document-outline</v-icon>
+				</v-btn>
+				
+				<v-spacer></v-spacer>
+				
+				<!-- Expand and Collapse Buttons - Right Aligned -->
 				<v-btn
 					density="compact"
 					variant="text"
@@ -276,6 +312,13 @@
 			</v-expansion-panels>
 
 			<!-- pre class="data-display">{{ JSON.stringify(hierarchicalData, null, 2) }}</pre -->
+			
+			<!-- Sample Object Panel -->
+			<SampleObjectPanel 
+				:data="sampleObject"
+				:is-open="showSampleObject"
+				@close="closeSampleObjectPanel"
+			/>
 		</div>
 		<div v-else class="text-center">
 			<v-icon size="64" class="mb-3 text-medium-emphasis">mdi-file-tree</v-icon>
@@ -311,15 +354,21 @@
 	
 	.expansion-controls {
 		display: flex;
-		justify-content: flex-end;
+		justify-content: space-between;
 		align-items: center;
 		margin-bottom: 4px;
 		padding-right: 8px;
+		padding-left: 8px;
 	}
 	
 	/* Ensure the buttons maintain consistent width */
-	.expansion-controls .v-btn {
+	.expansion-controls .v-btn:not(.sample-object-btn) {
 		min-width: 110px;
+	}
+	
+	/* Sample object button styles */
+	.sample-object-btn {
+		min-width: 40px;
 	}
 	
 	/* Ensure spinner is visible */

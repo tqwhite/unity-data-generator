@@ -1,6 +1,7 @@
 <script setup>
 	import { ref, computed, watch, onMounted } from 'vue';
 import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
+import SampleObjectPanel from './editors/SampleObjectPanel.vue';
 
 	// Props to receive the data and loading/error states
 	const props = defineProps({
@@ -33,6 +34,12 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 	// Modal control
 	const showModal = ref(false);
 	const selectedItem = ref(null);
+	
+	// Sample Object Panel control
+	const showSampleObjectPanel = ref(false);
+	const sampleObject = computed(() => {
+		return tableItems.value?.length > 0 ? tableItems.value[0] : {};
+	});
 
 	// Function to open edit modal
 	const openEditModal = (item) => {
@@ -44,6 +51,16 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 	const closeModal = () => {
 		showModal.value = false;
 		selectedItem.value = null;
+	};
+	
+	// Function to open Sample Object panel
+	const openSampleObjectPanel = () => {
+		showSampleObjectPanel.value = true;
+	};
+	
+	// Function to close Sample Object panel
+	const closeSampleObjectPanel = () => {
+		showSampleObjectPanel.value = false;
 	};
 
 	// Priority columns to show in main table
@@ -235,11 +252,17 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 
 <template>
 	<div class="tool-container">
-		<!-- Editor Component -->
+		<!-- Editor Components -->
 		<NaDescriptionEditor 
 			:item="selectedItem" 
 			v-model:show="showModal" 
 			@close="closeModal"
+		/>
+		
+		<SampleObjectPanel
+			:item="sampleObject"
+			v-model:show="showSampleObjectPanel"
+			@close="closeSampleObjectPanel"
 		/>
 		
 		<div v-if="isLoading" class="text-center">
@@ -300,6 +323,19 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 							class="filter-checkbox"
 						></v-checkbox>
 					</div>
+					
+					<!-- Sample Object Button -->
+					<v-btn
+						icon
+						variant="text"
+						color="primary"
+						title="Sample Object"
+						@click="openSampleObjectPanel"
+						:disabled="!workingData"
+						class="sample-object-btn ml-2"
+					>
+						<v-icon>mdi-file-document-outline</v-icon>
+					</v-btn>
 				</div>
 
 				<!-- Data table with expandable rows -->
@@ -535,6 +571,10 @@ import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
 		align-items: center;
 		margin-bottom: 12px;
 		gap: 16px;
+	}
+	
+	.sample-object-btn {
+		flex-shrink: 0;
 	}
 	
 	.filter-field {
