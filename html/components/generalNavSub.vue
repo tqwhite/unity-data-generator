@@ -72,9 +72,9 @@
 			CEDS
 		</v-btn>
 		
-		<!-- NA Model button (visible only when logged in) -->
+		<!-- NA Model button (always visible) -->
 		<v-btn
-			v-if="LoginStore.validUser && !isNaModelPage"
+			v-if="!isNaModelPage"
 			prepend-icon="mdi-database-search"
 			title="NA Model Tools"
 			:to="{ path: 'namodel' }"

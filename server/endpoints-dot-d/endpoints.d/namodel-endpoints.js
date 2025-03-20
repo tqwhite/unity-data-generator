@@ -30,6 +30,7 @@ const moduleFunction = function ({
 	// ================================================================================
 	// SERVICE FUNCTIONS
 	
+
 	const fetchNameListFunction = (permissionValidator) => (xReq, xRes, next) => {
 		const taskList = new taskListPlus();
 
@@ -74,7 +75,7 @@ const moduleFunction = function ({
 				}
 				next(err, { ...args, nameList });
 			};
-			
+
 			accessPointsDotD['namodel-fetch-name-list'](localCallback);
 		});
 
@@ -84,7 +85,7 @@ const moduleFunction = function ({
 			permissionValidator,
 			accessTokenHeaderTools,
 		};
-		
+
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			if (err) {
 				xRes.status(500).send(`${err.toString()}`);
@@ -97,7 +98,7 @@ const moduleFunction = function ({
 
 	const fetchDataFunction = (permissionValidator) => (xReq, xRes, next) => {
 		const taskList = new taskListPlus();
-		
+
 		taskList.push((args, next) =>
 			args.permissionValidator(
 				xReq.appValueGetter('authclaims'),
@@ -132,9 +133,9 @@ const moduleFunction = function ({
 		taskList.push((args, next) => {
 			const { accessPointsDotD } = args;
 			const refId = xReq.query.refId;
-			
+
 			if (!refId) {
-				next("No refId provided (NAMODEL-fetchData-02)", args);
+				next('No refId provided (NAMODEL-fetchData-02)', args);
 				return;
 			}
 
@@ -145,7 +146,7 @@ const moduleFunction = function ({
 				}
 				next(err, { ...args, data });
 			};
-			
+
 			accessPointsDotD['namodel-fetch-data'](refId, localCallback);
 		});
 
@@ -156,7 +157,7 @@ const moduleFunction = function ({
 			accessTokenHeaderTools,
 			refId: xReq.query.refId,
 		};
-		
+
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			if (err) {
 				xRes.status(500).send(`${err.toString()}`);
@@ -188,7 +189,7 @@ const moduleFunction = function ({
 				}
 				next(err, { ...args, savedData });
 			};
-			
+
 			const dataToSave = xReq.body.qtClone ? xReq.body.qtClone() : xReq.body;
 			accessPointsDotD['namodel-save-data'](dataToSave, localCallback);
 		});
@@ -223,7 +224,7 @@ const moduleFunction = function ({
 			accessTokenHeaderTools,
 			requestData: xReq.body,
 		};
-		
+
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			if (err) {
 				xRes.status(500).send(`${err.toString()}`);
@@ -253,13 +254,15 @@ const moduleFunction = function ({
 
 	// ================================================================================
 	// Do the constructing
-
+	xLog.status(`revoke public status asap`);
 	const permissionValidator = accessTokenHeaderTools.getValidator([
+		'public',
 		'client',
 		'admin',
 		'super',
 	]);
 	
+
 	// Add all NA Model endpoints
 	addEndpoint({
 		name: 'namodelNameList',

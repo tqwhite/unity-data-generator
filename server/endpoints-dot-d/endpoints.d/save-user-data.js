@@ -157,8 +157,9 @@ const moduleFunction = function ({
 	// ================================================================================
 	// Do the constructing
 
-
+	xLog.status(`revoke public status asap`);
 	const permissionValidator = accessTokenHeaderTools.getValidator([
+		'public',
 		'client',
 		'admin',
 		'super',

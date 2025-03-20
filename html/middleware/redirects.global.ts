@@ -9,10 +9,8 @@ export default defineNuxtRouteMiddleware((to, from) => {
     return navigateTo('/welcomePage');
   }
   
-  // If user is not logged in and tries to access NA Model page, redirect to login
-  if (to.path === '/namodel' && !loginStore.validUser) {
-    return navigateTo('/?login=true');
-  }
+  // NA Model page is accessible to all users (with or without login)
+  // No redirect needed for /namodel
   
   // If user is not logged in and tries to access profile, redirect to login
   if (to.path === '/utility' && to.query.purpose === 'profile' && !loginStore.validUser) {
