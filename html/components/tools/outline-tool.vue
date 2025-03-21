@@ -29,6 +29,9 @@
 	const isExpanding = ref(false);
 	const isCollapsing = ref(false);
 	
+	// Filter state
+	const noBlanks = ref(false);
+	
 	// State for sample object panel
 	const showSampleObject = ref(false);
 	const sampleObject = computed(() => {
@@ -51,6 +54,9 @@
 		// Process each item based on its XPath
 		Object.values(allItems).forEach(item => {
 			if (!item.XPath) return; // Skip items without XPath
+			
+			// Apply "No Blanks" filter - skip items with empty Description
+			if (noBlanks.value && (!item.Description || item.Description === '')) return;
 			
 			// Split the XPath into parts, removing empty entries
 			// e.g. "/root/child/grandchild" -> ["root", "child", "grandchild"]
@@ -243,6 +249,15 @@
 					<v-icon size="small" class="mr-1">mdi-file-document-outline</v-icon>
 				</v-btn>
 				
+				<!-- No Blanks filter checkbox -->
+				<v-checkbox
+					v-model="noBlanks"
+					density="compact"
+					hide-details
+					label="No Blanks"
+					class="no-blanks-checkbox"
+				></v-checkbox>
+				
 				<v-spacer></v-spacer>
 				
 				<!-- Expand and Collapse Buttons - Right Aligned -->
@@ -374,6 +389,21 @@
 	/* Ensure spinner is visible */
 	.v-progress-circular {
 		opacity: 1 !important;
+	}
+	
+	/* No Blanks checkbox styling */
+	.no-blanks-checkbox {
+		margin-top: 0;
+		margin-left: 8px;
+	}
+
+	.no-blanks-checkbox :deep(.v-selection-control) {
+		min-height: unset;
+	}
+
+	.no-blanks-checkbox :deep(.v-label) {
+		font-size: 0.8rem;
+		opacity: 0.8;
 	}
 	
 	/* Style for node count information */

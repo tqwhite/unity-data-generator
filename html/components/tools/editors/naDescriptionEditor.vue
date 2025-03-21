@@ -15,6 +15,9 @@ const customQuery = ref("");
 const cedsData = ref(null);
 const isLoadingCedsData = ref(false);
 
+// Track if semantic search has been performed at least once
+const hasPerformedSemanticSearch = ref(false);
+
 // Define props for the editor component
 const props = defineProps({
     item: {
@@ -96,6 +99,10 @@ const fetchSemanticResults = async () => {
         console.log(`Fetching semantic distance data for: "${queryString}"`);
         // Use the refId as the identifier for this query
         const refId = props.item.refId || props.item.XPath || "default";
+        
+        // Set flag that we're doing a semantic search
+        hasPerformedSemanticSearch.value = true;
+        
         await namodelStore.fetchSemanticDistance(refId, queryString);
     }
 };
@@ -116,6 +123,10 @@ const fetchCustomQuery = async () => {
     
     // Use the refId as the identifier for this query
     const refId = props.item.refId || props.item.XPath || "default";
+    
+    // Set flag that we're doing a semantic search
+    hasPerformedSemanticSearch.value = true;
+    
     await namodelStore.fetchSemanticDistance(refId, queryString);
     
     // Clear the input field after fetching
@@ -189,7 +200,9 @@ const fetchCustomQuery = async () => {
                             persistent-hint
                             density="compact"
                             variant="outlined"
-                            :append-inner-icon="customQuery.trim() ? 'mdi-magnify-plus' : 'mdi-magnify'"
+                            :loading="namodelStore.isLoadingSemanticDistance"
+                            :disabled="namodelStore.isLoadingSemanticDistance"
+                            :append-inner-icon="namodelStore.isLoadingSemanticDistance ? 'mdi-loading mdi-spin' : (customQuery.trim() ? 'mdi-magnify-plus' : 'mdi-magnify')"
                             :append-inner-icon-color="customQuery.trim() ? 'primary' : undefined"
                             @click:append-inner="fetchCustomQuery"
                             @keyup.enter="fetchCustomQuery"
@@ -197,15 +210,35 @@ const fetchCustomQuery = async () => {
                     </v-col>
                 </v-row>
                 
-                <!-- Semantic distance results - displayed in reverse order (newest first) -->
-                <div v-if="item.Description && currentItemResults.length > 0">
-                    <div v-for="(resultData, index) in [...currentItemResults].reverse()" :key="index" class="mt-3">
-                        <SemanticDistanceGrid
-                            :sourceText="resultData.queryString"
-                            :originalText="resultData.originalQuery"
-                            :results="resultData.resultSet"
-                            :error="namodelStore.semanticDistanceError"
-                        />
+                <!-- Semantic distance section (maintains its space even when changing states) -->
+                <div v-if="hasPerformedSemanticSearch || namodelStore.isLoadingSemanticDistance" class="semantic-results-container mt-3">
+                    <!-- Loading indicator for semantic distance -->
+                    <div v-if="namodelStore.isLoadingSemanticDistance" class="text-center">
+                        <v-progress-circular
+                            indeterminate
+                            color="primary"
+                            :size="50"
+                            :width="5"
+                        ></v-progress-circular>
+                        <div class="mt-2 text-body-2">Generating semantic distance results...</div>
+                    </div>
+                    
+                    <!-- Semantic distance results - displayed in reverse order (newest first) -->
+                    <div v-if="!namodelStore.isLoadingSemanticDistance && currentItemResults.length > 0">
+                        <div v-for="(resultData, index) in [...currentItemResults].reverse()" :key="index" class="mt-3">
+                            <SemanticDistanceGrid
+                                :sourceText="resultData.queryString"
+                                :originalText="resultData.originalQuery"
+                                :results="resultData.resultSet"
+                                :error="namodelStore.semanticDistanceError"
+                            />
+                        </div>
+                    </div>
+                    
+                    <!-- No results found message -->
+                    <div v-if="!namodelStore.isLoadingSemanticDistance && hasPerformedSemanticSearch && currentItemResults.length === 0" class="text-center mt-4">
+                        <v-icon color="info" size="large">mdi-information-outline</v-icon>
+                        <div class="text-body-1 mt-2">No semantic distance results found</div>
                     </div>
                 </div>
             </v-card-text>
@@ -311,5 +344,10 @@ const fetchCustomQuery = async () => {
 
 .ceds-match-row td {
     padding-top: 10px !important;
+}
+
+.semantic-results-container {
+    min-height: 100px;
+    transition: all 0.3s ease;
 }
 </style>

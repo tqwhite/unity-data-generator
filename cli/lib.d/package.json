@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "ajv": "^8.17.1",
-    "better-sqlite3": "^9.4.3",
     "fast-xml-parser": "^4.5.1",
     "html-entities": "^2.5.2",
     "qtools-config-file-processor": "^1.0.17",

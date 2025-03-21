@@ -6,7 +6,7 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); 
 
 const qt = require('qtools-functional-library'); // qt.help({printOutput:true, queryString:'.*', sendJson:false});
 
-const sqlite3 = require('sqlite3').verbose();
+const Database = require('better-sqlite3');
 
 const { pipeRunner, taskListPlus, mergeArgs, forwardArgs } = new require(
 	'qtools-asynchronous-pipe-plus',
@@ -63,14 +63,10 @@ const moduleFunction = function ({ unused }) {
 			const { suppressStatementLog, noTableNameOk } = options;
 
 			if (!noTableNameOk && !statement.match(/<!tableName!>/)) {
-				xLog.error(
-					`SQL statement has no <!tableName!> substitution tag. This is not allowed. [runStatementActual]`,
-				);
+				const errorMessage = `SQL statement has no <!tableName!> substitution tag. This is not allowed. [runStatementActual]`;
+				xLog.error(errorMessage);
 				if (typeof callback == 'function') {
-					callback(
-						`SQL statement has no <!tableName!> substitution tag. This is not allowed. [runStatementActual]`,
-						{},
-					);
+					callback(errorMessage, {});
 					return;
 				} else {
 					return '';
@@ -79,18 +75,23 @@ const moduleFunction = function ({ unused }) {
 			const finalStatement = statement.qtTemplateReplace({ tableName });
 			suppressStatementLog || xLog.status(finalStatement);
 
-			if (typeof callback == 'function') {
-				const localCallback = (err, directoryObjectsForDatabaseList) => {
-					if (err) {
-						xLog.error(
-							`${''.padEnd(50, '-')}\nSQL Error; ${err.toString()}\nBad Statement:\n\t${finalStatement}\n${''.padEnd(50, '-')}\n`,
-						);
-					}
-					callback(err, directoryObjectsForDatabaseList);
-				};
-				db.exec(finalStatement, localCallback);
-			} else {
-				return db.exec(finalStatement);
+			try {
+				// In better-sqlite3, exec() runs statements but doesn't return anything
+				db.exec(finalStatement);
+				
+				if (typeof callback == 'function') {
+					callback(null, {});
+				}
+				return true;
+			} catch (err) {
+				xLog.error(
+					`${''.padEnd(50, '-')}\nSQL Error; ${err.toString()}\nBad Statement:\n\t${finalStatement}\n${''.padEnd(50, '-')}\n`,
+				);
+				
+				if (typeof callback == 'function') {
+					callback(err, {});
+				}
+				throw err;
 			}
 		};
 
@@ -111,14 +112,10 @@ const moduleFunction = function ({ unused }) {
 
 			const { suppressStatementLog, noTableNameOk } = options;
 			if (!noTableNameOk && !statement.match(/<!tableName!>/)) {
-				xLog.error(
-					`SQL statement has no <!tableName!> substitution tag. This is not allowed. [getDataActual]`,
-				);
+				const errorMessage = `SQL statement has no <!tableName!> substitution tag. This is not allowed. [getDataActual]`;
+				xLog.error(errorMessage);
 				if (typeof callback == 'function') {
-					callback(
-						`SQL statement has no <!tableName!> substitution tag. This is not allowed. [getDataActual]`,
-						{},
-					);
+					callback(errorMessage, {});
 					return;
 				} else {
 					return '';
@@ -127,12 +124,24 @@ const moduleFunction = function ({ unused }) {
 			const finalStatement = statement.qtTemplateReplace({ tableName });
 			suppressStatementLog || xLog.status(finalStatement);
 
-			if (typeof callback == 'function') {
-				db.all(finalStatement, (err, result) => {
-					callback(err, result);
-				});
-			} else {
-				return db.exec(finalStatement);
+			try {
+				// In better-sqlite3, all() returns all rows from a query
+				const result = db.prepare(finalStatement).all();
+				
+				if (typeof callback == 'function') {
+					callback(null, result);
+					return;
+				}
+				return result;
+			} catch (err) {
+				xLog.error(
+					`${''.padEnd(50, '-')}\nSQL Error; ${err.toString()}\nBad Statement:\n\t${finalStatement}\n${''.padEnd(50, '-')}\n`,
+				);
+				
+				if (typeof callback == 'function') {
+					callback(err, []);
+				}
+				throw err;
 			}
 		};
 
@@ -140,7 +149,7 @@ const moduleFunction = function ({ unused }) {
 	// SAVE OBJECT
 
 	const getFieldNames = (createStatement, showCreateTableDebug) => {
-		const tmp = createStatement.qtGetSurePath('[0].sql', '');
+		const sql = createStatement && createStatement.length ? createStatement[0]?.sql : '';
 
 		if (showCreateTableDebug) {
 			console.dir(
@@ -149,24 +158,11 @@ const moduleFunction = function ({ unused }) {
 			);
 		}
 
-		const fieldNamesx = createStatement
-			.qtGetSurePath('[0].sql', '')
-			.replace(/\t+/g, '')
-			.replace(/(\[)/g, '')
-			.replace(/\n+/g, '<!tmp!>')
-			.replace(/ *(,|\)|\(|\<\!tmp\!\>) */g, '\n')
-			.split(/\n+/)
-			.map((item) => item.trim())
-			.splice(1)
-			.filter((item) => item)
-			.map((line) => line.split(/]/)[0]);
-
-		if (!createStatement) {
+		if (!sql) {
 			return [];
 		}
 
-		const fieldNames = createStatement
-			.qtGetSurePath('[0].sql', '')
+		const fieldNames = sql
 			.replace(/\t+/g, '')
 			.replace(/\n+/g, ' ')
 			.split(/,/)
@@ -423,7 +419,7 @@ const moduleFunction = function ({ unused }) {
 				  UPDATE <!tableName!> SET [updatedAt] = CURRENT_TIMESTAMP;
 				END;
 			/* CREATE UNIQUE INDEX IF NOT EXISTS idx_<!tableName!>_refId ON <!tableName!>(refId)*/ /* instance */;`;
-xLog.error(`HACKED: SQL statement in [${moduleName}]`);
+		xLog.error(`HACKED: SQL statement in [${moduleName}]`);
 		runStatement(statement, options, callback); //all databases have these, period. tqii
 	};
 
@@ -468,7 +464,17 @@ xLog.error(`HACKED: SQL statement in [${moduleName}]`);
 	};
 
 	const initDatabaseInstance = (dbFilePath, callback) => {
-		const db = new sqlite3.Database(dbFilePath);
+		// With better-sqlite3, we can enable WAL mode for better concurrency
+		const db = new Database(dbFilePath, { 
+			verbose: process.env.NODE_ENV === 'development' ? console.log : null,
+			fileMustExist: false // Creates the database if it doesn't exist
+		});
+		
+		// Set pragmas for better performance
+		db.pragma('journal_mode = WAL');  // Write-Ahead Logging for better concurrency
+		db.pragma('synchronous = NORMAL'); // Synchronous NORMAL offers good safety with better performance
+		db.pragma('foreign_keys = ON');    // Enforce foreign key constraints
+		
 		const getTable = getTableActual(db, defaultOptions);
 
 		callback('', { getTable, jsonToTsv, accessPoints: {} });
@@ -482,4 +488,3 @@ xLog.error(`HACKED: SQL statement in [${moduleName}]`);
 module.exports = moduleFunction;
 // module.exports = new moduleFunction();
 // moduleFunction().workingFunction().qtDump();
-

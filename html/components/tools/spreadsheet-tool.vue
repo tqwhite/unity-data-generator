@@ -223,7 +223,7 @@ import SampleObjectPanel from './editors/SampleObjectPanel.vue';
 		}
 		
 		if (noBlanksFilter.value) {
-			filtered = filtered.filter(item => item.Description !== '' && item.Description !== undefined);
+			filtered = filtered.filter(item => item.Description && !item.Description.match(/^\s+$/));
 		}
 		
 		if (noRefIdsFilter.value) {

@@ -66,6 +66,9 @@ export default defineNuxtConfig({
         },
         // Add other meta tags as needed
       ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/q-logo-favicon.ico' }
+      ],
       // Add other app-level configurations here if needed
     },
   },

@@ -53,7 +53,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 			};
 
 xLog.status(`HACK: goofball SheetName/refId swap here`);
-			const query = `SELECT distinct SheetName as refId, SheetName FROM <!tableName!> ORDER BY Name`;
+			const query = `SELECT distinct SheetName as refId, SheetName FROM <!tableName!> ORDER BY SheetName`;
 			naModelTable.getData(query, { suppressStatementLog: true, noTableNameOk:true }, localCallback);
 		});
 
