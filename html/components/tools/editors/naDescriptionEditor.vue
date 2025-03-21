@@ -166,15 +166,13 @@ const fetchCustomQuery = async () => {
                         </tr>
                         <!-- CEDS Matches Information -->
                         <tr v-if="item.cedsMatchesGlobalID" class="ceds-row ceds-match-row">
-                            <td class="text-right info-label">CEDS<br>AI Match:</td>
+                            <td class="text-right info-label">AI Match:</td>
                             <td class="item-ceds-data">
                                 <div class="ceds-content">
                                     <div class="ceds-header">
-                                        <span class="ceds-id">{{ item.cedsMatchesGlobalID }}</span>
-                                        <span class="ceds-name">{{ item.cedsMatchesElementName }}</span>
+                                        <span class="ceds-id">{{ item.cedsMatchesGlobalID }}</span> <span class="ceds-definition">{{ item.cedsMatchesElementName }} ({{ item.cedsMatchesConfidence }} confidence)</span>
                                     </div>
-                                    <div class="ceds-definition">[{{ item.cedsMatchesGlobalID }}] {{ item.cedsMatchesDefinition }}</div>
-                                    <div class="ceds-confidence">Confidence: <span class="confidence-badge">{{ item.cedsMatchesConfidence }}</span></div>
+                                    <div class="ceds-definition">{{ item.cedsMatchesDefinition }}</div>
                                 </div>
                             </td>
                         </tr>

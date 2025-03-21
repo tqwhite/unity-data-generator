@@ -7,6 +7,7 @@ import SelectionList from '@/components/selection-list.vue';
 import JsonTool from '@/components/tools/json-tool.vue';
 import SpreadsheetTool from '@/components/tools/spreadsheet-tool.vue';
 import OutlineTool from '@/components/tools/outline-tool.vue';
+import EvaluateDefinitionsTool from '@/components/tools/evaluate-definitions-tool.vue';
 
 const LoginStore = useLoginStore();
 const namodelStore = useNamodelStore();
@@ -74,6 +75,15 @@ const selectTool = (toolName) => {
 									Outline
 								</v-btn>
 								<v-btn 
+									class="mr-2"
+									variant="outlined" 
+									:disabled="selectedTool === 'evaluate'"
+									@click="selectTool('evaluate')"
+									prepend-icon="mdi-check-circle-outline"
+								>
+									Evaluate
+								</v-btn>
+								<v-btn 
 									variant="outlined" 
 									:disabled="selectedTool === 'json'"
 									@click="selectTool('json')"
@@ -100,6 +110,12 @@ const selectTool = (toolName) => {
 								<outline-tool 
 									v-else-if="selectedTool === 'outline'"
 									:workingData="namodelStore.combinedObject"
+									:is-loading="namodelStore.isLoading"
+									:error="namodelStore.error"
+								/>
+								<evaluate-definitions-tool
+									v-else-if="selectedTool === 'evaluate'"
+									:workingData="namodelStore.listOfProperties"
 									:is-loading="namodelStore.isLoading"
 									:error="namodelStore.error"
 								/>
