@@ -2,6 +2,10 @@
 	import { ref, computed } from 'vue';
 	import RecursivePanel from '@/components/RecursivePanel.vue';
 	import SampleObjectPanel from '@/components/tools/SampleObjectPanel.vue';
+	import { useNamodelStore } from '@/stores/namodelStore';
+	
+	// Initialize the store
+	const namodelStore = useNamodelStore();
 	
 	// Props to receive the data and loading/error states
 	const props = defineProps({
@@ -29,9 +33,6 @@
 	const isExpanding = ref(false);
 	const isCollapsing = ref(false);
 	
-	// Filter state
-	const noBlanks = ref(false);
-	
 	// State for sample object panel
 	const showSampleObject = ref(false);
 	const sampleObject = computed(() => {
@@ -54,9 +55,6 @@
 		// Process each item based on its XPath
 		Object.values(allItems).forEach(item => {
 			if (!item.XPath) return; // Skip items without XPath
-			
-			// Apply "No Blanks" filter - skip items with empty Description
-			if (noBlanks.value && (!item.Description || item.Description === '')) return;
 			
 			// Split the XPath into parts, removing empty entries
 			// e.g. "/root/child/grandchild" -> ["root", "child", "grandchild"]
@@ -132,6 +130,20 @@
 		
 		// Start counting from the root
 		return hierarchicalData.value ? countNodes(hierarchicalData.value) - 1 : 0; // Subtract 1 to not count the root itself
+	});
+	
+	// Get the number of elements with CEDS matches from the store
+	const cedsMatchCount = computed(() => {
+		// If we're working with a standalone data object not in the store
+		if (props.workingData && !namodelStore.combinedObject) {
+			// Use local calculation
+			return Object.values(props.workingData).filter(item => 
+				item && item.cedsMatchesConfidence !== undefined && item.cedsMatchesConfidence !== null
+			).length;
+		}
+		
+		// Otherwise use the store getter
+		return namodelStore.cedsMatchCount;
 	});
 	
 	// Get the number of top-level nodes
@@ -249,16 +261,13 @@
 					<v-icon size="small" class="mr-1">mdi-file-document-outline</v-icon>
 				</v-btn>
 				
-				<!-- No Blanks filter checkbox -->
-				<v-checkbox
-					v-model="noBlanks"
-					density="compact"
-					hide-details
-					label="No Blanks"
-					class="no-blanks-checkbox"
-				></v-checkbox>
-				
 				<v-spacer></v-spacer>
+				
+				<!-- Element Count Legend -->
+				<div class="element-count-legend" v-if="workingData">
+					<span class="legend-item">Total Elements: {{ namodelStore.combinedObject ? namodelStore.totalElementCount : totalNodeCount }}</span>
+					<span class="legend-item ml-2">CEDS AI Matches: {{ cedsMatchCount }}</span>
+				</div>
 				
 				<!-- Expand and Collapse Buttons - Right Aligned -->
 				<v-btn
@@ -415,5 +424,22 @@
 		margin-bottom: 4px;
 		padding-right: 12px;
 		font-style: italic;
+	}
+	
+	/* Element Count Legend styling */
+	.element-count-legend {
+		display: flex;
+		align-items: center;
+		margin-right: 12px;
+		background-color: rgba(0, 0, 0, 0.03);
+		padding: 2px 8px;
+		border-radius: 4px;
+		font-size: 0.75rem;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+	}
+	
+	.legend-item {
+		white-space: nowrap;
+		font-weight: 500;
 	}
 </style>

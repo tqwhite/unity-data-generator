@@ -1,5 +1,9 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
+import { useNamodelStore } from '@/stores/namodelStore';
+
+// Initialize the store
+const namodelStore = useNamodelStore();
 
 // Props to receive the data and loading/error states
 const props = defineProps({
@@ -66,6 +70,31 @@ const filteredItems = computed(() => {
 		item.cedsMatchesConfidence !== undefined && 
 		item.cedsMatchesConfidence !== null
 	);
+});
+
+// Get the number of elements with CEDS matches from the store
+const cedsMatchCount = computed(() => {
+	// If we're working with a standalone data object not in the store
+	if (props.workingData && !namodelStore.combinedObject) {
+		// Use local calculation
+		return Object.values(props.workingData).filter(item => 
+			item && item.cedsMatchesConfidence !== undefined && item.cedsMatchesConfidence !== null
+		).length;
+	}
+	
+	// Otherwise use the store getter
+	return namodelStore.cedsMatchCount;
+});
+
+// Get the total element count 
+const totalElementCount = computed(() => {
+	if (props.workingData && !namodelStore.combinedObject) {
+		// Use local calculation
+		return Object.keys(props.workingData).length;
+	}
+	
+	// Otherwise use the store getter
+	return namodelStore.totalElementCount;
 });
 
 // Sorted items based on current sort criteria
@@ -166,6 +195,12 @@ watch(
 			<div>{{ error }}</div>
 		</div>
 		<div v-else-if="workingData" class="w-100 h-100">
+			<!-- Element Count Legend -->
+			<div class="element-count-legend" v-if="workingData">
+				<span class="legend-item">Total Elements: {{ totalElementCount }}</span>
+				<span class="legend-item ml-2">CEDS AI Matches: {{ cedsMatchCount }}</span>
+			</div>
+			
 			<div v-if="filteredItems.length === 0" class="text-center pa-4">
 				<div class="text-h6 mb-3">No CEDS Match Candidates Found</div>
 				<div class="text-body-1">
@@ -274,6 +309,7 @@ watch(
 	display: flex;
 	justify-content: flex-start;
 	align-items: flex-start;
+	flex-direction: column;
 }
 
 .evaluate-table-container {
@@ -389,5 +425,23 @@ watch(
 
 .smaller-text {
 	font-size: 80%;
+}
+
+/* Element Count Legend styling */
+.element-count-legend {
+	display: flex;
+	align-items: center;
+	margin: 0 12px 12px 0;
+	background-color: rgba(0, 0, 0, 0.03);
+	padding: 4px 10px;
+	border-radius: 4px;
+	font-size: 0.8rem;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	align-self: flex-end;
+}
+
+.legend-item {
+	white-space: nowrap;
+	font-weight: 500;
 }
 </style>

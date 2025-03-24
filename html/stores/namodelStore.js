@@ -261,5 +261,21 @@ export const useNamodelStore = defineStore('namodel', {
 	getters: {
 		isDataLoaded: (state) => !!state.listOfProperties,
 		hasNameList: (state) => state.nameList.length > 0,
+		
+		// Get the total number of elements in the current object
+		totalElementCount: (state) => {
+			if (!state.combinedObject) return 0;
+			return Object.keys(state.combinedObject).length;
+		},
+		
+		// Get the number of elements with CEDS matches
+		cedsMatchCount: (state) => {
+			if (!state.combinedObject) return 0;
+			
+			// Count only items that have cedsMatchesConfidence
+			return Object.values(state.combinedObject).filter(item => 
+				item && item.cedsMatchesConfidence !== undefined && item.cedsMatchesConfidence !== null
+			).length;
+		},
 	},
 });

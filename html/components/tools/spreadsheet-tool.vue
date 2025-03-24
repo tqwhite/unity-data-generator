@@ -1,7 +1,11 @@
 <script setup>
 	import { ref, computed, watch, onMounted } from 'vue';
-import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
-import SampleObjectPanel from './editors/SampleObjectPanel.vue';
+	import NaDescriptionEditor from './editors/naDescriptionEditor.vue';
+	import SampleObjectPanel from './editors/SampleObjectPanel.vue';
+	import { useNamodelStore } from '@/stores/namodelStore';
+
+	// Initialize the store
+	const namodelStore = useNamodelStore();
 
 	// Props to receive the data and loading/error states
 	const props = defineProps({
@@ -232,6 +236,31 @@ import SampleObjectPanel from './editors/SampleObjectPanel.vue';
 		
 		return filtered;
 	});
+	
+	// Get the number of elements with CEDS matches from the store
+	const cedsMatchCount = computed(() => {
+		// If we're working with a standalone data object not in the store
+		if (props.workingData && !namodelStore.combinedObject) {
+			// Use local calculation
+			return Object.values(props.workingData).filter(item => 
+				item && item.cedsMatchesConfidence !== undefined && item.cedsMatchesConfidence !== null
+			).length;
+		}
+		
+		// Otherwise use the store getter
+		return namodelStore.cedsMatchCount;
+	});
+	
+	// Get the total element count 
+	const totalElementCount = computed(() => {
+		if (props.workingData && !namodelStore.combinedObject) {
+			// Use local calculation
+			return Object.keys(props.workingData).length;
+		}
+		
+		// Otherwise use the store getter
+		return namodelStore.totalElementCount;
+	});
 
 	// Initialize on mount and when workingData changes
 	onMounted(() => {
@@ -292,36 +321,45 @@ import SampleObjectPanel from './editors/SampleObjectPanel.vue';
 						placeholder="Property List Filter"
 					></v-text-field>
 					
-					<!-- Filter checkboxes -->
-					<div class="filter-checkboxes">
-						<v-checkbox
-							v-model="noAtFilter"
-							label="No @"
-							density="compact"
-							hide-details
-							class="filter-checkbox"
-						></v-checkbox>
-						<v-checkbox
-							v-model="noTypesFilter"
-							label="No Types"
-							density="compact"
-							hide-details
-							class="filter-checkbox"
-						></v-checkbox>
-						<v-checkbox
-							v-model="noBlanksFilter"
-							label="No Blanks"
-							density="compact"
-							hide-details
-							class="filter-checkbox"
-						></v-checkbox>
-						<v-checkbox
-							v-model="noRefIdsFilter"
-							label="No RefIds"
-							density="compact"
-							hide-details
-							class="filter-checkbox"
-						></v-checkbox>
+					<!-- Filter elements container -->
+					<div class="filter-elements-container">
+						<!-- Element Count Legend -->
+						<div class="element-count-legend">
+							<span class="legend-item">Total Elements: {{ totalElementCount }}</span>
+							<span class="legend-item ml-2">CEDS AI Matches: {{ cedsMatchCount }}</span>
+						</div>
+						
+						<!-- Filter checkboxes -->
+						<div class="filter-checkboxes">
+							<v-checkbox
+								v-model="noAtFilter"
+								label="No @"
+								density="compact"
+								hide-details
+								class="filter-checkbox"
+							></v-checkbox>
+							<v-checkbox
+								v-model="noTypesFilter"
+								label="No Types"
+								density="compact"
+								hide-details
+								class="filter-checkbox"
+							></v-checkbox>
+							<v-checkbox
+								v-model="noBlanksFilter"
+								label="No Blanks"
+								density="compact"
+								hide-details
+								class="filter-checkbox"
+							></v-checkbox>
+							<v-checkbox
+								v-model="noRefIdsFilter"
+								label="No RefIds"
+								density="compact"
+								hide-details
+								class="filter-checkbox"
+							></v-checkbox>
+						</div>
 					</div>
 					
 					<!-- Sample Object Button -->
@@ -583,11 +621,19 @@ import SampleObjectPanel from './editors/SampleObjectPanel.vue';
 		box-sizing: border-box;
 	}
 	
+	/* New container for filter checkboxes and element count */
+	.filter-elements-container {
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		margin-right: 8px;
+	}
+	
 	.filter-checkboxes {
 		display: flex;
 		flex-direction: row;
 		gap: 8px;
-		flex-grow: 1;
+		margin-top: 4px;
 	}
 	
 	.filter-checkbox {
@@ -626,5 +672,22 @@ import SampleObjectPanel from './editors/SampleObjectPanel.vue';
 	
 	:deep(.v-field.v-field--variant-outlined.v-field--focused .v-field__outline) {
 		color: var(--v-theme-primary) !important;
+	}
+	
+	/* Element Count Legend styling */
+	.element-count-legend {
+		display: flex;
+		align-items: center;
+		background-color: rgba(0, 0, 0, 0.03);
+		padding: 2px 8px;
+		border-radius: 4px;
+		font-size: 0.75rem;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		align-self: flex-start;
+	}
+	
+	.legend-item {
+		white-space: nowrap;
+		font-weight: 500;
 	}
 </style>
