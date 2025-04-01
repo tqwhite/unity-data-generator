@@ -20,17 +20,30 @@ if (router?.currentRoute.value.query.logout) {
 // Selected ID is now maintained by the selection-list component
 const selectedRefId = ref(null);
 
-// Selected tool - default to Spreadsheet tool
-const selectedTool = ref('spreadsheet');
+// Selected tool - default to Evaluate tool
+const selectedTool = ref('evaluate');
+
+// For controlling the selection tab - default to system selection for evaluate tool
+const activeSelectionTab = ref('system');
 
 // Handle selection from the component
 const handleSelection = (refId) => {
 	selectedRefId.value = refId;
 };
 
+// Handle tab change in the tabbed-selection component
+const handleTabChange = (tabValue) => {
+	activeSelectionTab.value = tabValue;
+};
+
 // Handle tool selection
 const selectTool = (toolName) => {
 	selectedTool.value = toolName;
+	
+	// Automatically set tab to "You Choose For Me" when Evaluate tool is selected
+	if (toolName === 'evaluate') {
+		activeSelectionTab.value = 'system';
+	}
 };
 
 // We'll fetch semantic distance data only when requested from the editor
@@ -46,7 +59,9 @@ const selectTool = (toolName) => {
 					<v-col cols="auto" style="width: 320px; min-width: 320px; max-width: 320px;" class="border-r border-1">
 						<tabbed-selection
 							:store="namodelStore" 
+							:initial-tab="activeSelectionTab"
 							@select="handleSelection"
+							@tab-change="handleTabChange"
 						/>
 					</v-col>
 					
@@ -56,6 +71,15 @@ const selectTool = (toolName) => {
 							<!-- Control buttons -->
 							<v-toolbar flat density="compact" color="white">
 								<v-spacer></v-spacer>
+								<v-btn 
+									class="mr-2"
+									variant="outlined" 
+									:disabled="selectedTool === 'evaluate'"
+									@click="selectTool('evaluate')"
+									prepend-icon="mdi-check-circle-outline"
+								>
+									Evaluate
+								</v-btn>
 								<v-btn 
 									class="mr-2" 
 									variant="outlined" 
@@ -73,15 +97,6 @@ const selectTool = (toolName) => {
 									prepend-icon="mdi-file-tree"
 								>
 									Outline
-								</v-btn>
-								<v-btn 
-									class="mr-2"
-									variant="outlined" 
-									:disabled="selectedTool === 'evaluate'"
-									@click="selectTool('evaluate')"
-									prepend-icon="mdi-check-circle-outline"
-								>
-									Evaluate
 								</v-btn>
 								<v-btn 
 									variant="outlined" 

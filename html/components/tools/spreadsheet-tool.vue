@@ -325,7 +325,10 @@
 					<div class="filter-elements-container">
 						<!-- Element Count Legend -->
 						<div class="element-count-legend">
-							<span class="legend-item">Total Elements: {{ totalElementCount }}</span>
+							<span class="legend-item" v-if="workingData && workingData.length > 0 && workingData[0]?.SheetName">
+								<strong>{{ workingData[0]?.SheetName || workingData[0]?.sheetName || '' }}</strong>
+							</span>
+							<span class="legend-item ml-2">Total Elements: {{ totalElementCount }}</span>
 							<span class="legend-item ml-2">CEDS AI Matches: {{ cedsMatchCount }}</span>
 						</div>
 						
@@ -475,6 +478,12 @@
 		display: flex;
 		justify-content: flex-start;
 		align-items: flex-start;
+	}
+	
+	/* Make filter field narrower */
+	.filter-field {
+		max-width: 25%;
+		width: 25%;
 	}
 
 	.content-container {

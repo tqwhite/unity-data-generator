@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import SelectionList from '@/components/selection-list.vue';
 import SystemSelection from '@/components/system-selection.vue';
 
@@ -55,19 +55,33 @@ const props = defineProps({
   store: {
     type: Object,
     required: true
+  },
+  initialTab: {
+    type: String,
+    default: 'system' // Default to "You Choose For Me" tab
   }
 });
 
 // Define emits
-const emit = defineEmits(['select']);
+const emit = defineEmits(['select', 'tabChange']);
 
-// Active tab state - default to "Choose Element"
-const activeTab = ref('manual');
+// Active tab state - initially set from props or default to "Choose Element"
+const activeTab = ref(props.initialTab);
 
 // Handle selection from either component
 const handleSelection = (refId) => {
   emit('select', refId);
 };
+
+// Watch for tab changes and emit an event
+watch(activeTab, (newTabValue) => {
+  emit('tabChange', newTabValue);
+});
+
+// Watch for changes in the initialTab prop
+watch(() => props.initialTab, (newTabValue) => {
+  activeTab.value = newTabValue;
+});
 
 onMounted(() => {
   // Initialize

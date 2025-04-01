@@ -265,7 +265,10 @@
 				
 				<!-- Element Count Legend -->
 				<div class="element-count-legend" v-if="workingData">
-					<span class="legend-item">Total Elements: {{ namodelStore.combinedObject ? namodelStore.totalElementCount : totalNodeCount }}</span>
+					<span class="legend-item" v-if="workingData && Object.values(workingData)[0]?.SheetName">
+						<strong>{{ Object.values(workingData)[0]?.SheetName || Object.values(workingData)[0]?.sheetName || '' }}</strong>
+					</span>
+					<span class="legend-item ml-2">Total Elements: {{ namodelStore.combinedObject ? namodelStore.totalElementCount : totalNodeCount }}</span>
 					<span class="legend-item ml-2">CEDS AI Matches: {{ cedsMatchCount }}</span>
 				</div>
 				
