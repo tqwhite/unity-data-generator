@@ -25,6 +25,17 @@ const props = defineProps({
 const tableItems = ref([]);
 const sortBy = ref({ key: 'cedsMatchesConfidence', order: 'desc' });
 
+// Watch for changes in store sort preferences
+watch(
+	() => namodelStore.evaluationPreferences.sortBy,
+	(newSortPreference) => {
+		if (newSortPreference) {
+			sortBy.value = { ...newSortPreference };
+		}
+	},
+	{ immediate: true, deep: true }
+);
+
 // Button state tracking
 const buttonStates = ref({});
 
@@ -157,6 +168,7 @@ const sortedItems = computed(() => {
 	});
 });
 
+
 // Change sort criteria
 const changeSort = (key) => {
 	console.log('Changing sort to:', key);
@@ -260,6 +272,7 @@ const getVoteDirection = (item) => {
 	return null; // Equal votes
 };
 
+
 // Initialize on mount and when workingData changes
 onMounted(() => {
 	initializeData();
@@ -290,9 +303,12 @@ watch(
 			<div>{{ error }}</div>
 		</div>
 		<div v-else-if="workingData" class="w-100 h-100">
-			<!-- Element Count Legend -->
+			<!-- Element Count and Selected Item Legend -->
 			<div class="element-count-legend" v-if="workingData">
-				<span class="legend-item">Total Elements: {{ totalElementCount }}</span>
+				<span class="legend-item" v-if="workingData && workingData.length > 0 && workingData[0]">
+					<strong>{{ workingData[0].SheetName || workingData[0].sheetName || 'Unknown Sheet' }}</strong>
+				</span>
+				<span class="legend-item ml-2">Total Elements: {{ totalElementCount }}</span>
 				<span class="legend-item ml-2">CEDS AI Matches: {{ cedsMatchCount }}</span>
 			</div>
 			
@@ -587,5 +603,10 @@ watch(
 .legend-item {
 	white-space: nowrap;
 	font-weight: 500;
+}
+
+.legend-title {
+	font-weight: 600;
+	color: #1976d2;
 }
 </style>

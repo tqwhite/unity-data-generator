@@ -16,6 +16,12 @@ export const useNamodelStore = defineStore('namodel', {
 			error: null,
 			voteCounts: {}
 		},
+		evaluationPreferences: {
+			sortBy: {
+				key: 'cedsMatchesConfidence',
+				order: 'desc'
+			}
+		}
 	}),
 
 	actions: {
@@ -316,6 +322,14 @@ export const useNamodelStore = defineStore('namodel', {
 				this.votingStatus.isVoting = false;
 			}
 		},
+		
+		// Set sort preferences for evaluation tool
+		setEvaluationSortPreference(key, order) {
+			this.evaluationPreferences.sortBy = {
+				key: key || 'cedsMatchesConfidence',
+				order: order || 'desc'
+			};
+		},
 	},
 
 	getters: {
@@ -343,4 +357,5 @@ export const useNamodelStore = defineStore('namodel', {
 			return state.votingStatus.voteCounts[matchRefId] || { goodCount: 0, badCount: 0 };
 		},
 	},
+	
 });

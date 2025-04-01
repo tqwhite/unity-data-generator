@@ -3,7 +3,7 @@ import { useLoginStore } from '@/stores/loginStore';
 import { useNamodelStore } from '@/stores/namodelStore';
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import SelectionList from '@/components/selection-list.vue';
+import TabbedSelection from '@/components/tabbed-selection.vue';
 import JsonTool from '@/components/tools/json-tool.vue';
 import SpreadsheetTool from '@/components/tools/spreadsheet-tool.vue';
 import OutlineTool from '@/components/tools/outline-tool.vue';
@@ -42,9 +42,9 @@ const selectTool = (toolName) => {
 		<v-main style="padding-top: 65px;">
 			<v-container fluid class="fill-height">
 				<v-row no-gutters class="fill-height">
-					<!-- Left sidebar with selection list component -->
+					<!-- Left sidebar with tabbed selection component -->
 					<v-col cols="auto" style="width: 320px; min-width: 320px; max-width: 320px;" class="border-r border-1">
-						<selection-list 
+						<tabbed-selection
 							:store="namodelStore" 
 							@select="handleSelection"
 						/>
