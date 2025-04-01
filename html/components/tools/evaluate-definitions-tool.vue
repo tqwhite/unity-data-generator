@@ -348,58 +348,47 @@ watch(
 					<tbody>
 						<tr v-for="item in sortedItems" :key="item.refId || item.id">
 							<td class="actions-col">
-								<div class="action-buttons">
-									<v-btn 
-										:color="getApproveButtonColor(item)" 
-										size="small" 
-										variant="outlined" 
-										class="mb-2"
-										@click="handleApprove(item)"
-										:disabled="buttonStates[item.refId || item.id]?.voted || buttonStates[item.refId || item.id]?.isVoting"
-										:loading="buttonStates[item.refId || item.id]?.isVoting && !buttonStates[item.refId || item.id]?.voted"
-										:style="getButtonStyle(item, 'approve')"
-									>
-										<span v-if="!buttonStates[item.refId || item.id]?.voted">
-											Approve
-										</span>
-										<span v-else-if="buttonStates[item.refId || item.id]?.voteType === 'approve'" class="vote-count">
-											👍 {{ buttonStates[item.refId || item.id]?.goodCount || 0 }}
-											<v-icon v-if="getVoteDirection(item)" class="vote-direction-icon ml-1" :color="getVoteDirection(item) === 'up' ? 'light-green-accent-4' : 'red-accent-2'" size="small">
-												{{ getVoteDirection(item) === 'up' ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold' }}
-											</v-icon>
-										</span>
-										<span v-else class="vote-count">
-											👍 {{ buttonStates[item.refId || item.id]?.goodCount || 0 }}
-											<v-icon v-if="getVoteDirection(item)" class="vote-direction-icon ml-1" :color="getVoteDirection(item) === 'up' ? 'light-green-accent-4' : 'red-accent-2'" size="small">
-												{{ getVoteDirection(item) === 'up' ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold' }}
-											</v-icon>
-										</span>
-									</v-btn>
-									<v-btn 
-										:color="getRejectButtonColor(item)"
-										size="small" 
-										variant="outlined"
-										@click="handleReject(item)"
-										:disabled="buttonStates[item.refId || item.id]?.voted || buttonStates[item.refId || item.id]?.isVoting"
-										:loading="buttonStates[item.refId || item.id]?.isVoting && !buttonStates[item.refId || item.id]?.voted"
-										:style="getButtonStyle(item, 'reject')"
-									>
-										<span v-if="!buttonStates[item.refId || item.id]?.voted">
-											Terrible
-										</span>
-										<span v-else-if="buttonStates[item.refId || item.id]?.voteType === 'reject'" class="vote-count">
-											👎 {{ buttonStates[item.refId || item.id]?.badCount || 0 }}
-											<v-icon v-if="getVoteDirection(item)" class="vote-direction-icon ml-1" :color="getVoteDirection(item) === 'up' ? 'light-green-accent-4' : 'red-accent-2'" size="small">
-												{{ getVoteDirection(item) === 'up' ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold' }}
-											</v-icon>
-										</span>
-										<span v-else class="vote-count">
-											👎 {{ buttonStates[item.refId || item.id]?.badCount || 0 }}
-											<v-icon v-if="getVoteDirection(item)" class="vote-direction-icon ml-1" :color="getVoteDirection(item) === 'up' ? 'light-green-accent-4' : 'red-accent-2'" size="small">
-												{{ getVoteDirection(item) === 'up' ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold' }}
-											</v-icon>
-										</span>
-									</v-btn>
+								<div class="action-wrapper">
+									<div class="vote-direction-indicator" v-if="buttonStates[item.refId || item.id]?.voted && getVoteDirection(item)">
+										<v-icon class="vote-arrow" :color="getVoteDirection(item) === 'up' ? 'light-green-accent-4' : 'red-accent-2'" size="large">
+											{{ getVoteDirection(item) === 'up' ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold' }}
+										</v-icon>
+									</div>
+									<div class="action-buttons">
+										<v-btn 
+											:color="getApproveButtonColor(item)" 
+											size="small" 
+											variant="outlined" 
+											class="mb-2"
+											@click="handleApprove(item)"
+											:disabled="buttonStates[item.refId || item.id]?.voted || buttonStates[item.refId || item.id]?.isVoting"
+											:loading="buttonStates[item.refId || item.id]?.isVoting && !buttonStates[item.refId || item.id]?.voted"
+											:style="getButtonStyle(item, 'approve')"
+										>
+											<span v-if="!buttonStates[item.refId || item.id]?.voted">
+												Approve
+											</span>
+											<span v-else class="vote-count">
+												👍 {{ buttonStates[item.refId || item.id]?.goodCount || 0 }}
+											</span>
+										</v-btn>
+										<v-btn 
+											:color="getRejectButtonColor(item)"
+											size="small" 
+											variant="outlined"
+											@click="handleReject(item)"
+											:disabled="buttonStates[item.refId || item.id]?.voted || buttonStates[item.refId || item.id]?.isVoting"
+											:loading="buttonStates[item.refId || item.id]?.isVoting && !buttonStates[item.refId || item.id]?.voted"
+											:style="getButtonStyle(item, 'reject')"
+										>
+											<span v-if="!buttonStates[item.refId || item.id]?.voted">
+												Terrible
+											</span>
+											<span v-else class="vote-count">
+												👎 {{ buttonStates[item.refId || item.id]?.badCount || 0 }}
+											</span>
+										</v-btn>
+									</div>
 								</div>
 							</td>
 							<td class="confidence-col">
@@ -482,7 +471,32 @@ watch(
 }
 
 .actions-col {
-	width: 100px;
+	width: 130px;
+}
+
+.action-wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+}
+
+.vote-direction-indicator {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+}
+
+.vote-arrow {
+	font-size: 24px;
+	filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.3));
+}
+
+.action-buttons {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .confidence-col {
@@ -491,13 +505,7 @@ watch(
 }
 
 .element-col {
-	width: calc(100% - 240px);
-}
-
-.action-buttons {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	width: calc(100% - 270px);
 }
 
 .element-container {
@@ -556,15 +564,6 @@ watch(
 	font-weight: bold;
 	color: white !important;
 	text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.vote-direction-icon {
-	font-size: 18px;
-	margin-left: 4px;
-	font-weight: bold;
 }
 
 /* Override Vuetify's disabled button opacity */
