@@ -11,6 +11,11 @@ export const useNamodelStore = defineStore('namodel', {
 		isLoadingSemanticDistance: false,
 		semanticDistanceError: null,
 		semanticDistanceResults: {},
+		votingStatus: {
+			isVoting: false,
+			error: null,
+			voteCounts: {}
+		},
 	}),
 
 	actions: {
@@ -256,6 +261,61 @@ export const useNamodelStore = defineStore('namodel', {
 		getSemanticDistanceResults(refId) {
 			return this.semanticDistanceResults[refId] || [];
 		},
+		
+		// Send vote for CEDS match approval/rejection
+		async sendCedsMatchVote(unityCedsMatchesRefId, isGoodMatch) {
+			this.votingStatus.isVoting = true;
+			this.votingStatus.error = null;
+			
+			// Import LoginStore to get auth token
+			const { useLoginStore } = await import('@/stores/loginStore');
+			const LoginStore = useLoginStore();
+			
+			// Get the auth token header if user is logged in, otherwise empty object
+			// unityCedsVote endpoints are marked as public so we don't need a token
+			const authHeader = LoginStore.validUser ? LoginStore.getAuthTokenProperty : {};
+			
+			try {
+				// Create vote data
+				const voteData = {
+					unityCedsMatchesRefId,
+					isGoodMatch: isGoodMatch ? '1' : '0',
+					username: LoginStore.validUser ? LoginStore.userData.username : 'anonymous'
+				};
+				
+				const response = await fetch('/api/unityCedsVote/saveVote', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						...authHeader,
+					},
+					body: JSON.stringify(voteData),
+				});
+				
+				if (!response.ok) {
+					throw new Error(`Failed to save vote: ${response.statusText}`);
+				}
+				
+				const voteResult = await response.json();
+				
+				// Store the vote counts for this match
+				if (voteResult.goodCount !== undefined || voteResult.badCount !== undefined) {
+					this.votingStatus.voteCounts[unityCedsMatchesRefId] = {
+						goodCount: voteResult.goodCount || 0,
+						badCount: voteResult.badCount || 0,
+						lastVote: isGoodMatch ? 'good' : 'bad'
+					};
+				}
+				
+				return voteResult;
+			} catch (err) {
+				this.votingStatus.error = err.message;
+				console.error('Error sending CEDS match vote:', err);
+				throw err;
+			} finally {
+				this.votingStatus.isVoting = false;
+			}
+		},
 	},
 
 	getters: {
@@ -276,6 +336,11 @@ export const useNamodelStore = defineStore('namodel', {
 			return Object.values(state.combinedObject).filter(item => 
 				item && item.cedsMatchesConfidence !== undefined && item.cedsMatchesConfidence !== null
 			).length;
+		},
+		
+		// Get vote counts for a specific CEDS match
+		getVoteCounts: (state) => (matchRefId) => {
+			return state.votingStatus.voteCounts[matchRefId] || { goodCount: 0, badCount: 0 };
 		},
 	},
 });

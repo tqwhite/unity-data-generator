@@ -29,39 +29,65 @@ const sortBy = ref({ key: 'cedsMatchesConfidence', order: 'desc' });
 const buttonStates = ref({});
 
 // Function to handle approval action
-const handleApprove = (item) => {
+const handleApprove = async (item) => {
 	const itemId = item.refId || item.id;
-	// Set temporary button state
+	const matchRefId = item.cedsMatchesRefId || itemId;
+	
+	// Set voting state
 	if (!buttonStates.value[itemId]) {
 		buttonStates.value[itemId] = {};
 	}
-	buttonStates.value[itemId].approveClicked = true;
+	buttonStates.value[itemId].isVoting = true;
 	
-	// Implement approval logic here
-	console.log('Approved:', item);
-	
-	// Reset button state after 10 seconds
-	setTimeout(() => {
-		buttonStates.value[itemId].approveClicked = false;
-	}, 10000);
+	try {
+		// Send the vote to the API (true = good match)
+		const result = await namodelStore.sendCedsMatchVote(matchRefId, true);
+		
+		// Update button state to show counts
+		buttonStates.value[itemId].voted = true;
+		buttonStates.value[itemId].voteType = 'approve';
+		buttonStates.value[itemId].goodCount = result.goodCount;
+		buttonStates.value[itemId].badCount = result.badCount;
+		
+		// Force a refresh of the component
+		buttonStates.value = { ...buttonStates.value };
+	} catch (err) {
+		console.error('Error submitting approval vote:', err);
+		buttonStates.value[itemId].error = err.message;
+	} finally {
+		buttonStates.value[itemId].isVoting = false;
+	}
 };
 
 // Function to handle rejection action
-const handleReject = (item) => {
+const handleReject = async (item) => {
 	const itemId = item.refId || item.id;
-	// Set temporary button state
+	const matchRefId = item.cedsMatchesRefId || itemId;
+	
+	// Set voting state
 	if (!buttonStates.value[itemId]) {
 		buttonStates.value[itemId] = {};
 	}
-	buttonStates.value[itemId].rejectClicked = true;
+	buttonStates.value[itemId].isVoting = true;
 	
-	// Implement rejection logic here
-	console.log('Rejected (Terrible):', item);
-	
-	// Reset button state after 10 seconds
-	setTimeout(() => {
-		buttonStates.value[itemId].rejectClicked = false;
-	}, 10000);
+	try {
+		// Send the vote to the API (false = bad match)
+		const result = await namodelStore.sendCedsMatchVote(matchRefId, false);
+		
+		// Update button state to show counts
+		buttonStates.value[itemId].voted = true;
+		buttonStates.value[itemId].voteType = 'reject';
+		buttonStates.value[itemId].goodCount = result.goodCount;
+		buttonStates.value[itemId].badCount = result.badCount;
+		
+		// Force a refresh of the component
+		buttonStates.value = { ...buttonStates.value };
+	} catch (err) {
+		console.error('Error submitting rejection vote:', err);
+		buttonStates.value[itemId].error = err.message;
+	} finally {
+		buttonStates.value[itemId].isVoting = false;
+	}
 };
 
 // Filter items that have cedsMatchesConfidence
@@ -165,6 +191,59 @@ const initializeData = () => {
 	tableItems.value = items;
 };
 
+// Helper function to get approve button color
+const getApproveButtonColor = (item) => {
+	const itemId = item.refId || item.id;
+	const buttonState = buttonStates.value[itemId];
+	
+	if (!buttonState?.voted) return 'success';
+	
+	// If this is the button that was clicked, use a darker success color
+	if (buttonState.voteType === 'approve') return 'green-darken-6';
+	
+	// Otherwise use a darker grey for the other button
+	return 'grey-darken-3';
+};
+
+// Helper function to get reject button color
+const getRejectButtonColor = (item) => {
+	const itemId = item.refId || item.id;
+	const buttonState = buttonStates.value[itemId];
+	
+	if (!buttonState?.voted) return 'error';
+	
+	// If this is the button that was clicked, use a darker error color
+	if (buttonState.voteType === 'reject') return 'red-darken-3';
+	
+	// Otherwise use a darker grey for the other button
+	return 'grey-darken-3';
+};
+
+// Get button style based on vote state
+const getButtonStyle = (item, voteType) => {
+	const itemId = item.refId || item.id;
+	const buttonState = buttonStates.value[itemId];
+	
+	if (!buttonState?.voted) return '';
+	
+	// Base style for all voted buttons - set opacity to 1
+	const baseStyle = 'opacity: 1 !important; font-weight: bold !important; color: white !important;';
+	
+	if (buttonState.voteType === voteType) {
+		// Voted button style
+		if (voteType === 'approve') {
+			// Light green background
+			return `${baseStyle} background-color: #4CAF50 !important; border: 2px solid #66BB6A !important;`;
+		} else {
+			// Light red background
+			return `${baseStyle} background-color: #F44336 !important; border: 2px solid #EF5350 !important;`;
+		}
+	} else {
+		// Other button style - light grey
+		return `${baseStyle} background-color: #9E9E9E !important; border: 2px solid #BDBDBD !important;`;
+	}
+};
+
 // Initialize on mount and when workingData changes
 onMounted(() => {
 	initializeData();
@@ -255,24 +334,42 @@ watch(
 							<td class="actions-col">
 								<div class="action-buttons">
 									<v-btn 
-										:color="buttonStates[item.refId || item.id]?.approveClicked ? 'grey' : 'success'" 
+										:color="getApproveButtonColor(item)" 
 										size="small" 
 										variant="outlined" 
 										class="mb-2"
 										@click="handleApprove(item)"
+										:disabled="buttonStates[item.refId || item.id]?.voted || buttonStates[item.refId || item.id]?.isVoting"
+										:loading="buttonStates[item.refId || item.id]?.isVoting && !buttonStates[item.refId || item.id]?.voted"
+										:style="getButtonStyle(item, 'approve')"
 									>
-										<span :class="{'smaller-text': buttonStates[item.refId || item.id]?.approveClicked}">
-											{{ buttonStates[item.refId || item.id]?.approveClicked ? 'Not Implemented' : 'Approve' }}
+										<span v-if="!buttonStates[item.refId || item.id]?.voted">
+											Approve
+										</span>
+										<span v-else-if="buttonStates[item.refId || item.id]?.voteType === 'approve'" class="vote-count">
+											👍 {{ buttonStates[item.refId || item.id]?.goodCount || 0 }}
+										</span>
+										<span v-else class="vote-count">
+											👍 {{ buttonStates[item.refId || item.id]?.goodCount || 0 }}
 										</span>
 									</v-btn>
 									<v-btn 
-										:color="buttonStates[item.refId || item.id]?.rejectClicked ? 'grey' : 'error'"
+										:color="getRejectButtonColor(item)"
 										size="small" 
 										variant="outlined"
 										@click="handleReject(item)"
+										:disabled="buttonStates[item.refId || item.id]?.voted || buttonStates[item.refId || item.id]?.isVoting"
+										:loading="buttonStates[item.refId || item.id]?.isVoting && !buttonStates[item.refId || item.id]?.voted"
+										:style="getButtonStyle(item, 'reject')"
 									>
-										<span :class="{'smaller-text': buttonStates[item.refId || item.id]?.rejectClicked}">
-											{{ buttonStates[item.refId || item.id]?.rejectClicked ? 'Not Implemented' : 'Terrible' }}
+										<span v-if="!buttonStates[item.refId || item.id]?.voted">
+											Terrible
+										</span>
+										<span v-else-if="buttonStates[item.refId || item.id]?.voteType === 'reject'" class="vote-count">
+											👎 {{ buttonStates[item.refId || item.id]?.badCount || 0 }}
+										</span>
+										<span v-else class="vote-count">
+											👎 {{ buttonStates[item.refId || item.id]?.badCount || 0 }}
 										</span>
 									</v-btn>
 								</div>
@@ -425,6 +522,17 @@ watch(
 
 .smaller-text {
 	font-size: 80%;
+}
+
+.vote-count {
+	font-weight: bold;
+	color: white !important;
+	text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Override Vuetify's disabled button opacity */
+:deep(.v-btn--disabled) {
+	opacity: 1 !important;
 }
 
 /* Element Count Legend styling */
