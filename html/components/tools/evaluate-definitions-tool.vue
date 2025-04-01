@@ -199,7 +199,7 @@ const getApproveButtonColor = (item) => {
 	if (!buttonState?.voted) return 'success';
 	
 	// If this is the button that was clicked, use a darker success color
-	if (buttonState.voteType === 'approve') return 'green-darken-6';
+	if (buttonState.voteType === 'approve') return 'green-darken-3';
 	
 	// Otherwise use a darker grey for the other button
 	return 'grey-darken-3';
@@ -242,6 +242,22 @@ const getButtonStyle = (item, voteType) => {
 		// Other button style - light grey
 		return `${baseStyle} background-color: #9E9E9E !important; border: 2px solid #BDBDBD !important;`;
 	}
+};
+
+// Determine the vote direction based on counts
+const getVoteDirection = (item) => {
+	const itemId = item.refId || item.id;
+	const buttonState = buttonStates.value[itemId];
+	
+	if (!buttonState?.voted) return null;
+	
+	// Convert to numbers and handle nullish values
+	const goodCount = parseInt(buttonState.goodCount || 0);
+	const badCount = parseInt(buttonState.badCount || 0);
+	
+	if (goodCount > badCount) return 'up';
+	if (badCount > goodCount) return 'down';
+	return null; // Equal votes
 };
 
 // Initialize on mount and when workingData changes
@@ -348,9 +364,15 @@ watch(
 										</span>
 										<span v-else-if="buttonStates[item.refId || item.id]?.voteType === 'approve'" class="vote-count">
 											👍 {{ buttonStates[item.refId || item.id]?.goodCount || 0 }}
+											<v-icon v-if="getVoteDirection(item)" class="vote-direction-icon ml-1" :color="getVoteDirection(item) === 'up' ? 'light-green-accent-4' : 'red-accent-2'" size="small">
+												{{ getVoteDirection(item) === 'up' ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold' }}
+											</v-icon>
 										</span>
 										<span v-else class="vote-count">
 											👍 {{ buttonStates[item.refId || item.id]?.goodCount || 0 }}
+											<v-icon v-if="getVoteDirection(item)" class="vote-direction-icon ml-1" :color="getVoteDirection(item) === 'up' ? 'light-green-accent-4' : 'red-accent-2'" size="small">
+												{{ getVoteDirection(item) === 'up' ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold' }}
+											</v-icon>
 										</span>
 									</v-btn>
 									<v-btn 
@@ -367,9 +389,15 @@ watch(
 										</span>
 										<span v-else-if="buttonStates[item.refId || item.id]?.voteType === 'reject'" class="vote-count">
 											👎 {{ buttonStates[item.refId || item.id]?.badCount || 0 }}
+											<v-icon v-if="getVoteDirection(item)" class="vote-direction-icon ml-1" :color="getVoteDirection(item) === 'up' ? 'light-green-accent-4' : 'red-accent-2'" size="small">
+												{{ getVoteDirection(item) === 'up' ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold' }}
+											</v-icon>
 										</span>
 										<span v-else class="vote-count">
 											👎 {{ buttonStates[item.refId || item.id]?.badCount || 0 }}
+											<v-icon v-if="getVoteDirection(item)" class="vote-direction-icon ml-1" :color="getVoteDirection(item) === 'up' ? 'light-green-accent-4' : 'red-accent-2'" size="small">
+												{{ getVoteDirection(item) === 'up' ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold' }}
+											</v-icon>
 										</span>
 									</v-btn>
 								</div>
@@ -528,6 +556,15 @@ watch(
 	font-weight: bold;
 	color: white !important;
 	text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.vote-direction-icon {
+	font-size: 18px;
+	margin-left: 4px;
+	font-weight: bold;
 }
 
 /* Override Vuetify's disabled button opacity */
