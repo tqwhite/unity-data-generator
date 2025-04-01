@@ -31,12 +31,12 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 		taskList.push((args, next) => {
 			const { sqlDb, dataMapping } = args;
 
-			args.sqlDb.getTable('_CEDSElements', mergeArgs(args, next, 'cedsTable'));
+			args.sqlDb.getTable('_CEDSElements', mergeArgs(args, next, 'cedsTable')); //this statement forwards the new table object to the next step under the name cedsTable
 		});
 
 		taskList.push((args, next) => {
 			const { cedsTable } = args;
-			const cedsMapper = dataMapping['ceds-schema-main'];
+			const cedsMapper = dataMapping['ceds-schema-main']; //instantiates the object that knows the schema, provides data value mapping and SQL statements
 
 			const localCallback = (err, rawResult = []) => {
 				if (err) {
@@ -45,12 +45,12 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 				}
 
 				
-				const nameList = cedsMapper.map(rawResult);
+				const nameList = cedsMapper.map(rawResult); // map can change the property names and/or the data values but often just passes the input back
 
-				next('', { ...args, nameList, cedsMapper });
+				next('', { ...args, nameList, cedsMapper }); // convention is to paas the mapper into the tasklist in case more steps require it
 			};
 
-			const query = cedsMapper.getSql('nameList', args);
+			const query = cedsMapper.getSql('nameList', args); //gets a SQL statement from the template nameList in the cedsMapper object
 			cedsTable.getData(query, { suppressStatementLog: true, noTableNameOk:true }, localCallback);
 		});
 

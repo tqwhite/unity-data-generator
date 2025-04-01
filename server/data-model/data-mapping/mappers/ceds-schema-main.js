@@ -29,7 +29,7 @@ const moduleFunction =
 			['ChangedInThisVersionInd']: 'ChangedInThisVersionInd',
 			['ChangeNotes']: 'ChangeNotes',
 			['refId']: 'refId'
-		};
+		}; //default 'forward' mapping outputs the property names on the left. Otherwise, the reverse but that's rarely used. Elements named X are deleted.
 
 		const basicMapper = baseMappingProcess(inputNameMapping);
 		

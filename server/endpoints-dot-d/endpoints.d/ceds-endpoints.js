@@ -313,7 +313,7 @@ const moduleFunction = function ({
 		accessTokenHeaderTools,
 	}) => {
 		expressApp[method](routePath, serviceFunction(permissionValidator)); //use expressApp instead of dotD.library
-		endpointsDotD.logList.push(name);
+		endpointsDotD.logList.push(name); // notify the outside world that this endpoint exists
 	};
 
 	// ================================================================================
