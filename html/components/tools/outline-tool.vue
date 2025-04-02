@@ -25,6 +25,11 @@
 		defaultExpanded: {
 			type: Number,
 			default: 2 // Expand top two levels by default
+		},
+		// Target path to expand to (array of keys)
+		targetPath: {
+			type: Array,
+			default: () => []
 		}
 	});
 
@@ -336,6 +341,7 @@
 					:level="1" 
 					:default-expanded="defaultExpanded"
 					:expand-all="expandAll"
+					:target-path="targetPath"
 				/>
 			</v-expansion-panels>
 

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch, nextTick } from 'vue';
 
 const props = defineProps({
   data: Object,
@@ -17,22 +17,111 @@ const props = defineProps({
   expandAll: {
     type: Boolean,
     default: false
+  },
+  // Target path to expand and scroll to (array of keys)
+  targetPath: {
+    type: Array,
+    default: () => []
   }
 });
 
-// Compute which panel indices should be open based on the level
+// Check if a key is on the target path at the current level
+const isOnTargetPath = (key, index) => {
+  // If there's no target path or it's not long enough, it's not on the path
+  if (!props.targetPath || props.targetPath.length < props.level) {
+    return false;
+  }
+  
+  // Check if this key matches the target path at the current level
+  return props.targetPath[props.level - 1] === key;
+};
+
+// Compute which panel indices should be open based on level and target path
 const openPanels = computed(() => {
-  if (props.level <= props.defaultExpanded) {
-    // If this level should be expanded, return array of panel indices
-    return Object.keys(props.data || {}).map((_, index) => index);
-  } else {
-    // Otherwise return empty array (no panels open)
-    return [];
+  const dataKeys = Object.keys(props.data || {});
+  
+  // If expandAll is active, expand everything
+  if (props.expandAll) {
+    return dataKeys.map((_, index) => index);
   }
+  
+  // Calculate which panels should be open
+  return dataKeys.reduce((indices, key, index) => {
+    // Open if within default expansion level
+    if (props.level <= props.defaultExpanded) {
+      indices.push(index);
+    }
+    // Or open if on the target path
+    else if (isOnTargetPath(key, index)) {
+      indices.push(index);
+    }
+    return indices;
+  }, []);
 });
 
-// Create a reactive reference to the model
+// Create a reactive reference to track open panels
 const modelValue = ref(openPanels.value);
+
+// Reference to the target element when found
+const targetElementRef = ref(null);
+
+// Track if we've found and scrolled to the target element
+const hasScrolledToTarget = ref(false);
+
+// Check if current node is the target (last item in path)
+const isTargetNode = (key) => {
+  return props.targetPath && 
+         props.targetPath.length === props.level && 
+         props.targetPath[props.level - 1] === key;
+};
+
+// Determine which nested panels should be open
+const getNestedOpenPanels = (parentKey, value) => {
+  // Get child keys (excluding metadata and data)
+  const childKeys = Object.keys(value).filter(k => k !== '_metadata' && k !== '_data');
+  
+  // If expandAll is true, or we're in default expansion level, expand all children
+  if (props.expandAll || props.level < props.defaultExpanded) {
+    return Array.from({ length: childKeys.length }, (_, i) => i);
+  }
+  
+  // If parent is on the target path, we may need to keep the path to target open
+  if (isOnTargetPath(parentKey)) {
+    // Create array of indices to expand
+    return childKeys.reduce((indices, childKey, index) => {
+      // Check if this child is on the target path
+      const childPathIndex = props.level; // Child level is parent level + 1
+      if (props.targetPath && props.targetPath.length > childPathIndex && 
+          props.targetPath[childPathIndex] === childKey) {
+        indices.push(index);
+      }
+      return indices;
+    }, []);
+  }
+  
+  // Default case - nothing expanded
+  return [];
+};
+
+// Watch for changes to targetPath and scroll to target when ready
+watch(() => props.targetPath, async (newPath) => {
+  if (newPath && newPath.length > 0) {
+    // Reset scroll flag when path changes
+    hasScrolledToTarget.value = false;
+    
+    // Wait for DOM to update
+    await nextTick();
+    
+    // Try to scroll to target if it's rendered
+    if (targetElementRef.value && !hasScrolledToTarget.value) {
+      targetElementRef.value.$el.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center' 
+      });
+      hasScrolledToTarget.value = true;
+    }
+  }
+}, { immediate: true });
 </script>
 
 <template>
@@ -40,12 +129,14 @@ const modelValue = ref(openPanels.value);
     v-for="(value, key) in data" 
     :key="key" 
     class="compact-panel"
-    :class="{ 'higher-level': level <= 2, 'lower-level': level > 2 }"
+    :class="{ 'higher-level': level <= 2, 'lower-level': level > 2, 'target-node': isTargetNode(key) }"
+    :ref="isTargetNode(key) ? (el => targetElementRef.value = el) : undefined"
   >
     <v-expansion-panel-title 
       :class="[
         'compact-panel-title', 
-        level <= 2 ? 'text-h6' : 'text-subtitle-2'
+        level <= 2 ? 'text-h6' : 'text-subtitle-2',
+        isTargetNode(key) ? 'target-node-title' : ''
       ]"
     >
       <div>
@@ -96,12 +187,13 @@ const modelValue = ref(openPanels.value);
           v-if="Object.keys(value).filter(k => k !== '_metadata' && k !== '_data').length > 0"
           density="compact" 
           multiple 
-          :model-value="expandAll || level < defaultExpanded ? Array.from({ length: Object.keys(value).filter(k => k !== '_metadata' && k !== '_data').length }, (_, i) => i) : []">
+          :model-value="getNestedOpenPanels(key, value)">
           <RecursivePanel 
             :data="Object.fromEntries(Object.entries(value).filter(([k]) => k !== '_metadata' && k !== '_data'))" 
             :level="level + 1"
             :default-expanded="defaultExpanded"
             :expand-all="expandAll"
+            :target-path="targetPath"
           />
         </v-expansion-panels>
       </template>
@@ -221,6 +313,21 @@ const modelValue = ref(openPanels.value);
   padding: 1px 5px;
   border-radius: 3px;
   display: inline-block;
+}
+
+/* Target node highlighting */
+.target-node {
+  border-left: 3px solid #1976d2;
+  background-color: rgba(25, 118, 210, 0.05);
+}
+
+.target-node-title {
+  font-weight: 600 !important;
+  color: #1976d2 !important;
+}
+
+.target-node:deep(.v-expansion-panel-title:hover) {
+  background-color: rgba(25, 118, 210, 0.1);
 }
 </style>
 
