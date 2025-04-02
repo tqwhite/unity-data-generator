@@ -80,6 +80,7 @@
 							xpath: item.XPath || '',
 							type: item.Type || '',
 							characteristics: item.Characteristics || '',
+							format: item.Format || '',
 							cedsId: item['CEDS ID'] || '',
 						},
 						_data: item

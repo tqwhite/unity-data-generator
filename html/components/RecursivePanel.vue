@@ -79,6 +79,10 @@ const modelValue = ref(openPanels.value);
             <div class="metadata-label">Characteristics:</div>
             <div class="metadata-value">{{ value._metadata.characteristics }}</div>
           </div>
+          <div class="metadata-item" v-if="value._metadata.format">
+            <div class="metadata-label">CodeSet:</div>
+            <div class="metadata-value">{{ value._metadata.format }}</div>
+          </div>
           <div class="metadata-item" v-if="value._metadata.cedsId">
             <div class="metadata-label">CEDS ID:</div>
             <div class="metadata-value metadata-cedsid">{{ value._metadata.cedsId }}</div>
