@@ -1,5 +1,5 @@
 <script setup>
-	import { ref, computed } from 'vue';
+	import { ref, computed, watch, nextTick } from 'vue';
 	import RecursivePanel from '@/components/RecursivePanel.vue';
 	import SampleObjectPanel from '@/components/tools/SampleObjectPanel.vue';
 	import { useNamodelStore } from '@/stores/namodelStore';
@@ -40,6 +40,30 @@
 	
 	// State for sample object panel
 	const showSampleObject = ref(false);
+	
+	// State for search
+	const showSearch = ref(false);
+	const searchQuery = ref('');
+	const searchResults = ref([]);
+	const searchLoading = ref(false);
+	const selectedSearchResult = ref(null);
+	const activeTargetPath = ref([]);
+
+	// Toggle search overlay
+	const toggleSearch = () => {
+		showSearch.value = !showSearch.value;
+		if (!showSearch.value) {
+			// Clear search when closing
+			searchQuery.value = '';
+			searchResults.value = [];
+		} else {
+			// Focus the search input when opening
+			nextTick(() => {
+				document.getElementById('outline-search-input')?.focus();
+			});
+		}
+	};
+	
 	const sampleObject = computed(() => {
 		return props.workingData ? 
 			(Array.isArray(props.workingData) ? props.workingData[0] : props.workingData) : 
@@ -231,6 +255,149 @@
 	const closeSampleObjectPanel = () => {
 		showSampleObject.value = false;
 	};
+	
+	// Search functionality
+	const performSearch = () => {
+		if (!searchQuery.value.trim() || !props.workingData) {
+			searchResults.value = [];
+			return;
+		}
+		
+		searchLoading.value = true;
+		
+		// Use setTimeout to prevent UI blocking during search
+		setTimeout(() => {
+			const query = searchQuery.value.toLowerCase().trim();
+			const results = [];
+			
+			// Helper function to search recursively through the hierarchical data
+			const searchInObject = (obj, currentPath = []) => {
+				if (!obj) return;
+				
+				Object.entries(obj).forEach(([key, value]) => {
+					// Skip metadata and data properties in the search
+					if (key === '_metadata' || key === '_data') return;
+					
+					// Build the current path including this key
+					const path = [...currentPath, key];
+					
+					// Check if this item has metadata (is a leaf node)
+					if (value && value._metadata) {
+						const metadata = value._metadata;
+						const name = metadata.name || key;
+						const description = metadata.description || '';
+						
+						// Search in name, description, and other relevant fields
+						if (
+							name.toLowerCase().includes(query) ||
+							description.toLowerCase().includes(query) ||
+							(metadata.xpath && metadata.xpath.toLowerCase().includes(query)) ||
+							(metadata.type && metadata.type.toLowerCase().includes(query)) ||
+							(metadata.characteristics && metadata.characteristics.toLowerCase().includes(query)) ||
+							(metadata.format && metadata.format.toLowerCase().includes(query))
+						) {
+							// Track which fields matched
+							const matches = {
+								name: name.toLowerCase().includes(query),
+								description: description.toLowerCase().includes(query),
+								xpath: metadata.xpath ? metadata.xpath.toLowerCase().includes(query) : false,
+								type: metadata.type ? metadata.type.toLowerCase().includes(query) : false,
+								characteristics: metadata.characteristics ? metadata.characteristics.toLowerCase().includes(query) : false,
+								format: metadata.format ? metadata.format.toLowerCase().includes(query) : false
+							};
+							
+							// Add to results with full context and match information
+							results.push({
+								name,
+								description: description.substring(0, 100) + (description.length > 100 ? '...' : ''),
+								xpath: metadata.xpath || '',
+								type: metadata.type || '',
+								characteristics: metadata.characteristics || '',
+								format: metadata.format || '',
+								path,
+								context: generatePathString(path),
+								data: value._data,
+								matches,
+								query  // Store the query to use for highlighting
+							});
+						}
+					}
+					
+					// Continue searching in nested objects if they exist
+					if (value && typeof value === 'object' && !(value instanceof Array)) {
+						searchInObject(value, path);
+					}
+				});
+			};
+			
+			// Start the search from the root of hierarchical data
+			searchInObject(hierarchicalData.value);
+			
+			// Sort results by relevance (name matches first, then path length)
+			results.sort((a, b) => {
+				// Name matches take precedence
+				const aNameMatch = a.name.toLowerCase().includes(query);
+				const bNameMatch = b.name.toLowerCase().includes(query);
+				
+				if (aNameMatch && !bNameMatch) return -1;
+				if (!aNameMatch && bNameMatch) return 1;
+				
+				// Then sort by path length (shorter paths first)
+				return a.path.length - b.path.length;
+			});
+			
+			searchResults.value = results;
+			searchLoading.value = false;
+		}, 10);
+	};
+	
+	// Generate a readable path string for display
+	const generatePathString = (path) => {
+		return path.join(' > ');
+	};
+	
+	// Function to highlight matched text in strings
+	const highlightMatch = (text, query) => {
+		if (!text || !query || query.trim() === '') return text;
+		
+		const regex = new RegExp(`(${escapeRegExp(query.trim())})`, 'gi');
+		return text.replace(regex, '<span class="highlight-match">$1</span>');
+	};
+	
+	// Helper to escape special characters in regex
+	const escapeRegExp = (str) => {
+		return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+	};
+	
+	// Handle search result selection
+	const selectSearchResult = (result) => {
+		// Reset any existing selection first
+		activeTargetPath.value = [];
+		
+		// Close the search overlay before updating path to allow UI to update
+		showSearch.value = false;
+		
+		// Wait a short moment to ensure the overlay is closed
+		setTimeout(() => {
+			// Update selected result
+			selectedSearchResult.value = result;
+			
+			// Set the target path, which will trigger expansion in RecursivePanel
+			activeTargetPath.value = result.path;
+			
+			// Log to console to help debug
+			console.log('Navigating to:', result.path);
+		}, 50);
+	};
+	
+	// Watch for changes in the search query
+	watch(searchQuery, (newQuery) => {
+		if (newQuery.trim()) {
+			performSearch();
+		} else {
+			searchResults.value = [];
+		}
+	});
 </script>
 
 <template>
@@ -265,6 +432,20 @@
 					title="Sample Object"
 				>
 					<v-icon size="small" class="mr-1">mdi-file-document-outline</v-icon>
+				</v-btn>
+				
+				<!-- Search Button -->
+				<v-btn
+					density="compact"
+					variant="text"
+					size="small"
+					color="primary"
+					@click="toggleSearch"
+					:disabled="!workingData"
+					class="search-btn mr-2"
+					title="Search"
+				>
+					<v-icon size="small" class="mr-1">mdi-magnify</v-icon>
 				</v-btn>
 				
 				<v-spacer></v-spacer>
@@ -341,7 +522,7 @@
 					:level="1" 
 					:default-expanded="defaultExpanded"
 					:expand-all="expandAll"
-					:target-path="targetPath"
+					:target-path="activeTargetPath"
 				/>
 			</v-expansion-panels>
 
@@ -353,6 +534,93 @@
 				:is-open="showSampleObject"
 				@close="closeSampleObjectPanel"
 			/>
+			
+			<!-- Search Overlay -->
+			<div class="search-overlay" v-if="showSearch">
+				<div class="search-container">
+					<div class="search-header">
+						<div class="search-title">Search Elements</div>
+						<v-btn
+							icon
+							density="compact"
+							variant="text"
+							size="small"
+							@click="toggleSearch"
+							class="close-search-btn"
+						>
+							<v-icon>mdi-close</v-icon>
+						</v-btn>
+					</div>
+					
+					<div class="search-input-container">
+						<v-text-field
+							id="outline-search-input"
+							v-model="searchQuery"
+							label="Search by name, description, type..."
+							variant="outlined"
+							density="compact"
+							hide-details
+							clearable
+							autofocus
+							prepend-inner-icon="mdi-magnify"
+							class="search-input"
+						></v-text-field>
+					</div>
+					
+					<div class="search-results-container">
+						<div v-if="searchLoading" class="search-loading">
+							<v-progress-circular indeterminate size="24" width="2" color="primary"></v-progress-circular>
+							<span class="ml-2">Searching...</span>
+						</div>
+						
+						<div v-else-if="searchResults.length === 0 && searchQuery.trim()" class="search-no-results">
+							No results found for "{{ searchQuery }}"
+						</div>
+						
+						<div v-else-if="searchResults.length === 0" class="search-prompt">
+							Enter a search term to find elements
+						</div>
+						
+						<div v-else class="search-results-list">
+							<div 
+								v-for="(result, index) in searchResults" 
+								:key="index" 
+								class="search-result-item"
+								@click="selectSearchResult(result)"
+							>
+								<div class="result-name" v-html="result.matches.name ? highlightMatch(result.name, result.query) : result.name"></div>
+								<div class="result-path">{{ result.context }}</div>
+								
+								<!-- Description with highlighting if matched -->
+								<div v-if="result.description" class="result-description"
+									v-html="result.matches.description ? highlightMatch(result.description, result.query) : result.description">
+								</div>
+								
+								<!-- Show matched fields with highlighting -->
+								<div v-if="result.matches.xpath" class="result-matched-field">
+									<span class="field-label">XPath:</span>
+									<span v-html="highlightMatch(result.xpath, result.query)"></span>
+								</div>
+								
+								<div v-if="result.matches.type" class="result-matched-field">
+									<span class="field-label">Type:</span>
+									<span v-html="highlightMatch(result.type, result.query)"></span>
+								</div>
+								
+								<div v-if="result.matches.characteristics" class="result-matched-field">
+									<span class="field-label">Characteristics:</span>
+									<span v-html="highlightMatch(result.characteristics, result.query)"></span>
+								</div>
+								
+								<div v-if="result.matches.format" class="result-matched-field">
+									<span class="field-label">CodeSet:</span>
+									<span v-html="highlightMatch(result.format, result.query)"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div v-else class="text-center">
 			<v-icon size="64" class="mb-3 text-medium-emphasis">mdi-file-tree</v-icon>
@@ -361,7 +629,7 @@
 	</div>
 </template>
 
-<style scoped>
+<style>
 	.tool-container {
 		width: 100%;
 		height: 100%;
@@ -451,5 +719,126 @@
 	.legend-item {
 		white-space: nowrap;
 		font-weight: 500;
+	}
+
+	/* Search Button Styling */
+	.search-btn {
+		min-width: 40px;
+	}
+
+	/* Search Overlay Styling */
+	.search-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 1000;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.search-container {
+		width: 90%;
+		max-width: 600px;
+		max-height: 80vh;
+		background-color: white;
+		border-radius: 8px;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.search-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 12px 16px;
+		background-color: #f5f5f5;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	}
+
+	.search-title {
+		font-weight: 500;
+		font-size: 1.1rem;
+		color: rgba(0, 0, 0, 0.8);
+	}
+
+	.search-input-container {
+		padding: 16px 16px 8px;
+	}
+
+	.search-results-container {
+		overflow-y: auto;
+		max-height: 60vh;
+		padding: 0 16px 16px;
+	}
+
+	.search-loading, .search-no-results, .search-prompt {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100px;
+		color: rgba(0, 0, 0, 0.6);
+		font-style: italic;
+	}
+
+	.search-results-list {
+		max-height: 100%;
+	}
+
+	.search-result-item {
+		padding: 12px;
+		border-radius: 4px;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		margin-bottom: 8px;
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.search-result-item:hover {
+		border-color: #1976d2;
+		background-color: rgba(25, 118, 210, 0.05);
+	}
+
+	.result-name {
+		font-weight: 500;
+		font-size: 1rem;
+		color: #1976d2;
+		margin-bottom: 4px;
+	}
+
+	.result-path {
+		font-size: 0.8rem;
+		color: rgba(0, 0, 0, 0.6);
+		margin-bottom: 6px;
+		font-family: monospace;
+	}
+
+	.result-description {
+		font-size: 0.85rem;
+		color: rgba(0, 0, 0, 0.7);
+		font-style: italic;
+	}
+	
+	/* Highlighted match styling */
+	.highlight-match {
+		font-weight: bold;
+	}
+	
+	/* Matched fields styling */
+	.result-matched-field {
+		font-size: 0.8rem;
+		margin-top: 4px;
+		color: rgba(0, 0, 0, 0.7);
+	}
+	
+	.field-label {
+		font-weight: 500;
+		margin-right: 4px;
+		color: rgba(0, 0, 0, 0.6);
 	}
 </style>
