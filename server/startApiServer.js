@@ -15,6 +15,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const querystring = require('querystring');
+const rateLimit = require('express-rate-limit');
 
 // --------------------------------------------------------------------------------
 // OTHER MODULES
@@ -57,6 +58,18 @@ const moduleFunction =
 		// SET UP EXPRESS
 
 		const expressApp = express();
+
+			// Set up rate limiting
+			const apiLimiter = rateLimit({
+				windowMs: 15 * 60 * 1000, // 15 minutes
+				max: 30, // limit each IP to 30 requests per windowMs
+				standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+				legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+				message: 'Too many requests from this IP, please try again after 15 minutes',
+			});
+
+			// Apply rate limiting to all routes
+			expressApp.use(apiLimiter);
 
 		expressApp.use((xReq, xRes, next) => {
 			if (suppressPictureRequestLogging && xReq.path.match(/\/api\/image\//)) {

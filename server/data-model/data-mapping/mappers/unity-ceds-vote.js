@@ -50,7 +50,8 @@ const moduleFunction =
           SELECT 
             (SELECT COUNT(*) FROM <!tableName!> WHERE unityCedsMatchesRefId = '<!unityCedsMatchesRefId!>' AND isGoodMatch = '1') as goodCount,
             (SELECT COUNT(*) FROM <!tableName!> WHERE unityCedsMatchesRefId = '<!unityCedsMatchesRefId!>' AND isGoodMatch = '0') as badCount
-        `
+        `,
+        deleteVote: `DELETE FROM <!tableName!> WHERE refId = '<!refId!>'`
       };
       const sql = queries[queryName];
       
