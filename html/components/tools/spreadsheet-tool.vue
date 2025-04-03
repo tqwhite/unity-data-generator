@@ -367,15 +367,16 @@
 					
 					<!-- Sample Object Button -->
 					<v-btn
-						icon
+						size="small"
 						variant="text"
 						color="primary"
-						title="Sample Object"
 						@click="openSampleObjectPanel"
 						:disabled="!workingData"
 						class="sample-object-btn ml-2"
+						density="compact"
 					>
-						<v-icon>mdi-file-document-outline</v-icon>
+						<v-icon size="small" class="mr-1">mdi-file-document-outline</v-icon>
+						<span class="button-text">Example Object</span>
 					</v-btn>
 				</div>
 
@@ -472,7 +473,14 @@
 </template>
 
 <style scoped>
-	.tool-container {
+.sample-object-btn {
+	font-size: 0.85rem;
+	letter-spacing: 0;
+	font-weight: 500;
+	margin-right: 4px;
+}
+
+.tool-container {
 		width: 100%;
 		height: 100%;
 		display: flex;

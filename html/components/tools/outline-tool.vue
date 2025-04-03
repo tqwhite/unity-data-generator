@@ -281,6 +281,9 @@
 					// Build the current path including this key
 					const path = [...currentPath, key];
 					
+					// Log paths during search to help with debugging
+					// console.log('Searching path:', path.join(' > '));
+					
 					// Check if this item has metadata (is a leaf node)
 					if (value && value._metadata) {
 						const metadata = value._metadata;
@@ -371,23 +374,31 @@
 	
 	// Handle search result selection
 	const selectSearchResult = (result) => {
-		// Reset any existing selection first
-		activeTargetPath.value = [];
+		console.log('Selected result:', result);
 		
-		// Close the search overlay before updating path to allow UI to update
+		// Reset any existing selection first and close search
+		activeTargetPath.value = [];
 		showSearch.value = false;
 		
-		// Wait a short moment to ensure the overlay is closed
+		// Use a more reliable approach with multiple timed updates
+		// First wait for the overlay to close
 		setTimeout(() => {
 			// Update selected result
 			selectedSearchResult.value = result;
 			
-			// Set the target path, which will trigger expansion in RecursivePanel
-			activeTargetPath.value = result.path;
-			
-			// Log to console to help debug
-			console.log('Navigating to:', result.path);
-		}, 50);
+			// Wait again to ensure the UI has stabilized
+			setTimeout(() => {
+				// Set the target path, which will trigger expansion in RecursivePanel
+				console.log('Setting target path to:', result.path);
+				activeTargetPath.value = [...result.path]; // Use spread to ensure it's a new array
+				
+				// Wait for expansion to complete before potentially focusing
+				setTimeout(() => {
+					// If needed, could add additional stabilization code here
+					console.log('Navigation should be complete');
+				}, 500);
+			}, 100);
+		}, 100);
 	};
 	
 	// Watch for changes in the search query

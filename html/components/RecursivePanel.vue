@@ -27,13 +27,22 @@ const props = defineProps({
 
 // Check if a key is on the target path at the current level
 const isOnTargetPath = (key, index) => {
-  // If there's no target path or it's not long enough, it's not on the path
-  if (!props.targetPath || props.targetPath.length < props.level) {
+  // If there's no target path, it's not on the path
+  if (!props.targetPath || !Array.isArray(props.targetPath) || props.targetPath.length === 0) {
+    return false;
+  }
+  
+  // Calculate the path index we need to check
+  const pathIndex = props.level - 1;
+  
+  // If the path doesn't have an entry for this level, it's not on the path
+  if (pathIndex >= props.targetPath.length) {
     return false;
   }
   
   // Check if this key matches the target path at the current level
-  return props.targetPath[props.level - 1] === key;
+  // Use string comparison to be more forgiving with type mismatches
+  return String(props.targetPath[pathIndex]) === String(key);
 };
 
 // Compute which panel indices should be open based on level and target path
@@ -62,17 +71,32 @@ const openPanels = computed(() => {
 // Create a reactive reference to track open panels
 const modelValue = ref(openPanels.value);
 
-// Reference to the target element when found
-const targetElementRef = ref(null);
+// Use a map to store refs for multiple panels
+const panelRefs = ref(new Map());
 
 // Track if we've found and scrolled to the target element
 const hasScrolledToTarget = ref(false);
 
+// Method to set a panel ref
+const setPanelRef = (el, key) => {
+  if (el && isTargetNode(key)) {
+    panelRefs.value.set(key, el);
+    console.log('Set panel ref for key:', key);
+  }
+};
+
 // Check if current node is the target (last item in path)
 const isTargetNode = (key) => {
-  return props.targetPath && 
-         props.targetPath.length === props.level && 
-         props.targetPath[props.level - 1] === key;
+  // Safety checks
+  if (!props.targetPath || !Array.isArray(props.targetPath) || props.targetPath.length === 0) {
+    return false;
+  }
+  
+  // Current node is the target if:
+  // 1. We are at the correct level (matching the path length)
+  // 2. The key matches the last element in the path
+  return props.targetPath.length === props.level && 
+         String(props.targetPath[props.level - 1]) === String(key);
 };
 
 // Determine which nested panels should be open
@@ -106,22 +130,65 @@ const getNestedOpenPanels = (parentKey, value) => {
 // Watch for changes to targetPath and scroll to target when ready
 watch(() => props.targetPath, async (newPath) => {
   if (newPath && newPath.length > 0) {
+    console.log('Target path changed in RecursivePanel at level', props.level, ':', newPath);
+    
     // Reset scroll flag when path changes
     hasScrolledToTarget.value = false;
     
-    // Wait for DOM to update
+    // Force update of model value based on the new target path
+    modelValue.value = openPanels.value;
+    
+    // Give time for DOM to update
     await nextTick();
     
-    // Try to scroll to target if it's rendered
-    if (targetElementRef.value && !hasScrolledToTarget.value) {
-      targetElementRef.value.$el.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'center' 
-      });
-      hasScrolledToTarget.value = true;
-    }
+    // Try to scroll to the target after a short delay to ensure DOM updates
+    setTimeout(async () => {
+      await nextTick();
+      
+      // Check if we are at the target level
+      if (props.level === newPath.length) {
+        const targetKey = newPath[props.level - 1];
+        console.log('Looking for target key:', targetKey, 'at level:', props.level);
+        
+        // Get the panel element from our map
+        const panelElement = panelRefs.value.get(targetKey);
+        
+        if (panelElement && !hasScrolledToTarget.value) {
+          console.log('Found panel element for target key:', targetKey);
+          
+          try {
+            // Scroll the element into view
+            panelElement.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center' 
+            });
+            
+            // Add visual feedback
+            panelElement.style.transition = 'background-color 0.5s ease';
+            panelElement.style.backgroundColor = 'rgba(25, 118, 210, 0.2)';
+            
+            setTimeout(() => {
+              panelElement.style.backgroundColor = '';
+              setTimeout(() => {
+                panelElement.style.backgroundColor = 'rgba(25, 118, 210, 0.2)';
+                setTimeout(() => {
+                  panelElement.style.backgroundColor = '';
+                }, 500);
+              }, 500);
+            }, 500);
+            
+            hasScrolledToTarget.value = true;
+          } catch (e) {
+            console.error('Error scrolling to element:', e);
+          }
+        } else {
+          console.log('Panel element not found for key:', targetKey, 'at level:', props.level);
+          console.log('Available keys in map:', [...panelRefs.value.keys()]);
+        }
+      }
+    }, 300); // Wait 300ms to ensure panels have expanded
   }
-}, { immediate: true });
+}, { immediate: true, deep: true });
 </script>
 
 <template>
@@ -130,7 +197,7 @@ watch(() => props.targetPath, async (newPath) => {
     :key="key" 
     class="compact-panel"
     :class="{ 'higher-level': level <= 2, 'lower-level': level > 2, 'target-node': isTargetNode(key) }"
-    :ref="isTargetNode(key) ? (el => targetElementRef.value = el) : undefined"
+    :ref="el => setPanelRef(el, key)"
   >
     <v-expansion-panel-title 
       :class="[

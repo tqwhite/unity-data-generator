@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
 import { useNamodelStore } from '@/stores/namodelStore';
+import NaDescriptionEditor from '@/components/tools/editors/naDescriptionEditor.vue';
 
 // Initialize the store
 const namodelStore = useNamodelStore();
@@ -38,6 +39,22 @@ watch(
 
 // Button state tracking
 const buttonStates = ref({});
+
+// Editor modal controls
+const showEditorModal = ref(false);
+const selectedItem = ref(null);
+
+// Function to open the semantic editor
+const openSemanticEditor = (item) => {
+	selectedItem.value = item;
+	showEditorModal.value = true;
+};
+
+// Function to close the editor modal
+const closeEditorModal = () => {
+	showEditorModal.value = false;
+	selectedItem.value = null;
+};
 
 // Function to handle approval action
 const handleApprove = async (item) => {
@@ -290,6 +307,12 @@ watch(
 
 <template>
 	<div class="evaluate-tool-container">
+		<!-- Editor Modal -->
+		<NaDescriptionEditor 
+			:item="selectedItem" 
+			v-model:show="showEditorModal" 
+			@close="closeEditorModal"
+		/>
 		<div v-if="isLoading" class="text-center">
 			<v-progress-circular
 				indeterminate
@@ -310,6 +333,7 @@ watch(
 				</span>
 				<span class="legend-item ml-2">Total Elements: {{ totalElementCount }}</span>
 				<span class="legend-item ml-2">CEDS AI Matches: {{ cedsMatchCount }}</span>
+				<span class="legend-item ml-2 instruction-text">Vote to include the pair of values for fine-tuning the AI process and either an Approved or Terrible example. Don't vote if you can't decide.</span>
 			</div>
 			
 			<div v-if="filteredItems.length === 0" class="text-center pa-4">
@@ -411,12 +435,29 @@ watch(
 								{{ item.cedsMatchesConfidence }}
 							</td>
 							<td class="element-col">
-								<div class="element-container">
-									<div class="element-line">
-										<span class="element-description"><b>{{ item.Name || item.refId }}:</b> {{ item.Description }}</span>
+								<div class="row-content-wrapper">
+									<div class="edit-icon-container">
+										<v-icon 
+											class="edit-icon" 
+											size="small" 
+											color="primary"
+											@click.stop="openSemanticEditor(item)"
+											title="Open semantic search editor"
+										>
+											mdi-pencil
+										</v-icon>
 									</div>
-									<div class="ceds-line">
-										<span class="ceds-definition"><b>{{ item.cedsMatchesGlobalID }}:</b> {{ item.cedsMatchesDefinition || item.cedsDefinition }}</span>
+									<div class="element-container">
+										<div class="element-line">
+											<span class="element-description"><b>{{ item.Name || item.refId }}:</b> {{ item.Description }}</span>
+										</div>
+										<div class="ceds-line">
+											<span class="ceds-definition">
+												<b>{{ item.cedsMatchesElementName || item.cedsElementName || 'CEDS Element' }}:</b> 
+												{{ item.cedsMatchesDefinition || item.cedsDefinition }} 
+												<span class="ceds-id">({{ item.cedsMatchesGlobalID }})</span>
+											</span>
+										</div>
 									</div>
 								</div>
 							</td>
@@ -524,15 +565,41 @@ watch(
 	width: calc(100% - 270px);
 }
 
+.row-content-wrapper {
+	display: flex;
+	align-items: flex-start;
+	width: 100%;
+}
+
+.edit-icon-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 8px;
+	padding-top: 5px; /* Align with first line of text */
+}
+
 .element-container {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
+	flex-grow: 1;
 }
 
 .element-line {
 	display: flex;
 	flex-direction: column;
+}
+
+.edit-icon {
+	opacity: 0.7;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.edit-icon:hover {
+	opacity: 1;
+	transform: scale(1.2);
 }
 
 .ceds-line {
@@ -554,8 +621,10 @@ watch(
 }
 
 .ceds-id {
-	font-weight: bold;
-	color: #2196F3;
+	color: #757575;
+	font-style: italic;
+	font-size: 0.9em;
+	margin-left: 4px;
 }
 
 .ceds-definition {
@@ -591,18 +660,30 @@ watch(
 .element-count-legend {
 	display: flex;
 	align-items: center;
+	flex-wrap: wrap;
 	margin: 0 12px 12px 0;
 	background-color: rgba(0, 0, 0, 0.03);
-	padding: 4px 10px;
+	padding: 6px 12px;
 	border-radius: 4px;
-	font-size: 0.8rem;
+	font-size: 0.85rem;
 	border: 1px solid rgba(0, 0, 0, 0.1);
-	align-self: flex-end;
+	width: 100%;
 }
 
 .legend-item {
 	white-space: nowrap;
 	font-weight: 500;
+}
+
+.instruction-text {
+	font-style: italic;
+	color: #d32f2f;
+	max-width: 600px;
+	white-space: normal;
+	line-height: 1.3;
+	border-left: 2px solid #d32f2f;
+	padding-left: 8px;
+	margin-left: 12px;
 }
 
 .legend-title {
