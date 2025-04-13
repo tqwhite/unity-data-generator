@@ -59,7 +59,8 @@ const closeEditorModal = () => {
 // Function to handle approval action
 const handleApprove = async (item) => {
 	const itemId = item.refId || item.id;
-	const matchRefId = item.cedsMatchesRefId || itemId;
+		const matchRefId = item.unityCedsMatchesRefId;
+
 	
 	// Set voting state
 	if (!buttonStates.value[itemId]) {
@@ -76,6 +77,7 @@ const handleApprove = async (item) => {
 		buttonStates.value[itemId].voteType = 'approve';
 		buttonStates.value[itemId].goodCount = result.goodCount;
 		buttonStates.value[itemId].badCount = result.badCount;
+		buttonStates.value[itemId].voteRefId = result.refId; // Store vote refId for undo
 		
 		// Force a refresh of the component
 		buttonStates.value = { ...buttonStates.value };
@@ -90,7 +92,8 @@ const handleApprove = async (item) => {
 // Function to handle rejection action
 const handleReject = async (item) => {
 	const itemId = item.refId || item.id;
-	const matchRefId = item.cedsMatchesRefId || itemId;
+		const matchRefId = item.unityCedsMatchesRefId;
+
 	
 	// Set voting state
 	if (!buttonStates.value[itemId]) {
@@ -107,6 +110,7 @@ const handleReject = async (item) => {
 		buttonStates.value[itemId].voteType = 'reject';
 		buttonStates.value[itemId].goodCount = result.goodCount;
 		buttonStates.value[itemId].badCount = result.badCount;
+		buttonStates.value[itemId].voteRefId = result.refId; // Store vote refId for undo
 		
 		// Force a refresh of the component
 		buttonStates.value = { ...buttonStates.value };
@@ -114,6 +118,50 @@ const handleReject = async (item) => {
 		console.error('Error submitting rejection vote:', err);
 		buttonStates.value[itemId].error = err.message;
 	} finally {
+		buttonStates.value[itemId].isVoting = false;
+	}
+};
+
+// Function to handle undo vote action
+const handleUndoVote = async (item) => {
+	const itemId = item.refId || item.id;
+	const matchRefId = item.cedsMatchesRefId || itemId;
+	
+	// Get the vote refId from the button state
+	const voteRefId = buttonStates.value[itemId]?.voteRefId;
+	
+	// If we don't have a vote refId, we can't undo
+	if (!voteRefId) {
+		console.error('No vote refId found for undo operation');
+		return;
+	}
+	
+	// Set voting state
+	if (!buttonStates.value[itemId]) {
+		buttonStates.value[itemId] = {};
+	}
+	buttonStates.value[itemId].isVoting = true;
+	
+	try {
+		// Send the undo request to the API
+		await namodelStore.undoCedsMatchVote(voteRefId, matchRefId);
+		
+		// Reset the button state
+		buttonStates.value[itemId] = {
+			voted: false,
+			voteType: null,
+			goodCount: 0,
+			badCount: 0,
+			voteRefId: null,
+			isVoting: false
+		};
+		
+		// Force a refresh of the component
+		buttonStates.value = { ...buttonStates.value };
+	} catch (err) {
+		console.error('Error undoing vote:', err);
+		buttonStates.value[itemId].error = err.message;
+		// Reset voting state but keep other properties
 		buttonStates.value[itemId].isVoting = false;
 	}
 };
@@ -393,6 +441,16 @@ watch(
 										<v-icon class="vote-arrow" :color="getVoteDirection(item) === 'up' ? 'light-green-accent-4' : 'red-accent-2'" size="large">
 											{{ getVoteDirection(item) === 'up' ? 'mdi-arrow-up-bold' : 'mdi-arrow-down-bold' }}
 										</v-icon>
+										<v-btn
+											icon
+											size="x-small"
+											variant="plain"
+											class="undo-button"
+											title="Undo vote"
+											@click.stop="handleUndoVote(item)"
+										>
+											<v-icon size="small">mdi-undo-variant</v-icon>
+										</v-btn>
 									</div>
 									<div class="action-buttons">
 										<v-btn 
@@ -542,12 +600,23 @@ watch(
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-direction: column;
 	width: 24px;
 }
 
 .vote-arrow {
 	font-size: 24px;
 	filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.3));
+}
+
+.undo-button {
+	margin-top: 4px;
+	opacity: 0.6;
+	transition: opacity 0.2s;
+}
+
+.undo-button:hover {
+	opacity: 1;
 }
 
 .action-buttons {

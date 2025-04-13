@@ -79,7 +79,8 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 					cedsMatches.GlobalID as 'cedsMatchesGlobalID',
 					cedsMatches.Definition as 'cedsMatchesDefinition',
 					cedsMatches.ElementName as 'cedsMatchesElementName',
-					unityCedsMatches.confidence as 'cedsMatchesConfidence'
+					unityCedsMatches.confidence as 'cedsMatchesConfidence',
+					unityCedsMatches.refId as 'unityCedsMatchesRefId'
 				FROM naDataModel 
 				left join _CEDSElements on _CEDSElements.GlobalID=naDataModel.[CEDS ID]
 				left join unityCedsMatches on unityCedsMatches.naDataModelRefId=naDataModel.refId
@@ -87,24 +88,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 				WHERE SheetName = '${refId}'
 			`;
 			
-			
-			const queryDISCARD = `
-				SELECT
-					naDataModel.refId,
-					naDataModel.Name,
-					naDataModel.Mandatory,
-					naDataModel.Characteristics,
-					naDataModel.Type,
-					naDataModel.Description,
-					naDataModel.XPath,
-					naDataModel.Format,
-					naDataModel.SheetName,
-					naDataModel.[CEDS ID],
-					_CEDSElements.Definition as 'cedsDefinition'
-				FROM <!tableName!> 
-				left join _CEDSElements on _CEDSElements.GlobalID=naDataModel.[CEDS ID]
-				WHERE SheetName = '${refId}'
-			`;
+	
 			naModelTable.getData(query, { suppressStatementLog: false, noTableNameOk:true }, localCallback);
 		});
 

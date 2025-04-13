@@ -99,6 +99,80 @@ const moduleFunction = function ({
       xRes.json(args.saveResult);
     });
   };
+  
+  // Function to handle vote undo
+  const undoVoteFunction = (permissionValidator) => (xReq, xRes, next) => {
+    const taskList = new taskListPlus();
+
+    taskList.push((args, next) =>
+      args.permissionValidator(
+        xReq.appValueGetter('authclaims'),
+        { showDetails: false },
+        forwardArgs({ next, args }),
+      ),
+    );
+
+    taskList.push((args, next) => {
+      const { accessTokenHeaderTools } = args;
+
+      const localCallback = (err) => {
+        if (err) {
+          next(`${err.toString()} (unityCedsVote-undoVote-01)`, args);
+          return;
+        }
+        next('', args);
+      };
+
+      accessTokenHeaderTools.refreshauthtoken(
+        {
+          xReq,
+          xRes,
+          payloadValues: {
+            source: 'unityCedsVote-undoVote',
+          },
+        },
+        localCallback,
+      );
+    });
+
+    taskList.push((args, next) => {
+      const { accessPointsDotD } = args;
+
+      const localCallback = (err, undoResult) => {
+        if (err) {
+          next(`${err.toString()} (unityCedsVote-undoVote-02)`, args);
+          return;
+        }
+        next(err, { ...args, undoResult });
+      };
+      
+      const undoData = xReq.body.qtClone ? xReq.body.qtClone() : xReq.body;
+      
+      // Validate required field
+      if (!undoData.refId) {
+        next('Missing required field: refId', args);
+        return;
+      }
+      
+      accessPointsDotD['unity-ceds-vote-undo'](undoData, localCallback);
+    });
+
+    // INIT AND EXECUTE THE PIPELINE
+    const initialData = {
+      accessPointsDotD,
+      permissionValidator,
+      accessTokenHeaderTools,
+    };
+    
+    pipeRunner(taskList.getList(), initialData, (err, args) => {
+      if (err) {
+        xRes.status(500).send(`${err.toString()}`);
+        return;
+      }
+
+      xRes.json(args.undoResult);
+    });
+  };
 
   // ================================================================================
   // Endpoint Constructor
@@ -125,12 +199,24 @@ const moduleFunction = function ({
     'public'
   ]);
   
-  // Add the endpoint
+  // Add the save vote endpoint
   addEndpoint({
     name: 'unityCedsVote/saveVote',
     method: 'post',
     routePath: `${routingPrefix}unityCedsVote/saveVote`,
     serviceFunction: saveVoteFunction,
+    expressApp,
+    endpointsDotD,
+    permissionValidator,
+    accessTokenHeaderTools,
+  });
+  
+  // Add the undo vote endpoint
+  addEndpoint({
+    name: 'unityCedsVote/undoVote',
+    method: 'post',
+    routePath: `${routingPrefix}unityCedsVote/undoVote`,
+    serviceFunction: undoVoteFunction,
     expressApp,
     endpointsDotD,
     permissionValidator,

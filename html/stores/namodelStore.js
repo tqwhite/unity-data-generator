@@ -309,7 +309,8 @@ export const useNamodelStore = defineStore('namodel', {
 					this.votingStatus.voteCounts[unityCedsMatchesRefId] = {
 						goodCount: voteResult.goodCount || 0,
 						badCount: voteResult.badCount || 0,
-						lastVote: isGoodMatch ? 'good' : 'bad'
+						lastVote: isGoodMatch ? 'good' : 'bad',
+						voteRefId: voteResult.refId // Store the vote refId for undo
 					};
 				}
 				
@@ -317,6 +318,60 @@ export const useNamodelStore = defineStore('namodel', {
 			} catch (err) {
 				this.votingStatus.error = err.message;
 				console.error('Error sending CEDS match vote:', err);
+				throw err;
+			} finally {
+				this.votingStatus.isVoting = false;
+			}
+		},
+		
+		// Undo a previously cast vote
+		async undoCedsMatchVote(voteRefId, unityCedsMatchesRefId) {
+			this.votingStatus.isVoting = true;
+			this.votingStatus.error = null;
+			
+			// Import LoginStore to get auth token
+			const { useLoginStore } = await import('@/stores/loginStore');
+			const LoginStore = useLoginStore();
+			
+			// Get the auth token header if user is logged in, otherwise empty object
+			const authHeader = LoginStore.validUser ? LoginStore.getAuthTokenProperty : {};
+			
+			try {
+				// Create undo data object with the vote refId
+				const undoData = {
+					refId: voteRefId,
+					unityCedsMatchesRefId // Pass this to get updated counts after deletion
+				};
+				
+				const response = await fetch('/api/unityCedsVote/undoVote', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						...authHeader,
+					},
+					body: JSON.stringify(undoData),
+				});
+				
+				if (!response.ok) {
+					throw new Error(`Failed to undo vote: ${response.statusText}`);
+				}
+				
+				const undoResult = await response.json();
+				
+				// Update the vote counts for this match in the store
+				if (unityCedsMatchesRefId) {
+					this.votingStatus.voteCounts[unityCedsMatchesRefId] = {
+						goodCount: undoResult.goodCount || 0,
+						badCount: undoResult.badCount || 0,
+						lastVote: null,
+						voteRefId: null
+					};
+				}
+				
+				return undoResult;
+			} catch (err) {
+				this.votingStatus.error = err.message;
+				console.error('Error undoing CEDS match vote:', err);
 				throw err;
 			} finally {
 				this.votingStatus.isVoting = false;
