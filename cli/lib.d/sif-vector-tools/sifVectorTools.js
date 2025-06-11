@@ -34,7 +34,7 @@ const getClosestRecords = require('./lib/get-closest-records');
 //HACKERY: from some reason, putting require('generate-embeddings') AFTER this causes sqlite to screw up
 
 // process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
-const initAtp = require('qtools-ai-thought-processor/jina')({
+const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
 	applicationControls: ['-writeVectorDatabase', '-newDatabase', '-dropTable', '-showStats', '--queryString', '--offset', '--limit', '--resultCount'],

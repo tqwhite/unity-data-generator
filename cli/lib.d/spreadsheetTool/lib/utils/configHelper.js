@@ -26,7 +26,7 @@ async function initialize() {
   const moduleName = 'spreadsheetTool';
   
   // Initialize ATP (Anthropic Thought Processor)
-  const initAtp = require('qtools-ai-thought-processor/jina')({
+  const initAtp = require('../../../../../lib/qtools-ai-framework/jina')({
     configFileBaseName: moduleName,
     applicationBasePath,
 	applicationControls: ['-loadDatabase', '-purgeBackupDbTables'],

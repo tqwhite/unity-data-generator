@@ -56,7 +56,7 @@ configFileBaseName='unityCedsMatch_AI_Only';
 }
 
 // process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
-const initAtp = require('qtools-ai-thought-processor/jina')({
+const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName,
 	applicationBasePath,
 		applicationControls: ['-loadDatabase', '-aiOnly'],

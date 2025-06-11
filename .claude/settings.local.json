@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(cd:*)",
+      "Bash(chmod:*)",
+      "Bash(claude -h)",
+      "Bash(cp:*)",
+      "Bash(diff:*)",
+      "Bash(echo \"Listening for commands...\")",
+      "Bash(gh pr:*)",
+      "Bash(grep:*)",
+      "Bash(jq:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(npm install:*)",
+      "Bash(perl:*)",
+      "Bash(rm:*)",
+      "Bash(sed:*)",
+      "Bash(tail:*)",
+      "Bash(find:*)",
+      "Bash(node:*)"
+    ],
+    "deny": []
+  }
+}
