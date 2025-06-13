@@ -22,7 +22,18 @@
       "Bash(find:*)",
       "Bash(node:*)",
       "Bash(open:*)",
-      "Bash(sqlite3:*)"
+      "Bash(sqlite3:*)",
+      "Bash(./vectorTools.js --testTable=test1 -writeVectorDatabase --offset=0 --limit=5)",
+      "Bash(./sifVectorTools.js -writeVectorDatabase --offset=0 --limit=5)",
+      "Bash(./vectorTools.js --testTable=test1 --queryString=\"student information\" --resultCount=3)",
+      "Bash(./sifVectorTools.js --queryString=\"student information\" --resultCount=3)",
+      "Bash(./vectorTools.js --testTable=test1 -showStats)",
+      "Bash(./vectorTools.js --testTable=test1 -dropTable)",
+      "Bash(./vectorTools.js -showStats)",
+      "Bash(./vectorTools.js --targetTableName=sifElementVectors_test2 -writeVectorDatabase --offset=0 --limit=10)",
+      "Bash(./vectorTools.js --targetTableName=sifElementVectors_test2 --queryString=\"student information\" --resultCount=3)",
+      "Bash(./vectorTools.js --targetTableName=sifElementVectors_test2 -dropTable)",
+      "Bash(./vectorTools.js --queryString=\"student information\" --resultCount=3)"
     ],
     "deny": []
   }
