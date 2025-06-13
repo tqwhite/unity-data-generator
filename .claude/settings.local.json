@@ -33,7 +33,9 @@
       "Bash(./vectorTools.js --targetTableName=sifElementVectors_test2 -writeVectorDatabase --offset=0 --limit=10)",
       "Bash(./vectorTools.js --targetTableName=sifElementVectors_test2 --queryString=\"student information\" --resultCount=3)",
       "Bash(./vectorTools.js --targetTableName=sifElementVectors_test2 -dropTable)",
-      "Bash(./vectorTools.js --queryString=\"student information\" --resultCount=3)"
+      "Bash(./vectorTools.js --queryString=\"student information\" --resultCount=3)",
+      "Bash(vectorTools -showStats:*)",
+      "Bash(vectorTools:*)"
     ],
     "deny": []
   }
