@@ -23,7 +23,17 @@ const applicationBasePath = findProjectRoot(); // call with {closest:false} if t
 
 const commandLineParser = require('qtools-parse-command-line');
 const commandLineParameters = commandLineParser.getParameters({
-	applicationControls: ['-writeVectorDatabase', '-newDatabase', '-dropTable', '-showStats', '--offset', '--limit', '--resultCount', '--targetTableName'],
+	applicationControls: [
+		'-writeVectorDatabase',
+		'-newDatabase',
+		'-dropTable',
+		'-showStats',
+		'--offset',
+		'--limit',
+		'--resultCount',
+		'--targetTableName',
+		'--dataProfile',
+	],
 });
 const generateEmbeddings = require('./lib/generate-embeddings');
 const getClosestRecords = require('./lib/get-closest-records');
@@ -40,11 +50,19 @@ const { showDatabaseStats } = require('./lib/show-database-stats');
 const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
-	applicationControls: ['-writeVectorDatabase', '-newDatabase', '-dropTable', '-showStats', '--queryString', '--offset', '--limit', '--resultCount', '--targetTableName'],
+	applicationControls: [
+		'-writeVectorDatabase',
+		'-newDatabase',
+		'-dropTable',
+		'-showStats',
+		'--queryString',
+		'--offset',
+		'--limit',
+		'--resultCount',
+		'--targetTableName',
+		'--dataProfile',
+	],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
-
-
-
 
 
 //START OF moduleFunction() ============================================================
@@ -53,7 +71,33 @@ const moduleFunction =
 	({ unused }) => {
 		const { xLog, getConfig, rawConfig, commandLineParameters } =
 			process.global;
-		const { databaseFilePath, openAiApiKey, defaultTargetTableName } = getConfig(moduleName); //moduleName is closure
+		const config = getConfig(moduleName); //moduleName is closure
+		const { databaseFilePath, openAiApiKey, defaultTargetTableName } = config;
+		
+		// Get data profile configuration
+		const dataProfile = commandLineParameters.values.dataProfile || 'sif';
+		
+		// Extract profile-specific settings from config using dotted notation
+		const sourceTableName = config[`dataProfiles.${dataProfile}.sourceTableName`];
+		const sourcePrivateKeyName = config[`dataProfiles.${dataProfile}.sourcePrivateKeyName`];
+		const sourceEmbeddableContentNameStr = config[`dataProfiles.${dataProfile}.sourceEmbeddableContentName`];
+		const profileDefaultTargetTableName = config[`dataProfiles.${dataProfile}.defaultTargetTableName`];
+		
+		// Parse comma-separated embeddable content names
+		const sourceEmbeddableContentName = sourceEmbeddableContentNameStr ? 
+			sourceEmbeddableContentNameStr.split(',').map(s => s.trim()) : [];
+		
+		// Validate profile configuration
+		if (!sourceTableName || !sourcePrivateKeyName || !sourceEmbeddableContentName.length) {
+			xLog.error(`Invalid or missing configuration for data profile '${dataProfile}'`);
+			xLog.error('Required settings: sourceTableName, sourcePrivateKeyName, sourceEmbeddableContentName');
+			return {};
+		}
+		
+		xLog.status(`Using data profile: ${dataProfile}`);
+		xLog.status(`Source table: ${sourceTableName}`);
+		xLog.status(`Source key: ${sourcePrivateKeyName}`);
+		xLog.status(`Embeddable content: ${sourceEmbeddableContentName.join(', ')}`);
 
 		const initOpenAi = () => {
 			const OpenAI = require('openai');
@@ -67,50 +111,54 @@ const moduleFunction =
 		const openai = initOpenAi();
 
 		// ================================================================================
-		
-		const sourceTableName = 'naDataModel';
-		// Use --targetTableName if provided, otherwise use default from config
-		const vectorTableName = commandLineParameters.values.targetTableName || defaultTargetTableName;
-		const sourcePrivateKeyName = 'refId';
-		const sourceEmbeddableContentName = ['Description', 'XPath'];
-		
+
+		// Use --targetTableName if provided, otherwise use profile default, then global default
+		const vectorTableName =
+			commandLineParameters.values.targetTableName || 
+			profileDefaultTargetTableName || 
+			defaultTargetTableName;
+
 		if (commandLineParameters.values.targetTableName) {
 			xLog.status(`Using custom target table: ${vectorTableName}`);
 		} else {
 			xLog.status(`Using default target table: ${vectorTableName}`);
 		}
-		
+
 		const vectorDb = initVectorDatabase(
 			databaseFilePath,
 			vectorTableName,
 			xLog,
 		); // showVecVersion(db);
-		
+
 		// Show database stats if requested
 		if (commandLineParameters.switches.showStats) {
 			xLog.status('Showing database statistics...');
 			showDatabaseStats(vectorDb, xLog);
 			return {}; // Exit after showing stats
 		}
-		
-		// Handle -dropTable independently - SAFELY now only drops specified SIF vector table
+
+		// Handle -dropTable independently - SAFELY now only drops specified vector table
 		if (commandLineParameters.switches.dropTable) {
-			xLog.status(`Safely dropping SIF vector table "${vectorTableName}" only...`);
-			xLog.status(`IMPORTANT: This will NOT affect CEDS tables or other database tables`);
-			
-			// Pass the specific vector table name to ensure we only drop SIF tables
+			xLog.status(
+				`Safely dropping ${dataProfile.toUpperCase()} vector table "${vectorTableName}" only...`,
+			);
+			xLog.status(
+				`IMPORTANT: This will NOT affect other profile tables or database tables`,
+			);
+
+			// Pass the specific vector table name to ensure we only drop the specified profile's tables
 			dropAllVectorTables(vectorDb, xLog, vectorTableName);
-			
+
 			// Show the empty state after dropping tables
 			xLog.status('Database state after dropping tables:');
 			showDatabaseStats(vectorDb, xLog);
-			
+
 			// Only exit if we're not also writing to the database
 			if (!commandLineParameters.switches.writeVectorDatabase) {
 				return {}; // Exit after dropping tables
 			}
 		}
-		
+
 		if (commandLineParameters.switches.writeVectorDatabase) {
 			generateEmbeddings({
 				openai,
@@ -122,19 +170,19 @@ const moduleFunction =
 				sourceEmbeddableContentName,
 			});
 		}
-		
+
 		if (commandLineParameters.values.queryString) {
 			getClosestRecords({
 				openai,
 				vectorDb,
-			}).workingFunction({
-				sourceTableName,
-				vectorTableName,
-				sourcePrivateKeyName,
-				sourceEmbeddableContentName,
-			},
-			commandLineParameters.values.queryString.qtLast(),
-				
+			}).workingFunction(
+				{
+					sourceTableName,
+					vectorTableName,
+					sourcePrivateKeyName,
+					sourceEmbeddableContentName,
+				},
+				commandLineParameters.values.queryString.qtLast(),
 			);
 		}
 

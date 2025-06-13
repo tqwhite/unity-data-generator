@@ -35,7 +35,9 @@
       "Bash(./vectorTools.js --targetTableName=sifElementVectors_test2 -dropTable)",
       "Bash(./vectorTools.js --queryString=\"student information\" --resultCount=3)",
       "Bash(vectorTools -showStats:*)",
-      "Bash(vectorTools:*)"
+      "Bash(vectorTools:*)",
+      "Bash(./vectorTools.js --showStats)",
+      "Bash(./vectorTools.js --dataProfile=sif --showStats)"
     ],
     "deny": []
   }
