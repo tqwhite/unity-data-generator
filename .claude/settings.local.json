@@ -20,7 +20,9 @@
       "Bash(sed:*)",
       "Bash(tail:*)",
       "Bash(find:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(open:*)",
+      "Bash(sqlite3:*)"
     ],
     "deny": []
   }

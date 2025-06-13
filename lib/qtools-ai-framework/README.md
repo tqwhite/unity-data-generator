@@ -1,131 +1,250 @@
-# qtools-ai-thought-processor
+# qtools-ai-framework
 
-#### AI Thought Processor (ATP)
+### AI Thought Process Framework for Educational Data Generation
 
-IMPORTANT: **All V1.0.X versions should be considered to have breaking changes.** This framework is still under active development. Normal semver will start on V2. qTools ATP works and is used in production but breaking changes are expected for awhile as we learn what is actually needed in our real application.
+**IMPORTANT**: All V1.0.X versions should be considered to have breaking changes. This framework is under active development. Normal semver will start on V2. The framework works and is used in production but breaking changes are expected as we learn what is actually needed in real applications.
 
-### DESCRIPTION
+---
 
-**qTools ATP is a framework** is based on a metaphor of seminar hosting one or more panel conversations working together on a problem. It calls these Thought Processes. 
+## 📖 Overview
 
-According to the metaphor, **a Thought Process is a series of Conversations**, each of which is a group of Thinkers guided by a Facilitator. Conversations operate in sequence under the control of the chosen Task Runner (only one of these so far). Each reports its Wisdom with the Wisdom of the last Conversation sent to output as the finished result of the Thought Process. The format and meaning of the Wisdom at each Conversation step is up to the specifics of the Thinkers.
+**qtools-ai-framework** is a sophisticated AI orchestration framework implementing a **"conversation-based thought process"** metaphor. It's designed around the concept of academic seminars with panel discussions working collaboratively on complex problems.
 
-**A Conversation has a Facilitator and a group of Thinkers**, each expert in some aspect of the problem under consideration. **The Conversation's Facilitator executes the list of Thinkers in some useful pattern.** This is usually in sequence, passing each Thinker's Wisdom to the next. (*Soon, in parallel with a final Thinker reducing the accumulated Wisdom to contribue to the next Conversation*). A special Facilitator repeats its Conversation until one of the Thinkers says the Wisdom is good.
+### Core Philosophy
 
-Fundamentally, **a Thinker receives Wisdom, does something and forwards new Wisdom to the next step**. In a Conversation, the Wisdom of the last Thinker is the final result of the Thought Process. qTools ATP does not know or care what the Thinkers do as long as they produce Wisdom. Although qTools ATP has a couple of built-in Thinkers,  **coding Thinkers is the main work of creating an application based on qTools ATP**.
+The framework models AI interactions as **Thought Processes** consisting of sequential **Conversations**, each guided by **Facilitators** who coordinate groups of specialized **Thinkers**. This metaphor provides a structured, extensible approach to complex AI workflows.
 
-**qTools ATP mainly provides the orchestration** so Thinkers can work with Facilitators in Conversations. This happens when an application hands the configuration structure to a makeFacilitators() function and passes those to findTheAnswer().
+### Conceptual Flow
 
-To support the entire process, **qTools ATP provides several utilities** to make coding Thinkers easier and make them easier to debug. Fundamental is a library of Smarty Pants modules that format parameters and requests for NetBrains (*presently only ChatGPT with others planned*). 
+```
+Thought Process → [Conversation 1] → [Conversation 2] → [Conversation N] → Final Result
+                      ↓                ↓                ↓
+                 [Facilitator]    [Facilitator]    [Facilitator]
+                      ↓                ↓                ↓
+              [Thinker 1,2,3...]  [Thinker 1,2...]  [Thinker 1...]
+```
 
-There is also a logging (xLog) facility that supports basic logging function but will also allow a Thinker (or any module) to write to a separate log file unique to that module for a specific program execution.  This usually contains raw prompts and responses.
+---
 
-qTools ATP uses the [qTools-parse-command-line](https://www.npmjs.com/package/qtools-parse-command-line) to control the Thought Process. This can be used by the application as well. Application specific flags and help text can be added to the system.
-### Usage Example
+## 🏗️ Architecture
 
-	const initAtp = require('qtools-ai-thought-processor/jina')({configFileBaseName:moduleName}); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
-	
+### Directory Structure
+
+```
+qtools-ai-framework/
+├── jina.js                    # Main entry point & orchestrator
+├── package.json              # Dependencies & metadata
+├── README.md                 # This documentation
+└── lib/
+    ├── jina-core/            # Core conversation orchestration
+    ├── task-runner.js        # Sequential facilitator execution
+    ├── conversation-generator/ # Manages thinker groups
+    ├── facilitators/         # Execution patterns
+    │   ├── get-answer/       # Single-pass execution
+    │   └── answer-until-valid/ # Retry-until-valid pattern
+    ├── smarty-pants-chooser/ # AI provider abstraction
+    │   └── lib/              # OpenAI integration
+    ├── x-log/                # Custom logging system
+    ├── assemble-configuration-show-help-maybe-exit/ # Config system
+    └── purge-cleanup-directory.js # Utility functions
+```
+
+### Key Components
+
+#### 1. **Entry Point** (`jina.js`)
+
+- Framework initialization & main orchestration
+- Process global setup & directory management
+- Performance monitoring & facilitator coordination
+- Factory pattern with initialization parameters
+
+#### 2. **Core Engine** (`lib/jina-core/`)
+
+- Central hub for conversation management
+- Dependency injection architecture
+- Services: conversation generation, embeddings (future), file operations (future)
+
+#### 3. **Task Runner** (`lib/task-runner.js`)
+
+- Sequential execution of facilitators using Chain of Responsibility pattern
+- `latestWisdom` object flows through facilitator chain
+- Centralized error handling with detailed stack traces
+
+#### 4. **Facilitators** (Execution Patterns)
+
+- **`get-answer/`**: Simple single-pass execution
+- **`answer-until-valid/`**: Retry loop with validation
+- Strategy pattern for different execution styles
+- Standardized `facilitator(passThroughObject)` interface
+
+#### 5. **Conversation Generator**
+
+- Manages groups of "thinkers" (AI prompt sequences)
+- Configuration-driven with Factory + Registry pattern
+- Integrates with `smarty-pants-chooser` for AI calls
+
+#### 6. **AI Integration** (`smarty-pants-chooser/`)
+
+- Abstraction layer for AI providers (currently OpenAI)
+- Provider pattern (extensible for other AI services)
+- Features: model selection, API key management, response formatting
+
+---
+
+## 🚀 Usage
+
+### Basic Integration
+
+```javascript
+const initAtp = require('../../lib/qtools-ai-framework/jina')({
+    configFileBaseName: moduleName,
+    applicationBasePath,
+    applicationControls: ['-debug', '--verbose']
+});
+
+// Initialize facilitators and execute thought process
+const { findTheAnswer, makeFacilitators } = initAtp();
+```
+
 ### Configuration Example
 
-In this sample application, Thinkers parse data files and access external HTTP resources as well as execute various prompts to successively refine the result from various perspectives.
+The framework uses hierarchical `.ini` configuration files:
 
-    ; ==============================================================
-    ; A Thought Process is a sequence of Conversations each
-    ; comprising a Facilitator and the name of a group of Thinkers
-    
-    [App_Specific_Thought_Process]
-    thoughtProcessConversationList.0.facilitatorModuleName=get-answer
-    thoughtProcessConversationList.0.conversationThinkerListName=unityGenerator
-    
-    thoughtProcessConversationList.1.facilitatorModuleName=answer-until-valid
-    thoughtProcessSpecificationList.1.conversationThinkerListName=refiner
-    
-    ; ==============================================================
-    ; A Conversation is one of a group of Thinkers instantiated with a Facilitator
-    
-    [conversation-generator]
-    unityGenerator.thinkerList.0.configName=getSpecificationData
-    unityGenerator.thinkerList.1.configName=xmlMaker
-    unityGenerator.thinkerList.2.configName=xmlReview
-    
-    refiner.thinkerList.0.configName=fixProblems
-    refiner.thinkerList.1.configName=checkValidity
-    
-    ; ==============================================================
-    ; Each Thinker is a custom module that receives Wisdom from other Thinkers
-    ; according to the Facilitator's control.
-    
-    [thinkers]
-    ;------------------------------------------
-    ; Opens a local data file
-    getSpecificationData.selfName=getSpecificationData
-    getSpecificationData.module=<!thinkerFolderPath!>/get-specification-data
-    
-    ;------------------------------------------
-    ; Accesses Net Brain
-    xmlMaker.selfName=xmlMaker
-    xmlMaker.module=<!thinkerFolderPath!>/xml-maker
-    xmlMaker.smartyPantsName=gpt
-    
-    ;------------------------------------------
-    ; Accesses Net Brain
-    xmlReview.selfName=xmlReview
-    xmlReview.module=<!thinkerFolderPath!>/xml-review
-    xmlReview.smartyPantsName=gpt
-    
-    ;------------------------------------------
-    ; Accesses HTTP service endpoint
-    checkValidity.selfName=checkValidity
-    checkValidity.module=<!thinkerFolderPath!>/check-validity
-    checkValidity.smartyPantsName=gpt
-    
-    ;------------------------------------------
-    ; Accesses Net Brain
-    fixProblems.selfName=fixProblems
-    fixProblems.module=<!thinkerFolderPath!>/fix-problems
-    fixProblems.smartyPantsName=gpt
-    
-    ; ==============================================================
-    ; Supply data to thinker module if needed
-    
-    [xml-maker]
-    promptLibraryModulePath=<!promptLibraryModulePath!>
-    
-    [xml-review]
-    promptLibraryModulePath=<!promptLibraryModulePath!>
-    
-    [fix-problems]
-    promptLibraryModulePath=<!promptLibraryModulePath!>
-    
-    [get-specification-data]
-    spreadsheetPath = <!sourceFilesPath!>/ImplementationSpecification.xlsx
+```ini
+; ==============================================================
+; A Thought Process is a sequence of Conversations each
+; comprising a Facilitator and the name of a group of Thinkers
 
-### Versions
+[App_Specific_Thought_Process]
+thoughtProcessConversationList.0.facilitatorModuleName=get-answer
+thoughtProcessConversationList.0.conversationThinkerListName=unityGenerator
 
-1.0.9 added applicationControls property to initialization to allow commandLineParameters to be added by calling program for its purposes.
+thoughtProcessConversationList.1.facilitatorModuleName=answer-until-valid
+thoughtProcessConversationList.1.conversationThinkerListName=refiner
 
-### Acknowledgment and Copyright
+; ==============================================================
+; A Conversation is one of a group of Thinkers instantiated with a Facilitator
 
-Development of this open source software was supported by the fine people of Access for Learning, LLC supporting their mission of educational data interoperability.
+[conversation-generator]
+unityGenerator.thinkerList.0.configName=getSpecificationData
+unityGenerator.thinkerList.1.configName=xmlMaker
+unityGenerator.thinkerList.2.configName=xmlReview
 
-    Copyright 2023 Access for Learning
-    
-    Licensed under the Apache License, Version 2.0 (the "License");
-    
-    you may not use this file except in compliance with the License.
-    
-    You may obtain a copy of the License at
-    
-     http://www.apache.org/licenses/LICENSE-2.0
-    
-    Unless required by applicable law or agreed to in writing, software
-    
-    distributed under the License is distributed on an "AS IS" BASIS,
-    
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    
-    See the License for the specific language governing permissions and
-    
-    limitations under the License.
-    
-    Authors: TQ White II (Justkidding, Inc.) and John Lovell (Access for Learning, LLC)
+refiner.thinkerList.0.configName=fixProblems
+refiner.thinkerList.1.configName=checkValidity
+
+; ==============================================================
+; Each Thinker is a custom module that receives Wisdom from other Thinkers
+
+[thinkers]
+getSpecificationData.selfName=getSpecificationData
+getSpecificationData.module=<!thinkerFolderPath!>/get-specification-data
+
+xmlMaker.selfName=xmlMaker
+xmlMaker.module=<!thinkerFolderPath!>/xml-maker
+xmlMaker.smartyPantsName=gpt
+
+; Additional thinker configurations...
+```
+
+---
+
+## 🔧 Technical Details
+
+### Code Patterns & Standards
+
+- **Module Function Pattern**: Consistent `moduleFunction()` structure
+- **Dependency Injection**: Core services injected into components
+- **qtools-asynchronous-pipe**: Preferred async pattern using taskListPlus and pipeRunner
+- **Global State**: `process.global` for shared services (xLog, getConfig)
+- **Error Resilience**: Comprehensive error handling with retries
+
+### Key Features
+
+1. **Modular Design**: Clear separation of concerns
+2. **Configuration-Driven**: Behavior controlled via `.ini` files
+3. **Extensible**: Plugin architecture for thinkers and facilitators
+4. **Debugging Support**: Extensive logging and file output for AI interactions
+5. **Standard Patterns**: Uses TQ's preferred qtools ecosystem
+
+### Dependencies
+
+- `qtools-asynchronous-pipe-plus`: Pipeline processing
+- `qtools-config-file-processor`: Configuration management
+- `qtools-functional-library`: Utility functions
+- `qtools-parse-command-line`: Command line parsing
+
+---
+
+## 📊 Framework Statistics
+
+- **Total Core Files**: ~20 JavaScript modules
+- **Configuration Complexity**: Medium (hierarchical .ini structure)
+- **Error Handling**: Comprehensive with retry mechanisms
+- **AI Provider Support**: OpenAI (extensible architecture)
+- **Documentation**: Comprehensive inline comments + this README
+
+---
+
+## 🎯 Development & Refactoring Notes
+
+### Current Strengths
+
+- ✅ Well-architected conversation metaphor
+- ✅ Comprehensive error handling
+- ✅ Extensive debugging capabilities
+- ✅ Configuration-driven flexibility
+- ✅ Modular, extensible design
+
+### Potential Improvements
+
+- 🔄 **Dependency Consolidation**: Multiple node_modules folders could be consolidated
+- 🔄 **Type Safety**: Add JSDoc types or TypeScript definitions
+- 🔄 **Testing**: Add unit tests for core components
+- 🔄 **AI Provider Expansion**: Support for Claude, Gemini, etc.
+- 🔄 **Performance Monitoring**: Enhanced metrics per thinker
+
+### Architecture Assessment
+
+The framework is well-designed and functional. Most potential "refactoring opportunities" are optimizations rather than fixes for broken patterns. The core metaphor is sound and the implementation follows good software engineering practices.
+
+---
+
+## 📝 Real-World Usage
+
+This framework is actively used in production for:
+
+- **Educational Data Generation**: Creating XML test data for SIF Unity standards
+- **Multi-step AI Workflows**: Complex prompt chains with validation
+- **Configuration-Driven AI**: Flexible AI behavior through .ini configuration
+- **Error-Resilient Processing**: Robust handling of AI API failures and retries
+
+---
+
+## 📚 Version History
+
+**1.0.9**: Added applicationControls property to initialization for command line parameter extension
+
+---
+
+## 📄 License & Attribution
+
+Development of this open source software was supported by **Access for Learning, LLC** in support of their mission of educational data interoperability.
+
+```
+Copyright 2023 Access for Learning
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+Authors: TQ White II (Justkidding, Inc.) and John Lovell (Access for Learning, LLC)
+```
