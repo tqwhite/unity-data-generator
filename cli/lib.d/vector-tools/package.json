@@ -2,7 +2,7 @@
   "name": "sif-vector-tools",
   "version": "1.0.0",
   "description": "Tools for working with SIF datamodel embedding vectors",
-  "main": "sifVectorTools.js",
+  "main": "vectorTools.js",
   "directories": {
     "lib": "lib"
   },
