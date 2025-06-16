@@ -88,8 +88,6 @@ const moduleFunction =
 			}).join('\n'));
 		};
 		
-
-		xLog.status(`${moduleName} is initialized`);
 		return { workingFunction };
 	};
 

@@ -24,10 +24,15 @@ const moduleFunction =
 	({ unused }) => {
 		
 		const initVectorDatabase = (databaseFilePath, vectorTableName, xLog) => {
-			const sqliteVec = require('sqlite-vec');
-			const db = require('better-sqlite3')(databaseFilePath, {});
-			sqliteVec.load(db);
-			return db;
+			try {
+				const sqliteVec = require('sqlite-vec');
+				const db = require('better-sqlite3')(databaseFilePath, {});
+				sqliteVec.load(db);
+				return db;
+			} catch (error) {
+				xLog.error(`Error in initVectorDatabase: ${error.message}`);
+				throw error;
+			}
 		};
 
 		return { initVectorDatabase };

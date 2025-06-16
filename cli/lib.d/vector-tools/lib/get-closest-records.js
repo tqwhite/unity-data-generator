@@ -21,13 +21,40 @@ const moduleFunction =
 			process.global;
 		const localConfig = getConfig(moduleName); //moduleName is closure
 
+		// Data profile strategies for different key lookup approaches
+		const dataProfileStrategies = {
+			sif: {
+				formatKeyForLookup: (key) => key.toString(), // Standard string conversion
+				name: 'SIF'
+			},
+			ceds: {
+				formatKeyForLookup: (key) => key.toString().padStart(6, '0'), // Zero-pad to 6 digits
+				name: 'CEDS'
+			},
+			// Future profiles can be added here
+			// ims: {
+			//     formatKeyForLookup: (key) => key.toString().toUpperCase(),
+			//     name: 'IMS'
+			// }
+		};
+
 		const workingFunction = async (embeddingSpecs, queryString) => {
 			const {
 				sourceTableName,
 				vectorTableName,
 				sourcePrivateKeyName,
 				sourceEmbeddableContentName,
+				dataProfile, // Should be passed from vectorTools
 			} = embeddingSpecs;
+			
+			// Get the strategy for this data profile
+			const strategy = dataProfileStrategies[dataProfile];
+			if (!strategy) {
+				xLog.error(`Unknown data profile: ${dataProfile}. Supported profiles: ${Object.keys(dataProfileStrategies).join(', ')}`);
+				return;
+			}
+			
+			xLog.verbose(`Using ${strategy.name} lookup strategy for data profile: ${dataProfile}`);
 			
 			
 			const resultCount = commandLineParameters.values.resultCount ? 
@@ -54,8 +81,8 @@ const moduleFunction =
 			
 			// Apply the processing to the query string
 			const processedQueryString = processQueryString(queryString);
-			xLog.status(`Original query: "${queryString}"`);
-			xLog.status(`Processed query: "${processedQueryString}"`);
+			xLog.verbose(`Original query: "${queryString}"`);
+			xLog.verbose(`Processed query: "${processedQueryString}"`);
 			
 			const queryEmbed = await openai.embeddings.create({
 				model: 'text-embedding-3-small',
@@ -71,25 +98,57 @@ const moduleFunction =
 				.all(new Float32Array(query));
 
 			const answers = rows.map(vectorChoice => {
+				const searchValue = vectorChoice[sourcePrivateKeyName];
+				
+				// Use the strategy to format the key for lookup
+				const formattedKey = strategy.formatKeyForLookup(searchValue);
+				xLog.verbose(`Looking up record with ${sourcePrivateKeyName}=${searchValue} (formatted as: ${formattedKey})`);
+				
+				// Use the formatted key for lookup
 				const record = vectorDb.prepare(
 					`select * from ${sourceTableName} where ${sourcePrivateKeyName}=?`
-				).get(vectorChoice[sourcePrivateKeyName].toString());
+				).get(formattedKey);
+				
+				// Debug: Log what we found
+				if (!record) {
+					xLog.error(`No record found for ${sourcePrivateKeyName}=${formattedKey} using ${strategy.name} strategy`);
+				} else {
+					xLog.verbose(`Found record using ${strategy.name} strategy`);
+				}
+				
 				return { ...vectorChoice, record };
 			});
 			
-			// Format output similar to CEDS but with SIF-specific fields and distance score
-			xLog.status(`Found ${answers.length} matches, sorted by distance (lowest/best match first):`);
-			xLog.result(answers.map((item, index) => {
-				const description = item.record.Description || '';
-				const xpath = item.record.XPath || '';
-				const refId = item.record.refId || '';
-				const distance = item.distance.toFixed(6); // Format distance to 6 decimal places
-				return `${index+1}. [score: ${distance}] ${refId} ${description} ${xpath}`;
+			// Filter out results where no record was found
+			const validAnswers = answers.filter(item => item.record !== null && item.record !== undefined);
+			
+			if (validAnswers.length === 0) {
+				xLog.error('No matching records found in source table. This suggests a data mismatch between vector table and source table.');
+				xLog.error(`Vector table rowids: ${rows.map(r => r[sourcePrivateKeyName]).join(', ')}`);
+				return;
+			}
+			
+			// Format output dynamically based on the data profile fields
+			xLog.status(`\n\nFound ${validAnswers.length} valid matches`);
+			xLog.result(validAnswers.map((item, index) => {
+				const distance = item.distance.toFixed(6);
+				const refId = item.record[sourcePrivateKeyName] || '';
+				
+				// Build description from the embeddable content fields
+				let description = '';
+				if (Array.isArray(sourceEmbeddableContentName)) {
+					description = sourceEmbeddableContentName
+						.map(field => item.record[field] || '')
+						.filter(value => value)
+						.join(' | ');
+				} else {
+					description = item.record[sourceEmbeddableContentName] || '';
+				}
+				
+				return `${index+1}. [score: ${distance}] ${refId} ${description}`;
 			}).join('\n'));
 		};
 		
-
-		xLog.status(`${moduleName} is initialized`);
 		return { workingFunction };
 	};
 

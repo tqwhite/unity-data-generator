@@ -37,7 +37,10 @@
       "Bash(vectorTools -showStats:*)",
       "Bash(vectorTools:*)",
       "Bash(./vectorTools.js --showStats)",
-      "Bash(./vectorTools.js --dataProfile=sif --showStats)"
+      "Bash(./vectorTools.js --dataProfile=sif --showStats)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(rg:*)",
+      "Bash(timeout 10s vectorTools:*)"
     ],
     "deny": []
   }

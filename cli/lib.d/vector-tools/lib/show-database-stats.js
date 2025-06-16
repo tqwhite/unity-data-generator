@@ -25,58 +25,107 @@ const moduleFunction =
 		
 		// Function to show database statistics
 		const showDatabaseStats = (db, xLog) => {
-			// Show SQLite and vec versions
 			try {
-				const { sqlite_version, vec_version } = db
-					.prepare('select sqlite_version() as sqlite_version, vec_version() as vec_version;')
-					.get();
-				xLog.result(`SQLite version: ${sqlite_version}, vec extension version: ${vec_version}`);
-			} catch (error) {
-				xLog.error(`Error getting version info: ${error.message}`);
-			}
+			// Show SQLite and vec versions
+			const sqlite_version = db.prepare('select sqlite_version() as version').get().version;
+			const vec_version = db.prepare('select vec_version() as version').get().version;
 			
 			// Get list of all tables
 			const allTables = db
 				.prepare(`SELECT name, type FROM sqlite_master WHERE type='table' ORDER BY name`)
 				.all();
 			
-			xLog.result(`Database contains ${allTables.length} tables total`);
-			
 			// Find vector tables specifically
-			const vecTables = allTables.filter(table => 
-				db.prepare(`SELECT sql FROM sqlite_master WHERE name = ?`).get(table.name)?.sql?.includes('USING vec0')
-			);
-			
-			xLog.result(`Vector tables (${vecTables.length}):`);
-			
-			// For each vector table, show stats
-			vecTables.forEach(table => {
+			const vecTables = allTables.filter(table => {
 				try {
-					const count = db.prepare(`SELECT COUNT(*) as count FROM "${table.name}"`).get().count;
-					xLog.result(`- ${table.name}: ${count} records`);
-					
-					// Show sample IDs if there are records
-					if (count > 0) {
-						const sampleIds = db.prepare(`SELECT rowid FROM "${table.name}" LIMIT 5`).all();
-						xLog.result(`  Sample rowids: ${sampleIds.map(r => r.rowid).join(', ')}${count > 5 ? '...' : ''}`);
-					}
+					const tableInfo = db.prepare(`SELECT sql FROM sqlite_master WHERE name = ?`).get(table.name);
+					return tableInfo?.sql?.includes('USING vec0') || false;
 				} catch (error) {
-					xLog.error(`Error getting stats for ${table.name}: ${error.message}`);
+					return false;
 				}
 			});
 			
-			// Show info about non-vector tables too
-			const regularTables = allTables.filter(table => !vecTables.includes(table));
-			if (regularTables.length > 0) {
-				xLog.result(`\nRegular tables (${regularTables.length}):`);
-				regularTables.forEach(table => {
+			// Build vector tables section
+			let vectorTablesSection = '';
+			if (vecTables.length === 0) {
+				vectorTablesSection = 'No vector tables found';
+			} else {
+				vecTables.forEach(table => {
 					try {
 						const count = db.prepare(`SELECT COUNT(*) as count FROM "${table.name}"`).get().count;
-						xLog.result(`- ${table.name}: ${count} records`);
+						const status = count > 0 ? 'READY' : 'EMPTY';
+						const paddedName = table.name.padEnd(25);
+						const paddedCount = count.toLocaleString().padStart(8);
+						vectorTablesSection += `${status.padEnd(6)} ${paddedName} ${paddedCount} records\n`;
 					} catch (error) {
-						xLog.error(`Error getting stats for ${table.name}: ${error.message}`);
+						vectorTablesSection += `ERROR  ${table.name.padEnd(25)} (failed to query)\n`;
 					}
 				});
+			}
+			
+			// Calculate summary stats
+			const totalVecRecords = vecTables.reduce((sum, table) => {
+				try {
+					return sum + db.prepare(`SELECT COUNT(*) as count FROM "${table.name}"`).get().count;
+				} catch (error) {
+					return sum;
+				}
+			}, 0);
+			
+			const regularTables = allTables.filter(table => !vecTables.includes(table));
+			const totalRegularRecords = regularTables.reduce((sum, table) => {
+				try {
+					return sum + db.prepare(`SELECT COUNT(*) as count FROM "${table.name}"`).get().count;
+				} catch (error) {
+					return sum;
+				}
+			}, 0);
+			
+			// Build top tables section
+			let topTablesSection = '';
+			if (regularTables.length > 0) {
+				const tablesWithCounts = regularTables.map(table => {
+					try {
+						const count = db.prepare(`SELECT COUNT(*) as count FROM "${table.name}"`).get().count;
+						return { name: table.name, count };
+					} catch (error) {
+						return { name: table.name, count: 0 };
+					}
+				}).sort((a, b) => b.count - a.count);
+				
+				tablesWithCounts.slice(0, 10).forEach(table => {
+					const paddedName = table.name.padEnd(30);
+					const paddedCount = table.count.toLocaleString().padStart(8);
+					topTablesSection += `${paddedName} ${paddedCount} records\n`;
+				});
+				
+				if (regularTables.length > 10) {
+					topTablesSection += `... and ${regularTables.length - 10} more tables\n`;
+				}
+			}
+			
+			// Assemble complete report
+			const report = `
+================================================================
+                    DATABASE STATISTICS
+================================================================
+SQLite: ${sqlite_version} | Vec Extension: ${vec_version}
+
+--- VECTOR TABLES ---
+${vectorTablesSection}
+--- SUMMARY ---
+Vector Tables:  ${vecTables.length.toString().padStart(2)} (${totalVecRecords.toLocaleString().padStart(8)} records)
+Regular Tables: ${regularTables.length.toString().padStart(2)} (${totalRegularRecords.toLocaleString().padStart(8)} records)
+Total Tables:   ${allTables.length.toString().padStart(2)} (${(totalVecRecords + totalRegularRecords).toLocaleString().padStart(8)} records)
+
+--- TOP REGULAR TABLES BY RECORD COUNT ---
+${topTablesSection}================================================================`;
+
+			xLog.result(report);
+			
+			} catch (error) {
+				xLog.error(`Error in showDatabaseStats: ${error.message}`);
+				xLog.error(`Stack: ${error.stack}`);
 			}
 		};
 

@@ -23,7 +23,7 @@ const moduleFunction =
 	({ moduleName } = {}) =>
 	({ unused }) => {
 		
-		// Function to drop SIF vector tables (safely)
+		// Function to drop vector tables (safely)
 		const dropAllVectorTables = (db, xLog, specifiedVectorTableName) => {
 			// CRITICAL SAFETY CHECK: Only drop tables matching our specific vector table name
 			// This prevents accidental deletion of other tables like CEDS tables
@@ -32,32 +32,38 @@ const moduleFunction =
 				return;
 			}
 			
-			xLog.status(`Will only drop tables matching the pattern: ${specifiedVectorTableName}`);
+			xLog.status(`Will drop all tables matching the pattern: ${specifiedVectorTableName}*`);
 			
-			// Find only the specific vector tables
+			// Find ALL tables that start with the specified vector table name
+			// This includes the main table and all sqlite-vec related tables (_chunks, _info, _rowids, etc.)
 			const vecTables = db
-				.prepare(`SELECT name FROM sqlite_master WHERE name = ? AND type='table' AND sql LIKE '%USING vec0%'`)
-				.all(specifiedVectorTableName);
+				.prepare(`SELECT name FROM sqlite_master WHERE name LIKE ? AND type='table'`)
+				.all(`${specifiedVectorTableName}%`);
 			
 			if (vecTables.length === 0) {
-				xLog.status(`No vector tables found matching "${specifiedVectorTableName}".`);
+				xLog.status(`No vector tables found matching "${specifiedVectorTableName}*".`);
 				return;
 			}
+			
+			xLog.status(`Found ${vecTables.length} tables to drop:`);
+			vecTables.forEach(({ name }) => {
+				xLog.status(`  - ${name}`);
+			});
 			
 			// Drop each matching table
 			let count = 0;
 			vecTables.forEach(({ name }) => {
 				try {
-					// Get count before dropping
+					// Get count before dropping (if possible)
 					let countBefore = 0;
 					try {
 						const countResult = db.prepare(`SELECT COUNT(*) as count FROM "${name}"`).get();
 						countBefore = countResult.count;
 					} catch (e) {
-						// Ignore count errors
+						// Ignore count errors for system tables
 					}
 					
-					xLog.status(`Dropping table "${name}" with ${countBefore} records...`);
+					xLog.status(`Dropping table "${name}"${countBefore > 0 ? ` with ${countBefore} records` : ''}...`);
 					db.exec(`DROP TABLE IF EXISTS "${name}"`);
 					count++;
 					xLog.status(`Successfully dropped vector table: "${name}"`);
@@ -74,15 +80,18 @@ const moduleFunction =
 				}
 			});
 			
-			// Final verification
+			// Final verification - check for any remaining tables with the pattern
 			const remainingTables = db
-				.prepare(`SELECT name FROM sqlite_master WHERE name = ? AND type='table'`)
-				.all(specifiedVectorTableName);
+				.prepare(`SELECT name FROM sqlite_master WHERE name LIKE ? AND type='table'`)
+				.all(`${specifiedVectorTableName}%`);
 				
 			if (remainingTables.length === 0) {
-				xLog.status(`Successfully removed vector table "${specifiedVectorTableName}".`);
+				xLog.status(`Successfully removed all vector tables matching "${specifiedVectorTableName}*".`);
 			} else {
-				xLog.status(`WARNING: Table "${specifiedVectorTableName}" could not be completely removed.`);
+				xLog.status(`WARNING: ${remainingTables.length} tables still remain:`);
+				remainingTables.forEach(({ name }) => {
+					xLog.status(`  - ${name}`);
+				});
 			}
 		};
 
