@@ -24,9 +24,14 @@ const applicationBasePath = findProjectRoot(); // call with {closest:false} if t
 // Note: commandLineParameters will be set by qtools-ai-framework below
 const generateEmbeddings = require('./lib/generate-embeddings');
 const getClosestRecords = require('./lib/get-closest-records');
-const { initVectorDatabase } = require('./lib/init-vector-database');
-const { dropAllVectorTables } = require('./lib/drop-all-vector-tables');
+const { dropAllVectorTables, dropProductionVectorTables } = require('./lib/drop-all-vector-tables');
 const { showDatabaseStats } = require('./lib/show-database-stats');
+const { getProfileConfiguration, logConfigurationStatus } = require('./lib/vector-config-handler');
+const { 
+	initVectorDatabase, 
+	getTableCount, 
+	tableExists 
+} = require('./lib/vector-database-operations');
 
 // =============================================================================
 // MODULE IMPORTS
@@ -60,38 +65,23 @@ const moduleFunction =
 	({ unused }) => {
 		const { xLog, getConfig, rawConfig, commandLineParameters } =
 			process.global;
-		const config = getConfig(moduleName); //moduleName is closure
-		const { databaseFilePath, openAiApiKey, defaultTargetTableName } = config;
 		
-		// Get data profile configuration (commandLineParameters already available from line 60)
-		// Handle case where dataProfile comes as array
-		const dataProfileRaw = commandLineParameters.values.dataProfile;
-		const dataProfile = Array.isArray(dataProfileRaw) ? dataProfileRaw[0] : dataProfileRaw;
-		
-		if (!dataProfile) {
-			xLog.error('--dataProfile parameter is required');
-			xLog.error('Available profiles: sif, ceds');
-			xLog.error('Example: vectorTools --dataProfile=sif --showStats');
+		// Get and validate configuration using the new config handler
+		const config = getProfileConfiguration(moduleName);
+		if (!config.isValid) {
 			return {};
 		}
 		
-		// Extract profile-specific settings from nested config object
-		const profileSettings = config.dataProfiles?.[dataProfile];
-		const sourceTableName = profileSettings?.sourceTableName;
-		const sourcePrivateKeyName = profileSettings?.sourcePrivateKeyName;
-		const sourceEmbeddableContentNameStr = profileSettings?.sourceEmbeddableContentName;
-		const profileDefaultTargetTableName = profileSettings?.defaultTargetTableName;
-		
-		// Parse comma-separated embeddable content names
-		const sourceEmbeddableContentName = sourceEmbeddableContentNameStr ? 
-			sourceEmbeddableContentNameStr.split(',').map(s => s.trim()) : [];
-		
-		// Validate profile configuration
-		if (!sourceTableName || !sourcePrivateKeyName || !sourceEmbeddableContentName.length) {
-			xLog.error(`Invalid or missing configuration for data profile '${dataProfile}'`);
-			xLog.error('Required settings: sourceTableName, sourcePrivateKeyName, sourceEmbeddableContentName');
-			return {};
-		}
+		// Extract configuration values
+		const {
+			dataProfile,
+			databaseFilePath,
+			openAiApiKey,
+			sourceTableName,
+			sourcePrivateKeyName,
+			sourceEmbeddableContentName,
+			vectorTableName
+		} = config;
 		
 		const initOpenAi = () => {
 			const OpenAI = require('openai');
@@ -106,19 +96,8 @@ const moduleFunction =
 
 		// ================================================================================
 
-		// Use --targetTableName if provided, otherwise use profile default, then global default
-		const vectorTableName =
-			commandLineParameters.values.targetTableName || 
-			profileDefaultTargetTableName || 
-			defaultTargetTableName;
-
-		// Show status messages in preferred order
-		xLog.status(`Database file path: ${databaseFilePath}`);
-		xLog.status(`Data profile: ${dataProfile}`);
-		xLog.status(`Target table: ${vectorTableName}`);
-		xLog.verbose(`Source table: ${sourceTableName}`);
-		xLog.verbose(`Source key: ${sourcePrivateKeyName}`);
-		xLog.verbose(`Embeddable content: ${sourceEmbeddableContentName.join(', ')}`);
+		// Show configuration status messages
+		logConfigurationStatus(config);
 
 		// Initialize database with error handling
 		let vectorDb;
@@ -153,9 +132,21 @@ const moduleFunction =
 
 
 			try {
-				// Pass the specific vector table name to ensure we only drop the specified profile's tables
-				dropAllVectorTables(vectorDb, xLog, vectorTableName);
-				xLog.status('Drop operation completed');
+				// Use enhanced drop function with safety checks
+				const dropResult = dropAllVectorTables(vectorDb, xLog, vectorTableName, { 
+					skipConfirmation: true // CLI operation - user already confirmed with -dropTable
+				});
+				
+				if (dropResult.success) {
+					xLog.status(`Drop operation completed: ${dropResult.droppedCount} tables dropped`);
+				} else {
+					xLog.error(`Drop operation failed: ${dropResult.error}`);
+					if (dropResult.errors && dropResult.errors.length > 0) {
+						dropResult.errors.forEach(err => {
+							xLog.error(`  - ${err.table}: ${err.error}`);
+						});
+					}
+				}
 			} catch (error) {
 				xLog.error(`Failed to drop tables: ${error.message}`);
 				xLog.error('Stack trace:', error.stack);
@@ -189,25 +180,7 @@ const moduleFunction =
 			const pipeRunner = asynchronousPipePlus.pipeRunner;
 			const taskListPlus = asynchronousPipePlus.taskListPlus;
 	
-			// Helper function to get table record count
-			const getTableCount = (tableName) => {
-				try {
-					const countResult = vectorDb.prepare(`SELECT COUNT(*) as count FROM "${tableName}"`).get();
-					return countResult.count;
-				} catch (error) {
-					return 0; // Table doesn't exist
-				}
-			};
-			
-			// Helper function to check if table exists
-			const tableExists = (tableName) => {
-				try {
-					const result = vectorDb.prepare(`SELECT name FROM sqlite_master WHERE type='table' AND name = ?`).get(tableName);
-					return !!result;
-				} catch (error) {
-					return false;
-				}
-			};
+			// Database helper functions now come from vector-database-operations module
 			
 			// Helper function to prompt user using callback style
 			const askUser = (question, callback) => {
@@ -246,12 +219,12 @@ const moduleFunction =
 				}
 				
 				// Check if source table exists first
-				const sourceExists = tableExists(sourceTableName);
+				const sourceExists = tableExists(vectorDb, sourceTableName);
 				if (!sourceExists) {
 					return next(new Error(`Source table '${sourceTableName}' does not exist.`));
 				}
 				
-				const sourceCount = getTableCount(sourceTableName);
+				const sourceCount = getTableCount(vectorDb, sourceTableName);
 				xLog.status(`Source table '${sourceTableName}' contains ${sourceCount} records.`);
 				
 				if (sourceCount === 0) {
@@ -297,8 +270,8 @@ const moduleFunction =
 				xLog.status('');
 				xLog.status('Step 2: Verifying new database...');
 				
-				const newCount = getTableCount(args.newTableName);
-				const oldCount = getTableCount(vectorTableName);
+				const newCount = getTableCount(vectorDb, args.newTableName);
+				const oldCount = getTableCount(vectorDb, vectorTableName);
 				
 				if (newCount === 0) {
 					return next(new Error('New table appears to be empty. Aborting deployment.'));
@@ -354,28 +327,18 @@ const moduleFunction =
 				
 				try {
 					// Drop existing production table if it exists (but preserve NEW table)
-					if (tableExists(vectorTableName)) {
+					if (tableExists(vectorDb, vectorTableName)) {
 						xLog.status(`Dropping existing ${vectorTableName} table (preserving NEW table)...`);
 						
-						// Get list of tables to drop (only production, not NEW)
-						const tablesToDrop = vectorDb
-							.prepare(`SELECT name FROM sqlite_master WHERE name LIKE ? AND type='table' AND name NOT LIKE '%_NEW%'`)
-							.all(`${vectorTableName}%`);
-						
-						xLog.status(`Will drop ${tablesToDrop.length} production tables (excluding NEW tables):`);
-						tablesToDrop.forEach(table => {
-							xLog.status(`  - ${table.name}`);
+						const dropResult = dropProductionVectorTables(vectorDb, xLog, vectorTableName, {
+							skipConfirmation: true // Internal rebuild operation
 						});
 						
-						// Drop each table
-						tablesToDrop.forEach(table => {
-							try {
-								vectorDb.exec(`DROP TABLE IF EXISTS "${table.name}"`);
-								xLog.status(`Successfully dropped production table: "${table.name}"`);
-							} catch (error) {
-								xLog.error(`Failed to drop table "${table.name}": ${error.message}`);
-							}
-						});
+						if (!dropResult.success) {
+							throw new Error(`Failed to drop production tables: ${dropResult.error}`);
+						}
+						
+						xLog.status(`Successfully dropped ${dropResult.droppedCount} production tables`);
 					}
 					
 					// Since sqlite-vec tables can't be renamed directly, we need to:
@@ -395,7 +358,13 @@ const moduleFunction =
 					
 					// Drop the NEW table and all its related tables
 					xLog.status('Cleaning up temporary table...');
-					dropAllVectorTables(vectorDb, xLog, args.newTableName);
+					const cleanupResult = dropAllVectorTables(vectorDb, xLog, args.newTableName, { 
+						skipConfirmation: true // Internal cleanup - no confirmation needed
+					});
+					
+					if (!cleanupResult.success) {
+						xLog.status(`Warning: Cleanup had issues: ${cleanupResult.error}`);
+					}
 					
 					next(null, args);
 				} catch (error) {
@@ -408,7 +377,7 @@ const moduleFunction =
 				xLog.status('');
 				xLog.status('Step 5: Final verification...');
 				
-				const finalCount = getTableCount(vectorTableName);
+				const finalCount = getTableCount(vectorDb, vectorTableName);
 				
 				if (finalCount > 0) {
 					xLog.status(`✓ Deployment successful! ${vectorTableName} now contains ${finalCount} records.`);

@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 'use strict';
 
-const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
+const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 
-const qt = require('qtools-functional-library'); //also exposes qtLog(); qt.help({printOutput:true, queryString:'.*', sendJson:false});
+const qt = require('qtools-functional-library');
+const { getTableCount, tableExists, getVectorTables } = require('./vector-database-operations');
 
 const os = require('os');
 const path = require('path');
@@ -23,79 +24,163 @@ const moduleFunction =
 	({ moduleName } = {}) =>
 	({ unused }) => {
 		
-		// Function to drop vector tables (safely)
-		const dropAllVectorTables = (db, xLog, specifiedVectorTableName) => {
+		/**
+		 * Safely drops vector tables with enhanced safety checks
+		 * @param {Object} db - Database connection
+		 * @param {Object} xLog - Logging object
+		 * @param {string} specifiedVectorTableName - Base name of vector table to drop
+		 * @param {Object} options - Additional options
+		 * @param {boolean} options.dryRun - If true, only show what would be dropped
+		 * @param {boolean} options.skipConfirmation - If true, skip safety prompts
+		 * @param {string[]} options.excludePatterns - Patterns to exclude from dropping
+		 * @returns {Object} Results of drop operation
+		 */
+		const dropAllVectorTables = (db, xLog, specifiedVectorTableName, options = {}) => {
+			const { dryRun = false, skipConfirmation = false, excludePatterns = [] } = options;
+			
 			// CRITICAL SAFETY CHECK: Only drop tables matching our specific vector table name
-			// This prevents accidental deletion of other tables like CEDS tables
 			if (!specifiedVectorTableName) {
 				xLog.error("ERROR: No vector table name specified. Cannot safely drop tables.");
-				return;
+				return { success: false, error: "No table name specified" };
 			}
 			
-			xLog.status(`Will drop all tables matching the pattern: ${specifiedVectorTableName}*`);
+			// Additional safety check - prevent dropping critical system tables
+			const protectedPatterns = ['sqlite_', 'CEDS_', '_CEDS', 'naDataModel', 'users'];
+			const isProtected = protectedPatterns.some(pattern => 
+				specifiedVectorTableName.toLowerCase().includes(pattern.toLowerCase())
+			);
+			
+			if (isProtected) {
+				xLog.error(`ERROR: Cannot drop protected table pattern: ${specifiedVectorTableName}`);
+				return { success: false, error: "Protected table pattern" };
+			}
+			
+			const searchPattern = `${specifiedVectorTableName}%`;
+			xLog.status(`${dryRun ? 'Would drop' : 'Will drop'} all tables matching the pattern: ${searchPattern}`);
 			
 			// Find ALL tables that start with the specified vector table name
-			// This includes the main table and all sqlite-vec related tables (_chunks, _info, _rowids, etc.)
-			const vecTables = db
+			const candidateTables = db
 				.prepare(`SELECT name FROM sqlite_master WHERE name LIKE ? AND type='table'`)
-				.all(`${specifiedVectorTableName}%`);
+				.all(searchPattern);
 			
-			if (vecTables.length === 0) {
-				xLog.status(`No vector tables found matching "${specifiedVectorTableName}*".`);
-				return;
+			// Apply exclusion patterns
+			const filteredTables = candidateTables.filter(({ name }) => {
+				return !excludePatterns.some(pattern => name.includes(pattern));
+			});
+			
+			if (filteredTables.length === 0) {
+				xLog.status(`No vector tables found matching "${searchPattern}".`);
+				return { success: true, droppedCount: 0, tables: [] };
 			}
 			
-			xLog.status(`Found ${vecTables.length} tables to drop:`);
-			vecTables.forEach(({ name }) => {
-				xLog.status(`  - ${name}`);
+			// Get table information before dropping
+			const tableInfo = filteredTables.map(({ name }) => {
+				const count = getTableCount(db, name);
+				const isVector = getVectorTables(db).some(vt => vt.name === name);
+				return { name, count, isVector };
 			});
 			
-			// Drop each matching table
-			let count = 0;
-			vecTables.forEach(({ name }) => {
+			const totalRecords = tableInfo.reduce((sum, table) => sum + table.count, 0);
+			
+			xLog.status(`Found ${filteredTables.length} tables to ${dryRun ? 'analyze' : 'drop'}:`);
+			tableInfo.forEach(({ name, count, isVector }) => {
+				const typeLabel = isVector ? '(vector)' : '(support)';
+				xLog.status(`  - ${name} ${typeLabel}: ${count.toLocaleString()} records`);
+			});
+			
+			if (totalRecords > 0) {
+				xLog.status(`Total records to be ${dryRun ? 'affected' : 'deleted'}: ${totalRecords.toLocaleString()}`);
+			}
+			
+			// Dry run - just return what would happen
+			if (dryRun) {
+				return { 
+					success: true, 
+					dryRun: true, 
+					wouldDropCount: filteredTables.length,
+					tables: tableInfo,
+					totalRecords
+				};
+			}
+			
+			// Safety confirmation for large operations
+			if (!skipConfirmation && (filteredTables.length > 5 || totalRecords > 1000)) {
+				xLog.status('');
+				xLog.status('⚠️  CAUTION: This will permanently delete significant data!');
+				xLog.status('Use { skipConfirmation: true } option to bypass this check.');
+				return { success: false, error: "User confirmation required" };
+			}
+			
+			// Perform the actual dropping
+			const results = {
+				success: true,
+				droppedCount: 0,
+				failedCount: 0,
+				tables: [],
+				errors: []
+			};
+			
+			for (const { name, count } of tableInfo) {
 				try {
-					// Get count before dropping (if possible)
-					let countBefore = 0;
-					try {
-						const countResult = db.prepare(`SELECT COUNT(*) as count FROM "${name}"`).get();
-						countBefore = countResult.count;
-					} catch (e) {
-						// Ignore count errors for system tables
-					}
-					
-					xLog.status(`Dropping table "${name}"${countBefore > 0 ? ` with ${countBefore} records` : ''}...`);
+					xLog.status(`Dropping table "${name}"${count > 0 ? ` with ${count.toLocaleString()} records` : ''}...`);
 					db.exec(`DROP TABLE IF EXISTS "${name}"`);
-					count++;
-					xLog.status(`Successfully dropped vector table: "${name}"`);
+					results.droppedCount++;
+					results.tables.push({ name, status: 'dropped', recordCount: count });
+					xLog.status(`✓ Successfully dropped: "${name}"`);
 				} catch (error) {
-					xLog.error(`Failed to drop table "${name}": ${error.message}`);
-					// Try alternative approach - just clear the data
+					xLog.error(`✗ Failed to drop table "${name}": ${error.message}`);
+					results.failedCount++;
+					results.errors.push({ table: name, error: error.message });
+					
+					// Try alternative approach - clear the data
 					try {
-						xLog.status(`Attempting to clear all data from table "${name}" instead...`);
+						xLog.status(`Attempting to clear data from "${name}" instead...`);
 						db.exec(`DELETE FROM "${name}"`);
-						xLog.status(`Cleared all data from table "${name}" since drop failed`);
+						results.tables.push({ name, status: 'cleared', recordCount: count });
+						xLog.status(`✓ Cleared data from: "${name}"`);
 					} catch (innerError) {
-						xLog.error(`Also failed to clear table "${name}": ${innerError.message}`);
+						xLog.error(`✗ Also failed to clear "${name}": ${innerError.message}`);
+						results.tables.push({ name, status: 'failed', recordCount: count });
+						results.errors.push({ table: name, error: innerError.message });
 					}
 				}
-			});
+			}
 			
-			// Final verification - check for any remaining tables with the pattern
+			// Final verification
 			const remainingTables = db
 				.prepare(`SELECT name FROM sqlite_master WHERE name LIKE ? AND type='table'`)
-				.all(`${specifiedVectorTableName}%`);
-				
+				.all(searchPattern);
+			
 			if (remainingTables.length === 0) {
-				xLog.status(`Successfully removed all vector tables matching "${specifiedVectorTableName}*".`);
+				xLog.status(`✓ Successfully removed all tables matching "${searchPattern}"`);
 			} else {
-				xLog.status(`WARNING: ${remainingTables.length} tables still remain:`);
+				xLog.status(`⚠️  WARNING: ${remainingTables.length} tables still remain:`);
 				remainingTables.forEach(({ name }) => {
 					xLog.status(`  - ${name}`);
 				});
+				results.success = false;
+				results.remainingTables = remainingTables.map(t => t.name);
 			}
+			
+			return results;
 		};
 
-		return { dropAllVectorTables };
+		/**
+		 * Safely drops only production vector tables (excludes _NEW tables)
+		 * @param {Object} db - Database connection
+		 * @param {Object} xLog - Logging object
+		 * @param {string} specifiedVectorTableName - Base name of vector table
+		 * @param {Object} options - Additional options
+		 * @returns {Object} Results of drop operation
+		 */
+		const dropProductionVectorTables = (db, xLog, specifiedVectorTableName, options = {}) => {
+			return dropAllVectorTables(db, xLog, specifiedVectorTableName, {
+				...options,
+				excludePatterns: ['_NEW', ...(options.excludePatterns || [])]
+			});
+		};
+
+		return { dropAllVectorTables, dropProductionVectorTables };
 	};
 
 //END OF moduleFunction() ============================================================
