@@ -40,7 +40,10 @@
       "Bash(./vectorTools.js --dataProfile=sif --showStats)",
       "WebFetch(domain:www.npmjs.com)",
       "Bash(rg:*)",
-      "Bash(timeout 10s vectorTools:*)"
+      "Bash(timeout 10s vectorTools:*)",
+      "Bash(timeout 30 node:*)",
+      "Bash(timeout:*)",
+      "Bash(/usr/bin/sqlite3 /Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/datastore/cedsIds.sqlite3 \".tables\")"
     ],
     "deny": []
   }

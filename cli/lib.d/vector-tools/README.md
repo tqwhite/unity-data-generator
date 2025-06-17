@@ -38,6 +38,15 @@ vectorTools --dataProfile=sif -rebuildDatabase
 vectorTools --dataProfile=ceds -rebuildDatabase
 ```
 
+### Automated Rebuild (No Prompts)
+
+Use `-yesAll` to automatically answer "yes" to all confirmation prompts:
+
+```bash
+vectorTools --dataProfile=sif -rebuildDatabase -yesAll
+vectorTools --dataProfile=ceds -rebuildDatabase -yesAll
+```
+
 ## Query Commands
 
 ### Basic Semantic Search
@@ -90,6 +99,7 @@ vectorTools --dataProfile=sif --queryString="Gun Free Schools Act" --resultCount
 - `--resultCount=N` - Number of results to return (default: 5)
 - `--offset=N` - Starting offset for results
 - `--limit=N` - Limit number of results
+- `-yesAll` - Automatically answer "yes" to all confirmation prompts (useful for automation)
 
 ## Examples
 
