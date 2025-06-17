@@ -1,6 +1,89 @@
 # vectorTools - Semantic Vector Database Management
 
-A command-line tool for managing and querying semantic vector databases using sqlite-vec and OpenAI embeddings.
+A modular command-line tool for managing and querying semantic vector databases using sqlite-vec and OpenAI embeddings.
+
+## Architecture
+
+This tool has been refactored into a modular architecture with six specialized modules:
+
+- **Vector Config Handler** - Configuration management and validation
+- **Vector Database Operations** - Core database operations and utilities  
+- **Drop All Vector Tables** - Safe table deletion with enhanced safety checks
+- **Vector Rebuild Workflow** - Complete database rebuild process
+- **User Interaction Handler** - Command processing and user messaging
+- **Application Initializer** - Application setup and dependency management
+
+## Testing
+
+### Test Suite
+
+The project includes comprehensive tests for all modules. Run tests using npm scripts:
+
+```bash
+# Run all tests
+npm test
+# or
+npm run test:all
+
+# Run specific module tests
+npm run test:config      # Configuration handler tests
+npm run test:database    # Database operations tests  
+npm run test:drop        # Drop tables tests
+npm run test:rebuild     # Rebuild workflow tests
+npm run test:interaction # User interaction tests
+npm run test:init        # Application initializer tests
+
+# Quick smoke tests (core modules only)
+npm run test:quick
+
+# Live integration test
+npm run test:integration
+```
+
+### Test Coverage
+
+- **40+ test scenarios** across all modules
+- **Error handling verification** for all failure modes
+- **Integration testing** with real database
+- **Performance testing** for database operations
+- **Command validation** and conflict detection
+- **User interaction patterns** and messaging
+
+### Development Workflow
+
+```bash
+# During development, run tests frequently
+npm run test:quick
+
+# Before committing changes
+npm test
+
+# Test specific functionality
+npm run test:database && npm run test:interaction
+
+# Verify CLI integration
+npm run test:integration
+```
+
+## Module Structure
+
+```
+lib/
+├── vector-config-handler.js       # Configuration management
+├── vector-database-operations.js  # Database utilities
+├── drop-all-vector-tables.js     # Safe table operations
+├── vector-rebuild-workflow.js    # Complete rebuild process
+├── user-interaction-handler.js   # Command processing
+└── application-initializer.js    # App setup
+
+test/
+├── test-vector-config-handler.js
+├── test-vector-database-operations.js
+├── test-drop-all-vector-tables.js
+├── test-vector-rebuild-workflow.js
+├── test-user-interaction-handler.js
+└── test-application-initializer.js
+```
 
 ## Command Syntax
 
@@ -145,3 +228,54 @@ Found 5 valid matches
 3. [score: 0.312458] 54321 Zero tolerance discipline procedures
 ...
 ```
+
+## Troubleshooting
+
+### Configuration Issues
+
+If you encounter configuration errors, check:
+
+1. **Data profile parameter**: Ensure `--dataProfile=sif` or `--dataProfile=ceds` is specified
+2. **Database path**: Verify the database file exists and is accessible
+3. **OpenAI API key**: Check that your API key is configured correctly
+
+### Database Issues
+
+For database connection or operation issues:
+
+```bash
+# Test database operations
+npm run test:database
+
+# Verify database statistics
+vectorTools --dataProfile=ceds -showStats
+```
+
+### Module Issues
+
+If you suspect issues with specific modules:
+
+```bash
+# Test individual modules
+npm run test:config
+npm run test:interaction
+npm run test:init
+
+# Run full test suite
+npm test
+```
+
+### Performance Issues
+
+The database operations are performance-tested:
+
+```bash
+# Run performance tests
+npm run test:database
+# Look for: "Completed 200 operations in XXXms"
+```
+
+## Version History
+
+- **v2.0.0** - Major refactoring into modular architecture with comprehensive test suite
+- **v1.0.0** - Initial monolithic implementation

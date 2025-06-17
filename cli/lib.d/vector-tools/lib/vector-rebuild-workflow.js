@@ -74,11 +74,8 @@ const moduleFunction = function(
 				});
 			};
 			
-			// Create tasklist for rebuild process
-			const rebuildTaskList = new taskListPlus();
-			
-			// Task 1: Initialize and backup
-			rebuildTaskList.push((args, next) => {
+			// Extracted function: Database backup and source validation
+			const performDatabaseBackup = (args, next) => {
 				xLog.status('=========================================');
 				xLog.status(`${String(dataProfile).toUpperCase()} Vector Database Rebuild`);
 				xLog.status('=========================================');
@@ -116,10 +113,10 @@ const moduleFunction = function(
 					newTableName: `${vectorTableName}_NEW`
 				};
 				next(null, result);
-			});
+			};
 			
-			// Task 2: Generate embeddings
-			rebuildTaskList.push((args, next) => {
+			// Extracted function: Vector embedding generation
+			const generateVectorEmbeddings = (args, next) => {
 				xLog.status('');
 				xLog.status('Step 1: Creating new vector database...');
 				xLog.status('This may take several minutes...');
@@ -143,10 +140,10 @@ const moduleFunction = function(
 					.catch((error) => {
 						next(new Error(`Vector database creation failed: ${error.message}`));
 					});
-			});
+			};
 			
-			// Task 3: Verify new database
-			rebuildTaskList.push((args, next) => {
+			// Extracted function: Database verification with count comparison
+			const verifyNewDatabase = (args, next) => {
 				xLog.status('');
 				xLog.status('Step 2: Verifying new database...');
 				
@@ -175,10 +172,10 @@ const moduleFunction = function(
 					oldCount: oldCount
 				};
 				next(null, result);
-			});
+			};
 			
-			// Task 4: Ask for deployment confirmation
-			rebuildTaskList.push((args, next) => {
+			// Extracted function: User confirmation for deployment
+			const confirmDeployment = (args, next) => {
 				xLog.status('');
 				xLog.status('Step 3: Deploy new database?');
 				xLog.status('This will:');
@@ -198,10 +195,10 @@ const moduleFunction = function(
 					};
 					next(null, result);
 				});
-			});
+			};
 			
-			// Task 5: Deploy new database
-			rebuildTaskList.push((args, next) => {
+			// Extracted function: Complex deployment process
+			const deployNewDatabase = (args, next) => {
 				xLog.status('');
 				xLog.status('Step 4: Deploying new database...');
 				
@@ -251,10 +248,10 @@ const moduleFunction = function(
 				} catch (error) {
 					next(new Error(`Deployment failed: ${error.message}`));
 				}
-			});
+			};
 			
-			// Task 6: Final verification
-			rebuildTaskList.push((args, next) => {
+			// Extracted function: Final verification and completion
+			const performFinalVerification = (args, next) => {
 				xLog.status('');
 				xLog.status('Step 5: Final verification...');
 				
@@ -272,7 +269,28 @@ const moduleFunction = function(
 				xLog.status('=========================================');
 				
 				next(null, args);
-			});
+			};
+			
+			// Create tasklist for rebuild process
+			const rebuildTaskList = new taskListPlus();
+			
+			// Task 1: Initialize and backup
+			rebuildTaskList.push(performDatabaseBackup);
+			
+			// Task 2: Generate embeddings
+			rebuildTaskList.push(generateVectorEmbeddings);
+			
+			// Task 3: Verify new database
+			rebuildTaskList.push(verifyNewDatabase);
+			
+			// Task 4: Ask for deployment confirmation
+			rebuildTaskList.push(confirmDeployment);
+			
+			// Task 5: Deploy new database
+			rebuildTaskList.push(deployNewDatabase);
+			
+			// Task 6: Final verification
+			rebuildTaskList.push(performFinalVerification);
 			
 			// Run the rebuild pipeline
 			pipeRunner(rebuildTaskList.getList(), {}, (err) => {

@@ -1,14 +1,37 @@
 {
   "name": "sif-vector-tools",
-  "version": "1.0.0",
-  "description": "Tools for working with SIF datamodel embedding vectors",
+  "version": "2.0.0",
+  "description": "Modular tools for working with vector embeddings and database operations",
   "main": "vectorTools.js",
   "directories": {
-    "lib": "lib"
+    "lib": "lib",
+    "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test:all",
+    "test:all": "npm run test:config && npm run test:database && npm run test:drop && npm run test:rebuild && npm run test:interaction && npm run test:init",
+    "test:config": "node test/test-vector-config-handler.js",
+    "test:database": "node test/test-vector-database-operations.js",
+    "test:drop": "node test/test-drop-all-vector-tables.js",
+    "test:rebuild": "node test/test-vector-rebuild-workflow.js",
+    "test:interaction": "node test/test-user-interaction-handler.js",
+    "test:init": "node test/test-application-initializer.js",
+    "test:quick": "npm run test:database && npm run test:interaction",
+    "test:integration": "node vectorTools.js --dataProfile=ceds -showStats",
+    "lint": "echo 'No linter configured'",
+    "start": "node vectorTools.js"
   },
+  "keywords": [
+    "vector",
+    "embeddings",
+    "sqlite",
+    "openai",
+    "cli",
+    "database"
+  ],
   "author": "TQ White II",
-  "license": "ISC"
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }

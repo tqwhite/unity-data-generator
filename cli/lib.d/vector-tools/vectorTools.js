@@ -34,6 +34,10 @@ const {
 } = require('./lib/vector-database-operations');
 const vectorRebuildWorkflow = require('./lib/vector-rebuild-workflow')();
 const { executeRebuildWorkflow } = vectorRebuildWorkflow();
+const userInteractionHandler = require('./lib/user-interaction-handler')();
+const { dispatchCommands } = userInteractionHandler();
+const applicationInitializer = require('./lib/application-initializer')();
+const { safeInitializeApplication } = applicationInitializer();
 
 // =============================================================================
 // MODULE IMPORTS
@@ -69,179 +73,58 @@ const moduleFunction =
 		const { xLog, getConfig, rawConfig, commandLineParameters } =
 			process.global;
 		
-		// Get and validate configuration using the new config handler
+		// =====================================================================
+		// MAIN APPLICATION EXECUTION PIPELINE
+		// =====================================================================
+		
+		// 1. Get and validate configuration
 		const config = getProfileConfiguration(moduleName);
 		if (!config.isValid) {
 			return {};
 		}
 		
-		// Extract configuration values
-		const {
-			dataProfile,
-			databaseFilePath,
-			openAiApiKey,
-			sourceTableName,
-			sourcePrivateKeyName,
-			sourceEmbeddableContentName,
-			vectorTableName
-		} = config;
-		
-		const initOpenAi = () => {
-			const OpenAI = require('openai');
-			const openai = new OpenAI({
-				apiKey: openAiApiKey,
-			});
-			return openai;
+		// 2. Prepare modules for application initializer
+		const modules = {
+			generateEmbeddings,
+			getClosestRecords,
+			dropAllVectorTables,
+			dropProductionVectorTables,
+			showDatabaseStats,
+			executeRebuildWorkflow,
+			tableExists,
+			getTableCount,
+			initVectorDatabase,
+			logConfigurationStatus
 		};
-
-		// ================================================================================
-		const openai = initOpenAi();
-
-		// ================================================================================
-
-		// Show configuration status messages
-		logConfigurationStatus(config);
-
-		// Initialize database with error handling
-		let vectorDb;
-		try {
-			vectorDb = initVectorDatabase(
-				databaseFilePath,
-				vectorTableName,
-				xLog,
-			);
-			xLog.verbose('Vector database initialized successfully');
-		} catch (error) {
-			xLog.error(`Failed to initialize vector database: ${error.message}`);
-			xLog.error('Stack trace:', error.stack);
+		
+		// 3. Initialize application components (OpenAI, database, dependencies)
+		const initResult = safeInitializeApplication(config, modules, xLog);
+		if (!initResult.success) {
+			xLog.error(`Application initialization failed: ${initResult.error}`);
 			return {};
 		}
-
-		// Show database stats if requested
-		if (commandLineParameters.switches.showStats) {
-			showDatabaseStats(vectorDb, xLog);
-			return {}; // Exit after showing stats
+		
+		// 4. Extract initialized components
+		const { openai, vectorDb, dependencies } = initResult;
+		
+		// 5. Dispatch and execute commands
+		const commandResult = dispatchCommands(
+			config,
+			vectorDb,
+			openai,
+			xLog,
+			commandLineParameters,
+			dependencies
+		);
+		
+		// 6. Handle execution result
+		if (!commandResult.success) {
+			xLog.error('Command execution failed');
+			return {};
 		}
-
-
-		// Handle -dropTable independently - SAFELY now only drops specified vector table
-		if (commandLineParameters.switches.dropTable) {
-			xLog.status(
-				`Safely dropping ${dataProfile.toUpperCase()} vector table "${vectorTableName}" only...`,
-			);
-			xLog.status(
-				`IMPORTANT: This will NOT affect other profile tables or database tables`,
-			);
-
-
-			try {
-				// Use enhanced drop function with safety checks
-				const dropResult = dropAllVectorTables(vectorDb, xLog, vectorTableName, { 
-					skipConfirmation: true // CLI operation - user already confirmed with -dropTable
-				});
-				
-				if (dropResult.success) {
-					xLog.status(`Drop operation completed: ${dropResult.droppedCount} tables dropped`);
-				} else {
-					xLog.error(`Drop operation failed: ${dropResult.error}`);
-					if (dropResult.errors && dropResult.errors.length > 0) {
-						dropResult.errors.forEach(err => {
-							xLog.error(`  - ${err.table}: ${err.error}`);
-						});
-					}
-				}
-			} catch (error) {
-				xLog.error(`Failed to drop tables: ${error.message}`);
-				xLog.error('Stack trace:', error.stack);
-			}
-
-			// Show the empty state after dropping tables
-			try {
-				xLog.status('Database state after dropping tables:');
-				showDatabaseStats(vectorDb, xLog);
-			} catch (error) {
-				xLog.error(`Failed to show database stats: ${error.message}`);
-			}
-
-			// Only exit if we're not also writing to the database
-			if (!commandLineParameters.switches.writeVectorDatabase) {
-				return {}; // Exit after dropping tables
-			}
-		}
-
-
-
-
-		// Handle -rebuildDatabase - Complete rebuild workflow with backup and verification
-		if (commandLineParameters.switches.rebuildDatabase) {
-			// Prepare configuration object
-			const config = {
-				dataProfile,
-				sourceTableName,
-				sourcePrivateKeyName,
-				sourceEmbeddableContentName,
-				vectorTableName
-			};
-			
-			// Prepare database operations
-			const dbOperations = {
-				tableExists,
-				getTableCount
-			};
-			
-			// Prepare drop operations
-			const dropOperations = {
-				dropProductionVectorTables,
-				dropAllVectorTables
-			};
-			
-			// Execute rebuild workflow
-			executeRebuildWorkflow(
-				config,
-				vectorDb,
-				openai,
-				xLog,
-				generateEmbeddings,
-				dbOperations,
-				dropOperations,
-				commandLineParameters,
-				(err) => {
-					if (err) {
-						xLog.error(`Rebuild failed: ${err.message}`);
-					}
-					// Continue to other operations or exit
-				}
-			);
-			
-			return {}; // Exit after starting the rebuild pipeline
-		}
-
-		if (commandLineParameters.switches.writeVectorDatabase) {
-			generateEmbeddings({
-				openai,
-				vectorDb,
-			}).workingFunction({
-				sourceTableName,
-				vectorTableName,
-				sourcePrivateKeyName,
-				sourceEmbeddableContentName,
-			});
-		}
-
-		if (commandLineParameters.values.queryString) {
-			getClosestRecords({
-				openai,
-				vectorDb,
-			}).workingFunction(
-				{
-					sourceTableName,
-					vectorTableName,
-					sourcePrivateKeyName,
-					sourceEmbeddableContentName,
-					dataProfile, // Pass the dataProfile for strategy selection
-				},
-				commandLineParameters.values.queryString.qtLast(),
-			);
+		
+		if (commandResult.shouldExit) {
+			return {};
 		}
 
 		return {};
