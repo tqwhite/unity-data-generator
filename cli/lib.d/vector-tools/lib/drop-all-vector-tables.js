@@ -146,20 +146,31 @@ const moduleFunction =
 				}
 			}
 			
-			// Final verification
-			const remainingTables = db
+			// Final verification - check for remaining tables (excluding intentionally preserved ones)
+			const allRemainingTables = db
 				.prepare(`SELECT name FROM sqlite_master WHERE name LIKE ? AND type='table'`)
 				.all(searchPattern);
+				
+			// Filter out tables that were intentionally excluded
+			const unexpectedRemaining = allRemainingTables.filter(({ name }) => {
+				return !excludePatterns.some(pattern => name.includes(pattern));
+			});
 			
-			if (remainingTables.length === 0) {
-				xLog.status(`✓ Successfully removed all tables matching "${searchPattern}"`);
+			if (unexpectedRemaining.length === 0) {
+				xLog.status(`✓ Successfully removed all target tables matching "${searchPattern}"`);
+				if (allRemainingTables.length > 0) {
+					xLog.status(`⚠️  WARNING: ${allRemainingTables.length} tables still remain:`);
+					allRemainingTables.forEach(({ name }) => {
+						xLog.status(`  - ${name}`);
+					});
+				}
 			} else {
-				xLog.status(`⚠️  WARNING: ${remainingTables.length} tables still remain:`);
-				remainingTables.forEach(({ name }) => {
+				xLog.status(`⚠️  ERROR: ${unexpectedRemaining.length} unexpected tables still remain:`);
+				unexpectedRemaining.forEach(({ name }) => {
 					xLog.status(`  - ${name}`);
 				});
 				results.success = false;
-				results.remainingTables = remainingTables.map(t => t.name);
+				results.remainingTables = unexpectedRemaining.map(t => t.name);
 			}
 			
 			return results;

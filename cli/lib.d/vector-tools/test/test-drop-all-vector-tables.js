@@ -176,7 +176,77 @@ const runTests = () => {
 		console.log('BACKUP table preserved:', backupTableExists ? '✅ Yes' : '❌ No');
 		console.log();
 
-		console.log('🎉 All drop operations tests completed!\n');
+		// Integration test with real rebuild scenario (reproduces user's exact issue)
+		console.log('Integration Test: Real rebuild scenario');
+		console.log('=======================================');
+		
+		try {
+			// Create exact scenario from user's rebuild: production tables + NEW tables
+			testDb.exec(`CREATE TABLE cedsElementVectors (id INTEGER, data TEXT)`);
+			testDb.exec(`CREATE TABLE cedsElementVectors_info (key TEXT, value TEXT)`);
+			testDb.exec(`CREATE TABLE cedsElementVectors_chunks (chunk_id INTEGER)`);
+			testDb.exec(`CREATE TABLE cedsElementVectors_rowids (rowid INTEGER)`);
+			testDb.exec(`CREATE TABLE cedsElementVectors_vector_chunks00 (data BLOB)`);
+			
+			// Create NEW tables (should be preserved during production drop)
+			testDb.exec(`CREATE TABLE cedsElementVectors_NEW (id INTEGER, data TEXT)`);
+			testDb.exec(`CREATE TABLE cedsElementVectors_NEW_info (key TEXT, value TEXT)`);
+			testDb.exec(`CREATE TABLE cedsElementVectors_NEW_chunks (chunk_id INTEGER)`);
+			testDb.exec(`CREATE TABLE cedsElementVectors_NEW_rowids (rowid INTEGER)`);
+			testDb.exec(`CREATE TABLE cedsElementVectors_NEW_vector_chunks00 (data BLOB)`);
+			
+			// Insert test data to match user's scenario
+			const insertStmt = testDb.prepare(`INSERT INTO cedsElementVectors DEFAULT VALUES`);
+			for (let i = 0; i < 1905; i++) {
+				insertStmt.run();
+			}
+			
+			testDb.exec(`INSERT INTO cedsElementVectors_info VALUES ('key1', 'value1'), ('key2', 'value2'), ('key3', 'value3'), ('key4', 'value4')`);
+			testDb.exec(`INSERT INTO cedsElementVectors_chunks VALUES (1), (2)`);
+			
+			console.log('✅ Created exact rebuild scenario: 5 production + 5 NEW tables');
+			
+			// Test dropProductionVectorTables exactly as used in rebuild workflow
+			const rebuildDropResult = dropProductionVectorTables(testDb, mockXLog, 'cedsElementVectors', { 
+				skipConfirmation: true // Internal rebuild operation
+			});
+			
+			console.log('✅ Rebuild drop result:', { 
+				success: rebuildDropResult.success, 
+				droppedCount: rebuildDropResult.droppedCount,
+				error: rebuildDropResult.error || 'None'
+			});
+			
+			// Verify exact behavior: production gone, NEW preserved
+			const finalTables = testDb.prepare(`SELECT name FROM sqlite_master WHERE name LIKE 'cedsElementVectors%' AND type='table'`).all();
+			const finalNames = finalTables.map(t => t.name);
+			
+			const productionGone = finalNames.filter(name => !name.includes('_NEW'));
+			const newPreserved = finalNames.filter(name => name.includes('_NEW'));
+			
+			console.log('✅ Production tables removed:', productionGone.length === 0 ? 'Yes' : `No (${productionGone.length} remain)`);
+			console.log('✅ NEW tables preserved:', newPreserved.length === 5 ? 'Yes (all 5)' : `No (${newPreserved.length} remain)`);
+			console.log('✅ Operation success:', rebuildDropResult.success ? 'Yes' : 'No');
+			
+			// This is the critical test - rebuild should succeed even with NEW tables remaining
+			const integrationPassed = rebuildDropResult.success && productionGone.length === 0 && newPreserved.length === 5;
+			console.log('✅ Integration test:', integrationPassed ? 'PASSED ✅' : 'FAILED ❌');
+			
+			if (!integrationPassed) {
+				console.log('❌ This reproduces the user\'s exact failure scenario!');
+				console.log('❌ Expected: success=true, 0 production tables, 5 NEW tables');
+				console.log('❌ Actual:', { 
+					success: rebuildDropResult.success, 
+					productionCount: productionGone.length, 
+					newCount: newPreserved.length 
+				});
+			}
+			
+		} catch (error) {
+			console.log('❌ Integration test failed:', error.message);
+		}
+
+		console.log('\n🎉 All drop operations tests completed!\n');
 
 	} catch (error) {
 		console.log('❌ Test suite failed:', error.message);

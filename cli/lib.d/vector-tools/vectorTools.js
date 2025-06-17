@@ -169,8 +169,7 @@ const moduleFunction =
 
 
 
-		// Handle -rebuildDatabase - Complete rebuild workflow with backup and verification
-		if (commandLineParameters.switches.rebuildDatabase) {
+		const rebuildProcessActual = ({ mainConfigName }) => () => {
 			const fs = require('fs');
 			const path = require('path');
 			const { execSync } = require('child_process');
@@ -335,7 +334,8 @@ const moduleFunction =
 						});
 						
 						if (!dropResult.success) {
-							throw new Error(`Failed to drop production tables: ${dropResult.error}`);
+							const errorMsg = dropResult.error || 'Unknown error during table drop operation';
+							throw new Error(`Failed to drop production tables: ${errorMsg}`);
 						}
 						
 						xLog.status(`Successfully dropped ${dropResult.droppedCount} production tables`);
@@ -402,6 +402,13 @@ const moduleFunction =
 			});
 			
 			return {}; // Exit after starting the rebuild pipeline
+		};
+
+		const rebuildProcess = rebuildProcessActual({ mainConfigName: 'vectorTools' });
+
+		// Handle -rebuildDatabase - Complete rebuild workflow with backup and verification
+		if (commandLineParameters.switches.rebuildDatabase) {
+			rebuildProcess();
 		}
 
 		if (commandLineParameters.switches.writeVectorDatabase) {
