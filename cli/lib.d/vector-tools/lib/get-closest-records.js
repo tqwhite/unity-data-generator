@@ -141,24 +141,28 @@ const moduleFunction =
 			}
 			
 			// Format output dynamically based on the data profile fields
-			xLog.status(`\n\nFound ${validAnswers.length} valid matches`);
-			xLog.result(validAnswers.map((item, index) => {
-				const distance = item.distance.toFixed(6);
-				const refId = item.record[sourcePrivateKeyName] || '';
-				
-				// Build description from the embeddable content fields
-				let description = '';
-				if (Array.isArray(sourceEmbeddableContentName)) {
-					description = sourceEmbeddableContentName
-						.map(field => item.record[field] || '')
-						.filter(value => value)
-						.join(' | ');
-				} else {
-					description = item.record[sourceEmbeddableContentName] || '';
-				}
-				
-				return `${index+1}. [score: ${distance}] ${refId} ${description}`;
-			}).join('\n'));
+			if (commandLineParameters.switches.json) {
+				xLog.result(JSON.stringify(validAnswers, '', '\t'));
+			} else {
+				xLog.status(`\n\nFound ${validAnswers.length} valid matches`);
+				xLog.result(validAnswers.map((item, index) => {
+					const distance = item.distance.toFixed(6);
+					const refId = item.record[sourcePrivateKeyName] || '';
+					
+					// Build description from the embeddable content fields
+					let description = '';
+					if (Array.isArray(sourceEmbeddableContentName)) {
+						description = sourceEmbeddableContentName
+							.map(field => item.record[field] || '')
+							.filter(value => value)
+							.join(' | ');
+					} else {
+						description = item.record[sourceEmbeddableContentName] || '';
+					}
+					
+					return `${index+1}. [score: ${distance}] ${refId} ${description}`;
+				}).join('\n'));
+			}
 		};
 		
 		return { workingFunction };

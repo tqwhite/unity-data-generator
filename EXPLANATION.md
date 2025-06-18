@@ -59,7 +59,8 @@ A toolchain designed to:
                       |          cedsIds.sqlite3     |
                       |     (Central Database)       |
                       |                              |
-         sifVectorTools                   cedsVectorTools
+                     vectorTools
+                  (--dataProfile=sif)         (--dataProfile=ceds)
                       |                              |
                       v                              v
            +----------------------+        +-----------------------+
@@ -104,13 +105,12 @@ A toolchain designed to:
 
 ### 4.2. CLI Tools
 
-| Tool                 | Path                              | Input Source     | Output Target        | Purpose                                     |
-| -------------------- | --------------------------------- | ---------------- | -------------------- | ------------------------------------------- |
-| Spreadsheet Tool     | `cli/lib.d/spreadsheetTool/`      | Excel files      | `naDataModel`        | Load Unity/SIF specifications into database |
-| CEDS Vector Tools    | `cli/lib.d/ceds-vector-tools/`    | `_CEDSElements`  | `cedsElementVectors` | Embed CEDS definitions for semantic search  |
-| SIF Vector Tools     | `cli/lib.d/sif-vector-tools/`     | `naDataModel`    | `sifElementVectors`  | Embed SIF/Unity specs for semantic search   |
-| Unity CEDS Match     | `cli/lib.d/unity-ceds-match/`     | vectors & tables | `unityCedsMatches`   | Find and store best CEDS–SIF mappings       |
-| Unity Data Generator | `cli/lib.d/unity-data-generator/` | Excel specs      | XML files            | Generate sample XML via AI conversation     |
+| Tool                 | Path                              | Input Source                     | Output Target                               | Purpose                                                               |
+| -------------------- | --------------------------------- | -------------------------------- | ------------------------------------------- | --------------------------------------------------------------------- |
+| Spreadsheet Tool     | `cli/lib.d/spreadsheetTool/`      | Excel files                      | `naDataModel`                               | Load Unity/SIF specifications into database                           |
+| Vector Tools         | `cli/lib.d/vector-tools/`         | `_CEDSElements` or `naDataModel` | `cedsElementVectors` or `sifElementVectors` | Unified tool for embedding both CEDS and SIF data for semantic search |
+| Unity CEDS Match     | `cli/lib.d/unity-ceds-match/`     | vectors & tables                 | `unityCedsMatches`                          | Find and store best CEDS–SIF mappings                                 |
+| Unity Data Generator | `cli/lib.d/unity-data-generator/` | Excel specs                      | XML files                                   | Generate sample XML via AI conversation                               |
 
 ### 4.3. AI Framework Integration
 
@@ -126,10 +126,10 @@ A toolchain designed to:
 
 1. **Loading CEDS**: 
    - Manual import of CEDS XML/CSV files → `_CEDSElements` table (1,905 records)
-   - Run `cedsVectorTools -writeVectorDatabase` → generates embeddings → `cedsElementVectors` table
+   - Run `vectorTools --dataProfile=ceds -rebuildDatabase` → generates embeddings → `cedsElementVectors` table
 2. **Loading SIF**: 
    - Run `spreadsheetTool -loadDatabase ImplementationSpecification.xlsx` → `naDataModel` table (15,620 records)
-   - Run `sifVectorTools -writeVectorDatabase` → generates embeddings → `sifElementVectors` table
+   - Run `vectorTools --dataProfile=sif -rebuildDatabase` → generates embeddings → `sifElementVectors` table
 
 ### 5.1.1. CEDS Ontology Data Loading Process
 
@@ -162,7 +162,9 @@ The CEDS Browse capability is powered by a comprehensive ontology database that 
 **Step 2: Database Population**
 
 - **Tool**: `cli/lib.d/db-sql-util/dbSqlUtil.js`
+
 - **Configuration**: `configs/instanceSpecific/qbook/dbSqlUtil.ini`
+
 - **Commands**:
   
   ```bash
@@ -271,8 +273,8 @@ Configuration `.ini` files allow changing AI providers, chunk sizes, and pipelin
 spreadsheetTool -loadDatabase assets/ImplementationSpecification.xlsx
 
 # 2. Generate vector embeddings (takes ~15 minutes for 15,620 records)
-sifVectorTools -writeVectorDatabase
-cedsVectorTools -writeVectorDatabase
+vectorTools --dataProfile=sif -rebuildDatabase
+vectorTools --dataProfile=ceds -rebuildDatabase
 
 # 3. Process all StudentPersonal elements for CEDS matching
 unityCedsMatch StudentPersonals -loadDatabase
@@ -281,7 +283,7 @@ unityCedsMatch StudentPersonals -loadDatabase
 unityDataGenerator StudentPersonals
 
 # 5. Check database statistics
-sifVectorTools -showStats
+vectorTools --dataProfile=sif -showStats
 ```
 
 **Result**: 242 StudentPersonal elements mapped to CEDS, with AI-suggested matches stored for web review.
@@ -304,8 +306,8 @@ sifVectorTools -showStats
 
 3. **Vector Tools**: 
    
-   - Clone and modify existing vector tools for new standard
-   - Configure embedding fields and processing rules
+   - Add new data profile configuration to `vectorTools` for the new standard
+   - Configure embedding fields and processing rules in the data profile settings
 
 4. **Integration**: 
    
@@ -345,15 +347,15 @@ sifVectorTools -showStats
 
 ```bash
 # Check database health and table counts
-sifVectorTools -showStats
-cedsVectorTools --help
+vectorTools --dataProfile=sif -showStats
+vectorTools --dataProfile=ceds -showStats
 
 # Clean up old backups
 spreadsheetTool -purgeBackupDbTables
 
 # Regenerate vectors after data changes
-sifVectorTools -dropTable -writeVectorDatabase
-cedsVectorTools -writeVectorDatabase
+vectorTools --dataProfile=sif -rebuildDatabase
+vectorTools --dataProfile=ceds -rebuildDatabase
 
 # Process new Unity object types
 spreadsheetTool -list assets/ImplementationSpecification.xlsx
@@ -372,7 +374,7 @@ unityCedsMatch NewObjectType -loadDatabase
 1. **"No such module: vec0" error**: Install `sqlite-vec` extension or check SQLite version
 2. **OpenAI API rate limits**: Configure delays in AI framework `.ini` files
 3. **Large spreadsheet timeouts**: Process in batches using `--limit` and `--offset` parameters
-4. **Vector search returning no results**: Verify embeddings exist with `-showStats`
+4. **Vector search returning no results**: Verify embeddings exist with `vectorTools --dataProfile=<profile> -showStats`
 
 ---
 

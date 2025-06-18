@@ -26,30 +26,11 @@ const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	);
 const applicationBasePath = findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
 
-// Note: commandLineParameters will be set by qtools-ai-framework below
-const generateEmbeddings = require('./lib/generate-embeddings');
-const getClosestRecords = require('./lib/get-closest-records');
-const { dropAllVectorTables, dropProductionVectorTables } = require('./lib/drop-all-vector-tables');
-const { showDatabaseStats } = require('./lib/show-database-stats');
-const { getProfileConfiguration, logConfigurationStatus } = require('./lib/vector-config-handler');
-const { 
-	initVectorDatabase, 
-	getTableCount, 
-	tableExists 
-} = require('./lib/vector-database-operations');
-const vectorRebuildWorkflow = require('./lib/vector-rebuild-workflow')();
-const { executeRebuildWorkflow } = vectorRebuildWorkflow();
-const userInteractionHandler = require('./lib/user-interaction-handler')();
-const { dispatchCommands } = userInteractionHandler();
-const applicationInitializer = require('./lib/application-initializer')();
-const { safeInitializeApplication } = applicationInitializer();
-
 // =====================================================================
-// MODULE IMPORTS
+// INITIALIZE QTOOLS-AI-FRAMEWORK FIRST
 // =====================================================================
 
-//HACKERY: from some reason, putting require('generate-embeddings') AFTER this causes sqlite to screw up
-
+// CRITICAL: This must happen before requiring any modules that access process.global
 // process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
 const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName: moduleName,
@@ -68,8 +49,32 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'--resultCount',
 		'--targetTableName',
 		'--dataProfile',
+		'-json'
 	],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
+
+// =====================================================================
+// MODULE IMPORTS (AFTER JINA INITIALIZATION)
+// =====================================================================
+
+//HACKERY: from some reason, putting require('generate-embeddings') AFTER this causes sqlite to screw up
+// Note: commandLineParameters will be set by qtools-ai-framework above
+const generateEmbeddings = require('./lib/generate-embeddings');
+const getClosestRecords = require('./lib/get-closest-records');
+const { dropAllVectorTables, dropProductionVectorTables } = require('./lib/drop-all-vector-tables');
+const { showDatabaseStats } = require('./lib/show-database-stats');
+const vectorConfigHandler = require('./lib/vector-config-handler');
+const { 
+	initVectorDatabase, 
+	getTableCount, 
+	tableExists 
+} = require('./lib/vector-database-operations');
+const vectorRebuildWorkflow = require('./lib/vector-rebuild-workflow')();
+const { executeRebuildWorkflow } = vectorRebuildWorkflow();
+const userInteractionHandler = require('./lib/user-interaction-handler')();
+const { dispatchCommands } = userInteractionHandler();
+const applicationInitializer = require('./lib/application-initializer')();
+const { safeInitializeApplication } = applicationInitializer();
 
 
 // ---------------------------------------------------------------------
@@ -88,6 +93,7 @@ const moduleFunction =
 		// ---------------------------------------------------------------------
 		// 1. Get and validate configuration
 		
+		const { getProfileConfiguration, logConfigurationStatus } = vectorConfigHandler({});
 		const config = getProfileConfiguration(moduleName);
 		if (!config.isValid) {
 			return {};

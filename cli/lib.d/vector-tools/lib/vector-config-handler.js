@@ -32,7 +32,18 @@ const moduleFunction =
 		// getProfileConfiguration - validates and extracts data profile configuration
 		
 		const getProfileConfiguration = (configModuleName) => {
-			const { xLog, getConfig, rawConfig, commandLineParameters } = process.global;
+			// Access directly instead of destructuring
+			const xLog = process.global.xLog;
+			const getConfig = process.global.getConfig;
+			const rawConfig = process.global.rawConfig;
+			const commandLineParameters = process.global.commandLineParameters;
+			
+			// Check if initialization is complete
+			if (!getConfig) {
+				console.error('Error: qtools-ai-framework not properly initialized. getConfig is not available.');
+				return { isValid: false };
+			}
+			
 			const config = getConfig(configModuleName);
 			const { databaseFilePath, openAiApiKey, defaultTargetTableName } = config;
 			
@@ -123,4 +134,4 @@ const moduleFunction =
 
 //END OF moduleFunction() ============================================================
 
-module.exports = moduleFunction({ moduleName })({});
+module.exports = moduleFunction({ moduleName });

@@ -17,7 +17,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	// INITIALIZATION
 
 	const { xLog, getConfig, rawConfig, commandLineParameters } = process.global;
-	const { cedsVectorToolsFilePath } = getConfig(moduleName); //moduleName is closure
+	const { vectorToolsFilePath } = getConfig(moduleName); //moduleName is closure
 
 	const { sqlDb, mapper, dataMapping } = passThroughParameters;
 	const escapeShellArg = (str) => {
@@ -52,7 +52,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 
 			const queryString = xReq.query.queryString;
 			const shellCommand = escapeShellArg(
-				`${cedsVectorToolsFilePath} -json --queryString='${apostropheEscape(queryString)}'`,
+				`${vectorToolsFilePath} --dataProfile=ceds -json --queryString='${apostropheEscape(queryString)}'`,
 			);
 
 			xLog.status(`shellCommand: ${shellCommand}`);

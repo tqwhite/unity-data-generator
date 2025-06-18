@@ -53,7 +53,7 @@ const moduleFunction = function (args = {}) {
 			callback('', { suggestionList });
 		};
 
-		const shellString = `cedsVectorTools --queryString='${apostropheEscape(elementDefinition.Description)} ${apostropheEscape(elementDefinition.XPath)}'`;
+		const shellString = `vectorTools --dataProfile=ceds --queryString='${apostropheEscape(elementDefinition.Description)} ${apostropheEscape(elementDefinition.XPath)}'`;
 
 
 		exec(shellString, localCallback);

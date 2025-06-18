@@ -43,7 +43,16 @@
       "Bash(timeout 10s vectorTools:*)",
       "Bash(timeout 30 node:*)",
       "Bash(timeout:*)",
-      "Bash(/usr/bin/sqlite3 /Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/datastore/cedsIds.sqlite3 \".tables\")"
+      "Bash(/usr/bin/sqlite3 /Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/datastore/cedsIds.sqlite3 \".tables\")",
+      "Bash(npm run test:*)",
+      "Bash(npm run:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(setbadge \"Claude UDG\")",
+      "Bash(osascript:*)",
+      "Bash(./vectorTools.js --dataProfile=ceds --queryString=\"An indication of whether the school or local education agency LEA\" --resultCount=3)",
+      "Bash(unityCedsMatch:*)",
+      "Bash(cedsVectorTools:*)"
     ],
     "deny": []
   }
