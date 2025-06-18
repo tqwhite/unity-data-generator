@@ -111,7 +111,12 @@ const cleanupMockBackupScript = (scriptPath) => {
     }
 };
 
-// Test 1: Module initialization
+// =====================================================================
+// BASIC FUNCTIONALITY TESTS
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// 1. Module initialization
 runTest('Module initialization', () => {
     const workflow = vectorRebuildWorkflow.executeRebuildWorkflow;
     if (typeof workflow !== 'function') {
@@ -121,7 +126,8 @@ runTest('Module initialization', () => {
     console.log('   ✅ Module exports executeRebuildWorkflow function');
 });
 
-// Test 2: Workflow with -yesAll flag (automated)
+// ---------------------------------------------------------------------
+// 2. Workflow with -yesAll flag (automated)
 runTest('Automated workflow with -yesAll flag', (done) => {
     const mockCommandLineParameters = {
         switches: { yesAll: true }
@@ -160,7 +166,12 @@ runTest('Automated workflow with -yesAll flag', (done) => {
     }, 100);
 });
 
-// Test 3: Error handling - missing backup script
+// =====================================================================
+// ERROR HANDLING TESTS
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// 1. Error handling - missing backup script
 runTest('Error handling - missing backup script', (done) => {
     const mockCommandLineParameters = {
         switches: { yesAll: true }
@@ -190,7 +201,8 @@ runTest('Error handling - missing backup script', (done) => {
     }, 100);
 });
 
-// Test 4: Error handling - source table doesn't exist
+// ---------------------------------------------------------------------
+// 2. Error handling - source table doesn't exist
 runTest('Error handling - source table missing', (done) => {
     const mockCommandLineParameters = {
         switches: { yesAll: true }
@@ -232,7 +244,8 @@ runTest('Error handling - source table missing', (done) => {
     }, 100);
 });
 
-// Test 5: Error handling - empty source table
+// ---------------------------------------------------------------------
+// 3. Error handling - empty source table
 runTest('Error handling - empty source table', (done) => {
     const mockCommandLineParameters = {
         switches: { yesAll: true }
@@ -274,7 +287,8 @@ runTest('Error handling - empty source table', (done) => {
     }, 100);
 });
 
-// Test 6: Error handling - embedding generation failure
+// ---------------------------------------------------------------------
+// 4. Error handling - embedding generation failure
 runTest('Error handling - embedding generation failure', (done) => {
     const mockCommandLineParameters = {
         switches: { yesAll: true }
@@ -312,7 +326,8 @@ runTest('Error handling - embedding generation failure', (done) => {
     }, 100);
 });
 
-// Test 7: Error handling - new table is empty
+// ---------------------------------------------------------------------
+// 5. Error handling - new table is empty
 runTest('Error handling - new table empty after generation', (done) => {
     const mockCommandLineParameters = {
         switches: { yesAll: true }
@@ -354,7 +369,8 @@ runTest('Error handling - new table empty after generation', (done) => {
     }, 100);
 });
 
-// Test 8: Warning for significantly smaller new table
+// ---------------------------------------------------------------------
+// 6. Warning for significantly smaller new table
 runTest('Warning detection for smaller new table', (done) => {
     const mockCommandLineParameters = {
         switches: { yesAll: true }
@@ -400,7 +416,8 @@ runTest('Warning detection for smaller new table', (done) => {
     }, 100);
 });
 
-// Test 9: Error handling - drop operation failure
+// ---------------------------------------------------------------------
+// 7. Error handling - drop operation failure
 runTest('Error handling - drop operation failure', (done) => {
     const mockCommandLineParameters = {
         switches: { yesAll: true }
@@ -441,7 +458,8 @@ runTest('Error handling - drop operation failure', (done) => {
     }, 100);
 });
 
-// Test 10: Cleanup warning handling
+// ---------------------------------------------------------------------
+// 8. Cleanup warning handling
 runTest('Cleanup warning handling', (done) => {
     const mockCommandLineParameters = {
         switches: { yesAll: true }
@@ -487,7 +505,12 @@ runTest('Cleanup warning handling', (done) => {
     }, 100);
 });
 
-// Wait for async tests to complete, then show summary
+// =====================================================================
+// TEST SUMMARY
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// 1. Wait for async tests to complete, then show summary
 setTimeout(() => {
     console.log('\n\n============================================================');
     console.log('                    TEST SUMMARY');

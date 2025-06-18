@@ -8,7 +8,12 @@ const qt = require('qtools-functional-library');
 const os = require('os');
 const path = require('path');
 
-//START OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE FUNCTION
+// =====================================================================
+// ---------------------------------------------------------------------
+// moduleFunction - provides complete rebuild workflow functionality
+
 const moduleFunction = function(
 	{
 		globalIdentifier = 'vector-rebuild-workflow',
@@ -19,18 +24,9 @@ const moduleFunction = function(
 		// Parameters will be passed when calling the workflow
 	} = {}) => {
 		
-		/**
-		 * Complete rebuild workflow with backup and verification
-		 * @param {Object} config - Configuration object with profile settings
-		 * @param {Object} vectorDb - Database connection
-		 * @param {Object} openai - OpenAI client
-		 * @param {Object} xLog - Logging object
-		 * @param {Object} generateEmbeddings - Embedding generation module
-		 * @param {Object} dbOperations - Database operations (tableExists, getTableCount)
-		 * @param {Object} dropOperations - Drop operations (dropProductionVectorTables, dropAllVectorTables)
-		 * @param {Object} commandLineParameters - Command line parameters object
-		 * @param {function} callback - Completion callback
-		 */
+		// ---------------------------------------------------------------------
+		// executeRebuildWorkflow - complete rebuild workflow with backup and verification
+		
 		const executeRebuildWorkflow = (config, vectorDb, openai, xLog, generateEmbeddings, dbOperations, dropOperations, commandLineParameters, callback) => {
 			const fs = require('fs');
 			const path = require('path');
@@ -56,7 +52,9 @@ const moduleFunction = function(
 			// Extract drop operations
 			const { dropProductionVectorTables, dropAllVectorTables } = dropOperations;
 	
-			// Helper function to prompt user using callback style
+			// ---------------------------------------------------------------------
+			// askUser - prompts user for input using callback style
+			
 			const askUser = (question, callback) => {
 				// Check for -yesAll flag to automatically answer "yes"
 				if (commandLineParameters.switches.yesAll) {
@@ -74,7 +72,9 @@ const moduleFunction = function(
 				});
 			};
 			
-			// Extracted function: Database backup and source validation
+			// ---------------------------------------------------------------------
+			// performDatabaseBackup - performs database backup and source validation
+			
 			const performDatabaseBackup = (args, next) => {
 				xLog.status('=========================================');
 				xLog.status(`${String(dataProfile).toUpperCase()} Vector Database Rebuild`);
@@ -115,7 +115,9 @@ const moduleFunction = function(
 				next(null, result);
 			};
 			
-			// Extracted function: Vector embedding generation
+			// ---------------------------------------------------------------------
+			// generateVectorEmbeddings - generates vector embeddings for new table
+			
 			const generateVectorEmbeddings = (args, next) => {
 				xLog.status('');
 				xLog.status('Step 1: Creating new vector database...');
@@ -142,7 +144,9 @@ const moduleFunction = function(
 					});
 			};
 			
-			// Extracted function: Database verification with count comparison
+			// ---------------------------------------------------------------------
+			// verifyNewDatabase - verifies new database with count comparison
+			
 			const verifyNewDatabase = (args, next) => {
 				xLog.status('');
 				xLog.status('Step 2: Verifying new database...');
@@ -174,7 +178,9 @@ const moduleFunction = function(
 				next(null, result);
 			};
 			
-			// Extracted function: User confirmation for deployment
+			// ---------------------------------------------------------------------
+			// confirmDeployment - prompts user for deployment confirmation
+			
 			const confirmDeployment = (args, next) => {
 				xLog.status('');
 				xLog.status('Step 3: Deploy new database?');
@@ -197,7 +203,9 @@ const moduleFunction = function(
 				});
 			};
 			
-			// Extracted function: Complex deployment process
+			// ---------------------------------------------------------------------
+			// deployNewDatabase - deploys new database with table copying
+			
 			const deployNewDatabase = (args, next) => {
 				xLog.status('');
 				xLog.status('Step 4: Deploying new database...');
@@ -250,7 +258,9 @@ const moduleFunction = function(
 				}
 			};
 			
-			// Extracted function: Final verification and completion
+			// ---------------------------------------------------------------------
+			// performFinalVerification - performs final verification and completion
+			
 			const performFinalVerification = (args, next) => {
 				xLog.status('');
 				xLog.status('Step 5: Final verification...');
@@ -270,6 +280,9 @@ const moduleFunction = function(
 				
 				next(null, args);
 			};
+			
+			// ---------------------------------------------------------------------
+			// 3. Workflow execution pipeline
 			
 			// Create tasklist for rebuild process
 			const rebuildTaskList = new taskListPlus();
@@ -306,6 +319,8 @@ const moduleFunction = function(
 	};
 };
 
-//END OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE EXPORTS
+// =====================================================================
 
 module.exports = moduleFunction;

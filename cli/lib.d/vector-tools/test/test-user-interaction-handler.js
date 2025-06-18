@@ -96,7 +96,12 @@ const mockConfig = {
 const mockVectorDb = {};
 const mockOpenai = {};
 
-// Test 1: Module initialization
+// =====================================================================
+// BASIC FUNCTIONALITY TESTS
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// 1. Module initialization
 runTest('Module initialization', () => {
     const functions = userInteractionHandler;
     const expectedFunctions = [
@@ -115,7 +120,8 @@ runTest('Module initialization', () => {
     console.log('   ✅ All expected functions are available');
 });
 
-// Test 2: User messages functionality
+// ---------------------------------------------------------------------
+// 2. User messages functionality
 runTest('User messages functionality', () => {
     const xLog = createMockXLog();
     const messages = userInteractionHandler.createUserMessages(xLog);
@@ -140,7 +146,8 @@ runTest('User messages functionality', () => {
     console.log(`   ✅ Generated ${logMessages.length} user messages correctly`);
 });
 
-// Test 3: Error handler functionality
+// ---------------------------------------------------------------------
+// 3. Error handler functionality
 runTest('Error handler functionality', () => {
     const xLog = createMockXLog();
     const errorHandler = userInteractionHandler.createErrorHandler(xLog);
@@ -164,7 +171,8 @@ runTest('Error handler functionality', () => {
     console.log(`   ✅ Generated ${errorMessages.length} error messages correctly`);
 });
 
-// Test 4: Command validation
+// ---------------------------------------------------------------------
+// 4. Command validation
 runTest('Command validation', () => {
     const xLog = createMockXLog();
     
@@ -193,7 +201,12 @@ runTest('Command validation', () => {
     console.log('   ✅ Command validation working correctly');
 });
 
-// Test 5: Show stats command
+// =====================================================================
+// COMMAND HANDLER TESTS
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// 1. Show stats command
 runTest('Show stats command handler', () => {
     const xLog = createMockXLog();
     const dependencies = createMockDependencies();
@@ -211,7 +224,8 @@ runTest('Show stats command handler', () => {
     console.log('   ✅ Show stats command handled correctly');
 });
 
-// Test 6: Drop table command
+// ---------------------------------------------------------------------
+// 2. Drop table command
 runTest('Drop table command handler', () => {
     const xLog = createMockXLog();
     const dependencies = createMockDependencies();
@@ -235,7 +249,8 @@ runTest('Drop table command handler', () => {
     console.log('   ✅ Drop table command handled correctly');
 });
 
-// Test 7: Write vector database command
+// ---------------------------------------------------------------------
+// 3. Write vector database command
 runTest('Write vector database command handler', () => {
     const xLog = createMockXLog();
     const dependencies = createMockDependencies();
@@ -255,7 +270,8 @@ runTest('Write vector database command handler', () => {
     console.log('   ✅ Write vector database command handled correctly');
 });
 
-// Test 8: Query string command
+// ---------------------------------------------------------------------
+// 4. Query string command
 runTest('Query string command handler', () => {
     const xLog = createMockXLog();
     const dependencies = createMockDependencies();
@@ -283,7 +299,12 @@ runTest('Query string command handler', () => {
     console.log('   ✅ Query string command handled correctly');
 });
 
-// Test 9: Command dispatcher - show stats
+// =====================================================================
+// COMMAND DISPATCHER TESTS
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// 1. Command dispatcher - show stats
 runTest('Command dispatcher - show stats', () => {
     const xLog = createMockXLog();
     const dependencies = createMockDependencies();
@@ -308,7 +329,8 @@ runTest('Command dispatcher - show stats', () => {
     console.log('   ✅ Command dispatcher handled show stats correctly');
 });
 
-// Test 10: Command dispatcher - no commands
+// ---------------------------------------------------------------------
+// 2. Command dispatcher - no commands
 runTest('Command dispatcher - no commands', () => {
     const xLog = createMockXLog();
     const dependencies = createMockDependencies();
@@ -339,7 +361,12 @@ runTest('Command dispatcher - no commands', () => {
     console.log('   ✅ Command dispatcher handled no commands correctly');
 });
 
-// Wait for async operations to complete, then show summary
+// =====================================================================
+// TEST SUMMARY
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// 1. Wait for async operations to complete, then show summary
 setTimeout(() => {
     console.log('\n\n============================================================');
     console.log('                    TEST SUMMARY');

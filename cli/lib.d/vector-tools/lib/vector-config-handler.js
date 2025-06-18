@@ -7,8 +7,13 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 
-// --------------------------------------------------------------------------------
-// FIND PROJECT ROOT
+// =====================================================================
+// PROJECT ROOT CONFIGURATION
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// findProjectRoot - locates the project root directory by searching for rootFolderName
+
 const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	__dirname.replace(
 		new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
@@ -16,16 +21,16 @@ const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	);
 const applicationBasePath = findProjectRoot();
 
-//START OF moduleFunction() ============================================================
+// ---------------------------------------------------------------------
+// moduleFunction - provides configuration handling and validation functionality
+
 const moduleFunction =
 	({ moduleName } = {}) =>
 	({ unused }) => {
 		
-		/**
-		 * Validates and extracts data profile configuration
-		 * @param {string} configModuleName - The module name for config lookup
-		 * @returns {Object} Configuration object with all profile settings
-		 */
+		// ---------------------------------------------------------------------
+		// getProfileConfiguration - validates and extracts data profile configuration
+		
 		const getProfileConfiguration = (configModuleName) => {
 			const { xLog, getConfig, rawConfig, commandLineParameters } = process.global;
 			const config = getConfig(configModuleName);
@@ -89,10 +94,9 @@ const moduleFunction =
 			};
 		};
 
-		/**
-		 * Logs configuration status messages in preferred order
-		 * @param {Object} config - Configuration object from getProfileConfiguration
-		 */
+		// ---------------------------------------------------------------------
+		// logConfigurationStatus - displays configuration status messages
+		
 		const logConfigurationStatus = (config) => {
 			const { xLog } = process.global;
 			if (!config.isValid) return;

@@ -3,7 +3,12 @@
 
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 
-//START OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE FUNCTION
+// =====================================================================
+// ---------------------------------------------------------------------
+// moduleFunction - provides user interaction handling for vector tools CLI
+
 const moduleFunction = function(
 	{
 		globalIdentifier = 'user-interaction-handler',
@@ -14,14 +19,18 @@ const moduleFunction = function(
 		// Parameters will be passed when calling the functions
 	} = {}) => {
 		
+		// =====================================================================
+		// USER INTERACTION HANDLER
+		// =====================================================================
+		
 		/**
 		 * Handles command processing and user interaction for vector tools CLI
 		 * Provides standardized messaging, error handling, and command execution patterns
 		 */
 		
-		/**
-		 * Standardized user messaging functions
-		 */
+		// ---------------------------------------------------------------------
+		// createUserMessages - creates standardized user messaging functions
+		
 		const createUserMessages = (xLog) => ({
 			// Status messages
 			showOperationStart: (operation, profile, tableName) => {
@@ -60,9 +69,9 @@ const moduleFunction = function(
 			}
 		});
 		
-		/**
-		 * Standardized error handling patterns
-		 */
+		// ---------------------------------------------------------------------
+		// createErrorHandler - creates standardized error handling patterns
+		
 		const createErrorHandler = (xLog) => ({
 			handleDatabaseError: (operation, error) => {
 				xLog.error(`Failed to ${operation}: ${error.message}`);
@@ -84,9 +93,9 @@ const moduleFunction = function(
 			}
 		});
 		
-		/**
-		 * Command execution wrapper with standardized error handling
-		 */
+		// ---------------------------------------------------------------------
+		// executeWithErrorHandling - command execution wrapper with error handling
+		
 		const executeWithErrorHandling = async (xLog, operation, executorFn) => {
 			try {
 				const result = await executorFn();
@@ -97,9 +106,9 @@ const moduleFunction = function(
 			}
 		};
 		
-		/**
-		 * Show Stats Command Handler
-		 */
+		// ---------------------------------------------------------------------
+		// handleShowStatsCommand - handles show database stats command
+		
 		const handleShowStatsCommand = (vectorDb, xLog, showDatabaseStats) => {
 			const messages = createUserMessages(xLog);
 			messages.showOperationStart('Database Statistics Display', 'ALL', null);
@@ -113,9 +122,9 @@ const moduleFunction = function(
 			}
 		};
 		
-		/**
-		 * Drop Table Command Handler
-		 */
+		// ---------------------------------------------------------------------
+		// handleDropTableCommand - handles drop table command with safety checks
+		
 		const handleDropTableCommand = (config, vectorDb, xLog, dropAllVectorTables, showDatabaseStats, commandLineParameters) => {
 			const { dataProfile, vectorTableName } = config;
 			const messages = createUserMessages(xLog);
@@ -155,9 +164,9 @@ const moduleFunction = function(
 			return { success: true, shouldExit };
 		};
 		
-		/**
-		 * Rebuild Database Command Handler
-		 */
+		// ---------------------------------------------------------------------
+		// handleRebuildDatabaseCommand - handles complete database rebuild workflow
+		
 		const handleRebuildDatabaseCommand = (
 			config, 
 			vectorDb, 
@@ -207,9 +216,9 @@ const moduleFunction = function(
 			return { success: true, shouldExit: true }; // Exit after starting the rebuild pipeline
 		};
 		
-		/**
-		 * Write Vector Database Command Handler
-		 */
+		// ---------------------------------------------------------------------
+		// handleWriteVectorDatabaseCommand - handles vector database generation
+		
 		const handleWriteVectorDatabaseCommand = (config, openai, vectorDb, xLog, generateEmbeddings) => {
 			const { dataProfile, sourceTableName, vectorTableName, sourcePrivateKeyName, sourceEmbeddableContentName } = config;
 			const messages = createUserMessages(xLog);
@@ -234,9 +243,9 @@ const moduleFunction = function(
 			}
 		};
 		
-		/**
-		 * Query String Command Handler
-		 */
+		// ---------------------------------------------------------------------
+		// handleQueryStringCommand - handles vector similarity search queries
+		
 		const handleQueryStringCommand = (config, openai, vectorDb, xLog, getClosestRecords, commandLineParameters) => {
 			const { dataProfile, sourceTableName, vectorTableName, sourcePrivateKeyName, sourceEmbeddableContentName } = config;
 			const messages = createUserMessages(xLog);
@@ -267,9 +276,9 @@ const moduleFunction = function(
 			}
 		};
 		
-		/**
-		 * Validate command combinations and dependencies
-		 */
+		// ---------------------------------------------------------------------
+		// validateCommandCombinations - validates command combinations and dependencies
+		
 		const validateCommandCombinations = (commandLineParameters, xLog) => {
 			const switches = commandLineParameters.switches;
 			const values = commandLineParameters.values;
@@ -295,9 +304,9 @@ const moduleFunction = function(
 			return { valid: true };
 		};
 		
-		/**
-		 * Main command dispatcher
-		 */
+		// ---------------------------------------------------------------------
+		// dispatchCommands - main command dispatcher and router
+		
 		const dispatchCommands = (
 			config,
 			vectorDb,
@@ -377,6 +386,8 @@ const moduleFunction = function(
 	};
 };
 
-//END OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE EXPORTS
+// =====================================================================
 
 module.exports = moduleFunction;

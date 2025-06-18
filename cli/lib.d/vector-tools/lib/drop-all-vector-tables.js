@@ -10,8 +10,13 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 
-// --------------------------------------------------------------------------------
-// FIND PROJECT ROOT
+// =====================================================================
+// UTILITY FUNCTIONS
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// findProjectRoot - locates the project root directory by searching for rootFolderName
+
 const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	__dirname.replace(
 		new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
@@ -19,22 +24,19 @@ const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	);
 const applicationBasePath = findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
 
-//START OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE FUNCTION
+// =====================================================================
+// ---------------------------------------------------------------------
+// moduleFunction - provides vector table drop operations with safety checks
+
 const moduleFunction =
 	({ moduleName } = {}) =>
 	({ unused }) => {
 		
-		/**
-		 * Safely drops vector tables with enhanced safety checks
-		 * @param {Object} db - Database connection
-		 * @param {Object} xLog - Logging object
-		 * @param {string} specifiedVectorTableName - Base name of vector table to drop
-		 * @param {Object} options - Additional options
-		 * @param {boolean} options.dryRun - If true, only show what would be dropped
-		 * @param {boolean} options.skipConfirmation - If true, skip safety prompts
-		 * @param {string[]} options.excludePatterns - Patterns to exclude from dropping
-		 * @returns {Object} Results of drop operation
-		 */
+		// ---------------------------------------------------------------------
+		// dropAllVectorTables - safely drops vector tables with enhanced safety checks
+		
 		const dropAllVectorTables = (db, xLog, specifiedVectorTableName, options = {}) => {
 			const { dryRun = false, skipConfirmation = false, excludePatterns = [] } = options;
 			
@@ -176,14 +178,9 @@ const moduleFunction =
 			return results;
 		};
 
-		/**
-		 * Safely drops only production vector tables (excludes _NEW tables)
-		 * @param {Object} db - Database connection
-		 * @param {Object} xLog - Logging object
-		 * @param {string} specifiedVectorTableName - Base name of vector table
-		 * @param {Object} options - Additional options
-		 * @returns {Object} Results of drop operation
-		 */
+		// ---------------------------------------------------------------------
+		// dropProductionVectorTables - safely drops only production vector tables
+		
 		const dropProductionVectorTables = (db, xLog, specifiedVectorTableName, options = {}) => {
 			return dropAllVectorTables(db, xLog, specifiedVectorTableName, {
 				...options,
@@ -194,6 +191,8 @@ const moduleFunction =
 		return { dropAllVectorTables, dropProductionVectorTables };
 	};
 
-//END OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE EXPORTS
+// =====================================================================
 
 module.exports = moduleFunction({ moduleName })({}); //runs it right now

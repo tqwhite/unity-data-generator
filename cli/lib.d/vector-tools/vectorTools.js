@@ -12,8 +12,13 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 
-// --------------------------------------------------------------------------------
-// FIND PROJECT ROOT
+// =====================================================================
+// PROJECT ROOT CONFIGURATION
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// findProjectRoot - locates the project root directory by searching for rootFolderName
+
 const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	__dirname.replace(
 		new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
@@ -39,8 +44,9 @@ const { dispatchCommands } = userInteractionHandler();
 const applicationInitializer = require('./lib/application-initializer')();
 const { safeInitializeApplication } = applicationInitializer();
 
-// =============================================================================
+// =====================================================================
 // MODULE IMPORTS
+// =====================================================================
 
 //HACKERY: from some reason, putting require('generate-embeddings') AFTER this causes sqlite to screw up
 
@@ -66,7 +72,9 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 
 
-//START OF moduleFunction() ============================================================
+// ---------------------------------------------------------------------
+// moduleFunction - main application entry point and execution pipeline
+
 const moduleFunction =
 	({ moduleName } = {}) =>
 	({ unused }) => {
@@ -77,12 +85,15 @@ const moduleFunction =
 		// MAIN APPLICATION EXECUTION PIPELINE
 		// =====================================================================
 		
+		// ---------------------------------------------------------------------
 		// 1. Get and validate configuration
+		
 		const config = getProfileConfiguration(moduleName);
 		if (!config.isValid) {
 			return {};
 		}
 		
+		// ---------------------------------------------------------------------
 		// 2. Prepare modules for application initializer
 		const modules = {
 			generateEmbeddings,
@@ -97,6 +108,7 @@ const moduleFunction =
 			logConfigurationStatus
 		};
 		
+		// ---------------------------------------------------------------------
 		// 3. Initialize application components (OpenAI, database, dependencies)
 		const initResult = safeInitializeApplication(config, modules, xLog);
 		if (!initResult.success) {
@@ -104,9 +116,11 @@ const moduleFunction =
 			return {};
 		}
 		
+		// ---------------------------------------------------------------------
 		// 4. Extract initialized components
 		const { openai, vectorDb, dependencies } = initResult;
 		
+		// ---------------------------------------------------------------------
 		// 5. Dispatch and execute commands
 		const commandResult = dispatchCommands(
 			config,
@@ -117,6 +131,7 @@ const moduleFunction =
 			dependencies
 		);
 		
+		// ---------------------------------------------------------------------
 		// 6. Handle execution result
 		if (!commandResult.success) {
 			xLog.error('Command execution failed');

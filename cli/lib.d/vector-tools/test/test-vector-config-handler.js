@@ -191,7 +191,8 @@ if (require.main === module) {
 		results.errors.push(`Basic tests: ${error.message}`);
 	}
 
-	// Print comprehensive summary
+	// ---------------------------------------------------------------------
+	// 1. Print comprehensive summary
 	console.log('\n'.repeat(2));
 	console.log('=' .repeat(60));
 	console.log('                    TEST SUMMARY');

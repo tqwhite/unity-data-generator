@@ -170,7 +170,9 @@ const runTests = () => {
 	}
 };
 
-// Performance test
+// =====================================================================
+// PERFORMANCE TESTS
+// =====================================================================
 const runPerformanceTest = () => {
 	console.log('\n⚡ Performance Test: Multiple operations');
 	console.log('=====================================');
@@ -229,7 +231,9 @@ const runPerformanceTest = () => {
 	}
 };
 
-// Integration test with actual project database (read-only)
+// =====================================================================
+// INTEGRATION TESTS
+// =====================================================================
 const runIntegrationTest = () => {
 	console.log('\n🔗 Integration Test: Real database');
 	console.log('=================================');
@@ -308,7 +312,8 @@ if (require.main === module) {
 		results.errors.push(`Integration tests: ${error.message}`);
 	}
 
-	// Print comprehensive summary
+	// ---------------------------------------------------------------------
+	// 1. Print comprehensive summary
 	console.log('\n'.repeat(2));
 	console.log('=' .repeat(60));
 	console.log('                    TEST SUMMARY');

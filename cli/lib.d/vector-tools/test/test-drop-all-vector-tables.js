@@ -176,7 +176,8 @@ const runTests = () => {
 		console.log('BACKUP table preserved:', backupTableExists ? '✅ Yes' : '❌ No');
 		console.log();
 
-		// Integration test with real rebuild scenario (reproduces user's exact issue)
+		// ---------------------------------------------------------------------
+		// 1. Integration test with real rebuild scenario (reproduces user's exact issue)
 		console.log('Integration Test: Real rebuild scenario');
 		console.log('=======================================');
 		
@@ -267,7 +268,9 @@ const runTests = () => {
 	}
 };
 
-// Safety and edge case tests
+// =====================================================================
+// SAFETY AND EDGE CASE TESTS
+// =====================================================================
 const runSafetyTests = () => {
 	console.log('\n🛡️  Safety and Edge Case Tests');
 	console.log('==============================');
@@ -334,7 +337,9 @@ const runSafetyTests = () => {
 	}
 };
 
-// Performance test
+// =====================================================================
+// PERFORMANCE TESTS
+// =====================================================================
 const runPerformanceTest = () => {
 	console.log('\n⚡ Performance Test: Drop Operations');
 	console.log('===================================');
@@ -413,7 +418,8 @@ if (require.main === module) {
 		results.errors.push(`Performance tests: ${error.message}`);
 	}
 
-	// Print comprehensive summary
+	// ---------------------------------------------------------------------
+	// 1. Print comprehensive summary
 	console.log('\n'.repeat(2));
 	console.log('=' .repeat(60));
 	console.log('                    TEST SUMMARY');

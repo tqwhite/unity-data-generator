@@ -7,8 +7,13 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 
-// --------------------------------------------------------------------------------
-// FIND PROJECT ROOT
+// =====================================================================
+// UTILITY FUNCTIONS
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// findProjectRoot - locates the project root directory by searching for rootFolderName
+
 const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	__dirname.replace(
 		new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
@@ -16,18 +21,19 @@ const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	);
 const applicationBasePath = findProjectRoot();
 
-//START OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE FUNCTION
+// =====================================================================
+// ---------------------------------------------------------------------
+// moduleFunction - provides vector database operations and utilities
+
 const moduleFunction =
 	({ moduleName } = {}) =>
 	({ unused }) => {
 		
-		/**
-		 * Initializes vector database with sqlite-vec extension
-		 * @param {string} databaseFilePath - Path to SQLite database file
-		 * @param {string} vectorTableName - Name of vector table (unused but kept for compatibility)
-		 * @param {Object} xLog - Logging object
-		 * @returns {Object} Database connection with sqlite-vec loaded
-		 */
+		// ---------------------------------------------------------------------
+		// initVectorDatabase - initializes vector database with sqlite-vec extension
+		
 		const initVectorDatabase = (databaseFilePath, vectorTableName, xLog) => {
 			try {
 				const sqliteVec = require('sqlite-vec');
@@ -40,12 +46,9 @@ const moduleFunction =
 			}
 		};
 
-		/**
-		 * Gets record count for a table
-		 * @param {Object} db - Database connection
-		 * @param {string} tableName - Name of table to count
-		 * @returns {number} Number of records in table, 0 if table doesn't exist
-		 */
+		// ---------------------------------------------------------------------
+		// getTableCount - gets record count for a table
+		
 		const getTableCount = (db, tableName) => {
 			try {
 				const countResult = db.prepare(`SELECT COUNT(*) as count FROM "${tableName}"`).get();
@@ -55,12 +58,9 @@ const moduleFunction =
 			}
 		};
 
-		/**
-		 * Checks if a table exists in the database
-		 * @param {Object} db - Database connection
-		 * @param {string} tableName - Name of table to check
-		 * @returns {boolean} True if table exists, false otherwise
-		 */
+		// ---------------------------------------------------------------------
+		// tableExists - checks if a table exists in the database
+		
 		const tableExists = (db, tableName) => {
 			try {
 				const result = db.prepare(`SELECT name FROM sqlite_master WHERE type='table' AND name = ?`).get(tableName);
@@ -70,11 +70,9 @@ const moduleFunction =
 			}
 		};
 
-		/**
-		 * Gets all tables in the database
-		 * @param {Object} db - Database connection
-		 * @returns {Array} Array of table objects with name and type
-		 */
+		// ---------------------------------------------------------------------
+		// getAllTables - gets all tables in the database
+		
 		const getAllTables = (db) => {
 			try {
 				return db.prepare(`SELECT name, type FROM sqlite_master WHERE type='table' ORDER BY name`).all();
@@ -83,11 +81,9 @@ const moduleFunction =
 			}
 		};
 
-		/**
-		 * Gets vector tables (tables using vec0 extension)
-		 * @param {Object} db - Database connection
-		 * @returns {Array} Array of vector table objects
-		 */
+		// ---------------------------------------------------------------------
+		// getVectorTables - gets vector tables using vec0 extension
+		
 		const getVectorTables = (db) => {
 			try {
 				const allTables = getAllTables(db);
@@ -104,11 +100,9 @@ const moduleFunction =
 			}
 		};
 
-		/**
-		 * Gets database version information
-		 * @param {Object} db - Database connection
-		 * @returns {Object} Object with sqlite_version and vec_version
-		 */
+		// ---------------------------------------------------------------------
+		// getDatabaseVersions - gets database version information
+		
 		const getDatabaseVersions = (db) => {
 			try {
 				const sqlite_version = db.prepare('SELECT sqlite_version() as version').get().version;
@@ -124,13 +118,9 @@ const moduleFunction =
 			}
 		};
 
-		/**
-		 * Creates a vector table with specified dimensions
-		 * @param {Object} db - Database connection
-		 * @param {string} tableName - Name of vector table to create
-		 * @param {number} dimensions - Vector dimensions (default: 1536)
-		 * @returns {boolean} True if successful, false otherwise
-		 */
+		// ---------------------------------------------------------------------
+		// createVectorTable - creates a vector table with specified dimensions
+		
 		const createVectorTable = (db, tableName, dimensions = 1536) => {
 			try {
 				db.exec(`CREATE VIRTUAL TABLE ${tableName} USING vec0(embedding float[${dimensions}])`);
@@ -140,10 +130,9 @@ const moduleFunction =
 			}
 		};
 
-		/**
-		 * Safely closes database connection
-		 * @param {Object} db - Database connection
-		 */
+		// ---------------------------------------------------------------------
+		// closeDatabase - safely closes database connection
+		
 		const closeDatabase = (db) => {
 			try {
 				if (db && typeof db.close === 'function') {
@@ -166,6 +155,8 @@ const moduleFunction =
 		};
 	};
 
-//END OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE EXPORTS
+// =====================================================================
 
 module.exports = moduleFunction({ moduleName })({});

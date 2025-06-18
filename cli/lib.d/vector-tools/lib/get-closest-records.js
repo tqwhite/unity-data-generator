@@ -10,7 +10,12 @@ const path = require('path');
 const fs = require('fs');
 
 
-//START OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE FUNCTION
+// =====================================================================
+// ---------------------------------------------------------------------
+// moduleFunction - provides vector similarity search functionality
+
 const moduleFunction =
 	({ moduleName } = {}) =>
 	({
@@ -21,7 +26,9 @@ const moduleFunction =
 			process.global;
 		const localConfig = getConfig(moduleName); //moduleName is closure
 
-		// Data profile strategies for different key lookup approaches
+		// ---------------------------------------------------------------------
+		// dataProfileStrategies - defines key formatting strategies for different data profiles
+		
 		const dataProfileStrategies = {
 			sif: {
 				formatKeyForLookup: (key) => key.toString(), // Standard string conversion
@@ -38,6 +45,9 @@ const moduleFunction =
 			// }
 		};
 
+		// ---------------------------------------------------------------------
+		// workingFunction - performs vector similarity search with data profile strategy
+		
 		const workingFunction = async (embeddingSpecs, queryString) => {
 			const {
 				sourceTableName,
@@ -60,7 +70,9 @@ const moduleFunction =
 			const resultCount = commandLineParameters.values.resultCount ? 
 				parseInt(commandLineParameters.values.resultCount, 10) : 5;
 				
-			// Process query string the same way we process XPath values for consistency
+			// ---------------------------------------------------------------------
+			// processQueryString - transforms query strings for better search results
+			
 			const processQueryString = (value) => {
 				if (!value) return '';
 				
@@ -152,7 +164,9 @@ const moduleFunction =
 		return { workingFunction };
 	};
 
-//END OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE EXPORTS
+// =====================================================================
 
 
 module.exports = moduleFunction({ moduleName }); //returns initialized moduleFunction

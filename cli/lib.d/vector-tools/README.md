@@ -17,32 +17,48 @@ This tool has been refactored into a modular architecture with six specialized m
 
 ### Test Suite
 
-The project includes comprehensive tests for all modules. Run tests using npm scripts:
+The project includes comprehensive tests for all modules. Run individual test files directly:
 
 ```bash
-# Run all tests
-npm test
-# or
-npm run test:all
+# Run all tests individually
+node test/test-vector-config-handler.js
+node test/test-vector-database-operations.js
+node test/test-drop-all-vector-tables.js
+node test/test-vector-rebuild-workflow.js
+node test/test-user-interaction-handler.js
+node test/test-application-initializer.js
 
-# Run specific module tests
-npm run test:config      # Configuration handler tests
-npm run test:database    # Database operations tests  
-npm run test:drop        # Drop tables tests
-npm run test:rebuild     # Rebuild workflow tests
-npm run test:interaction # User interaction tests
-npm run test:init        # Application initializer tests
+# Or run them all at once
+for test in test/test-*.js; do echo "Running $test"; node "$test"; done
+```
 
-# Quick smoke tests (core modules only)
-npm run test:quick
+### Test Commands Reference
 
-# Live integration test
-npm run test:integration
+Each test file can be run independently and provides specific functionality verification:
+
+```bash
+# Configuration and validation tests (7 tests)
+node test/test-vector-config-handler.js
+
+# Database operations and utilities tests (16 tests)
+node test/test-vector-database-operations.js
+
+# Table drop operations with safety checks (12 tests)
+node test/test-drop-all-vector-tables.js
+
+# Complete rebuild workflow tests (10 tests)
+node test/test-vector-rebuild-workflow.js
+
+# User interaction and command handling tests (10 tests)
+node test/test-user-interaction-handler.js
+
+# Application initialization tests (12 tests)
+node test/test-application-initializer.js
 ```
 
 ### Test Coverage
 
-- **40+ test scenarios** across all modules
+- **67 test scenarios** across all modules (7+16+12+10+10+12)
 - **Error handling verification** for all failure modes
 - **Integration testing** with real database
 - **Performance testing** for database operations
@@ -53,16 +69,17 @@ npm run test:integration
 
 ```bash
 # During development, run tests frequently
-npm run test:quick
+node test/test-vector-config-handler.js
+node test/test-vector-database-operations.js
 
-# Before committing changes
-npm test
+# Before committing changes, run all tests
+for test in test/test-*.js; do echo "Running $test"; node "$test"; done
 
 # Test specific functionality
-npm run test:database && npm run test:interaction
+node test/test-vector-database-operations.js && node test/test-user-interaction-handler.js
 
-# Verify CLI integration
-npm run test:integration
+# Verify specific module integration
+node test/test-application-initializer.js
 ```
 
 ## Module Structure
@@ -245,7 +262,7 @@ For database connection or operation issues:
 
 ```bash
 # Test database operations
-npm run test:database
+node test/test-vector-database-operations.js
 
 # Verify database statistics
 vectorTools --dataProfile=ceds -showStats
@@ -257,12 +274,12 @@ If you suspect issues with specific modules:
 
 ```bash
 # Test individual modules
-npm run test:config
-npm run test:interaction
-npm run test:init
+node test/test-vector-config-handler.js
+node test/test-user-interaction-handler.js
+node test/test-application-initializer.js
 
 # Run full test suite
-npm test
+for test in test/test-*.js; do echo "Running $test"; node "$test"; done
 ```
 
 ### Performance Issues
@@ -271,7 +288,7 @@ The database operations are performance-tested:
 
 ```bash
 # Run performance tests
-npm run test:database
+node test/test-vector-database-operations.js
 # Look for: "Completed 200 operations in XXXms"
 ```
 

@@ -10,7 +10,9 @@ const path = require('path');
 const fs = require('fs');
 
 
-//START OF moduleFunction() ============================================================
+// ---------------------------------------------------------------------
+// moduleFunction - handles embedding generation and vector database operations
+
 const moduleFunction =
 	({ moduleName } = {}) =>
 	({ openai, vectorDb }) => {
@@ -18,8 +20,16 @@ const moduleFunction =
 			process.global;
 		const { unused } = getConfig(moduleName); //moduleName is closure
 
-		// ================================================================================
+		// =====================================================================
+		// UTILITY FUNCTIONS
+		// =====================================================================
 
+		// ---------------------------------------------------------------------
+		// 1. Database version information
+		
+		// ---------------------------------------------------------------------
+		// showVecVersion - displays SQLite and vec extension version information
+		
 		const showVecVersion = (vectorDb) => {
 			const { sqlite_version, vec_version } = vectorDb
 				.prepare(
@@ -31,6 +41,9 @@ const moduleFunction =
 				`sqlite_version=${sqlite_version}, vec_version=${vec_version}`,
 			);
 		};
+		
+		// ---------------------------------------------------------------------
+		// getVectorTableCount - counts records in a vector table
 		
 		const getVectorTableCount = (vectorDb, vectorTableName) => {
 			// Check if the table exists
@@ -49,6 +62,9 @@ const moduleFunction =
 			}
 			return 0;
 		};
+		
+		// ---------------------------------------------------------------------
+		// initVectorTables - creates or initializes vector tables with safety checks
 		
 		const initVectorTables = (vectorDb, vectorTableName, createNew=false) => {
 			// Check if table exists
@@ -88,6 +104,9 @@ const moduleFunction =
 			}
 		};
 
+		// ---------------------------------------------------------------------
+		// getEmbeddableData - retrieves source data for embedding generation with pagination
+		
 		const getEmbeddableData = (
 			vectorDb,
 			{
@@ -111,12 +130,17 @@ const moduleFunction =
 			return embeddableData;
 		};
 
+		// ---------------------------------------------------------------------
+		// getEmbeddingVectors - generates embeddings from OpenAI API with text preprocessing
+		
 		const getEmbeddingVectors = async (
 			openai,
 			embeddableData,
 			sourceEmbeddableContentName,
 		) => {
-				// Helper function to process XPath values
+				// ---------------------------------------------------------------------
+				// processXPathValue - transforms XPath strings for better embedding quality
+				
 				const processXPathValue = (value) => {
 					if (!value) return '';
 					
@@ -139,6 +163,9 @@ const moduleFunction =
 					
 					return processed;
 				};
+				
+				// ---------------------------------------------------------------------
+				// transformForOpenAi - prepares data for OpenAI embedding API
 				
 				const transformForOpenAi = (
 					embeddableData,
@@ -178,6 +205,9 @@ const moduleFunction =
 			return embedding;
 		};
 
+		// ---------------------------------------------------------------------
+		// putVectorsIntoDatabase - stores embedding vectors in vector database
+		
 		const putVectorsIntoDatabase = ({
 			vectorDb,
 			embedding,
@@ -224,15 +254,25 @@ const moduleFunction =
 			xLog.status(`Vector table now has ${finalCount} total records`);
 		};
 
-		// ================================================================================
+		// =====================================================================
+		// MAIN PROCESSING FUNCTIONS
+		// =====================================================================
 		
-		// Get the total count of records to process
+		// ---------------------------------------------------------------------
+		// 1. Get the total count of records to process
+		
+		// ---------------------------------------------------------------------
+		// getTotalRecordCount - gets total count of records in source table
+		
 		const getTotalRecordCount = (vectorDb, sourceTableName) => {
 			const result = vectorDb
 				.prepare(`SELECT COUNT(*) as count FROM ${sourceTableName}`)
 				.get();
 			return result.count;
 		};
+		
+		// ---------------------------------------------------------------------
+		// workingFunction - main embedding generation workflow with batch processing
 		
 		const workingFunction = async (embeddingSpecs) => {
 			const {

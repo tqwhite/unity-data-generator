@@ -3,7 +3,12 @@
 
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 
-//START OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE FUNCTION
+// =====================================================================
+// ---------------------------------------------------------------------
+// moduleFunction - provides application initialization and setup functionality
+
 const moduleFunction = function(
 	{
 		globalIdentifier = 'application-initializer',
@@ -14,14 +19,18 @@ const moduleFunction = function(
 		// Parameters will be passed when calling the functions
 	} = {}) => {
 		
+		// =====================================================================
+		// APPLICATION INITIALIZER
+		// =====================================================================
+		
 		/**
 		 * Application initialization and setup for vector tools CLI
 		 * Handles OpenAI client setup, database initialization, and dependency preparation
 		 */
 		
-		/**
-		 * Initialize OpenAI client with API key
-		 */
+		// ---------------------------------------------------------------------
+		// initializeOpenAI - initializes OpenAI client with API key
+		
 		const initializeOpenAI = (openAiApiKey, xLog) => {
 			try {
 				const OpenAI = require('openai');
@@ -37,9 +46,9 @@ const moduleFunction = function(
 			}
 		};
 		
-		/**
-		 * Initialize vector database with error handling
-		 */
+		// ---------------------------------------------------------------------
+		// initializeVectorDatabase - initializes vector database with error handling
+		
 		const initializeVectorDatabase = (databaseFilePath, vectorTableName, xLog, initVectorDatabase) => {
 			try {
 				const vectorDb = initVectorDatabase(
@@ -57,9 +66,9 @@ const moduleFunction = function(
 			}
 		};
 		
-		/**
-		 * Prepare database operations object for command dispatcher
-		 */
+		// ---------------------------------------------------------------------
+		// prepareDatabaseOperations - prepares database operations object
+		
 		const prepareDatabaseOperations = (tableExists, getTableCount) => {
 			return {
 				tableExists,
@@ -67,9 +76,9 @@ const moduleFunction = function(
 			};
 		};
 		
-		/**
-		 * Prepare drop operations object for command dispatcher
-		 */
+		// ---------------------------------------------------------------------
+		// prepareDropOperations - prepares drop operations object
+		
 		const prepareDropOperations = (dropProductionVectorTables, dropAllVectorTables) => {
 			return {
 				dropProductionVectorTables,
@@ -77,9 +86,9 @@ const moduleFunction = function(
 			};
 		};
 		
-		/**
-		 * Prepare all dependencies required by the command dispatcher
-		 */
+		// ---------------------------------------------------------------------
+		// prepareDependencies - prepares all dependencies for command dispatcher
+		
 		const prepareDependencies = (modules) => {
 			const {
 				generateEmbeddings,
@@ -103,10 +112,9 @@ const moduleFunction = function(
 			};
 		};
 		
-		/**
-		 * Complete application initialization sequence
-		 * Returns all initialized components needed by the application
-		 */
+		// ---------------------------------------------------------------------
+		// initializeApplication - complete application initialization sequence
+		
 		const initializeApplication = (config, modules, xLog) => {
 			const {
 				openAiApiKey,
@@ -156,9 +164,9 @@ const moduleFunction = function(
 			};
 		};
 		
-		/**
-		 * Validate that all required modules are provided
-		 */
+		// ---------------------------------------------------------------------
+		// validateModules - validates that all required modules are provided
+		
 		const validateModules = (modules, xLog) => {
 			const requiredModules = [
 				'generateEmbeddings',
@@ -184,9 +192,9 @@ const moduleFunction = function(
 			return true;
 		};
 		
-		/**
-		 * Safe application initialization with comprehensive error handling
-		 */
+		// ---------------------------------------------------------------------
+		// safeInitializeApplication - safe initialization with error handling
+		
 		const safeInitializeApplication = (config, modules, xLog) => {
 			// Validate all required modules are present
 			if (!validateModules(modules, xLog)) {
@@ -230,6 +238,8 @@ const moduleFunction = function(
 	};
 };
 
-//END OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE EXPORTS
+// =====================================================================
 
 module.exports = moduleFunction;

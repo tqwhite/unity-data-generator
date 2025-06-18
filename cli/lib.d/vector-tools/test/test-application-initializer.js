@@ -68,7 +68,12 @@ const createMockModules = (shouldFail = false) => ({
     logConfigurationStatus: () => {}
 });
 
-// Test 1: Module initialization
+// =====================================================================
+// BASIC FUNCTIONALITY TESTS
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// 1. Module initialization
 runTest('Module initialization', () => {
     const functions = applicationInitializer;
     const expectedFunctions = [
@@ -89,7 +94,8 @@ runTest('Module initialization', () => {
     console.log('   ✅ All expected functions are available');
 });
 
-// Test 2: OpenAI initialization - success
+// ---------------------------------------------------------------------
+// 2. OpenAI initialization - success
 runTest('OpenAI initialization - success', () => {
     const xLog = createMockXLog();
     
@@ -122,7 +128,8 @@ runTest('OpenAI initialization - success', () => {
     console.log('   ✅ OpenAI client initialized successfully');
 });
 
-// Test 3: Vector database initialization - success
+// ---------------------------------------------------------------------
+// 3. Vector database initialization - success
 runTest('Vector database initialization - success', () => {
     const xLog = createMockXLog();
     const mockInitVectorDatabase = () => ({ connected: true });
@@ -145,7 +152,8 @@ runTest('Vector database initialization - success', () => {
     console.log('   ✅ Vector database initialized successfully');
 });
 
-// Test 4: Vector database initialization - failure
+// ---------------------------------------------------------------------
+// 4. Vector database initialization - failure
 runTest('Vector database initialization - failure', () => {
     const xLog = createMockXLog();
     const mockInitVectorDatabase = () => {
@@ -170,7 +178,8 @@ runTest('Vector database initialization - failure', () => {
     console.log('   ✅ Database initialization failure handled correctly');
 });
 
-// Test 5: Database operations preparation
+// ---------------------------------------------------------------------
+// 5. Database operations preparation
 runTest('Database operations preparation', () => {
     const mockTableExists = () => true;
     const mockGetTableCount = () => 100;
@@ -191,7 +200,8 @@ runTest('Database operations preparation', () => {
     console.log('   ✅ Database operations prepared correctly');
 });
 
-// Test 6: Drop operations preparation
+// ---------------------------------------------------------------------
+// 6. Drop operations preparation
 runTest('Drop operations preparation', () => {
     const mockDropProduction = () => ({ success: true });
     const mockDropAll = () => ({ success: true });
@@ -212,7 +222,8 @@ runTest('Drop operations preparation', () => {
     console.log('   ✅ Drop operations prepared correctly');
 });
 
-// Test 7: Dependencies preparation
+// ---------------------------------------------------------------------
+// 7. Dependencies preparation
 runTest('Dependencies preparation', () => {
     const modules = createMockModules();
     
@@ -237,7 +248,12 @@ runTest('Dependencies preparation', () => {
     console.log('   ✅ Dependencies prepared correctly');
 });
 
-// Test 8: Module validation - success
+// =====================================================================
+// VALIDATION TESTS
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// 1. Module validation - success
 runTest('Module validation - success', () => {
     const xLog = createMockXLog();
     const modules = createMockModules();
@@ -251,7 +267,8 @@ runTest('Module validation - success', () => {
     console.log('   ✅ Module validation passed for complete modules');
 });
 
-// Test 9: Module validation - failure
+// ---------------------------------------------------------------------
+// 2. Module validation - failure
 runTest('Module validation - failure', () => {
     const xLog = createMockXLog();
     const incompleteModules = {
@@ -273,7 +290,12 @@ runTest('Module validation - failure', () => {
     console.log('   ✅ Module validation correctly failed for incomplete modules');
 });
 
-// Test 10: Safe application initialization - success
+// =====================================================================
+// INTEGRATION TESTS
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// 1. Safe application initialization - success
 runTest('Safe application initialization - success', () => {
     const xLog = createMockXLog();
     const config = createMockConfig(true);
@@ -308,7 +330,8 @@ runTest('Safe application initialization - success', () => {
     console.log('   ✅ Safe application initialization succeeded');
 });
 
-// Test 11: Safe application initialization - invalid config
+// ---------------------------------------------------------------------
+// 2. Safe application initialization - invalid config
 runTest('Safe application initialization - invalid config', () => {
     const xLog = createMockXLog();
     const config = createMockConfig(false); // Invalid config
@@ -327,7 +350,8 @@ runTest('Safe application initialization - invalid config', () => {
     console.log('   ✅ Safe application initialization correctly failed for invalid config');
 });
 
-// Test 12: Safe application initialization - missing modules
+// ---------------------------------------------------------------------
+// 3. Safe application initialization - missing modules
 runTest('Safe application initialization - missing modules', () => {
     const xLog = createMockXLog();
     const config = createMockConfig(true);
@@ -349,7 +373,12 @@ runTest('Safe application initialization - missing modules', () => {
     console.log('   ✅ Safe application initialization correctly failed for missing modules');
 });
 
-// Show summary
+// =====================================================================
+// TEST SUMMARY
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// 1. Show summary
 setTimeout(() => {
     console.log('\n\n============================================================');
     console.log('                    TEST SUMMARY');

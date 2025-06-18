@@ -9,8 +9,13 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 
-// --------------------------------------------------------------------------------
-// FIND PROJECT ROOT
+// =====================================================================
+// UTILITY FUNCTIONS
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// findProjectRoot - locates the project root directory by searching for rootFolderName
+
 const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	__dirname.replace(
 		new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
@@ -18,10 +23,18 @@ const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	);
 const applicationBasePath = findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
 
-//START OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE FUNCTION
+// =====================================================================
+// ---------------------------------------------------------------------
+// moduleFunction - provides vector database initialization functionality
+
 const moduleFunction =
 	({ moduleName } = {}) =>
 	({ unused }) => {
+		
+		// ---------------------------------------------------------------------
+		// initVectorDatabase - initializes SQLite database with vector extension
 		
 		const initVectorDatabase = (databaseFilePath, vectorTableName, xLog) => {
 			try {
@@ -38,6 +51,8 @@ const moduleFunction =
 		return { initVectorDatabase };
 	};
 
-//END OF moduleFunction() ============================================================
+// =====================================================================
+// MODULE EXPORTS
+// =====================================================================
 
 module.exports = moduleFunction({ moduleName })({}); //runs it right now
