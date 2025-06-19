@@ -86,7 +86,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 
 	// Check for help flag
 	if (commandLineParameters.switches.help) {
-		const helpText = require('./xmlThinkers/think-about-matching-with-ceds/help-text')(moduleName);
+		const helpText = require('./ucmThinkers/think-about-matching-with-ceds/help-text')(moduleName);
 		xLog.result(helpText);
 		process.exit(0);
 	}
