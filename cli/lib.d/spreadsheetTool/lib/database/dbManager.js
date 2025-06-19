@@ -172,15 +172,22 @@ async function purgeBackups(databaseFilePath, retainCount, baseTableName = DEFAU
  * @param {Object} record - The record to generate an ID for
  * @returns {string} Numeric refId as a string
  * 
- * Note: The refId is generated based only on the XPath value to ensure
- * records with the same XPath always have the same refId.
+ * Note: The refId is generated based on XPath/Path values primarily, with fallback
+ * to other fields if needed, to ensure each record has a unique refId.
  */
 function generateRefId(record) {
-  // Use only the XPath value for generating the refId
-  const xpathValue = record.XPath || '';
+  // Use XPath value first, then fall back to Path, then use a combination of other fields
+  const pathValue = record.XPath || record.Path || '';
   
-  // Generate a SHA-256 hash of the XPath value
-  const hash = crypto.createHash('sha256').update(xpathValue).digest('hex');
+  // If we still don't have a unique identifier, create one from multiple fields
+  let uniqueValue = pathValue;
+  if (!uniqueValue) {
+    // Use Name, Type, Description as fallback to create a unique identifier
+    uniqueValue = (record.Name || '') + '|' + (record.Type || '') + '|' + (record.Description || '') + '|' + (record.SheetName || '');
+  }
+  
+  // Generate a SHA-256 hash of the unique value
+  const hash = crypto.createHash('sha256').update(uniqueValue).digest('hex');
   
   // Convert the first 12 characters of the hash to a numeric refId
   // Using BigInt ensures it can represent large integers precisely

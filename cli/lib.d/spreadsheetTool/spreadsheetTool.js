@@ -34,6 +34,44 @@ const spreadsheetWriter = require('./lib/spreadsheet/excelWriter');
 const dbManager = require('./lib/database/dbManager');
 
 // =============================================================================
+// HELPER FUNCTIONS
+
+/**
+ * Generate a camelCase table name from a filename
+ * @param {string} filename - The input filename
+ * @returns {string} CamelCase table name with illegal characters removed
+ */
+function generateTableNameFromFilename(filename) {
+  if (!filename) return 'defaultTable';
+  
+  // Get basename without extension
+  const baseName = path.basename(filename, path.extname(filename));
+  
+  // Split on common separators and non-word characters
+  const words = baseName
+    .split(/[^a-zA-Z0-9]+/)
+    .filter(word => word.length > 0)
+    .map(word => word.toLowerCase());
+  
+  // Convert to camelCase: first word lowercase, subsequent words capitalized
+  const camelCase = words
+    .map((word, index) => {
+      if (index === 0) {
+        return word;
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join('');
+  
+  // Ensure it starts with a letter (prepend 'table' if it doesn't)
+  if (!/^[a-zA-Z]/.test(camelCase)) {
+    return 'table' + camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+  }
+  
+  return camelCase || 'defaultTable';
+}
+
+// =============================================================================
 // MAIN EXECUTION FUNCTION
 
 (async () => {
@@ -94,8 +132,14 @@ const dbManager = require('./lib/database/dbManager');
         // Read spreadsheet data
         const spreadsheetData = await spreadsheetReader.readSpreadsheet(loadSpreadsheetFile);
         
+        // Get table name from command line or generate from filename
+        const tableName = cliParams.values.tableName ? 
+          cliParams.values.tableName[0] : 
+          generateTableNameFromFilename(loadSpreadsheetFile);
+        config.xLog.status(`Using table name: ${tableName}`);
+        
         // Save to database
-        await dbManager.saveData(config.databaseFilePath, spreadsheetData);
+        await dbManager.saveData(config.databaseFilePath, spreadsheetData, tableName);
         
         // Generate output files from database
         await generateOutputFiles(config, cliParams);
@@ -114,12 +158,17 @@ const dbManager = require('./lib/database/dbManager');
 
 // Helper function to generate output files from database
 async function generateOutputFiles(config, cliParams) {
-  // Read data from database
-  const dbData = await dbManager.readData(config.databaseFilePath);
-  
-  // Get output paths from command line
+  // Get table name from command line or generate from filename
   const fileList = cliParams.fileList || [];
   const spreadsheetFile = fileList.length > 0 ? fileList[0] : null;
+  const tableName = cliParams.values.tableName ? 
+    cliParams.values.tableName[0] : 
+    generateTableNameFromFilename(spreadsheetFile);
+  
+  // Read data from database
+  const dbData = await dbManager.readData(config.databaseFilePath, tableName);
+  
+  // Get output paths from command line
   const outputPathArg = fileList.length > 1 ? fileList[1] : null;
   
   // Determine base filename and output directory

@@ -29,7 +29,7 @@ async function initialize() {
   const initAtp = require('../../../../../lib/qtools-ai-framework/jina')({
     configFileBaseName: moduleName,
     applicationBasePath,
-	applicationControls: ['-loadDatabase', '-purgeBackupDbTables'],
+	applicationControls: ['-loadDatabase', '-purgeBackupDbTables', '-list', '--tableName'],
   });
   
   // Access global variables set up by initAtp

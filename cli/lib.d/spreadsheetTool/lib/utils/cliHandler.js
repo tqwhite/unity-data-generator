@@ -77,6 +77,20 @@ OPTIONS:
   -purgeBackupDbTables  Remove old database table backups, keeping only the most recent ones
   -echoAlso          Display the output in the console
   -help              Show this help message
+  --tableName=name   Specify custom table name (default: camelCase from input filename)
+
+EXAMPLES:
+  spreadsheetTool -list MyData.xlsx
+    Lists all worksheets in MyData.xlsx
+    
+  spreadsheetTool -loadDatabase MyData.xlsx
+    Creates table 'myData' from MyData.xlsx and generates output files
+    
+  spreadsheetTool -loadDatabase MyData.xlsx --tableName=customTable
+    Creates table 'customTable' from MyData.xlsx
+    
+  spreadsheetTool -loadDatabase "JEDx Sample Data.xls"
+    Creates table 'jedxSampleData' (camelCase, special chars removed)
   `);
   
   process.exit(0);
