@@ -127,21 +127,21 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 //   });
 
   // Get the latest refined XML
-  const refinedXml = wisdom.latestXml;
+  const finalSynthData = wisdom.generatedSynthData;
 
   // =============================================================================
   // OUTPUT HANDLING
 
   // Optionally echo the refined XML to the console
   if (commandLineParameters.switches.echoAlso) {
-    xLog.result(`\n\n${refinedXml}\n\n`);
+    xLog.result(`\n\n${finalSynthData}\n\n`);
   }
 
   // Save the process file (for logging or debugging)
-  xLog.saveProcessFile(`${moduleName}_${path.basename(outputFilePath)}`, refinedXml);
+  xLog.saveProcessFile(`${moduleName}_${path.basename(outputFilePath)}`, finalSynthData);
 
   // Write the refined XML to the output file
-  fs.writeFileSync(outputFilePath, refinedXml, 'utf-8');
+  fs.writeFileSync(outputFilePath, finalSynthData, 'utf-8');
 
   // Log the output file path
   xLog.status(`Output file path: ${outputFilePath}`);

@@ -26,9 +26,9 @@ const moduleFunction =
 			);
 		
 
-		const getLatestXml = (inString) => {
-			const startDelimiter = '[START XML SAMPLE]';
-			const endDelimiter = '[END XML SAMPLE]';
+		const getgeneratedSynthData = (inString) => {
+			const startDelimiter = '[START DATA SAMPLE]';
+			const endDelimiter = '[END DATA SAMPLE]';
 
 			function escapeRegExp(string) {
 				return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escapes special characters for use in a regex
@@ -45,9 +45,9 @@ const moduleFunction =
 			if (match) {
 				const result=match[1];
 				const xmlContent = result.substring(result.indexOf('<'), result.lastIndexOf('>') + 1);
-				return {latestXml:xmlContent}
+				return {generatedSynthData:xmlContent}
 			} else {
-				return {latestXml:'XML Missing in Response'}
+				return {generatedSynthData:'XML Missing in Response'}
 			}
 		};
 
@@ -93,27 +93,27 @@ const moduleFunction =
 		const workingFunction = () => {
 			return {
 				'xml-maker': {
-					extractionFunction:extractionFunction([getLatestXml]),
+					extractionFunction:extractionFunction([getgeneratedSynthData]),
 					extractionParameters: {
-						frontDelimiter: `[START XML SAMPLE]`,
-						backDelimiter: `[END XML SAMPLE]`,
+						frontDelimiter: `[START DATA SAMPLE]`,
+						backDelimiter: `[END DATA SAMPLE]`,
 					},
 					promptTemplate: require(`./stringsLib/${stringsVariation}/maker`)(),
 				},
 				'xml-review': {
-					extractionFunction:extractionFunction([getLatestXml]),
+					extractionFunction:extractionFunction([getgeneratedSynthData]),
 					extractionParameters: {
-						frontDelimiter: `[START XML SAMPLE]`,
-						backDelimiter: `[END XML SAMPLE]`,
+						frontDelimiter: `[START DATA SAMPLE]`,
+						backDelimiter: `[END DATA SAMPLE]`,
 					},
 					promptTemplate: require(`./stringsLib/${stringsVariation}/review`)(),
 				},
 
 				'fix-problems': {
-					extractionFunction:extractionFunction([getLatestXml, getExplanation]),
+					extractionFunction:extractionFunction([getgeneratedSynthData, getExplanation]),
 					extractionParameters: {
-						frontDelimiter: `[START XML SAMPLE]`,
-						backDelimiter: `[END XML SAMPLE]`,
+						frontDelimiter: `[START DATA SAMPLE]`,
+						backDelimiter: `[END DATA SAMPLE]`,
 						explanationFrontDelimiter: `[START EXPLANATIONS]`,
 						explanationBackDelimiter: `[END EXPLANATIONS]`,
 					},

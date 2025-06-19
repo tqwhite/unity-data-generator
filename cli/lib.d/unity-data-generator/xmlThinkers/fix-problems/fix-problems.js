@@ -137,7 +137,7 @@ const moduleFunction = function (args = {}) {
 			const { wisdom } = args;
 
 			const lastThinkerWisdom = args.qtGetSurePath(
-				`thinkerResponses.${args.lastThinkerName}.wisdom.latestXml`,
+				`thinkerResponses.${args.lastThinkerName}.wisdom.generatedSynthData`,
 			);
 
 			xLog.verbose(
@@ -152,7 +152,7 @@ The Refined XML below was evaluated. Here are the details of the process that al
 
 ------------------------\nBefore Refining XML:\n${lastThinkerWisdom}\n------------------------
 
-------------------------\nRefined XML:\n${wisdom.latestXml}\n------------------------
+------------------------\nRefined XML:\n${wisdom.generatedSynthData}\n------------------------
 
 ------------------------\nXML Refinement Explanation:\n${wisdom.explanation}\n------------------------
 

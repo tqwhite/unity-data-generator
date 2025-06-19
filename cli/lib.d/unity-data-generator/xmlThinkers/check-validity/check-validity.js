@@ -29,7 +29,7 @@ const moduleFunction = function (args = {}) {
 	// ================================================================================
 	// TALK TO AI
 
-	const accessSmartyPants = (currentXml, callback) => {
+	const accessSmartyPants = (synthData, callback) => {
 		const localCallback = (err, validationMessage) => {
 			let isValid = false;
 
@@ -48,7 +48,7 @@ const moduleFunction = function (args = {}) {
 				isValid = true;
 			}
 			xLog.verbose(
-				`XML VALIDATION RESULT: ${JSON.stringify(validationMessage, '', '\t')}`,
+				`DATA VALIDATION RESULT: ${JSON.stringify(validationMessage, '', '\t')}`,
 			);
 			callback('', { validationMessage, isValid });
 		};
@@ -59,7 +59,7 @@ const moduleFunction = function (args = {}) {
 		const axiosParms = {
 			method: 'post',
 			url,
-			data: currentXml,
+			data: synthData,
 			headers: {
 				Accept: '*/*',
 				'Content-Type': 'text/plain',
@@ -93,9 +93,9 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const currentXml = args.qtGetSurePath('latestWisdom.latestXml');
+		const synthData = args.qtGetSurePath('latestWisdom.generatedSynthData');
 
-		if (!currentXml) {
+		if (!synthData) {
 			throw `No XML received from previous Thinker (fix-problems) in ${moduleName}`;
 		}
 
@@ -111,7 +111,7 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { currentXml, latestWisdom } = args;
+			const { synthData, latestWisdom } = args;
 
 			const localCallback = (err, result) => {
 				const { validationMessage, isValid } = result;
@@ -133,7 +133,7 @@ const moduleFunction = function (args = {}) {
 					{ append: true },
 				);
 
-				xLog.saveProcessFile(`${moduleName}_lastOneChecked.xml`, currentXml, {
+				xLog.saveProcessFile(`${moduleName}_lastOneChecked.xml`, synthData, {
 					append: false,
 				});
 
@@ -144,7 +144,7 @@ const moduleFunction = function (args = {}) {
 
 				const wisdom = {
 					...latestWisdom,
-					latestXml: currentXml,
+					generatedSynthData: synthData,
 					validationMessage,
 					isValid,
 				};
@@ -152,7 +152,7 @@ const moduleFunction = function (args = {}) {
 				next('', { ...args, wisdom, isValid });
 			};
 
-			accessSmartyPants(currentXml, localCallback);
+			accessSmartyPants(synthData, localCallback);
 		});
 
 		// --------------------------------------------------------------------------------
@@ -160,7 +160,7 @@ const moduleFunction = function (args = {}) {
 
 		const initialData = {
 			...args,
-			currentXml,
+			synthData,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			const { wisdom, isValid } = args;

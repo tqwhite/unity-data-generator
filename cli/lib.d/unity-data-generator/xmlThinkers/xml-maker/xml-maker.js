@@ -17,7 +17,7 @@ const moduleFunction = function (args = {}) {
 
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
 	const systemPrompt =
-		"You are a top level expert in XML data modeling and syntax. Your goal is to provide actual data. Explanations are only for exceptions and are very brief. Let's think step by step and check conclusions.";
+		"You are a top level expert in data modeling and syntax. Your goal is to provide actual data. Explanations are only for exceptions and are very brief. Let's think step by step and check conclusions.";
 
 	// ================================================================================
 	// UTILITIES
@@ -100,8 +100,8 @@ const moduleFunction = function (args = {}) {
 				{ append: true },
 			);
 			const tmp=extractionFunction(rawWisdom);
-			const { latestXml } = extractionFunction(rawWisdom);
-			const wisdom={...latestWisdom, latestXml};
+			const { generatedSynthData } = extractionFunction(rawWisdom);
+			const wisdom={...latestWisdom, generatedSynthData};
 
 			next('', { ...args, wisdom });
 		});

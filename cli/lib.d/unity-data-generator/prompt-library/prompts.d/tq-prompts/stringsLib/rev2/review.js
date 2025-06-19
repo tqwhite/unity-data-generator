@@ -40,7 +40,7 @@ Here is the Object Standard Definition:
 
 Here is the XML Test Data for review:
 
-<!latestXml!>
+<!generatedSynthData!>
 
 **PROCESS INSTRUCTIONS**
 

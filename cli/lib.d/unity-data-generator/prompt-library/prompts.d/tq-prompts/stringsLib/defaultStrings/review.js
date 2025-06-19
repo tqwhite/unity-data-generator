@@ -31,7 +31,7 @@ XML TEST DATA
 
 Here is the XML Test Data for review:
 
-<!latestXml!>
+<!generatedSynthData!>
 
 PROCESS INSTRUCTIONS
 

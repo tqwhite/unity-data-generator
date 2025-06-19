@@ -104,7 +104,7 @@ const moduleFunction = function (args = {}) {
 				{ append: true },
 			);
 
-			const wisdom = {...latestWisdom, ...extractionFunction(rawWisdom)}; //overwrites latestXml
+			const wisdom = {...latestWisdom, ...extractionFunction(rawWisdom)}; //overwrites generatedSynthData
 
 			next('', { ...args, wisdom });
 		});

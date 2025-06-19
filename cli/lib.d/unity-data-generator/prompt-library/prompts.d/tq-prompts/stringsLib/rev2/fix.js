@@ -19,7 +19,7 @@ This project involves creating valid, realistic XML test data objects for educat
 
 **Current XML Object**
 
-<!latestXml!>
+<!generatedSynthData!>
 
 **Semantic Specification**
 

@@ -12,7 +12,7 @@ This project is the creation of valid, realistic test data objects for use in ed
 
 Here is the current XML object:
 
-<!latestXml!>
+<!generatedSynthData!>
 
 
 Here is the semantic specification for this object. It is expressed as a JSON object with keys that are xPaths referring to the current XML object. 
