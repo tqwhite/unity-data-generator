@@ -100,7 +100,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
     : targetObjectNameList;
 
   // Determine the output file path
-  const outputFilePath = outFile || path.join(outputsPath, `${targetObjectNamesString}.xml`);
+  const outputFilePath = outFile || path.join(outputsPath, `${targetObjectNamesString}.synthData`);
 
   // Ensure the output directory exists
   const outputDir = path.dirname(outputFilePath);

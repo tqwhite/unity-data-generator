@@ -9,12 +9,6 @@ const asynchronousPipePlus = new require('qtools-asynchronous-pipe-plus')();
 const pipeRunner = asynchronousPipePlus.pipeRunner;
 const taskListPlus = asynchronousPipePlus.taskListPlus;
 
-// NOTE: THIS IS USUALLY A TQ NO-NO. This value is common to all instantiations of this
-// module. Fortunately, this is a batch program so it is only instantiated for the one
-// processing run.
-
-const validationList=[];
-
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function (args = {}) {
@@ -24,44 +18,35 @@ const moduleFunction = function (args = {}) {
 	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
 
 	const systemPrompt =
-		'You are a data scientist, Working to accurately process XML data. You are determined to produce complete, useful test data.';
+		'You are a data scientist, Working to accurately pgenerate synthetic test data. You are determined to produce complete, useful test data.';
 
 	// ================================================================================
 	// UTILITIES
 
 	const promptGenerator = require('../lib/prompt-generator')({promptLibraryModulePath});
 
-	const formulatePromptList = (promptGenerator) => {
-		return ({ latestWisdom, elementSpecWorksheetJson } = {}) => {
-
-			let validationMessagesString = 'No errors found.';
-			if (latestWisdom.qtGetSurePath('validationMessage', {}).error) {
-				validationList.push(latestWisdom.validationMessage.error);
-				validationMessagesString = validationList.join('\n');
-			}
+	const formulatePromptList =
+		(promptGenerator) =>
+		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
 			return promptGenerator.iterativeGeneratorPrompt({
 				...latestWisdom,
-				validationMessagesString,
 				employerModuleName: moduleName,
 			});
 		};
-	};
-
 
 	// ================================================================================
 	// TALK TO AI
 
 	const accessSmartyPants = (args, callback) => {
-		let { promptList, systemPrompt, temperatureFactor } = args;
+		let { promptList, systemPrompt } = args;
 
 		const localCallback = (err, result) => {
 			callback('', result);
 		};
+		
+		let a;
 		promptList.unshift({ role: 'system', content: systemPrompt });
-		smartyPants.accessExternalResource(
-			{ promptList, temperatureFactor },
-			localCallback,
-		); //in this case, smartyPants is gpt4-completion
+		smartyPants.accessExternalResource({ promptList }, localCallback); //in this case, smartyPants is gpt4-completion
 	};
 
 	// ================================================================================
@@ -70,6 +55,7 @@ const moduleFunction = function (args = {}) {
 
 	const executeRequest = (args, callback) => {
 		const taskList = new taskListPlus();
+
 
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
@@ -109,7 +95,7 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { wisdom: rawWisdom, promptElements, latestWiisdom } = args;
+			const { wisdom: rawWisdom, promptElements, latestWisdom } = args;
 			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
@@ -117,8 +103,8 @@ const moduleFunction = function (args = {}) {
 				`\n\n\n${moduleName}---------------------------------------------------\n${rawWisdom}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
-			
-			const wisdom = {...latestWiisdom, ...extractionFunction(rawWisdom)};
+
+			const wisdom = {...latestWisdom, ...extractionFunction(rawWisdom)}; //overwrites generatedSynthData
 
 			next('', { ...args, wisdom });
 		});
@@ -134,39 +120,8 @@ const moduleFunction = function (args = {}) {
 			...args,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { wisdom } = args;
-
-			const lastThinkerWisdom = args.qtGetSurePath(
-				`thinkerResponses.${args.lastThinkerName}.wisdom.generatedSynthData`,
-			);
-
-			xLog.verbose(
-				`\n------------------------\nXML Refinement Explanation:\n${wisdom.explanation}\n------------------------`,
-			);
-
-			const refinementReportPartialTemplate = `
-====================================================================================================
-XML REFINEMENT PASS ${new Date().toLocaleString()}
-
-The Refined XML below was evaluated. Here are the details of the process that allowed for the errors...
-
-------------------------\nBefore Refining XML:\n${lastThinkerWisdom}\n------------------------
-
-------------------------\nRefined XML:\n${wisdom.generatedSynthData}\n------------------------
-
-------------------------\nXML Refinement Explanation:\n${wisdom.explanation}\n------------------------
-
-The Refined XML was submited to the validation API with this result:
-
-<!validationMessage!>
-
-------------------------
-			`;
-
-			callback(err, {
-				wisdom: { ...wisdom, isValid: true, refinementReportPartialTemplate },
-				args,
-			}); //valid a priori since it was just fixed
+			const { wisdom, rawAiResponseObject } = args;
+			callback(err, { wisdom, args });
 		});
 	};
 

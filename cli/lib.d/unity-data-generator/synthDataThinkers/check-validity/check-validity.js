@@ -96,7 +96,7 @@ const moduleFunction = function (args = {}) {
 		const synthData = args.qtGetSurePath('latestWisdom.generatedSynthData');
 
 		if (!synthData) {
-			throw `No XML received from previous Thinker (fix-problems) in ${moduleName}`;
+			throw `No synthData received from previous Thinker (fix-problems) in ${moduleName}`;
 		}
 
 		const refinementReportPartialTemplate = args.qtGetSurePath(
@@ -125,7 +125,7 @@ const moduleFunction = function (args = {}) {
 							/<!validationMessage!>/,
 							JSON.stringify(validationMessage, '', '\t'),
 						)
-					: `No refinement report was generated for inValid XML error ${validationMessage}`;
+					: `No refinement report was generated for inValid synthData error ${validationMessage}`;
 
 				xLog.saveProcessFile(
 					`${moduleName}_refinementReports.log`,
@@ -133,7 +133,7 @@ const moduleFunction = function (args = {}) {
 					{ append: true },
 				);
 
-				xLog.saveProcessFile(`${moduleName}_lastOneChecked.xml`, synthData, {
+				xLog.saveProcessFile(`${moduleName}_lastOneChecked.synthData`, synthData, {
 					append: false,
 				});
 
@@ -165,9 +165,9 @@ const moduleFunction = function (args = {}) {
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			const { wisdom, isValid } = args;
 			if (isValid) {
-				xLog.status(`XML passed validation check`);
+				xLog.status(`synthData passed validation check`);
 			} else {
-				xLog.status(`XML did NOT pass validation check`);
+				xLog.status(`synthData did NOT pass validation check`);
 			}
 			callback(err, { wisdom, args });
 		});
