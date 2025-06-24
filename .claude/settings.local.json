@@ -52,7 +52,8 @@
       "Bash(osascript:*)",
       "Bash(./vectorTools.js --dataProfile=ceds --queryString=\"An indication of whether the school or local education agency LEA\" --resultCount=3)",
       "Bash(unityCedsMatch:*)",
-      "Bash(cedsVectorTools:*)"
+      "Bash(cedsVectorTools:*)",
+      "Bash(unityDataGenerator:*)"
     ],
     "deny": []
   }

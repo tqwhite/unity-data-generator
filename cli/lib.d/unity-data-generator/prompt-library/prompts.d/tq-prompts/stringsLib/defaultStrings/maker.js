@@ -4,9 +4,10 @@
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
 
 //START OF moduleFunction() ============================================================
-const moduleFunction = ({ moduleName } = {}) => () => {
-
-	return `
+const moduleFunction =
+	({ moduleName } = {}) =>
+	({ dotD, passThroughParameters } = {}) => {
+		const promptTemplate = `
 Your task is to develop an XML object that will be used as testing data for an educational data portability standard. This will be based on fictitious people and schools that we are going to make up. We will need to create details for students and classrooms, teaching various conventionally American educational topics. The standard has objects for all aspects of education and we will need to create details for all of the objects. An Object Standard Definition is provided below in the form of a JSON object with a property for each element in the XML to be produced.
 
 GUIDANCE FOR GENERATING JUDGING CORRECT XML
@@ -41,15 +42,46 @@ RESULT FORMATTING INSTRUCTIONS
 
 Always wrap the XML part of your response in delimiters like this:
 
-<!frontDelimiter!>
+<!getgeneratedSynthData.frontDelimiter!>
  TESTING DATA XML GOES HERE
-<!backDelimiter!>
+<!getgeneratedSynthData.backDelimiter!>
 
 There should be *nothing* except well-formed XML between those delimiters.
 
 		`;
-};
+		
+
+			const extractionParameters = {
+				getgeneratedSynthData: {
+					frontDelimiter: `[START DATA SAMPLE]`,
+					backDelimiter: `[END DATA SAMPLE]`,
+				},
+				getExplanation: {
+					explanationFrontDelimiter: `[START EXPLANATIONS]`,
+					explanationBackDelimiter: `[END EXPLANATIONS]`,
+				},
+			};
+
+		const { extractionLibrary, defaultExtractionFunction } =
+			passThroughParameters;
+
+		
+		const extractionList=[
+			extractionLibrary.getgeneratedSynthData(extractionParameters),
+		];
+		const extractionFunction = defaultExtractionFunction({extractionList});
+		
+		const thinker='xml-maker';
+
+		const workingFunction = () => {
+			return { promptTemplate, extractionParameters, extractionFunction, thinker };
+		};
+
+		dotD == undefined || dotD.library.add(moduleName, workingFunction);
+
+		return { workingFunction };
+	};
 
 //END OF moduleFunction() ============================================================
 
-	module.exports = moduleFunction({ moduleName });
+module.exports = moduleFunction({ moduleName });

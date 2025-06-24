@@ -4,9 +4,10 @@
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
 
 //START OF moduleFunction() ============================================================
-const moduleFunction = ({ moduleName } = {}) => () => {
-
-	return `
+const moduleFunction =
+	({ moduleName } = {}) =>
+	({ dotD, passThroughParameters } = {}) => {
+		const promptTemplate = `
 This project is the creation of valid, realistic test data objects for use in education software data exchange. The task at hand is to finalize 'current XML object' below by evaluating it in comparison to its semantic specification and to correct any XML validation errors that have been reported.
 
 
@@ -93,23 +94,51 @@ To faciliate subsequent processing, please format your output according to these
 
 Wrap the resulting XML with delimiters like this:
 
-<!frontDelimiter!>
+<!getgeneratedSynthData.frontDelimiter!>
  MERGED XML GOES HERE
-<!backDelimiter!>
+<!getgeneratedSynthData.backDelimiter!>
 
 There should be *nothing* except well-formed XML between those delimiters.
 
 Explain your reasoning for each step of the processing. Wrap the explanatory text with delimiters like this:
 
-<!explanationFrontDelimiter!>
+<!getExplanation.explanationFrontDelimiter!>
 EXPLANATIONS GO HERE
-<!explanationBackDelimiter!>
-
+<!getExplanation.explanationBackDelimiter!>
 
 
 		`;
-};
+			const extractionParameters = {
+				getgeneratedSynthData: {
+					frontDelimiter: `[START DATA SAMPLE]`,
+					backDelimiter: `[END DATA SAMPLE]`,
+				},
+				getExplanation: {
+					explanationFrontDelimiter: `[START EXPLANATIONS]`,
+					explanationBackDelimiter: `[END EXPLANATIONS]`,
+				},
+			};
+
+		const { extractionLibrary, defaultExtractionFunction } =
+			passThroughParameters;
+
+		const extractionList=[
+			extractionLibrary.getgeneratedSynthData(extractionParameters),
+			extractionLibrary.getExplanation(extractionParameters),
+		];
+		const extractionFunction = defaultExtractionFunction({extractionList});
+		
+		const thinker='fix-problems';
+
+		const workingFunction = () => {
+			return { promptTemplate, extractionParameters, extractionFunction, thinker };
+		};
+
+		dotD == undefined || dotD.library.add(moduleName, workingFunction);
+
+		return { workingFunction };
+	};
 
 //END OF moduleFunction() ============================================================
 
-	module.exports = moduleFunction({ moduleName });
+module.exports = moduleFunction({ moduleName });

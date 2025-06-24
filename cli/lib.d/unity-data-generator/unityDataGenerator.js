@@ -46,7 +46,8 @@ const moduleName = path.basename(__filename, '.js');
 // process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
 const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName: moduleName,
-	applicationBasePath
+	applicationBasePath,
+	applicationControls: ['--promptLibrary'],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 // =============================================================================
 // MAIN EXECUTION FUNCTION

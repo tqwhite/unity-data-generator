@@ -20,15 +20,14 @@ const moduleFunction =
 			.qtGetSurePath('values.alternateStringLib', [])
 			.qtLast();
 
-		alternateStringLib &&
-			xLog.status(
-				`using alternate string library '${alternateStringLib}' in ${moduleName}`,
-			);
-		
+		const getgeneratedSynthData = (extractionParameters) => (inString) => {
 
-		const getgeneratedSynthData = (inString) => {
-			const startDelimiter = '[START DATA SAMPLE]';
-			const endDelimiter = '[END DATA SAMPLE]';
+
+			const { frontDelimiter: startDelimiter, backDelimiter: endDelimiter } =
+				extractionParameters.getgeneratedSynthData;
+
+			// 			const startDelimiter = '[START DATA SAMPLE]';
+			// 			const endDelimiter = '[END DATA SAMPLE]';
 
 			function escapeRegExp(string) {
 				return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escapes special characters for use in a regex
@@ -43,17 +42,25 @@ const moduleFunction =
 			const match = inString.match(regex);
 
 			if (match) {
-				const result=match[1];
-				const xmlContent = result.substring(result.indexOf('<'), result.lastIndexOf('>') + 1);
-				return {generatedSynthData:xmlContent}
+				const result = match[1];
+				const xmlContent = result.substring(
+					result.indexOf('<'),
+					result.lastIndexOf('>') + 1,
+				);
+				return { generatedSynthData: xmlContent };
 			} else {
-				return {generatedSynthData:'XML Missing in Response'}
+				return { generatedSynthData: 'XML Missing in Response' };
 			}
 		};
 
-		const getExplanation = (inString) => {
-			const startDelimiter = '[START EXPLANATIONS]';
-			const endDelimiter = '[END EXPLANATIONS]';
+		const getExplanation = (extractionParameters) => (inString) => {
+			const {
+				explanationFrontDelimiter: startDelimiter,
+				explanationBackDelimiter: endDelimiter,
+			} = extractionParameters.getExplanation;
+
+			// 			const startDelimiter = '[START EXPLANATIONS]';
+			// 			const endDelimiter = '[END EXPLANATIONS]';
 
 			function escapeRegExp(string) {
 				return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escapes special characters for use in a regex
@@ -69,57 +76,71 @@ const moduleFunction =
 
 			if (match) {
 				const xmlContent = match[1].trim();
-				return {explanation:xmlContent}
+				return { explanation: xmlContent };
 			} else {
-				return {explanation:'No explanation found.'}
+				return { explanation: 'No explanation found.' };
 			}
 		};
-		
 
-		const extractionFunction = (extractionList=[])=>(inString) => {
-			const outObject={};
-			
-			extractionList.forEach(extractionFunc=>{
-				const result=extractionFunc(inString);
-				Object.assign(outObject, result); //mutates outObject
-			});
-			return outObject;
-		};
-		
+		const extractionFunction =
+			({ extractionList }) =>
+			(inString) => {
+				const outObject = {};
 
+				extractionList.forEach((extractionFunc) => {
+					const result = extractionFunc(inString);
+					Object.assign(outObject, result); //mutates outObject
+				});
+				return outObject;
+			};
+
+		// identify the library to use
 		const stringsVariation = alternateStringLib
 			? alternateStringLib
 			: `defaultStrings`;
-		const workingFunction = () => {
-			return {
-				'xml-maker': {
-					extractionFunction:extractionFunction([getgeneratedSynthData]),
-					extractionParameters: {
-						frontDelimiter: `[START DATA SAMPLE]`,
-						backDelimiter: `[END DATA SAMPLE]`,
-					},
-					promptTemplate: require(`./stringsLib/${stringsVariation}/maker`)(),
-				},
-				'xml-review': {
-					extractionFunction:extractionFunction([getgeneratedSynthData]),
-					extractionParameters: {
-						frontDelimiter: `[START DATA SAMPLE]`,
-						backDelimiter: `[END DATA SAMPLE]`,
-					},
-					promptTemplate: require(`./stringsLib/${stringsVariation}/review`)(),
-				},
 
-				'fix-problems': {
-					extractionFunction:extractionFunction([getgeneratedSynthData, getExplanation]),
-					extractionParameters: {
-						frontDelimiter: `[START DATA SAMPLE]`,
-						backDelimiter: `[END DATA SAMPLE]`,
-						explanationFrontDelimiter: `[START EXPLANATIONS]`,
-						explanationBackDelimiter: `[END EXPLANATIONS]`,
-					},
-					promptTemplate: require(`./stringsLib/${stringsVariation}/fix`)(),
-				},
-			};
+		// Log which string library is being used
+		xLog.status(`Using string library: ${stringsVariation}`);
+
+		alternateStringLib &&
+			xLog.status(
+				`using alternate string library '${alternateStringLib}' in ${moduleName}`,
+			);
+
+		const passThroughParameters = {
+			extractionLibrary: {
+				getgeneratedSynthData,
+				getExplanation,
+			},
+			defaultExtractionFunction: extractionFunction,
+		};
+
+		const stringMakers = require('qtools-library-dot-d')({
+			libraryName: 'stringMakers',
+		});
+
+		const promptLibraryName = commandLineParameters
+			.qtGetSurePath('values.promptLibrary', [])
+			.qtLast('defaultStrings');
+		const promptLibraryPath = path.join(
+			__dirname,
+			'stringsLib',
+			promptLibraryName,
+		);
+		stringMakers.setLibraryPath(promptLibraryPath);
+		stringMakers.loadModules({ passThroughParameters });
+		stringMakers.seal();
+
+		const workingFunction = () => {
+			const result = Object.keys(stringMakers)
+				.map((name) => stringMakers[name]())
+				.filter((item) => typeof item == 'object' && item.thinker)
+				.reduce((result, item) => {
+					result[item.thinker] = item;
+					return result;
+				}, {});
+
+			return result;
 		};
 
 		dotD.library.add(moduleName, workingFunction);

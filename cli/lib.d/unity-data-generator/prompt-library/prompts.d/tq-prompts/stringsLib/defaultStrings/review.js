@@ -4,9 +4,10 @@
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
 
 //START OF moduleFunction() ============================================================
-const moduleFunction = ({ moduleName } = {}) => () => {
-
-	return `
+const moduleFunction =
+	({ moduleName } = {}) =>
+	({ dotD, passThroughParameters } = {}) => {
+		const promptTemplate = `
 This is the quality control step in a process that is generating XML Test Data that matches a specification and has fictitious data values that resemble data that would occur in the real world. 
 
 The requirements for the XML are specified in the Object Standard Definition below. Your goal is to examine the XML and make sure it is of the highest quality.
@@ -47,16 +48,44 @@ RESULT FORMATTING INSTRUCTIONS
 
 Wrap the finished XML with delimiters like this:
 
-<!frontDelimiter!>
+<!getgeneratedSynthData.frontDelimiter!>
  MERGED XML GOES HERE
-<!backDelimiter!>
+<!getgeneratedSynthData.backDelimiter!>
 
 There should be *nothing* except well-formed XML between those delimiters.
 
 
 		`;
-};
+
+			const extractionParameters = {
+				getgeneratedSynthData: {
+					frontDelimiter: `[START DATA SAMPLE]`,
+					backDelimiter: `[END DATA SAMPLE]`,
+				},
+				getExplanation: {
+					explanationFrontDelimiter: `[START EXPLANATIONS]`,
+					explanationBackDelimiter: `[END EXPLANATIONS]`,
+				},
+			};
+		const { extractionLibrary, defaultExtractionFunction } =
+			passThroughParameters;
+
+		const extractionList=[
+			extractionLibrary.getgeneratedSynthData(extractionParameters),
+		];
+		const extractionFunction = defaultExtractionFunction({extractionList});
+		
+		const thinker='xml-review';
+
+		const workingFunction = () => {
+			return { promptTemplate, extractionParameters, extractionFunction, thinker };
+		};
+
+		dotD == undefined || dotD.library.add(moduleName, workingFunction, thinker);
+
+		return { workingFunction };
+	};
 
 //END OF moduleFunction() ============================================================
 
-	module.exports = moduleFunction({ moduleName });
+module.exports = moduleFunction({ moduleName });
