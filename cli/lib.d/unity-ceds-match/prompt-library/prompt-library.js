@@ -28,7 +28,7 @@ const moduleFunction =
 				promptLibrary = Object.assign(promptLibrary, promptObjects[name]());
 			});
 
-		return promptLibrary; //tq-prompts, tq-prompts-rev2
+		return promptLibrary; //udg-v1, udg-v1-rev2
 	};
 
 //END OF moduleFunction() ============================================================

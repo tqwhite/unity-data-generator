@@ -109,9 +109,9 @@ pipeRunner(taskList.getList(), initialData, (err, args) => {
 ## Key Files in the System
 
 ### **Prompt Library Files:**
-- Main entry: `/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/unity-data-generator/prompt-library/prompts.d/tq-prompts/tq-prompts.js`
-- String libraries: `/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/unity-data-generator/prompt-library/prompts.d/tq-prompts/stringsLib/defaultStrings/`
-- Alternate strings: `/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/unity-data-generator/prompt-library/prompts.d/tq-prompts/stringsLib/rev2/`
+- Main entry: `/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/unity-data-generator/prompt-library/prompts.d/udg-v1/udg-v1.js`
+- String libraries: `/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/unity-data-generator/prompt-library/prompts.d/udg-v1/stringsLib/defaultStrings/`
+- Alternate strings: `/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/unity-data-generator/prompt-library/prompts.d/udg-v1/stringsLib/rev2/`
 
 ### **Thinker Implementations:**
 - `/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/code/cli/lib.d/unity-data-generator/synthDataThinkers/xml-maker/xml-maker.js`
@@ -126,13 +126,13 @@ pipeRunner(taskList.getList(), initialData, (err, args) => {
 
 There are **three conflicting places** where delimiters are defined:
 
-### **1. Hardcoded in Extraction Functions (tq-prompts.js:30-31, 55-56):**
+### **1. Hardcoded in Extraction Functions (udg-v1.js:30-31, 55-56):**
 ```javascript
 const startDelimiter = '[START DATA SAMPLE]';
 const endDelimiter = '[END DATA SAMPLE]';
 ```
 
-### **2. In extractionParameters (tq-prompts.js:101-102, 109-110, 118-121):**
+### **2. In extractionParameters (udg-v1.js:101-102, 109-110, 118-121):**
 ```javascript
 extractionParameters: {
     frontDelimiter: `[START DATA SAMPLE]`,
@@ -186,7 +186,7 @@ const { extractionFunction } = promptElements;
 const { generatedSynthData } = extractionFunction(rawWisdom);
 ```
 
-### **Extraction Function Patterns in tq-prompts.js:**
+### **Extraction Function Patterns in udg-v1.js:**
 
 #### **xml-maker & xml-review:**
 ```javascript
