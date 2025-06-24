@@ -12,7 +12,7 @@ const fs = require('fs');
 //START OF moduleFunction() ============================================================
 const moduleFunction =
 	({ moduleName } = {}) =>
-	({ dotD ,passThroughParameters:inboundPassThrough}) => {
+	({ passThroughParameters:inboundPassThrough}) => {
 
 		const {selectedLibrary}=inboundPassThrough
 
@@ -133,9 +133,7 @@ const moduleFunction =
 			return result;
 		};
 
-		dotD.library.add(moduleName, workingFunction);
-
-		return { workingFunction };
+		return workingFunction;
 	};
 
 //END OF moduleFunction() ============================================================

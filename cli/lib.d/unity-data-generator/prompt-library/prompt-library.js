@@ -23,27 +23,11 @@ const moduleFunction =
 		
 		xLog.status(`Running prompt application: ${promptApplicationName}`);
 
-		promptObjects.setLibraryPath(path.join(__dirname, 'prompts.d'));
 
 		const passThroughParameters = { promptApplicationName };
-		promptObjects.loadModules({ passThroughParameters });
-		promptObjects.seal(); //make the library immutable
-
-		// Helper function to list available libraries
-		const getAvailableLibraries = () => {
-			return Object.keys(promptObjects).filter((name) => name.match(/prompts/));
-		};
-
-		// Validate library exists
-		if (!promptObjects[promptApplicationName]) {
-			const available = getAvailableLibraries();
-			xLog.error(`Prompt library '${promptApplicationName}' not found.`);
-			xLog.error(`Available libraries: ${available.join(', ')}`);
-			throw new Error(`Invalid prompt library: ${promptApplicationName}`);
-		}
-
+		
 		// Load only the selected library
-		const promptLibrary = promptObjects[promptApplicationName]();
+		const promptLibrary = require(`./prompts.d/${promptApplicationName}`)({passThroughParameters})();;
 
 		return promptLibrary;
 	};

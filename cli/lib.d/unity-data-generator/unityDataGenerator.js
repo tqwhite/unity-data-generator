@@ -31,8 +31,12 @@ const fs = require('fs');
 
 // --------------------------------------------------------------------------------
 // FIND PROJECT ROOT
-const findProjectRoot=({rootFolderName='system', closest=true}={})=>__dirname.replace(new RegExp(`^(.*${closest?'':'?'}\/${rootFolderName}).*$`), "$1");
-const applicationBasePath=findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
+const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
+	__dirname.replace(
+		new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
+		'$1',
+	);
+const applicationBasePath = findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
 
 // =============================================================================
 // MODULE NAME DETERMINATION
@@ -47,115 +51,135 @@ const moduleName = path.basename(__filename, '.js');
 const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
-	applicationControls: ['--thoughtProcess', '--promptLibrary', '--promptVersion'],
+	applicationControls: [
+		'--thoughtProcess',
+		'--promptLibrary',
+		'--promptVersion',
+	],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 // =============================================================================
 // MAIN EXECUTION FUNCTION
 
 (async () => {
+	// =============================================================================
+	// INITIALIZATION
 
-  // =============================================================================
-  // INITIALIZATION
+	// Access global variables set up by 'initAtp'
+	const { xLog, getConfig, commandLineParameters } = process.global;
 
-  // Access global variables set up by 'initAtp'
-  const { xLog, getConfig, commandLineParameters } = process.global;
+	// Get configuration specific to this module
+	let { outputsPath } = getConfig(moduleName);
 
-  // Get configuration specific to this module
-  let { outputsPath } = getConfig(moduleName);
+	// Retrieve the output file path from command-line parameters
+	const thoughtProcessName = commandLineParameters.qtGetSurePath(
+		'values.thoughtProcess[0]',
+		'UDG_Thought_Process',
+	);
 
-  // Retrieve the output file path from command-line parameters
-  const thoughtProcessName = commandLineParameters.qtGetSurePath('values.thoughtProcess[0]', 'UDG_Thought_Process');
-  
-  // Get configuration specific to qTools-AI
-  let { thoughtProcessConversationList } = getConfig(thoughtProcessName);
-  
-  // If no thoughtProcessName, show error and exit
-  if (!thoughtProcessConversationList) {
-    xLog.error(`ERROR: Thought process '${thoughtProcessName}' is not in the configuration file`);
-    process.exit(1);
-  }
-  
-  xLog.status(`Using thought process: ${thoughtProcessName}`);
+	// Get configuration specific to qTools-AI
+	let { thoughtProcessConversationList } = getConfig(thoughtProcessName);
 
-  // =============================================================================
-  // COMMAND-LINE PARAMETERS PROCESSING
+	// If no thoughtProcessName, show error and exit
+	if (!thoughtProcessConversationList) {
+		xLog.error(
+			`ERROR: Thought process '${thoughtProcessName}' is not in the configuration file`,
+		);
+		process.exit(1);
+	}
 
-  // Retrieve the output file path from command-line parameters
-  const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
+	xLog.status(`Using thought process: ${thoughtProcessName}`);
 
-  // If an output file is specified, adjust outputsPath accordingly
-  if (outFile) {
-    outputsPath = path.dirname(outFile);
-    fs.mkdirSync(outputsPath, { recursive: true });
-  }
+	// =============================================================================
+	// COMMAND-LINE PARAMETERS PROCESSING
 
-  // Get the list of target object names from command-line parameters
-  let targetObjectNameList = commandLineParameters.qtGetSurePath('values.elements', []);
+	// Retrieve the output file path from command-line parameters
+	const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
 
-  // If no target objects are specified, use 'fileList' from command-line parameters
-  if (!targetObjectNameList.length) {
-    targetObjectNameList = commandLineParameters.qtGetSurePath('fileList', []);
-  }
+	// If an output file is specified, adjust outputsPath accordingly
+	if (outFile) {
+		outputsPath = path.dirname(outFile);
+		fs.mkdirSync(outputsPath, { recursive: true });
+	}
 
-  // If no target objects and no 'listElements' switch, show error and exit
-  if (!targetObjectNameList.length && !commandLineParameters.switches.listElements) {
-    xLog.error('Target element name is required. Try -help or -listElements');
-    process.exit(1);
-  }
+	// Get the list of target object names from command-line parameters
+	let targetObjectNameList = commandLineParameters.qtGetSurePath(
+		'values.elements',
+		[],
+	);
 
-  // =============================================================================
-  // OUTPUT FILE DETERMINATION
+	// If no target objects are specified, use 'fileList' from command-line parameters
+	if (!targetObjectNameList.length) {
+		targetObjectNameList = commandLineParameters.qtGetSurePath('fileList', []);
+	}
 
-  // Convert targetObjectNameList to a string for use in file names
-  const targetObjectNamesString = Array.isArray(targetObjectNameList)
-    ? targetObjectNameList.join('_')
-    : targetObjectNameList;
+	// If no target objects and no 'listElements' switch, show error and exit
+	if (
+		!targetObjectNameList.length &&
+		!commandLineParameters.switches.listElements
+	) {
+		xLog.error('Target element name is required. Try -help or -listElements');
+		process.exit(1);
+	}
 
-  // Determine the output file path
-  const outputFilePath = outFile || path.join(outputsPath, `${targetObjectNamesString}.synthData`);
+	// =============================================================================
+	// OUTPUT FILE DETERMINATION
 
-  // Ensure the output directory exists
-  const outputDir = path.dirname(outputFilePath);
-  fs.mkdirSync(outputDir, { recursive: true });
+	// Convert targetObjectNameList to a string for use in file names
+	const targetObjectNamesString = Array.isArray(targetObjectNameList)
+		? targetObjectNameList.join('_')
+		: targetObjectNameList;
 
-  // =============================================================================
-  // JINA INTERACTION
+	// Determine the output file path
+	const outputFilePath =
+		outFile || path.join(outputsPath, `${targetObjectNamesString}.synthData`);
 
-  // Initialize Jina and set up facilitators
-  const { findTheAnswer, makeFacilitators } = initAtp({configName:moduleName});
-  const facilitators = makeFacilitators({ thoughtProcessConversationList });
+	// Ensure the output directory exists
+	const outputDir = path.dirname(outputFilePath);
+	fs.mkdirSync(outputDir, { recursive: true });
 
-  // Interact with Jina to get wisdom
-  const wisdom = await findTheAnswer({
-    facilitators,
-    targetObjectNameList,
-    debugLogName: targetObjectNamesString,
-  })
-//   .catch(err=>{
-//   	if (err){
-//   		xLog.error(`Error: ${err.toString()}. Exit. No Output.`);
-//   		process.exit(1);
-//   	}
-//   });
+	// =============================================================================
+	// JINA INTERACTION
 
-  // Get the latest refined XML
-  const finalSynthData = wisdom.generatedSynthData;
+	// Initialize Jina and set up facilitators
+	const { findTheAnswer, makeFacilitators } = initAtp({
+		configName: moduleName,
+	});
+	const facilitators = makeFacilitators({ thoughtProcessConversationList });
 
-  // =============================================================================
-  // OUTPUT HANDLING
+	// Interact with Jina to get wisdom
+	const wisdom = await findTheAnswer({
+		facilitators,
+		targetObjectNameList,
+		debugLogName: targetObjectNamesString,
+	});
+	//   .catch(err=>{
+	//   	if (err){
+	//   		xLog.error(`Error: ${err.toString()}. Exit. No Output.`);
+	//   		process.exit(1);
+	//   	}
+	//   });
 
-  // Optionally echo the refined XML to the console
-  if (commandLineParameters.switches.echoAlso) {
-    xLog.result(`\n\n${finalSynthData}\n\n`);
-  }
+	// Get the latest refined XML
+	const finalSynthData = wisdom.generatedSynthData;
 
-  // Save the process file (for logging or debugging)
-  xLog.saveProcessFile(`${moduleName}_${path.basename(outputFilePath)}`, finalSynthData);
+	// =============================================================================
+	// OUTPUT HANDLING
 
-  // Write the refined XML to the output file
-  fs.writeFileSync(outputFilePath, finalSynthData, 'utf-8');
+	// Optionally echo the refined XML to the console
+	if (commandLineParameters.switches.echoAlso) {
+		xLog.result(`\n\n${finalSynthData}\n\n`);
+	}
 
-  // Log the output file path
-  xLog.status(`Output file path: ${outputFilePath}`);
+	// Save the process file (for logging or debugging)
+	xLog.saveProcessFile(
+		`${moduleName}_${path.basename(outputFilePath)}`,
+		finalSynthData,
+	);
 
+	// Write the refined XML to the output file
+	fs.writeFileSync(outputFilePath, finalSynthData, 'utf-8');
+
+	// Log the output file path
+	xLog.status(`Detail logs path: ${xLog.getProcessFilesDirectory()}`);
+	xLog.status(`Output file path: ${outputFilePath}`);
 })(); // End of main execution function
