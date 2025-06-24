@@ -55,8 +55,8 @@ const moduleFunction =
 
 		const getExplanation = (extractionParameters) => (inString) => {
 			const {
-				explanationFrontDelimiter: startDelimiter,
-				explanationBackDelimiter: endDelimiter,
+				frontDelimiter: startDelimiter,
+				backDelimiter: endDelimiter,
 			} = extractionParameters.getExplanation;
 
 			// 			const startDelimiter = '[START EXPLANATIONS]';

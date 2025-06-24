@@ -110,9 +110,9 @@ Please follow these steps:
 
 - **Explanation**: Provide your reasoning for each processing step, wrapped with these delimiters:
 
-<!explanationFrontDelimiter!>
+<!frontDelimiter!>
 EXPLANATIONS GO HERE
-<!explanationBackDelimiter!>
+<!backDelimiter!>
 
 ---
 

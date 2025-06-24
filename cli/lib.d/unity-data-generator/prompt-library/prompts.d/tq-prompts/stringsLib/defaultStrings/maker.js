@@ -57,8 +57,8 @@ There should be *nothing* except well-formed XML between those delimiters.
 					backDelimiter: `[END DATA SAMPLE]`,
 				},
 				getExplanation: {
-					explanationFrontDelimiter: `[START EXPLANATIONS]`,
-					explanationBackDelimiter: `[END EXPLANATIONS]`,
+					frontDelimiter: `[START EXPLANATIONS]`,
+					backDelimiter: `[END EXPLANATIONS]`,
 				},
 			};
 

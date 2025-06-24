@@ -102,9 +102,9 @@ There should be *nothing* except well-formed XML between those delimiters.
 
 Explain your reasoning for each step of the processing. Wrap the explanatory text with delimiters like this:
 
-<!getExplanation.explanationFrontDelimiter!>
+<!getExplanation.frontDelimiter!>
 EXPLANATIONS GO HERE
-<!getExplanation.explanationBackDelimiter!>
+<!getExplanation.backDelimiter!>
 
 
 		`;
@@ -114,8 +114,8 @@ EXPLANATIONS GO HERE
 					backDelimiter: `[END DATA SAMPLE]`,
 				},
 				getExplanation: {
-					explanationFrontDelimiter: `[START EXPLANATIONS]`,
-					explanationBackDelimiter: `[END EXPLANATIONS]`,
+					frontDelimiter: `[START EXPLANATIONS]`,
+					backDelimiter: `[END EXPLANATIONS]`,
 				},
 			};
 
