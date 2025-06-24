@@ -75,6 +75,12 @@ const moduleFunction = function (args = {}) {
 					'\t',
 				);
 			}
+			
+			if (!elementSpecWorksheetJson){
+				xLog.error(`No element '${targetObjectName}' was found in specification data source`);
+				next(`No element '${targetObjectName}' was found in specification data source`, { ...args, wisdom:{elementSpecWorksheetJson} });
+				return;
+			}
 
 			next('', { ...args, wisdom:{elementSpecWorksheetJson} });
 		});
