@@ -7,51 +7,47 @@ const path = require('path');
 //START OF moduleFunction() ============================================================
 
 const moduleFunction =
-	({ config, commandLineParameters, moduleName, promptLibraryName } = {}) =>
+	({ config, commandLineParameters, moduleName } = {}) =>
 	(args = {}) => {
-		const { xLog } = process.global;
-		
+		const { xLog, commandLineParameters, getConfig } = process.global;
+		const unityConfig = getConfig('unityDataGenerator');
+
+		const promptApplicationName = commandLineParameters.qtGetSurePath?.(
+			'values.promptLibrary[0]',
+			unityConfig.defaultPromptLibrary,
+		);
+
 		const promptObjects = require('qtools-library-dot-d')({
 			libraryName: 'promptObjects',
 		});
+		
+		xLog.status(`Running prompt application: ${promptApplicationName}`);
+
 		promptObjects.setLibraryPath(path.join(__dirname, 'prompts.d'));
 
-		const passThroughParameters = {};
+		const passThroughParameters = { promptApplicationName };
 		promptObjects.loadModules({ passThroughParameters });
 		promptObjects.seal(); //make the library immutable
-		
+
 		// Helper function to list available libraries
 		const getAvailableLibraries = () => {
-			return Object.keys(promptObjects)
-				.filter((name) => name.match(/prompts/));
+			return Object.keys(promptObjects).filter((name) => name.match(/prompts/));
 		};
 
-		// Get library selection from command line, parameter, config, or default
-		const { commandLineParameters: clp, getConfig } = process.global;
-		const unityConfig = getConfig && getConfig('unityDataGenerator');
-		const selectedLibrary = clp?.qtGetSurePath?.('values.promptLibrary[0]') 
-			|| promptLibraryName 
-			|| unityConfig?.defaultPromptLibrary
-			|| 'tq-prompts'; // default fallback
-
 		// Validate library exists
-		if (!promptObjects[selectedLibrary]) {
+		if (!promptObjects[promptApplicationName]) {
 			const available = getAvailableLibraries();
-			xLog && xLog.error && xLog.error(`Prompt library '${selectedLibrary}' not found.`);
-			xLog && xLog.error && xLog.error(`Available libraries: ${available.join(', ')}`);
-			throw new Error(`Invalid prompt library: ${selectedLibrary}`);
+			xLog.error(`Prompt library '${promptApplicationName}' not found.`);
+			xLog.error(`Available libraries: ${available.join(', ')}`);
+			throw new Error(`Invalid prompt library: ${promptApplicationName}`);
 		}
 
-		// Log which library is being used
-		xLog && xLog.status && xLog.status(`Using prompt library: ${selectedLibrary}`);
-
 		// Load only the selected library
-		const promptLibrary = promptObjects[selectedLibrary]();
+		const promptLibrary = promptObjects[promptApplicationName]();
 
 		return promptLibrary;
 	};
 
 //END OF moduleFunction() ============================================================
-
 
 module.exports = moduleFunction({ moduleName });

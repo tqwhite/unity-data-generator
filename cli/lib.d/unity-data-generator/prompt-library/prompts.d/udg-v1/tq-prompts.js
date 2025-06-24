@@ -12,13 +12,19 @@ const fs = require('fs');
 //START OF moduleFunction() ============================================================
 const moduleFunction =
 	({ moduleName } = {}) =>
-	({ dotD }) => {
+	({ dotD ,passThroughParameters:inboundPassThrough}) => {
+
+		const {selectedLibrary}=inboundPassThrough
+
 		const { xLog, getConfig, rawConfig, commandLineParameters } =
 			process.global;
 		const localConfig = getConfig(moduleName); //moduleName is closure
-		const alternateStringLib = commandLineParameters
-			.qtGetSurePath('values.alternateStringLib', [])
-			.qtLast();
+		
+		const promptLibraryName = commandLineParameters
+			.qtGetSurePath('values.promptLibrary', [])
+			.qtLast('defaultStrings');
+			
+		xLog.status(`Using prompt library: ${promptLibraryName}`);
 
 		const getgeneratedSynthData = (extractionParameters) => (inString) => {
 
@@ -94,19 +100,6 @@ const moduleFunction =
 				return outObject;
 			};
 
-		// identify the library to use
-		const stringsVariation = alternateStringLib
-			? alternateStringLib
-			: `defaultStrings`;
-
-		// Log which string library is being used
-		xLog.status(`Using string library: ${stringsVariation}`);
-
-		alternateStringLib &&
-			xLog.status(
-				`using alternate string library '${alternateStringLib}' in ${moduleName}`,
-			);
-
 		const passThroughParameters = {
 			extractionLibrary: {
 				getgeneratedSynthData,
@@ -119,9 +112,6 @@ const moduleFunction =
 			libraryName: 'stringMakers',
 		});
 
-		const promptLibraryName = commandLineParameters
-			.qtGetSurePath('values.promptLibrary', [])
-			.qtLast('defaultStrings');
 		const promptLibraryPath = path.join(
 			__dirname,
 			'stringsLib',

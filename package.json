@@ -12,11 +12,11 @@
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
-    "express-rate-limit": "^7.5.0",
-    "qtools-asynchronous-pipe-plus": "^1.0.4",
+    "express-rate-limit": "^7.5.1",
+    "qtools-asynchronous-pipe-plus": "^1.0.5",
     "qtools-config-file-processor": "^1.0.18",
     "qtools-functional-library": "^2.0.4",
-    "qtools-library-dot-d": "^1.0.4",
-    "qtools-parse-command-line": "^1.0.8"
+    "qtools-library-dot-d": "^1.0.8",
+    "qtools-parse-command-line": "^1.0.9"
   }
 }
