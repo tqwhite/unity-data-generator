@@ -1,0 +1,11 @@
+{
+  "name": "jedx-v1",
+  "version": "1.0.0",
+  "description": "organizing for gpt prompt string manufacture",
+  "main": "jedx-v1",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}

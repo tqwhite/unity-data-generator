@@ -47,7 +47,7 @@ const moduleName = path.basename(__filename, '.js');
 const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
-	applicationControls: ['--promptLibrary'],
+	applicationControls: ['--promptLibrary', '--promptVersion'],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 // =============================================================================
 // MAIN EXECUTION FUNCTION
