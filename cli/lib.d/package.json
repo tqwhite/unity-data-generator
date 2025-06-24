@@ -10,12 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "ajv": "^8.17.1",
-    "fast-xml-parser": "^4.5.1",
-    "html-entities": "^2.5.2",
-    "qtools-config-file-processor": "^1.0.17",
-    "qtools-functional-library": "^2.0.1",
-    "qtools-parse-command-line": "^1.0.8",
-    "uuid": "^11.0.5",
+    "fast-xml-parser": "^5.2.5",
+    "html-entities": "^2.6.0",
+    "qtools-config-file-processor": "^1.0.18",
+    "qtools-functional-library": "^2.0.4",
+    "qtools-parse-command-line": "^1.0.9",
+    "uuid": "^11.1.0",
     "xlsx": "^0.18.5",
     "xml2js": "^0.6.2",
     "xml2js-xpath": "^0.13.0"

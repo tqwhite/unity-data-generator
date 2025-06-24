@@ -9,6 +9,6 @@
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
-    "qtools-functional-library": "^1.0.10"
+    "qtools-functional-library": "^2.0.4"
   }
 }

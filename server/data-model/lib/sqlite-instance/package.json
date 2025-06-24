@@ -9,7 +9,7 @@
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
-    "better-sqlite3": "^11.9.1",
+    "better-sqlite3": "^12.1.0",
     "sqlstring-sqlite": "^0.1.1"
   }
 }

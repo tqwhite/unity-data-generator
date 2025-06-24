@@ -9,7 +9,7 @@
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
-    "openai": "^4.52.7",
+    "openai": "^5.7.0",
     "punycode": "^2.3.1"
   }
 }

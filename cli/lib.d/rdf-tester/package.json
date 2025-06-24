@@ -9,7 +9,7 @@
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
-    "n3": "^1.16.3",
+    "n3": "^1.26.0",
     "rdf-parse": "^4.0.0",
     "rdfxml-streaming-parser": "^3.0.1",
     "sparql-engine": "^0.8.3",

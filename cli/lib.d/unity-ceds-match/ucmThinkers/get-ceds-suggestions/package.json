@@ -9,7 +9,7 @@
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.7.9",
+    "axios": "^1.10.0",
     "https": "^1.0.0"
   }
 }

@@ -119,6 +119,14 @@ const moduleFunction =
 		taskList.push((args, next) => {
 			const localCallback = (err, accessPointsDotD) => {
 				if (err) {
+console.log(`\n=-=============   err  ========================= [data-model.js.]\n`);
+
+
+console.dir({['err']:err}, { showHidden: false, depth: 4, colors: true });
+console.trace();
+console.log(`\n=-=============   err  ========================= [data-model.js.]\n`);
+
+
 					next(err, args); //next('skipRestOfPipe', args);
 					return;
 				}

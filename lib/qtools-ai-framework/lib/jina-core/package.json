@@ -9,6 +9,6 @@
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
-    "qtools-asynchronous-pipe-plus": "^1.0.2"
+    "qtools-asynchronous-pipe-plus": "^1.0.5"
   }
 }
