@@ -47,7 +47,7 @@ const moduleName = path.basename(__filename, '.js');
 const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
-	applicationControls: ['--promptLibrary', '--promptVersion'],
+	applicationControls: ['--thoughtProcess', '--promptLibrary', '--promptVersion'],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 // =============================================================================
 // MAIN EXECUTION FUNCTION
@@ -62,9 +62,20 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 
   // Get configuration specific to this module
   let { outputsPath } = getConfig(moduleName);
+
+  // Retrieve the output file path from command-line parameters
+  const thoughtProcessName = commandLineParameters.qtGetSurePath('values.thoughtProcess[0]', 'UDG_Thought_Process');
   
   // Get configuration specific to qTools-AI
-  let { thoughtProcessConversationList } = getConfig('App_Specific_Thought_Process');
+  let { thoughtProcessConversationList } = getConfig(thoughtProcessName);
+  
+  // If no thoughtProcessName, show error and exit
+  if (!thoughtProcessConversationList) {
+    xLog.error(`ERROR: Thought process '${thoughtProcessName}' is not in the configuration file`);
+    process.exit(1);
+  }
+  
+  xLog.status(`Using thought process: ${thoughtProcessName}`);
 
   // =============================================================================
   // COMMAND-LINE PARAMETERS PROCESSING
