@@ -55,6 +55,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'--thoughtProcess',
 		'--promptLibrary',
 		'--promptVersion',
+		'-showElements'
 	],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 // =============================================================================

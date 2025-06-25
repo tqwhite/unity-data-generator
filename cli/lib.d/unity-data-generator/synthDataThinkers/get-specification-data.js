@@ -48,6 +48,8 @@ const moduleFunction = function (args = {}) {
 				xLog.error(`No specifications found. ${spreadsheetPath} does not exist`);
 				throw `No specifications found. ${spreadsheetPath} does not exist`;
 			}
+			
+			xLog.status(`Found specification data ${spreadsheetPath}`);
 
 			const workbook = xlsx.readFile(spreadsheetPath);
 			const worksheetNames = workbook.SheetNames;
@@ -56,7 +58,9 @@ const moduleFunction = function (args = {}) {
 				xLog.status(worksheetNames.join('\n'));
 				process.exit();
 			}
-
+			
+			commandLineParameters.switches.showElements && xLog.status(`Spreadsheet elements: ${worksheetNames.join(', ').replace(/, $/)}`);
+			
 			let elementSpecWorksheetJson;
 			for (let index = 0; index < worksheetNames.length; index++) {
 				const name = worksheetNames[index];
@@ -77,9 +81,10 @@ const moduleFunction = function (args = {}) {
 			}
 			
 			if (!elementSpecWorksheetJson){
-				xLog.error(`No element '${targetObjectName}' was found in specification data source`);
-				next(`No element '${targetObjectName}' was found in specification data source`, { ...args, wisdom:{elementSpecWorksheetJson} });
-				return;
+				xLog.error(`MISSING ELEMENT '${targetObjectName}' was not found in specification data source`);
+				throw `MISSING ELEMENT '${targetObjectName}' was not found in specification data source`;
+				//next(`MISSING ELEMENT '${targetObjectName}' was not found in specification data source`, { ...args, wisdom:{elementSpecWorksheetJson} });
+				//return;
 			}
 
 			next('', { ...args, wisdom:{elementSpecWorksheetJson} });
