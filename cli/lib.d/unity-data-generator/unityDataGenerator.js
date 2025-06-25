@@ -147,7 +147,8 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	});
 	const facilitators = makeFacilitators({ 
 		thoughtProcessConversationList, 
-		thinkerParameters 
+		thinkerParameters,
+		thoughtProcessName
 	});
 
 	// Interact with Jina to get wisdom

@@ -16,7 +16,7 @@ const https = require('https');
 
 const moduleFunction = function (args = {}) {
 	const { xLog, getConfig } = process.global;
-	const { thinkerParameters={} } = args; // Extract from args with default
+	const { thinkerParameters={}, promptGenerator } = args; // Extract from args with default
 	const localThinkerParameters = thinkerParameters.qtGetSurePath(moduleName, {});
 	const allThinkersParameters = thinkerParameters.qtGetSurePath('allThinkers', {});
 	

@@ -11,11 +11,14 @@ const moduleFunction =
 	(args = {}) => {
 		const { xLog, commandLineParameters, getConfig } = process.global;
 		const unityConfig = getConfig('unityDataGenerator');
+		const { promptLibraryName } = args;
 
-		const promptApplicationName = commandLineParameters.qtGetSurePath?.(
-			'values.promptLibrary[0]',
-			unityConfig.defaultPromptLibrary,
-		);
+		// Priority: parameter > command line > config default
+		const promptApplicationName = promptLibraryName ||
+			commandLineParameters.qtGetSurePath?.(
+				'values.promptLibrary[0]',
+				unityConfig.defaultPromptLibrary,
+			);
 
 		const promptObjects = require('qtools-library-dot-d')({
 			libraryName: 'promptObjects',

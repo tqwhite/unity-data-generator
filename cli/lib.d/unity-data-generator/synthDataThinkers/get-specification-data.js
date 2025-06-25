@@ -17,7 +17,7 @@ const fs=require('fs');
 
 const moduleFunction = function (args = {}) {
 	const { xLog, getConfig, commandLineParameters } = process.global;
-	const { thinkerParameters={} } = args; // Extract from args
+	const { thinkerParameters={}, promptGenerator } = args; // Extract from args
 	const localThinkerParameters = thinkerParameters.qtGetSurePath(moduleName, {});
 	const allThinkersParameters = thinkerParameters.qtGetSurePath('allThinkers', {});
 	

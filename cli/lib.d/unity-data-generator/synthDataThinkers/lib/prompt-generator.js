@@ -12,12 +12,12 @@ const moduleFunction = function (args = {}) {
 
 	const { xLog } = process.global;
 	
-	const {promptLibraryModulePath}=args;
+	const {promptLibraryModulePath, promptLibraryName}=args;
 	
 	const iterativeGeneratorPrompt = (args) => {
 		const { employerModuleName } = args;
 
-		const promptLibrary = require(promptLibraryModulePath)(); //'johns-maker', 'johns-review', 'tqs-maker', 'tqs-review', 'fix-problems'
+		const promptLibrary = require(promptLibraryModulePath)({ promptLibraryName }); //'johns-maker', 'johns-review', 'tqs-maker', 'tqs-review', 'fix-problems'
 
 		if (!promptLibrary[employerModuleName]) {
 			xLog.error(
