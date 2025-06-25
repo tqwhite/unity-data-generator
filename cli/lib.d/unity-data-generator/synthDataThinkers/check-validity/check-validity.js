@@ -18,10 +18,13 @@ const moduleFunction = function (args = {}) {
 	const { xLog, getConfig } = process.global;
 	const { thinkerParameters={} } = args; // Extract from args with default
 	const localThinkerParameters = thinkerParameters.qtGetSurePath(moduleName, {});
+	const allThinkersParameters = thinkerParameters.qtGetSurePath('allThinkers', {});
 	
-	// Priority: thinkerParameters over getConfig
+	// Priority: localThinkerParameters > allThinkersParameters > configFromSection
 	const configFromSection = getConfig(moduleName);
-	const finalConfig = { ...configFromSection, ...localThinkerParameters };
+	const finalConfig = { ...configFromSection, ...allThinkersParameters, ...localThinkerParameters };
+	
+	xLog.verbose(`Thinker Parameters (${moduleName})\n    `+Object.keys(finalConfig).map(name=>`${name}=${finalConfig[name]}`).join('\n    '));
 	
 
 	const { thinkerSpec, smartyPants } = args;
