@@ -17,8 +17,19 @@ const fs=require('fs');
 
 const moduleFunction = function (args = {}) {
 	const { xLog, getConfig, commandLineParameters } = process.global;
-
-	const { spreadsheetPath } = getConfig(moduleName); //ignoring thinker specs included in args
+	const { thinkerParameters={} } = args; // Extract from args
+	const localThinkerParameters = thinkerParameters.qtGetSurePath(moduleName, {});
+	
+	
+	// Priority: thinkerParameters over getConfig
+	const configFromSection = getConfig(moduleName);
+	const finalConfig = { ...configFromSection, ...localThinkerParameters };
+	
+	console.log(`=== STEP 8 DEBUG ${moduleName}] ===`);
+	console.log('localThinkerParameters:', JSON.stringify(localThinkerParameters, null, 2));
+	console.log('=== END STEP 8 DEBUG ===\n');
+	
+	const { spreadsheetPath } = finalConfig;
 	
 	let targetObjectName = commandLineParameters.qtGetSurePath('values.elements', []).qtLast();
 	targetObjectName=targetObjectName?targetObjectName:commandLineParameters.qtGetSurePath('fileList', []).qtLast();

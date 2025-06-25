@@ -78,7 +78,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	);
 
 	// Get configuration specific to qTools-AI
-	let { thoughtProcessConversationList } = getConfig(thoughtProcessName);
+	let { thoughtProcessConversationList, thinkerParameters } = getConfig(thoughtProcessName);
 
 	// If no thoughtProcessName, show error and exit
 	if (!thoughtProcessConversationList) {
@@ -145,7 +145,10 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	const { findTheAnswer, makeFacilitators } = initAtp({
 		configName: moduleName,
 	});
-	const facilitators = makeFacilitators({ thoughtProcessConversationList });
+	const facilitators = makeFacilitators({ 
+		thoughtProcessConversationList, 
+		thinkerParameters 
+	});
 
 	// Interact with Jina to get wisdom
 	const wisdom = await findTheAnswer({
