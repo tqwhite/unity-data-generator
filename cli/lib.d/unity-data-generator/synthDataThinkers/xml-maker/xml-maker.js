@@ -13,9 +13,17 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 
 const moduleFunction = function (args = {}) {
 	const { xLog, getConfig } = process.global;
-	const {promptLibraryModulePath}=getConfig(moduleName);
+	const { thinkerParameters={} } = args; // Extract from args with default
+	const localThinkerParameters = thinkerParameters.qtGetSurePath(moduleName, {});
+	
+	// Priority: thinkerParameters over getConfig
+	const configFromSection = getConfig(moduleName);
+	const finalConfig = { ...configFromSection, ...localThinkerParameters };
+	
+	
+	const {promptLibraryModulePath} = finalConfig;
 
-	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
+	const { thinkerSpec, smartyPants } = args;
 	const systemPrompt =
 		"You are a top level expert in data modeling and syntax. Your goal is to provide actual data. Explanations are only for exceptions and are very brief. Let's think step by step and check conclusions.";
 

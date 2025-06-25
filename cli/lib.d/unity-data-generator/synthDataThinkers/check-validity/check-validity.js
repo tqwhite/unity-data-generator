@@ -15,9 +15,16 @@ const https = require('https');
 //START OF moduleFunction() ============================================================
 
 const moduleFunction = function (args = {}) {
-	const { xLog } = process.global;
+	const { xLog, getConfig } = process.global;
+	const { thinkerParameters={} } = args; // Extract from args with default
+	const localThinkerParameters = thinkerParameters.qtGetSurePath(moduleName, {});
+	
+	// Priority: thinkerParameters over getConfig
+	const configFromSection = getConfig(moduleName);
+	const finalConfig = { ...configFromSection, ...localThinkerParameters };
+	
 
-	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
+	const { thinkerSpec, smartyPants } = args;
 
 	// ================================================================================
 	// UTILITIES

@@ -25,9 +25,6 @@ const moduleFunction = function (args = {}) {
 	const configFromSection = getConfig(moduleName);
 	const finalConfig = { ...configFromSection, ...localThinkerParameters };
 	
-	console.log(`=== STEP 8 DEBUG ${moduleName}] ===`);
-	console.log('localThinkerParameters:', JSON.stringify(localThinkerParameters, null, 2));
-	console.log('=== END STEP 8 DEBUG ===\n');
 	
 	const { spreadsheetPath } = finalConfig;
 	
