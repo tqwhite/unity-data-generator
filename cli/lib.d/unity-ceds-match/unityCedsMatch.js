@@ -168,7 +168,10 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	const { findTheAnswer, makeFacilitators } = initAtp({
 		configName: moduleName,
 	});
-	const facilitators = makeFacilitators({ thoughtProcessConversationList });
+	const facilitators = makeFacilitators({ 
+		thoughtProcessConversationList,
+		thoughtProcessName: 'App_Specific_Thought_Process'
+	});
 
 	const { wisdom: spreadsheetData } = await demoFuncAsync({});
 	const { elementSpecWorksheetJson: spreadSheetJson } = spreadsheetData;

@@ -15,16 +15,14 @@ const moduleFunction = function (args = {}) {
 	const { xLog, getConfig } = process.global;
 	const { promptLibraryModulePath, promptName } = getConfig(moduleName);
 
-	const { thinkerSpec, smartyPants } = args; //ignoring thinker specs included in args
+	const { thinkerSpec, smartyPants, promptGenerator } = args; //ignoring thinker specs included in args
 	const systemPrompt =
 		"You are a top level expert in XML data modeling and syntax. Your goal is to provide actual data. Explanations are only for exceptions and are very brief. Let's think step by step and check conclusions.";
 
 	// ================================================================================
 	// UTILITIES
 
-	const promptGenerator = require('../lib/prompt-generator')({
-		promptLibraryModulePath,
-	});
+	// promptGenerator is now passed in from conversation-generator
 
 	const formulatePromptList =
 		(promptGenerator) =>
