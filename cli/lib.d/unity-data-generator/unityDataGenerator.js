@@ -53,7 +53,6 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	applicationBasePath,
 	applicationControls: [
 		'--thoughtProcess',
-		'--promptLibrary',
 		'--promptVersion',
 		'-showElements'
 	],

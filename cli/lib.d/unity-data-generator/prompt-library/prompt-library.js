@@ -13,12 +13,8 @@ const moduleFunction =
 		const unityConfig = getConfig('unityDataGenerator');
 		const { promptLibraryName } = args;
 
-		// Priority: parameter > command line > config default
-		const promptApplicationName = promptLibraryName ||
-			commandLineParameters.qtGetSurePath?.(
-				'values.promptLibrary[0]',
-				unityConfig.defaultPromptLibrary,
-			);
+		// Use promptLibraryName parameter (configured in thought process)
+		const promptApplicationName = promptLibraryName || unityConfig.defaultPromptLibrary;
 
 		const promptObjects = require('qtools-library-dot-d')({
 			libraryName: 'promptObjects',

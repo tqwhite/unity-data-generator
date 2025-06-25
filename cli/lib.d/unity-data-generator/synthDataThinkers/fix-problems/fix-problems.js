@@ -28,10 +28,6 @@ const moduleFunction = function (args = {}) {
 	const finalConfig = { ...configFromSection, ...allThinkersParameters, ...localThinkerParameters };
 	
 	xLog.verbose(`Thinker Parameters (${moduleName})\n    `+Object.keys(finalConfig).map(name=>`${name}=${finalConfig[name]}`).join('\n    '));
-	
-	
-	const {promptLibraryModulePath} = finalConfig;
-
 	const { thinkerSpec, smartyPants } = args;
 
 	const systemPrompt =

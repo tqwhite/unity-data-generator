@@ -22,10 +22,6 @@ const moduleFunction = function (args = {}) {
 	const finalConfig = { ...configFromSection, ...allThinkersParameters, ...localThinkerParameters };
 	
 	xLog.verbose(`Thinker Parameters (${moduleName})\n    `+Object.keys(finalConfig).map(name=>`${name}=${finalConfig[name]}`).join('\n    '));
-	
-	
-	const {promptLibraryModulePath} = finalConfig;
-
 	const { thinkerSpec, smartyPants } = args;
 	const systemPrompt =
 		"You are a top level expert in data modeling and syntax. Your goal is to provide actual data. Explanations are only for exceptions and are very brief. Let's think step by step and check conclusions.";

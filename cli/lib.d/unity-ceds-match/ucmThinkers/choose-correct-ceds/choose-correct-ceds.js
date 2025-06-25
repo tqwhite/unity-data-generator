@@ -13,7 +13,7 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 
 const moduleFunction = function (args = {}) {
 	const { xLog, getConfig } = process.global;
-	const { promptLibraryModulePath, promptName } = getConfig(moduleName);
+	const { promptName } = getConfig(moduleName);
 
 	const { thinkerSpec, smartyPants, promptGenerator } = args; //ignoring thinker specs included in args
 	const systemPrompt =
