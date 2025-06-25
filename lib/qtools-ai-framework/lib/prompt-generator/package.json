@@ -1,0 +1,11 @@
+{
+  "name": "@qtools-ai-framework/prompt-generator",
+  "version": "1.0.0",
+  "description": "Core framework service for AI prompt generation and template processing",
+  "main": "prompt-generator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}
