@@ -12,22 +12,37 @@ const fs = require('fs');
 //START OF moduleFunction() ============================================================
 const moduleFunction =
 	({ moduleName } = {}) =>
-	({ passThroughParameters:inboundPassThrough}) => {
+	({ passThroughParameters: inboundPassThrough }) => {
+		const { selectedLibrary } = inboundPassThrough;
 
-		const {selectedLibrary}=inboundPassThrough
+		const expectedDataType='JSON';
+
+		let start_dataTypeSpecificCleanupDelimiter;
+		let end_dataTypeSpecificCleanupDelimiter;
+
+		switch (expectedDataType) {
+			case 'JSON':
+				start_dataTypeSpecificCleanupDelimiter = '{';
+				end_dataTypeSpecificCleanupDelimiter = '}';
+				break;
+			case 'XML':
+				start_dataTypeSpecificCleanupDelimiter = '<';
+				end_dataTypeSpecificCleanupDelimiter = '>';
+				break;
+		}
 
 		const { xLog, getConfig, rawConfig, commandLineParameters } =
 			process.global;
 		const localConfig = getConfig(moduleName); //moduleName is closure
-		
+
 		const promptLibraryName = commandLineParameters
 			.qtGetSurePath('values.promptVersion', [])
 			.qtLast('defaultStrings');
-			
+
 		xLog.status(`Using prompt library: ${promptLibraryName}`);
 
 		const getgeneratedSynthData = (extractionParameters) => (inString) => {
-
+			
 
 			const { frontDelimiter: startDelimiter, backDelimiter: endDelimiter } =
 				extractionParameters.getgeneratedSynthData;
@@ -50,8 +65,8 @@ const moduleFunction =
 			if (match) {
 				const result = match[1];
 				const xmlContent = result.substring(
-					result.indexOf('<'),
-					result.lastIndexOf('>') + 1,
+					result.indexOf(start_dataTypeSpecificCleanupDelimiter),
+					result.lastIndexOf(end_dataTypeSpecificCleanupDelimiter) + 1,
 				);
 				return { generatedSynthData: xmlContent };
 			} else {
@@ -60,10 +75,8 @@ const moduleFunction =
 		};
 
 		const getExplanation = (extractionParameters) => (inString) => {
-			const {
-				frontDelimiter: startDelimiter,
-				backDelimiter: endDelimiter,
-			} = extractionParameters.getExplanation;
+			const { frontDelimiter: startDelimiter, backDelimiter: endDelimiter } =
+				extractionParameters.getExplanation;
 
 			// 			const startDelimiter = '[START EXPLANATIONS]';
 			// 			const endDelimiter = '[END EXPLANATIONS]';
