@@ -12,9 +12,24 @@ const fs = require('fs');
 //START OF moduleFunction() ============================================================
 const moduleFunction =
 	({ moduleName } = {}) =>
-	({ passThroughParameters:inboundPassThrough}) => {
+	({ passThroughParameters: inboundPassThrough }) => {
+		const { selectedLibrary } = inboundPassThrough;
 
-		const {selectedLibrary}=inboundPassThrough
+		const expectedDataType='XML';
+
+		let start_dataTypeSpecificCleanupDelimiter;
+		let end_dataTypeSpecificCleanupDelimiter;
+
+		switch (expectedDataType) {
+			case 'JSON':
+				start_dataTypeSpecificCleanupDelimiter = '{';
+				end_dataTypeSpecificCleanupDelimiter = '}';
+				break;
+			case 'XML':
+				start_dataTypeSpecificCleanupDelimiter = '<';
+				end_dataTypeSpecificCleanupDelimiter = '>';
+				break;
+		}
 
 		const { xLog, getConfig, rawConfig, commandLineParameters } =
 			process.global;
@@ -50,8 +65,8 @@ const moduleFunction =
 			if (match) {
 				const result = match[1];
 				const xmlContent = result.substring(
-					result.indexOf('<'),
-					result.lastIndexOf('>') + 1,
+					result.indexOf(start_dataTypeSpecificCleanupDelimiter),
+					result.lastIndexOf(end_dataTypeSpecificCleanupDelimiter) + 1,
 				);
 				return { generatedSynthData: xmlContent };
 			} else {

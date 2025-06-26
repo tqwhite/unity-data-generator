@@ -109,7 +109,9 @@ const moduleFunction = function (args = {}) {
 				{ append: true },
 			);
 
-			const wisdom = {...latestWisdom, ...extractionFunction(rawWisdom)}; //overwrites generatedSynthData
+			const extractedData = extractionFunction(rawWisdom);
+
+			const wisdom = {...latestWisdom, ...extractedData}; //overwrites generatedSynthData
 
 			next('', { ...args, wisdom });
 		});

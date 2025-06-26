@@ -114,9 +114,12 @@ A toolchain designed to:
 
 ### 4.3. AI Framework Integration
 
+- **qtools-ai-framework**: Core framework providing conversation orchestration, prompt generation, and AI provider abstraction
 - **Seminar Workflow**: Prompt → Review → Validate → Fix
-- **Configuration**: `.ini` files drive AI model selection and prompt chaining.
-- **Providers**: Abstracts OpenAI, Claude, Gemini.
+- **Thought Processes**: Configuration-driven AI conversation flows defined in `.ini` files
+- **Prompt Libraries**: Modular prompt templates selected via thought process configuration, not command line flags
+- **Dependency Injection**: Framework services (like prompt-generator) are injected into thinkers rather than directly instantiated
+- **Providers**: Abstracts OpenAI, Claude, Gemini through smarty-pants-chooser service
 
 ---
 
@@ -280,7 +283,8 @@ vectorTools --dataProfile=ceds -rebuildDatabase
 unityCedsMatch StudentPersonals -loadDatabase
 
 # 4. Generate sample XML for testing
-unityDataGenerator StudentPersonals
+unityDataGenerator StudentPersonals  # Uses default UDG_Thought_Process (udg-v1 prompts)
+unityDataGenerator StudentPersonals --thoughtProcess=JEDX_Thought_Process  # Uses jedx-v1 prompts
 
 # 5. Check database statistics
 vectorTools --dataProfile=sif -showStats
@@ -290,9 +294,49 @@ vectorTools --dataProfile=sif -showStats
 
 ---
 
-## 7. Extension Points and Best Practices
+## 7. qtools-ai-framework Architecture Details
 
-### Adding a New Standard
+### 7.1. Framework Services
+
+The AI capabilities are provided by `qtools-ai-framework`, a modular system with core services:
+
+- **Location**: `/lib/qtools-ai-framework/lib/`
+- **Core Services**:
+  - `conversation-generator`: Orchestrates thinker sequences and injects dependencies
+  - `facilitators`: Control conversation flow patterns (get-answer, answer-until-valid)
+  - `prompt-generator`: Framework-level service for prompt template processing
+  - `smarty-pants-chooser`: AI provider abstraction (OpenAI, Claude, etc.)
+  - `x-log`: Structured logging with process file management
+
+### 7.2. Thought Process Configuration
+
+AI behavior is configured through thought processes in `.ini` files:
+
+```ini
+[UDG_Thought_Process]
+promptLibraryName=udg-v1
+promptLibraryModulePath=<!promptLibraryModulePath!>
+thoughtProcessConversationList.0.facilitatorModuleName=get-answer
+thoughtProcessConversationList.0.conversationThinkerListName=unityGenerator
+
+[JEDX_Thought_Process]  
+promptLibraryName=jedx-v1
+promptLibraryModulePath=<!promptLibraryModulePath!>
+```
+
+### 7.3. Dependency Injection Pattern
+
+The framework uses dependency injection to maintain clean separation:
+
+1. **Application Level**: Specifies `thoughtProcessName` when calling `makeFacilitators()`
+2. **Framework Level**: `conversation-generator` reads thought process config and instantiates `prompt-generator`  
+3. **Thinker Level**: Thinkers receive pre-configured `promptGenerator` via function arguments
+
+This eliminates hard-coded paths and allows different applications to use different prompt libraries without code changes.
+
+---
+
+### 8.1. Adding a New Standard
 
 1. **Data Ingestion**: 
    
@@ -314,25 +358,41 @@ vectorTools --dataProfile=sif -showStats
    - Extend `unityCedsMatch` for cross-standard mappings
    - Update web components to display multi-standard matches
 
-### Improving Semantic Matching
+### 8.2. Improving Semantic Matching
 
 - Implement chunk-level embeddings for long definitions.
 - Fuse results from multiple vector searches for higher recall.
 - Incorporate AI-driven confidence scoring before user review.
 
+### 8.3. Adding New AI Thought Processes
+
+1. **Create Prompt Library**: 
+   - Add new prompt library directory under application's `prompt-library/prompts.d/`
+   - Create prompt template modules following existing patterns
+
+2. **Configure Thought Process**:
+   - Add new thought process section to application's `.ini` file
+   - Specify `promptLibraryName` and `promptLibraryModulePath`
+   - Define conversation flows and thinker sequences
+
+3. **Framework Integration**:
+   - No code changes needed - framework automatically detects and supports new configurations
+   - Use `--thoughtProcess=NewThoughtProcess` to select the new configuration
+
 ---
 
-## 8. Architectural Strengths
+## 9. Architectural Strengths
 
 - **Unified Data Store**: Simplifies backups and consistency.
 - **Modular CLI Tools**: Easy to test, scale, and reuse.
 - **AI-Driven Workflows**: Balances automation with human oversight.
 - **Configuration-Driven**: Lowers barrier to adding new standards or models.
 - **Vector Search**: Enables powerful, semantic discovery beyond keyword matching.
+- **Framework Services**: Dependency injection and modular design enable clean extension.
 
 ---
 
-## 9. Next Steps and Recommendations
+## 10. Next Steps and Recommendations
 
 1. **Pilot Multi-Standard Mapping**: Integrate a third standard (e.g., IMS) to validate extensibility.
 2. **Optimize Embeddings**: Benchmark single-vs. chunked embeddings for mapping accuracy.
@@ -341,7 +401,7 @@ vectorTools --dataProfile=sif -showStats
 
 ---
 
-## 10. Common Tasks and Troubleshooting
+## 11. Common Tasks and Troubleshooting
 
 ### Typical Maintenance Commands
 

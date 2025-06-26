@@ -63,7 +63,7 @@ const moduleFunction = function (args = {}) {
 			callback('', { validationMessage, isValid });
 		};
 
-		const url = 'https://testharness.a4l.org/SIFController/api/validate/4.3/';
+		const url = finalConfig.validationUrl;
 		xLog.status(`validating with ${url}`);
 
 		const axiosParms = {
@@ -103,6 +103,7 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
+
 		const synthData = args.qtGetSurePath('latestWisdom.generatedSynthData');
 
 		if (!synthData) {
