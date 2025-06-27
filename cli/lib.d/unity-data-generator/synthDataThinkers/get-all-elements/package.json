@@ -1,0 +1,6 @@
+{
+  "name": "get-all-elements",
+  "version": "1.0.0",
+  "description": "Thinker to get all elements from spreadsheet for multi-element processing",
+  "main": "get-all-elements.js"
+}

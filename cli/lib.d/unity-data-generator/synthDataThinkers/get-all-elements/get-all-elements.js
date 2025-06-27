@@ -1,5 +1,4 @@
-const qtools = require('qtools');
-const qtoolsGen = require('qtools').getInstance();
+const qt = require('qtools-functional-library');
 const xlsx = require('xlsx');
 
 const moduleFunction = function(args = {}) {
@@ -26,7 +25,9 @@ const moduleFunction = function(args = {}) {
             
             // Apply filtering based on command line
             if (commandLineParameters.values.elements) {
-                const requestedElements = commandLineParameters.values.elements[0].split(',');
+                xLog.debug(`commandLineParameters.values.elements: ${JSON.stringify(commandLineParameters.values.elements)}`);
+                // Command line parser already splits on commas, so elements is already an array
+                const requestedElements = commandLineParameters.values.elements;
                 elementsToProcess = elementsToProcess.filter(name => 
                     requestedElements.includes(name)
                 );

@@ -84,9 +84,8 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 			thoughtProcessName = 'JEDX_Multi_Element_Process';
 			xLog.status('Using multi-element JEDX process');
 		} else if (thoughtProcessName === 'UDG_Thought_Process') {
-			// Would need UDG_Multi_Element_Process configuration
-			xLog.error('Multi-element processing not yet configured for UDG process');
-			process.exit(1);
+			thoughtProcessName = 'UDG_Multi_Element_Process';
+			xLog.status('Using multi-element UDG process');
 		}
 	}
 
@@ -126,10 +125,12 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		targetObjectNameList = commandLineParameters.qtGetSurePath('fileList', []);
 	}
 
-	// If no target objects and no 'listElements' switch, show error and exit
+	// If no target objects and no 'listElements' or 'allElements' or 'showElements' switch, show error and exit
 	if (
 		!targetObjectNameList.length &&
-		!commandLineParameters.switches.listElements
+		!commandLineParameters.switches.listElements &&
+		!commandLineParameters.switches.allElements &&
+		!commandLineParameters.switches.showElements
 	) {
 		xLog.error('Target element name is required. Try -help or -listElements');
 		process.exit(1);
@@ -139,9 +140,16 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	// OUTPUT FILE DETERMINATION
 
 	// Convert targetObjectNameList to a string for use in file names
-	const targetObjectNamesString = Array.isArray(targetObjectNameList)
-		? targetObjectNameList.join('_')
-		: targetObjectNameList;
+	let targetObjectNamesString;
+	if (commandLineParameters.switches.allElements) {
+		targetObjectNamesString = 'allElements';
+	} else if (commandLineParameters.switches.showElements && !targetObjectNameList.length) {
+		targetObjectNamesString = 'showElements'; // Dummy name for showElements
+	} else {
+		targetObjectNamesString = Array.isArray(targetObjectNameList)
+			? targetObjectNameList.join('_')
+			: targetObjectNameList;
+	}
 
 	// Determine the output file path
 	const outputFilePath =
@@ -177,8 +185,21 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	//   	}
 	//   });
 
-	// Get the latest refined XML
-	const finalSynthData = wisdom.generatedSynthData;
+	// Get the latest refined data
+	let finalSynthData;
+	
+	// Check if this is multi-element processing
+	if (wisdom.processedElements && wisdom._iterationMetadata) {
+		// Multi-element mode - combine all results
+		finalSynthData = JSON.stringify({
+			metadata: wisdom._iterationMetadata,
+			elements: wisdom.processedElements,
+			...(wisdom.elementErrors && { errors: wisdom.elementErrors })
+		}, null, 2);
+	} else {
+		// Single element mode
+		finalSynthData = wisdom.generatedSynthData;
+	}
 
 	// =============================================================================
 	// OUTPUT HANDLING
