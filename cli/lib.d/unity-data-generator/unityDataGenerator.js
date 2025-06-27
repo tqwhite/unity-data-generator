@@ -69,6 +69,16 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	// Access global variables set up by 'initAtp'
 	const { xLog, getConfig, commandLineParameters } = process.global;
 
+	// Normalize input: convert fileList to --elements for backward compatibility
+	const fileList = commandLineParameters.qtGetSurePath('fileList', []);
+	const elementsFlag = commandLineParameters.values.elements;
+
+	if (fileList.length > 0 && !elementsFlag) {
+		commandLineParameters.values.elements = fileList;
+		commandLineParameters.fileList = [];
+		xLog.status(`Converted positional arguments to --elements: ${fileList.join(',')}`);
+	}
+
 	// Get configuration specific to this module
 	let { outputsPath } = getConfig(moduleName);
 
@@ -78,15 +88,13 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'UDG_Thought_Process',
 	);
 	
-	// Auto-select multi-element process when appropriate
-	if (commandLineParameters.switches.allElements || commandLineParameters.values.elements) {
-		if (thoughtProcessName === 'JEDX_Thought_Process') {
-			thoughtProcessName = 'JEDX_Multi_Element_Process';
-			xLog.status('Using multi-element JEDX process');
-		} else if (thoughtProcessName === 'UDG_Thought_Process') {
-			thoughtProcessName = 'UDG_Multi_Element_Process';
-			xLog.status('Using multi-element UDG process');
-		}
+	// Always use multi-element process (backward compatibility handled by input normalization)
+	if (thoughtProcessName === 'JEDX_Thought_Process') {
+		thoughtProcessName = 'JEDX_Multi_Element_Process';
+		xLog.status('Using multi-element JEDX process');
+	} else if (thoughtProcessName === 'UDG_Thought_Process') {
+		thoughtProcessName = 'UDG_Multi_Element_Process';
+		xLog.status('Using multi-element UDG process');
 	}
 
 	// Get configuration specific to qTools-AI
@@ -185,21 +193,20 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	//   	}
 	//   });
 
-	// Get the latest refined data
-	let finalSynthData;
-	
-	// Check if this is multi-element processing
-	if (wisdom.processedElements && wisdom._iterationMetadata) {
-		// Multi-element mode - combine all results
-		finalSynthData = JSON.stringify({
-			metadata: wisdom._iterationMetadata,
-			elements: wisdom.processedElements,
-			...(wisdom.elementErrors && { errors: wisdom.elementErrors })
-		}, null, 2);
-	} else {
-		// Single element mode
-		finalSynthData = wisdom.generatedSynthData;
-	}
+console.log(`\n=-=============   wisdom.processedElements  ========================= [unityDataGenerator.js.]\n`);
+
+
+console.dir({['wisdom.processedElements']:wisdom.processedElements}, { showHidden: false, depth: 4, colors: true });
+
+console.log(`\n=-=============   wisdom.processedElements  ========================= [unityDataGenerator.js.]\n`);
+
+
+	// Get the latest refined data (always multi-element format)
+	const finalSynthData = JSON.stringify({
+		metadata: wisdom._iterationMetadata,
+		elements: wisdom.processedElements,
+		...(wisdom.elementErrors && { errors: wisdom.elementErrors })
+	}, null, 2);
 
 	// =============================================================================
 	// OUTPUT HANDLING
