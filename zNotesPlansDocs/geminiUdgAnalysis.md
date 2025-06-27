@@ -43,7 +43,7 @@ The system makes excellent use of the `qtools-ai-framework` to abstract away the
 
 *   **What it is**: The application-level tools (like `unity-data-generator`) don't need to contain complex logic for managing multi-step AI conversations. They simply delegate that task to the framework.
 *   **Evidence**: The `unity-data-generator` tool can invoke a complex, multi-step XML generation and validation process simply by telling the framework to run the "UDG_Thought_Process". All the complexity of managing the AI interaction is handled by the framework.
-*   **Why it's well-architected**: This keeps the application code clean, focused, and easier to maintain. The core business logic (generating data for Unity) is not entangled with the generic problem of orchestrating an AI conversation.
+*   **Why it's well-architected**: This keeps the application code clean, focused, and easier to maintain. The core business logic (generating data for Unity) is not entangled with the generic problem of orchestrating an AI conversation. Recent improvements to the underlying framework, such as making its batch-processing facilitator fully configurable, further validate this architectural choice. The Unity Object Generator now benefits from an even more powerful and reusable orchestration engine, enhancing its own potential for future flexibility without requiring changes to its core components.
 
 ### 5. Pragmatic Human-in-the-Loop Design (Realistic AI Implementation)
 

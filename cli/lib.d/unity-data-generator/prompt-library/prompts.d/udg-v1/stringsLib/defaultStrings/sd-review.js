@@ -75,7 +75,7 @@ There should be *nothing* except well-formed XML between those delimiters.
 		];
 		const extractionFunction = defaultExtractionFunction({extractionList});
 		
-		const thinker='xml-review';
+		const thinker='sd-review';
 
 		const workingFunction = () => {
 			return { promptTemplate, extractionParameters, extractionFunction, thinker };

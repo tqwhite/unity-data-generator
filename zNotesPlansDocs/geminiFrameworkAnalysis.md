@@ -37,7 +37,8 @@ A thought process is defined hierarchically in the configuration, establishing a
    thoughtProcessConversationList.0.conversationThinkerListName=dataFetcher
    
    thoughtProcessConversationList.1.facilitatorModuleName=iterate-over-collection
-   thoughtProcessConversationList.1.conversationThinkerListName=itemProcessor
+   thoughtProcessConversationList.1.collectionSource=dataFetcher
+   thoughtProcessConversationList.1.itemProcessorConversationName=itemProcessor
    ```
 
 2. **Conversation Definition**: A conversation is a named list of thinkers. This groups related tasks together.

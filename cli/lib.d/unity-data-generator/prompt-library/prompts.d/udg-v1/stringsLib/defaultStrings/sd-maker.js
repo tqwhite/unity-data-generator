@@ -71,7 +71,7 @@ There should be *nothing* except well-formed XML between those delimiters.
 		];
 		const extractionFunction = defaultExtractionFunction({extractionList});
 		
-		const thinker='xml-maker';
+		const thinker='sd-maker';
 
 		const workingFunction = () => {
 			return { promptTemplate, extractionParameters, extractionFunction, thinker };

@@ -75,7 +75,7 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 		];
 		const extractionFunction = defaultExtractionFunction({extractionList});
 		
-		const thinker='xml-review';
+		const thinker='sd-review';
 
 		const workingFunction = () => {
 			return { promptTemplate, extractionParameters, extractionFunction, thinker };
