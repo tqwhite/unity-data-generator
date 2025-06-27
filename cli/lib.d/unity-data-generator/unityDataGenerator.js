@@ -54,7 +54,9 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	applicationControls: [
 		'--thoughtProcess',
 		'--promptVersion',
-		'-showElements'
+		'-showElements',
+		'-allElements',
+		'--elements'
 	],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 // =============================================================================
@@ -71,10 +73,22 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	let { outputsPath } = getConfig(moduleName);
 
 	// Retrieve the output file path from command-line parameters
-	const thoughtProcessName = commandLineParameters.qtGetSurePath(
+	let thoughtProcessName = commandLineParameters.qtGetSurePath(
 		'values.thoughtProcess[0]',
 		'UDG_Thought_Process',
 	);
+	
+	// Auto-select multi-element process when appropriate
+	if (commandLineParameters.switches.allElements || commandLineParameters.values.elements) {
+		if (thoughtProcessName === 'JEDX_Thought_Process') {
+			thoughtProcessName = 'JEDX_Multi_Element_Process';
+			xLog.status('Using multi-element JEDX process');
+		} else if (thoughtProcessName === 'UDG_Thought_Process') {
+			// Would need UDG_Multi_Element_Process configuration
+			xLog.error('Multi-element processing not yet configured for UDG process');
+			process.exit(1);
+		}
+	}
 
 	// Get configuration specific to qTools-AI
 	let { thoughtProcessConversationList, thinkerParameters } = getConfig(thoughtProcessName);

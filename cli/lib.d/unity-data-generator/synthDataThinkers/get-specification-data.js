@@ -30,6 +30,7 @@ const moduleFunction = function (args = {}) {
 	
 	const { spreadsheetPath } = finalConfig;
 	
+	// Default from command line (will be overridden in executeRequest if in multi-element mode)
 	let targetObjectName = commandLineParameters.qtGetSurePath('values.elements', []).qtLast();
 	targetObjectName=targetObjectName?targetObjectName:commandLineParameters.qtGetSurePath('fileList', []).qtLast();
 
@@ -44,7 +45,7 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { UNUSED } = args;
+		const { latestWisdom = {} } = args;
 		const taskList = new taskListPlus();
 		
 
@@ -53,6 +54,12 @@ const moduleFunction = function (args = {}) {
 
 		taskList.push((args, next) => {
 			const { spreadsheetPath } = args;
+			
+			// Check for currentElement from iterator (multi-element mode)
+			if (latestWisdom.currentElement) {
+				targetObjectName = latestWisdom.currentElement;
+				xLog.status(`Multi-element mode: Processing ${targetObjectName}`);
+			}
 		
 			if (!fs.existsSync(spreadsheetPath)) {
 				xLog.error(`No specifications found. ${spreadsheetPath} does not exist`);

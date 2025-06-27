@@ -1,0 +1,6 @@
+{
+  "name": "iterate-over-collection",
+  "version": "1.0.0",
+  "description": "Facilitator for iterating over collections in qtools-ai-framework",
+  "main": "iterate-over-collection.js"
+}

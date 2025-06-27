@@ -53,7 +53,11 @@
       "Bash(./vectorTools.js --dataProfile=ceds --queryString=\"An indication of whether the school or local education agency LEA\" --resultCount=3)",
       "Bash(unityCedsMatch:*)",
       "Bash(cedsVectorTools:*)",
-      "Bash(unityDataGenerator:*)"
+      "Bash(unityDataGenerator:*)",
+      "Bash(./cli/lib.d/unity-data-generator/unityDataGenerator.js --listElements --thoughtProcess=JEDX_Thought_Process)",
+      "Bash(./cli/lib.d/unity-data-generator/unityDataGenerator.js -listElements --thoughtProcess=JEDX_Thought_Process)",
+      "Bash(./cli/lib.d/unity-data-generator/unityDataGenerator.js --elements=organization_paths,job_paths --thoughtProcess=JEDX_Thought_Process)",
+      "Bash(./cli/lib.d/unity-data-generator/unityDataGenerator.js --elements=organization_paths --thoughtProcess=JEDX_Thought_Process 2 >& 1)"
     ],
     "deny": []
   }
