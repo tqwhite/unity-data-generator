@@ -56,7 +56,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'--promptVersion',
 		'-showElements',
 		'-allElements',
-		'--elements'
+		'--elements',
 	],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 // =============================================================================
@@ -76,7 +76,9 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	if (fileList.length > 0 && !elementsFlag) {
 		commandLineParameters.values.elements = fileList;
 		commandLineParameters.fileList = [];
-		xLog.status(`Converted positional arguments to --elements: ${fileList.join(',')}`);
+		xLog.status(
+			`Converted positional arguments to --elements: ${fileList.join(',')}`,
+		);
 	}
 
 	// Get configuration specific to this module
@@ -87,7 +89,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'values.thoughtProcess[0]',
 		'UDG_Thought_Process',
 	);
-	
+
 	// Always use multi-element process (backward compatibility handled by input normalization)
 	if (thoughtProcessName === 'JEDX_Thought_Process') {
 		thoughtProcessName = 'JEDX_Multi_Element_Process';
@@ -98,7 +100,8 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	}
 
 	// Get configuration specific to qTools-AI
-	let { thoughtProcessConversationList, thinkerParameters } = getConfig(thoughtProcessName);
+	let { thoughtProcessConversationList, thinkerParameters, resultFileType } =
+		getConfig(thoughtProcessName);
 
 	// If no thoughtProcessName, show error and exit
 	if (!thoughtProcessConversationList) {
@@ -151,7 +154,10 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	let targetObjectNamesString;
 	if (commandLineParameters.switches.allElements) {
 		targetObjectNamesString = 'allElements';
-	} else if (commandLineParameters.switches.showElements && !targetObjectNameList.length) {
+	} else if (
+		commandLineParameters.switches.showElements &&
+		!targetObjectNameList.length
+	) {
 		targetObjectNamesString = 'showElements'; // Dummy name for showElements
 	} else {
 		targetObjectNamesString = Array.isArray(targetObjectNameList)
@@ -174,10 +180,10 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	const { findTheAnswer, makeFacilitators } = initAtp({
 		configName: moduleName,
 	});
-	const facilitators = makeFacilitators({ 
-		thoughtProcessConversationList, 
+	const facilitators = makeFacilitators({
+		thoughtProcessConversationList,
 		thinkerParameters,
-		thoughtProcessName
+		thoughtProcessName,
 	});
 
 	// Interact with Jina to get wisdom
@@ -192,21 +198,18 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	//   		process.exit(1);
 	//   	}
 	//   });
+	
 
-console.log(`\n=-=============   wisdom.processedElements  ========================= [unityDataGenerator.js.]\n`);
-
-
-console.dir({['wisdom.processedElements']:wisdom.processedElements}, { showHidden: false, depth: 4, colors: true });
-
-console.log(`\n=-=============   wisdom.processedElements  ========================= [unityDataGenerator.js.]\n`);
-
+	xLog.debug(
+		{ ['wisdom']: wisdom },
+		{ showHidden: false, depth: null, colors: true },
+	);
+	
 
 	// Get the latest refined data (always multi-element format)
-	const finalSynthData = JSON.stringify({
-		metadata: wisdom._iterationMetadata,
-		elements: wisdom.processedElements,
-		...(wisdom.elementErrors && { errors: wisdom.elementErrors })
-	}, null, 2);
+	const finalSynthData = wisdom.processedElements;
+
+	// wisdom.elementErrors
 
 	// =============================================================================
 	// OUTPUT HANDLING
@@ -214,18 +217,38 @@ console.log(`\n=-=============   wisdom.processedElements  =====================
 	// Optionally echo the refined XML to the console
 	if (commandLineParameters.switches.echoAlso) {
 		xLog.result(`\n\n${finalSynthData}\n\n`);
+console.dir({['finalSynthData']:finalSynthData}, { showHidden: false, depth: 4, colors: true });
+
 	}
 
 	// Save the process file (for logging or debugging)
 	xLog.saveProcessFile(
 		`${moduleName}_${path.basename(outputFilePath)}`,
-		finalSynthData,
+		JSON.stringify(finalSynthData),
 	);
 
-	// Write the refined XML to the output file
-	fs.writeFileSync(outputFilePath, finalSynthData, 'utf-8');
+	// Set up batch-specific debug log directory
+	const batchSpecificDebugResultDirPath = path.join(
+		outputsPath,
+		`${thoughtProcessName}_${Math.floor(Date.now() / 1000)
+			.toString()
+			.slice(-4)}`,
+	);
+
+	fs.mkdirSync(batchSpecificDebugResultDirPath, { recursive: true });
+	
+
+	const fileExtension = resultFileType ? resultFileType : synthData;
+
+	Object.keys(finalSynthData).forEach((name) => {
+		const outputFilePath = path.join(
+			batchSpecificDebugResultDirPath,
+			`${name}.${fileExtension}`,
+		);
+		fs.writeFileSync(outputFilePath, finalSynthData[name], 'utf-8');
+	});
 
 	// Log the output file path
 	xLog.status(`Detail logs path: ${xLog.getProcessFilesDirectory()}`);
-	xLog.status(`Output file path: ${outputFilePath}`);
+	xLog.status(`Output file path: ${batchSpecificDebugResultDirPath}`);
 })(); // End of main execution function

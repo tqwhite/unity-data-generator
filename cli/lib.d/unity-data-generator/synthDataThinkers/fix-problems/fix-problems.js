@@ -44,6 +44,7 @@ const moduleFunction = function (args = {}) {
 				validationList.push(latestWisdom.validationMessage.error);
 				validationMessagesString = validationList.join('\n');
 			}
+			
 			return promptGenerator.iterativeGeneratorPrompt({
 				...latestWisdom,
 				validationMessagesString,
