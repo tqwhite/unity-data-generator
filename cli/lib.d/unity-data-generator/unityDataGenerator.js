@@ -90,14 +90,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'UDG_Thought_Process',
 	);
 
-	// Always use multi-element process (backward compatibility handled by input normalization)
-	if (thoughtProcessName === 'JEDX_Thought_Process') {
-		thoughtProcessName = 'JEDX_Multi_Element_Process';
-		xLog.status('Using multi-element JEDX process');
-	} else if (thoughtProcessName === 'UDG_Thought_Process') {
-		thoughtProcessName = 'UDG_Multi_Element_Process';
-		xLog.status('Using multi-element UDG process');
-	}
+
 
 	// Get configuration specific to qTools-AI
 	let { thoughtProcessConversationList, thinkerParameters, resultFileType } =
