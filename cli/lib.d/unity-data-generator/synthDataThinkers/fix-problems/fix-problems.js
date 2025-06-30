@@ -75,6 +75,14 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
+		// Critical validation: fix-problems REQUIRES generatedSynthData from previous thinker
+		const generatedSynthData = args.qtGetSurePath('latestWisdom.generatedSynthData');
+		if (!generatedSynthData) {
+			const errorMsg = `CRITICAL ERROR in ${moduleName}: No generatedSynthData received from previous thinker (sd-review). This is required input for fix-problems processing.`;
+			xLog.error(errorMsg);
+			throw new Error(errorMsg);
+		}
+
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------

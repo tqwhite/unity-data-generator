@@ -106,6 +106,14 @@ const moduleFunction = function (args = {}) {
 			);
 			const tmp=extractionFunction(rawWisdom);
 			const { generatedSynthData } = extractionFunction(rawWisdom);
+			
+			// Critical validation: sd-maker MUST produce generatedSynthData
+			if (!generatedSynthData) {
+				const errorMsg = `CRITICAL ERROR in ${moduleName}: Failed to generate generatedSynthData from AI response. This is the primary output required by all downstream thinkers. Check prompt library and extraction function.`;
+				xLog.error(errorMsg);
+				throw new Error(errorMsg);
+			}
+			
 			const wisdom={...latestWisdom, generatedSynthData};
 
 			next('', { ...args, wisdom });

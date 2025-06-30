@@ -107,7 +107,9 @@ const moduleFunction = function (args = {}) {
 		const synthData = args.qtGetSurePath('latestWisdom.generatedSynthData');
 
 		if (!synthData) {
-			throw `No synthData received from previous Thinker (fix-problems) in ${moduleName}`;
+			const errorMsg = `CRITICAL ERROR in ${moduleName}: No generatedSynthData received from previous thinker (fix-problems). This is required input for check-validity processing.`;
+			xLog.error(errorMsg);
+			throw new Error(errorMsg);
 		}
 
 		const refinementReportPartialTemplate = args.qtGetSurePath(
