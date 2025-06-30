@@ -53,12 +53,17 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { spreadsheetPath } = args;
+			const { spreadsheetPath, latestWisdom = {} } = args;
 			
 			// Check for currentElement from iterator (multi-element mode)
 			if (latestWisdom.currentElement) {
 				targetObjectName = latestWisdom.currentElement;
 				xLog.status(`Multi-element mode: Processing ${targetObjectName}`);
+			} else {
+				// Debug: Log what we have in latestWisdom
+				console.log(`[${moduleName}] No currentElement found in latestWisdom`);
+				console.log(`[${moduleName}] latestWisdom keys: ${Object.keys(latestWisdom).join(', ')}`);
+				console.log(`[${moduleName}] targetObjectName before loop: ${targetObjectName}`);
 			}
 		
 			if (!fs.existsSync(spreadsheetPath)) {
