@@ -42,6 +42,76 @@ const moduleFunction = function (args = {}) {
 	
 
 	const { thinkerSpec, smartyPants } = args;
+	const systemPrompt =
+		"You are an expert in data analysis and JSON manipulation. Your goal is to process data accurately and add the requested properties. Be precise and thorough.";
+
+	// ================================================================================
+	// UTILITIES
+
+	const convertProcessedElementsToPromptFormat = (processedElements) => {
+		const convertedElements = {};
+		
+		Object.keys(processedElements).forEach(key => {
+			try {
+				// Parse the JSON string to object, then stringify for clean formatting
+				convertedElements[key] = JSON.parse(processedElements[key]);
+			} catch (err) {
+				xLog.error(`Failed to parse JSON for ${key}: ${err.message}`);
+				// Keep original if parse fails
+				convertedElements[key] = processedElements[key];
+			}
+		});
+		
+		return JSON.stringify(convertedElements, null, 2);
+	};
+
+	const convertPromptFormatToProcessedElements = (promptFormatData) => {
+		const convertedElements = {};
+		
+		try {
+			// Parse the AI response JSON
+			const parsedData = typeof promptFormatData === 'string' 
+				? JSON.parse(promptFormatData) 
+				: promptFormatData;
+			
+			Object.keys(parsedData).forEach(key => {
+				// Convert each object back to JSON string format
+				convertedElements[key] = JSON.stringify(parsedData[key]);
+			});
+			
+		} catch (err) {
+			xLog.error(`Failed to convert prompt format back to processedElements: ${err.message}`);
+			throw new Error(`Conversion failed: ${err.message}`);
+		}
+		
+		return convertedElements;
+	};
+
+	const formulatePromptList =
+		(promptGenerator) =>
+		({ latestWisdom } = {}) => {
+			// Convert processedElements for prompt consumption
+			const convertedProcessedElements = convertProcessedElementsToPromptFormat(latestWisdom.processedElements);
+			
+			return promptGenerator.iterativeGeneratorPrompt({
+				...latestWisdom,
+				processedElements: convertedProcessedElements,
+				employerModuleName: moduleName,
+			});
+		};
+
+	// ================================================================================
+	// TALK TO AI
+
+	const accessSmartyPants = (args, callback) => {
+		let { promptList, systemPrompt } = args;
+
+		const localCallback = (err, result) => {
+			callback('', result);
+		};
+		promptList.unshift({ role: 'system', content: systemPrompt });
+		smartyPants.accessExternalResource({ promptList }, localCallback);
+	};
 
 	// ================================================================================
 	// ================================================================================
@@ -63,14 +133,67 @@ const moduleFunction = function (args = {}) {
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
-		// LOG THE WISDOM PROPERTY AND SET VALID
+		// GENERATE PROMPTS
 
 		taskList.push((args, next) => {
-			const { latestWisdom } = args;
+			const {
+				promptGenerator,
+				formulatePromptList,
+			} = args;
 
-			const {processedElements} = latestWisdom;
+			const promptElements = formulatePromptList(promptGenerator)(args);
 
-			Object.keys(processedElements).forEach(name=>processedElements[name]=processedElements[name].toUpperCase());
+			xLog.saveProcessFile(
+				`${moduleName}_promptList.log`,
+				`\n\n\n${moduleName}---------------------------------------------------\n${promptElements.promptList[0].content}\n----------------------------------------------------\n\n`,
+				{ append: true },
+			);
+
+			next('', { ...args, promptElements });
+		});
+
+		// --------------------------------------------------------------------------------
+		// CALL AI
+
+		taskList.push((args, next) => {
+			const { accessSmartyPants, promptElements, systemPrompt } = args;
+			const { promptList } = promptElements;
+
+			const localCallback = (err, result) => {
+console.log(`\n=-=============   result  ========================= [coherence-generator.js.moduleFunction]\n`)
+
+
+				next(err, { ...args, ...result });
+			};
+
+			accessSmartyPants({ promptList, systemPrompt }, localCallback);
+		});
+
+		// --------------------------------------------------------------------------------
+		// EXTRACT RESULTS
+
+		taskList.push((args, next) => {
+			const { wisdom: rawWisdom, promptElements, latestWisdom } = args;
+			const { extractionParameters, extractionFunction } = promptElements;
+
+			xLog.saveProcessFile(
+				`${moduleName}_responseList.log`,
+				`\n\n\n${moduleName}---------------------------------------------------\n${rawWisdom}\n----------------------------------------------------\n\n`,
+				{ append: true },
+			);
+
+			const extractedData = extractionFunction(rawWisdom);
+			const { processedElements: extractedProcessedElements } = extractedData;
+
+			// Critical validation: coherence-generator MUST produce processedElements
+			if (!extractedProcessedElements) {
+				const errorMsg = `CRITICAL ERROR in ${moduleName}: Failed to extract processedElements from AI response. Check prompt and extraction function.`;
+				xLog.error(errorMsg);
+				throw new Error(errorMsg);
+			}
+
+			// Convert back to original format: {key: "json string", key2: "json string"}
+			const processedElements = convertPromptFormatToProcessedElements(extractedProcessedElements);
 
 			// For answer-until-valid facilitator, we need to return isValid=true
 			const isValid = true;
@@ -80,7 +203,13 @@ const moduleFunction = function (args = {}) {
 		// --------------------------------------------------------------------------------
 		// INIT AND EXECUTE THE PIPELINE
 
-		const initialData = args;
+		const initialData = {
+			promptGenerator,
+			formulatePromptList,
+			accessSmartyPants,
+			systemPrompt,
+			...args,
+		};
 
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			const { latestWisdom, isValid, processedElements } = args;
