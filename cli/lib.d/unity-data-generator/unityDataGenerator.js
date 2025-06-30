@@ -216,11 +216,8 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 
 	// Optionally echo the refined XML to the console
 	if (commandLineParameters.switches.echoAlso) {
-		xLog.result(`\n\n${finalSynthData}\n\n`);
-console.dir({['finalSynthData']:finalSynthData}, { showHidden: false, depth: 4, colors: true });
-
+		//	xLog.result({['finalSynthData']:finalSynthData}, { showHidden: false, depth: 4, colors: true });
 	}
-
 	// Save the process file (for logging or debugging)
 	xLog.saveProcessFile(
 		`${moduleName}_${path.basename(outputFilePath)}`,
@@ -247,6 +244,7 @@ console.dir({['finalSynthData']:finalSynthData}, { showHidden: false, depth: 4, 
 		);
 		fs.writeFileSync(outputFilePath, finalSynthData[name], 'utf-8');
 	});
+	xLog.status(`Wrote files for: ${Object.keys(finalSynthData).length?Object.keys(finalSynthData):'No objects created'}`);
 
 	// Log the output file path
 	xLog.status(`Detail logs path: ${xLog.getProcessFilesDirectory()}`);

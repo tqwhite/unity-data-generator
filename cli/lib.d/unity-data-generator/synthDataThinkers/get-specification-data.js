@@ -31,8 +31,7 @@ const moduleFunction = function (args = {}) {
 	const { spreadsheetPath } = finalConfig;
 	
 	// Default from command line (will be overridden in executeRequest if in multi-element mode)
-	let targetObjectName = commandLineParameters.qtGetSurePath('values.elements', []).qtLast();
-	targetObjectName=targetObjectName?targetObjectName:commandLineParameters.qtGetSurePath('fileList', []).qtLast();
+	let targetObjectName
 
 	// ================================================================================
 	// UTILITIES
@@ -47,9 +46,8 @@ const moduleFunction = function (args = {}) {
 	const executeRequest = (args, callback) => {
 		const { latestWisdom = {} } = args;
 		const taskList = new taskListPlus();
-		
 
-		// --------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
@@ -59,11 +57,6 @@ const moduleFunction = function (args = {}) {
 			if (latestWisdom.currentElement) {
 				targetObjectName = latestWisdom.currentElement;
 				xLog.status(`Multi-element mode: Processing ${targetObjectName}`);
-			} else {
-				// Debug: Log what we have in latestWisdom
-				console.log(`[${moduleName}] No currentElement found in latestWisdom`);
-				console.log(`[${moduleName}] latestWisdom keys: ${Object.keys(latestWisdom).join(', ')}`);
-				console.log(`[${moduleName}] targetObjectName before loop: ${targetObjectName}`);
 			}
 		
 			if (!fs.existsSync(spreadsheetPath)) {
