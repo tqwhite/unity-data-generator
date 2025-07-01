@@ -59,7 +59,8 @@
       "Bash(./cli/lib.d/unity-data-generator/unityDataGenerator.js --elements=organization_paths,job_paths --thoughtProcess=JEDX_Thought_Process)",
       "Bash(./cli/lib.d/unity-data-generator/unityDataGenerator.js --elements=organization_paths --thoughtProcess=JEDX_Thought_Process 2 >& 1)",
       "Bash(./cli/lib.d/unity-data-generator/unityDataGenerator.js --elements=organization_paths,job_paths --thoughtProcess=JEDX_Thought_Process -debug 2 >& 1)",
-      "Bash(./cli/lib.d/unity-data-generator/unityDataGenerator.js -allElements --thoughtProcess=JEDX_Thought_Process 2 >& 1)"
+      "Bash(./cli/lib.d/unity-data-generator/unityDataGenerator.js -allElements --thoughtProcess=JEDX_Thought_Process 2 >& 1)",
+      "Bash(touch:*)"
     ],
     "deny": []
   }

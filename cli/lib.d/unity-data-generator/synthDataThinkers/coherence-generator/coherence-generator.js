@@ -76,7 +76,7 @@ const moduleFunction = function (args = {}) {
 			
 			Object.keys(parsedData).forEach(key => {
 				// Convert each object back to JSON string format
-				convertedElements[key] = JSON.stringify(parsedData[key]);
+				convertedElements[key] = JSON.stringify(parsedData[key], '', '\t');
 			});
 			
 		} catch (err) {
