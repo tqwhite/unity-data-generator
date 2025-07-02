@@ -18,24 +18,38 @@ You will receive a collection of JSON objects in the processedElements data:
 
 # COHERENCE ANALYSIS INSTRUCTIONS
 
+## 0. *Eliminate duplicate guids in refIds**: Each of these objects is made by a separate process. If there are any refIds (private key only) that are duplicates, change them to different values before going on to step 1.
+
 ## 1. Identify Keys and References
 - **Primary Keys**: Look for properties named "refId" - these are unique identifiers for each object
-- **Foreign Keys**: Look for properties ending in "RefId" or containing "refId" (except the primary "refId" itself) - these should reference other objects in the dataset
+- **Foreign Keys**: Look for properties ending in "RefId" or containing "refId" (except the primary "refId" itself) - these should reference other objects in the dataset. 
 
 ## 2. Analyze Current Relationships
 - Map all refId values present in the dataset
 - Identify all foreign key fields that should reference these refIds
-- Check if foreign keys currently point to valid refIds within the dataset
+- You should identify these relationships and list them.
 
 ## 3. Fix Referential Integrity
 - **Update Foreign Keys**: Modify any foreign key values to reference actual refIds that exist in the current dataset
 - **Maintain Logical Relationships**: Ensure relationships make sense (e.g., student references should point to actual student objects)
 - **Preserve Data Structure**: Keep all other properties unchanged except for foreign key corrections
+- **Deal with multiple parent relationships**: There are arbitrary numbers of each object. If you detect a foreign key for which there is more than one parent/target element, choose the refId that seems most coherent eg, same state or city.
+- **Do not leave parent objects that could have references empty**: If there are enough child objects, every parent object should have a descendant.
 
 ## 4. Add Rainbow Color Property for Debugging
 - Add a "UDG_DEBUG_INDICATOR" property to each JSON object
 - Use rainbow colors: red, orange, yellow, green, blue, indigo, violet
 - Assign colors randomly but ensure variety across objects
+
+## 5. Check your work.
+- The foreign keys of all objects should reference the refId of another object if you can find any sort of object that makes sense to link it to.
+- All refIds of any objects that act as parents (ie, there are other elements with foreign keys whose name makes sense in correspondence to an element name), should have a subordinate object. That is, no parent object should have two descendents any parent objects have zero.
+
+# ERRORS TO AVOID: These have been seen and care should be taken to prevent them.
+- ❌ Minor referential integrity issue with cross-worker hour report references
+- ❌ **CRITICAL**: Hours report references Job RefId instead of Worker RefId (type mismatch)
+- ❌ **MAJOR**: Fundamental foreign key relationship errors 
+- 🚨 **TYPE MISMATCH ERROR**: worker_hours_paid_path.json workerRefId field contains Job RefId (instead of Worker RefId
 
 # EXAMPLE
 If you have objects with refIds: "abc-123", "def-456", "ghi-789"
@@ -45,7 +59,7 @@ Then foreign keys should only reference these three values, not random UUIDs.
 1. Parse each JSON object in the processedElements collection
 2. Extract all refId values to create a reference map
 3. Identify all foreign key properties (properties containing "refId" or ending in "RefId")
-4. Update foreign keys to reference valid refIds from the dataset
+4. Update foreign keys to reference valid parent refIds from the dataset
 5. Add the rainbowColor property to each object
 6. Return the complete corrected processedElements object
 

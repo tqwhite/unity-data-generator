@@ -57,6 +57,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'-showElements',
 		'-allElements',
 		'--elements',
+		'--elementCounts',
 	],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 // =============================================================================
@@ -129,15 +130,67 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		targetObjectNameList = commandLineParameters.qtGetSurePath('fileList', []);
 	}
 
-	// If no target objects and no 'listElements' or 'allElements' or 'showElements' switch, show error and exit
+	// If no target objects and no 'listElements' or 'allElements' or 'showElements' switch, and no elementCounts, show error and exit
 	if (
 		!targetObjectNameList.length &&
 		!commandLineParameters.switches.listElements &&
 		!commandLineParameters.switches.allElements &&
-		!commandLineParameters.switches.showElements
+		!commandLineParameters.switches.showElements &&
+		!commandLineParameters.values.elementCounts
 	) {
 		xLog.error('Target element name is required. Try -help or -listElements');
 		process.exit(1);
+	}
+
+	// =============================================================================
+	// VALIDATE ELEMENTCOUNTS PARAMETER
+	
+	// Validate elementCounts against available spreadsheet elements (if specified)
+	if (commandLineParameters.values.elementCounts) {
+		try {
+			// Get the same spreadsheet path that get-all-elements uses
+			const { thinkerParameters } = getConfig(thoughtProcessName);
+			const elementSpecWorksheetPath = 
+				thinkerParameters.qtGetSurePath('get-specification-data.spreadsheetPath') ||
+				thinkerParameters.qtGetSurePath('elementSpecWorksheetPath') ||
+				thinkerParameters.qtGetSurePath('spreadsheetPath');
+			
+			if (!elementSpecWorksheetPath) {
+				xLog.error('ERROR: Cannot validate elementCounts - spreadsheet path not found in configuration');
+				process.exit(1);
+			}
+			
+			// Read spreadsheet to get available elements
+			const xlsx = require('xlsx');
+			const workbook = xlsx.readFile(elementSpecWorksheetPath);
+			const availableElements = workbook.SheetNames;
+			
+			// Parse and validate elementCounts
+			const elementCounts = commandLineParameters.values.elementCounts;
+			const invalidElements = [];
+			
+			elementCounts.forEach(countSpec => {
+				const [elementName, count] = countSpec.split(':');
+				if (!availableElements.includes(elementName)) {
+					invalidElements.push(elementName);
+				}
+			});
+			
+			// Show error and exit if any invalid elements found
+			if (invalidElements.length > 0) {
+				const errorMessage = invalidElements.length === 1
+					? `Element '${invalidElements[0]}' specified in --elementCounts does not exist in spreadsheet.`
+					: `Elements ${invalidElements.map(name => `'${name}'`).join(', ')} specified in --elementCounts do not exist in spreadsheet.`;
+				xLog.error(`ERROR: ${errorMessage} Available elements: ${availableElements.join(', ')}`);
+				process.exit(1);
+			}
+			
+			xLog.status(`Validated elementCounts: all specified elements exist in spreadsheet`);
+			
+		} catch (error) {
+			xLog.error(`ERROR: Failed to validate elementCounts: ${error.message}`);
+			process.exit(1);
+		}
 	}
 
 	// =============================================================================

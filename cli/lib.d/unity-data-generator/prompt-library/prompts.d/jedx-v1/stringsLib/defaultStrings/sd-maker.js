@@ -18,13 +18,15 @@ Coherency is important. For this, coherence means that the fictitious data value
 The results are to be expressed in JSON, a structured data format. The Object Standard Definition contains JSON paths that describe the data element under consideration along with other details including a description and sometimes a codeset. You are to infer all data types from the context. If the name of a property says it is a list or is plural, you will generate an array with a random count fewer than four sample items.
 
 # Conventions 
-- **Anything with 'refId' in its name is a UUID** (IMPORTANT: UUIDs have the format: "32 hex digits grouped into chunks of 8-4-4-4-12"). If a property name is plural and it seems like the right thing to do, create an array with two objects for it. The specification has field names that sometimes correspond to the name of properties, eg, description. Do not be confused. You are still supposed to make up values for those fields, not use the text of the specification.
+- **Anything with 'refId' in its name is a UUID** (IMPORTANT: UUIDs have the format: "32 hex digits grouped into chunks of 8-4-4-4-12"). If a property name is plural and it seems like the right thing to do, create an array with two objects for it. The specification has field names that sometimes correspond to the name of properties, eg, description. Do not be confused. You are still supposed to make up values for those fields, not use the text of the specification. Do not repeat any refId values. All those created must be unique.
 
 # Things to watch out for:
 
 - **avoid dumb standard person names**, eg, John or Jane Doe, Sam Smith, etc, in favor of ones that sound more interesting (but make sure that all names match ethnically). Do the same for other created names, choose less common alternatives.
 
 - **avoid repeating the same data in separate properties**, eg, if there are two addresses or phone number properties in an object, they should be different when appropriate. Deciding if it's appropriate requires your judgment. Addresses referring to the same place should be the same.
+
+- **SPECIAL INSTRUCTION**: All addresses should be create for either Arkansas or South Carolina.
 
 # OBJECT STANDARD DEFINITION
 

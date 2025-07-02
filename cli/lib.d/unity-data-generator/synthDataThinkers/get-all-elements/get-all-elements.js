@@ -24,14 +24,60 @@ const moduleFunction = function(args = {}) {
             let elementsToProcess = workbook.SheetNames;
             
             // Apply filtering based on command line
-            if (commandLineParameters.values.elements) {
+            let elementsToInclude = [];
+            
+            // Determine base element set
+            if (commandLineParameters.switches.allElements) {
+                // Start with all elements from spreadsheet
+                elementsToInclude = [...elementsToProcess];
+                xLog.status(`${moduleName}: Starting with all ${elementsToInclude.length} elements`);
+            } else if (commandLineParameters.values.elements) {
+                // Start with specified elements
                 xLog.debug(`commandLineParameters.values.elements: ${JSON.stringify(commandLineParameters.values.elements)}`);
-                // Command line parser already splits on commas, so elements is already an array
                 const requestedElements = commandLineParameters.values.elements;
-                elementsToProcess = elementsToProcess.filter(name => 
+                elementsToInclude = elementsToProcess.filter(name => 
                     requestedElements.includes(name)
                 );
-                xLog.status(`${moduleName}: Filtered to specific elements: ${elementsToProcess.join(', ')}`);
+                xLog.status(`${moduleName}: Starting with specified elements: ${elementsToInclude.join(', ')}`);
+            }
+            
+            // Apply elementCounts if specified
+            if (commandLineParameters.values.elementCounts) {
+                const elementCounts = commandLineParameters.values.elementCounts;
+                const countsMap = {};
+                
+                // Parse elementCounts
+                elementCounts.forEach(countSpec => {
+                    const [elementName, count] = countSpec.split(':');
+                    countsMap[elementName] = parseInt(count, 10);
+                });
+                
+                // Note: Validation of elementCounts is now done earlier in unityDataGenerator.js
+                
+                // Build final list: elements not in countsMap get count of 1, elements in countsMap get specified count
+                const finalElements = [];
+                
+                // Add elements with count of 1 (not in elementCounts)
+                elementsToInclude.forEach(elementName => {
+                    if (!countsMap[elementName]) {
+                        finalElements.push(elementName);
+                    }
+                });
+                
+                // Add elements with specified counts
+                Object.keys(countsMap).forEach(elementName => {
+                    const count = countsMap[elementName];
+                    for (let i = 0; i < count; i++) {
+                        finalElements.push(elementName);
+                    }
+                });
+                
+                elementsToInclude = finalElements;
+                xLog.status(`${moduleName}: Applied elementCounts, final elements: ${elementsToInclude.join(', ')}`);
+            }
+            
+            if (elementsToInclude.length > 0) {
+                elementsToProcess = elementsToInclude;
             } else if (commandLineParameters.switches.allElements) {
                 xLog.status(`${moduleName}: Processing all ${elementsToProcess.length} elements`);
             } else {
