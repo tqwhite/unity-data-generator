@@ -87,18 +87,33 @@ const moduleFunction = function (args = {}) {
 		return convertedElements;
 	};
 
-	const formulatePromptList =
-		(promptGenerator) =>
-		({ latestWisdom } = {}) => {
+	const formulatePromptList = (promptGenerator) => {
+		return ({ latestWisdom } = {}) => {
 			// Convert processedElements for prompt consumption
 			const convertedProcessedElements = convertProcessedElementsToPromptFormat(latestWisdom.processedElements);
+			
+			// Handle validation messages like fix-problems does
+			let validationMessagesString = 'No validation errors detected. Proceed with relationship optimization and coherence improvements.';
+			if (latestWisdom.qtGetSurePath('validationMessage', {})) {
+				const validationMessage = latestWisdom.validationMessage;
+				if (validationMessage && validationMessage.errors && validationMessage.errors.length > 0) {
+					validationMessagesString = `${validationMessage.errorCount} validation errors detected:\n\n`;
+					validationMessage.errors.forEach((error, index) => {
+						validationMessagesString += `Error ${index + 1}: ${error.type} (${error.severity})\n`;
+						validationMessagesString += `Issue: ${error.issue}\n`;
+						validationMessagesString += `Fix: ${error.fix}\n\n`;
+					});
+				}
+			}
 			
 			return promptGenerator.iterativeGeneratorPrompt({
 				...latestWisdom,
 				processedElements: convertedProcessedElements,
-				employerModuleName: moduleName,
+				validationMessagesString,
+				employerModuleName: 'fix-coherence', // Use the new prompt
 			});
 		};
+	};
 
 	// ================================================================================
 	// TALK TO AI
@@ -195,9 +210,8 @@ console.log(`\n=-=============   result  ========================= [coherence-ge
 			// Convert back to original format: {key: "json string", key2: "json string"}
 			const processedElements = convertPromptFormatToProcessedElements(extractedProcessedElements);
 
-			// For answer-until-valid facilitator, we need to return isValid=true
-			const isValid = true;
-			next('', { ...args, processedElements, isValid });
+			// Let check-group-validity determine isValid - do not set it here
+			next('', { ...args, processedElements });
 		});
 
 		// --------------------------------------------------------------------------------
@@ -212,7 +226,7 @@ console.log(`\n=-=============   result  ========================= [coherence-ge
 		};
 
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { latestWisdom, isValid, processedElements } = args;
+			const { latestWisdom, processedElements } = args;
 			
 			// Create new wisdom object without circular references
 			// Copy all properties except _conversationMetadata which contains circular refs
@@ -220,7 +234,6 @@ console.log(`\n=-=============   result  ========================= [coherence-ge
 			const { _conversationMetadata, ...safeWisdom } = latestWisdom;
 			const wisdom = {
 				...safeWisdom,
-				isValid,
 			};
 
 			wisdom.processedElements=processedElements; //send the revised data onward
@@ -236,7 +249,7 @@ console.log(`\n=-=============   result  ========================= [coherence-ge
 			);
 			
 			
-			xLog.status(`${moduleName}: Completed with isValid=${isValid}`);
+			xLog.status(`${moduleName}: Completed - data processed for validation`);
 			callback(err, { wisdom, args });
 		});
 	};
