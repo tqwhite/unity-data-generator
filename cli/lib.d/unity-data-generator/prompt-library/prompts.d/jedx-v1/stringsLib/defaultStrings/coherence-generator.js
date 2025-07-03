@@ -51,9 +51,23 @@ A validation check might have been run on the INPUT DATA. IF there are errors, t
 - Use rainbow colors: red, orange, yellow, green, blue, indigo, violet
 - Assign colors randomly but ensure variety across objects
 
-## 5. Check your work.
+## 5. Check your work for Business Logic Compliance
 - The foreign keys of all objects should reference the refId of another object if you can find any sort of object that makes sense to link it to.
 - All refIds of any objects that act as parents (ie, there are other elements with foreign keys whose name makes sense in correspondence to an element name), should have a subordinate object. That is, no parent object should have two descendents any parent objects have zero.
+
+**CRITICAL BUSINESS LOGIC VALIDATION:**
+- **Every worker MUST have exactly one compensation report** (no more, no fewer)
+- **Every worker MUST have at least one hours report** (no orphaned workers)
+- **Hours reports should be distributed evenly** (if 3 workers and 6 hours reports, then 2 reports per worker)
+- **All jobs and workers must belong to the same organization** (no cross-organizational inconsistencies)
+- **No worker should be severely overloaded** (having 3+ more reports than other workers)
+
+**VALIDATION FAILURE CONDITIONS (must be fixed):**
+- Worker with zero compensation reports = CRITICAL ERROR
+- Worker with multiple compensation reports = CRITICAL ERROR
+- Worker with zero hours reports = CRITICAL ERROR  
+- Jobs in different organization than workers = CRITICAL ERROR
+- Severe distribution imbalance (one worker with 4+ reports, another with 0) = CRITICAL ERROR
 
 # YOU ARE NOT TO CREATE NEW OBJECTS TO ACHIEVE VALIDITY OR COHERENCE
 - This data set might be part of another unseen data set. Creating objects here violates user intent. Do not do it.
@@ -63,13 +77,30 @@ GUIDANCE FOR CORRECTING RELATIONSHIP PROBLEMS
 
 If there are validation errors, you MUST FIND A WAY TO CHANGE THE DATA to make it better UNLESS it could require creating new objects.
 
+**ORGANIZATIONAL CONSISTENCY REQUIREMENTS:**
+- All jobs and workers should belong to the SAME organization
+- If jobs are in Organization A and workers are in Organization B, move ALL workers to Organization A
+- OR move ALL jobs to Organization B 
+- Maintain organizational hierarchy coherence
+
+**DISTRIBUTION BALANCE REQUIREMENTS:**
+- Each worker must have exactly ONE compensation report
+- Hours reports should be distributed as evenly as possible among workers
+- If Worker A has 4 reports and Worker B has 0 reports, reassign 2 reports from A to B
+- NO orphaned entities allowed (workers with zero reports)
+- NO duplicate compensation reports allowed (multiple per worker)
+
 If there are referential integrity errors, correct them by:
 - Updating foreign key RefIds to point to existing parent entities
 - Ensuring proper parent-child relationship patterns
 
 If there are distribution imbalances, correct them by:
-- Reassigning child entities more evenly among available parents
-- Moving entities from overloaded parents to underloaded ones
+- **Reassigning child entities more evenly among available parents**
+- **Moving entities from overloaded parents to underloaded ones**
+- **Ensuring every worker has exactly ONE compensation report per year**
+- **Distributing hours reports as evenly as possible among workers**
+- **NO WORKER should be left with ZERO reports (orphaned entities)**
+- **NO WORKER should have multiple compensation reports (duplicates)**
 - Maintaining business logic coherence
 
 If there are RefId duplicates, correct them by:

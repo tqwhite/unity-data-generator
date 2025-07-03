@@ -353,6 +353,8 @@ const performFastValidation = (processedElements) => {
 		// Quick checks for major issues
 		errors.push(...checkReferentialIntegrity(processedElements, refIdRegistry));
 		errors.push(...checkRefIdUniqueness(processedElements));
+		errors.push(...checkDistributionBalance(processedElements, refIdRegistry));
+		errors.push(...checkOrganizationalConsistency(processedElements, refIdRegistry));
 		
 		return {
 			isValid: errors.length === 0,
@@ -581,6 +583,232 @@ const checkRefIdUniqueness = (processedElements) => {
 			});
 		}
 	});
+	
+	return errors;
+};
+
+const checkDistributionBalance = (processedElements, refIdRegistry) => {
+	const errors = [];
+	
+	try {
+		// Count reports per worker
+		const workerReportCounts = {};
+		const workerCompensationCounts = {};
+		
+		// Initialize worker counts
+		refIdRegistry.forEach((info, refId) => {
+			if (info.entityType === 'worker') {
+				workerReportCounts[refId] = { compensation: 0, hours: 0, total: 0 };
+				workerCompensationCounts[refId] = [];
+			}
+		});
+		
+		// Count compensation reports per worker
+		refIdRegistry.forEach((info, refId) => {
+			if (info.entityType === 'worker_compensation_report') {
+				const elementsArray = Array.isArray(processedElements) ? processedElements : 
+					Object.keys(processedElements).map(key => {
+						try {
+							return JSON.parse(processedElements[key]);
+						} catch (err) {
+							return processedElements[key];
+						}
+					});
+				
+				const element = elementsArray[info.index];
+				const data = element.data || element;
+				const report = data.worker_compensation_report;
+				
+				if (report && report.workerRefId) {
+					const workerRefId = report.workerRefId;
+					if (workerReportCounts[workerRefId]) {
+						workerReportCounts[workerRefId].compensation++;
+						workerReportCounts[workerRefId].total++;
+						workerCompensationCounts[workerRefId].push(refId);
+					}
+				}
+			}
+		});
+		
+		// Count hours reports per worker
+		refIdRegistry.forEach((info, refId) => {
+			if (info.entityType === 'worker_paid_hours_report') {
+				const elementsArray = Array.isArray(processedElements) ? processedElements : 
+					Object.keys(processedElements).map(key => {
+						try {
+							return JSON.parse(processedElements[key]);
+						} catch (err) {
+							return processedElements[key];
+						}
+					});
+				
+				const element = elementsArray[info.index];
+				const data = element.data || element;
+				const report = data.worker_paid_hours_report;
+				
+				if (report && report.workerRefId) {
+					const workerRefId = report.workerRefId;
+					if (workerReportCounts[workerRefId]) {
+						workerReportCounts[workerRefId].hours++;
+						workerReportCounts[workerRefId].total++;
+					}
+				}
+			}
+		});
+		
+		// Check for orphaned workers (zero reports)
+		Object.keys(workerReportCounts).forEach(workerRefId => {
+			const counts = workerReportCounts[workerRefId];
+			if (counts.total === 0) {
+				errors.push({
+					type: "orphanedEntity",
+					severity: "critical",
+					issue: `Worker ${workerRefId} has zero reports (orphaned entity)`,
+					fix: "Assign at least one compensation report and one hours report to this worker"
+				});
+			}
+			
+			if (counts.compensation === 0) {
+				errors.push({
+					type: "missingCompensation",
+					severity: "critical",
+					issue: `Worker ${workerRefId} has no compensation reports`,
+					fix: "Create a compensation report for this worker"
+				});
+			}
+			
+			if (counts.hours === 0) {
+				errors.push({
+					type: "missingHours",
+					severity: "critical",
+					issue: `Worker ${workerRefId} has no hours reports`,
+					fix: "Create hours reports for this worker"
+				});
+			}
+		});
+		
+		// Check for duplicate compensation reports
+		Object.keys(workerCompensationCounts).forEach(workerRefId => {
+			const compReports = workerCompensationCounts[workerRefId];
+			if (compReports.length > 1) {
+				errors.push({
+					type: "duplicateCompensation",
+					severity: "critical",
+					issue: `Worker ${workerRefId} has ${compReports.length} compensation reports (should be 1)`,
+					fix: "Remove duplicate compensation reports, keep only one per worker per year",
+					duplicateReports: compReports
+				});
+			}
+		});
+		
+		// Check for severe distribution imbalance
+		const totalCounts = Object.values(workerReportCounts).map(c => c.total);
+		if (totalCounts.length > 0) {
+			const maxReports = Math.max(...totalCounts);
+			const minReports = Math.min(...totalCounts);
+			
+			if (maxReports - minReports > 2) {
+				errors.push({
+					type: "distributionImbalance",
+					severity: "critical",
+					issue: `Severe distribution imbalance: worker with ${maxReports} reports vs worker with ${minReports} reports`,
+					fix: "Redistribute reports more evenly among workers",
+					distributionCounts: totalCounts
+				});
+			}
+		}
+		
+	} catch (error) {
+		errors.push({
+			type: "distributionAnalysisError",
+			severity: "critical",
+			issue: `Distribution analysis failed: ${error.message}`,
+			fix: "Review data structure and distribution logic"
+		});
+	}
+	
+	return errors;
+};
+
+const checkOrganizationalConsistency = (processedElements, refIdRegistry) => {
+	const errors = [];
+	
+	try {
+		const organizationAssignments = {
+			jobs: {},
+			workers: {}
+		};
+		
+		// Track organizational assignments
+		refIdRegistry.forEach((info, refId) => {
+			if (info.entityType === 'job' || info.entityType === 'worker') {
+				const elementsArray = Array.isArray(processedElements) ? processedElements : 
+					Object.keys(processedElements).map(key => {
+						try {
+							return JSON.parse(processedElements[key]);
+						} catch (err) {
+							return processedElements[key];
+						}
+					});
+				
+				const element = elementsArray[info.index];
+				const data = element.data || element;
+				const entity = data[info.entityType];
+				
+				if (entity && entity.organizationRefId) {
+					if (info.entityType === 'job') {
+						organizationAssignments.jobs[refId] = entity.organizationRefId;
+					} else if (info.entityType === 'worker') {
+						organizationAssignments.workers[refId] = entity.organizationRefId;
+					}
+				}
+			}
+		});
+		
+		// Check for cross-organizational inconsistencies
+		const jobOrgs = Object.values(organizationAssignments.jobs);
+		const workerOrgs = Object.values(organizationAssignments.workers);
+		const uniqueJobOrgs = [...new Set(jobOrgs)];
+		const uniqueWorkerOrgs = [...new Set(workerOrgs)];
+		
+		// Check if jobs are split across multiple organizations
+		if (uniqueJobOrgs.length > 1) {
+			errors.push({
+				type: "crossOrganizationalJobs",
+				severity: "important",
+				issue: `Jobs are split across ${uniqueJobOrgs.length} organizations: ${uniqueJobOrgs.join(', ')}`,
+				fix: "Move all jobs to the same organization for consistency"
+			});
+		}
+		
+		// Check if workers are split across multiple organizations
+		if (uniqueWorkerOrgs.length > 1) {
+			errors.push({
+				type: "crossOrganizationalWorkers", 
+				severity: "important",
+				issue: `Workers are split across ${uniqueWorkerOrgs.length} organizations: ${uniqueWorkerOrgs.join(', ')}`,
+				fix: "Move all workers to the same organization for consistency"
+			});
+		}
+		
+		// Check if jobs and workers are in different organizations
+		if (uniqueJobOrgs.length === 1 && uniqueWorkerOrgs.length === 1 && uniqueJobOrgs[0] !== uniqueWorkerOrgs[0]) {
+			errors.push({
+				type: "jobWorkerOrganizationMismatch",
+				severity: "critical",
+				issue: `Jobs belong to organization ${uniqueJobOrgs[0]} but workers belong to organization ${uniqueWorkerOrgs[0]}`,
+				fix: "Move jobs and workers to the same organization for logical consistency"
+			});
+		}
+		
+	} catch (error) {
+		errors.push({
+			type: "organizationalAnalysisError",
+			severity: "critical",
+			issue: `Organizational analysis failed: ${error.message}`,
+			fix: "Review organizational reference structure"
+		});
+	}
 	
 	return errors;
 };

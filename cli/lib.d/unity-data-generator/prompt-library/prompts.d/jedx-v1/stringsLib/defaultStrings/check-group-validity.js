@@ -34,15 +34,20 @@ Your primary responsibilities:
    - Check for duplicate RefIds across different entities
    - RefIds should follow UUID format: "a1b2c3d4-e5f6-7890-ab12-cd34ef56gh78" (32 hex digits in 8-4-4-4-12 pattern)
 
-3) **DISTRIBUTION BALANCE ANALYSIS**: Evaluate if child entities are evenly distributed among parents
+3) **DISTRIBUTION BALANCE ANALYSIS**: CRITICALLY IMPORTANT - Evaluate if child entities are evenly distributed among parents
    - Each parent should have roughly equal numbers of children
    - Flag cases where distribution varies by more than 1 entity per parent
    - Example: 6 reports among 3 workers should be 2 reports each
+   - **ORPHANED ENTITY DETECTION**: Any worker with ZERO reports is a CRITICAL ERROR
+   - **OVERLOADED ENTITY DETECTION**: Any worker with significantly more reports than others is a MAJOR ERROR
+   - **DUPLICATE COMPENSATION**: Multiple compensation reports per worker per year is INVALID
 
 4) **HIERARCHICAL COMPLETENESS ANALYSIS**: Ensure proper organizational structure
    - All required parent entities must be present for referenced children
    - Child entities must have valid parent references
    - Flag missing parent entities
+   - **CROSS-ORGANIZATIONAL CONSISTENCY**: All jobs and workers should belong to the SAME organization
+   - **ORGANIZATIONAL LOGIC**: Jobs should exist in the same organization as their workers
 
 VALIDATION CONTEXT
 
@@ -62,10 +67,13 @@ Please analyze the data collection and provide:
 COMMON RELATIONSHIP PATTERNS TO VERIFY:
 
 • **Organization → Jobs**: All jobs should reference the same organization (single organization model)
-• **Organization → Workers**: All workers should reference the same organization
-• **Worker → Compensation Reports**: Each worker can have multiple compensation reports
-• **Worker → Hours Reports**: Each worker can have multiple hours reports
+• **Organization → Workers**: All workers should reference the same organization  
+• **Worker → Compensation Reports**: Each worker should have EXACTLY ONE compensation report per year
+• **Worker → Hours Reports**: Each worker should have roughly EQUAL numbers of hours reports
 • **Balanced Distribution**: If there are 3 workers and 6 reports, distribute 2 reports per worker
+• **NO ORPHANED ENTITIES**: Every worker MUST have at least one compensation report and one hours report
+• **NO OVERLOADED ENTITIES**: No worker should have significantly more reports than others
+• **ORGANIZATIONAL CONSISTENCY**: Jobs and workers should be in the same organization
 
 VALIDATION RESULT REQUIREMENTS
 
@@ -80,6 +88,10 @@ Based on your analysis, determine:
 - Any duplicate RefId values across different entities
 - Any missing required parent entities for child entities
 - Any malformed RefId formats that don't follow UUID pattern
+- **ANY WORKER WITH ZERO REPORTS** (orphaned entities)
+- **ANY WORKER WITH MULTIPLE COMPENSATION REPORTS** (duplicate business records)
+- **SEVERE DISTRIBUTION IMBALANCE** (one worker with 3+ more reports than others)
+- **CROSS-ORGANIZATIONAL INCONSISTENCIES** (jobs and workers in different organizations)
 
 **BROKEN REFERENCE DETECTION**: 
 If you find ANY foreign key that points to a RefId that doesn't exist in the data collection, this is a CRITICAL ERROR that makes the entire dataset INVALID. You must explicitly list:
