@@ -103,19 +103,23 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
+		const { wisdomBus } = args;
+		
+		if (!wisdomBus) {
+			return callback(new Error(`${moduleName}: wisdom-bus is required`));
+		}
 
-		const synthData = args.qtGetSurePath('latestWisdom.generatedSynthData');
+		// Read from wisdom-bus instead of latestWisdom
+		const synthData = wisdomBus.get('generatedSynthData');
 
 		if (!synthData) {
-			const errorMsg = `CRITICAL ERROR in ${moduleName}: No generatedSynthData received from previous thinker (fix-problems). This is required input for check-validity processing.`;
+			const errorMsg = `CRITICAL ERROR in ${moduleName}: No generatedSynthData found in wisdom-bus. This is required input for check-validity processing.`;
 			xLog.error(errorMsg);
 			throw new Error(errorMsg);
 		}
 
-		const refinementReportPartialTemplate = args.qtGetSurePath(
-			'latestWisdom.refinementReportPartialTemplate',
-			'got nothing from previous process (fix-problems.js)',
-		);
+		const refinementReportPartialTemplate = wisdomBus.get('refinementReportPartialTemplate') ||
+			'got nothing from previous process (fix-problems.js)';
 
 		const { unused } = args;
 		const taskList = new taskListPlus();
@@ -124,7 +128,7 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { synthData, latestWisdom } = args;
+			const { synthData, wisdomBus } = args;
 
 			const localCallback = (err, result) => {
 				const { validationMessage, isValid } = result;
@@ -155,14 +159,12 @@ const moduleFunction = function (args = {}) {
 					append: true,
 				});
 
-				const wisdom = {
-					...latestWisdom,
-					generatedSynthData: synthData,
-					validationMessage,
-					isValid,
-				};
+				// Write results to wisdom-bus
+				wisdomBus.add('generatedSynthData', synthData);
+				wisdomBus.add('validationMessage', validationMessage);
+				wisdomBus.add('isValid', isValid);
 
-				next('', { ...args, wisdom, isValid });
+				next('', { ...args, isValid });
 			};
 
 			accessSmartyPants(synthData, localCallback);
@@ -174,15 +176,20 @@ const moduleFunction = function (args = {}) {
 		const initialData = {
 			...args,
 			synthData,
+			wisdomBus
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { wisdom, isValid } = args;
+			const { isValid } = args;
 			if (isValid) {
 				xLog.progress(`synthData passed validation check`);
 			} else {
 				xLog.error(`synthData did NOT pass validation check`);
 			}
-			callback(err, { wisdom, args });
+			// Return success only (no wisdom)
+			callback(err, { 
+				success: true,
+				message: `Validation ${isValid ? 'passed' : 'failed'}`
+			});
 		});
 	};
 

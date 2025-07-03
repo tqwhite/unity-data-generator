@@ -6,7 +6,11 @@ const moduleFunction = function(args = {}) {
     const moduleName = 'get-all-elements';
     
     const executeRequest = (args, callback) => {
-        const { thinkerParameters = {} } = args;
+        const { thinkerParameters = {}, wisdomBus } = args;
+        
+        if (!wisdomBus) {
+            return callback(new Error(`${moduleName}: wisdom-bus is required`));
+        }
         
         // Get spreadsheet path from configuration
         const elementSpecWorksheetPath = 
@@ -80,12 +84,14 @@ const moduleFunction = function(args = {}) {
                 elementsToProcess = [];
             }
             
+            // Add results to wisdom-bus
+            wisdomBus.add('elementsToProcess', elementsToProcess);
+            wisdomBus.add('elementCount', elementsToProcess.length);
+            
+            // Return success only (no wisdom)
             callback(null, { 
-                wisdom: { 
-                    elementsToProcess,
-                    elementCount: elementsToProcess.length
-                },
-                args 
+                success: true,
+                message: `Found ${elementsToProcess.length} elements to process`
             });
             
         } catch (error) {

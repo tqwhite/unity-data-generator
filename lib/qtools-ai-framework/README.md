@@ -24,12 +24,15 @@ const result = await facilitators.makeResponse({
 The qtools-ai-framework implements a three-tier architectural metaphor:
 
 **Thought Processes** - Top-level orchestration. Thought processes are mainly a sequence of conversations.
+
 **Conversations** - Each conversation has a facilitator and a group of thinkers. A facilitator conducts conversational exchanges, giving and receiving wisdom, according to a pattern that is specific to this facilitator. For example, there is a facilitator that just asks one thinker to respond to a prompt. Another takes two thinkers and reruns one of them until the other says it's finished. 
+
 **Thinkers** - An individual software entity that is happy to receive the data from other thinkers and add value to it. Often, this value is derived from a prompted interaction with some smartyPants AI but it can also be from some URL, a file, or any other thing a NodeJS module can do. The only requirement is that it obey the function signature of the thinker set.
 
 The framework provides dependency injection, prompt management, and facilitator patterns for common processing needs.
 
 ## VERSIONS
+
 - v1.02: added xLog.progress() and xLog.setProgressMessageStatus() (true to show, false to hide)
 - v1.0.1: initial commit, works
 
