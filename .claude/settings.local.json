@@ -64,7 +64,10 @@
       "Bash(dot:*)",
       "Bash(export OPENAI_API_KEY=\"test_key\")",
       "Bash(gtimeout:*)",
-      "Bash(npm test:*)"
+      "Bash(npm test:*)",
+      "Bash(/Users/tqwhite/Documents/webdev/qtools-ai-framework/qtoolsAiTwoStepSample/qtoolsAiTwoStepSample.js --creatingPrompt=pony --revisingPrompt='french person')",
+      "Bash(awk:*)",
+      "Bash(split:*)"
     ],
     "deny": []
   }

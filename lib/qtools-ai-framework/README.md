@@ -33,6 +33,8 @@ The framework provides dependency injection, prompt management, and facilitator 
 
 ## VERSIONS
 
+- v2.0.2: Updated README
+- v2.0.0: Added async processing and wisdom-bus architecture for thinker data interactions
 - v1.02: added xLog.progress() and xLog.setProgressMessageStatus() (true to show, false to hide)
 - v1.0.1: initial commit, works
 
@@ -57,7 +59,7 @@ The qtools-ai-framework (QAF) implements a division of labor.
 - `answer-until-valid` - Keeps asking thinkers to try again until one says "this is good"
 - More patterns are being added as we learn more (and user patterns are on the roadmap)
 
-**APPLICATION PROVIDES:**
+**USER APPLICATION PROVIDES:**
 
 **Prompt Libraries** - Organized collections of prompts:
 
@@ -81,7 +83,103 @@ The qtools-ai-framework (QAF) implements a division of labor.
 1. **Dependency Injection** - Framework services are injected into thinkers
 2. **Configuration-Driven** - Thought processes defined in INI configuration
 3. **Prompt Library Architecture** - Modular prompt management per thought process
-4. **Wisdom Pipeline** - Data flows through thinkers as accumulated "wisdom"
+4. **Wisdom-Bus Architecture** - Thread-safe data management with collision strategies
+5. **Wisdom Pipeline** - Data flows through thinkers as accumulated "wisdom"
+
+## WISDOM-BUS ARCHITECTURE
+
+**NEW in v2.0**: The wisdom-bus provides thread-safe data management for thinker interactions, replacing the traditional `latestWisdom` pattern with a more robust accessor-based system.
+
+### Core Concepts
+
+**Wisdom-Bus** - A centralized data management system that:
+
+- Provides thread-safe access to shared wisdom data
+- Handles collision resolution when multiple thinkers access the same data
+- Creates isolated namespaces for each process to prevent data corruption
+- Maintains a complete process registry for debugging and tracking
+
+**Accessors** - Process-specific interfaces that:
+
+- Give each thinker its own namespace (`_proc_{processId}_{key}`)
+- Provide `add()`, `get()`, `getAll()`, `exists()` methods for data manipulation
+- Automatically handle collision detection and resolution
+- Track all operations for debugging and process monitoring
+
+**Collision Strategies** - Built-in approaches for handling data conflicts:
+
+- `sequence` - Arrays maintain order, objects preserve all values with numeric suffixes
+- `array` - Always convert to arrays and concatenate values
+- `overwrite` - Last writer wins (simple replacement)
+- `error` - Throw error on any collision (strict mode)
+
+### Wisdom-Bus Benefits
+
+1. **Thread Safety** - Multiple thinkers can safely access data simultaneously
+2. **Process Isolation** - Each process gets its own namespace preventing cross-contamination
+3. **Collision Resolution** - Automatic handling of data conflicts with configurable strategies
+4. **Debugging Support** - Complete operation logging and process registry
+5. **Migration Support** - Helper functions allow gradual transition from legacy patterns
+
+### How Thinkers Use Wisdom-Bus
+
+**New Pattern (v2.0+):**
+
+```javascript
+const executeRequest = (args, callback) => {
+    // Wisdom-bus is injected as wisdomBus accessor - NOTE: This is an ACCESSOR, not the full wisdom-bus
+    const { wisdomBus } = args;
+
+    // Add data to the wisdom-bus using accessor methods
+    wisdomBus.add('generatedData', myData);
+    wisdomBus.add('isValid', true);
+
+    // Get data from wisdom-bus using accessor methods
+    const existingData = wisdomBus.get('previousData');
+    const allWisdom = wisdomBus.getAll(); // Gets all accessible wisdom for this process
+
+    // Traditional wisdom return for framework compatibility
+    const wisdom = allWisdom; // No need to spread, getAll() returns complete accessible wisdom
+    callback('', { wisdom, args });
+};
+```
+
+**Important: Accessor Methods vs Full Wisdom-Bus**
+
+Thinkers receive a **namespaced accessor**, not the full wisdom-bus. Available methods:
+
+- `wisdomBus.add(key, value)` - Add data to your namespace
+- `wisdomBus.get(key)` - Get data (checks your namespace first, then initial wisdom)
+- `wisdomBus.getAll()` - Get all accessible data (your additions + initial wisdom)
+- `wisdomBus.has(key)` - Check if key exists
+- `wisdomBus.processId` - Your unique process identifier
+
+**Legacy Pattern (still supported):**
+
+```javascript
+const executeRequest = (args, callback) => {
+    const { latestWisdom } = args;
+
+    const wisdom = { 
+        ...latestWisdom, 
+        generatedData: myData,
+        isValid: true 
+    };
+    callback('', { wisdom, args });
+};
+```
+
+### Migration Helper
+
+For existing thinkers, the framework provides automatic migration:
+
+```javascript
+// Thinkers can work with both patterns
+const migrateThinker = require('../wisdom-bus/migrate-thinker-helper').migrateThinker;
+
+// Framework automatically wraps legacy thinkers
+const wrappedThinker = migrateThinker(legacyThinker);
+```
 
 ## CREATING A NEW THINKER
 
@@ -101,7 +199,7 @@ Think of the qtools-ai-framework like a big conference at a hotel.
 
 **How Panels Work Together**: Here's where it gets interesting. The morning panel might discuss "What data do we need?" The experts share their findings. Then the afternoon panel takes those findings and asks "Is this data any good?" If not, they send notes back to the morning panel saying "Try again, but fix these problems."
 
-**The Final Report**: After all the panels finish, someone takes all the wisdom from every discussion and writes up the final conference report. That's your output.
+**The Final Report**: After those panels finish, another panel takes all the wisdom from every discussion and writes up the final conference report. That's your output.
 
 **Real Example**: In our coherence-generator story:
 
@@ -193,17 +291,21 @@ Think of `args` like a shared notebook that all thinkers can read and write in. 
 
 Key properties in args:
 
-- `latestWisdom` - The accumulated knowledge from all previous thinkers. This is THE MOST IMPORTANT property.
+- `wisdomBus` - **NEW v2.0**: Your thread-safe accessor for reading/writing wisdom data
+- `latestWisdom` - **Legacy**: The accumulated knowledge from all previous thinkers (still supported)
 - Other properties - Various data the conversation needs
 
 **What You Must Return**
 
 Your thinker MUST include these in its wisdom output:
 
-1. `wisdom` - Must contain all of `latestWisdom` plus your new contributions
+1. `wisdom` - Must contain all wisdom data plus your new contributions
 2. `isValid` - Set to true/false (even if not using answer-until-valid facilitator)
 
-Best practice: `const wisdom = { ...latestWisdom, yourNewData, isValid: true }`
+**Best practices:**
+
+- **v2.0 pattern**: Use `wisdomBus.add()` to store data, `wisdomBus.getAll()` for wisdom return
+- **Legacy pattern**: `const wisdom = { ...latestWisdom, yourNewData, isValid: true }`
 
 Create the basic thinker structure:
 
@@ -220,7 +322,7 @@ const taskListPlus = asynchronousPipePlus.taskListPlus;
 
 const moduleFunction = function (args = {}) {
     const { xLog, getConfig } = process.global;
-    const { thinkerParameters={}, promptGenerator, smartyPants } = args;
+    const { thinkerParameters={}, promptGenerator, smartyPants, wisdomBus } = args;
 
     // Get configuration
     const localThinkerParameters = thinkerParameters.qtGetSurePath(moduleName, {});
@@ -230,10 +332,11 @@ const moduleFunction = function (args = {}) {
 
     const systemPrompt = "Your AI system prompt here";
 
-    // UTILITIES
-    const formulatePromptList = (promptGenerator) => ({ latestWisdom } = {}) => {
+    // UTILITIES - Wisdom-bus pattern
+    const formulatePromptList = (promptGenerator) => ({ wisdomBus } = {}) => {
+        const wisdomData = wisdomBus.getAll(); // Get all accessible wisdom via accessor
         return promptGenerator.iterativeGeneratorPrompt({
-            ...latestWisdom,
+            ...wisdomData,
             employerModuleName: moduleName,
         });
     };
@@ -247,14 +350,15 @@ const moduleFunction = function (args = {}) {
         smartyPants.accessExternalResource({ promptList }, localCallback);
     };
 
-    // DO THE JOB
+    // DO THE JOB - Wisdom-bus pattern
     const executeRequest = (args, callback) => {
         const taskList = new taskListPlus();
+        const { wisdomBus } = args;
 
         // Task 1: Generate prompts
         taskList.push((args, next) => {
-            const { promptGenerator, formulatePromptList } = args;
-            const promptElements = formulatePromptList(promptGenerator)(args);
+            const { promptGenerator, formulatePromptList, wisdomBus } = args;
+            const promptElements = formulatePromptList(promptGenerator)({ wisdomBus });
             next('', { ...args, promptElements });
         });
 
@@ -269,11 +373,18 @@ const moduleFunction = function (args = {}) {
 
         // Task 3: Extract and process results
         taskList.push((args, next) => {
-            const { wisdom: rawWisdom, promptElements, latestWisdom } = args;
+            const { wisdom: rawWisdom, promptElements, wisdomBus } = args;
             const { extractionFunction } = promptElements;
             const extractedData = extractionFunction(rawWisdom);
 
-            const wisdom = { ...latestWisdom, ...extractedData };
+            // Add results to wisdom-bus using accessor methods
+            Object.keys(extractedData).forEach(key => {
+                wisdomBus.add(key, extractedData[key]); // Adds to your process namespace
+            });
+            wisdomBus.add('isValid', true);
+
+            // Get all accessible wisdom for framework compatibility
+            const wisdom = wisdomBus.getAll(); // Returns all accessible data for this process
             next('', { ...args, wisdom });
         });
 
@@ -304,8 +415,18 @@ Add validation for required input data:
 
 ```javascript
 const executeRequest = (args, callback) => {
-    // Critical validation
-    const requiredData = args.qtGetSurePath('latestWisdom.requiredProperty');
+    // Critical validation - Updated for wisdom-bus pattern
+    const { wisdomBus, latestWisdom } = args;
+
+    // v2.0 pattern: Check wisdom-bus for required data
+    let requiredData;
+    if (wisdomBus) {
+        requiredData = wisdomBus.get('requiredProperty');
+    } else {
+        // Legacy pattern: Check latestWisdom
+        requiredData = latestWisdom?.requiredProperty;
+    }
+
     if (!requiredData) {
         const errorMsg = `CRITICAL ERROR in ${moduleName}: No requiredProperty received`;
         xLog.error(errorMsg);
@@ -384,6 +505,7 @@ module.exports = moduleFunction({ moduleName });
 
 - Process `currentElement` from wisdom
 - Results accumulate across iterations
+- Sequential or Parallel (throtted batches)
 
 #### Data Flow
 
@@ -401,29 +523,53 @@ module.exports = moduleFunction({ moduleName });
 
 ### Wisdom Property Flow
 
-The standard property for synthetic data generation:
+The standard pattern for synthetic data generation using wisdom-bus:
 
 ```javascript
-// sd-maker creates it
-const wisdom = { ...latestWisdom, generatedSynthData };
+// sd-maker creates data
+wisdomBus.add('generatedSynthData', synthData);
+wisdomBus.add('isValid', true);
 
-// sd-review modifies it  
-const wisdom = { ...latestWisdom, ...extractedData }; // overwrites generatedSynthData
+// sd-review modifies data
+const currentData = wisdomBus.get('generatedSynthData');
+const improvedData = improveData(currentData);
+wisdomBus.add('generatedSynthData', improvedData);
 
-// check-validity validates and preserves it
-const wisdom = { ...latestWisdom, generatedSynthData, isValid, validationMessage };
+// check-validity validates and preserves
+const dataToValidate = wisdomBus.get('generatedSynthData');
+const validationResult = validateData(dataToValidate);
+wisdomBus.add('isValid', validationResult.isValid);
+wisdomBus.add('validationMessage', validationResult.message);
+
+// Final wisdom return
+const wisdom = wisdomBus.getAll();
+callback('', { wisdom, args });
 ```
 
 ### Error Handling
 
-Always validate critical inputs:
+Always validate critical inputs using wisdom-bus:
 
 ```javascript
-if (!criticalData) {
-    const errorMsg = `CRITICAL ERROR in ${moduleName}: Missing required data`;
-    xLog.error(errorMsg);
-    throw new Error(errorMsg);
-}
+const executeRequest = (args, callback) => {
+    const { wisdomBus } = args;
+
+    // Check for required data using accessor
+    const criticalData = wisdomBus.get('requiredProperty'); // Checks namespace first, then initial wisdom
+    if (!criticalData) {
+        const errorMsg = `CRITICAL ERROR in ${moduleName}: Missing required data`;
+        xLog.error(errorMsg);
+
+        // Add error info to wisdom-bus using accessor
+        wisdomBus.add('isValid', false);
+        wisdomBus.add('errorMessage', errorMsg);
+
+        const wisdom = wisdomBus.getAll(); // Get all accessible wisdom
+        return callback(new Error(errorMsg), { wisdom, args });
+    }
+
+    // Continue with processing...
+};
 ```
 
 ## CONFIGURATION REFERENCE
@@ -440,6 +586,11 @@ thoughtProcessConversationList.0.facilitatorModuleName=iterate-over-collection
 thoughtProcessConversationList.0.conversationThinkerListName.0=thinkerGroup
 thoughtProcessConversationList.0.iterableSourceThinkerName=dataSource
 thoughtProcessConversationList.0.resultValueWisdomPropertyName=currentElement
+
+# Optional async configuration for iterate-over-collection
+thoughtProcessConversationList.0.asyncMode=true              # Enable async processing
+thoughtProcessConversationList.0.maxConcurrentRequests=3    # Max parallel requests
+thoughtProcessConversationList.0.requestsPerSecond=2        # Rate limiting
 ```
 
 ### Thinker Configuration
@@ -458,6 +609,42 @@ thinkerName.smartyPantsName=gpt  # if AI access needed
 - Processes arrays of elements
 - Accumulates results
 - Configurable error handling
+- **NEW: Asynchronous processing (parallel batches) support**
+
+#### Async Processing Mode
+
+The iterate-over-collection facilitator now supports asynchronous processing for improved performance when handling multiple elements:
+
+**Configuration Options:**
+
+- `asyncMode` (boolean, default: false) - Enable/disable async processing
+- `maxConcurrentRequests` (number, default: 1) - Maximum parallel API requests
+- `requestsPerSecond` (number, optional) - Rate limiting for API calls
+
+**Example Configuration:**
+
+```ini
+[JEDX_Thought_Process]
+thoughtProcessConversationList.0.facilitatorModuleName=iterate-over-collection
+thoughtProcessConversationList.0.asyncMode=true
+thoughtProcessConversationList.0.maxConcurrentRequests=3
+thoughtProcessConversationList.0.requestsPerSecond=2
+```
+
+**Benefits:**
+
+- Parallel processing of independent elements
+- Configurable concurrency limits to prevent API overload
+- Optional rate limiting for API compliance
+- Automatic error handling with `continueOnError` support
+- Progress tracking for all parallel operations
+
+**How It Works:**
+
+- When `asyncMode=true`, elements are processed in parallel up to `maxConcurrentRequests`
+- Rate limiting ensures no more than `requestsPerSecond` API calls are made
+- Results are collected using `Promise.allSettled` for resilient error handling
+- Each element gets its own conversation instance with isolated wisdom context
 
 ### answer-until-valid
 
@@ -480,7 +667,8 @@ thinkerName.smartyPantsName=gpt  # if AI access needed
 ## VERSION HISTORY
 
 - 1.0.0 - Initial framework architecture
-- 2.0.0 - Configuration-driven prompt library selection
+- 2.0.0 - Configuration-driven prompt library selection + **Wisdom-Bus Architecture** for thread-safe data management
+- 2.1.0 - Async processing support for iterate-over-collection with rate limiting
 
 ## OTHER COOL QTOOLS
 

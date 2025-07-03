@@ -110,7 +110,7 @@ const moduleFunction = function (args = {}) {
 				...latestWisdom,
 				processedElements: convertedProcessedElements,
 				validationMessagesString,
-				employerModuleName: 'fix-coherence', // Use the new prompt
+				employerModuleName: moduleName, // Use the new prompt
 			});
 		};
 	};
@@ -175,9 +175,6 @@ const moduleFunction = function (args = {}) {
 			const { promptList } = promptElements;
 
 			const localCallback = (err, result) => {
-console.log(`\n=-=============   result  ========================= [coherence-generator.js.moduleFunction]\n`)
-
-
 				next(err, { ...args, ...result });
 			};
 

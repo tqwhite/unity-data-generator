@@ -9,12 +9,22 @@ const moduleFunction =
 	({ dotD, passThroughParameters } = {}) => {
 		const promptTemplate = `
 # PRIMARY TASK DEFINITION
-- Your task is to analyze multiple JSON objects for referential integrity and ensure all foreign key relationships are coherent within the dataset.
+- This project creates valid, realistic JEDX employment test data objects for use in education software data exchange. Your task is to finalize the data collection by ensuring proper relationships, foreign key consistency, and balanced distribution of child entities among parents.
+
 
 # INPUT DATA
 You will receive a collection of JSON objects in the processedElements data:
 
 <!processedElements!>
+
+
+ERROR CORRECTION SECTION
+
+A validation check might have been run on the INPUT DATA. IF there are errors, they are here:
+
+<!validationMessagesString!>
+
+(It is possible that no errors have yet been found.)
 
 # COHERENCE ANALYSIS INSTRUCTIONS
 
@@ -45,11 +55,27 @@ You will receive a collection of JSON objects in the processedElements data:
 - The foreign keys of all objects should reference the refId of another object if you can find any sort of object that makes sense to link it to.
 - All refIds of any objects that act as parents (ie, there are other elements with foreign keys whose name makes sense in correspondence to an element name), should have a subordinate object. That is, no parent object should have two descendents any parent objects have zero.
 
-# ERRORS TO AVOID: These have been seen and care should be taken to prevent them.
-- ❌ Minor referential integrity issue with cross-worker hour report references
-- ❌ **CRITICAL**: Hours report references Job RefId instead of Worker RefId (type mismatch)
-- ❌ **MAJOR**: Fundamental foreign key relationship errors 
-- 🚨 **TYPE MISMATCH ERROR**: worker_hours_paid_path.json workerRefId field contains Job RefId (instead of Worker RefId
+# YOU ARE NOT TO CREATE NEW OBJECTS TO ACHIEVE VALIDITY OR COHERENCE
+- This data set might be part of another unseen data set. Creating objects here violates user intent. Do not do it.
+- Subordinate foreign keys that are missing parent element references are considered valid.
+
+GUIDANCE FOR CORRECTING RELATIONSHIP PROBLEMS
+
+If there are validation errors, you MUST FIND A WAY TO CHANGE THE DATA to make it better UNLESS it could require creating new objects.
+
+If there are referential integrity errors, correct them by:
+- Updating foreign key RefIds to point to existing parent entities
+- Ensuring proper parent-child relationship patterns
+
+If there are distribution imbalances, correct them by:
+- Reassigning child entities more evenly among available parents
+- Moving entities from overloaded parents to underloaded ones
+- Maintaining business logic coherence
+
+If there are RefId duplicates, correct them by:
+- Generating new unique RefIds for duplicate entities
+- Maintaining foreign key references after RefId changes
+- Following UUID format specifications
 
 # EXAMPLE
 If you have objects with refIds: "abc-123", "def-456", "ghi-789"
@@ -101,7 +127,21 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 			const match = inString.match(regex);
 
 			if (match) {
-				const result = match[1].trim();
+				let result = match[1].trim();
+				
+				// Handle markdown code blocks (```json ... ```)
+				if (result.startsWith('```json')) {
+					result = result.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+				} else if (result.startsWith('```')) {
+					result = result.replace(/^```\s*/, '').replace(/\s*```$/, '');
+				}
+				
+				// Remove JavaScript-style comments that are invalid in JSON
+				// Be more careful - only remove // that are actually comments (after whitespace or comma)
+				result = result.replace(/(\s|,)\s*\/\/.*$/gm, '$1');
+				
+				result = result.trim();
+				
 				try {
 					const parsedElements = JSON.parse(result);
 					return { processedElements: parsedElements };
