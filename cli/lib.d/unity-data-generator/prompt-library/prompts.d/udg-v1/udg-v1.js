@@ -39,7 +39,7 @@ const moduleFunction =
 			.qtGetSurePath('values.promptVersion', [])
 			.qtLast('defaultStrings');
 			
-		xLog.status(`Using prompt library: ${promptLibraryName}`);
+		xLog.progress(`Using prompt library: ${promptLibraryName}`);
 
 		const getgeneratedSynthData = (extractionParameters) => (inString) => {
 

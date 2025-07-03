@@ -20,7 +20,7 @@ const moduleFunction =
 			libraryName: 'promptObjects',
 		});
 		
-		xLog.status(`Running prompt application: ${promptApplicationName}`);
+		xLog.progress(`Running prompt application: ${promptApplicationName}`);
 
 
 		const passThroughParameters = { promptApplicationName };

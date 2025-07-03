@@ -65,8 +65,6 @@ const moduleFunction = function (args = {}) {
 					continue;
 				}
 
-				xLog.status(`Found element definition for ${name}`);
-
 				const sheet = workbook.Sheets[name];
 				const elementSpecWorksheet = xlsx.utils.sheet_to_json(sheet);
 				elementSpecWorksheetJson = JSON.stringify(

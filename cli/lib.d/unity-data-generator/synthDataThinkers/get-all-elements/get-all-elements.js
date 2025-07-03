@@ -30,15 +30,11 @@ const moduleFunction = function(args = {}) {
             if (commandLineParameters.switches.allElements) {
                 // Start with all elements from spreadsheet
                 elementsToInclude = [...elementsToProcess];
-                xLog.status(`${moduleName}: Starting with all ${elementsToInclude.length} elements`);
             } else if (commandLineParameters.values.elements) {
-                // Start with specified elements
-                xLog.debug(`commandLineParameters.values.elements: ${JSON.stringify(commandLineParameters.values.elements)}`);
                 const requestedElements = commandLineParameters.values.elements;
                 elementsToInclude = elementsToProcess.filter(name => 
                     requestedElements.includes(name)
                 );
-                xLog.status(`${moduleName}: Starting with specified elements: ${elementsToInclude.join(', ')}`);
             }
             
             // Apply elementCounts if specified
@@ -73,17 +69,15 @@ const moduleFunction = function(args = {}) {
                 });
                 
                 elementsToInclude = finalElements;
-                xLog.status(`${moduleName}: Applied elementCounts, final elements: ${elementsToInclude.join(', ')}`);
+                xLog.progress(`${moduleName}: Applied elementCounts, final elements: ${elementsToInclude.join(', ')}`);
             }
             
             if (elementsToInclude.length > 0) {
                 elementsToProcess = elementsToInclude;
             } else if (commandLineParameters.switches.allElements) {
-                xLog.status(`${moduleName}: Processing all ${elementsToProcess.length} elements`);
             } else {
                 // Return empty collection - not in multi-element mode
                 elementsToProcess = [];
-                xLog.status(`${moduleName}: No multi-element flags found, returning empty collection`);
             }
             
             callback(null, { 

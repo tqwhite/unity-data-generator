@@ -29,6 +29,7 @@ const moduleFunction = function (args = {}) {
 	
 	
 	const { spreadsheetPath } = finalConfig;
+	xLog.verbose(`Found specification spreadsheet ${spreadsheetPath}`);
 	
 	// Default from command line (will be overridden in executeRequest if in multi-element mode)
 	let targetObjectName
@@ -56,7 +57,7 @@ const moduleFunction = function (args = {}) {
 			// Check for currentElement from iterator (multi-element mode)
 			if (latestWisdom.currentElement) {
 				targetObjectName = latestWisdom.currentElement;
-				xLog.status(`Multi-element mode: Processing ${targetObjectName}`);
+				xLog.status(`Processing element ${targetObjectName}`);
 			}
 		
 			if (!fs.existsSync(spreadsheetPath)) {
@@ -64,7 +65,6 @@ const moduleFunction = function (args = {}) {
 				throw `No specifications found. ${spreadsheetPath} does not exist`;
 			}
 			
-			xLog.status(`Found specification data ${spreadsheetPath}`);
 
 			const workbook = xlsx.readFile(spreadsheetPath);
 			const worksheetNames = workbook.SheetNames;
@@ -83,8 +83,6 @@ const moduleFunction = function (args = {}) {
 				if (targetObjectName!=name) {
 					continue;
 				}
-
-				xLog.status(`Found element definition for ${name}`);
 
 				const sheet = workbook.Sheets[name];
 				const elementSpecWorksheet = xlsx.utils.sheet_to_json(sheet);

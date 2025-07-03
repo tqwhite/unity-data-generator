@@ -83,15 +83,15 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	}
 
 	// Get configuration specific to this module
-	let { outputsPath } = getConfig(moduleName);
+	let { objectResultOutputDirPath, showProgressMessages } =
+		getConfig(moduleName);
+
+	xLog.setProgressMessageStatus(showProgressMessages);
 
 	// Retrieve the output file path from command-line parameters
 	let thoughtProcessName = commandLineParameters.qtGetSurePath(
 		'values.thoughtProcess[0]',
-		'UDG_Thought_Process',
 	);
-
-
 
 	// Get configuration specific to qTools-AI
 	let { thoughtProcessConversationList, thinkerParameters, resultFileType } =
@@ -108,116 +108,41 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	xLog.status(`Using thought process: ${thoughtProcessName}`);
 
 	// =============================================================================
+	// VALIDATE SPEC EXISTANCE
+
+	require('./lib/validate-input-element')({ thoughtProcessName });
+	require('./lib/validate-element-count-parameters')({ thoughtProcessName });
+
+	// =============================================================================
 	// COMMAND-LINE PARAMETERS PROCESSING
 
 	// Retrieve the output file path from command-line parameters
-	const outFile = commandLineParameters.qtGetSurePath('values.outFile[0]', '');
-
-	// If an output file is specified, adjust outputsPath accordingly
-	if (outFile) {
-		outputsPath = path.dirname(outFile);
-		fs.mkdirSync(outputsPath, { recursive: true });
-	}
-
-	// Get the list of target object names from command-line parameters
-	let targetObjectNameList = commandLineParameters.qtGetSurePath(
-		'values.elements',
-		[],
+	const cliFileOverride = commandLineParameters.qtGetSurePath(
+		'values.cliFileOverride[0]',
+		'',
 	);
 
-	// If no target objects are specified, use 'fileList' from command-line parameters
-	if (!targetObjectNameList.length) {
-		targetObjectNameList = commandLineParameters.qtGetSurePath('fileList', []);
-	}
-
-	// If no target objects and no 'listElements' or 'allElements' or 'showElements' switch, and no elementCounts, show error and exit
-	if (
-		!targetObjectNameList.length &&
-		!commandLineParameters.switches.listElements &&
-		!commandLineParameters.switches.allElements &&
-		!commandLineParameters.switches.showElements &&
-		!commandLineParameters.values.elementCounts
-	) {
-		xLog.error('Target element name is required. Try -help or -listElements');
-		process.exit(1);
-	}
-
-	// =============================================================================
-	// VALIDATE ELEMENTCOUNTS PARAMETER
-	
-	// Validate elementCounts against available spreadsheet elements (if specified)
-	if (commandLineParameters.values.elementCounts) {
-		try {
-			// Get the same spreadsheet path that get-all-elements uses
-			const { thinkerParameters } = getConfig(thoughtProcessName);
-			const elementSpecWorksheetPath = 
-				thinkerParameters.qtGetSurePath('get-specification-data.spreadsheetPath') ||
-				thinkerParameters.qtGetSurePath('elementSpecWorksheetPath') ||
-				thinkerParameters.qtGetSurePath('spreadsheetPath');
-			
-			if (!elementSpecWorksheetPath) {
-				xLog.error('ERROR: Cannot validate elementCounts - spreadsheet path not found in configuration');
-				process.exit(1);
-			}
-			
-			// Read spreadsheet to get available elements
-			const xlsx = require('xlsx');
-			const workbook = xlsx.readFile(elementSpecWorksheetPath);
-			const availableElements = workbook.SheetNames;
-			
-			// Parse and validate elementCounts
-			const elementCounts = commandLineParameters.values.elementCounts;
-			const invalidElements = [];
-			
-			elementCounts.forEach(countSpec => {
-				const [elementName, count] = countSpec.split(':');
-				if (!availableElements.includes(elementName)) {
-					invalidElements.push(elementName);
-				}
-			});
-			
-			// Show error and exit if any invalid elements found
-			if (invalidElements.length > 0) {
-				const errorMessage = invalidElements.length === 1
-					? `Element '${invalidElements[0]}' specified in --elementCounts does not exist in spreadsheet.`
-					: `Elements ${invalidElements.map(name => `'${name}'`).join(', ')} specified in --elementCounts do not exist in spreadsheet.`;
-				xLog.error(`ERROR: ${errorMessage} Available elements: ${availableElements.join(', ')}`);
-				process.exit(1);
-			}
-			
-			xLog.status(`Validated elementCounts: all specified elements exist in spreadsheet`);
-			
-		} catch (error) {
-			xLog.error(`ERROR: Failed to validate elementCounts: ${error.message}`);
-			process.exit(1);
-		}
+	// If an output file is specified, adjust objectResultOutputDirPath accordingly
+	if (cliFileOverride) {
+		objectResultOutputDirPath = path.dirname(cliFileOverride);
+		fs.mkdirSync(objectResultOutputDirPath, { recursive: true });
 	}
 
 	// =============================================================================
 	// OUTPUT FILE DETERMINATION
 
-	// Convert targetObjectNameList to a string for use in file names
-	let targetObjectNamesString;
-	if (commandLineParameters.switches.allElements) {
-		targetObjectNamesString = 'allElements';
-	} else if (
-		commandLineParameters.switches.showElements &&
-		!targetObjectNameList.length
-	) {
-		targetObjectNamesString = 'showElements'; // Dummy name for showElements
-	} else {
-		targetObjectNamesString = Array.isArray(targetObjectNameList)
-			? targetObjectNameList.join('_')
-			: targetObjectNameList;
-	}
-
 	// Determine the output file path
-	const outputFilePath =
-		outFile || path.join(outputsPath, `${targetObjectNamesString}.synthData`);
+	const outputFilePath = cliFileOverride;
 
 	// Ensure the output directory exists
 	const outputDir = path.dirname(outputFilePath);
 	fs.mkdirSync(outputDir, { recursive: true });
+
+	// Convert targetObjectNameList to a string for use in file names
+
+	const processDetailLogDirName = require('./lib/calculate-detail-log-name')({
+		thoughtProcessName,
+	});
 
 	// =============================================================================
 	// JINA INTERACTION
@@ -235,8 +160,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	// Interact with Jina to get wisdom
 	const wisdom = await findTheAnswer({
 		facilitators,
-		targetObjectNameList,
-		debugLogName: targetObjectNamesString,
+		debugLogName: processDetailLogDirName,
 	});
 	//   .catch(err=>{
 	//   	if (err){
@@ -244,13 +168,11 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	//   		process.exit(1);
 	//   	}
 	//   });
-	
 
 	xLog.debug(
 		{ ['wisdom']: wisdom },
 		{ showHidden: false, depth: null, colors: true },
 	);
-	
 
 	// Get the latest refined data (always multi-element format)
 	const finalSynthData = wisdom.processedElements;
@@ -262,7 +184,16 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 
 	// Optionally echo the refined XML to the console
 	if (commandLineParameters.switches.echoAlso) {
-			xLog.result({['finalSynthData']:finalSynthData}, { showHidden: false, depth: 4, colors: true });
+		xLog.status(
+			`===============================================================/n${Object.keys(finalSynthData).length ? Object.keys(finalSynthData) : 'No objects created'}\n`,
+		);
+		xLog.result(
+			{ ['finalSynthData']: finalSynthData },
+			{ showHidden: false, depth: 4, colors: true },
+		);
+		xLog.status(
+			'\n===============================================================/n',
+		);
 	}
 	// Save the process file (for logging or debugging)
 	xLog.saveProcessFile(
@@ -272,14 +203,13 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 
 	// Set up batch-specific debug log directory
 	const batchSpecificDebugResultDirPath = path.join(
-		outputsPath,
+		objectResultOutputDirPath,
 		`${thoughtProcessName}_${Math.floor(Date.now() / 1000)
 			.toString()
 			.slice(-4)}`,
 	);
 
 	fs.mkdirSync(batchSpecificDebugResultDirPath, { recursive: true });
-	
 
 	const fileExtension = resultFileType ? resultFileType : synthData;
 
@@ -288,9 +218,12 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 			batchSpecificDebugResultDirPath,
 			`${name}.${fileExtension}`,
 		);
+
 		fs.writeFileSync(outputFilePath, finalSynthData[name], 'utf-8');
 	});
-	xLog.status(`\nWrote files for: ${Object.keys(finalSynthData).length?Object.keys(finalSynthData):'No objects created'}`);
+	xLog.status(
+		`\nWrote files for: ${Object.keys(finalSynthData).length ? Object.keys(finalSynthData) : 'No objects created'}`,
+	);
 
 	// Log the output file path
 	xLog.status(`Detail logs path: ${xLog.getProcessFilesDirectory()}`);

@@ -47,11 +47,10 @@ A validation check was run on the current data collection. Here is the result:
 
 GUIDANCE FOR CORRECTING RELATIONSHIP PROBLEMS
 
-If there are validation errors, you MUST FIND A WAY TO CHANGE THE DATA to make it better.
+If there are validation errors, you MUST FIND A WAY TO CHANGE THE DATA to make it better UNLESS it could require creating new objects.
 
 If there are referential integrity errors, correct them by:
 - Updating foreign key RefIds to point to existing parent entities
-- Creating missing parent entities if referenced by children
 - Ensuring proper parent-child relationship patterns
 
 If there are distribution imbalances, correct them by:
@@ -63,6 +62,11 @@ If there are RefId duplicates, correct them by:
 - Generating new unique RefIds for duplicate entities
 - Maintaining foreign key references after RefId changes
 - Following UUID format specifications
+
+
+# YOU ARE NOT TO CREATE NEW OBJECTS TO ACHIEVE VALIDITY OR COHERENCE
+- If the only errors remaining are missing parent references, unconnected children are considered valid.
+- This data set might be part of another unseen data set. Creating objects here violates user intent. Do not do it.
 
 WHEN YOU COMPLETE THE REVISIONS, PLEASE REVIEW THE RESULTING DATA AND VERIFY THAT ALL RELATIONSHIPS ARE COHERENT.
 

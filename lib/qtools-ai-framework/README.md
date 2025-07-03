@@ -29,6 +29,10 @@ The qtools-ai-framework implements a three-tier architectural metaphor:
 
 The framework provides dependency injection, prompt management, and facilitator patterns for common processing needs.
 
+## VERSIONS
+- v1.02: added xLog.progress() and xLog.setProgressMessageStatus() (true to show, false to hide)
+- v1.0.1: initial commit, works
+
 ## ARCHITECTURE
 
 The qtools-ai-framework (QAF) implements a division of labor.

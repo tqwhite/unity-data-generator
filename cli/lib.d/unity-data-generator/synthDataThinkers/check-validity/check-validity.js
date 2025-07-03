@@ -64,7 +64,7 @@ const moduleFunction = function (args = {}) {
 		};
 
 		const url = finalConfig.validationUrl;
-		xLog.status(`validating with ${url}`);
+		xLog.progress(`validating with ${url}`);
 
 		const axiosParms = {
 			method: 'post',
@@ -178,9 +178,9 @@ const moduleFunction = function (args = {}) {
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			const { wisdom, isValid } = args;
 			if (isValid) {
-				xLog.status(`synthData passed validation check`);
+				xLog.progress(`synthData passed validation check`);
 			} else {
-				xLog.status(`synthData did NOT pass validation check`);
+				xLog.error(`synthData did NOT pass validation check`);
 			}
 			callback(err, { wisdom, args });
 		});
