@@ -4,7 +4,9 @@
   "description": "AI thought process framework",
   "main": "jina.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "author": "TQ White II",
   "license": "ISC",
@@ -13,5 +15,8 @@
     "qtools-config-file-processor": "^1.0.18",
     "qtools-functional-library": "^2.0.4",
     "qtools-parse-command-line": "^1.0.9"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
