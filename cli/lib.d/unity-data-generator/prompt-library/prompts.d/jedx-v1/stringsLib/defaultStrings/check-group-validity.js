@@ -18,17 +18,17 @@ VALIDATION ANALYSIS REQUIRED
 
 Your primary responsibilities:
 
-1) **FOREIGN KEY INTEGRITY ANALYSIS**: CRITICALLY IMPORTANT - Check if fields ending in 'RefId' point to existing primary RefIds
-   - organizationRefId fields must point to existing organization.RefId values
-   - workerRefId fields must point to existing worker.RefId values  
-   - jobRefId fields must point to existing job.RefId values
-   - Pattern: {entityType}RefId → must find matching {entityType} with that RefId
+1) **FOREIGN KEY INTEGRITY ANALYSIS**: Check if fields ending in 'RefId' point to existing primary RefIds
+   - organizationRefId fields ideally point to existing organization.RefId values
+   - workerRefId fields ideally point to existing worker.RefId values  
+   - jobRefId fields ideally point to existing job.RefId values
+   - Pattern: {entityType}RefId → should find matching {entityType} with that RefId
    
-   **MANDATORY PROCEDURE**: For EVERY foreign key field you find:
-   a) Extract the RefId value from the foreign key field
-   b) Search the ENTIRE data collection for a matching primary RefId
-   c) If NO matching RefId is found, this is a CRITICAL ERROR
-   d) Report broken references with specific RefId values and entity names
+   **IMPORTANT NOTE**: ORPHANED ENTITIES ARE ALLOWED
+   - Child entities may reference parent RefIds that don't exist in the dataset
+   - This is acceptable and should NOT be flagged as an error
+   - Only flag as warning if desired, but NEVER mark dataset as INVALID for missing parent references
+   - Focus validation on business logic within the provided entities
 
 2) **REFID UNIQUENESS ANALYSIS**: Verify every entity has a completely unique RefId
    - Check for duplicate RefIds across different entities
@@ -84,21 +84,21 @@ Based on your analysis, determine:
 - **Are there any critical blocking issues?**
 
 **CRITICAL VALIDATION FAILURE CONDITIONS** (automatically INVALID):
-- Any foreign key field pointing to a non-existent RefId
-- Any duplicate RefId values across different entities
-- Any missing required parent entities for child entities
+- Any duplicate RefId values across different entities  
 - Any malformed RefId formats that don't follow UUID pattern
-- **ANY WORKER WITH ZERO REPORTS** (orphaned entities)
+- **ANY WORKER WITH ZERO REPORTS** (orphaned entities within the dataset)
 - **ANY WORKER WITH MULTIPLE COMPENSATION REPORTS** (duplicate business records)
 - **SEVERE DISTRIBUTION IMBALANCE** (one worker with 3+ more reports than others)
 - **CROSS-ORGANIZATIONAL INCONSISTENCIES** (jobs and workers in different organizations)
 
-**BROKEN REFERENCE DETECTION**: 
-If you find ANY foreign key that points to a RefId that doesn't exist in the data collection, this is a CRITICAL ERROR that makes the entire dataset INVALID. You must explicitly list:
-- The entity containing the broken foreign key
-- The foreign key field name  
-- The RefId value that doesn't exist
-- The entity type it should point to
+**NOTE**: Foreign keys pointing to non-existent RefIds are ALLOWED and should NOT cause validation failure
+
+**REFERENCE ANALYSIS**: 
+Foreign keys that point to RefIds not present in the current data collection are ACCEPTABLE and should be noted but NOT treated as validation errors. These represent valid orphaned entities. Only focus on errors within the provided dataset:
+- Distribution balance among existing entities
+- Duplicate RefIds
+- Business logic violations (multiple compensation reports per worker)
+- Cross-organizational inconsistencies
 
 RESULT FORMATTING INSTRUCTIONS
 

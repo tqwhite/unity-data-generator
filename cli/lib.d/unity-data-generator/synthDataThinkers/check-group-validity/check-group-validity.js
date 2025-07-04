@@ -539,10 +539,14 @@ const checkReferentialIntegrity = (processedElements, refIdRegistry) => {
 			if (typeof entity === 'object' && entity) {
 				
 				// Check all foreign key fields (ending in RefId)
+				// NOTE: Orphaned entities (foreign keys pointing to non-existent RefIds) are ALLOWED
 				Object.keys(entity).forEach(fieldKey => {
 					if (fieldKey.endsWith('RefId') && fieldKey !== 'RefId') {
 						const foreignKeyValue = entity[fieldKey];
 						
+						// DISABLED: Foreign keys pointing to non-existent RefIds are acceptable
+						// This allows for orphaned entities which is a valid scenario
+						/*
 						if (foreignKeyValue && !refIdRegistry.has(foreignKeyValue)) {
 							errors.push({
 								type: "referentialIntegrity",
@@ -553,6 +557,7 @@ const checkReferentialIntegrity = (processedElements, refIdRegistry) => {
 								fix: `Update ${fieldKey} to reference an existing entity RefId`
 							});
 						}
+						*/
 					}
 				});
 			}

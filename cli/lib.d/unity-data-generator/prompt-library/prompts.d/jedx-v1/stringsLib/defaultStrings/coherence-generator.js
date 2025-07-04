@@ -129,7 +129,7 @@ COMPLETE PROCESSED ELEMENTS OBJECT WITH CORRECTED REFERENCES AND RAINBOW COLORS 
 
 There should be *nothing* except well-formed, valid JSON between those delimiters.
 		`;
-		
+
 		const extractionParameters = {
 			getProcessedElements: {
 				frontDelimiter: `[START COHERENCE RESULTS]`,
@@ -159,20 +159,20 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 
 			if (match) {
 				let result = match[1].trim();
-				
+
 				// Handle markdown code blocks (```json ... ```)
 				if (result.startsWith('```json')) {
 					result = result.replace(/^```json\s*/, '').replace(/\s*```$/, '');
 				} else if (result.startsWith('```')) {
 					result = result.replace(/^```\s*/, '').replace(/\s*```$/, '');
 				}
-				
+
 				// Remove JavaScript-style comments that are invalid in JSON
 				// Be more careful - only remove // that are actually comments (after whitespace or comma)
 				result = result.replace(/(\s|,)\s*\/\/.*$/gm, '$1');
-				
+
 				result = result.trim();
-				
+
 				try {
 					const parsedElements = JSON.parse(result);
 					return { processedElements: parsedElements };
@@ -183,16 +183,147 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 				return { processedElements: 'No coherence results found in response' };
 			}
 		};
-		
-		const extractionList = [
-			getProcessedElements(extractionParameters),
-		];
-		const extractionFunction = defaultExtractionFunction({extractionList});
-		
+
+		const extractionList = [getProcessedElements(extractionParameters)];
+		const extractionFunction = defaultExtractionFunction({ extractionList });
+
 		const thinker = 'coherence-generator';
 
+		// Child object balancing function for beforeAiProcess tool
+		const balanceChildObjects = (dataset) => {
+			const { xLog } = process.global;
+
+			// Parse the dataset if it's a string
+			let parsedDataset;
+			try {
+				parsedDataset =
+					typeof dataset === 'string' ? JSON.parse(dataset) : dataset;
+			} catch (error) {
+				xLog.error(`Failed to parse dataset: ${error.message}`);
+				return dataset;
+			}
+
+			// Step 1: Find all somethingRefId relationships
+			const relationships = {};
+			const parentCounts = {};
+
+			Object.keys(parsedDataset).forEach((key) => {
+				const obj = parsedDataset[key];
+
+				// Find all RefId fields that reference other objects
+				Object.keys(obj).forEach((field) => {
+					if (field.endsWith('RefId') && field !== 'RefId') {
+						const relationshipType = field; // e.g., 'organizationRefId', 'workerRefId'
+						const targetRefId = obj[field];
+
+						if (!relationships[relationshipType]) {
+							relationships[relationshipType] = [];
+						}
+						relationships[relationshipType].push({
+							childKey: key,
+							childObj: obj,
+							targetRefId: targetRefId,
+						});
+
+						// Count parents for this relationship type
+						if (!parentCounts[relationshipType]) {
+							parentCounts[relationshipType] = new Set();
+						}
+						parentCounts[relationshipType].add(targetRefId);
+					}
+				});
+			});
+
+			xLog.status(
+				`Found ${Object.keys(relationships).length} relationship types: ${Object.keys(relationships).join(', ')}`,
+			);
+
+			// Step 2: For each relationship type, balance the distribution
+			Object.keys(relationships).forEach((relationshipType) => {
+				const children = relationships[relationshipType];
+				const uniqueParents = Array.from(parentCounts[relationshipType]);
+
+				if (children.length === 0 || uniqueParents.length === 0) {
+					return;
+				}
+
+				xLog.status(
+					`Balancing ${relationshipType}: ${children.length} children across ${uniqueParents.length} parents`,
+				);
+
+				// Calculate distribution
+				const childrenPerParent = Math.floor(
+					children.length / uniqueParents.length,
+				);
+				const remainder = children.length % uniqueParents.length;
+
+				// Distribute children among parents
+				let childIndex = 0;
+				uniqueParents.forEach((parentRefId, parentIndex) => {
+					// Some parents get one extra child if there's a remainder
+					const extraChild = parentIndex < remainder ? 1 : 0;
+					const childrenForThisParent = childrenPerParent + extraChild;
+
+					for (
+						let i = 0;
+						i < childrenForThisParent && childIndex < children.length;
+						i++
+					) {
+						const child = children[childIndex];
+						child.childObj[relationshipType] = parentRefId;
+						childIndex++;
+					}
+				});
+
+				xLog.status(
+					`Distributed ${relationshipType}: ${childrenPerParent}${remainder > 0 ? '+1' : ''} children per parent`,
+				);
+			});
+
+			// Return the balanced dataset in the same format it came in
+			return typeof dataset === 'string'
+				? JSON.stringify(parsedDataset, null, 2)
+				: parsedDataset;
+		};
+
+		// Tool functions for data processing
+		const tools = {
+			beforeAiProcess: (processedElements) => {
+				const { xLog } = process.global;
+				xLog.status(
+					'JEDX Tools: Running beforeAiProcess - balancing child objects',
+				);
+
+				try {
+					const balancedElements = balanceChildObjects(processedElements);
+					xLog.status(
+						'JEDX Tools: Child object balancing completed successfully',
+					);
+					return balancedElements;
+				} catch (error) {
+					xLog.error(`JEDX Tools: Error in beforeAiProcess: ${error.message}`);
+					throw error;
+				}
+			},
+
+			afterAiProcess: (processedElements) => {
+				const { xLog } = process.global;
+				xLog.status(
+					'JEDX Tools: Running afterAiProcess - no processing needed',
+				);
+				return processedElements;
+			},
+		};
+
 		const workingFunction = () => {
-			return { promptTemplate, extractionParameters, extractionFunction, thinker };
+			return {
+				promptTemplate,
+				extractionParameters,
+				extractionFunction,
+				thinker,
+				balanceChildObjects,
+				tools,
+			};
 		};
 
 		dotD == undefined || dotD.library.add(moduleName, workingFunction);

@@ -115,12 +115,16 @@ const moduleFunction =
 				return outObject;
 			};
 
+		// Tools will be collected from individual prompt modules
+		const tools = {};
+
 		const passThroughParameters = {
 			extractionLibrary: {
 				getgeneratedSynthData,
 				getExplanation,
 			},
 			defaultExtractionFunction: extractionFunction,
+			tools,
 		};
 
 		const stringMakers = require('qtools-library-dot-d')({
@@ -144,6 +148,42 @@ const moduleFunction =
 					result[item.thinker] = item;
 					return result;
 				}, {});
+
+			// Collect tools from all prompt modules that provide them
+			const collectToolsFromModules = (moduleResults) => {
+				const collectedTools = {};
+				
+				Object.keys(moduleResults).forEach(thinkerName => {
+					const module = moduleResults[thinkerName];
+					if (module && module.tools) {
+						// Merge tools from this module
+						Object.keys(module.tools).forEach(toolName => {
+							const toolKey = toolName;
+							if (collectedTools[toolKey]) {
+								// If tool already exists, create a composite function
+								const existingTool = collectedTools[toolKey];
+								const newTool = module.tools[toolName];
+								collectedTools[toolKey] = (data) => {
+									// Chain the tools: first existing, then new
+									const intermediateResult = existingTool(data);
+									return newTool(intermediateResult);
+								};
+							} else {
+								collectedTools[toolKey] = module.tools[toolName];
+							}
+						});
+					}
+				});
+				
+				return collectedTools;
+			};
+
+			// Collect all tools from modules
+			const moduleTools = collectToolsFromModules(result);
+			Object.assign(tools, moduleTools);
+
+			// Add tools to the result object
+			result.tools = tools;
 
 			return result;
 		};

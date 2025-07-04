@@ -114,7 +114,22 @@ const moduleFunction = function (args = {}) {
 				throw new Error(errorMsg);
 			}
 			
-			const wisdom={...latestWisdom, generatedSynthData};
+			let wisdom={...latestWisdom, generatedSynthData};
+
+			// Apply afterAiProcess tool if available
+			const { tools } = promptElements;
+			if (tools && tools.afterAiProcess) {
+				try {
+					xLog.status(`${moduleName}: Applying afterAiProcess tool`);
+					wisdom = tools.afterAiProcess(wisdom);
+					xLog.status(`${moduleName}: Applied afterAiProcess tool successfully`);
+				} catch (error) {
+					xLog.error(`${moduleName}: Error applying afterAiProcess tool: ${error.message}`);
+					// Continue without tool processing
+				}
+			} else {
+				xLog.status(`${moduleName}: No afterAiProcess tool available`);
+			}
 
 			next('', { ...args, wisdom });
 		});

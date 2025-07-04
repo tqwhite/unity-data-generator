@@ -168,6 +168,38 @@ const moduleFunction = function (args = {}) {
 		});
 
 		// --------------------------------------------------------------------------------
+		// APPLY PRE-AI TOOLS
+
+		taskList.push((args, next) => {
+			const { promptElements, latestWisdom } = args;
+			const { tools } = promptElements;
+
+			// Apply beforeAiProcess tool if available
+			if (tools && tools.beforeAiProcess) {
+				try {
+					const convertedProcessedElements = convertProcessedElementsToPromptFormat(latestWisdom.processedElements);
+					const balancedProcessedElements = tools.beforeAiProcess(convertedProcessedElements);
+					const revertedProcessedElements = convertPromptFormatToProcessedElements(balancedProcessedElements);
+					
+					// Update latestWisdom with balanced data
+					const updatedLatestWisdom = {
+						...latestWisdom,
+						processedElements: revertedProcessedElements
+					};
+					
+					xLog.status(`${moduleName}: Applied beforeAiProcess tool successfully`);
+					next('', { ...args, latestWisdom: updatedLatestWisdom });
+				} catch (error) {
+					xLog.error(`${moduleName}: Error applying beforeAiProcess tool: ${error.message}`);
+					next('', args); // Continue without tool processing
+				}
+			} else {
+				xLog.status(`${moduleName}: No beforeAiProcess tool available`);
+				next('', args);
+			}
+		});
+
+		// --------------------------------------------------------------------------------
 		// CALL AI
 
 		taskList.push((args, next) => {

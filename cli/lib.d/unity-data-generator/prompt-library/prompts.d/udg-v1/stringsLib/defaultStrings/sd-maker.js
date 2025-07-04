@@ -16,7 +16,7 @@ Coherency is important. For this, coherence means that the fictitious data value
 
 The results are to be expressed in XML, the language of the data standard. The Object Standard Definition contains xPaths that describe the data element under consideration along with other details including a description and sometimes a codeset. You are to infer all data types. If the name of an element says it is a list, you will generate two of the subordinate elements. 
 
-Conventions: At signs (@) refer to attributes. Anything with 'refId' in its name is a UUID (IMPORTANT: UUIDs have the format: "32 hex digits grouped into chunks of 8-4-4-4-12"). If a property name is plural and it seems like the right thing to do, create two elements for it. The specification has field names that sometimes correspond to the name of elements, eg, description. Do not be confused. You are still supposed to make up values for those fields, not use the text of the specification.
+Conventions: At signs (@) refer to attributes. **Anything with 'refId' in its name should use the exact token: <!REFIDGOESHERE!>** (This will be replaced with unique UUIDs during post-processing). If a property name is plural and it seems like the right thing to do, create two elements for it. The specification has field names that sometimes correspond to the name of elements, eg, description. Do not be confused. You are still supposed to make up values for those fields, not use the text of the specification.
 
 There are a few things that, working on this, you need to watch out for:
 
@@ -65,6 +65,9 @@ There should be *nothing* except well-formed XML between those delimiters.
 		const { extractionLibrary, defaultExtractionFunction } =
 			passThroughParameters;
 
+		// Define refId replacement token
+		const refIdReplacementToken = '<!REFIDGOESHERE!>';
+
 		
 		const extractionList=[
 			extractionLibrary.getgeneratedSynthData(extractionParameters),
@@ -73,8 +76,83 @@ There should be *nothing* except well-formed XML between those delimiters.
 		
 		const thinker='sd-maker';
 
+		// UUID generation function
+		const generateUuid = () => {
+			const crypto = require('crypto');
+			const randomBytes = crypto.randomBytes(16);
+			
+			// Set version (4) and variant bits
+			randomBytes[6] = (randomBytes[6] & 0x0f) | 0x40; // Version 4
+			randomBytes[8] = (randomBytes[8] & 0x3f) | 0x80; // Variant bits
+			
+			// Convert to hex string with dashes
+			const hex = randomBytes.toString('hex');
+			return [
+				hex.substring(0, 8),
+				hex.substring(8, 12),
+				hex.substring(12, 16),
+				hex.substring(16, 20),
+				hex.substring(20, 32)
+			].join('-');
+		};
+
+		// Tool functions for data processing
+		const tools = {
+			afterAiProcess: (wisdom) => {
+				const { xLog } = process.global;
+				xLog.status('UDG SD-Maker Tools: Running afterAiProcess - replacing refId tokens with unique UUIDs');
+				
+				if (!wisdom || !wisdom.generatedSynthData) {
+					xLog.warning('UDG SD-Maker Tools: No generatedSynthData found in wisdom');
+					return wisdom;
+				}
+				
+				try {
+					// Convert to string if it's an object
+					let dataString = typeof wisdom.generatedSynthData === 'string' 
+						? wisdom.generatedSynthData 
+						: JSON.stringify(wisdom.generatedSynthData);
+					
+					// Find all refId tokens and replace with unique UUIDs
+					const tokenPattern = new RegExp(refIdReplacementToken, 'g');
+					const matches = dataString.match(tokenPattern);
+					
+					if (matches) {
+						xLog.status(`UDG SD-Maker Tools: Found ${matches.length} ${refIdReplacementToken} tokens to replace`);
+						
+						// Replace each token with a unique UUID
+						dataString = dataString.replace(tokenPattern, () => generateUuid());
+						
+						// Parse back to object if it was originally an object
+						const updatedData = typeof wisdom.generatedSynthData === 'string' 
+							? dataString 
+							: JSON.parse(dataString);
+						
+						xLog.status('UDG SD-Maker Tools: Successfully replaced all refId tokens with unique UUIDs');
+						
+						return {
+							...wisdom,
+							generatedSynthData: updatedData
+						};
+					} else {
+						xLog.status(`UDG SD-Maker Tools: No ${refIdReplacementToken} tokens found`);
+						return wisdom;
+					}
+				} catch (error) {
+					xLog.error(`UDG SD-Maker Tools: Error in afterAiProcess: ${error.message}`);
+					throw error;
+				}
+			}
+		};
+
 		const workingFunction = () => {
-			return { promptTemplate, extractionParameters, extractionFunction, thinker };
+			return { 
+				promptTemplate,
+				extractionParameters, 
+				extractionFunction, 
+				thinker, 
+				tools
+			};
 		};
 
 		dotD == undefined || dotD.library.add(moduleName, workingFunction);
