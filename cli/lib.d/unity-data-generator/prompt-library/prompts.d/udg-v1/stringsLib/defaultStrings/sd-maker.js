@@ -8,7 +8,7 @@ const moduleFunction =
 	({ moduleName } = {}) =>
 	({ dotD, passThroughParameters } = {}) => {
 		const promptTemplate = `
-Your task is to develop an XML object that will be used as testing data for an educational data portability standard. This will be based on fictitious people and schools that we are going to make up. We will need to create details for students and classrooms, teaching various conventionally American educational topics. The standard has objects for all aspects of education and we will need to create details for all of the objects. An Object Standard Definition is provided below in the form of a JSON object with a property for each element in the XML to be produced.
+Your task is to develop an XML object that will be used as testing data for an educational data portability standard (xmlns="http://www.sifassociation.org/datamodel/na/4.x" should be injected into the top-level element). This will be based on fictitious people and schools that we are going to make up. We will need to create details for students and classrooms, teaching various conventionally American educational topics. The standard has objects for all aspects of education and we will need to create details for all of the objects. An Object Standard Definition is provided below in the form of a JSON object with a property for each element in the XML to be produced.
 
 GUIDANCE FOR GENERATING JUDGING CORRECT XML
 
