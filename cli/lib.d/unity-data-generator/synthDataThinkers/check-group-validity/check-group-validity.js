@@ -99,7 +99,7 @@ const moduleFunction = function (args = {}) {
 	// ================================================================================
 	// PURE VALIDATION MODE
 
-	const executePureValidation = (args, callback) => {
+	const localValidationOnly = (args, callback) => {
 		const { latestWisdom } = args;
 		const { processedElements } = latestWisdom;
 
@@ -189,7 +189,7 @@ ${validationMessage ? JSON.stringify(validationMessage, '', '\t') : 'No validati
 		}
 		
 xLog.error(`SKIPPING AI VALIDATION in ${moduleName}!!!`);
-		return executePureValidation(args, callback);
+		return localValidationOnly(args, callback);
 
 		// AI-powered validation mode
 		const taskList = new taskListPlus();
