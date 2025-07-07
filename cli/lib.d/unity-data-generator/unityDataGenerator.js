@@ -77,9 +77,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	if (fileList.length > 0 && !elementsFlag) {
 		commandLineParameters.values.elements = fileList;
 		commandLineParameters.fileList = [];
-		xLog.status(
-			`Converted positional arguments to --elements: ${fileList.join(',')}`,
-		);
+
 	}
 
 	// Get configuration specific to this module
@@ -192,7 +190,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 			{ showHidden: false, depth: 4, colors: true },
 		);
 		xLog.status(
-			'\n===============================================================/n',
+			'\n===============================================================\n',
 		);
 	}
 	// Save the process file (for logging or debugging)

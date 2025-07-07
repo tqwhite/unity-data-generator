@@ -69,7 +69,7 @@ const moduleFunction =
 				process.exit(1);
 			}
 
-			xLog.status(
+			xLog.progress(
 				`Validated elementCounts: all specified elements exist in spreadsheet`,
 			);
 		} catch (error) {

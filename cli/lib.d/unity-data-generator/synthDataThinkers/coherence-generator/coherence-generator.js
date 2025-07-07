@@ -187,14 +187,12 @@ const moduleFunction = function (args = {}) {
 						processedElements: revertedProcessedElements
 					};
 					
-					xLog.status(`${moduleName}: Applied beforeAiProcess tool successfully`);
 					next('', { ...args, latestWisdom: updatedLatestWisdom });
 				} catch (error) {
 					xLog.error(`${moduleName}: Error applying beforeAiProcess tool: ${error.message}`);
 					next('', args); // Continue without tool processing
 				}
 			} else {
-				xLog.status(`${moduleName}: No beforeAiProcess tool available`);
 				next('', args);
 			}
 		});
@@ -278,7 +276,6 @@ const moduleFunction = function (args = {}) {
 			);
 			
 			
-			xLog.status(`${moduleName}: Completed - data processed for validation`);
 			callback(err, { wisdom, args });
 		});
 	};

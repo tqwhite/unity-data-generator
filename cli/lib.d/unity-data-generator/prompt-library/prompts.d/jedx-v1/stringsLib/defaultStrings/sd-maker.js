@@ -106,7 +106,6 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 		const tools = {
 			afterAiProcess: (wisdom) => {
 				const { xLog } = process.global;
-				xLog.status('SD-Maker Tools: Running afterAiProcess - replacing REFIDGOESHERE tokens with unique UUIDs');
 				
 				if (!wisdom || !wisdom.generatedSynthData) {
 					xLog.warning('SD-Maker Tools: No generatedSynthData found in wisdom');
@@ -124,7 +123,6 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 					const matches = dataString.match(tokenPattern);
 
 					if (matches) {
-						xLog.status(`SD-Maker Tools: Found ${matches.length} ${refIdReplacementToken} tokens to replace`);
 						
 						// Replace each token with a unique UUID
 						dataString = dataString.replace(tokenPattern, () => generateUuid());
@@ -134,14 +132,13 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 							? dataString 
 							: JSON.parse(dataString);
 						
-						xLog.status('SD-Maker Tools: Successfully replaced all REFIDGOESHERE tokens with unique UUIDs');
 						
 						return {
 							...wisdom,
 							generatedSynthData: updatedData
 						};
 					} else {
-						xLog.status(`SD-Maker Tools: No ${refIdReplacementToken} tokens found`);
+						xLog.warning(`SD-Maker Tools: No ${refIdReplacementToken} tokens found`);
 						return wisdom;
 					}
 				} catch (error) {

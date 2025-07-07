@@ -11,12 +11,10 @@ const moduleFunction =
 # PRIMARY TASK DEFINITION
 - This project creates valid, realistic JEDX employment test data objects for use in education software data exchange. Your task is to finalize the data collection by ensuring proper relationships, foreign key consistency, and balanced distribution of child entities among parents.
 
-
 # INPUT DATA
 You will receive a collection of JSON objects in the processedElements data:
 
 <!processedElements!>
-
 
 ERROR CORRECTION SECTION
 
@@ -234,7 +232,7 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 				});
 			});
 
-			xLog.status(
+			xLog.verbose(
 				`Found ${Object.keys(relationships).length} relationship types: ${Object.keys(relationships).join(', ')}`,
 			);
 
@@ -247,7 +245,7 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 					return;
 				}
 
-				xLog.status(
+				xLog.verbose(
 					`Balancing ${relationshipType}: ${children.length} children across ${uniqueParents.length} parents`,
 				);
 
@@ -275,7 +273,7 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 					}
 				});
 
-				xLog.status(
+				xLog.verbose(
 					`Distributed ${relationshipType}: ${childrenPerParent}${remainder > 0 ? '+1' : ''} children per parent`,
 				);
 			});
@@ -290,15 +288,8 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 		const tools = {
 			beforeAiProcess: (processedElements) => {
 				const { xLog } = process.global;
-				xLog.status(
-					'JEDX Tools: Running beforeAiProcess - balancing child objects',
-				);
-
 				try {
 					const balancedElements = balanceChildObjects(processedElements);
-					xLog.status(
-						'JEDX Tools: Child object balancing completed successfully',
-					);
 					return balancedElements;
 				} catch (error) {
 					xLog.error(`JEDX Tools: Error in beforeAiProcess: ${error.message}`);
@@ -308,9 +299,6 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 
 			afterAiProcess: (processedElements) => {
 				const { xLog } = process.global;
-				xLog.status(
-					'JEDX Tools: Running afterAiProcess - no processing needed',
-				);
 				return processedElements;
 			},
 		};

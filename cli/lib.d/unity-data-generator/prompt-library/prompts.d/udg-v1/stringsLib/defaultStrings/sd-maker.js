@@ -100,8 +100,6 @@ There should be *nothing* except well-formed XML between those delimiters.
 		const tools = {
 			afterAiProcess: (wisdom) => {
 				const { xLog } = process.global;
-				xLog.status('UDG SD-Maker Tools: Running afterAiProcess - replacing refId tokens with unique UUIDs');
-				
 				if (!wisdom || !wisdom.generatedSynthData) {
 					xLog.warning('UDG SD-Maker Tools: No generatedSynthData found in wisdom');
 					return wisdom;
@@ -118,7 +116,6 @@ There should be *nothing* except well-formed XML between those delimiters.
 					const matches = dataString.match(tokenPattern);
 					
 					if (matches) {
-						xLog.status(`UDG SD-Maker Tools: Found ${matches.length} ${refIdReplacementToken} tokens to replace`);
 						
 						// Replace each token with a unique UUID
 						dataString = dataString.replace(tokenPattern, () => generateUuid());
@@ -127,9 +124,7 @@ There should be *nothing* except well-formed XML between those delimiters.
 						const updatedData = typeof wisdom.generatedSynthData === 'string' 
 							? dataString 
 							: JSON.parse(dataString);
-						
-						xLog.status('UDG SD-Maker Tools: Successfully replaced all refId tokens with unique UUIDs');
-						
+
 						return {
 							...wisdom,
 							generatedSynthData: updatedData

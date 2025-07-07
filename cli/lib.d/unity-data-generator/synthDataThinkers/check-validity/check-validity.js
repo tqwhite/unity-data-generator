@@ -48,9 +48,6 @@ const moduleFunction = function (args = {}) {
 					.qtGetSurePath('error', '')
 					.match(/Element 'identity' cannot have character/)
 			) {
-				xLog.status(
-					`FOUND: weird identity error; forced isValid=true "t${validationMessage.qtGetSurePath('error', '')}"`,
-				);
 				isValid = true;
 			}
 
