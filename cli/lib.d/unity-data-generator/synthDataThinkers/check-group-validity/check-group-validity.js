@@ -100,7 +100,7 @@ const moduleFunction = function (args = {}) {
 	// PURE VALIDATION MODE
 
 	const localValidationOnly = (args, callback) => {
-		const { latestWisdom } = args;
+		const { latestWisdom, wisdomBus } = args;
 		const { processedElements } = latestWisdom;
 
 		// Perform comprehensive validation
@@ -121,7 +121,7 @@ const moduleFunction = function (args = {}) {
 ====================================================================================================
 JEDX Group VALIDATION PASS ${timestamp}
 
-Pure validation analysis completed for element collection.
+LOCAL ONLY (no AI) Validation completed for element collection.
 
 Validation Checks Performed:
 1. **Referential Integrity**: Checking that all foreign keys (fields ending in 'RefId') point to existing entities
@@ -147,11 +147,12 @@ ${validationMessage ? JSON.stringify(validationMessage, '', '\t') : 'No validati
 		// Create wisdom object
 		const { _conversationMetadata, ...safeWisdom } = latestWisdom;
 		const wisdom = {
-			...safeWisdom,
 			isValid,
 			validationMessage,
 		};
-
+wisdomBus.saveWisdom('isValid', isValid);
+wisdomBus.saveWisdom('validationMessage', validationMessage);
+xLog.status(`wrote to wisdomBus.processId=${wisdomBus.processId} ${moduleName}`);
 		callback('', { wisdom, args });
 	};
 
@@ -177,7 +178,7 @@ ${validationMessage ? JSON.stringify(validationMessage, '', '\t') : 'No validati
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { latestWisdom } = args;
+		const { latestWisdom, wisdomBus } = args;
 
 		// Critical validation: check-group-validity REQUIRES processedElements
 		const { processedElements } = latestWisdom;
@@ -187,8 +188,9 @@ ${validationMessage ? JSON.stringify(validationMessage, '', '\t') : 'No validati
 			xLog.error(errorMsg);
 			throw new Error(errorMsg);
 		}
+
+		xLog.error(`SKIPPING AI VALIDATION in ${moduleName}!!!`);
 		
-xLog.error(`SKIPPING AI VALIDATION in ${moduleName}!!!`);
 		return localValidationOnly(args, callback);
 
 		// AI-powered validation mode
