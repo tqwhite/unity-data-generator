@@ -52,6 +52,31 @@
 - Allows conversation-generator to inject wisdomBus into facilitators via callback
 - Worked around parameter passing limitations with dependency injection pattern
 
+### Step 9: Add underscore validation to wisdom-bus keys ✅
+- Added validation to prevent underscores in user keys (saveWisdom, saveMetadata, saveUtilityScopedData)
+- Allows internal framework keys starting with underscore (_iterationContext, _conversationMetadata, etc.)
+- Throws clear error message for invalid user keys
+- Suggests using camelCase or hyphens instead
+- Prevents parsing ambiguity in consolidation-engine
+- Maintains lastIndexOf parsing for processId separation
+
+### Step 10: Add execution mode configuration to wisdom-bus ✅
+- Added setExecutionMode() to configure 'serial', 'parallel', or 'iteration' modes
+- Added accessor-specific setInitialData() method
+- Modified getLatestWisdom() to be mode-aware:
+  - Serial mode: Returns own saves + initial wisdom
+  - Iteration mode: Returns accessor-specific data if set, otherwise initial wisdom
+- Updated has() and getAll() to check accessor-specific data in iteration mode
+- Removed parameterless getLatestWisdom() - now requires a key
+
+### Step 11: Implement shared wisdom-bus pattern for iterate-over-collection ✅
+- Added facilitatorAccessor injection in conversation-generator
+- Updated iterate-over-collection to use injected wisdom-bus
+- Set execution mode to 'iteration' when wisdom-bus is injected
+- Pass itemWisdom as initialData in args instead of creating itemWisdomBus
+- Removed isolated itemWisdomBus creation per item
+- Enables cross-thinker communication within item conversations
+
 ## Implementation Complete!
 
 All steps have been successfully implemented:
@@ -63,3 +88,6 @@ All steps have been successfully implemented:
 6. ✅ Updated all code to use new method names
 7. ✅ Added utility scoped data methods
 8. ✅ Enabled facilitators to access wisdomBus via facilitatorAccessor pattern
+9. ✅ Added underscore validation to prevent key parsing issues
+10. ✅ Added execution mode configuration to wisdom-bus
+11. ✅ Implemented shared wisdom-bus pattern for iterate-over-collection
