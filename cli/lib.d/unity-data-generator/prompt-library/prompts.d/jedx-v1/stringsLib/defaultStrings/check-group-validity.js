@@ -148,7 +148,12 @@ If INVALID, the following corrections are needed:
 		const thinker = 'check-group-validity';
 
 		const workingFunction = () => {
-			return { promptTemplate, extractionParameters, extractionFunction, thinker };
+			return {
+				promptTemplate,
+				extractionParameters,
+				extractionFunction,
+				thinker,
+			};
 		};
 
 		dotD == undefined || dotD.library.add(moduleName, workingFunction);
