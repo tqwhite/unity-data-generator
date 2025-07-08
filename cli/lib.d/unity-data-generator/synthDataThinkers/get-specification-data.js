@@ -55,11 +55,12 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { spreadsheetPath, latestWisdom = {} } = args;
+			const { spreadsheetPath, accessor } = args;
 			
 			// Check for currentElement from iterator (multi-element mode)
-			if (latestWisdom.currentElement) {
-				targetObjectName = latestWisdom.currentElement;
+			const currentElement = accessor.getLatestWisdom('currentElement');
+			if (currentElement) {
+				targetObjectName = currentElement;
 				xLog.status(`Processing element ${targetObjectName}`);
 			}
 		
@@ -106,7 +107,7 @@ const moduleFunction = function (args = {}) {
 			// Save to metadata for cross-thinker access
 			accessor.saveMetadata('elementSpecWorksheetJson', elementSpecWorksheetJson);
 			
-			next('', { ...args, wisdom:{elementSpecWorksheetJson} });
+			next('', args);
 		});
 
 		// --------------------------------------------------------------------------------
@@ -119,8 +120,7 @@ const moduleFunction = function (args = {}) {
 			accessor
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { wisdom, wisdomBus, accessor } = args;
-			callback(err, { wisdom, args });
+			callback(err, { success: !err });
 		});
 	};
 

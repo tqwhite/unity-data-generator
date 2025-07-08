@@ -35,6 +35,7 @@ const moduleFunction = function (args = {}) {
 		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
 			return promptGenerator.iterativeGeneratorPrompt({
 				...latestWisdom,
+				elementSpecWorksheetJson,
 				employerModuleName: moduleName,
 			});
 		};
@@ -59,19 +60,19 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		// Critical validation: sd-review REQUIRES generatedSynthData from previous thinker
-		const generatedSynthData = args.qtGetSurePath('latestWisdom.generatedSynthData');
-		if (!generatedSynthData) {
-			const errorMsg = `CRITICAL ERROR in ${moduleName}: No generatedSynthData received from previous thinker (sd-maker). This is required input for sd-review processing.`;
-			xLog.error(errorMsg);
-			throw new Error(errorMsg);
-		}
-
 		const { wisdomBus } = args;
 		const taskList = new taskListPlus();
 		
 		// wisdomBus is already an accessor created by conversation-generator
 		const accessor = wisdomBus;
+		
+		// Critical validation: sd-review REQUIRES generatedSynthData from previous thinker
+		const generatedSynthData = accessor.getLatestWisdom('generatedSynthData');
+		if (!generatedSynthData) {
+			const errorMsg = `CRITICAL ERROR in ${moduleName}: No generatedSynthData received from previous thinker (sd-maker). This is required input for sd-review processing.`;
+			xLog.error(errorMsg);
+			throw new Error(errorMsg);
+		}
 
 
 		// --------------------------------------------------------------------------------
@@ -124,7 +125,7 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { wisdom: rawWisdom, promptElements, latestWisdom } = args;
+			const { wisdom: rawWisdom, promptElements, accessor } = args;
 			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
@@ -135,9 +136,12 @@ const moduleFunction = function (args = {}) {
 
 			const extractedData = extractionFunction(rawWisdom);
 
-			const wisdom = {...latestWisdom, ...extractedData}; //overwrites generatedSynthData
+			// Save each extracted value to wisdom-bus
+			Object.entries(extractedData).forEach(([key, value]) => {
+				accessor.saveWisdom(key, value);
+			});
 
-			next('', { ...args, wisdom });
+			next('', args);
 		});
 
 		// --------------------------------------------------------------------------------
@@ -153,8 +157,7 @@ const moduleFunction = function (args = {}) {
 			accessor
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { wisdom, rawAiResponseObject, wisdomBus, accessor } = args;
-			callback(err, { wisdom, args });
+			callback(err, { success: !err });
 		});
 	};
 

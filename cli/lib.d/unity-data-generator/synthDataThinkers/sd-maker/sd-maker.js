@@ -34,6 +34,7 @@ const moduleFunction = function (args = {}) {
 		({ latestWisdom, elementSpecWorksheetJson } = {}) => {
 			return promptGenerator.iterativeGeneratorPrompt({
 				...latestWisdom,
+				elementSpecWorksheetJson,
 				employerModuleName: moduleName,
 			});
 		};
@@ -112,7 +113,7 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { wisdom: rawWisdom, promptElements, latestWisdom } = args;
+			const { wisdom: rawWisdom, promptElements, accessor } = args;
 			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
@@ -120,8 +121,8 @@ const moduleFunction = function (args = {}) {
 				`\n\n\n${moduleName}---------------------------------------------------\n${rawWisdom}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
-			const tmp=extractionFunction(rawWisdom);
-			const { generatedSynthData } = extractionFunction(rawWisdom);
+			const extractedData = extractionFunction(rawWisdom);
+			const { generatedSynthData } = extractedData;
 			
 			// Critical validation: sd-maker MUST produce generatedSynthData
 			if (!generatedSynthData) {
@@ -130,22 +131,29 @@ const moduleFunction = function (args = {}) {
 				throw new Error(errorMsg);
 			}
 			
-			let wisdom={...latestWisdom, generatedSynthData};
+			// Save the generated data to wisdom-bus
+			accessor.saveWisdom('generatedSynthData', generatedSynthData);
 
 			// Apply afterAiProcess tool if available
 			const { tools } = promptElements;
 			if (tools && tools.afterAiProcess) {
 				try {
-					wisdom = tools.afterAiProcess(wisdom);
+					// Get current wisdom state for tool processing
+					const currentWisdom = {
+						generatedSynthData: generatedSynthData
+					};
+					const processedWisdom = tools.afterAiProcess(currentWisdom);
+					// If tool modified generatedSynthData, update it
+					if (processedWisdom.generatedSynthData !== currentWisdom.generatedSynthData) {
+						accessor.saveWisdom('generatedSynthData', processedWisdom.generatedSynthData);
+					}
 				} catch (error) {
 					xLog.error(`${moduleName}: Error applying afterAiProcess tool: ${error.message}`);
 					// Continue without tool processing
 				}
-			} else {
-				xLog.status(`${moduleName}: No afterAiProcess tool available`);
 			}
 
-			next('', { ...args, wisdom });
+			next('', args);
 		});
 
 		// --------------------------------------------------------------------------------
@@ -161,8 +169,7 @@ const moduleFunction = function (args = {}) {
 			accessor
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { wisdom, rawAiResponseObject, wisdomBus, accessor } = args;
-			callback(err, { wisdom, args }); //generally, wisdom can contain many extracted values
+			callback(err, { success: !err });
 		});
 	};
 

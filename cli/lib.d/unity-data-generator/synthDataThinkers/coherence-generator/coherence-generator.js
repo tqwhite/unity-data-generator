@@ -154,9 +154,10 @@ const moduleFunction = function (args = {}) {
 			const {
 				promptGenerator,
 				formulatePromptList,
+				accessor
 			} = args;
 
-			const promptElements = formulatePromptList(promptGenerator)(args);
+			const promptElements = formulatePromptList(promptGenerator)({ ...args, accessor });
 
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
@@ -171,13 +172,14 @@ const moduleFunction = function (args = {}) {
 		// APPLY PRE-AI TOOLS
 
 		taskList.push((args, next) => {
-			const { promptElements, latestWisdom } = args;
+			const { promptElements, latestWisdom, accessor } = args;
 			const { tools } = promptElements;
 
 			// Apply beforeAiProcess tool if available
 			if (tools && tools.beforeAiProcess) {
 				try {
-					const convertedProcessedElements = convertProcessedElementsToPromptFormat(latestWisdom.processedElements);
+					const processedElements = accessor ? accessor.getLatestWisdom('processedElements') : latestWisdom.processedElements;
+					const convertedProcessedElements = convertProcessedElementsToPromptFormat(processedElements);
 					const balancedProcessedElements = tools.beforeAiProcess(convertedProcessedElements);
 					const revertedProcessedElements = convertPromptFormatToProcessedElements(balancedProcessedElements);
 					

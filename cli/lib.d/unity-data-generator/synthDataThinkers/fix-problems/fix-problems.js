@@ -37,16 +37,28 @@ const moduleFunction = function (args = {}) {
 	// UTILITIES
 
 	const formulatePromptList = (promptGenerator) => {
-		return ({ latestWisdom, elementSpecWorksheetJson } = {}) => {
+		return ({ latestWisdom, elementSpecWorksheetJson, accessor } = {}) => {
+			// Get elementSpecWorksheetJson from metadata if using wisdomBus
+			if (accessor && !elementSpecWorksheetJson) {
+				elementSpecWorksheetJson = accessor.getMetadata('elementSpecWorksheetJson');
+			}
+			
+			// Get validation message from wisdomBus or latestWisdom
+			const validationMessage = accessor ? accessor.getLatestWisdom('validationMessage') : latestWisdom.validationMessage;
 
 			let validationMessagesString = 'No errors found.';
-			if (latestWisdom.qtGetSurePath('validationMessage', {}).error) {
-				validationList.push(latestWisdom.validationMessage.error);
+			if (validationMessage && validationMessage.error) {
+				validationList.push(validationMessage.error);
 				validationMessagesString = validationList.join('\n');
 			}
 			
+			// Get generatedSynthData from wisdomBus or latestWisdom
+			const generatedSynthData = accessor ? accessor.getLatestWisdom('generatedSynthData') : latestWisdom.generatedSynthData;
+			
 			return promptGenerator.iterativeGeneratorPrompt({
 				...latestWisdom,
+				generatedSynthData,
+				elementSpecWorksheetJson,
 				validationMessagesString,
 				employerModuleName: moduleName,
 			});
@@ -75,15 +87,19 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
+		const { wisdomBus } = args;
+		const taskList = new taskListPlus();
+		
+		// wisdomBus is already an accessor created by conversation-generator
+		const accessor = wisdomBus;
+		
 		// Critical validation: fix-problems REQUIRES generatedSynthData from previous thinker
-		const generatedSynthData = args.qtGetSurePath('latestWisdom.generatedSynthData');
+		const generatedSynthData = accessor ? accessor.getLatestWisdom('generatedSynthData') : args.qtGetSurePath('latestWisdom.generatedSynthData');
 		if (!generatedSynthData) {
-			const errorMsg = `CRITICAL ERROR in ${moduleName}: No generatedSynthData received from previous thinker (sd-review). This is required input for fix-problems processing.`;
+			const errorMsg = `CRITICAL ERROR in ${moduleName}: No generatedSynthData received from previous thinker. This is required input for fix-problems processing.`;
 			xLog.error(errorMsg);
 			throw new Error(errorMsg);
 		}
-
-		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
@@ -92,9 +108,10 @@ const moduleFunction = function (args = {}) {
 			const {
 				promptGenerator,
 				formulatePromptList,
+				accessor
 			} = args;
 
-			const promptElements = formulatePromptList(promptGenerator)(args);
+			const promptElements = formulatePromptList(promptGenerator)({ ...args, accessor });
 
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
@@ -123,7 +140,7 @@ const moduleFunction = function (args = {}) {
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
-			const { wisdom: rawWisdom, promptElements, latestWiisdom } = args;
+			const { wisdom: rawWisdom, promptElements, latestWisdom, accessor } = args;
 			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
@@ -132,7 +149,16 @@ const moduleFunction = function (args = {}) {
 				{ append: true },
 			);
 			
-			const wisdom = {...latestWiisdom, ...extractionFunction(rawWisdom)};
+			const extractedData = extractionFunction(rawWisdom);
+			const wisdom = {...latestWisdom, ...extractedData};
+			
+			// Save to wisdom-bus if available
+			if (accessor && extractedData.generatedSynthData) {
+				accessor.saveWisdom('generatedSynthData', extractedData.generatedSynthData);
+			}
+			if (accessor && extractedData.explanation) {
+				accessor.saveWisdom('fixProblemsExplanation', extractedData.explanation);
+			}
 
 			next('', { ...args, wisdom });
 		});
@@ -146,6 +172,8 @@ const moduleFunction = function (args = {}) {
 			accessSmartyPants,
 			systemPrompt,
 			...args,
+			wisdomBus,
+			accessor
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			const { wisdom } = args;
@@ -177,10 +205,23 @@ The Refined SynthData was submited to the validation API with this result:
 ------------------------
 			`;
 
-			callback(err, {
-				wisdom: { ...wisdom, isValid: true, refinementReportPartialTemplate },
-				args,
-			}); //valid a priori since it was just fixed
+			// Save refinement report to wisdom-bus if available
+			if (accessor) {
+				accessor.saveWisdom('refinementReportPartialTemplate', refinementReportPartialTemplate);
+				accessor.saveWisdom('isValid', true);
+			}
+			
+			// Maintain backward compatibility
+			if (wisdomBus) {
+				// Return success only when using wisdomBus
+				callback(err, { success: !err });
+			} else {
+				// Return wisdom for legacy mode
+				callback(err, {
+					wisdom: { ...wisdom, isValid: true, refinementReportPartialTemplate },
+					args,
+				});
+			}
 		});
 	};
 
