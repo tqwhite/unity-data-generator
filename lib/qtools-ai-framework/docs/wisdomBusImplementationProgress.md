@@ -45,6 +45,13 @@
 - Updated conversation-generator to use utility methods for _conversationMetadata
 - Added methods to accessor interface
 
+### Step 8: Enable facilitators to access wisdomBus ✅
+- Created facilitatorAccessor pattern with wisdomAccessor setter
+- Updated all facilitators to include facilitatorAccessor object
+- Modified conversation-generator to accept facilitatorAccessor parameter
+- Allows conversation-generator to inject wisdomBus into facilitators via callback
+- Worked around parameter passing limitations with dependency injection pattern
+
 ## Implementation Complete!
 
 All steps have been successfully implemented:
@@ -55,3 +62,4 @@ All steps have been successfully implemented:
 5. ✅ Renamed accessor methods (add→saveWisdom, get→getLatestWisdom)
 6. ✅ Updated all code to use new method names
 7. ✅ Added utility scoped data methods
+8. ✅ Enabled facilitators to access wisdomBus via facilitatorAccessor pattern
