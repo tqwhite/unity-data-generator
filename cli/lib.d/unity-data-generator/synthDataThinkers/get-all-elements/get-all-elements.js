@@ -85,8 +85,8 @@ const moduleFunction = function(args = {}) {
             }
             
             // Add results to wisdom-bus
-            wisdomBus.add('elementsToProcess', elementsToProcess);
-            wisdomBus.add('elementCount', elementsToProcess.length);
+            wisdomBus.saveWisdom('elementsToProcess', elementsToProcess);
+            wisdomBus.saveWisdom('elementCount', elementsToProcess.length);
             
             // Return success only (no wisdom)
             callback(null, { 

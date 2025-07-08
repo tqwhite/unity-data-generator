@@ -67,7 +67,11 @@ const moduleFunction = function (args = {}) {
 			throw new Error(errorMsg);
 		}
 
+		const { wisdomBus } = args;
 		const taskList = new taskListPlus();
+		
+		// wisdomBus is already an accessor created by conversation-generator
+		const accessor = wisdomBus;
 
 
 		// --------------------------------------------------------------------------------
@@ -77,9 +81,21 @@ const moduleFunction = function (args = {}) {
 			const {
 				promptGenerator,
 				formulatePromptList,
+				accessor
 			} = args;
 
-			const promptElements = formulatePromptList(promptGenerator)(args);
+			// Retrieve elementSpecWorksheetJson from metadata
+			const elementSpecWorksheetJson = accessor.getMetadata('elementSpecWorksheetJson');
+			if (!elementSpecWorksheetJson) {
+				const errorMsg = `${moduleName}: No elementSpecWorksheetJson found in metadata. Ensure get-specification-data ran first.`;
+				xLog.error(errorMsg);
+				throw new Error(errorMsg);
+			}
+
+			const promptElements = formulatePromptList(promptGenerator)({
+				...args,
+				elementSpecWorksheetJson
+			});
 
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
@@ -133,9 +149,11 @@ const moduleFunction = function (args = {}) {
 			accessSmartyPants,
 			systemPrompt,
 			...args,
+			wisdomBus,
+			accessor
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { wisdom, rawAiResponseObject } = args;
+			const { wisdom, rawAiResponseObject, wisdomBus, accessor } = args;
 			callback(err, { wisdom, args });
 		});
 	};

@@ -45,8 +45,11 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { latestWisdom = {} } = args;
+		const { latestWisdom = {}, wisdomBus } = args;
 		const taskList = new taskListPlus();
+		
+		// wisdomBus is already an accessor created by conversation-generator
+		const accessor = wisdomBus;
 
 	// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
@@ -100,6 +103,9 @@ const moduleFunction = function (args = {}) {
 				//return;
 			}
 
+			// Save to metadata for cross-thinker access
+			accessor.saveMetadata('elementSpecWorksheetJson', elementSpecWorksheetJson);
+			
 			next('', { ...args, wisdom:{elementSpecWorksheetJson} });
 		});
 
@@ -108,10 +114,12 @@ const moduleFunction = function (args = {}) {
 
 		const initialData = {
 			...args,
-			spreadsheetPath
+			spreadsheetPath,
+			wisdomBus,
+			accessor
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { wisdom } = args;
+			const { wisdom, wisdomBus, accessor } = args;
 			callback(err, { wisdom, args });
 		});
 	};

@@ -107,7 +107,7 @@ const moduleFunction = function (args = {}) {
 		}
 
 		// Read from wisdom-bus instead of latestWisdom
-		const synthData = wisdomBus.get('generatedSynthData');
+		const synthData = wisdomBus.getLatestWisdom('generatedSynthData');
 
 		if (!synthData) {
 			const errorMsg = `CRITICAL ERROR in ${moduleName}: No generatedSynthData found in wisdom-bus. This is required input for check-validity processing.`;
@@ -115,7 +115,7 @@ const moduleFunction = function (args = {}) {
 			throw new Error(errorMsg);
 		}
 
-		const refinementReportPartialTemplate = wisdomBus.get('refinementReportPartialTemplate') ||
+		const refinementReportPartialTemplate = wisdomBus.getLatestWisdom('refinementReportPartialTemplate') ||
 			'got nothing from previous process (fix-problems.js)';
 
 		const { unused } = args;
@@ -157,9 +157,9 @@ const moduleFunction = function (args = {}) {
 				});
 
 				// Write results to wisdom-bus
-				wisdomBus.add('generatedSynthData', synthData);
-				wisdomBus.add('validationMessage', validationMessage);
-				wisdomBus.add('isValid', isValid);
+				wisdomBus.saveWisdom('generatedSynthData', synthData);
+				wisdomBus.saveWisdom('validationMessage', validationMessage);
+				wisdomBus.saveWisdom('isValid', isValid);
 
 				next('', { ...args, isValid });
 			};
