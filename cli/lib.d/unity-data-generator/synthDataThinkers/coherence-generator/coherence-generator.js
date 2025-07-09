@@ -80,6 +80,8 @@ const moduleFunction = function (args = {}) {
 			});
 			
 		} catch (err) {
+			xLog.saveProcessFile(`${moduleName}_BadPromptFormatData`, promptFormatData);
+			xLog.error(`Saved promptFormatData in ${moduleName}_BadPromptFormatData`);
 			xLog.error(`Failed to convert prompt format back to processedElements: ${err.message}`);
 			throw new Error(`Conversion failed: ${err.message}`);
 		}
