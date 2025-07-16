@@ -668,7 +668,8 @@ thoughtProcessConversationList.0.requestsPerSecond=2
 
 - 1.0.0 - Initial framework architecture
 - 2.0.0 - Configuration-driven prompt library selection + **Wisdom-Bus Architecture** for thread-safe data management
-- 2.1.0 - Async processing support for iterate-over-collection with rate limiting
+- 2.0.1 - Async processing support for iterate-over-collection with rate limiting
+- 2.1.0 - Wisdom bus implementation; important architectural change
 
 ## OTHER COOL QTOOLS
 
