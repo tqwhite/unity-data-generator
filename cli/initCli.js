@@ -179,6 +179,7 @@ const moduleFunction =
 		const symlinkDir = createSymlinks(cliExecutablePaths, 'unityDataGenerator');
 
 		console.log(symlinkDir); //give the new path addition to BASH
+		console.error(`Use addCliModule to create a new CLI tool`);
 	};
 
 //END OF moduleFunction() ============================================================

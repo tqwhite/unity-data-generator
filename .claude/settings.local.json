@@ -67,7 +67,9 @@
       "Bash(npm test:*)",
       "Bash(/Users/tqwhite/Documents/webdev/qtools-ai-framework/qtoolsAiTwoStepSample/qtoolsAiTwoStepSample.js --creatingPrompt=pony --revisingPrompt='french person')",
       "Bash(awk:*)",
-      "Bash(split:*)"
+      "Bash(split:*)",
+      "Bash(./jedxUtility.js -duplicateWorkerSets --count=3)",
+      "Bash(./jedxUtility.js:*)"
     ],
     "deny": []
   }

@@ -26,6 +26,12 @@ A validation check might have been run on the INPUT DATA. IF there are errors, t
 
 # COHERENCE ANALYSIS INSTRUCTIONS
 
+Coherency is important. For this, coherence means that the fictitious data values align with each other in ways that make sense to the user of this testing data. Within objects, the invented data needs to be consistent, eg, the worker has properties of first, last and full name. If the first is 'Joe' and the last is 'White', it would be incorrect to say the full name is 'Sam Smith'. The coherent value is 'Joe White'.
+
+Between objects, addresses need to make sense. Workers should work in the same state as the organization. Dates for compensation and hours should make sense.
+
+The Object Standard Definition has a codeset value for some properties. These should be respected and the choice of code should make sense with the rest of the object. There is an annotation property with instructions. These should be treated as mandatory.
+
 ## 0. *Eliminate duplicate guids in refIds**: Each of these objects is made by a separate process. If there are any refIds (private key only) that are duplicates, change them to different values before going on to step 1.
 
 ## 1. Identify Keys and References
@@ -44,14 +50,14 @@ A validation check might have been run on the INPUT DATA. IF there are errors, t
 - **Deal with multiple parent relationships**: There are arbitrary numbers of each object. If you detect a foreign key for which there is more than one parent/target element, choose the refId that seems most coherent eg, same state or city.
 - **Do not leave parent objects that could have references empty**: If there are enough child objects, every parent object should have a descendant.
 
-## 4. Add Rainbow Color Property for Debugging
-- Add a "UDG_DEBUG_INDICATOR" property to each JSON object
-- Use rainbow colors: red, orange, yellow, green, blue, indigo, violet
-- Assign colors randomly but ensure variety across objects
-
-## 5. Check your work for Business Logic Compliance
+## 4. Check your work for Business Logic Compliance
 - The foreign keys of all objects should reference the refId of another object if you can find any sort of object that makes sense to link it to.
 - All refIds of any objects that act as parents (ie, there are other elements with foreign keys whose name makes sense in correspondence to an element name), should have a subordinate object. That is, no parent object should have two descendents any parent objects have zero.
+
+## 5. workerId values in worker objects must be changed to be identical
+- The worker objects have a subordinate workerId object each generated separately and probably different.
+- Pick one of the worker.workerId objects and write that into all of the worker objects.
+- Make sure that ell of the workers have the same workerId object.
 
 **CRITICAL BUSINESS LOGIC VALIDATION:**
 - **Every worker MUST have exactly one compensation report** (no more, no fewer)
@@ -59,6 +65,7 @@ A validation check might have been run on the INPUT DATA. IF there are errors, t
 - **Hours reports should be distributed evenly** (if 3 workers and 6 hours reports, then 2 reports per worker)
 - **All jobs and workers must belong to the same organization** (no cross-organizational inconsistencies)
 - **No worker should be severely overloaded** (having 3+ more reports than other workers)
+- **All worker objects should have the same workerId subordinate property value
 
 **VALIDATION FAILURE CONDITIONS (must be fixed):**
 - Worker with zero compensation reports = CRITICAL ERROR
@@ -66,6 +73,7 @@ A validation check might have been run on the INPUT DATA. IF there are errors, t
 - Worker with zero hours reports = CRITICAL ERROR  
 - Jobs in different organization than workers = CRITICAL ERROR
 - Severe distribution imbalance (one worker with 4+ reports, another with 0) = CRITICAL ERROR
+- Sometimes objects are erroneously created without a container object or a named property, ie, {refId:'xx'} instead of {worker: {refix:'xx'}} or {organization:{refId:'xx'}} = CRITICAL ERROR
 
 # YOU ARE NOT TO CREATE NEW OBJECTS TO ACHIEVE VALIDITY OR COHERENCE
 - This data set might be part of another unseen data set. Creating objects here violates user intent. Do not do it.

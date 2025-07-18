@@ -29,6 +29,8 @@ const path = require('path');
 const os = require('os');
 const fs = require('fs');
 
+const configFileProcessor = require('qtools-config-file-processor');
+
 // --------------------------------------------------------------------------------
 // FIND PROJECT ROOT
 const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
@@ -46,11 +48,13 @@ const moduleName = path.basename(__filename, '.js');
 
 // =============================================================================
 // MODULE IMPORTS
+const helpText=require('./lib/help-text');
 
 // process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
 const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
+	helpText,
 	applicationControls: [
 		'--thoughtProcess',
 		'--promptVersion',
@@ -58,6 +62,8 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'-allElements',
 		'--elements',
 		'--elementCounts',
+		'-showProgressMessages',
+		'--userConfigPath'
 	],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 // =============================================================================
@@ -67,8 +73,20 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	// =============================================================================
 	// INITIALIZATION
 
-	// Access global variables set up by 'initAtp'
+	
+	// Access global variables set up by 'initAtp' and userConfigs
 	const { xLog, getConfig, commandLineParameters } = process.global;
+	
+	const userConfigPath=commandLineParameters.qtGetSurePath('values.userConfigPath[0]');
+
+	process.global.userConfigs={};
+	if (userConfigPath){
+			process.global.userConfigs = configFileProcessor.getConfig(
+				fs.realpathSync(userConfigPath)
+			);
+			xLog.status(`User config found: ${userConfigPath}`);
+			xLog.status(`                   ${process.global.userConfigs.qtGetSurePath('annotation.description', 'No annotation found for userConfig')}`);
+	}
 
 	// Normalize input: convert fileList to --elements for backward compatibility
 	const fileList = commandLineParameters.qtGetSurePath('fileList', []);
@@ -198,14 +216,23 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		`${moduleName}_${path.basename(outputFilePath)}`,
 		JSON.stringify(finalSynthData),
 	);
-
+	
 	// Set up batch-specific debug log directory
-	const batchSpecificDebugResultDirPath = path.join(
+	let batchSpecificDebugResultDirPath = path.join(
 		objectResultOutputDirPath,
 		`${thoughtProcessName}_${Math.floor(Date.now() / 1000)
 			.toString()
 			.slice(-4)}`,
 	);
+	
+	if(userConfigPath){
+		batchSpecificDebugResultDirPath=path.join(objectResultOutputDirPath,
+		`${path.basename(userConfigPath).replace(/\.ini/, '')}_${Math.floor(Date.now() / 1000)
+			.toString()
+			.slice(-4)}`, 
+			)
+	}
+
 
 	fs.mkdirSync(batchSpecificDebugResultDirPath, { recursive: true });
 

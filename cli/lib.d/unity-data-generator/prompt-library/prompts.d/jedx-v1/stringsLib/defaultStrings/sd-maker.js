@@ -7,13 +7,18 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); 
 const moduleFunction =
 	({ moduleName } = {}) =>
 	({ dotD, passThroughParameters } = {}) => {
+		const { userConfigs } = process.global;
+		
 		const promptTemplate = `
 # PRIMARY TASK DEFINITION
-- Your task is to develop a JSON object that will be used as testing data for an educational data portability standard. This will be based on fictitious people and schools that we are going to make up. We will need to create details for students and classrooms, teaching various conventionally American educational topics. The standard has objects for all aspects of education and we will need to create details for all of the objects. An Object Standard Definition is provided below in the form of a JSON object with a property for each field in the JSON to be produced.
+
+- Your task is to develop a JSON object that will be used as testing data for an educational data portability standard. This will be based on fictitious people and corporations that we are going to make up. We will need to create details for company purposes, worker names, jobs and pay scales. The standard has objects for many aspects of organization utility and we will need to create details for all of the objects. An Object Standard Definition is provided below in the form of a JSON object with a value for each field in the JSON to be produced. 
 
 # GUIDANCE FOR GENERATING CORRECT JSON
 
-Coherency is important. For this, coherence means that the fictitious data values align with each other in ways that make sense to the user of this testing data. For example, addresses of students should match that of the school. Within objects, the invented data needs to be consistent, eg, the student model has properties of first, last and full name. If the first is 'Joe' and the last is 'White', it would be incorrect to say the full name is 'Sam Smith'. The coherent value is 'Joe White'.
+Coherency is important. For this, coherence means that the fictitious data values align with each other in ways that make sense to the user of this testing data. Within objects, the invented data needs to be consistent, eg, the worker has properties of first, last and full name. If the first is 'Joe' and the last is 'White', it would be incorrect to say the full name is 'Sam Smith'. The coherent value is 'Joe White'.
+
+The Object Standard Definition has a codeset value for some properties. These should be respected and the choice of code should make sense with the rest of the object. There is an annotation property with instructions. These should be treated as mandatory.
 
 The results are to be expressed in JSON, a structured data format. The Object Standard Definition contains JSON paths that describe the data element under consideration along with other details including a description and sometimes a codeset. You are to infer all data types from the context. If the name of a property says it is a list or is plural, you will generate an array with a random count fewer than four sample items.
 
@@ -26,7 +31,7 @@ The results are to be expressed in JSON, a structured data format. The Object St
 
 - **avoid repeating the same data in separate properties**, eg, if there are two addresses or phone number properties in an object, they should be different when appropriate. Deciding if it's appropriate requires your judgment. Addresses referring to the same place should be the same.
 
-- **SPECIAL INSTRUCTION**: All addresses should be create for either Arkansas or South Carolina.
+<!prompt-injections.sd-maker.organization!>
 
 # OBJECT STANDARD DEFINITION
 
@@ -54,19 +59,19 @@ Always wrap the JSON part of your response in delimiters like this:
 
 There should be *nothing* except well-formed, valid JSON between those delimiters.
 
-		`;
-		
+		`.qtTemplateReplace(userConfigs);
 
-			const extractionParameters = {
-				getgeneratedSynthData: {
-					frontDelimiter: `[START DATA SAMPLE]`,
-					backDelimiter: `[END DATA SAMPLE]`,
-				},
-				getExplanation: {
-					frontDelimiter: `[START EXPLANATIONS]`,
-					backDelimiter: `[END EXPLANATIONS]`,
-				},
-			};
+
+		const extractionParameters = {
+			getgeneratedSynthData: {
+				frontDelimiter: `[START DATA SAMPLE]`,
+				backDelimiter: `[END DATA SAMPLE]`,
+			},
+			getExplanation: {
+				frontDelimiter: `[START EXPLANATIONS]`,
+				backDelimiter: `[END EXPLANATIONS]`,
+			},
+		};
 
 		const { extractionLibrary, defaultExtractionFunction } =
 			passThroughParameters;
@@ -74,23 +79,22 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 		// Define refId replacement token
 		const refIdReplacementToken = '<!REFIDGOESHERE!>';
 
-		
-		const extractionList=[
+		const extractionList = [
 			extractionLibrary.getgeneratedSynthData(extractionParameters),
 		];
-		const extractionFunction = defaultExtractionFunction({extractionList});
-		
-		const thinker='sd-maker';
+		const extractionFunction = defaultExtractionFunction({ extractionList });
+
+		const thinker = 'sd-maker';
 
 		// UUID generation function
 		const generateUuid = () => {
 			const crypto = require('crypto');
 			const randomBytes = crypto.randomBytes(16);
-			
+
 			// Set version (4) and variant bits
 			randomBytes[6] = (randomBytes[6] & 0x0f) | 0x40; // Version 4
 			randomBytes[8] = (randomBytes[8] & 0x3f) | 0x80; // Variant bits
-			
+
 			// Convert to hex string with dashes
 			const hex = randomBytes.toString('hex');
 			return [
@@ -98,7 +102,7 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 				hex.substring(8, 12),
 				hex.substring(12, 16),
 				hex.substring(16, 20),
-				hex.substring(20, 32)
+				hex.substring(20, 32),
 			].join('-');
 		};
 
@@ -106,55 +110,59 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 		const tools = {
 			afterAiProcess: (wisdom) => {
 				const { xLog } = process.global;
-				
+
 				if (!wisdom || !wisdom.generatedSynthData) {
 					xLog.warning('SD-Maker Tools: No generatedSynthData found in wisdom');
 					return wisdom;
 				}
-				
+
 				try {
 					// Convert to string if it's an object
-					let dataString = typeof wisdom.generatedSynthData === 'string' 
-						? wisdom.generatedSynthData 
-						: JSON.stringify(wisdom.generatedSynthData);
-					
+					let dataString =
+						typeof wisdom.generatedSynthData === 'string'
+							? wisdom.generatedSynthData
+							: JSON.stringify(wisdom.generatedSynthData);
+
 					// Find all refId tokens and replace with unique UUIDs
 					const tokenPattern = new RegExp(refIdReplacementToken, 'g');
 					const matches = dataString.match(tokenPattern);
 
 					if (matches) {
-						
 						// Replace each token with a unique UUID
 						dataString = dataString.replace(tokenPattern, () => generateUuid());
-						
+
 						// Parse back to object if it was originally an object
-						const updatedData = typeof wisdom.generatedSynthData === 'string' 
-							? dataString 
-							: JSON.parse(dataString);
-						
-						
+						const updatedData =
+							typeof wisdom.generatedSynthData === 'string'
+								? dataString
+								: JSON.parse(dataString);
+
 						return {
 							...wisdom,
-							generatedSynthData: updatedData
+							generatedSynthData: updatedData,
 						};
 					} else {
-						xLog.warning(`SD-Maker Tools: No ${refIdReplacementToken} tokens found`);
+						xLog.warning(
+							`SD-Maker Tools: No ${refIdReplacementToken} tokens found`,
+						);
 						return wisdom;
 					}
 				} catch (error) {
-					xLog.error(`SD-Maker Tools: Error in afterAiProcess: ${error.message}`);
+					xLog.error(
+						`SD-Maker Tools: Error in afterAiProcess: ${error.message}`,
+					);
 					throw error;
 				}
-			}
+			},
 		};
 
 		const workingFunction = () => {
-			return { 
+			return {
 				promptTemplate,
-				extractionParameters, 
-				extractionFunction, 
-				thinker, 
-				tools
+				extractionParameters,
+				extractionFunction,
+				thinker,
+				tools,
 			};
 		};
 

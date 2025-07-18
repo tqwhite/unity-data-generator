@@ -1,0 +1,14 @@
+{
+  "name": "jedx-utility",
+  "version": "1.0.0",
+  "description": "various tools to complete generating JEDX data",
+  "main": "jedxUtility.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}
