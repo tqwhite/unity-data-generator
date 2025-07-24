@@ -11,7 +11,6 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 
-console.log(`HELLO FROM ${__dirname}/${moduleName}`);
 
 // =====================================================================
 // FUNCTION MODULES
@@ -38,13 +37,7 @@ const moduleFunction =
 			return duplicateWorkerSetsModule.execute({ count, addToDupeSet });
 		}
 
-		const workingFunction = () => {
-			return 'hello';
-		};
-		
 
-		xLog.status(`${moduleName} is initialized`);
-		return { workingFunction };
 	};
 
 //END OF moduleFunction() ============================================================
@@ -56,11 +49,9 @@ const configFileProcessor = require('qtools-config-file-processor');
 const configName= os.hostname() == 'qMini.local' ? 'instanceSpecific/qbook' : '' ; //when deployed, usually the config is in the configs/ dir
 const configDirPath = `${projectRoot}/configs/${configName}/`;
 const config = configFileProcessor.getConfig(`${moduleName}.ini`, configDirPath)
-console.dir({['config']:config}, { showHidden: false, depth: 4, colors: true });
 
 const commandLineParser = require('qtools-parse-command-line');
 const commandLineParameters = commandLineParser.getParameters({noFunctions: true});
-console.dir({['commandLineParameters']:commandLineParameters}, { showHidden: false, depth: 4, colors: true });
 //
 
 // prettier-ignore

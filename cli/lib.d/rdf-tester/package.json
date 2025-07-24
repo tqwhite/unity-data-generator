@@ -11,7 +11,7 @@
   "dependencies": {
     "n3": "^1.26.0",
     "rdf-parse": "^4.0.0",
-    "rdfxml-streaming-parser": "^3.0.1",
+    "rdfxml-streaming-parser": "^3.1.0",
     "sparql-engine": "^0.8.3",
     "xml2js": "^0.6.2"
   }

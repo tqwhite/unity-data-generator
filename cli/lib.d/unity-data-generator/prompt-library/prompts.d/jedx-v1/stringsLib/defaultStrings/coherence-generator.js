@@ -123,14 +123,13 @@ Then foreign keys should only reference these three values, not random UUIDs.
 2. Extract all refId values to create a reference map
 3. Identify all foreign key properties (properties containing "refId" or ending in "RefId")
 4. Update foreign keys to reference valid parent refIds from the dataset
-5. Add the rainbowColor property to each object
-6. Return the complete corrected processedElements object
+5. Return the complete corrected processedElements object
 
 # RESULT FORMATTING INSTRUCTIONS
 Always wrap the complete modified processedElements object in delimiters like this:
 
 <!getProcessedElements.frontDelimiter!>
-COMPLETE PROCESSED ELEMENTS OBJECT WITH CORRECTED REFERENCES AND RAINBOW COLORS GOES HERE
+COMPLETE PROCESSED ELEMENTS OBJECT WITH CORRECTED REFERENCES COLORS GOES HERE
 <!getProcessedElements.backDelimiter!>
 
 There should be *nothing* except well-formed, valid JSON between those delimiters.

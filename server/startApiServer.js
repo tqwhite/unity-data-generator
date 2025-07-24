@@ -253,7 +253,7 @@ const projectRoot=findProjectRoot(); // call with {closest:false} if there are n
 // --------------------------------------------------------------------------------
 // UTILITIES 
 process.global = {};
-process.global.xLog = require(path.join(projectRoot, 'code/lib/x-log'));
+process.global.xLog = require('qtools-x-log');
 process.global.xLog.logToStdOut();
 process.global.projectRoot = projectRoot;
 

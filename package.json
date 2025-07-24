@@ -12,7 +12,7 @@
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
-    "express-rate-limit": "^7.5.1",
+    "express-rate-limit": "^8.0.1",
     "qtools-asynchronous-pipe-plus": "^1.0.5",
     "qtools-config-file-processor": "^1.0.18",
     "qtools-functional-library": "^2.0.4",

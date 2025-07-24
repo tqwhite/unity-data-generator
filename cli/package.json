@@ -9,8 +9,8 @@
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
-    "better-sqlite3": "^12.1.0",
-    "openai": "^5.7.0",
+    "better-sqlite3": "^12.2.0",
+    "openai": "^5.10.2",
     "qtools-asynchronous-pipe-plus": "^1.0.5",
     "qtools-config-file-processor": "^1.0.18",
     "qtools-functional-library": "^2.0.4",

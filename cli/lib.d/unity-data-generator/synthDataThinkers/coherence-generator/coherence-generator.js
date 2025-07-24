@@ -48,25 +48,25 @@ const moduleFunction = function (args = {}) {
 	// ================================================================================
 	// UTILITIES
 
-	const convertProcessedElementsToPromptFormat = (processedElements) => {
-		const convertedElements = {};
+	const convertStorageToPromptFormat = (storageFormatElements) => {
+		const promptFormatElements = {};
 		
-		Object.keys(processedElements).forEach(key => {
+		Object.keys(storageFormatElements).forEach(key => {
 			try {
 				// Parse the JSON string to object, then stringify for clean formatting
-				convertedElements[key] = JSON.parse(processedElements[key]);
+				promptFormatElements[key] = JSON.parse(storageFormatElements[key]);
 			} catch (err) {
 				xLog.error(`Failed to parse JSON for ${key}: ${err.message}`);
 				// Keep original if parse fails
-				convertedElements[key] = processedElements[key];
+				promptFormatElements[key] = storageFormatElements[key];
 			}
 		});
 		
-		return JSON.stringify(convertedElements, null, 2);
+		return JSON.stringify(promptFormatElements, null, 2);
 	};
 
-	const convertPromptFormatToProcessedElements = (promptFormatData) => {
-		const convertedElements = {};
+	const convertPromptToStorageFormat = (promptFormatData) => {
+		const storageFormatElements = {};
 		
 		try {
 			// Parse the AI response JSON
@@ -76,28 +76,28 @@ const moduleFunction = function (args = {}) {
 			
 			Object.keys(parsedData).forEach(key => {
 				// Convert each object back to JSON string format
-				convertedElements[key] = JSON.stringify(parsedData[key], '', '\t');
+				storageFormatElements[key] = JSON.stringify(parsedData[key], '', '\t');
 			});
 			
 		} catch (err) {
 			xLog.saveProcessFile(`${moduleName}_BadPromptFormatData`, promptFormatData);
 			xLog.error(`Saved promptFormatData in ${moduleName}_BadPromptFormatData`);
-			xLog.error(`Failed to convert prompt format back to processedElements: ${err.message}`);
+			xLog.error(`Failed to convert prompt format back to storageFormat: ${err.message}`);
 			throw new Error(`Conversion failed: ${err.message}`);
 		}
 		
-		return convertedElements;
+		return storageFormatElements;
 	};
 
 	const formulatePromptList = (promptGenerator) => {
-		return ({ latestWisdom } = {}) => {
+		return ({ inputWisdom } = {}) => {
 			// Convert processedElements for prompt consumption
-			const convertedProcessedElements = convertProcessedElementsToPromptFormat(latestWisdom.processedElements);
+			const promptFormatElements = convertStorageToPromptFormat(inputWisdom.processedElements);
 			
 			// Handle validation messages like fix-problems does
 			let validationMessagesString = 'No validation errors detected. Proceed with relationship optimization and coherence improvements.';
-			if (latestWisdom.qtGetSurePath('validationMessage', {})) {
-				const validationMessage = latestWisdom.validationMessage;
+			if (inputWisdom.qtGetSurePath('validationMessage', {})) {
+				const validationMessage = inputWisdom.validationMessage;
 				if (validationMessage && validationMessage.errors && validationMessage.errors.length > 0) {
 					validationMessagesString = `${validationMessage.errorCount} validation errors detected:\n\n`;
 					validationMessage.errors.forEach((error, index) => {
@@ -109,8 +109,8 @@ const moduleFunction = function (args = {}) {
 			}
 			
 			return promptGenerator.iterativeGeneratorPrompt({
-				...latestWisdom,
-				processedElements: convertedProcessedElements,
+				...inputWisdom,
+				processedElements: promptFormatElements,
 				validationMessagesString,
 				employerModuleName: moduleName, // Use the new prompt
 			});
@@ -120,8 +120,8 @@ const moduleFunction = function (args = {}) {
 	// ================================================================================
 	// TALK TO AI
 
-	const accessSmartyPants = (args, callback) => {
-		let { promptList, systemPrompt } = args;
+	const accessSmartyPants = (aiRequestData, callback) => {
+		let { promptList, systemPrompt } = aiRequestData;
 
 		const localCallback = (err, result) => {
 			callback('', result);
@@ -134,13 +134,13 @@ const moduleFunction = function (args = {}) {
 	// ================================================================================
 	// DO THE JOB
 
-	const executeRequest = (args, callback) => {
-		const { latestWisdom } = args;
+	const executeRequest = (initialArgs, callback) => {
+		const { latestWisdom: inputWisdom } = initialArgs;
 
 		// Critical validation: coherence-generator REQUIRES processedElements from iterate-over-collection
-		const {processedElements} = latestWisdom;
+		const {processedElements: storageFormatElements} = inputWisdom;
 		
-		if (!processedElements) {
+		if (!storageFormatElements) {
 			const errorMsg = `CRITICAL ERROR in ${moduleName}: No processedElements received from previous conversation. This is required input for coherence analysis.`;
 			xLog.error(errorMsg);
 			throw new Error(errorMsg);
@@ -152,14 +152,15 @@ const moduleFunction = function (args = {}) {
 		// --------------------------------------------------------------------------------
 		// GENERATE PROMPTS
 
-		taskList.push((args, next) => {
+		taskList.push((promptGenerationData, next) => {
 			const {
 				promptGenerator,
 				formulatePromptList,
-				accessor
-			} = args;
+				accessor,
+				inputWisdom
+			} = promptGenerationData;
 
-			const promptElements = formulatePromptList(promptGenerator)({ ...args, accessor });
+			const promptElements = formulatePromptList(promptGenerator)({ inputWisdom, accessor }); //takes wisdom object with data to process; returns promptList (OpenAI format), extractionFunction, extractionParameters, and tools from prompt library
 
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
@@ -167,59 +168,59 @@ const moduleFunction = function (args = {}) {
 				{ append: true },
 			);
 
-			next('', { ...args, promptElements });
+			next('', { ...promptGenerationData, promptElements });
 		});
 
 		// --------------------------------------------------------------------------------
 		// APPLY PRE-AI TOOLS
 
-		taskList.push((args, next) => {
-			const { promptElements, latestWisdom, accessor } = args;
+		taskList.push((preAiProcessingData, next) => {
+			const { promptElements, inputWisdom, accessor } = preAiProcessingData;
 			const { tools } = promptElements;
 
 			// Apply beforeAiProcess tool if available
 			if (tools && tools.beforeAiProcess) {
 				try {
-					const processedElements = accessor ? accessor.getLatestWisdom('processedElements') : latestWisdom.processedElements;
-					const convertedProcessedElements = convertProcessedElementsToPromptFormat(processedElements);
-					const balancedProcessedElements = tools.beforeAiProcess(convertedProcessedElements);
-					const revertedProcessedElements = convertPromptFormatToProcessedElements(balancedProcessedElements);
+					const storageFormatElements = accessor ? accessor.getLatestWisdom('processedElements') : inputWisdom.processedElements;
+					const promptFormatElements = convertStorageToPromptFormat(storageFormatElements);
+					const balancedPromptElements = tools.beforeAiProcess(promptFormatElements);
+					const balancedStorageElements = convertPromptToStorageFormat(balancedPromptElements);
 					
-					// Update latestWisdom with balanced data
-					const updatedLatestWisdom = {
-						...latestWisdom,
-						processedElements: revertedProcessedElements
+					// Update inputWisdom with balanced data
+					const enhancedWisdom = {
+						...inputWisdom,
+						processedElements: balancedStorageElements
 					};
 					
-					next('', { ...args, latestWisdom: updatedLatestWisdom });
+					next('', { ...preAiProcessingData, inputWisdom: enhancedWisdom });
 				} catch (error) {
 					xLog.error(`${moduleName}: Error applying beforeAiProcess tool: ${error.message}`);
-					next('', args); // Continue without tool processing
+					next('', preAiProcessingData); // Continue without tool processing
 				}
 			} else {
-				next('', args);
+				next('', preAiProcessingData);
 			}
 		});
 
 		// --------------------------------------------------------------------------------
 		// CALL AI
 
-		taskList.push((args, next) => {
-			const { accessSmartyPants, promptElements, systemPrompt } = args;
+		taskList.push((aiInteractionData, next) => {
+			const { accessSmartyPants, promptElements, systemPrompt } = aiInteractionData;
 			const { promptList } = promptElements;
 
 			const localCallback = (err, result) => {
-				next(err, { ...args, ...result });
+				next(err, { ...aiInteractionData, ...result });
 			};
 
-			accessSmartyPants({ promptList, systemPrompt }, localCallback);
+			accessSmartyPants({ promptList, systemPrompt }, localCallback); //promptList is one or more OpenAI formatted prompts sent from the prompt generator; systemPrompt is hard coded
 		});
 
 		// --------------------------------------------------------------------------------
 		// EXTRACT RESULTS
 
-		taskList.push((args, next) => {
-			const { wisdom: rawWisdom, promptElements, latestWisdom } = args;
+		taskList.push((extractionData, next) => {
+			const { wisdom: rawWisdom, promptElements, inputWisdom } = extractionData;
 			const { extractionParameters, extractionFunction } = promptElements;
 
 			xLog.saveProcessFile(
@@ -228,59 +229,60 @@ const moduleFunction = function (args = {}) {
 				{ append: true },
 			);
 
-			const extractedData = extractionFunction(rawWisdom);
-			const { processedElements: extractedProcessedElements } = extractedData;
+			const extractedResponseData = extractionFunction(rawWisdom);
+			const { processedElements: extractedPromptElements } = extractedResponseData;
 
 			// Critical validation: coherence-generator MUST produce processedElements
-			if (!extractedProcessedElements) {
+			if (!extractedPromptElements) {
 				const errorMsg = `CRITICAL ERROR in ${moduleName}: Failed to extract processedElements from AI response. Check prompt and extraction function.`;
 				xLog.error(errorMsg);
 				throw new Error(errorMsg);
 			}
 
 			// Convert back to original format: {key: "json string", key2: "json string"}
-			const processedElements = convertPromptFormatToProcessedElements(extractedProcessedElements);
+			const finalStorageElements = convertPromptToStorageFormat(extractedPromptElements);
 
 			// Let check-group-validity determine isValid - do not set it here
-			next('', { ...args, processedElements });
+			next('', { ...extractionData, processedElements: finalStorageElements });
 		});
 
 		// --------------------------------------------------------------------------------
 		// INIT AND EXECUTE THE PIPELINE
 
-		const initialData = {
+		const initialPipelineData = {
 			promptGenerator,
 			formulatePromptList,
 			accessSmartyPants,
 			systemPrompt,
-			...args,
+			inputWisdom,
+			...initialArgs,
 		};
 
-		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { latestWisdom, processedElements } = args;
+		pipeRunner(taskList.getList(), initialPipelineData, (err, finalPipelineData) => {
+			const { inputWisdom, processedElements: finalStorageElements } = finalPipelineData;
 			
 			// Create new wisdom object without circular references
 			// Copy all properties except _conversationMetadata which contains circular refs
 			xLog.status(`HACK: Circular reference hack, fix this.`);
-			const { _conversationMetadata, ...safeWisdom } = latestWisdom;
-			const wisdom = {
+			const { _conversationMetadata, ...safeWisdom } = inputWisdom;
+			const outputWisdom = {
 				...safeWisdom,
 			};
 
-			wisdom.processedElements=processedElements; //send the revised data onward
+			outputWisdom.processedElements = finalStorageElements; //send the revised data onward
 			
 
 			xLog.verbose(
-				`${moduleName}: Wisdom property content:\n${JSON.stringify(processedElements, null, 2)}`,
+				`${moduleName}: Wisdom property content:\n${JSON.stringify(finalStorageElements, null, 2)}`,
 			);
 			xLog.saveProcessFile(
 				`${moduleName}_processedElements.log`,
-				`\n\n\n${moduleName}---------------------------------------------------\n${JSON.stringify(processedElements, null, 2)}\n----------------------------------------------------\n\n`,
+				`\n\n\n${moduleName}---------------------------------------------------\n${JSON.stringify(finalStorageElements, null, 2)}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
 			
 			
-			callback(err, { wisdom, args });
+			callback(err, { wisdom: outputWisdom, args: finalPipelineData });
 		});
 	};
 
