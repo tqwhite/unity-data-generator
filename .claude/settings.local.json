@@ -69,7 +69,11 @@
       "Bash(awk:*)",
       "Bash(split:*)",
       "Bash(./jedxUtility.js -duplicateWorkerSets --count=3)",
-      "Bash(./jedxUtility.js:*)"
+      "Bash(./jedxUtility.js:*)",
+      "Bash(dbSqlUtil:*)",
+      "Bash(jedxUtility:*)",
+      "Bash(spreadsheetTool --help)",
+      "Bash(rdfTester:*)"
     ],
     "deny": []
   }
