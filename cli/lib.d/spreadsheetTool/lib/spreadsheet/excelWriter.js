@@ -76,6 +76,10 @@ async function writeExcelFile(outputFilePath, data) {
     xLog.status(`Added sheet: ${safeSheetName} with ${rows.length} rows`);
   });
   
+  // Ensure the output directory exists
+  const outputDir = path.dirname(outputFilePath);
+  fs.mkdirSync(outputDir, { recursive: true });
+  
   // Write to Excel file
   xlsx.writeFile(newWorkbook, outputFilePath);
   xLog.status(`Excel file generated at: ${outputFilePath}`);

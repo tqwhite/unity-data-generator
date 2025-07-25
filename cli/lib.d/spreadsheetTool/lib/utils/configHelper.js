@@ -29,14 +29,15 @@ async function initialize() {
   const initAtp = require('../../../../../lib/qtools-ai-framework/jina')({
     configFileBaseName: moduleName,
     applicationBasePath,
-	applicationControls: ['-loadDatabase', '-purgeBackupDbTables', '-list', '--tableName'],
+	applicationControls: ['-loadDatabase', '-purgeBackupDbTables', '-list', '--tableName', '--refIdSourceNames'],
   });
   
   // Access global variables set up by initAtp
   const { xLog, getConfig, commandLineParameters } = process.global;
   
   // Get configuration specific to this module
-  let { outputsPath, databaseFilePath, retainOnDbBackupPurge = 3 } = getConfig(moduleName);
+  const moduleConfig = getConfig(moduleName) || {};
+  let { outputsPath, databaseFilePath, retainOnDbBackupPurge = 3, refIdSourceNames = 'XPath' } = moduleConfig;
   
   // If database path is not specified, try to find it
   if (!databaseFilePath) {
@@ -56,10 +57,16 @@ async function initialize() {
     }
   }
   
+  // Check for CLI override of refIdSourceNames
+  if (commandLineParameters.values.refIdSourceNames && commandLineParameters.values.refIdSourceNames.length > 0) {
+    refIdSourceNames = commandLineParameters.values.refIdSourceNames[0];
+  }
+  
   const config = {
     outputsPath,
     databaseFilePath,
     retainOnDbBackupPurge,
+    refIdSourceNames,       // Configurable refId generation
     xLog,                   // Logger
     applicationBasePath,    // Root directory of the application
     tableName: 'naDataModel' // Default table name for data storage

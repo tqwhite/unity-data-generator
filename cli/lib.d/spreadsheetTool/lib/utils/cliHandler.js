@@ -78,6 +78,8 @@ OPTIONS:
   -echoAlso          Display the output in the console
   -help              Show this help message
   --tableName=name   Specify custom table name (default: camelCase from input filename)
+  --refIdSourceNames=fields  Comma-separated field names for refId generation (default: XPath)
+                     Examples: --refIdSourceNames=Name,Type or --refIdSourceNames=allExcept,createdAt
 
 EXAMPLES:
   spreadsheetTool -list MyData.xlsx
@@ -91,6 +93,12 @@ EXAMPLES:
     
   spreadsheetTool -loadDatabase "JEDx Sample Data.xls"
     Creates table 'jedxSampleData' (camelCase, special chars removed)
+    
+  spreadsheetTool -loadDatabase MyData.xlsx --refIdSourceNames=Name,Type
+    Generates refId from Name and Type fields instead of XPath
+    
+  spreadsheetTool -loadDatabase MyData.xlsx --refIdSourceNames=allExcept,createdAt,updatedAt
+    Generates refId from all fields except timestamps
   `);
   
   process.exit(0);

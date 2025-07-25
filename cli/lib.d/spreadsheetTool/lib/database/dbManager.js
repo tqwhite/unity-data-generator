@@ -39,14 +39,15 @@ function initDatabase(databaseFilePath) {
  * @param {string} databaseFilePath - Path to the database file
  * @param {Object} spreadsheetData - Data from the spreadsheet
  * @param {string} tableName - Name of the table to save to (optional)
+ * @param {string} refIdSourceNames - Comma-separated field names for refId generation (optional)
  * @returns {Promise<void>}
  * 
  * Note: All records will be saved with:
- * - refId: A hash generated from the XPath value
+ * - refId: A hash generated from configurable source fields
  * - createdAt: Timestamp when the record was created
  * - updatedAt: Timestamp when the record was last updated
  */
-async function saveData(databaseFilePath, spreadsheetData, tableName = DEFAULT_TABLE_NAME) {
+async function saveData(databaseFilePath, spreadsheetData, tableName = DEFAULT_TABLE_NAME, refIdSourceNames = 'XPath') {
   const { xLog } = process.global;
   const db = initDatabase(databaseFilePath);
   
@@ -59,8 +60,8 @@ async function saveData(databaseFilePath, spreadsheetData, tableName = DEFAULT_T
     // Process data with generated numeric refIds, createdAt and updatedAt timestamps
     const currentTimestamp = new Date().toISOString();
     const processedData = spreadsheetData.data.map(record => {
-      // Generate a numeric refId (stored as string for compatibility)
-      const refId = generateRefId(record);
+      // Generate a numeric refId using configurable source fields
+      const refId = generateRefId(record, refIdSourceNames);
       return { 
         ...record, 
         refId: refId,
@@ -170,20 +171,37 @@ async function purgeBackups(databaseFilePath, retainCount, baseTableName = DEFAU
 /**
  * Generate a refId for a record
  * @param {Object} record - The record to generate an ID for
+ * @param {string} refIdSourceNames - Comma-separated list of field names to use for refId generation
  * @returns {string} Numeric refId as a string
  * 
- * Note: The refId is generated based on XPath/Path values primarily, with fallback
- * to other fields if needed, to ensure each record has a unique refId.
+ * Note: The refId is generated based on configurable field names. Special keyword 'allExcept'
+ * can be used to include all fields except those listed after it.
  */
-function generateRefId(record) {
-  // Use XPath value first, then fall back to Path, then use a combination of other fields
-  const pathValue = record.XPath || record.Path || '';
+function generateRefId(record, refIdSourceNames = 'XPath') {
+  const sourceNames = refIdSourceNames.split(',').map(s => s.trim());
   
-  // If we still don't have a unique identifier, create one from multiple fields
-  let uniqueValue = pathValue;
-  if (!uniqueValue) {
-    // Use Name, Type, Description as fallback to create a unique identifier
-    uniqueValue = (record.Name || '') + '|' + (record.Type || '') + '|' + (record.Description || '') + '|' + (record.SheetName || '');
+  let fieldsToUse = [];
+  
+  if (sourceNames[0] === 'allExcept') {
+    // Use all fields except the ones listed after 'allExcept'
+    const excludeFields = sourceNames.slice(1);
+    fieldsToUse = Object.keys(record).filter(key => !excludeFields.includes(key));
+  } else {
+    // Use specific fields listed
+    fieldsToUse = sourceNames;
+  }
+  
+  // Build concatenated value from specified fields
+  const values = fieldsToUse.map(fieldName => record[fieldName] || '');
+  let uniqueValue = values.join('|');
+  
+  // If no value was generated, use a fallback
+  if (!uniqueValue || uniqueValue === '|'.repeat(values.length - 1)) {
+    // Fallback: use all available fields
+    const allValues = Object.keys(record)
+      .sort() // Sort for consistency
+      .map(key => record[key] || '');
+    uniqueValue = allValues.join('|');
   }
   
   // Generate a SHA-256 hash of the unique value
