@@ -30,11 +30,17 @@ const applicationBasePath = findProjectRoot(); // call with {closest:false} if t
 // INITIALIZE QTOOLS-AI-FRAMEWORK FIRST
 // =====================================================================
 
+// ---------------------------------------------------------------------
+// helpText - application-specific help integration
+
+const helpText = require('./lib/help-text');
+
 // CRITICAL: This must happen before requiring any modules that access process.global
 // process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
 const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
+	helpText,
 	applicationControls: [
 		'-writeVectorDatabase',
 		'-newDatabase',
