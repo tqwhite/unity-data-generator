@@ -46,7 +46,7 @@ const moduleName = path.basename(__filename, '.js');
 
 // =============================================================================
 // MODULE IMPORTS
-
+const helpText=require('./lib/help-text');
 
 //unityCedsMatch_AI_Only
 
@@ -59,8 +59,17 @@ configFileBaseName='unityCedsMatch_AI_Only';
 const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName,
 	applicationBasePath,
-		applicationControls: ['-loadDatabase', '-aiOnly'],
-
+	helpText,
+	applicationControls: [
+		'-loadDatabase',
+		'-aiOnly',
+		'-echoAlso',
+		'-listElements',
+		'-help',
+		'--elements',
+		'--outFile',
+		'--overrideConfigPath'
+	],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
 
 // =============================================================================
@@ -84,12 +93,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	// =============================================================================
 	// COMMAND-LINE PARAMETERS PROCESSING
 
-	// Check for help flag
-	if (commandLineParameters.switches.help) {
-		const helpText = require('./lib/help-text')(moduleName);
-		xLog.result(helpText);
-		process.exit(0);
-	}
+	// Framework now handles help automatically - remove manual help handling
 
 	// Check if database loading is requested
 	const loadDatabase = commandLineParameters.switches.loadDatabase;
