@@ -10,7 +10,8 @@ const excelWriter = require('../../lib/spreadsheet/excelWriter');
 const mockXLog = {
   status: jest.fn(),
   result: jest.fn(),
-  error: jest.fn()
+  error: jest.fn(),
+  verbose: jest.fn()
 };
 
 beforeAll(() => {
@@ -209,8 +210,8 @@ describe('Excel Writer', () => {
       
       await excelWriter.writeExcelFile(excelPath, testData);
       
-      expect(mockXLog.status).toHaveBeenCalledWith('Added sheet: Sheet1 with 2 rows');
-      expect(mockXLog.status).toHaveBeenCalledWith('Added sheet: Sheet2 with 1 rows');
+      expect(mockXLog.verbose).toHaveBeenCalledWith('Added sheet: Sheet1 with 2 rows');
+      expect(mockXLog.verbose).toHaveBeenCalledWith('Added sheet: Sheet2 with 1 rows');
     });
   });
 

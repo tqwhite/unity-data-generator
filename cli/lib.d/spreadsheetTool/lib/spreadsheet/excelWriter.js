@@ -73,7 +73,7 @@ async function writeExcelFile(outputFilePath, data) {
     
     // Add worksheet to workbook
     xlsx.utils.book_append_sheet(newWorkbook, worksheet, safeSheetName);
-    xLog.status(`Added sheet: ${safeSheetName} with ${rows.length} rows`);
+    xLog.verbose(`Added sheet: ${safeSheetName} with ${rows.length} rows`);
   });
   
   // Ensure the output directory exists
@@ -86,7 +86,57 @@ async function writeExcelFile(outputFilePath, data) {
 }
 
 /**
- * Write data to both JSON and Excel files
+ * Write data to CSV file
+ * @param {string} outputFilePath - Path to the output CSV file
+ * @param {Object} data - Data object containing data array
+ * @returns {Promise<void>}
+ */
+async function writeCsvFile(outputFilePath, data) {
+  const { xLog } = process.global;
+  
+  if (!data.data || data.data.length === 0) {
+    xLog.error('No data provided for CSV export');
+    return;
+  }
+  
+  // Ensure the output directory exists
+  const outputDir = path.dirname(outputFilePath);
+  fs.mkdirSync(outputDir, { recursive: true });
+  
+  // Get all unique column names from the data
+  const allColumns = new Set();
+  data.data.forEach(row => {
+    Object.keys(row).forEach(key => allColumns.add(key));
+  });
+  
+  const columns = Array.from(allColumns);
+  
+  // Create CSV content
+  let csvContent = '';
+  
+  // Add header row
+  csvContent += columns.map(col => `"${col}"`).join(',') + '\n';
+  
+  // Add data rows
+  data.data.forEach(row => {
+    const values = columns.map(col => {
+      const value = row[col] || '';
+      // Escape quotes and wrap in quotes if contains comma, quote, or newline
+      if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return `"${value}"`;
+    });
+    csvContent += values.join(',') + '\n';
+  });
+  
+  // Write CSV file
+  fs.writeFileSync(outputFilePath, csvContent, 'utf8');
+  xLog.status(`CSV file generated at: ${outputFilePath}`);
+}
+
+/**
+ * Write data to JSON, Excel, and CSV files
  * @param {string} basePath - Base output path (without extension)
  * @param {Object} data - Data to write to the files
  * @returns {Promise<Object>} Paths to the created files
@@ -95,19 +145,23 @@ async function writeDataFiles(basePath, data) {
   // Generate file paths
   const jsonPath = `${basePath}.json`;
   const excelPath = `${basePath}_generated.xlsx`;
+  const csvPath = `${basePath}.csv`;
   
-  // Write both files
+  // Write all files
   await writeJsonFile(jsonPath, data);
   await writeExcelFile(excelPath, data);
+  await writeCsvFile(csvPath, data);
   
   return {
     jsonPath,
-    excelPath
+    excelPath,
+    csvPath
   };
 }
 
 module.exports = {
   writeJsonFile,
   writeExcelFile,
+  writeCsvFile,
   writeDataFiles
 };

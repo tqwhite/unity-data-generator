@@ -10,7 +10,8 @@ const excelReader = require('../../lib/spreadsheet/excelReader');
 const mockXLog = {
   status: jest.fn(),
   result: jest.fn(),
-  error: jest.fn()
+  error: jest.fn(),
+  verbose: jest.fn()
 };
 
 beforeAll(() => {
@@ -152,7 +153,7 @@ describe('Excel Reader', () => {
         
         expect(result.data).toHaveLength(1);
         expect(result.data[0].SheetName).toBe('Sheet1');
-        expect(mockXLog.status).toHaveBeenCalledWith('Processed sheet: Sheet1 (1 rows)');
+        expect(mockXLog.verbose).toHaveBeenCalledWith('Processed sheet: Sheet1 (1 rows)');
         expect(mockXLog.status).not.toHaveBeenCalledWith(expect.stringContaining('EmptySheet'));
       } finally {
         if (fs.existsSync(emptySheetPath)) {
@@ -172,8 +173,8 @@ describe('Excel Reader', () => {
       await excelReader.readSpreadsheet(testExcelPath);
       
       expect(mockXLog.status).toHaveBeenCalledWith(expect.stringContaining('Processing spreadsheet:'));
-      expect(mockXLog.status).toHaveBeenCalledWith('Processed sheet: Sheet1 (2 rows)');
-      expect(mockXLog.status).toHaveBeenCalledWith('Processed sheet: Sheet2 (1 rows)');
+      expect(mockXLog.verbose).toHaveBeenCalledWith('Processed sheet: Sheet1 (2 rows)');
+      expect(mockXLog.verbose).toHaveBeenCalledWith('Processed sheet: Sheet2 (1 rows)');
     });
   });
 });

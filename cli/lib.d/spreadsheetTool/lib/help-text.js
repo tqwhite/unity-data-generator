@@ -113,12 +113,23 @@ COMMON OPERATIONS
 
 EXAMPLES
 
+	Database Export (Default Operation):
 	spreadsheetTool                                                # Export naDataModel table to files
 	spreadsheetTool --tableName=cedsElements                      # Export CEDS elements to files  
+	spreadsheetTool --tableName=myTable /tmp                      # Export myTable to /tmp directory
+	
+	File Import to Database:
 	spreadsheetTool -loadDatabase "Student Data.xlsx"             # Import Excel, create studentData table
-	spreadsheetTool -loadDatabase data.csv --tableName=surveys /custom/output # Import with custom table and output
+	spreadsheetTool -loadDatabase data.csv --tableName=surveys    # Import CSV with custom table name
+	spreadsheetTool -loadDatabase /tmp/TESTTQ.csv --tableName=TESTTQ2  # Import CSV to specific table
+	spreadsheetTool -loadDatabase data.csv --tableName=surveys /custom/output # Import with custom output directory
+	
+	File Exploration:
 	spreadsheetTool -list "Multi Sheet Workbook.xlsx"             # Explore worksheet structure
 	spreadsheetTool -loadDatabase workbook.xlsx --sheetName="Q1 Data" -echoAlso # Import specific sheet with console output
+	
+	Output Formats (automatically generates JSON, Excel, and CSV):
+	spreadsheetTool --tableName=myData /tmp                       # Creates: /tmp/myData.json, /tmp/myData_generated.xlsx, /tmp/myData.csv
 
 INTEGRATION WORKFLOW
 

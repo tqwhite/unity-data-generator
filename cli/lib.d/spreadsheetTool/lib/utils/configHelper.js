@@ -7,6 +7,11 @@
 
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
+
+// Direct qtools library usage instead of qtools-ai-framework
+const commandLineParser = require('qtools-parse-command-line');
+const configFileProcessor = require('qtools-config-file-processor');
 
 // Find project root directory
 const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
@@ -25,15 +30,51 @@ async function initialize() {
   // Determine module name for configuration lookup
   const moduleName = 'spreadsheetTool';
   
-  // Initialize ATP (Anthropic Thought Processor)
-  const initAtp = require('../../../../../lib/qtools-ai-framework/jina')({
-    configFileBaseName: moduleName,
-    applicationBasePath,
-	applicationControls: ['-loadDatabase', '-purgeBackupDbTables', '-list', '--tableName', '--refIdSourceNames'],
+  // Initialize xLog directly
+  const xLog = require('qtools-x-log');
+  
+  // Parse command line parameters with application controls
+  const applicationControls = [
+    '-help',
+    '-loadDatabase',
+    '-purgeBackupDbTables', 
+    '-list',
+    '-analyzeOnly',
+    '-saveToDatabase',
+    '-skipValidation',
+    '-overwriteTable',
+    '--tableName',
+    '--inputFile',
+    '--outputFile',
+    '--sheetName',
+    '--configPath',
+    '--refIdSourceNames'
+  ];
+  
+  const commandLineParameters = commandLineParser.getParameters({
+    applicationControls: applicationControls
   });
   
-  // Access global variables set up by initAtp
-  const { xLog, getConfig, commandLineParameters } = process.global;
+  // Set up configuration path
+  const configName = os.hostname().match(/^q/) ? 'instanceSpecific/qbook' : '';
+  const configDirPath = `${applicationBasePath}/configs/${configName}/`;
+  
+  // Load configuration directly
+  const rawConfig = configFileProcessor.getConfig(
+    `${moduleName}.ini`,
+    configDirPath,
+    { resolve: true }
+  );
+  
+  const getConfig = (sectionName) => rawConfig[sectionName];
+  
+  // Set up process.global for compatibility
+  process.global = {
+    xLog,
+    getConfig,
+    commandLineParameters,
+    rawConfig
+  };
   
   // Get configuration specific to this module
   const moduleConfig = getConfig(moduleName) || {};

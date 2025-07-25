@@ -12,7 +12,8 @@ const excelWriter = require('../../lib/spreadsheet/excelWriter');
 const mockXLog = {
   status: jest.fn(),
   result: jest.fn(),
-  error: jest.fn()
+  error: jest.fn(),
+  verbose: jest.fn()
 };
 
 beforeAll(() => {

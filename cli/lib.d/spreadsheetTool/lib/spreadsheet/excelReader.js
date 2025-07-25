@@ -89,7 +89,7 @@ async function readSpreadsheet(spreadsheetFile) {
       allData.push(row);
     });
     
-    xLog.status(`Processed sheet: ${sheetName} (${sheetData.length} rows)`);
+    xLog.verbose(`Processed sheet: ${sheetName} (${sheetData.length} rows)`);
   });
   
   // Create result data structure
