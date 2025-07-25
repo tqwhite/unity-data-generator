@@ -36,5 +36,8 @@ EXAMPLES
   ${moduleName} -outFile=result.json # Custom output file
 
 ============================================================
+
+<!frameworkHelpInfo!>
+  
 `;
 };

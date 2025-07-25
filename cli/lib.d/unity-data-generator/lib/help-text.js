@@ -40,24 +40,12 @@ OUTPUT
 
 -outFile:	Override the default file path
 -echoAlso:	Show XML on command line as well as writing to file
-
-MESSAGES
-
--help, --help	shows this help message. No processing is done.
-
--showConfig	display the final configuration (pipe to jq, if you have it)
-
--silent	turns off all message output
--quiet	turns off all but error messages
--verbose	shows additional messages that clarify what is going on
--debug	shows all development debugging messages, plus verbose and everything else
-
+<!frameworkHelpInfo!>
 EXAMPLES
 
 unityDataGenerator.js LEAAccountabilitys; //smallest of the models
 unityDataGenerator.js --overrideConfigPath="FILEPATH/systemParamters.ini" --outFile=PATH/TO/FILE
 unityDataGenerator.js StudentPersonal --promptLibrary=john-prompts  //use john's prompts
-
 
 ============================================================
 ${errorMessage}
