@@ -21,7 +21,8 @@ const mockRawConfig = {
     outputsPath: '/test/output',
     databaseFilePath: '/test/database.sqlite3',
     retainOnDbBackupPurge: 3,
-    refIdSourceNames: 'XPath'
+    refIdSourceNames: 'XPath',
+    defaultTableName: 'naDataModel'
   }
 };
 

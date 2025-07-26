@@ -315,7 +315,7 @@ async function handleDatabaseExport(commandLineParameters, config) {
 	
 	try {
 		// Get table name from command line or use default from config
-		const tableName = commandLineParameters.qtGetSurePath('values.tableName.0') || config.tableName;
+		const tableName = commandLineParameters.qtGetSurePath('values.tableName.0') || config.defaultTableName;
 		// Get output directory from --outputFile parameter or fileList[0] or default config path
 		const outputDirectory = commandLineParameters.qtGetSurePath('values.outputFile.0') || 
 								commandLineParameters.fileList?.[0] || 

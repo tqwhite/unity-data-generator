@@ -78,24 +78,12 @@ async function initialize() {
   
   // Get configuration specific to this module
   const moduleConfig = getConfig(moduleName) || {};
-  let { outputsPath, databaseFilePath, retainOnDbBackupPurge = 3, refIdSourceNames = 'XPath' } = moduleConfig;
+  let { outputsPath, databaseFilePath, retainOnDbBackupPurge = 3, refIdSourceNames=[], defaultTableName } = moduleConfig;
   
   // If database path is not specified, try to find it
   if (!databaseFilePath) {
-    // Try to get from embedVectorTools config
-    const embedVectorConfig = getConfig('init-ceds-vectors');
-    databaseFilePath = embedVectorConfig ? embedVectorConfig.databaseFilePath : null;
-    
-    if (databaseFilePath) {
-      xLog.status(`Using database path from embedVectorTools: ${databaseFilePath}`);
-    } else {
-      // Use default path if not found
-      databaseFilePath = path.join(applicationBasePath, 'data', 'data.sqlite3');
-      xLog.status(`Using default database path: ${databaseFilePath}`);
-      
-      // Ensure directory exists
-      fs.mkdirSync(path.dirname(databaseFilePath), { recursive: true });
-    }
+    xLog.error('No database file path specified in either command line or config');
+    throw 'No database file path specified in either command line or config';
   }
   
   // Check for CLI override of refIdSourceNames
@@ -110,7 +98,7 @@ async function initialize() {
     refIdSourceNames,       // Configurable refId generation
     xLog,                   // Logger
     applicationBasePath,    // Root directory of the application
-    tableName: 'naDataModel' // Default table name for data storage
+    defaultTableName // Configurable default table name for data storage
   };
   
   return {

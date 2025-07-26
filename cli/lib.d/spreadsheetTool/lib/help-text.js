@@ -49,7 +49,7 @@ CONTROLS
 	                    
 	--tableName:        DATABASE: Specify database table name for import/export
 	                    For import: creates table with this name (default: camelCase from filename)
-	                    For export: reads from this table (default: naDataModel)
+	                    For export: reads from this table (default: configured defaultTableName)
 	                    
 	--sheetName:        EXCEL: Specific worksheet name to process (Excel files only)
 	                    If not specified, processes the first worksheet
@@ -114,7 +114,7 @@ COMMON OPERATIONS
 EXAMPLES
 
 	Database Export (Default Operation):
-	spreadsheetTool                                                # Export naDataModel table to files
+	spreadsheetTool                                                # Export default table to files
 	spreadsheetTool --tableName=cedsElements                      # Export CEDS elements to files  
 	spreadsheetTool --tableName=myTable /tmp                      # Export myTable to /tmp directory
 	

@@ -15,6 +15,12 @@ const mockXLog = {
 beforeAll(() => {
   process.global = {
     xLog: mockXLog,
+    getConfig: jest.fn((moduleName) => {
+      if (moduleName === 'dbManager') {
+        return { LEGACY_DEFAULT_TABLE_NAME: 'naDataModel' };
+      }
+      return {};
+    }),
     commandLineParameters: {
       switches: {}
     }
