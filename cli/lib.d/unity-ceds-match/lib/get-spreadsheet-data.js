@@ -11,7 +11,7 @@ const pipeRunner = asynchronousPipePlus.pipeRunner;
 const taskListPlus = asynchronousPipePlus.taskListPlus;
 
 const xlsx = require('xlsx');
-const fs=require('fs');
+const fs = require('fs');
 
 //START OF moduleFunction() ============================================================
 
@@ -20,8 +20,13 @@ const moduleFunction = function (args = {}) {
 
 	const { spreadsheetPath } = getConfig(moduleName); //ignoring thinker specs included in args
 	
-	let targetObjectName = commandLineParameters.qtGetSurePath('values.elements', []).qtLast();
-	targetObjectName=targetObjectName?targetObjectName:commandLineParameters.qtGetSurePath('fileList', []).qtLast();
+
+	let targetObjectName = commandLineParameters
+		.qtGetSurePath('values.elements', [])
+		.qtLast();
+	targetObjectName = targetObjectName
+		? targetObjectName
+		: commandLineParameters.qtGetSurePath('fileList', []).qtLast();
 
 	// ================================================================================
 	// UTILITIES
@@ -36,16 +41,17 @@ const moduleFunction = function (args = {}) {
 	const executeRequest = (args, callback) => {
 		const { UNUSED } = args;
 		const taskList = new taskListPlus();
-		
 
 		// --------------------------------------------------------------------------------
 		// TASKLIST ITEM TEMPLATE
 
 		taskList.push((args, next) => {
 			const { spreadsheetPath } = args;
-		
+			xLog.status(`using spreadsheet: ${spreadsheetPath}1`);
 			if (!fs.existsSync(spreadsheetPath)) {
-				xLog.error(`No specifications found. ${spreadsheetPath} does not exist`);
+				xLog.error(
+					`No specifications found. ${spreadsheetPath} does not exist`,
+				);
 				throw `No specifications found. ${spreadsheetPath} does not exist`;
 			}
 
@@ -61,7 +67,7 @@ const moduleFunction = function (args = {}) {
 			for (let index = 0; index < worksheetNames.length; index++) {
 				const name = worksheetNames[index];
 
-				if (targetObjectName!=name) {
+				if (targetObjectName != name) {
 					continue;
 				}
 
@@ -74,7 +80,11 @@ const moduleFunction = function (args = {}) {
 				);
 			}
 
-			next('', { ...args, wisdom:{elementSpecWorksheetJson} });
+			const sifObjectDefinition = JSON.parse(elementSpecWorksheetJson);
+
+			next('', {
+				sifObjectDefinition,
+			});
 		});
 
 		// --------------------------------------------------------------------------------
@@ -82,11 +92,11 @@ const moduleFunction = function (args = {}) {
 
 		const initialData = {
 			...args,
-			spreadsheetPath
+			spreadsheetPath,
 		};
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
-			const { wisdom } = args;
-			callback(err, { wisdom, args });
+			const { sifObjectDefinition } = args;
+			callback(err, { sifObjectDefinition });
 		});
 	};
 

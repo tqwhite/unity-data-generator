@@ -21,25 +21,19 @@ DESCRIPTION
 
 	unityCedsMatch --elements=ELEMENTNAME [OPTIONS]
 	
-	AI-powered semantic matching system that analyzes Unity/SIF data elements
-	and identifies corresponding CEDS (Common Education Data Standards) elements
-	based on semantic similarity, data types, and educational context.
+	Performs AI-powered semantic matching between Unity/SIF data elements and CEDS 
+	(Common Education Data Standards) definitions. Reads Unity element specifications 
+	from Excel files and generates structured JSON matches with confidence scores.
 	
-	SEMANTIC MATCHING PROCESS:
-	1. ELEMENT ANALYSIS: Extracts Unity element definitions, descriptions, and metadata
-	2. CEDS COMPARISON: Compares against comprehensive CEDS element database  
-	3. AI EVALUATION: Uses advanced AI to assess semantic similarity and context
-	4. CONFIDENCE SCORING: Provides match confidence levels and alternative suggestions
+	Two-stage matching process:
+	1. Semantic similarity search using vectorTools against CEDS embeddings (default)
+	2. AI analysis using educational domain expertise to select optimal matches
 	
-	AI-POWERED RECOMMENDATIONS:
-	The tool employs sophisticated AI reasoning to understand educational data
-	context beyond simple text matching. It considers data types, usage patterns,
-	educational domain knowledge, and semantic relationships to provide accurate
-	CEDS mappings for standards compliance.
+	Alternative AI-only mode (-aiOnly) uses pure reasoning without vector embeddings
+	for comprehensive analysis of complex elements.
 	
-	OUTPUT FORMATS:
-	Generates comprehensive JSON reports with match recommendations, confidence
-	scores, alternative candidates, and detailed analysis for each Unity element.
+	Results can be displayed, saved to JSON files, or persisted to the database 
+	(-loadDatabase) for integration with the web application's voting system.
 
 CONTROLS
 

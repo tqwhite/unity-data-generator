@@ -171,9 +171,10 @@ const moduleFunction = function(args = {}) {
 			thoughtProcessName: 'App_Specific_Thought_Process'
 		});
 
-		const { wisdom: spreadsheetData } = await demoFuncAsync({});
-		const { elementSpecWorksheetJson: spreadSheetJson } = spreadsheetData;
-		const sifObjectDefinition = JSON.parse(spreadSheetJson);
+		const { sifObjectDefinition } = await demoFuncAsync({});
+		xLog.status(`Found ${sifObjectDefinition.length} Unity definitions`);
+		xLog.verbose(`    /'${sifObjectDefinition.map(item=>item.Name).join('\n    /').replace(/\n    $/, '')}`);
+
 		const cedsRecommendationList = [];
 
 		for (const sifElement of sifObjectDefinition) {
