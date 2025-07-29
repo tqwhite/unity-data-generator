@@ -53,7 +53,9 @@ const moduleFunction = function(args = {}) {
             dataProfile,
             sourceTableName,
             sourcePrivateKeyName,
-            sourceEmbeddableContentName
+            sourceEmbeddableContentName,
+            // Verbose tracking parameters
+            collectVerboseData = false
         } = args;
 
         // Get the strategy for this data profile
@@ -85,6 +87,20 @@ const moduleFunction = function(args = {}) {
                 `SELECT rowid as '${sourcePrivateKeyName}', distance FROM ${tableName} WHERE embedding MATCH ? ORDER BY distance LIMIT ${resultCount}`
             )
             .all(new Float32Array(queryEmbedding));
+
+        // Collect verbose data for simple vector (single enriched string)
+        const verboseData = collectVerboseData ? {
+            originalQuery: queryString,
+            enrichedStrings: [{
+                enrichedString: processedQueryString,
+                type: 'processed_query',
+                matches: rows.map(row => ({
+                    sourceRefId: row[sourcePrivateKeyName],
+                    distance: row.distance
+                }))
+            }],
+            queryExpansionAnalysis: []
+        } : null;
 
         // Look up source records and format results
         const scoredResults = [];
@@ -118,6 +134,15 @@ const moduleFunction = function(args = {}) {
         });
 
         xLog.verbose(`Found ${scoredResults.length} matches`);
+        
+        // Return results with optional verbose data
+        if (collectVerboseData) {
+            return {
+                results: scoredResults,
+                verboseData: verboseData
+            };
+        }
+        
         return scoredResults;
     };
 

@@ -274,6 +274,54 @@ const moduleFunction = function(
 		};
 		
 		// ---------------------------------------------------------------------
+		// displayVerboseQueryAnalysis - formats and displays query expansion analysis
+		
+		const displayVerboseQueryAnalysis = (verboseData, xLog) => {
+			if (!verboseData) return;
+			
+			xLog.status('\n╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗');
+			xLog.status('║                                      QUERY EXPANSION ANALYSIS                                         ║');
+			xLog.status('╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝');
+			
+			xLog.status(`├─ Original Query: "${verboseData.originalQuery}"`);
+			xLog.status('│');
+			
+			verboseData.enrichedStrings.forEach((enrichedData, index) => {
+				const isLast = index === verboseData.enrichedStrings.length - 1;
+				const connector = isLast ? '└─' : '├─';
+				
+				xLog.status(`${connector} Enriched String ${index + 1} [${enrichedData.type}]: "${enrichedData.enrichedString}"`);
+				
+				if (enrichedData.matches && enrichedData.matches.length > 0) {
+					enrichedData.matches.forEach((match, matchIndex) => {
+						const isLastMatch = matchIndex === enrichedData.matches.length - 1;
+						const matchConnector = isLast ? '   ' : '│  ';
+						const matchPrefix = isLastMatch ? '└─' : '├─';
+						
+						const distance = match.distance ? match.distance.toFixed(4) : 'N/A';
+						let matchDescription = `[${distance}] RefID: ${match.sourceRefId}`;
+						
+						// Add fact details for atomic results
+						if (match.factType && match.factText) {
+							matchDescription += ` (${match.factType}: "${match.factText}")`;
+						}
+						
+						xLog.status(`${matchConnector} ${matchPrefix} ${matchDescription}`);
+					});
+				} else {
+					const noMatchConnector = isLast ? '   ' : '│  ';
+					xLog.status(`${noMatchConnector} └─ (no matches found)`);
+				}
+				
+				if (!isLast) {
+					xLog.status('│');
+				}
+			});
+			
+			xLog.status('');
+		};
+
+		// ---------------------------------------------------------------------
 		// handleQueryStringCommand - handles vector similarity search queries
 		
 		const handleQueryStringCommand = async (config, openai, vectorDb, xLog, semanticAnalyzer, commandLineParameters) => {
@@ -292,7 +340,10 @@ const moduleFunction = function(
 			xLog.status(`Query: "${queryString}"`);
 			
 			try {
-				const results = await semanticAnalyzer.scoreDistanceResults({
+				// Check if verbose mode is enabled
+				const isVerbose = commandLineParameters.switches.verbose;
+				
+				const scoringResult = await semanticAnalyzer.scoreDistanceResults({
 					queryString,
 					vectorDb,
 					openai,
@@ -301,14 +352,24 @@ const moduleFunction = function(
 					dataProfile,
 					sourceTableName,
 					sourcePrivateKeyName,
-					sourceEmbeddableContentName
+					sourceEmbeddableContentName,
+					collectVerboseData: isVerbose
 				});
+				
+				// Handle both formats (legacy array or new object with verbose data)
+				const results = scoringResult.results || scoringResult;
+				const verboseData = scoringResult.verboseData;
+
+				// Display verbose analysis if requested
+				if (isVerbose && verboseData) {
+					displayVerboseQueryAnalysis(verboseData, xLog);
+				}
 
 				// Format and output results
 				if (commandLineParameters.switches.json) {
 					xLog.result(JSON.stringify(results, '', '\t'));
 				} else {
-					xLog.status(`\n\nFound ${results.length} valid matches`);
+					xLog.status(`\n\nFound ${results.length} valid matches for "${queryString}"`);
 					results.forEach(result => {
 						const distance = result.distance.toFixed(6);
 						const refId = result.record[sourcePrivateKeyName] || '';
@@ -631,6 +692,7 @@ const moduleFunction = function(
 			handleShowProgressCommand,
 			handlePurgeProgressCommand,
 			handleResumeCommand,
+			displayVerboseQueryAnalysis,
 			validateCommandCombinations,
 			dispatchCommands
 		};

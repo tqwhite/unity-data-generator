@@ -64,8 +64,6 @@ const moduleFunction = function(args = {}) {
 
                 // Create embeddings for each string
                 for (const embeddingData of embeddingStrings) {
-console.log(`embeddingData.text=${embeddingData.text}`);
-
                     const response = await openai.embeddings.create({
                         model: 'text-embedding-3-small',
                         input: embeddingData.text

@@ -30,7 +30,9 @@ const moduleFunction = function(args = {}) {
             dataProfile,
             sourceTableName,
             sourcePrivateKeyName,
-            sourceEmbeddableContentName
+            sourceEmbeddableContentName,
+            // Verbose tracking parameters
+            collectVerboseData = false
         } = args;
 
         const atomicTableName = `${tableName}_atomic`;
@@ -62,6 +64,11 @@ const moduleFunction = function(args = {}) {
 
         // Collect matches for each query embedding
         const allMatches = new Map(); // sourceRefId -> match data
+        const verboseData = collectVerboseData ? {
+            originalQuery: queryString,
+            enrichedStrings: [],
+            queryExpansionAnalysis: []
+        } : null;
 
         for (const queryEmb of queryEmbeddings) {
             const queryBuffer = Buffer.from(new Float32Array(queryEmb.embedding).buffer);
@@ -77,6 +84,21 @@ const moduleFunction = function(args = {}) {
             `;
 
             const results = vectorDb.prepare(sql).all(queryBuffer, resultCount * 2);
+
+            // Collect verbose data for this enriched string
+            if (collectVerboseData) {
+                const enrichedStringData = {
+                    enrichedString: queryEmb.text,
+                    type: queryEmb.type,
+                    matches: results.slice(0, Math.min(results.length, resultCount)).map(row => ({
+                        sourceRefId: row.sourceRefId,
+                        factType: row.factType,
+                        factText: row.factText,
+                        distance: row.distance
+                    }))
+                };
+                verboseData.enrichedStrings.push(enrichedStringData);
+            }
 
             // Aggregate by sourceRefId
             results.forEach(row => {
@@ -157,6 +179,15 @@ const moduleFunction = function(args = {}) {
         }
 
         xLog.verbose(`Found ${finalResults.length} matches using atomic scoring`);
+        
+        // Return results with optional verbose data
+        if (collectVerboseData) {
+            return {
+                results: finalResults,
+                verboseData: verboseData
+            };
+        }
+        
         return finalResults;
     };
 
