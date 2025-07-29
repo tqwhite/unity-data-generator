@@ -91,8 +91,7 @@ const moduleFunction = function(
 		
 		const prepareDependencies = (modules) => {
 			const {
-				generateEmbeddings,
-				getClosestRecords,
+				semanticAnalyzer,
 				dropAllVectorTables,
 				showDatabaseStats,
 				executeRebuildWorkflow,
@@ -102,8 +101,7 @@ const moduleFunction = function(
 			} = modules;
 			
 			return {
-				generateEmbeddings,
-				getClosestRecords,
+				semanticAnalyzer,
 				dropAllVectorTables,
 				showDatabaseStats,
 				dbOperations: prepareDatabaseOperations(tableExists, getTableCount),
@@ -169,8 +167,7 @@ const moduleFunction = function(
 		
 		const validateModules = (modules, xLog) => {
 			const requiredModules = [
-				'generateEmbeddings',
-				'getClosestRecords',
+				'semanticAnalyzer',
 				'dropAllVectorTables',
 				'dropProductionVectorTables',
 				'showDatabaseStats',

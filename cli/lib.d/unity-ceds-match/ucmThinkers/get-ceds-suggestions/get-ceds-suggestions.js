@@ -53,8 +53,17 @@ const moduleFunction = function (args = {}) {
 			callback('', { suggestionList });
 		};
 
-		const shellString = `vectorTools --dataProfile=ceds --queryString='${apostropheEscape(elementDefinition.Description)} ${apostropheEscape(elementDefinition.XPath)}'`;
+		// Get semantic mode from command line or use default
+		const { commandLineParameters } = process.global;
+		const semanticAnalysisMode = commandLineParameters.qtGetSurePath('values.semanticAnalysisMode[0]', 'simpleVector');
+		
+		// Build command with mode flag if not default
+		let modeFlag = '';
+		if (semanticAnalysisMode !== 'simpleVector') {
+			modeFlag = ` --semanticAnalysisMode=${semanticAnalysisMode}`;
+		}
 
+		const shellString = `vectorTools --dataProfile=ceds --queryString='${apostropheEscape(elementDefinition.Description)} ${apostropheEscape(elementDefinition.XPath)}'${modeFlag}`;
 
 		exec(shellString, localCallback);
 	};

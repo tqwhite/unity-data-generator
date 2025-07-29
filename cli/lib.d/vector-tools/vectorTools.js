@@ -47,6 +47,9 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'-dropTable',
 		'-showStats',
 		'-rebuildDatabase',
+		'-resume',
+		'-showProgress',
+		'-purgeProgressTable',
 		'-yesAll',
 		'-verbose',
 		'--queryString',
@@ -55,6 +58,8 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'--resultCount',
 		'--targetTableName',
 		'--dataProfile',
+		'--semanticAnalysisMode',
+		'--batchId',
 		'-json'
 	],
 }); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
@@ -65,8 +70,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 
 //HACKERY: from some reason, putting require('generate-embeddings') AFTER this causes sqlite to screw up
 // Note: commandLineParameters will be set by qtools-ai-framework above
-const generateEmbeddings = require('./lib/generate-embeddings');
-const getClosestRecords = require('./lib/get-closest-records');
+const { loadSemanticAnalyzer } = require('./lib/semanticAnalyzers/semantic-analyzer-loader');
 const { dropAllVectorTables, dropProductionVectorTables } = require('./lib/drop-all-vector-tables');
 const { showDatabaseStats } = require('./lib/show-database-stats');
 const vectorConfigHandler = require('./lib/vector-config-handler');
@@ -88,7 +92,7 @@ const { safeInitializeApplication } = applicationInitializer();
 
 const moduleFunction =
 	({ moduleName } = {}) =>
-	({ unused }) => {
+	async ({ unused }) => {
 		const { xLog, getConfig, rawConfig, commandLineParameters } =
 			process.global;
 		
@@ -104,12 +108,18 @@ const moduleFunction =
 		if (!config.isValid) {
 			return {};
 		}
+
+		// ---------------------------------------------------------------------
+		// 1.5. Load semantic analyzer
+		const semanticAnalysisMode = commandLineParameters.qtGetSurePath('values.semanticAnalysisMode[0]', 'simpleVector');
+		const semanticAnalyzer = loadSemanticAnalyzer(semanticAnalysisMode);
+		xLog.status(`Using ${semanticAnalysisMode} semantic analyzer`);
 		
 		// ---------------------------------------------------------------------
 		// 2. Prepare modules for application initializer
+		const progressTracker = require('./lib/progress-tracker')();
 		const modules = {
-			generateEmbeddings,
-			getClosestRecords,
+			semanticAnalyzer,
 			dropAllVectorTables,
 			dropProductionVectorTables,
 			showDatabaseStats,
@@ -117,7 +127,8 @@ const moduleFunction =
 			tableExists,
 			getTableCount,
 			initVectorDatabase,
-			logConfigurationStatus
+			logConfigurationStatus,
+			progressTracker
 		};
 		
 		// ---------------------------------------------------------------------
@@ -134,7 +145,7 @@ const moduleFunction =
 		
 		// ---------------------------------------------------------------------
 		// 5. Dispatch and execute commands
-		const commandResult = dispatchCommands(
+		const commandResult = await dispatchCommands(
 			config,
 			vectorDb,
 			openai,

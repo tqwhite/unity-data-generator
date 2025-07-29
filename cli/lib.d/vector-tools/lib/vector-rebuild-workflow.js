@@ -27,7 +27,7 @@ const moduleFunction = function(
 		// ---------------------------------------------------------------------
 		// executeRebuildWorkflow - complete rebuild workflow with backup and verification
 		
-		const executeRebuildWorkflow = (config, vectorDb, openai, xLog, generateEmbeddings, dbOperations, dropOperations, commandLineParameters, callback) => {
+		const executeRebuildWorkflow = (config, vectorDb, openai, xLog, semanticAnalyzer, dbOperations, dropOperations, commandLineParameters, callback) => {
 			const fs = require('fs');
 			const path = require('path');
 			const { execSync } = require('child_process');
@@ -118,30 +118,51 @@ const moduleFunction = function(
 			// ---------------------------------------------------------------------
 			// generateVectorEmbeddings - generates vector embeddings for new table
 			
-			const generateVectorEmbeddings = (args, next) => {
+			const generateVectorEmbeddings = async (args, next) => {
 				xLog.status('');
 				xLog.status('Step 1: Creating new vector database...');
 				xLog.status('This may take several minutes...');
 				
-				// Convert the async workingFunction to callback style
-				const embeddingPromise = generateEmbeddings({
-					openai,
-					vectorDb,
-				}).workingFunction({
-					sourceTableName,
-					vectorTableName: args.newTableName,
-					sourcePrivateKeyName,
-					sourceEmbeddableContentName,
-				});
-				
-				embeddingPromise
-					.then(() => {
-						xLog.status('Vector generation completed.');
-						next(null, args); // Pass args through to next task
-					})
-					.catch((error) => {
-						next(new Error(`Vector database creation failed: ${error.message}`));
+				try {
+					// Get limit and offset from command line parameters
+					const limit = commandLineParameters.values.limit ? 
+						parseInt(commandLineParameters.values.limit[0], 10) : null;
+					const offset = commandLineParameters.values.offset ? 
+						parseInt(commandLineParameters.values.offset[0], 10) : 0;
+
+					// Build SQL query with limit and offset
+					let sql = `SELECT * FROM ${sourceTableName}`;
+					const params = [];
+					
+					if (limit !== null) {
+						sql += ` LIMIT ? OFFSET ?`;
+						params.push(limit, offset);
+					} else if (offset > 0) {
+						sql += ` OFFSET ?`;
+						params.push(offset);
+					}
+
+					// Get source data for processing
+					const sourceRowList = vectorDb.prepare(sql).all(...params);
+					
+					xLog.status(`Processing ${sourceRowList.length} records from ${sourceTableName}${limit ? ` (LIMIT ${limit} OFFSET ${offset})` : ''}`);
+
+					// Use semantic analyzer to generate vectors
+					await semanticAnalyzer.generateVectors({
+						sourceRowList,
+						sourceEmbeddableContentName,
+						sourcePrivateKeyName,
+						openai,
+						vectorDb,
+						tableName: args.newTableName,
+						dataProfile
 					});
+					
+					xLog.status('Vector generation completed.');
+					next(null, args); // Pass args through to next task
+				} catch (error) {
+					next(new Error(`Vector database creation failed: ${error.message}`));
+				}
 			};
 			
 			// ---------------------------------------------------------------------

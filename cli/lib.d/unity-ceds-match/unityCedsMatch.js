@@ -62,7 +62,8 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'-help',
 		'--elements',
 		'--outFile',
-		'--overrideConfigPath'
+		'--overrideConfigPath',
+		'--semanticAnalysisMode'
 	],
 });
 

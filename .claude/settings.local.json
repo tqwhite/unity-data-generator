@@ -73,7 +73,8 @@
       "Bash(dbSqlUtil:*)",
       "Bash(jedxUtility:*)",
       "Bash(spreadsheetTool --help)",
-      "Bash(rdfTester:*)"
+      "Bash(rdfTester:*)",
+      "Bash(pkill:*)"
     ],
     "deny": []
   }
