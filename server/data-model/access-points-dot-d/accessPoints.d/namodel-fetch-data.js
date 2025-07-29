@@ -22,7 +22,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	// ================================================================================
 	// SERVICE FUNCTION
 
-	const serviceFunction = (refId, callback) => {
+	const serviceFunction = ({refId, semanticAnalysisMode}, callback) => {
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 		});
 
 		taskList.push((args, next) => {
-			const { naModelTable, dataMapping, refId } = args;
+			const { naModelTable, dataMapping, refId, semanticAnalysisMode } = args;
 			const naModelMapper = dataMapping['na-data-model'];
 
 			const localCallback = (err, rawResult = []) => {
@@ -83,7 +83,8 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 					unityCedsMatches.refId as 'unityCedsMatchesRefId'
 				FROM naDataModel 
 				left join _CEDSElements on _CEDSElements.GlobalID=naDataModel.[CEDS ID]
-				left join unityCedsMatches on unityCedsMatches.naDataModelRefId=naDataModel.refId
+				left join unityCedsMatches on unityCedsMatches.naDataModelRefId=naDataModel.refId 
+					${semanticAnalysisMode ? `AND unityCedsMatches.semanticAnalysisMode='${semanticAnalysisMode}'` : ''}
 				left join _CEDSElements as cedsMatches on cedsMatches.GlobalID=unityCedsMatches._CEDSElementsRefId
 				WHERE SheetName = '${refId}'
 			`;
@@ -95,7 +96,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 		// --------------------------------------------------------------------------------
 		// INIT AND EXECUTE THE PIPELINE
 
-		const initialData = { sqlDb, mapper, dataMapping, refId };
+		const initialData = { sqlDb, mapper, dataMapping, refId, semanticAnalysisMode };
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			if (err) {
 				xLog.error(

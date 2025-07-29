@@ -133,6 +133,7 @@ const moduleFunction = function ({
 		taskList.push((args, next) => {
 			const { accessPointsDotD } = args;
 			const refId = xReq.query.refId;
+			const semanticAnalysisMode = xReq.query.semanticAnalysisMode;
 
 			if (!refId) {
 				next('No refId provided (NAMODEL-fetchData-02)', args);
@@ -147,7 +148,7 @@ const moduleFunction = function ({
 				next(err, { ...args, data });
 			};
 
-			accessPointsDotD['namodel-fetch-data'](refId, localCallback);
+			accessPointsDotD['namodel-fetch-data']({refId, semanticAnalysisMode}, localCallback);
 		});
 
 		// INIT AND EXECUTE THE PIPELINE
