@@ -1,5 +1,5 @@
 <template>
-  <div class="system-selection">
+  <div class="roll-the-dice">
     <div class="text-center">
       
       <div class="selection-options mt-8">
@@ -40,6 +40,10 @@ const props = defineProps({
   store: {
     type: Object,
     required: true
+  },
+  selectItem: {
+    type: Function,
+    required: true
   }
 });
 
@@ -74,15 +78,14 @@ const selectRandomItem = async () => {
     const randomIndex = Math.floor(Math.random() * props.store.nameList.length);
     const randomItem = props.store.nameList[randomIndex];
     
-    // Load the selected item data
-    await props.store.fetchData(randomItem.refId);
+    // Use the centralized selectItem function
+    await props.selectItem(randomItem.refId);
     
     // Set sort preference to show CEDS matches first
     props.store.setEvaluationSortPreference('cedsMatchesConfidence', 'desc');
     
-    // Update the selected item and emit
+    // Update the selected item
     selectedItem.value = randomItem;
-    emit('select', randomItem.refId);
     
   } catch (err) {
     console.error('Error selecting random item:', err);
@@ -108,7 +111,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.system-selection {
+.roll-the-dice {
   height: 100%;
   padding: 24px 16px;
   display: flex;

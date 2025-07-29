@@ -50,11 +50,13 @@ export const useCedsStore = defineStore('ceds', {
 			}
 		},
 
-		async fetchData(refId) {
+		async fetchData(refId, options = {}) {
 			if (!refId) {
 				console.error('No refId provided to fetchData');
 				return;
 			}
+			
+			const { semanticAnalysisMode } = options;
 
 			// Import LoginStore to get auth token
 			const { useLoginStore } = await import('@/stores/loginStore');
@@ -67,12 +69,15 @@ export const useCedsStore = defineStore('ceds', {
 			this.isLoading = true;
 			this.error = null;
 			try {
-				const response = await fetch(
-					`/api/ceds/fetchData?refId=${encodeURIComponent(refId)}`,
-					{
-						headers: authHeader,
-					},
-				);
+				// Build URL with optional semantic analysis mode parameter
+				let url = `/api/ceds/fetchData?refId=${encodeURIComponent(refId)}`;
+				if (semanticAnalysisMode) {
+					url += `&semanticAnalysisMode=${encodeURIComponent(semanticAnalysisMode)}`;
+				}
+				
+				const response = await fetch(url, {
+					headers: authHeader,
+				});
 
 				if (!response.ok) {
 					throw new Error(`Failed to fetch CEDS data: ${response.statusText}`);

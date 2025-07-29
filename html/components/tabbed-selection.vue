@@ -1,5 +1,15 @@
 <template>
   <v-card flat class="h-100 selection-card">
+    <!-- Semantic Analysis Mode Selector -->
+    <div class="semantic-mode-container pa-3">
+      <SemanticAnalysisModeSelector 
+        :selectedMode="semanticAnalysisMode"
+        @update:selectedMode="handleModeChange"
+      />
+    </div>
+    
+    <v-divider></v-divider>
+    
     <!-- Tabs for switching between manual and system selection -->
     <v-tabs 
       v-model="activeTab" 
@@ -30,14 +40,16 @@
       <v-window-item value="manual">
         <selection-list 
           :store="store" 
+          :selectItem="selectItem"
           @select="handleSelection"
         />
       </v-window-item>
       
       <!-- System selection tab -->
       <v-window-item value="system">
-        <system-selection
+        <roll-the-dice
           :store="store"
+          :selectItem="selectItem"
           @select="handleSelection"
         />
       </v-window-item>
@@ -48,7 +60,8 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import SelectionList from '@/components/selection-list.vue';
-import SystemSelection from '@/components/system-selection.vue';
+import SystemSelection from '@/components/roll-the-dice.vue';
+import SemanticAnalysisModeSelector from '@/components/tools/semantic-analysis-mode-selector.vue';
 
 // Define props
 const props = defineProps({
@@ -68,6 +81,31 @@ const emit = defineEmits(['select', 'tabChange']);
 // Active tab state - initially set from props or default to "Choose Element"
 const activeTab = ref(props.initialTab);
 
+// Semantic analysis mode state
+const semanticAnalysisMode = ref('simpleVector');
+const currentlySelectedRefId = ref(null);
+
+// Centralized selectItem function - replaces individual implementations in child components
+const selectItem = async (refId) => {
+  console.log('selectItem called with refId:', refId, 'semantic mode:', semanticAnalysisMode.value);
+  currentlySelectedRefId.value = refId;
+  await props.store.fetchData(refId, { semanticAnalysisMode: semanticAnalysisMode.value });
+  emit('select', refId);
+};
+
+// Handle semantic analysis mode changes
+const handleModeChange = async (newMode) => {
+  console.log('handleModeChange called with:', newMode, 'currently selected:', currentlySelectedRefId.value);
+  semanticAnalysisMode.value = newMode;
+  // If an item is currently selected, refresh it with the new mode
+  if (currentlySelectedRefId.value) {
+    console.log('Refreshing item with new mode:', newMode);
+    await selectItem(currentlySelectedRefId.value);
+  } else {
+    console.log('No item currently selected - mode change will apply to next selection');
+  }
+};
+
 // Handle selection from either component
 const handleSelection = (refId) => {
   emit('select', refId);
@@ -81,6 +119,11 @@ watch(activeTab, (newTabValue) => {
 // Watch for changes in the initialTab prop
 watch(() => props.initialTab, (newTabValue) => {
   activeTab.value = newTabValue;
+});
+
+// Watch for changes in semantic analysis mode
+watch(semanticAnalysisMode, (newMode, oldMode) => {
+  console.log('semanticAnalysisMode changed from', oldMode, 'to', newMode);
 });
 
 onMounted(() => {

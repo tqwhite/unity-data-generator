@@ -6,6 +6,10 @@ const props = defineProps({
   store: {
     type: Object,
     required: true
+  },
+  selectItem: {
+    type: Function,
+    required: true
   }
 });
 
@@ -33,11 +37,10 @@ onMounted(async () => {
   }
 });
 
-// Handler for item selection
-const selectItem = async (refId) => {
+// Handler for item selection - now uses the prop function
+const handleItemSelection = async (refId) => {
   selectedRefId.value = refId;
-  await props.store.fetchData(refId);
-  emit('select', refId); // Emit the selected ID to parent
+  await props.selectItem(refId);
 };
 </script>
 
@@ -65,7 +68,7 @@ const selectItem = async (refId) => {
         v-for="item in filteredNameList"
         :key="item.refId"
         :active="selectedRefId === item.refId"
-        @click="selectItem(item.refId)"
+        @click="handleItemSelection(item.refId)"
         density="compact"
         class="py-1"
       >
