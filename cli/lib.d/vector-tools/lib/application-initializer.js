@@ -223,13 +223,6 @@ const moduleFunction = function(
 		};
 
 		return {
-			initializeOpenAI,
-			initializeVectorDatabase,
-			prepareDatabaseOperations,
-			prepareDropOperations,
-			prepareDependencies,
-			initializeApplication,
-			validateModules,
 			safeInitializeApplication
 		};
 	};

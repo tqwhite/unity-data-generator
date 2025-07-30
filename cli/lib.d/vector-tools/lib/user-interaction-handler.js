@@ -325,6 +325,7 @@ const moduleFunction = function(
 		// handleQueryStringCommand - handles vector similarity search queries
 		
 		const handleQueryStringCommand = async (config, openai, vectorDb, xLog, semanticAnalyzer, commandLineParameters) => {
+
 			const { dataProfile, sourceTableName, vectorTableName, sourcePrivateKeyName, sourceEmbeddableContentName } = config;
 			const messages = createUserMessages(xLog);
 			
@@ -680,20 +681,6 @@ const moduleFunction = function(
 		};
 
 		return {
-			createUserMessages,
-			createErrorHandler,
-			executeWithErrorHandling,
-			handleShowStatsCommand,
-			handleDropTableCommand,
-			handleRebuildDatabaseCommand,
-			handleWriteVectorDatabaseCommand,
-			handleWriteVectorDatabaseCommandWithResume,
-			handleQueryStringCommand,
-			handleShowProgressCommand,
-			handlePurgeProgressCommand,
-			handleResumeCommand,
-			displayVerboseQueryAnalysis,
-			validateCommandCombinations,
 			dispatchCommands
 		};
 	};
