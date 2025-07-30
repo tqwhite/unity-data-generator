@@ -71,6 +71,8 @@ function createTableSchema(db) {
         "naDataModelRefId" TEXT,
         "confidence" TEXT,
         "jsonResultString" TEXT,
+        "semanticAnalysisMode" TEXT,
+        "vectorModeVersion" TEXT,
         "createdAt" TEXT,
         "updatedAt" TEXT
       )
@@ -85,10 +87,12 @@ function createTableSchema(db) {
  * Save CEDS match results to the database
  * @param {string} databaseFilePath - Path to the database file
  * @param {Array} matchResults - Array of CEDS match results
+ * @param {Object} options - Options including semanticAnalysisMode and vectorModeVersion
  * @returns {Promise<Object>} Result statistics
  */
-async function saveCedsMatches(databaseFilePath, matchResults) {
+async function saveCedsMatches(databaseFilePath, matchResults, options = {}) {
   const { xLog } = process.global;
+  const { semanticAnalysisMode = 'atomicVector', vectorModeVersion = 'v1.0' } = options;
   const db = initDatabase(databaseFilePath);
   const stats = { total: matchResults.length, inserted: 0, updated: 0, skipped: 0 };
   
@@ -105,18 +109,18 @@ async function saveCedsMatches(databaseFilePath, matchResults) {
       // Prepare statements
       const insertStatement = db.prepare(`
         INSERT INTO "${CEDS_MATCHES_TABLE}" 
-        (refId, _CEDSElementsRefId, naDataModelRefId, confidence, jsonResultString, createdAt, updatedAt)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        (refId, _CEDSElementsRefId, naDataModelRefId, confidence, jsonResultString, semanticAnalysisMode, vectorModeVersion, createdAt, updatedAt)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
       `);
       
       const updateStatement = db.prepare(`
         UPDATE "${CEDS_MATCHES_TABLE}" 
-        SET _CEDSElementsRefId = ?, confidence = ?, jsonResultString = ?, updatedAt = ?
-        WHERE naDataModelRefId = ?
+        SET _CEDSElementsRefId = ?, confidence = ?, jsonResultString = ?, vectorModeVersion = ?, updatedAt = ?
+        WHERE naDataModelRefId = ? AND semanticAnalysisMode = ?
       `);
       
       const checkExistsStatement = db.prepare(`
-        SELECT refId FROM "${CEDS_MATCHES_TABLE}" WHERE naDataModelRefId = ?
+        SELECT refId FROM "${CEDS_MATCHES_TABLE}" WHERE naDataModelRefId = ? AND semanticAnalysisMode = ?
       `);
       
       // Process each match result
@@ -136,19 +140,19 @@ async function saveCedsMatches(databaseFilePath, matchResults) {
         // Generate naDataModelRefId from XPath
         const naDataModelRefId = generateRefIdFromXPath(xpath);
         
-        // Check if record already exists
-        const existingRecord = checkExistsStatement.get(naDataModelRefId);
+        // Check if record already exists for this naDataModelRefId + semanticAnalysisMode combination
+        const existingRecord = checkExistsStatement.get(naDataModelRefId, semanticAnalysisMode);
         
         if (existingRecord) {
           // Update existing record
-          updateStatement.run(cedsId, confidence, jsonString, currentTimestamp, naDataModelRefId);
+          updateStatement.run(cedsId, confidence, jsonString, vectorModeVersion, currentTimestamp, naDataModelRefId, semanticAnalysisMode);
           stats.updated++;
         } else {
           // Generate a unique refId for this match
           const refId = crypto.randomBytes(8).toString('hex');
           
           // Insert new record
-          insertStatement.run(refId, cedsId, naDataModelRefId, confidence, jsonString, currentTimestamp, currentTimestamp);
+          insertStatement.run(refId, cedsId, naDataModelRefId, confidence, jsonString, semanticAnalysisMode, vectorModeVersion, currentTimestamp, currentTimestamp);
           stats.inserted++;
         }
       }
@@ -157,7 +161,7 @@ async function saveCedsMatches(databaseFilePath, matchResults) {
     // Execute the transaction
     transaction();
     
-    xLog.status(`CEDS matches database updated: ${stats.inserted} inserted, ${stats.updated} updated, ${stats.skipped} skipped`);
+    xLog.status(`CEDS matches database updated: ${stats.inserted} inserted, ${stats.updated} updated, ${stats.skipped} found no match`);
     return stats;
     
   } finally {

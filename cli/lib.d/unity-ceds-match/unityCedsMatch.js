@@ -71,6 +71,9 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 
 const moduleFunction = function(args = {}) {
 	return async ({ unused } = {}) => {
+		// Start process timing
+		const processStartTime = Date.now();
+		
 		// =============================================================================
 		// INITIALIZATION
 
@@ -245,11 +248,34 @@ const moduleFunction = function(args = {}) {
 		if (loadDatabase && cedsRecommendationList.length > 0) {
 			try {
 				xLog.status('Saving CEDS match results to database...');
-				const stats = await dbSaver.saveCedsMatches(databaseFilePath, cedsRecommendationList);
+				
+				// Get semantic analysis mode from command line parameters
+				const semanticAnalysisMode = commandLineParameters.qtGetSurePath('values.semanticAnalysisMode[0]', 'atomicVector');
+				
+				const stats = await dbSaver.saveCedsMatches(databaseFilePath, cedsRecommendationList, {
+					semanticAnalysisMode,
+					vectorModeVersion: 'v1.0'
+				});
 				xLog.status(`Database save complete: ${stats.inserted} inserted, ${stats.updated} updated, ${stats.skipped} skipped (out of ${stats.total} total)`);
 			} catch (err) {
 				xLog.error(`Database save error: ${err.message}`);
 			}
+		}
+		
+		// Calculate and log elapsed time
+		const processEndTime = Date.now();
+		const elapsedSeconds = (processEndTime - processStartTime) / 1000;
+		const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+		const remainingSeconds = (elapsedSeconds % 60).toFixed(1);
+		
+		xLog.status(`\n=== PROCESS COMPLETE ===`);
+		xLog.status(`Total elapsed time: ${elapsedMinutes}m ${remainingSeconds}s`);
+		xLog.status(`Elements processed: ${cedsRecommendationList.length}`);
+		if (loadDatabase) {
+			const stats = cedsRecommendationList.length > 0 ? 
+				{ inserted: 'see above', updated: 'see above', total: cedsRecommendationList.length } : 
+				{ inserted: 0, updated: 0, total: 0 };
+			xLog.status(`Database records: ${stats.inserted} inserted, ${stats.updated} updated`);
 		}
 	};
 };

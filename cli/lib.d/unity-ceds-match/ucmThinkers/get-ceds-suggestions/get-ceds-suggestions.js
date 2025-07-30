@@ -55,7 +55,8 @@ const moduleFunction = function (args = {}) {
 
 		// Get semantic mode from command line or use default
 		const { commandLineParameters } = process.global;
-		const semanticAnalysisMode = commandLineParameters.qtGetSurePath('values.semanticAnalysisMode[0]', 'simpleVector');
+		const semanticAnalysisMode = commandLineParameters.qtGetSurePath('values.semanticAnalysisMode[0]', 'atomicVector');
+		xLog.status(`TODO: move hard coded default, atomicVector, to config`);
 		
 		// Build command with mode flag if not default
 		let modeFlag = '';
