@@ -72,7 +72,8 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 	// ---------------------------------------------------------------------
 	// initializeDatabase - initializes vector database with error handling
 	
-	const initializeDatabase = (databaseFilePath, vectorTableName) => {
+	const initializeDatabase = ({databaseFilePath, vectorTableName}) => {
+
 		try {
 			const vectorDb = initVectorDatabase(
 				databaseFilePath,

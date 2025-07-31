@@ -29,7 +29,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			`Starting Complete Database Rebuild for ${dataProfile.toUpperCase()} profile...`,
 		);
 		
-		console.log(`got to replace database, not doing it today for debug. Exiting`);
+		console.log(`THIS WAS NEVER IMPLEMENTED. Exiting`);
 		
 console.log(' Debug Exit [replace-existing-database.js.]', {depth:4, colors:true}); process.exit(); //tqDebug
 

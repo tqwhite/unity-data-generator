@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 'use strict';
 
-// Suppress punycode deprecation warning
 process.noDeprecation = true;
 
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
@@ -12,7 +11,6 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 
-// findProjectRoot - locate system directory
 const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	__dirname.replace(
 		new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
@@ -22,7 +20,6 @@ const applicationBasePath = findProjectRoot();
 
 const helpText = require('./lib/help-text')({});
 
-// Initialize AI framework with command line controls
 const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
@@ -50,53 +47,43 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	],
 });
 
-// =====================================================================
-// MODULE IMPORTS (AFTER JINA INITIALIZATION)
-// =====================================================================
-
 const databaseOperationsGen = require('./lib/database-operations');
 const aiOperationsGen = require('./lib/ai-operations');
 const { prettyPrintAtomicExpansion } =
 	require('./lib/pretty-print-atomic-expansion')({});
 const { queryVectorDatabase } = require('./lib/query-vector-database')({});
-const { reorganizeConfig } = require('./lib/assemble-config')({});
+const { reorganizeValidateConfig } = require('./lib/assemble-config')({});
 const { createVectorDatabase } = require('./lib/create-vector-database')({});
 const { replaceExistingDatabase } = require('./lib/replace-existing-database')(
 	{},
 );
 
-// ---------------------------------------------------------------------
-// moduleFunction - main application entry point and execution pipeline
+const semanticAnalyzerLibrary =
+	require('./lib/semanticAnalyzers/semantic-analyzer-library')({});
 
+//START OF moduleFunction() ============================================================
 const moduleFunction =
 	({ moduleName } = {}) =>
 	async ({ unused }) => {
 		const { xLog, getConfig, rawConfig, commandLineParameters } =
 			process.global;
+		
 
-		const databaseOperations = databaseOperationsGen({});
-		const { showDatabaseStats, dropAllVectorTables, validateAndExecuteDropTable } = databaseOperations;
+		const config = reorganizeValidateConfig(getConfig(moduleName));
 
 		const { openai } = aiOperationsGen({});
+		
+		const semanticAnalyzer = semanticAnalyzerLibrary.getAnalyzer(); // gets --semanticAnalysisMode from command line
 
-		// Initialize semantic analyzer library
-		const semanticAnalyzerLibrary =
-			require('./lib/semanticAnalyzers/semantic-analyzer-library')({});
+		const databaseOperations = databaseOperationsGen({});
 
-		const semanticAnalysisMode = commandLineParameters.qtGetSurePath(
-			'values.semanticAnalysisMode[0]',
-			'simpleVector',
+		const vectorDb = databaseOperations.initializeDatabase(
+			config.qtSelectProperties(['databaseFilePath', 'vectorTableName']),
 		);
-		const semanticAnalyzer = semanticAnalyzerLibrary.getAnalyzer({
-			semanticAnalysisMode,
-			xLog,
-		});
 
-		// Extract command line switches and values
 		const switches = commandLineParameters.switches;
 		const values = commandLineParameters.values;
 
-		// Check for conflicting operations
 		if (switches.showStats && switches.rebuildDatabase) {
 			xLog.error(
 				`Cannot do (switches.showStats && switches.rebuildDatabase. Exiting.}`,
@@ -104,107 +91,37 @@ const moduleFunction =
 			process.exit(1);
 		}
 
-		// =====================================================================
-		// MAIN APPLICATION EXECUTION PIPELINE
-		// =====================================================================
-
-		// ---------------------------------------------------------------------
-		// 1. Get and validate configuration
-
-		const config = reorganizeConfig(getConfig(moduleName));
-		if (!config.isValid) {
-			return {};
-		}
-
-		// ---------------------------------------------------------------------
-		// 2. Prepare modules for application initializer
 		const progressTracker = require('./lib/progress-tracker')({});
 
-		// ---------------------------------------------------------------------
-		// 3. Initialize database
-		const vectorDb = databaseOperations.initializeDatabase(
-			config.databaseFilePath,
-			config.vectorTableName,
-		);
+		// ====================================================================================
+		// MANAGEMENT UTILITY OPERATIONS
 
-		// ---------------------------------------------------------------------
-		// 4. Initialize OpenAI client
-
-		// ---------------------------------------------------------------------
-		// 5. Dispatch and execute commands
-
-		// Validate queryString requirements
-		if (values.queryString && !values.queryString.qtLast()) {
-			xLog.error('Query string cannot be empty');
-			return { success: false, shouldExit: true };
-		}
-
-		// Handle commands in priority order
 		if (switches.showStats) {
-			showDatabaseStats(vectorDb);
+			databaseOperations.showDatabaseStats(vectorDb);
 		}
 
-		// Progress tracking commands
 		if (switches.showProgress) {
 			progressTracker.showProgress(vectorDb);
 		}
 
-		// Resume incomplete batch operations
-		if (switches.resume) {
-			return await createVectorDatabase(progressTracker)(
-				config,
-				openai,
-				vectorDb,
-				semanticAnalyzer,
-			);
-		}
-
-		// Drop specific vector tables
 		if (switches.dropTable) {
-			validateAndExecuteDropTable(config, vectorDb, switches);
-
-			// Only exit if we're not also writing to the database
-			const shouldExit = !switches.writeVectorDatabase;
-			if (shouldExit) return { success: true, shouldExit: true };
+			databaseOperations.validateAndExecuteDropTable(config, vectorDb, switches);
 		}
 
-		// Handle purge progress (only with write operations)
 		if (switches.purgeProgressTable) {
-			if (!switches.writeVectorDatabase && !switches.rebuildDatabase) {
-				xLog.error(
-					'-purgeProgressTable can only be used with -writeVectorDatabase or -rebuildDatabase',
-				);
-				return { success: false, shouldExit: true };
-			}
-
-			try {
-				progressTracker.purgeProgressTable(vectorDb, config.dataProfile);
-				xLog.status(`Ready to start fresh for ${config.dataProfile} profile`);
-			} catch (error) {
-				xLog.error(`Purge progress table failed: ${error.message}`);
-				return { success: false, shouldExit: true };
-			}
+			progressTracker.validateAndExecutePurgeProgressTable({
+				vectorDb,
+				config
+			});
 		}
 
-		// Execute complete database rebuild workflow
-		if (switches.rebuildDatabase) {
-			const {
-				dataProfile,
-				sourceTableName,
-				sourcePrivateKeyName,
-				sourceEmbeddableContentName,
-				vectorTableName,
-			} = config;
+		// ====================================================================================
+		// DATABASE UPDATTE FUNCTIONS
 
-			// Execute rebuild workflow
+		if (switches.rebuildDatabase) {
+
 			replaceExistingDatabase(
-				{
-					dataProfile,
-					sourceTableName,
-					sourcePrivateKeyName,
-					sourceEmbeddableContentName,
-					vectorTableName,
-				},
+				config,
 				vectorDb,
 				openai,
 				semanticAnalyzer,
@@ -218,11 +135,17 @@ const moduleFunction =
 					}
 				},
 			);
-
-			return { success: true, shouldExit: true };
 		}
 
-		// Generate new vectors for database
+		if (switches.resume) {
+			return await createVectorDatabase(progressTracker)(
+				config,
+				openai,
+				vectorDb,
+				semanticAnalyzer,
+			);
+		}
+
 		if (switches.writeVectorDatabase || values.writeVectorDatabase) {
 			return await createVectorDatabase(progressTracker)(
 				config,
@@ -232,7 +155,9 @@ const moduleFunction =
 			);
 		}
 
-		// Execute semantic similarity query
+		// ====================================================================================
+		// LOOKUP BY VECTOR FUNCTION
+
 		if (values.queryString) {
 			return await queryVectorDatabase(prettyPrintAtomicExpansion)(
 				config,
@@ -242,7 +167,6 @@ const moduleFunction =
 			);
 		}
 
-		// No commands specified - show help or default behavior
 		xLog.status(
 			'No operation specified. Use --help to see available commands.',
 		);

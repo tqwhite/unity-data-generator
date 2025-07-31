@@ -6,12 +6,12 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 	const { xLog, getConfig, rawConfig, commandLineParameters, projectRoot } = process.global;
 	const moduleConfig = getConfig(moduleName);
 
-	const reorganizeConfig = (vectorToolsConfig) => {
+	const reorganizeValidateConfig = (vectorToolsConfig) => {
 		
 		// Check if initialization is complete
 		if (!getConfig) {
 			console.error('Error: qtools-ai-framework not properly initialized. getConfig is not available.');
-			return { isValid: false };
+			process.exit(1)
 		}
 		
 		const { databaseFilePath, openAiApiKey, defaultTargetTableName } = vectorToolsConfig;
@@ -31,7 +31,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		if (!profileSettings) {
 			xLog.error(`Unknown data profile: '${dataProfile}'`);
 			xLog.error('Available profiles: sif, ceds');
-			return { isValid: false };
+			process.exit(1)
 		}
 		
 		const sourceTableName = profileSettings.sourceTableName;
@@ -48,7 +48,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			xLog.error(`Invalid or missing configuration for data profile '${dataProfile}'`);
 			xLog.error('Required settings: sourceTableName, sourcePrivateKeyName, sourceEmbeddableContentName');
 			xLog.error(`Found: sourceTableName='${sourceTableName}', sourcePrivateKeyName='${sourcePrivateKeyName}', sourceEmbeddableContentName='${sourceEmbeddableContentNameStr}'`);
-			return { isValid: false };
+			process.exit(1)
 		}
 		
 		// Determine target table name (custom > profile default > global default)
@@ -59,7 +59,6 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		
 		// Return complete configuration
 		return {
-			isValid: true,
 			dataProfile,
 			databaseFilePath,
 			openAiApiKey,
@@ -72,7 +71,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		};
 	};
 
-	return { reorganizeConfig };
+	return { reorganizeValidateConfig };
 };
 
 module.exports = moduleFunction({ moduleName }); //returns initialized moduleFunction
