@@ -34,7 +34,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 				xLog,
 			);
 			
-			xLog.verbose('Vector database initialized successfully');
+			xLog.verbose(`Using ${databaseFilePath}`);
 			return vectorDb;
 		} catch (error) {
 			xLog.error(`Failed to initialize vector database: ${error.message}`);

@@ -12,26 +12,12 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 
-// =====================================================================
-// PROJECT ROOT CONFIGURATION
-// =====================================================================
-
-// ---------------------------------------------------------------------
-// findProjectRoot - locates the project root directory by searching for rootFolderName
-
 const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	__dirname.replace(
 		new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
 		'$1',
 	);
 const applicationBasePath = findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
-
-// =====================================================================
-// INITIALIZE QTOOLS-AI-FRAMEWORK FIRST
-// =====================================================================
-
-// ---------------------------------------------------------------------
-// helpText - application-specific help integration
 
 const helpText = require('./lib/help-text');
 
@@ -71,10 +57,8 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 const databaseOperationsGen = require('./lib/database-operations');
 const aiOperationsGen = require('./lib/ai-operations');
 
-
-//HACKERY: from some reason, putting require('generate-embeddings') AFTER this causes sqlite to screw up
-// Note: commandLineParameters will be set by qtools-ai-framework above
 const vectorConfigHandler = require('./lib/vector-config-handler');
+
 const vectorRebuildWorkflow = require('./lib/vector-rebuild-workflow')();
 const { executeRebuildWorkflow } = vectorRebuildWorkflow();
 
@@ -88,7 +72,6 @@ const moduleFunction =
 			process.global;
 
 		const databaseOperations = databaseOperationsGen({});
-		
 
 		const { openai } = aiOperationsGen({});
 
@@ -101,15 +84,12 @@ const moduleFunction =
 		const values = commandLineParameters.values;
 
 		// Check for conflicting operations
-		const mutuallyExclusiveCommands = ['showStats', 'rebuildDatabase'];
-		const activeExclusiveCommands = mutuallyExclusiveCommands.filter(
-			(cmd) => switches[cmd],
-		);
-		if (activeExclusiveCommands.length > 1) {
+
+		if (switches.showStats && switches.rebuildDatabase) {
 			xLog.error(
-				`Cannot combine these operations: ${activeExclusiveCommands.join(', ')}`,
+				`Cannot do (switches.showStats && switches.rebuildDatabase. Exiting.}`,
 			);
-			return { success: false, shouldExit: true };
+			process.exit(1);
 		}
 
 		// Helper function for vector generation

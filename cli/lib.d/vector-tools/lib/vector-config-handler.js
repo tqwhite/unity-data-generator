@@ -44,12 +44,13 @@ const moduleFunction =
 				return { isValid: false };
 			}
 			
-			const config = getConfig(configModuleName);
+			const config = getConfig(moduleName);
+
 			const { databaseFilePath, openAiApiKey, defaultTargetTableName } = config;
 			
 			// Get and normalize data profile parameter
 			const dataProfileRaw = commandLineParameters.values.dataProfile;
-			const dataProfile = Array.isArray(dataProfileRaw) ? dataProfileRaw[0] : dataProfileRaw;
+			const dataProfile = commandLineParameters.values.dataProfile[0];
 			
 			// Validate data profile is provided
 			if (!dataProfile) {
@@ -75,14 +76,6 @@ const moduleFunction =
 			// Parse comma-separated embeddable content names
 			const sourceEmbeddableContentName = sourceEmbeddableContentNameStr ? 
 				sourceEmbeddableContentNameStr.split(',').map(s => s.trim()) : [];
-			
-			// Validate required profile configuration
-			if (!sourceTableName || !sourcePrivateKeyName || !sourceEmbeddableContentName.length) {
-				xLog.error(`Invalid or missing configuration for data profile '${dataProfile}'`);
-				xLog.error('Required settings: sourceTableName, sourcePrivateKeyName, sourceEmbeddableContentName');
-				xLog.error(`Found: sourceTableName='${sourceTableName}', sourcePrivateKeyName='${sourcePrivateKeyName}', sourceEmbeddableContentName='${sourceEmbeddableContentNameStr}'`);
-				return { isValid: false };
-			}
 			
 			// Determine target table name (custom > profile default > global default)
 			const vectorTableName =
@@ -110,20 +103,7 @@ const moduleFunction =
 		
 		const logConfigurationStatus = (config) => {
 			const { xLog } = process.global;
-			if (!config.isValid) return;
-			
-			xLog.status(`Database file path: ${config.databaseFilePath}`);
-			xLog.status(`Data profile: ${config.dataProfile}`);
-			
-			if (config.isCustomTargetTable) {
-				xLog.status(`Target table: ${config.vectorTableName} (custom)`);
-			} else {
-				xLog.status(`Target table: ${config.vectorTableName}`);
-			}
-			
-			xLog.verbose(`Source table: ${config.sourceTableName}`);
-			xLog.verbose(`Source key: ${config.sourcePrivateKeyName}`);
-			xLog.verbose(`Embeddable content: ${config.sourceEmbeddableContentName.join(', ')}`);
+			xLog.status(`No longer wanted`);
 		};
 
 		return { 

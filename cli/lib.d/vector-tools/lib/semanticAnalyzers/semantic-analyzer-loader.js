@@ -6,34 +6,30 @@ const path = require('path');
 const moduleFunction = function (args = {}) {
 	const { xLog, getConfig, commandLineParameters } = process.global;
 
-	const loadSemanticAnalyzer = (analyzerName) => {
-		const validAnalyzers = ['simpleVector', 'atomicVector'];
+	const semanticAnalysisMode = commandLineParameters.qtGetSurePath(
+		'values.semanticAnalysisMode[0]',
+	);
 
-		// Map command line names to directory names
-		const analyzerMap = {
-			simpleVector: 'simple-vector',
-			atomicVector: 'atomic-vector',
-		};
-
-		if (!validAnalyzers.includes(analyzerName)) {
-			throw `Invalid semantic analyzer: ${analyzerName}`;
-		}
-
-		const analyserName = analyzerMap[analyzerName];
-
-		const analyzerModule = require(`./${analyserName}`);
-		const analyzer = analyzerModule();
-
-		return analyzer;
-	};
-		const semanticAnalysisMode = commandLineParameters.qtGetSurePath(
-			'values.semanticAnalysisMode[0]',
-			'simpleVector',
+	const validAnalyzers = ['simpleVector', 'atomicVector'];
+	if (!validAnalyzers.includes(semanticAnalysisMode)) {
+		xLog.error(
+			`Invalid semantic analyzer: ${semanticAnalysisMode ? semanticAnalysisMode : 'MISSING VALUE'}`,
 		);
-		const semanticAnalyzer = loadSemanticAnalyzer(semanticAnalysisMode);
-		xLog.status(`Using ${semanticAnalysisMode} semantic analyzer`);
+		process.exit(1);
+	}
 
-	return { loadSemanticAnalyzer, semanticAnalyzer };
+	// Map command line names to directory names
+	const analyzerMap = {
+		simpleVector: 'simple-vector',
+		atomicVector: 'atomic-vector',
+	};
+
+	const analyserName = analyzerMap[semanticAnalysisMode];
+	const analyzerModule = require(`./${analyserName}`);
+	const semanticAnalyzer = analyzerModule();
+	xLog.status(`Using ${semanticAnalysisMode} semantic analyzer`);
+
+	return { semanticAnalyzer };
 };
 
 module.exports = moduleFunction();
