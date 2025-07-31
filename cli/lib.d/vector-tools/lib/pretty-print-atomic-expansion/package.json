@@ -1,0 +1,8 @@
+{
+  "name": "pretty-print-atomic-expansion",
+  "version": "1.0.0",
+  "description": "Pretty prints atomic vector query expansion analysis",
+  "main": "pretty-print-atomic-expansion.js",
+  "author": "TQ",
+  "license": "UNLICENSED"
+}

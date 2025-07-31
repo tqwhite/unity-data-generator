@@ -1,0 +1,8 @@
+{
+  "name": "assemble-config",
+  "version": "1.0.0",
+  "description": "Assembles and validates data profile configuration from command line and config files",
+  "main": "assemble-config.js",
+  "author": "TQ",
+  "license": "UNLICENSED"
+}

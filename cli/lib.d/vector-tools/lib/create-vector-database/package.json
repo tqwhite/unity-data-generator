@@ -1,0 +1,8 @@
+{
+  "name": "create-vector-database",
+  "version": "1.0.0",
+  "description": "Creates vector database with progress tracking and resume capabilities",
+  "main": "create-vector-database.js",
+  "author": "TQ",
+  "license": "UNLICENSED"
+}

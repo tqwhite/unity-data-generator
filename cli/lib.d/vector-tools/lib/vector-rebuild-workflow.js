@@ -33,6 +33,10 @@ const moduleFunction = function(
 			const { execSync } = require('child_process');
 			const readline = require('readline');
 			
+			xLog.status(
+				`Starting Complete Database Rebuild for ${dataProfile.toUpperCase()} profile...`,
+			);
+			
 			const asynchronousPipePlus = require('qtools-asynchronous-pipe-plus')();
 			const pipeRunner = asynchronousPipePlus.pipeRunner;
 			const taskListPlus = asynchronousPipePlus.taskListPlus;

@@ -1,0 +1,8 @@
+{
+  "name": "query-vector-database",
+  "version": "1.0.0",
+  "description": "Queries vector database for semantic similarity search",
+  "main": "query-vector-database.js",
+  "author": "TQ",
+  "license": "UNLICENSED"
+}

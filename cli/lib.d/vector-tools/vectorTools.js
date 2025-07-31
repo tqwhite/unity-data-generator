@@ -56,6 +56,10 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 
 const databaseOperationsGen = require('./lib/database-operations');
 const aiOperationsGen = require('./lib/ai-operations');
+const { prettyPrintAtomicExpansion } = require('./lib/pretty-print-atomic-expansion')({});
+const { queryVectorDatabase } = require('./lib/query-vector-database')({});
+const { assembleConfig } = require('./lib/assemble-config')({});
+const { createVectorDatabase } = require('./lib/create-vector-database')({});
 
 const vectorRebuildWorkflow = require('./lib/vector-rebuild-workflow')();
 const { executeRebuildWorkflow } = vectorRebuildWorkflow();
@@ -90,376 +94,19 @@ const moduleFunction =
 			process.exit(1);
 		}
 
-		// Helper function for vector generation
-		const handleVectorGeneration = async (
-			config,
-			openai,
-			vectorDb,
-			xLog,
-			semanticAnalyzer,
-			commandLineParameters,
-			resumeBatch = null,
-		) => {
-			const {
-				dataProfile,
-				sourceTableName,
-				vectorTableName,
-				sourcePrivateKeyName,
-				sourceEmbeddableContentName,
-			} = config;
 
-			// Determine actual table name and semantic mode
-			const semanticAnalysisMode = commandLineParameters.qtGetSurePath(
-				'values.semanticAnalysisMode[0]',
-				'simpleVector',
-			);
-			const actualTableName =
-				semanticAnalysisMode === 'atomicVector'
-					? `${vectorTableName}_atomic`
-					: vectorTableName;
 
-			try {
-				let sourceRowList,
-					batchId,
-					processedKeys = [];
-
-				if (resumeBatch) {
-					// Resume mode - get unprocessed records
-					batchId = resumeBatch.batch_id;
-					processedKeys = progressTracker.getProcessedKeys(vectorDb, batchId);
-
-					xLog.status(
-						`Starting Resuming Vector Database Generation for ${dataProfile.toUpperCase()} profile...`,
-					);
-					if (actualTableName) {
-						xLog.status(`Target table: "${actualTableName}"`);
-					}
-					xLog.status(`Resuming batch: ${batchId}`);
-					xLog.status(`Already processed: ${processedKeys.length} records`);
-
-					// Get remaining records to process
-					const allRecords = vectorDb
-						.prepare(`SELECT * FROM ${sourceTableName}`)
-						.all();
-					sourceRowList = allRecords.filter((record) => {
-						const keyValue = record[sourcePrivateKeyName];
-						return !processedKeys.includes(keyValue.toString());
-					});
-
-					xLog.status(`Remaining to process: ${sourceRowList.length} records`);
-				} else {
-					// New batch mode - get records based on limit/offset
-					xLog.status(
-						`Starting Vector Database Generation for ${dataProfile.toUpperCase()} profile...`,
-					);
-					if (actualTableName) {
-						xLog.status(`Target table: "${actualTableName}"`);
-					}
-
-					const limit = commandLineParameters.values.limit
-						? parseInt(commandLineParameters.values.limit[0], 10)
-						: null;
-					const offset = commandLineParameters.values.offset
-						? parseInt(commandLineParameters.values.offset[0], 10)
-						: 0;
-
-					// Build SQL query with limit and offset
-					let sql = `SELECT * FROM ${sourceTableName}`;
-					const params = [];
-
-					if (limit !== null) {
-						sql += ` LIMIT ? OFFSET ?`;
-						params.push(limit, offset);
-					} else if (offset > 0) {
-						sql += ` OFFSET ?`;
-						params.push(offset);
-					}
-
-					// Get source data for processing
-					sourceRowList = vectorDb.prepare(sql).all(...params);
-
-					// Create new progress batch
-					batchId = progressTracker.createBatch(
-						vectorDb,
-						config,
-						semanticAnalysisMode,
-						sourceRowList.length,
-						{
-							limit,
-							offset,
-							command: 'writeVectorDatabase',
-							semanticAnalysisMode,
-						},
-					);
-				}
-
-				xLog.status(
-					`Processing ${sourceRowList.length} records from ${sourceTableName}${resumeBatch ? ' (RESUME)' : ''}`,
-				);
-
-				// Generate vectors with progress tracking
-				await semanticAnalyzer.generateVectors({
-					sourceRowList,
-					sourceEmbeddableContentName,
-					sourcePrivateKeyName,
-					openai,
-					vectorDb,
-					tableName: vectorTableName,
-					dataProfile,
-					// Progress tracking parameters
-					batchId,
-					progressTracker,
-					alreadyProcessedCount: processedKeys.length,
-				});
-
-				// Mark batch as completed
-				progressTracker.completeBatch(vectorDb, batchId);
-
-				return { success: true, shouldExit: true };
-			} catch (error) {
-				xLog.error(`Vector database generation failed: ${error.message}`);
-				return { success: false, shouldExit: true };
-			}
-		};
-
-		// Helper function for query handling
-		const handleQueryCommand = async (
-			config,
-			openai,
-			vectorDb,
-			xLog,
-			semanticAnalyzer,
-			commandLineParameters,
-		) => {
-			const {
-				dataProfile,
-				sourceTableName,
-				vectorTableName,
-				sourcePrivateKeyName,
-				sourceEmbeddableContentName,
-			} = config;
-
-			const queryString = commandLineParameters.values.queryString.qtLast();
-			const resultCount = commandLineParameters.values.resultCount
-				? parseInt(commandLineParameters.values.resultCount, 10)
-				: 5;
-
-			// Determine actual table name based on semantic analyzer mode
-			const semanticAnalysisMode = commandLineParameters.qtGetSurePath(
-				'values.semanticAnalysisMode[0]',
-				'simpleVector',
-			);
-			const actualTableName =
-				semanticAnalysisMode === 'atomicVector'
-					? `${vectorTableName}_atomic`
-					: vectorTableName;
-
-			xLog.status(
-				`Starting Vector Similarity Search for ${dataProfile.toUpperCase()} profile...`,
-			);
-			if (actualTableName) {
-				xLog.status(`Target table: "${actualTableName}"`);
-			}
-			xLog.status(`Query: "${queryString}"`);
-
-			try {
-				// Check if verbose mode is enabled
-				const isVerbose = commandLineParameters.switches.verbose;
-
-				const scoringResult = await semanticAnalyzer.scoreDistanceResults({
-					queryString,
-					vectorDb,
-					openai,
-					tableName: vectorTableName,
-					resultCount,
-					dataProfile,
-					sourceTableName,
-					sourcePrivateKeyName,
-					sourceEmbeddableContentName,
-					collectVerboseData: isVerbose,
-				});
-
-				// Handle both formats (legacy array or new object with verbose data)
-				const results = scoringResult.results || scoringResult;
-				const verboseData = scoringResult.verboseData;
-
-				// Display verbose analysis if requested
-				if (isVerbose && verboseData) {
-					displayVerboseQueryAnalysis(verboseData, xLog);
-				}
-
-				// Format and output results
-				if (commandLineParameters.switches.json) {
-					xLog.result(JSON.stringify(results, '', '\t'));
-				} else {
-					xLog.status(
-						`\n\nFound ${results.length} valid matches for "${queryString}"`,
-					);
-					results.forEach((result) => {
-						const distance = result.distance.toFixed(6);
-						const refId = result.record[sourcePrivateKeyName] || '';
-
-						// Build description from the embeddable content fields
-						let description = '';
-						if (Array.isArray(sourceEmbeddableContentName)) {
-							description = sourceEmbeddableContentName
-								.map((field) => result.record[field] || '')
-								.filter((value) => value)
-								.join(' | ');
-						} else {
-							description = result.record[sourceEmbeddableContentName] || '';
-						}
-
-						console.log(
-							`${result.rank}. [score: ${distance}] ${refId} ${description}`,
-						);
-					});
-				}
-
-				return { success: true, shouldExit: false };
-			} catch (error) {
-				xLog.error(`Vector similarity search failed: ${error.message}`);
-				return { success: false, shouldExit: false };
-			}
-		};
-
-		// Helper function for verbose query analysis display
-		const displayVerboseQueryAnalysis = (verboseData, xLog) => {
-			if (!verboseData) return;
-
-			xLog.status(
-				'\n╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗',
-			);
-			xLog.status(
-				'║                                      QUERY EXPANSION ANALYSIS                                         ║',
-			);
-			xLog.status(
-				'╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝',
-			);
-
-			xLog.status(`├─ Original Query: "${verboseData.originalQuery}"`);
-			xLog.status('│');
-
-			verboseData.enrichedStrings.forEach((enrichedData, index) => {
-				const isLast = index === verboseData.enrichedStrings.length - 1;
-				const connector = isLast ? '└─' : '├─';
-
-				xLog.status(
-					`${connector} Enriched String ${index + 1} [${enrichedData.type}]: "${enrichedData.enrichedString}"`,
-				);
-
-				if (enrichedData.matches && enrichedData.matches.length > 0) {
-					enrichedData.matches.forEach((match, matchIndex) => {
-						const isLastMatch = matchIndex === enrichedData.matches.length - 1;
-						const matchConnector = isLast ? '   ' : '│  ';
-						const matchPrefix = isLastMatch ? '└─' : '├─';
-
-						const distance = match.distance ? match.distance.toFixed(4) : 'N/A';
-						let matchDescription = `[${distance}] RefID: ${match.sourceRefId}`;
-
-						// Add fact details for atomic results
-						if (match.factType && match.factText) {
-							matchDescription += ` (${match.factType}: "${match.factText}")`;
-						}
-
-						xLog.status(`${matchConnector} ${matchPrefix} ${matchDescription}`);
-					});
-				} else {
-					const noMatchConnector = isLast ? '   ' : '│  ';
-					xLog.status(`${noMatchConnector} └─ (no matches found)`);
-				}
-
-				if (!isLast) {
-					xLog.status('│');
-				}
-			});
-
-			xLog.status('');
-		};
 
 		// =====================================================================
 		// MAIN APPLICATION EXECUTION PIPELINE
 		// =====================================================================
 
-		const getProfileConfiguration = (configModuleName) => {
-			// Access directly instead of destructuring
-			const xLog = process.global.xLog;
-			const getConfig = process.global.getConfig;
-			const rawConfig = process.global.rawConfig;
-			const commandLineParameters = process.global.commandLineParameters;
-			
-			// Check if initialization is complete
-			if (!getConfig) {
-				console.error('Error: qtools-ai-framework not properly initialized. getConfig is not available.');
-				return { isValid: false };
-			}
-			
-			const config = getConfig(configModuleName);
-			const { databaseFilePath, openAiApiKey, defaultTargetTableName } = config;
-			
-			// Get and normalize data profile parameter
-			const dataProfileRaw = commandLineParameters.values.dataProfile;
-			const dataProfile = Array.isArray(dataProfileRaw) ? dataProfileRaw[0] : dataProfileRaw;
-			
-			// Validate data profile is provided
-			if (!dataProfile) {
-				xLog.error('--dataProfile parameter is required');
-				xLog.error('Available profiles: sif, ceds');
-				xLog.error('Example: vectorTools --dataProfile=sif --showStats');
-				return { isValid: false };
-			}
-			
-			// Extract profile-specific settings from nested config object
-			const profileSettings = config.dataProfiles?.[dataProfile];
-			if (!profileSettings) {
-				xLog.error(`Unknown data profile: '${dataProfile}'`);
-				xLog.error('Available profiles: sif, ceds');
-				return { isValid: false };
-			}
-			
-			const sourceTableName = profileSettings.sourceTableName;
-			const sourcePrivateKeyName = profileSettings.sourcePrivateKeyName;
-			const sourceEmbeddableContentNameStr = profileSettings.sourceEmbeddableContentName;
-			const profileDefaultTargetTableName = profileSettings.defaultTargetTableName;
-			
-			// Parse comma-separated embeddable content names
-			const sourceEmbeddableContentName = sourceEmbeddableContentNameStr ? 
-				sourceEmbeddableContentNameStr.split(',').map(s => s.trim()) : [];
-			
-			// Validate required profile configuration
-			if (!sourceTableName || !sourcePrivateKeyName || !sourceEmbeddableContentName.length) {
-				xLog.error(`Invalid or missing configuration for data profile '${dataProfile}'`);
-				xLog.error('Required settings: sourceTableName, sourcePrivateKeyName, sourceEmbeddableContentName');
-				xLog.error(`Found: sourceTableName='${sourceTableName}', sourcePrivateKeyName='${sourcePrivateKeyName}', sourceEmbeddableContentName='${sourceEmbeddableContentNameStr}'`);
-				return { isValid: false };
-			}
-			
-			// Determine target table name (custom > profile default > global default)
-			const vectorTableName =
-				commandLineParameters.values.targetTableName || 
-				profileDefaultTargetTableName || 
-				defaultTargetTableName;
-			
-			// Return complete configuration
-			return {
-				isValid: true,
-				dataProfile,
-				databaseFilePath,
-				openAiApiKey,
-				sourceTableName,
-				sourcePrivateKeyName,
-				sourceEmbeddableContentName,
-				vectorTableName,
-				defaultTargetTableName,
-				isCustomTargetTable: !!commandLineParameters.values.targetTableName
-			};
-		};
 
 		// ---------------------------------------------------------------------
 		// 1. Get and validate configuration
 
 
-		const config = getProfileConfiguration(moduleName);
+		const config = assembleConfig(xLog, getConfig, commandLineParameters)(moduleName);
 		if (!config.isValid) {
 			return {};
 		}
@@ -555,7 +202,7 @@ const moduleFunction =
 				);
 
 				// Resume vector generation
-				return await handleVectorGeneration(
+				return await createVectorDatabase(progressTracker)(
 					config,
 					openai,
 					vectorDb,
@@ -640,25 +287,18 @@ const moduleFunction =
 				vectorTableName,
 			} = config;
 
-			xLog.status(
-				`Starting Complete Database Rebuild for ${dataProfile.toUpperCase()} profile...`,
-			);
-			if (vectorTableName) {
-				xLog.status(`Target table: "${vectorTableName}"`);
-			}
 
-			// Prepare configuration object for rebuild workflow
-			const rebuildConfig = {
+
+
+			// Execute rebuild workflow
+			executeRebuildWorkflow(
+				{
 				dataProfile,
 				sourceTableName,
 				sourcePrivateKeyName,
 				sourceEmbeddableContentName,
 				vectorTableName,
-			};
-
-			// Execute rebuild workflow
-			executeRebuildWorkflow(
-				rebuildConfig,
+			},
 				vectorDb,
 				openai,
 				xLog,
@@ -679,7 +319,7 @@ const moduleFunction =
 		}
 
 		if (switches.writeVectorDatabase || values.writeVectorDatabase) {
-			return await handleVectorGeneration(
+			return await createVectorDatabase(progressTracker)(
 				config,
 				openai,
 				vectorDb,
@@ -690,7 +330,7 @@ const moduleFunction =
 		}
 
 		if (values.queryString) {
-			return await handleQueryCommand(
+			return await queryVectorDatabase(prettyPrintAtomicExpansion)(
 				config,
 				openai,
 				vectorDb,

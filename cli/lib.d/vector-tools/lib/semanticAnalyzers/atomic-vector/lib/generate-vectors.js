@@ -98,6 +98,11 @@ const moduleFunction = function(args = {}) {
                         content: embeddingData.text,
                         processed: true
                     });
+console.log(`\n=-=============   DEBUG PROCESSED ONE SET INTO DB SUCCESSFULLY  ========================= [generate-vectors.js.moduleFunction]\n`);
+
+
+console.log(' Debug Exit [generate-vectors.js.moduleFunction]', {depth:4, colors:true}); process.exit(); //tqDebug
+
                 }
 
                 // Update progress tracking if available (after processing each source record)
