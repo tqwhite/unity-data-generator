@@ -76,24 +76,58 @@ const databaseOperationsGen = require('./lib/database-operations');
 const {
 	loadSemanticAnalyzer,
 } = require('./lib/semanticAnalyzers/semantic-analyzer-loader');
-const {
-	dropAllVectorTables,
-	dropProductionVectorTables,
-} = require('./lib/database-operations/lib/drop-all-vector-tables');
-const {
-	showDatabaseStats,
-} = require('./lib/database-operations/lib/show-database-stats');
 const vectorConfigHandler = require('./lib/vector-config-handler');
-const {
-	initVectorDatabase,
-	getTableCount,
-	tableExists,
-} = require('./lib/database-operations/lib/vector-database-operations');
 const vectorRebuildWorkflow = require('./lib/vector-rebuild-workflow')();
 const { executeRebuildWorkflow } = vectorRebuildWorkflow();
 const applicationInitializer = require('./lib/application-initializer')();
-const { initializeApplication } = applicationInitializer();
 
+// ---------------------------------------------------------------------
+// prepareDependencies - prepares all dependencies for command dispatcher
+
+const prepareDependencies = (modules) => {
+	const {
+		semanticAnalyzer,
+		dropAllVectorTables,
+		showDatabaseStats,
+		executeRebuildWorkflow,
+		tableExists,
+		getTableCount,
+		dropProductionVectorTables
+	} = modules;
+	
+	return {
+		semanticAnalyzer,
+		dropAllVectorTables,
+		showDatabaseStats,
+		dbOperations: {
+			tableExists,
+			getTableCount
+		},
+		dropOperations: {
+			dropProductionVectorTables,
+			dropAllVectorTables
+		},
+		executeRebuildWorkflow
+	};
+};
+
+// ---------------------------------------------------------------------
+// initializeOpenAI - initializes OpenAI client with API key
+
+const initializeOpenAI = (openAiApiKey, xLog) => {
+	try {
+		const OpenAI = require('openai');
+		const openai = new OpenAI({
+			apiKey: openAiApiKey,
+		});
+		
+		xLog.verbose('OpenAI client initialized successfully');
+		return { success: true, client: openai };
+	} catch (error) {
+		xLog.error(`Failed to initialize OpenAI client: ${error.message}`);
+		return { success: false, error: error.message };
+	}
+};
 
 // ---------------------------------------------------------------------
 // moduleFunction - main application entry point and execution pipeline
@@ -671,28 +705,37 @@ const moduleFunction =
 		const progressTracker = require('./lib/progress-tracker')();
 		const modules = {
 			semanticAnalyzer,
-			dropAllVectorTables,
-			dropProductionVectorTables,
-			showDatabaseStats,
+			dropAllVectorTables: databaseOperations.dropAllVectorTables,
+			dropProductionVectorTables: databaseOperations.dropProductionVectorTables,
+			showDatabaseStats: databaseOperations.showDatabaseStats,
 			executeRebuildWorkflow,
-			tableExists,
-			getTableCount,
-			initVectorDatabase,
+			tableExists: databaseOperations.tableExists,
+			getTableCount: databaseOperations.getTableCount,
+			initVectorDatabase: databaseOperations.initVectorDatabase,
 			logConfigurationStatus,
 			progressTracker,
 		};
 
 		// ---------------------------------------------------------------------
-		// 3. Initialize application components (OpenAI, database, dependencies)
-		const initResult = initializeApplication(config, modules, xLog);
-		if (!initResult.success) {
-			xLog.error(`Application initialization failed: ${initResult.error}`);
-			return {};
-		}
+		// 3. Initialize database 
+		const vectorDb = databaseOperations.initializeDatabase(
+			config.databaseFilePath,
+			config.vectorTableName,
+			xLog
+		);
 
 		// ---------------------------------------------------------------------
-		// 4. Extract initialized components
-		const { openai, vectorDb, dependencies } = initResult;
+		// 4. Initialize OpenAI client
+		const openaiResult = initializeOpenAI(config.openAiApiKey, xLog);
+		if (!openaiResult.success) {
+			xLog.error(`OpenAI initialization failed: ${openaiResult.error}`);
+			return {};
+		}
+		const openai = openaiResult.client;
+
+		// ---------------------------------------------------------------------
+		// 5. Prepare dependencies
+		const dependencies = prepareDependencies(modules);
 
 		// ---------------------------------------------------------------------
 		// 5. Dispatch and execute commands

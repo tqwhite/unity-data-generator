@@ -31,20 +31,6 @@ const moduleFunction =
 	({ moduleName } = {}) =>
 	({ unused }) => {
 		
-		// ---------------------------------------------------------------------
-		// initVectorDatabase - initializes vector database with sqlite-vec extension
-		
-		const initVectorDatabase = (databaseFilePath, vectorTableName, xLog) => {
-			try {
-				const sqliteVec = require('sqlite-vec');
-				const db = require('better-sqlite3')(databaseFilePath, {});
-				sqliteVec.load(db);
-				return db;
-			} catch (error) {
-				xLog.error(`Error in initVectorDatabase: ${error.message}`);
-				throw error;
-			}
-		};
 
 		// ---------------------------------------------------------------------
 		// getTableCount - gets record count for a table
@@ -144,7 +130,6 @@ const moduleFunction =
 		};
 
 		return { 
-			initVectorDatabase,
 			getTableCount,
 			tableExists,
 			getAllTables,

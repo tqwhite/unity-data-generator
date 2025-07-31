@@ -17,22 +17,44 @@ console.log(`HELLO FROM ${__dirname}/${moduleName}`);
 //START OF moduleFunction() ============================================================
 const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 	const { xLog, getConfig, rawConfig, commandLineParameters, projectRoot } = process.global;
-	const localConfig = getConfig(moduleName); //moduleName is closure
-
-console.log(`\n=-=============   localConfig  ========================= [database-operations.js.]\n`);
-
-
-console.dir({['localConfig']:localConfig}, { showHidden: false, depth: 4, colors: true });
-
-console.log(`\n=-=============   localConfig  ========================= [database-operations.js.]\n`);
-
-
-	const workingFunction = () => {
-		return 'hello';
+	const localConfig = getConfig(moduleName);
+	
+	// Import database modules
+	const { dropAllVectorTables, dropProductionVectorTables } = require('./lib/drop-all-vector-tables');
+	const { showDatabaseStats } = require('./lib/show-database-stats');
+	const { getTableCount, tableExists } = require('./lib/vector-database-operations');
+	const { initVectorDatabase } = require('./lib/init-vector-database');
+	
+	// ---------------------------------------------------------------------
+	// initializeDatabase - initializes vector database with error handling
+	
+	const initializeDatabase = (databaseFilePath, vectorTableName, xLog) => {
+		try {
+			const vectorDb = initVectorDatabase(
+				databaseFilePath,
+				vectorTableName,
+				xLog,
+			);
+			
+			xLog.verbose('Vector database initialized successfully');
+			return vectorDb;
+		} catch (error) {
+			xLog.error(`Failed to initialize vector database: ${error.message}`);
+			xLog.error('Stack trace:', error.stack);
+			throw error;
+		}
 	};
 	
 	xLog.status(`${moduleName} is initialized`);
-	return { workingFunction };
+	return { 
+		initializeDatabase,
+		dropAllVectorTables,
+		dropProductionVectorTables,
+		showDatabaseStats,
+		getTableCount,
+		tableExists,
+		initVectorDatabase
+	};
 };
 
 //END OF moduleFunction() ============================================================

@@ -55,7 +55,7 @@ const moduleFunction = function(args = {}) {
 
             try {
                 // Extract atomic facts
-                xLog.verbose(`Extracting atomic facts for ${privateKey}`);
+                xLog.verbose(`Extracting atomic facts for ${privateKey} [${moduleName}]`);
                 const extractedData = await extractAtomicFacts(embeddableContent, openai);
 
                 // Generate embedding strings
