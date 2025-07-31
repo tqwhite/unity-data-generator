@@ -69,65 +69,14 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 // =====================================================================
 
 const databaseOperationsGen = require('./lib/database-operations');
+const aiOperationsGen = require('./lib/ai-operations');
 
 
 //HACKERY: from some reason, putting require('generate-embeddings') AFTER this causes sqlite to screw up
 // Note: commandLineParameters will be set by qtools-ai-framework above
-const {
-	loadSemanticAnalyzer,
-} = require('./lib/semanticAnalyzers/semantic-analyzer-loader');
 const vectorConfigHandler = require('./lib/vector-config-handler');
 const vectorRebuildWorkflow = require('./lib/vector-rebuild-workflow')();
 const { executeRebuildWorkflow } = vectorRebuildWorkflow();
-const applicationInitializer = require('./lib/application-initializer')();
-
-// ---------------------------------------------------------------------
-// prepareDependencies - prepares all dependencies for command dispatcher
-
-const prepareDependencies = (modules) => {
-	const {
-		semanticAnalyzer,
-		dropAllVectorTables,
-		showDatabaseStats,
-		executeRebuildWorkflow,
-		tableExists,
-		getTableCount,
-		dropProductionVectorTables
-	} = modules;
-	
-	return {
-		semanticAnalyzer,
-		dropAllVectorTables,
-		showDatabaseStats,
-		dbOperations: {
-			tableExists,
-			getTableCount
-		},
-		dropOperations: {
-			dropProductionVectorTables,
-			dropAllVectorTables
-		},
-		executeRebuildWorkflow
-	};
-};
-
-// ---------------------------------------------------------------------
-// initializeOpenAI - initializes OpenAI client with API key
-
-const initializeOpenAI = (openAiApiKey, xLog) => {
-	try {
-		const OpenAI = require('openai');
-		const openai = new OpenAI({
-			apiKey: openAiApiKey,
-		});
-		
-		xLog.verbose('OpenAI client initialized successfully');
-		return { success: true, client: openai };
-	} catch (error) {
-		xLog.error(`Failed to initialize OpenAI client: ${error.message}`);
-		return { success: false, error: error.message };
-	}
-};
 
 // ---------------------------------------------------------------------
 // moduleFunction - main application entry point and execution pipeline
@@ -139,256 +88,29 @@ const moduleFunction =
 			process.global;
 
 		const databaseOperations = databaseOperationsGen({});
+		
 
-		// dispatchCommands - main command dispatcher and router
-		const dispatchCommands = async (
-			config,
-			vectorDb,
-			openai,
-			xLog,
-			commandLineParameters,
-			dependencies,
-		) => {
-			const {
-				semanticAnalyzer,
-				dropAllVectorTables,
-				showDatabaseStats,
-				dbOperations,
-				dropOperations,
-				executeRebuildWorkflow,
-			} = dependencies;
+		const { openai } = aiOperationsGen({});
 
-			// Validate command combinations
-			const switches = commandLineParameters.switches;
-			const values = commandLineParameters.values;
+		const {
+			semanticAnalyzer,
+		} = require('./lib/semanticAnalyzers/semantic-analyzer-loader');
 
-			// Check for conflicting operations
-			const mutuallyExclusiveCommands = ['showStats', 'rebuildDatabase'];
-			const activeExclusiveCommands = mutuallyExclusiveCommands.filter(
-				(cmd) => switches[cmd],
+		// Validate command combinations
+		const switches = commandLineParameters.switches;
+		const values = commandLineParameters.values;
+
+		// Check for conflicting operations
+		const mutuallyExclusiveCommands = ['showStats', 'rebuildDatabase'];
+		const activeExclusiveCommands = mutuallyExclusiveCommands.filter(
+			(cmd) => switches[cmd],
+		);
+		if (activeExclusiveCommands.length > 1) {
+			xLog.error(
+				`Cannot combine these operations: ${activeExclusiveCommands.join(', ')}`,
 			);
-			if (activeExclusiveCommands.length > 1) {
-				xLog.error(
-					`Cannot combine these operations: ${activeExclusiveCommands.join(', ')}`,
-				);
-				return { success: false, shouldExit: true };
-			}
-
-			// Validate queryString requirements
-			if (values.queryString && !values.queryString.qtLast()) {
-				xLog.error('Query string cannot be empty');
-				return { success: false, shouldExit: true };
-			}
-
-			// Handle commands in priority order
-			if (switches.showStats) {
-				try {
-					xLog.status(
-						'Starting Database Statistics Display for ALL profile...',
-					);
-					showDatabaseStats(vectorDb, xLog);
-					return { success: true, shouldExit: true };
-				} catch (error) {
-					xLog.error(`Failed to show database stats: ${error.message}`);
-					return { success: false, shouldExit: true };
-				}
-			}
-
-			// Progress tracking commands
-			if (switches.showProgress) {
-				try {
-					progressTracker.showProgress(vectorDb);
-					return { success: true, shouldExit: true };
-				} catch (error) {
-					xLog.error(`Show progress failed: ${error.message}`);
-					return { success: false, shouldExit: true };
-				}
-			}
-
-			if (switches.resume) {
-				try {
-					let batchToResume;
-
-					if (values.batchId && values.batchId[0]) {
-						batchToResume = progressTracker.getBatchProgress(
-							vectorDb,
-							values.batchId[0],
-						);
-						if (!batchToResume) {
-							xLog.error(`Batch not found: ${values.batchId[0]}`);
-							return { success: false, shouldExit: true };
-						}
-					} else {
-						const incompleteBatches = progressTracker.getIncompleteBatches(
-							vectorDb,
-							config.dataProfile,
-						);
-						if (incompleteBatches.length === 0) {
-							xLog.status(
-								`No incomplete batches found for ${config.dataProfile} profile`,
-							);
-							return { success: true, shouldExit: true };
-						}
-						batchToResume = incompleteBatches[0];
-					}
-
-					xLog.status(`Resuming batch: ${batchToResume.batch_id}`);
-					xLog.status(
-						`Progress: ${batchToResume.processed_records}/${batchToResume.total_records} records`,
-					);
-
-					// Resume vector generation
-					return await handleVectorGeneration(
-						config,
-						openai,
-						vectorDb,
-						xLog,
-						semanticAnalyzer,
-						commandLineParameters,
-						batchToResume,
-					);
-				} catch (error) {
-					xLog.error(`Resume operation failed: ${error.message}`);
-					return { success: false, shouldExit: true };
-				}
-			}
-
-			if (switches.dropTable) {
-				const { dataProfile, vectorTableName } = config;
-
-				xLog.status(
-					`Safely dropping ${dataProfile.toUpperCase()} vector table "${vectorTableName}" only...`,
-				);
-				xLog.status(
-					'IMPORTANT: This will NOT affect other profile tables or database tables',
-				);
-
-				try {
-					const dropResult = dropAllVectorTables(
-						vectorDb,
-						xLog,
-						vectorTableName,
-						{
-							skipConfirmation: true,
-						},
-					);
-
-					if (dropResult.success) {
-						xLog.status(`✓ Drop operation completed successfully`);
-						xLog.status(`  ${dropResult.droppedCount} tables processed`);
-					} else {
-						xLog.error(`✗ Drop operation failed: ${dropResult.error}`);
-					}
-				} catch (error) {
-					xLog.error(`Failed to drop tables: ${error.message}`);
-				}
-
-				// Show the empty state after dropping tables
-				try {
-					xLog.status('Database state after dropping tables:');
-					showDatabaseStats(vectorDb, xLog);
-				} catch (error) {
-					xLog.error(`Failed to show database stats: ${error.message}`);
-				}
-
-				// Only exit if we're not also writing to the database
-				const shouldExit = !switches.writeVectorDatabase;
-				if (shouldExit) return { success: true, shouldExit: true };
-			}
-
-			// Handle purge progress (only with write operations)
-			if (switches.purgeProgressTable) {
-				if (!switches.writeVectorDatabase && !switches.rebuildDatabase) {
-					xLog.error(
-						'-purgeProgressTable can only be used with -writeVectorDatabase or -rebuildDatabase',
-					);
-					return { success: false, shouldExit: true };
-				}
-
-				try {
-					progressTracker.purgeProgressTable(vectorDb, config.dataProfile);
-					xLog.status(`Ready to start fresh for ${config.dataProfile} profile`);
-				} catch (error) {
-					xLog.error(`Purge progress table failed: ${error.message}`);
-					return { success: false, shouldExit: true };
-				}
-			}
-
-			if (switches.rebuildDatabase) {
-				const {
-					dataProfile,
-					sourceTableName,
-					sourcePrivateKeyName,
-					sourceEmbeddableContentName,
-					vectorTableName,
-				} = config;
-
-				xLog.status(
-					`Starting Complete Database Rebuild for ${dataProfile.toUpperCase()} profile...`,
-				);
-				if (vectorTableName) {
-					xLog.status(`Target table: "${vectorTableName}"`);
-				}
-
-				// Prepare configuration object for rebuild workflow
-				const rebuildConfig = {
-					dataProfile,
-					sourceTableName,
-					sourcePrivateKeyName,
-					sourceEmbeddableContentName,
-					vectorTableName,
-				};
-
-				// Execute rebuild workflow
-				executeRebuildWorkflow(
-					rebuildConfig,
-					vectorDb,
-					openai,
-					xLog,
-					semanticAnalyzer,
-					dbOperations,
-					dropOperations,
-					commandLineParameters,
-					(err) => {
-						if (err) {
-							xLog.error(`Rebuild failed: ${err.message}`);
-						} else {
-							xLog.status('✓ Database rebuild completed successfully');
-						}
-					},
-				);
-
-				return { success: true, shouldExit: true };
-			}
-
-			if (switches.writeVectorDatabase || values.writeVectorDatabase) {
-				return await handleVectorGeneration(
-					config,
-					openai,
-					vectorDb,
-					xLog,
-					semanticAnalyzer,
-					commandLineParameters,
-				);
-			}
-
-			if (values.queryString) {
-				return await handleQueryCommand(
-					config,
-					openai,
-					vectorDb,
-					xLog,
-					semanticAnalyzer,
-					commandLineParameters,
-				);
-			}
-
-			// No commands specified - show help or default behavior
-			xLog.status(
-				'No operation specified. Use --help to see available commands.',
-			);
-			return { success: true, shouldExit: true };
-		};
+			return { success: false, shouldExit: true };
+		}
 
 		// Helper function for vector generation
 		const handleVectorGeneration = async (
@@ -692,15 +414,6 @@ const moduleFunction =
 		}
 
 		// ---------------------------------------------------------------------
-		// 1.5. Load semantic analyzer
-		const semanticAnalysisMode = commandLineParameters.qtGetSurePath(
-			'values.semanticAnalysisMode[0]',
-			'simpleVector',
-		);
-		const semanticAnalyzer = loadSemanticAnalyzer(semanticAnalysisMode);
-		xLog.status(`Using ${semanticAnalysisMode} semantic analyzer`);
-
-		// ---------------------------------------------------------------------
 		// 2. Prepare modules for application initializer
 		const progressTracker = require('./lib/progress-tracker')();
 		const modules = {
@@ -717,36 +430,231 @@ const moduleFunction =
 		};
 
 		// ---------------------------------------------------------------------
-		// 3. Initialize database 
+		// 3. Initialize database
 		const vectorDb = databaseOperations.initializeDatabase(
 			config.databaseFilePath,
 			config.vectorTableName,
-			xLog
+			xLog,
 		);
 
 		// ---------------------------------------------------------------------
 		// 4. Initialize OpenAI client
-		const openaiResult = initializeOpenAI(config.openAiApiKey, xLog);
-		if (!openaiResult.success) {
-			xLog.error(`OpenAI initialization failed: ${openaiResult.error}`);
-			return {};
-		}
-		const openai = openaiResult.client;
-
-		// ---------------------------------------------------------------------
-		// 5. Prepare dependencies
-		const dependencies = prepareDependencies(modules);
 
 		// ---------------------------------------------------------------------
 		// 5. Dispatch and execute commands
-		const commandResult = await dispatchCommands(
-			config,
-			vectorDb,
-			openai,
-			xLog,
-			commandLineParameters,
-			dependencies,
+
+		// Validate queryString requirements
+		if (values.queryString && !values.queryString.qtLast()) {
+			xLog.error('Query string cannot be empty');
+			return { success: false, shouldExit: true };
+		}
+
+		// Handle commands in priority order
+		if (switches.showStats) {
+			try {
+				xLog.status('Starting Database Statistics Display for ALL profile...');
+				showDatabaseStats(vectorDb, xLog);
+				return { success: true, shouldExit: true };
+			} catch (error) {
+				xLog.error(`Failed to show database stats: ${error.message}`);
+				return { success: false, shouldExit: true };
+			}
+		}
+
+		// Progress tracking commands
+		if (switches.showProgress) {
+			try {
+				progressTracker.showProgress(vectorDb);
+				return { success: true, shouldExit: true };
+			} catch (error) {
+				xLog.error(`Show progress failed: ${error.message}`);
+				return { success: false, shouldExit: true };
+			}
+		}
+
+		if (switches.resume) {
+			try {
+				let batchToResume;
+
+				if (values.batchId && values.batchId[0]) {
+					batchToResume = progressTracker.getBatchProgress(
+						vectorDb,
+						values.batchId[0],
+					);
+					if (!batchToResume) {
+						xLog.error(`Batch not found: ${values.batchId[0]}`);
+						return { success: false, shouldExit: true };
+					}
+				} else {
+					const incompleteBatches = progressTracker.getIncompleteBatches(
+						vectorDb,
+						config.dataProfile,
+					);
+					if (incompleteBatches.length === 0) {
+						xLog.status(
+							`No incomplete batches found for ${config.dataProfile} profile`,
+						);
+						return { success: true, shouldExit: true };
+					}
+					batchToResume = incompleteBatches[0];
+				}
+
+				xLog.status(`Resuming batch: ${batchToResume.batch_id}`);
+				xLog.status(
+					`Progress: ${batchToResume.processed_records}/${batchToResume.total_records} records`,
+				);
+
+				// Resume vector generation
+				return await handleVectorGeneration(
+					config,
+					openai,
+					vectorDb,
+					xLog,
+					semanticAnalyzer,
+					commandLineParameters,
+					batchToResume,
+				);
+			} catch (error) {
+				xLog.error(`Resume operation failed: ${error.message}`);
+				return { success: false, shouldExit: true };
+			}
+		}
+
+		if (switches.dropTable) {
+			const { dataProfile, vectorTableName } = config;
+
+			xLog.status(
+				`Safely dropping ${dataProfile.toUpperCase()} vector table "${vectorTableName}" only...`,
+			);
+			xLog.status(
+				'IMPORTANT: This will NOT affect other profile tables or database tables',
+			);
+
+			try {
+				const dropResult = dropAllVectorTables(
+					vectorDb,
+					xLog,
+					vectorTableName,
+					{
+						skipConfirmation: true,
+					},
+				);
+
+				if (dropResult.success) {
+					xLog.status(`✓ Drop operation completed successfully`);
+					xLog.status(`  ${dropResult.droppedCount} tables processed`);
+				} else {
+					xLog.error(`✗ Drop operation failed: ${dropResult.error}`);
+				}
+			} catch (error) {
+				xLog.error(`Failed to drop tables: ${error.message}`);
+			}
+
+			// Show the empty state after dropping tables
+			try {
+				xLog.status('Database state after dropping tables:');
+				showDatabaseStats(vectorDb, xLog);
+			} catch (error) {
+				xLog.error(`Failed to show database stats: ${error.message}`);
+			}
+
+			// Only exit if we're not also writing to the database
+			const shouldExit = !switches.writeVectorDatabase;
+			if (shouldExit) return { success: true, shouldExit: true };
+		}
+
+		// Handle purge progress (only with write operations)
+		if (switches.purgeProgressTable) {
+			if (!switches.writeVectorDatabase && !switches.rebuildDatabase) {
+				xLog.error(
+					'-purgeProgressTable can only be used with -writeVectorDatabase or -rebuildDatabase',
+				);
+				return { success: false, shouldExit: true };
+			}
+
+			try {
+				progressTracker.purgeProgressTable(vectorDb, config.dataProfile);
+				xLog.status(`Ready to start fresh for ${config.dataProfile} profile`);
+			} catch (error) {
+				xLog.error(`Purge progress table failed: ${error.message}`);
+				return { success: false, shouldExit: true };
+			}
+		}
+
+		if (switches.rebuildDatabase) {
+			const {
+				dataProfile,
+				sourceTableName,
+				sourcePrivateKeyName,
+				sourceEmbeddableContentName,
+				vectorTableName,
+			} = config;
+
+			xLog.status(
+				`Starting Complete Database Rebuild for ${dataProfile.toUpperCase()} profile...`,
+			);
+			if (vectorTableName) {
+				xLog.status(`Target table: "${vectorTableName}"`);
+			}
+
+			// Prepare configuration object for rebuild workflow
+			const rebuildConfig = {
+				dataProfile,
+				sourceTableName,
+				sourcePrivateKeyName,
+				sourceEmbeddableContentName,
+				vectorTableName,
+			};
+
+			// Execute rebuild workflow
+			executeRebuildWorkflow(
+				rebuildConfig,
+				vectorDb,
+				openai,
+				xLog,
+				semanticAnalyzer,
+				dbOperations,
+				dropOperations,
+				commandLineParameters,
+				(err) => {
+					if (err) {
+						xLog.error(`Rebuild failed: ${err.message}`);
+					} else {
+						xLog.status('✓ Database rebuild completed successfully');
+					}
+				},
+			);
+
+			return { success: true, shouldExit: true };
+		}
+
+		if (switches.writeVectorDatabase || values.writeVectorDatabase) {
+			return await handleVectorGeneration(
+				config,
+				openai,
+				vectorDb,
+				xLog,
+				semanticAnalyzer,
+				commandLineParameters,
+			);
+		}
+
+		if (values.queryString) {
+			return await handleQueryCommand(
+				config,
+				openai,
+				vectorDb,
+				xLog,
+				semanticAnalyzer,
+				commandLineParameters,
+			);
+		}
+
+		// No commands specified - show help or default behavior
+		xLog.status(
+			'No operation specified. Use --help to see available commands.',
 		);
+		return { success: true, shouldExit: true };
 
 		// ---------------------------------------------------------------------
 		// 6. Handle execution result

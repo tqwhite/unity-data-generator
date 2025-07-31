@@ -1,0 +1,14 @@
+{
+  "name": "atomic-vector",
+  "version": "1.0.0",
+  "description": "deconstruct input for complext vector lookup",
+  "main": "atomic-vector.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}

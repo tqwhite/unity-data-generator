@@ -1,0 +1,14 @@
+{
+  "name": "simple-vector",
+  "version": "1.0.0",
+  "description": "do simple vector lookup ",
+  "main": "simple-vector.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC"
+}

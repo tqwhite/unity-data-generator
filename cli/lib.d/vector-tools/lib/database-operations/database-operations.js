@@ -11,8 +11,6 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 
-console.log(`HELLO FROM ${__dirname}/${moduleName}`);
-
 
 //START OF moduleFunction() ============================================================
 const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
@@ -44,8 +42,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 			throw error;
 		}
 	};
-	
-	xLog.status(`${moduleName} is initialized`);
+
 	return { 
 		initializeDatabase,
 		dropAllVectorTables,
