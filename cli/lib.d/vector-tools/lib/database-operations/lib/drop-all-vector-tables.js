@@ -33,16 +33,15 @@ const applicationBasePath = findProjectRoot(); // call with {closest:false} if t
 const moduleFunction =
 	({ moduleName } = {}) =>
 	({ unused }) => {
+		const { xLog } = process.global;
 		
 		// ---------------------------------------------------------------------
 		// dropAllVectorTables - safely drops vector tables with enhanced safety checks
 		
-		const dropAllVectorTables = (db, xLog, specifiedVectorTableName, options = {}) => {
-console.log(`\n=-=============   dropAllVectorTables  ========================= [drop-all-vector-tables.js.]\n`);
+		const dropAllVectorTables = (db, specifiedVectorTableName, options = {}) => {
 
-
-return "NO DROPPING WAS DONE";
-			const { dryRun = false, skipConfirmation = false, excludePatterns = [] } = options;
+			const { dryRun = true, skipConfirmation = false, excludePatterns = [] } = options;
+			xLog.status(`DRY RUN FLAG HARD CODED FOR DEBUGGING IN [${moduleName}]`);
 			
 			// CRITICAL SAFETY CHECK: Only drop tables matching our specific vector table name
 			if (!specifiedVectorTableName) {
@@ -62,7 +61,7 @@ return "NO DROPPING WAS DONE";
 			}
 			
 			const searchPattern = `${specifiedVectorTableName}%`;
-			xLog.status(`${dryRun ? 'Would drop' : 'Will drop'} all tables matching the pattern: ${searchPattern}`);
+			xLog.status(`${dryRun ? 'DRY RUN: Would drop' : 'Will drop'} all tables matching the pattern: ${searchPattern}`);
 			
 			// Find ALL tables that start with the specified vector table name
 			const candidateTables = db

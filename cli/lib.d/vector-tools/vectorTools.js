@@ -75,7 +75,7 @@ const moduleFunction =
 			process.global;
 
 		const databaseOperations = databaseOperationsGen({});
-		const { showDatabaseStats, dropAllVectorTables } = databaseOperations;
+		const { showDatabaseStats, dropAllVectorTables, validateAndExecuteDropTable } = databaseOperations;
 
 		const { openai } = aiOperationsGen({});
 
@@ -161,42 +161,7 @@ const moduleFunction =
 
 		// Drop specific vector tables
 		if (switches.dropTable) {
-			const { dataProfile, vectorTableName } = config;
-
-			xLog.status(
-				`Safely dropping ${dataProfile.toUpperCase()} vector table "${vectorTableName}" only...`,
-			);
-			xLog.status(
-				'IMPORTANT: This will NOT affect other profile tables or database tables',
-			);
-
-			try {
-				const dropResult = dropAllVectorTables(
-					vectorDb,
-					xLog,
-					vectorTableName,
-					{
-						skipConfirmation: true,
-					},
-				);
-
-				if (dropResult.success) {
-					xLog.status(`✓ Drop operation completed successfully`);
-					xLog.status(`  ${dropResult.droppedCount} tables processed`);
-				} else {
-					xLog.error(`✗ Drop operation failed: ${dropResult.error}`);
-				}
-			} catch (error) {
-				xLog.error(`Failed to drop tables: ${error.message}`);
-			}
-
-			// Show the empty state after dropping tables
-			try {
-				xLog.status('Database state after dropping tables:');
-				showDatabaseStats(vectorDb);
-			} catch (error) {
-				xLog.error(`Failed to show database stats: ${error.message}`);
-			}
+			validateAndExecuteDropTable(config, vectorDb, switches);
 
 			// Only exit if we're not also writing to the database
 			const shouldExit = !switches.writeVectorDatabase;

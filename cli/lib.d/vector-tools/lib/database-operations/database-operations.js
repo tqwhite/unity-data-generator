@@ -24,6 +24,52 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 	const { initVectorDatabase } = require('./lib/init-vector-database');
 	
 	// ---------------------------------------------------------------------
+	// validateAndExecuteDropTable - validates and executes table drop operations
+	
+	const validateAndExecuteDropTable = (config, vectorDb, switches) => {
+		const { dataProfile, vectorTableName } = config;
+
+		xLog.status(
+			`Safely dropping ${dataProfile.toUpperCase()} vector table "${vectorTableName}" only...`,
+		);
+		xLog.status(
+			'IMPORTANT: This will NOT affect other profile tables or database tables',
+		);
+
+		try {
+			const dropResult = dropAllVectorTables(
+				vectorDb,
+				vectorTableName,
+				{
+					skipConfirmation: true,
+				},
+			);
+
+			if (dropResult.success) {
+				xLog.status(`✓ Drop operation completed successfully`);
+				xLog.status(`  ${dropResult.droppedCount} tables processed`);
+			} else {
+				xLog.error(`✗ Drop operation failed: ${dropResult.error} [${moduleName}]`);
+				process.exit(1);
+			}
+		} catch (error) {
+			xLog.error(`Failed to drop tables: ${error.message} [${moduleName}]`);
+			process.exit(1);
+		}
+
+		// Show the empty state after dropping tables
+		try {
+			xLog.status('Database state after dropping tables:');
+			showDatabaseStats(vectorDb);
+		} catch (error) {
+			xLog.error(`Failed to show database stats: ${error.message} [${moduleName}]`);
+			process.exit(1);
+		}
+
+		return { success: true };
+	};
+
+	// ---------------------------------------------------------------------
 	// initializeDatabase - initializes vector database with error handling
 	
 	const initializeDatabase = (databaseFilePath, vectorTableName) => {
@@ -44,6 +90,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 
 	return { 
 		initializeDatabase,
+		validateAndExecuteDropTable,
 		dropAllVectorTables,
 		dropProductionVectorTables,
 		showDatabaseStats,
