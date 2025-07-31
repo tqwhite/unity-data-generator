@@ -1,10 +1,10 @@
 'use strict';
 
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
-const path = require('path');
 
-const moduleFunction = function (args = {}) {
-	const { xLog, getConfig, commandLineParameters } = process.global;
+const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
+	const { xLog, getConfig, rawConfig, commandLineParameters, projectRoot } = process.global;
+	const moduleConfig = getConfig(moduleName);
 
 	const semanticAnalysisMode = commandLineParameters.qtGetSurePath(
 		'values.semanticAnalysisMode[0]',
@@ -25,11 +25,11 @@ const moduleFunction = function (args = {}) {
 	};
 
 	const analyserName = analyzerMap[semanticAnalysisMode];
-	const analyzerModule = require(`./${analyserName}`);
+	const analyzerModule = require(`../${analyserName}`);
 	const semanticAnalyzer = analyzerModule();
 	xLog.status(`Using ${semanticAnalysisMode} semantic analyzer`);
 
-	return { semanticAnalyzer };
+	return { semanticAnalyzerLibrary: semanticAnalyzer };
 };
 
-module.exports = moduleFunction();
+module.exports = moduleFunction({ moduleName }); //returns initialized moduleFunction

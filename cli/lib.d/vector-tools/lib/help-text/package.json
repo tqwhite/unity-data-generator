@@ -1,0 +1,8 @@
+{
+  "name": "help-text",
+  "version": "1.0.0",
+  "description": "Provides help text and documentation for vector tools CLI",
+  "main": "help-text.js",
+  "author": "TQ",
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "replace-existing-database",
+  "version": "1.0.0",
+  "description": "Orchestrates complete database rebuild workflow with backup and verification",
+  "main": "replace-existing-database.js",
+  "author": "TQ",
+  "license": "UNLICENSED"
+}

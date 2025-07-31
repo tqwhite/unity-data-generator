@@ -1,0 +1,8 @@
+{
+  "name": "semantic-analyzer-library",
+  "version": "1.0.0",
+  "description": "Library for loading and initializing semantic analyzers based on command line configuration",
+  "main": "semantic-analyzer-library.js",
+  "author": "TQ",
+  "license": "UNLICENSED"
+}

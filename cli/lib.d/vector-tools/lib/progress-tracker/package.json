@@ -1,0 +1,8 @@
+{
+  "name": "progress-tracker",
+  "version": "1.0.0",
+  "description": "Progress tracking and resume functionality for vector database operations",
+  "main": "progress-tracker.js",
+  "author": "TQ",
+  "license": "UNLICENSED"
+}

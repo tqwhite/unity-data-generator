@@ -19,7 +19,7 @@ const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	);
 const applicationBasePath = findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
 
-const helpText = require('./lib/help-text');
+const helpText = require('./lib/help-text')({});
 
 // CRITICAL: This must happen before requiring any modules that access process.global
 // process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
@@ -60,9 +60,7 @@ const { prettyPrintAtomicExpansion } = require('./lib/pretty-print-atomic-expans
 const { queryVectorDatabase } = require('./lib/query-vector-database')({});
 const { assembleConfig } = require('./lib/assemble-config')({});
 const { createVectorDatabase } = require('./lib/create-vector-database')({});
-
-const vectorRebuildWorkflow = require('./lib/vector-rebuild-workflow')();
-const { executeRebuildWorkflow } = vectorRebuildWorkflow();
+const { replaceExistingDatabase } = require('./lib/replace-existing-database')({});
 
 // ---------------------------------------------------------------------
 // moduleFunction - main application entry point and execution pipeline
@@ -78,8 +76,8 @@ const moduleFunction =
 		const { openai } = aiOperationsGen({});
 
 		const {
-			semanticAnalyzer,
-		} = require('./lib/semanticAnalyzers/semantic-analyzer-loader');
+			semanticAnalyzerLibrary: semanticAnalyzer,
+		} = require('./lib/semanticAnalyzers/semantic-analyzer-library')({});
 
 		// Validate command combinations
 		const switches = commandLineParameters.switches;
@@ -113,13 +111,13 @@ const moduleFunction =
 
 		// ---------------------------------------------------------------------
 		// 2. Prepare modules for application initializer
-		const progressTracker = require('./lib/progress-tracker')();
+		const progressTracker = require('./lib/progress-tracker')({});
 		const modules = {
 			semanticAnalyzer,
 			dropAllVectorTables: databaseOperations.dropAllVectorTables,
 			dropProductionVectorTables: databaseOperations.dropProductionVectorTables,
 			showDatabaseStats: databaseOperations.showDatabaseStats,
-			executeRebuildWorkflow,
+			replaceExistingDatabase,
 			tableExists: databaseOperations.tableExists,
 			getTableCount: databaseOperations.getTableCount,
 			initVectorDatabase: databaseOperations.initVectorDatabase,
@@ -291,7 +289,7 @@ const moduleFunction =
 
 
 			// Execute rebuild workflow
-			executeRebuildWorkflow(
+			replaceExistingDatabase(
 				{
 				dataProfile,
 				sourceTableName,
@@ -303,8 +301,8 @@ const moduleFunction =
 				openai,
 				xLog,
 				semanticAnalyzer,
-				dbOperations,
-				dropOperations,
+				databaseOperations,
+				databaseOperations,
 				commandLineParameters,
 				(err) => {
 					if (err) {

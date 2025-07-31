@@ -1,16 +1,15 @@
-#!/usr/bin/env node
 'use strict';
 
-const qt = require('qtools-functional-library');
+const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 
-//START OF moduleFunction() ============================================================
+const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
+	// This is a special case module that is instantiated before process.global
+	// and does not need it.
 
-const moduleFunction = function(args={}) {
+	const mainHelp = args => {
+		const {defaultRequestFilePath, errorMessage=''} = args;
 
-const mainHelp = args => {
-	const {defaultRequestFilePath, errorMessage=''} = args;
-
-	return `
+		return `
 ============================================================
 
 NAME
@@ -140,11 +139,9 @@ EXAMPLES
 ============================================================
 ${errorMessage}
 `;
+	};
+
+	return { mainHelp };
 };
 
-	return ({mainHelp});
-};
-
-//END OF moduleFunction() ============================================================
-
-module.exports = moduleFunction();
+module.exports = moduleFunction({ moduleName }); //returns initialized moduleFunction
