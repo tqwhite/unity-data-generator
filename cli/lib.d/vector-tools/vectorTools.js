@@ -4,25 +4,25 @@
 // Suppress punycode deprecation warning
 process.noDeprecation = true;
 
-const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, ''); //this just seems to come in handy a lot
+const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 
-const qt = require('qtools-functional-library'); //also exposes qtLog(); qt.help({printOutput:true, queryString:'.*', sendJson:false});
+const qt = require('qtools-functional-library');
 
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
 
+// findProjectRoot - locate system directory
 const findProjectRoot = ({ rootFolderName = 'system', closest = true } = {}) =>
 	__dirname.replace(
 		new RegExp(`^(.*${closest ? '' : '?'}\/${rootFolderName}).*$`),
 		'$1',
 	);
-const applicationBasePath = findProjectRoot(); // call with {closest:false} if there are nested rootFolderName directories and you want the top level one
+const applicationBasePath = findProjectRoot();
 
 const helpText = require('./lib/help-text')({});
 
-// CRITICAL: This must happen before requiring any modules that access process.global
-// process.global.configPath=process.env.udgConfigPath; // unused, jina finds the config on its own, see node_modules/qtools-ai-thought-processor/...figure-out-config-path.js
+// Initialize AI framework with command line controls
 const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	configFileBaseName: moduleName,
 	applicationBasePath,
@@ -48,7 +48,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'--batchId',
 		'-json',
 	],
-}); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
+});
 
 // =====================================================================
 // MODULE IMPORTS (AFTER JINA INITIALIZATION)
@@ -56,11 +56,14 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 
 const databaseOperationsGen = require('./lib/database-operations');
 const aiOperationsGen = require('./lib/ai-operations');
-const { prettyPrintAtomicExpansion } = require('./lib/pretty-print-atomic-expansion')({});
+const { prettyPrintAtomicExpansion } =
+	require('./lib/pretty-print-atomic-expansion')({});
 const { queryVectorDatabase } = require('./lib/query-vector-database')({});
-const { assembleConfig } = require('./lib/assemble-config')({});
+const { reorganizeConfig } = require('./lib/assemble-config')({});
 const { createVectorDatabase } = require('./lib/create-vector-database')({});
-const { replaceExistingDatabase } = require('./lib/replace-existing-database')({});
+const { replaceExistingDatabase } = require('./lib/replace-existing-database')(
+	{},
+);
 
 // ---------------------------------------------------------------------
 // moduleFunction - main application entry point and execution pipeline
@@ -75,16 +78,24 @@ const moduleFunction =
 
 		const { openai } = aiOperationsGen({});
 
-		const {
-			semanticAnalyzerLibrary: semanticAnalyzer,
-		} = require('./lib/semanticAnalyzers/semantic-analyzer-library')({});
+		// Initialize semantic analyzer library
+		const semanticAnalyzerLibrary =
+			require('./lib/semanticAnalyzers/semantic-analyzer-library')({});
 
-		// Validate command combinations
+		const semanticAnalysisMode = commandLineParameters.qtGetSurePath(
+			'values.semanticAnalysisMode[0]',
+			'simpleVector',
+		);
+		const semanticAnalyzer = semanticAnalyzerLibrary.getAnalyzer({
+			semanticAnalysisMode,
+			xLog,
+		});
+
+		// Extract command line switches and values
 		const switches = commandLineParameters.switches;
 		const values = commandLineParameters.values;
 
 		// Check for conflicting operations
-
 		if (switches.showStats && switches.rebuildDatabase) {
 			xLog.error(
 				`Cannot do (switches.showStats && switches.rebuildDatabase. Exiting.}`,
@@ -92,19 +103,14 @@ const moduleFunction =
 			process.exit(1);
 		}
 
-
-
-
 		// =====================================================================
 		// MAIN APPLICATION EXECUTION PIPELINE
 		// =====================================================================
 
-
 		// ---------------------------------------------------------------------
 		// 1. Get and validate configuration
 
-
-		const config = assembleConfig(xLog, getConfig, commandLineParameters)(moduleName);
+		const config = reorganizeConfig(getConfig(moduleName));
 		if (!config.isValid) {
 			return {};
 		}
@@ -112,17 +118,6 @@ const moduleFunction =
 		// ---------------------------------------------------------------------
 		// 2. Prepare modules for application initializer
 		const progressTracker = require('./lib/progress-tracker')({});
-		const modules = {
-			semanticAnalyzer,
-			dropAllVectorTables: databaseOperations.dropAllVectorTables,
-			dropProductionVectorTables: databaseOperations.dropProductionVectorTables,
-			showDatabaseStats: databaseOperations.showDatabaseStats,
-			replaceExistingDatabase,
-			tableExists: databaseOperations.tableExists,
-			getTableCount: databaseOperations.getTableCount,
-			initVectorDatabase: databaseOperations.initVectorDatabase,
-			progressTracker,
-		};
 
 		// ---------------------------------------------------------------------
 		// 3. Initialize database
@@ -146,75 +141,27 @@ const moduleFunction =
 
 		// Handle commands in priority order
 		if (switches.showStats) {
-			try {
-				xLog.status('Starting Database Statistics Display for ALL profile...');
-				showDatabaseStats(vectorDb, xLog);
-				return { success: true, shouldExit: true };
-			} catch (error) {
-				xLog.error(`Failed to show database stats: ${error.message}`);
-				return { success: false, shouldExit: true };
-			}
+			showDatabaseStats(vectorDb, xLog);
 		}
 
 		// Progress tracking commands
 		if (switches.showProgress) {
-			try {
-				progressTracker.showProgress(vectorDb);
-				return { success: true, shouldExit: true };
-			} catch (error) {
-				xLog.error(`Show progress failed: ${error.message}`);
-				return { success: false, shouldExit: true };
-			}
+			progressTracker.showProgress(vectorDb);
 		}
 
+		// Resume incomplete batch operations
 		if (switches.resume) {
-			try {
-				let batchToResume;
-
-				if (values.batchId && values.batchId[0]) {
-					batchToResume = progressTracker.getBatchProgress(
-						vectorDb,
-						values.batchId[0],
-					);
-					if (!batchToResume) {
-						xLog.error(`Batch not found: ${values.batchId[0]}`);
-						return { success: false, shouldExit: true };
-					}
-				} else {
-					const incompleteBatches = progressTracker.getIncompleteBatches(
-						vectorDb,
-						config.dataProfile,
-					);
-					if (incompleteBatches.length === 0) {
-						xLog.status(
-							`No incomplete batches found for ${config.dataProfile} profile`,
-						);
-						return { success: true, shouldExit: true };
-					}
-					batchToResume = incompleteBatches[0];
-				}
-
-				xLog.status(`Resuming batch: ${batchToResume.batch_id}`);
-				xLog.status(
-					`Progress: ${batchToResume.processed_records}/${batchToResume.total_records} records`,
-				);
-
-				// Resume vector generation
-				return await createVectorDatabase(progressTracker)(
-					config,
-					openai,
-					vectorDb,
-					xLog,
-					semanticAnalyzer,
-					commandLineParameters,
-					batchToResume,
-				);
-			} catch (error) {
-				xLog.error(`Resume operation failed: ${error.message}`);
-				return { success: false, shouldExit: true };
-			}
+			return await createVectorDatabase(progressTracker)(
+				config,
+				openai,
+				vectorDb,
+				xLog,
+				semanticAnalyzer,
+				commandLineParameters,
+			);
 		}
 
+		// Drop specific vector tables
 		if (switches.dropTable) {
 			const { dataProfile, vectorTableName } = config;
 
@@ -276,6 +223,7 @@ const moduleFunction =
 			}
 		}
 
+		// Execute complete database rebuild workflow
 		if (switches.rebuildDatabase) {
 			const {
 				dataProfile,
@@ -285,18 +233,15 @@ const moduleFunction =
 				vectorTableName,
 			} = config;
 
-
-
-
 			// Execute rebuild workflow
 			replaceExistingDatabase(
 				{
-				dataProfile,
-				sourceTableName,
-				sourcePrivateKeyName,
-				sourceEmbeddableContentName,
-				vectorTableName,
-			},
+					dataProfile,
+					sourceTableName,
+					sourcePrivateKeyName,
+					sourceEmbeddableContentName,
+					vectorTableName,
+				},
 				vectorDb,
 				openai,
 				xLog,
@@ -316,6 +261,7 @@ const moduleFunction =
 			return { success: true, shouldExit: true };
 		}
 
+		// Generate new vectors for database
 		if (switches.writeVectorDatabase || values.writeVectorDatabase) {
 			return await createVectorDatabase(progressTracker)(
 				config,
@@ -327,6 +273,7 @@ const moduleFunction =
 			);
 		}
 
+		// Execute semantic similarity query
 		if (values.queryString) {
 			return await queryVectorDatabase(prettyPrintAtomicExpansion)(
 				config,
@@ -343,22 +290,9 @@ const moduleFunction =
 			'No operation specified. Use --help to see available commands.',
 		);
 		return { success: true, shouldExit: true };
-
-		// ---------------------------------------------------------------------
-		// 6. Handle execution result
-		if (!commandResult.success) {
-			xLog.error('Command execution failed');
-			return {};
-		}
-
-		if (commandResult.shouldExit) {
-			return {};
-		}
-
-		return {};
 	};
 
 //END OF moduleFunction() ============================================================
 
-module.exports = moduleFunction({ moduleName })({}); //runs it right now
-//module.exports = moduleFunction({config, commandLineParameters, moduleName})();
+module.exports = moduleFunction({ moduleName })({});
+

@@ -6,7 +6,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 	const { xLog, getConfig, rawConfig, commandLineParameters, projectRoot } = process.global;
 	const moduleConfig = getConfig(moduleName);
 
-	const assembleConfig = (xLog, getConfig, commandLineParameters) => (configModuleName) => {
+	const reorganizeConfig = (vectorToolsConfig) => {
 		
 		// Check if initialization is complete
 		if (!getConfig) {
@@ -14,8 +14,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			return { isValid: false };
 		}
 		
-		const localConfig = getConfig(configModuleName);
-		const { databaseFilePath, openAiApiKey, defaultTargetTableName } = localConfig;
+		const { databaseFilePath, openAiApiKey, defaultTargetTableName } = vectorToolsConfig;
 		
 		// Get and normalize data profile parameter
 		const dataProfileRaw = commandLineParameters.values.dataProfile;
@@ -28,7 +27,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		}
 		
 		// Extract profile-specific settings from nested config object
-		const profileSettings = localConfig.dataProfiles?.[dataProfile];
+		const profileSettings = vectorToolsConfig.dataProfiles?.[dataProfile];
 		if (!profileSettings) {
 			xLog.error(`Unknown data profile: '${dataProfile}'`);
 			xLog.error('Available profiles: sif, ceds');
@@ -73,7 +72,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		};
 	};
 
-	return { assembleConfig };
+	return { reorganizeConfig };
 };
 
 module.exports = moduleFunction({ moduleName }); //returns initialized moduleFunction
