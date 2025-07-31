@@ -32,22 +32,7 @@ const moduleFunction = function(
 		// ---------------------------------------------------------------------
 		// initializeVectorDatabase - initializes vector database with error handling
 		
-		const initializeVectorDatabase = (databaseFilePath, vectorTableName, xLog, initVectorDatabase) => {
-			try {
-				const vectorDb = initVectorDatabase(
-					databaseFilePath,
-					vectorTableName,
-					xLog,
-				);
-				
-				xLog.verbose('Vector database initialized successfully');
-				return { success: true, database: vectorDb };
-			} catch (error) {
-				xLog.error(`Failed to initialize vector database: ${error.message}`);
-				xLog.error('Stack trace:', error.stack);
-				return { success: false, error: error.message };
-			}
-		};
+
 
 		
 		// ---------------------------------------------------------------------
