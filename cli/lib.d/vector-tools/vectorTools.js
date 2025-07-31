@@ -57,8 +57,6 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 const databaseOperationsGen = require('./lib/database-operations');
 const aiOperationsGen = require('./lib/ai-operations');
 
-const vectorConfigHandler = require('./lib/vector-config-handler');
-
 const vectorRebuildWorkflow = require('./lib/vector-rebuild-workflow')();
 const { executeRebuildWorkflow } = vectorRebuildWorkflow();
 
@@ -383,11 +381,84 @@ const moduleFunction =
 		// MAIN APPLICATION EXECUTION PIPELINE
 		// =====================================================================
 
+		const getProfileConfiguration = (configModuleName) => {
+			// Access directly instead of destructuring
+			const xLog = process.global.xLog;
+			const getConfig = process.global.getConfig;
+			const rawConfig = process.global.rawConfig;
+			const commandLineParameters = process.global.commandLineParameters;
+			
+			// Check if initialization is complete
+			if (!getConfig) {
+				console.error('Error: qtools-ai-framework not properly initialized. getConfig is not available.');
+				return { isValid: false };
+			}
+			
+			const config = getConfig(configModuleName);
+			const { databaseFilePath, openAiApiKey, defaultTargetTableName } = config;
+			
+			// Get and normalize data profile parameter
+			const dataProfileRaw = commandLineParameters.values.dataProfile;
+			const dataProfile = Array.isArray(dataProfileRaw) ? dataProfileRaw[0] : dataProfileRaw;
+			
+			// Validate data profile is provided
+			if (!dataProfile) {
+				xLog.error('--dataProfile parameter is required');
+				xLog.error('Available profiles: sif, ceds');
+				xLog.error('Example: vectorTools --dataProfile=sif --showStats');
+				return { isValid: false };
+			}
+			
+			// Extract profile-specific settings from nested config object
+			const profileSettings = config.dataProfiles?.[dataProfile];
+			if (!profileSettings) {
+				xLog.error(`Unknown data profile: '${dataProfile}'`);
+				xLog.error('Available profiles: sif, ceds');
+				return { isValid: false };
+			}
+			
+			const sourceTableName = profileSettings.sourceTableName;
+			const sourcePrivateKeyName = profileSettings.sourcePrivateKeyName;
+			const sourceEmbeddableContentNameStr = profileSettings.sourceEmbeddableContentName;
+			const profileDefaultTargetTableName = profileSettings.defaultTargetTableName;
+			
+			// Parse comma-separated embeddable content names
+			const sourceEmbeddableContentName = sourceEmbeddableContentNameStr ? 
+				sourceEmbeddableContentNameStr.split(',').map(s => s.trim()) : [];
+			
+			// Validate required profile configuration
+			if (!sourceTableName || !sourcePrivateKeyName || !sourceEmbeddableContentName.length) {
+				xLog.error(`Invalid or missing configuration for data profile '${dataProfile}'`);
+				xLog.error('Required settings: sourceTableName, sourcePrivateKeyName, sourceEmbeddableContentName');
+				xLog.error(`Found: sourceTableName='${sourceTableName}', sourcePrivateKeyName='${sourcePrivateKeyName}', sourceEmbeddableContentName='${sourceEmbeddableContentNameStr}'`);
+				return { isValid: false };
+			}
+			
+			// Determine target table name (custom > profile default > global default)
+			const vectorTableName =
+				commandLineParameters.values.targetTableName || 
+				profileDefaultTargetTableName || 
+				defaultTargetTableName;
+			
+			// Return complete configuration
+			return {
+				isValid: true,
+				dataProfile,
+				databaseFilePath,
+				openAiApiKey,
+				sourceTableName,
+				sourcePrivateKeyName,
+				sourceEmbeddableContentName,
+				vectorTableName,
+				defaultTargetTableName,
+				isCustomTargetTable: !!commandLineParameters.values.targetTableName
+			};
+		};
+
 		// ---------------------------------------------------------------------
 		// 1. Get and validate configuration
 
-		const { getProfileConfiguration, logConfigurationStatus } =
-			vectorConfigHandler({});
+
 		const config = getProfileConfiguration(moduleName);
 		if (!config.isValid) {
 			return {};
@@ -405,7 +476,6 @@ const moduleFunction =
 			tableExists: databaseOperations.tableExists,
 			getTableCount: databaseOperations.getTableCount,
 			initVectorDatabase: databaseOperations.initVectorDatabase,
-			logConfigurationStatus,
 			progressTracker,
 		};
 
