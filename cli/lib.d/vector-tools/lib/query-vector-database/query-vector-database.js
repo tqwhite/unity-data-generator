@@ -11,9 +11,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		config,
 		openai,
 		vectorDb,
-		xLog,
 		semanticAnalyzer,
-		commandLineParameters,
 	) => {
 		const {
 			dataProfile,

@@ -6,7 +6,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 	const { xLog, getConfig, rawConfig, commandLineParameters, projectRoot } = process.global;
 	const moduleConfig = getConfig(moduleName);
 
-	const replaceExistingDatabase = (config, vectorDb, openai, xLog, semanticAnalyzer, dbOperations, dropOperations, commandLineParameters, callback) => {
+	const replaceExistingDatabase = (config, vectorDb, openai, semanticAnalyzer, dbOperations, dropOperations, callback) => {
 		const fs = require('fs');
 		const path = require('path');
 		const { execSync } = require('child_process');

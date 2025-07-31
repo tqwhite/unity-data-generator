@@ -56,9 +56,7 @@ const moduleFunction =
 				config,
 				openai,
 				vectorDb,
-				xLog,
 				semanticAnalyzer,
-				commandLineParameters,
 				resumeBatch = null,
 			) => {
 				const {

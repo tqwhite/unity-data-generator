@@ -32,11 +32,12 @@ const applicationBasePath = findProjectRoot(); // call with {closest:false} if t
 const moduleFunction =
 	({ moduleName } = {}) =>
 	({ unused }) => {
+		const { xLog } = process.global;
 		
 		// ---------------------------------------------------------------------
 		// initVectorDatabase - initializes SQLite database with vector extension
 		
-		const initVectorDatabase = (databaseFilePath, vectorTableName, xLog) => {
+		const initVectorDatabase = (databaseFilePath, vectorTableName) => {
 			try {
 				const sqliteVec = require('sqlite-vec');
 				const db = require('better-sqlite3')(databaseFilePath, {});

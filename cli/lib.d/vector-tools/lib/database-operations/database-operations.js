@@ -26,12 +26,11 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 	// ---------------------------------------------------------------------
 	// initializeDatabase - initializes vector database with error handling
 	
-	const initializeDatabase = (databaseFilePath, vectorTableName, xLog) => {
+	const initializeDatabase = (databaseFilePath, vectorTableName) => {
 		try {
 			const vectorDb = initVectorDatabase(
 				databaseFilePath,
 				vectorTableName,
-				xLog,
 			);
 			
 			xLog.verbose(`Using ${databaseFilePath}`);

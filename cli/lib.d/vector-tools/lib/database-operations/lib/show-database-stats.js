@@ -32,11 +32,12 @@ const applicationBasePath = findProjectRoot(); // call with {closest:false} if t
 const moduleFunction =
 	({ moduleName } = {}) =>
 	({ unused }) => {
+		const { xLog } = process.global;
 		
 		// ---------------------------------------------------------------------
 		// showDatabaseStats - displays comprehensive database statistics
 		
-		const showDatabaseStats = (db, xLog) => {
+		const showDatabaseStats = (db) => {
 			try {
 			// Show SQLite and vec versions
 			const sqlite_version = db.prepare('select sqlite_version() as version').get().version;

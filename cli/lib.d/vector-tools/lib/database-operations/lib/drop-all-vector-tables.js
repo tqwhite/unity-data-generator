@@ -38,6 +38,10 @@ const moduleFunction =
 		// dropAllVectorTables - safely drops vector tables with enhanced safety checks
 		
 		const dropAllVectorTables = (db, xLog, specifiedVectorTableName, options = {}) => {
+console.log(`\n=-=============   dropAllVectorTables  ========================= [drop-all-vector-tables.js.]\n`);
+
+
+return "NO DROPPING WAS DONE";
 			const { dryRun = false, skipConfirmation = false, excludePatterns = [] } = options;
 			
 			// CRITICAL SAFETY CHECK: Only drop tables matching our specific vector table name

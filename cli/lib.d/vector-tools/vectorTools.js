@@ -75,6 +75,7 @@ const moduleFunction =
 			process.global;
 
 		const databaseOperations = databaseOperationsGen({});
+		const { showDatabaseStats, dropAllVectorTables } = databaseOperations;
 
 		const { openai } = aiOperationsGen({});
 
@@ -124,7 +125,6 @@ const moduleFunction =
 		const vectorDb = databaseOperations.initializeDatabase(
 			config.databaseFilePath,
 			config.vectorTableName,
-			xLog,
 		);
 
 		// ---------------------------------------------------------------------
@@ -141,7 +141,7 @@ const moduleFunction =
 
 		// Handle commands in priority order
 		if (switches.showStats) {
-			showDatabaseStats(vectorDb, xLog);
+			showDatabaseStats(vectorDb);
 		}
 
 		// Progress tracking commands
@@ -155,9 +155,7 @@ const moduleFunction =
 				config,
 				openai,
 				vectorDb,
-				xLog,
 				semanticAnalyzer,
-				commandLineParameters,
 			);
 		}
 
@@ -195,7 +193,7 @@ const moduleFunction =
 			// Show the empty state after dropping tables
 			try {
 				xLog.status('Database state after dropping tables:');
-				showDatabaseStats(vectorDb, xLog);
+				showDatabaseStats(vectorDb);
 			} catch (error) {
 				xLog.error(`Failed to show database stats: ${error.message}`);
 			}
@@ -244,11 +242,9 @@ const moduleFunction =
 				},
 				vectorDb,
 				openai,
-				xLog,
 				semanticAnalyzer,
 				databaseOperations,
 				databaseOperations,
-				commandLineParameters,
 				(err) => {
 					if (err) {
 						xLog.error(`Rebuild failed: ${err.message}`);
@@ -267,9 +263,7 @@ const moduleFunction =
 				config,
 				openai,
 				vectorDb,
-				xLog,
 				semanticAnalyzer,
-				commandLineParameters,
 			);
 		}
 
@@ -279,9 +273,7 @@ const moduleFunction =
 				config,
 				openai,
 				vectorDb,
-				xLog,
 				semanticAnalyzer,
-				commandLineParameters,
 			);
 		}
 
