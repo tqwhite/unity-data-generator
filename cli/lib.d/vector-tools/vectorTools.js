@@ -43,6 +43,9 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'--dataProfile',
 		'--semanticAnalysisMode',
 		'--batchId',
+		'--query',
+		'--whereClause',
+		'--resultLimit',
 		'-json',
 	],
 });
@@ -60,6 +63,8 @@ const { replaceExistingDatabase } = require('./lib/replace-existing-database')(
 
 const semanticAnalyzerLibrary =
 	require('./lib/semanticAnalyzers/semantic-analyzer-library')({});
+
+const { directQueryTool } = require('./lib/direct-query-tool/direct-query-tool')({});
 
 //START OF moduleFunction() ============================================================
 const moduleFunction =
@@ -165,6 +170,42 @@ const moduleFunction =
 				vectorDb,
 				semanticAnalyzer,
 			);
+		}
+
+		// ====================================================================================
+		// DIRECT DATABASE QUERY FUNCTION
+
+		if (values.query) {
+			const queryType = values.query.qtLast();
+			
+			// showQueryInfo doesn't require whereClause
+			if (queryType === 'showQueryInfo') {
+				return directQueryTool({
+					config,
+					vectorDb,
+					queryOptions: {
+						queryType,
+						whereClause: null,
+						resultLimit: null
+					}
+				});
+			}
+			
+			// Other queries require whereClause
+			if (values.whereClause) {
+				return directQueryTool({
+					config,
+					vectorDb,
+					queryOptions: {
+						queryType,
+						whereClause: values.whereClause.qtLast(),
+						resultLimit: values.resultLimit ? values.resultLimit.qtLast() : null
+					}
+				});
+			} else {
+				xLog.error('--whereClause parameter is required for this query type');
+				process.exit(1);
+			}
 		}
 
 		xLog.status(

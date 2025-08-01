@@ -1,0 +1,5 @@
+{
+	"name": "direct-query-tool",
+	"version": "1.0.0",
+	"description": "Direct database query tool for vectorTools with extensible query types"
+}
