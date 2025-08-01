@@ -12,6 +12,7 @@ const moduleFunction =
 		const getAnalyzer = () => {
 			const semanticAnalysisMode = commandLineParameters.qtGetSurePath(
 				'values.semanticAnalysisMode[0]',
+				'atomicVector'
 			);
 			const validAnalyzers = ['simpleVector', 'atomicVector'];
 			if (!validAnalyzers.includes(semanticAnalysisMode)) {
@@ -28,7 +29,7 @@ const moduleFunction =
 			};
 
 			const analyserName = analyzerMap[semanticAnalysisMode];
-			const analyzerModule = require(`../${analyserName}`);
+			const analyzerModule = require(`./${analyserName}`);
 			const semanticAnalyzer = analyzerModule();
 			xLog.status(`Using ${semanticAnalysisMode} semantic analyzer`);
 

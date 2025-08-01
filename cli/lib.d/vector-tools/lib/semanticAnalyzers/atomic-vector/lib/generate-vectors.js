@@ -24,6 +24,10 @@ const moduleFunction = function(args = {}) {
         const generatedVectors = [];
         const atomicTableName = `${tableName}_atomic`;
 
+console.log(`atomicTableName=${atomicTableName}`);
+
+console.log(' Debug Exit [generate-vectors.js.moduleFunction]', {depth:4, colors:true}); process.exit(); //tqDebug
+
         // Create atomic table
         const createTableSql = `CREATE TABLE IF NOT EXISTS ${atomicTableName} (
             refId TEXT PRIMARY KEY,
