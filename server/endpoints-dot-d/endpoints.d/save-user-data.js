@@ -167,7 +167,7 @@ const moduleFunction = function ({
 	]);
 	
 	addEndpoint({
-		name:routePath,
+		name:`${routingPrefix}saveUserData`,
 		method:'post',
 		routePath:`${routingPrefix}saveUserData`,
 		serviceFunction:saveDataFunction,
