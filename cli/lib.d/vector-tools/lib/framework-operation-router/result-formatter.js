@@ -12,29 +12,46 @@ const moduleFunction = function (args = {}) {
 	// LEGACY FORMAT SIMULATION
 
 	const formatQueryResultsAsLegacy = (frameworkResult, originalQuery) => {
-		if (!frameworkResult || !frameworkResult.queryResults) {
+		// Handle multiple possible result formats
+		const queryResults = frameworkResult?.queryResults || frameworkResult?.query_results || frameworkResult?.results;
+		
+		if (!frameworkResult || !queryResults || !Array.isArray(queryResults) || queryResults.length === 0) {
 			return null;
 		}
 
-		const { queryResults, totalResults, searchType, embeddingModel } = frameworkResult;
+		const { totalResults, searchType, embeddingModel, search_metadata } = frameworkResult;
 
-		// Generate the numbered results header (legacy format)
+		// Generate the final summary first (like legacy)
+		const summary = `Found ${queryResults.length} valid matches for "${originalQuery}"`;
+
+		// Generate the numbered results (like legacy format)
 		const numberedResults = queryResults.map((result, index) => {
-			const score = result.similarity || (0.8 + Math.random() * 0.3); // Mock similarity for skeleton
-			const refId = result.refId || `mock${String(index + 1).padStart(3, '0')}`;
-			const definition = result.Definition || result.definition || 'Mock result from framework';
+			const score = result.distance || result.score || result.similarity || 0.0;
+			const refId = result.refId || result.record?.GlobalID || `result${index + 1}`;
+			
+			// Build description from record fields (same logic as legacy)
+			let definition = '';
+			if (result.record) {
+				const record = result.record;
+				if (record.Definition) {
+					definition = record.Definition;
+				} else if (record.description) {
+					definition = record.description;
+				} else if (record.Element) {
+					definition = record.Element;
+				} else {
+					// Fallback to any string field
+					definition = Object.values(record).find(val => typeof val === 'string' && val.length > 10) || 'No description available';
+				}
+			} else {
+				definition = result.Definition || result.definition || 'Framework result';
+			}
 			
 			return `${index + 1}. [score: ${score.toFixed(6)}] ${refId} ${definition}`;
 		}).join('\n');
 
-		// Generate the atomic expansion analysis (simplified for skeleton)
-		const expansionAnalysis = generateMockExpansionAnalysis(originalQuery, queryResults);
-
-		// Generate the final summary
-		const summary = `Found ${queryResults.length} valid matches for "${originalQuery}"`;
-
-		// Combine all parts in legacy format
-		return `${numberedResults}\n${expansionAnalysis}\n\n${summary}`;
+		// Return clean legacy format (summary + results, no expansion analysis)
+		return `${summary}\n${numberedResults}\n`;
 	};
 
 	const generateMockExpansionAnalysis = (query, results) => {

@@ -89,9 +89,9 @@ const moduleFunction = function (args = {}) {
 			// Legacy format output for console display
 			_legacyFormatOutput: legacyFormattedOutput,
 			// Structured data for programmatic access
-			results: wisdom.queryResults || [],
-			queryString: wisdom.queryString || originalParams.queryString,
-			totalResults: wisdom.totalResults || (wisdom.queryResults ? wisdom.queryResults.length : 0),
+			results: wisdom.results || wisdom.queryResults || [],
+			queryString: wisdom.queryString || wisdom.metadata?.queryString || originalParams.queryString,
+			totalResults: wisdom.totalResults || wisdom.metadata?.totalMatches || (Array.isArray(wisdom.results) ? wisdom.results.length : 0),
 			searchType: wisdom.searchType || 'framework',
 			embeddingModel: wisdom.embeddingModel || 'framework-model',
 			// Framework metadata

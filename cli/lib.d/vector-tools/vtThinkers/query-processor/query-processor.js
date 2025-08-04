@@ -33,105 +33,195 @@ const moduleFunction = function (args = {}) {
 		};
 
 	// ================================================================================
-	// VECTOR SEARCH OPERATIONS (SKELETON - Mock for now)
+	// REAL VECTOR SEARCH OPERATIONS
 
-	const performVectorSearch = (args, callback) => {
-		const { queryEmbedding, searchType, resultCount } = args;
+	// Import required modules at module level
+	const OpenAI = require('openai');
+	const Database = require('better-sqlite3');
+	const { reorganizeValidateConfig } = require('../../lib/assemble-config')({});
+
+	const performVectorQuery = async (args) => {
+		const { queryString, dataProfile, semanticAnalysisMode, resultCount, verbose } = args;
 		
-		xLog.verbose(`${moduleName}: Would perform ${searchType} vector search with ${resultCount} results`);
+		xLog.status(`${moduleName}: Direct OpenAI + SQLite approach (no semantic analyzer module loading)`);
+
+		// Get basic config info without complex reorganization
+		const aiConfig = getConfig('ai-operations');
+		const databasePath = dataProfile === 'ceds' 
+			? '/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/datastore/cedsIds.sqlite3'
+			: '/Users/tqwhite/Documents/webdev/A4L/unityObjectGenerator/system/datastore/cedsIds.sqlite3'; // Same for now
 		
-		// SKELETON: Return mock search results
-		const mockResults = [
-			{
-				refId: 'result001',
-				GlobalID: 'result001',
-				Definition: 'Mock result 1: This is a test result for vector search validation',
-				Description: 'First mock search result',
-				similarity: 0.92,
-				factType: searchType === 'atomic' ? 'mock_element_1' : 'simple',
-				factText: searchType === 'atomic' ? 'This is a mock atomic fact' : null
-			},
-			{
-				refId: 'result002', 
-				GlobalID: 'result002',
-				Definition: 'Mock result 2: Another test result for framework testing',
-				Description: 'Second mock search result',
-				similarity: 0.88,
-				factType: searchType === 'atomic' ? 'mock_element_2' : 'simple',
-				factText: searchType === 'atomic' ? 'Another mock atomic fact' : null
-			},
-			{
-				refId: 'result003',
-				GlobalID: 'result003', 
-				Definition: 'Mock result 3: Final test result for completeness',
-				Description: 'Third mock search result',
-				similarity: 0.85,
-				factType: searchType === 'atomic' ? 'mock_element_3' : 'simple',
-				factText: searchType === 'atomic' ? 'Final mock atomic fact' : null
+		const vectorTableName = dataProfile === 'ceds' ? 'cedsElementVectors_atomic' : 'sifElementVectors_atomic';
+		const sourceTableName = dataProfile === 'ceds' ? '_CEDSElements' : 'naDataModel';
+		const sourceKeyName = dataProfile === 'ceds' ? 'GlobalID' : 'refId';
+		
+		try {
+			// Initialize OpenAI directly
+			const openai = new OpenAI({
+				apiKey: aiConfig.apiKey
+			});
+
+			// Generate embedding for query
+			xLog.status(`${moduleName}: Generating embedding for query`);
+			const response = await openai.embeddings.create({
+				model: 'text-embedding-3-small',
+				input: queryString
+			});
+			
+			const queryEmbedding = response.data[0].embedding;
+			const queryBuffer = Buffer.from(new Float32Array(queryEmbedding).buffer);
+
+			// Initialize database using the same method as legacy system
+			const sqliteVec = require('sqlite-vec');
+			const Database = require('better-sqlite3');
+			const vectorDb = new Database(databasePath);
+			sqliteVec.load(vectorDb);
+			
+			xLog.verbose(`${moduleName}: Loaded SQLite vector extension using sqlite-vec module`);
+
+			// Direct vector search
+			xLog.status(`${moduleName}: Performing vector search in ${vectorTableName}`);
+			
+			const sql = `
+				SELECT sourceRefId, factType, factText, 
+				       vec_distance_L2(embedding, ?) as distance
+				FROM ${vectorTableName}
+				WHERE embedding IS NOT NULL
+				ORDER BY distance
+				LIMIT ?
+			`;
+
+			const vectorResults = vectorDb.prepare(sql).all(queryBuffer, resultCount * 2);
+
+			// Get unique source records
+			const uniqueRecords = new Map();
+			for (const row of vectorResults) {
+				if (!uniqueRecords.has(row.sourceRefId)) {
+					uniqueRecords.set(row.sourceRefId, {
+						refId: row.sourceRefId,
+						distance: row.distance,
+						matches: []
+					});
+				}
+				uniqueRecords.get(row.sourceRefId).matches.push({
+					factType: row.factType,
+					factText: row.factText,
+					distance: row.distance
+				});
 			}
-		];
 
-		// Simulate async vector search
-		setTimeout(() => {
-			callback('', {
-				results: mockResults.slice(0, resultCount),
-				totalResults: mockResults.length,
-				searchType: searchType
-			});
-		}, 150);
-	};
+			// Get top results and look up source records
+			const topResults = Array.from(uniqueRecords.values())
+				.sort((a, b) => a.distance - b.distance)
+				.slice(0, resultCount);
 
-	const generateQueryEmbedding = (queryString, callback) => {
-		xLog.verbose(`${moduleName}: Would generate embedding for query: ${queryString.substring(0, 100)}...`);
+			const query_results = [];
+			
+			for (let i = 0; i < topResults.length; i++) {
+				const result = topResults[i];
+				const formattedKey = dataProfile === 'ceds' ? result.refId.padStart(6, '0') : result.refId;
+				
+				// Look up source record
+				const sourceRecord = vectorDb.prepare(
+					`SELECT * FROM ${sourceTableName} WHERE ${sourceKeyName} = ?`
+				).get(formattedKey);
+				
+				if (sourceRecord) {
+					query_results.push({
+						rank: i + 1,
+						refId: result.refId,
+						distance: result.distance,
+						score: result.distance,
+						record: sourceRecord,
+						factTypesMatched: result.matches.length,
+						totalMatches: result.matches.length
+					});
+				}
+			}
 
-		// SKELETON: Return mock query embedding (1536 dimensions like text-embedding-3-small)
-		const mockQueryEmbedding = new Array(1536).fill(0).map(() => Math.random() * 2 - 1);
+			vectorDb.close();
 
-		// Simulate async embedding generation
-		setTimeout(() => {
-			callback('', {
-				embedding: mockQueryEmbedding,
-				model: 'text-embedding-3-small-mock',
-				usage: { prompt_tokens: queryString.length / 4, total_tokens: queryString.length / 4 }
-			});
-		}, 75);
+			xLog.status(`${moduleName}: Found ${query_results.length} results using direct approach`);
+
+			return {
+				query_results,
+				search_metadata: {
+					queryString,
+					dataProfile,
+					semanticAnalysisMode,
+					resultCount: query_results.length,
+					totalMatches: query_results.length
+				}
+			};
+
+		} catch (error) {
+			xLog.error(`${moduleName}: Direct vector search error: ${error.message}`);
+			throw error;
+		}
 	};
 
 	// ================================================================================
 	// DO THE JOB
 
-	const executeRequest = (args, callback) => {
+	const executeRequest = async (args, callback) => {
 		try {
-			// SKELETON: Return mock results immediately to verify parameter mapping works
-			xLog.verbose(`${moduleName}: SKELETON MODE - Returning mock query results`);
+			// Debug parameter sources
+			xLog.verbose(`${moduleName}: executeRequest args: ${JSON.stringify(args, null, 2)}`);
+			
+			// Extract parameters from args/latestWisdom with multiple fallback sources
+			const { latestWisdom = {}, thinkerResponses = {} } = args || {};
+			const { commandLineParameters } = process.global;
+			
+			// Try multiple sources for parameters
+			const queryString = latestWisdom.queryString || 
+							   args?.queryString || 
+							   commandLineParameters?.values?.queryString?.[0];
+							   
+			const dataProfile = latestWisdom.dataProfile || 
+							   args?.dataProfile || 
+							   commandLineParameters?.values?.dataProfile?.[0] || 
+							   'ceds';
+							   
+			const semanticAnalysisMode = latestWisdom.semanticAnalysisMode || 
+										args?.semanticAnalysisMode || 
+										commandLineParameters?.values?.semanticAnalysisMode?.[0] || 
+										'atomicVector';
+										
+			const resultCount = parseInt(latestWisdom.resultCount || 
+										args?.resultCount || 
+										commandLineParameters?.values?.resultCount?.[0] || 
+										5);
+										
+			const verbose = latestWisdom.verbose || 
+						   args?.verbose || 
+						   commandLineParameters?.switches?.verbose || 
+						   false;
 
-			const mockResults = {
-				queryResults: [
-					{
-						refId: 'mock001',
-						Definition: 'Mock Framework Result 1: Parameter mapping successful',
-						similarity: 0.95,
-						factType: 'framework_test'
-					},
-					{
-						refId: 'mock002', 
-						Definition: 'Mock Framework Result 2: qtools-ai-framework integration working',
-						similarity: 0.90,
-						factType: 'framework_test'
-					}
-				],
-				queryString: 'framework query test',
-				totalResults: 2,
-				searchType: 'framework_mock',
-				embeddingModel: 'framework-test-model',
-				_frameworkSuccess: true
-			};
+			if (!queryString) {
+				throw new Error(`No queryString provided for vector search. Sources checked: latestWisdom=${!!latestWisdom.queryString}, args=${!!args?.queryString}, CLI=${!!commandLineParameters?.values?.queryString?.[0]}`);
+			}
 
-			xLog.status(`${moduleName}: Framework integration successful - returning mock results`);
-			callback('', mockResults);
+			xLog.status(`${moduleName}: REAL MODE - Performing vector search`);
+			xLog.verbose(`${moduleName}: Query: "${queryString}"`);
+			xLog.verbose(`${moduleName}: Profile: ${dataProfile}, Mode: ${semanticAnalysisMode}, Count: ${resultCount}`);
+
+			// Perform real vector search
+			const searchResults = await performVectorQuery({
+				queryString,
+				dataProfile,
+				semanticAnalysisMode,
+				resultCount,
+				verbose
+			});
+
+			xLog.status(`${moduleName}: Real vector search completed successfully`);
+			xLog.verbose(`${moduleName}: Returning result keys: ${Object.keys(searchResults)}`);
+			
+			// Return results wrapped in wisdom object like other thinkers
+			callback('', { wisdom: searchResults });
 
 		} catch (error) {
-			xLog.error(`${moduleName}: Error in skeleton: ${error.message}`);
+			xLog.error(`${moduleName}: Error in real query processing: ${error.message}`);
 			callback(error);
 		}
 	};

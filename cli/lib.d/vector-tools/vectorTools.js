@@ -48,6 +48,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'--resultLimit',
 		'-json',
 		'-useFramework',
+		'-useLegacy',
 		'--thoughtProcess',
 	],
 });
