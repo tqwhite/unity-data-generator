@@ -1,1 +1,25 @@
 .aider*
+
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Package lock files (optional - some prefer to track these)
+# package-lock.json
+# */package-lock.json
+
+# Build outputs
+dist/
+build/
+*.log
+*.tmp
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

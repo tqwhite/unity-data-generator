@@ -6,302 +6,50 @@ const moduleFunction = function (args = {}) {
 	const { xLog, getConfig } = process.global;
 	const localConfig = getConfig(moduleName);
 
+	// Import schema registry and subordinate modules
+	const schemaRegistry = require('./schemas')({});
+	const validation = require('./lib/validation')({});
+	const formatters = require('./lib/formatters')({});
+	const queryBuilders = require('./lib/query-builders')({});
+
+	function getCurrentSemanticMode() {
+		const { commandLineParameters } = process.global;
+		return commandLineParameters.qtGetSurePath('values.semanticAnalysisMode[0]', 'simpleVector');
+	}
+
 	const queryTypes = {
 		showAll: {
 			description: 'Join source data with vector table metadata (full text)',
-			handler: buildShowAllQuery
+			handler: (args) => queryBuilders.buildShowAllQuery({...args, validation, getCurrentSemanticMode, schemaRegistry})
 		},
 		vectorsOnly: {
 			description: 'Show just vector table records',
-			handler: buildVectorsOnlyQuery
+			handler: (args) => queryBuilders.buildVectorsOnlyQuery({...args, validation, getCurrentSemanticMode, schemaRegistry})
 		},
 		sourceOnly: {
 			description: 'Show just source table records', 
-			handler: buildSourceOnlyQuery
+			handler: (args) => queryBuilders.buildSourceOnlyQuery({...args, validation, getCurrentSemanticMode, schemaRegistry})
+		},
+		compareAnalysis: {
+			description: 'Compare original definitions with atomic and simple vector analysis',
+			handler: (args) => queryBuilders.buildCompareAnalysisQuery({...args, validation})
+		},
+		matchDiscrepancies: {
+			description: 'Find SIF elements where simple and atomic vector matching produced different CEDS matches',
+			handler: queryBuilders.buildMatchDiscrepanciesQuery
 		},
 		showQueryInfo: {
 			description: 'Show all query types and their compiled SQL statements',
-			handler: buildShowQueryInfoQuery
+			handler: queryBuilders.buildShowQueryInfoQuery
 		}
 	};
 
-	function validateInputs({ queryType, whereClause }) {
-		// showQueryInfo doesn't need a whereClause
-		if (queryType === 'showQueryInfo') {
-			if (!queryType) {
-				xLog.error('--query parameter is required');
-				process.exit(1);
-				return false;
-			}
-		} else {
-			if (!queryType || !whereClause) {
-				xLog.error('Both --query and --whereClause parameters are required');
-				process.exit(1);
-				return false;
-			}
-		}
 
-		// Ensure we have strings, not arrays or other types
-		const cleanQueryType = typeof queryType === 'string' ? queryType : String(queryType || '');
-		const cleanWhereClause = typeof whereClause === 'string' ? whereClause : String(whereClause || '');
-
-		// For non-showQueryInfo queries, both parameters must have values
-		if (queryType !== 'showQueryInfo' && (!cleanQueryType || !cleanWhereClause)) {
-			xLog.error('Both --query and --whereClause parameters must have values');
-			process.exit(1);
-			return false;
-		}
-
-		if (!queryTypes[cleanQueryType]) {
-			const validTypes = Object.keys(queryTypes).join(', ');
-			xLog.error(`Invalid query type: ${cleanQueryType}. Valid types: ${validTypes}`);
-			process.exit(1);
-			return false;
-		}
-
-		// Validate WHERE clause for SQL injection prevention
-		const dangerousPatterns = [';', '--', '/*', '*/', 'DROP', 'DELETE', 'UPDATE', 'INSERT', 'ALTER'];
-		
-		const upperWhereClause = cleanWhereClause.toUpperCase();
-		for (const pattern of dangerousPatterns) {
-			if (upperWhereClause.includes(pattern)) {
-				xLog.error(`Invalid WHERE clause: contains prohibited pattern '${pattern}'`);
-				process.exit(1);
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	function sanitizeWhereClause(whereClause) {
-		// Convert double quotes to single quotes for SQLite string literals
-		// This handles cases like: createdAt>"2025-07-01" -> createdAt>'2025-07-01'
-		// But preserves intentional double quotes around identifiers if needed
-		
-		// Simple heuristic: if we see >"..." or <"..." or ="..." convert to single quotes
-		// This covers the most common user-friendly input patterns
-		let sanitized = whereClause
-			.replace(/([><=!]+)"([^"]+)"/g, "$1'$2'")  // Convert >"value" to >'value'
-			.replace(/\s+"([^"]+)"/g, " '$1'")         // Convert standalone "value" to 'value'  
-			.replace(/^"([^"]+)"/g, "'$1'");          // Convert leading "value" to 'value'
-		
-		xLog.debug(`Sanitized WHERE clause: ${whereClause} -> ${sanitized}`);
-		return sanitized;
-	}
-
-	function buildShowAllQuery({ config, whereClause, resultLimit }) {
-		const { commandLineParameters } = process.global;
-		const { sourceTableName, vectorTableName, sourcePrivateKeyName } = config;
-		
-		// Sanitize WHERE clause for user-friendly input
-		const sanitizedWhereClause = sanitizeWhereClause(whereClause);
-		
-		// Determine actual vector table name based on semantic analysis mode
-		const semanticAnalysisMode = commandLineParameters.qtGetSurePath('values.semanticAnalysisMode[0]', 'simpleVector');
-		const actualVectorTableName = semanticAnalysisMode === 'atomicVector' 
-			? `${vectorTableName}_atomic` 
-			: vectorTableName;
-		
-		// Select useful columns, exclude vector embeddings
-		let query;
-		if (config.dataProfile === 'ceds') {
-			if (semanticAnalysisMode === 'atomicVector') {
-				// Atomic vector table has rich metadata
-				query = `
-					SELECT 
-						s.GlobalID,
-						s.ElementName,
-						s.Definition,
-						s.Format,
-						s.HasOptionSet,
-						s.UsageNotes,
-						v.refId as vectorRefId,
-						v.factType,
-						v.factText,
-						v.semanticCategory,
-						v.conceptualDimension,
-						v.createdAt as vectorCreatedAt
-					FROM ${sourceTableName} s
-					LEFT JOIN ${actualVectorTableName} v ON s.${sourcePrivateKeyName} = v.sourceRefId
-					WHERE ${sanitizedWhereClause}
-				`;
-			} else {
-				// Simple vector table (vec0 virtual table) has minimal structure
-				query = `
-					SELECT 
-						s.GlobalID,
-						s.ElementName,
-						s.Definition,
-						s.Format,
-						s.HasOptionSet,
-						s.UsageNotes
-					FROM ${sourceTableName} s
-					WHERE ${sanitizedWhereClause}
-				`;
-			}
-		} else if (config.dataProfile === 'sif') {
-			query = `
-				SELECT 
-					s.refId,
-					s.Name,
-					s.Description,
-					s.XPath,
-					s.DataType,
-					v.refId as vectorRefId,
-					v.createdAt as vectorCreatedAt
-				FROM ${sourceTableName} s
-				LEFT JOIN ${actualVectorTableName} v ON s.${sourcePrivateKeyName} = v.sourceRefId
-				WHERE ${sanitizedWhereClause}
-			`;
-		} else {
-			xLog.error(`Unsupported data profile: ${config.dataProfile}`);
-			process.exit(1);
-		}
-		
-		if (resultLimit) {
-			query += ` LIMIT ${parseInt(resultLimit)}`;
-		}
-		
-		return query;
-	}
-
-
-	function buildVectorsOnlyQuery({ config, whereClause, resultLimit }) {
-		const { commandLineParameters } = process.global;
-		const { vectorTableName } = config;
-		
-		// Sanitize WHERE clause for user-friendly input
-		const sanitizedWhereClause = sanitizeWhereClause(whereClause);
-		
-		// Determine actual vector table name based on semantic analysis mode
-		const semanticAnalysisMode = commandLineParameters.qtGetSurePath('values.semanticAnalysisMode[0]', 'simpleVector');
-		const actualVectorTableName = semanticAnalysisMode === 'atomicVector' 
-			? `${vectorTableName}_atomic` 
-			: vectorTableName;
-		
-		// Exclude the actual embedding blob, show metadata only
-		let query = `
-			SELECT 
-				refId,
-				sourceRefId,
-				factType,
-				factText,
-				semanticCategory,
-				conceptualDimension,
-				factIndex,
-				createdAt
-			FROM ${actualVectorTableName}
-			WHERE ${sanitizedWhereClause}
-		`;
-		
-		if (resultLimit) {
-			query += ` LIMIT ${parseInt(resultLimit)}`;
-		}
-		
-		return query;
-	}
-
-	function buildSourceOnlyQuery({ config, whereClause, resultLimit }) {
-		const { sourceTableName } = config;
-		
-		// Sanitize WHERE clause for user-friendly input
-		const sanitizedWhereClause = sanitizeWhereClause(whereClause);
-		
-		let query;
-		if (config.dataProfile === 'ceds') {
-			query = `
-				SELECT 
-					GlobalID,
-					ElementName,
-					Definition,
-					Format,
-					HasOptionSet,
-					UsageNotes,
-					TermID,
-					ChangedInThisVersionInd
-				FROM ${sourceTableName}
-				WHERE ${sanitizedWhereClause}
-			`;
-		} else if (config.dataProfile === 'sif') {
-			query = `
-				SELECT 
-					refId,
-					Name,
-					Description,
-					XPath,
-					DataType,
-					createdAt,
-					updatedAt
-				FROM ${sourceTableName}
-				WHERE ${sanitizedWhereClause}
-			`;
-		} else {
-			xLog.error(`Unsupported data profile: ${config.dataProfile}`);
-			process.exit(1);
-		}
-		
-		if (resultLimit) {
-			query += ` LIMIT ${parseInt(resultLimit)}`;
-		}
-		
-		return query;
-	}
-
-	function buildShowQueryInfoQuery({ config, whereClause, resultLimit }) {
-		// This is a special query type that doesn't actually query the database
-		// Instead, it shows what queries would be generated
-		return null; // Will be handled specially in the main function
-	}
-
-	function formatResults(results, queryType) {
-		if (!results || results.length === 0) {
-			xLog.status('No results found for the given criteria');
-			return;
-		}
-
-		const showVectorDetails = queryType === 'showAll';
-		xLog.status(`\nFound ${results.length} records (query type: ${queryType})\n`);
-
-		results.forEach((row, index) => {
-			xLog.status(`${index + 1}. [${row.GlobalID || row.refId}] ${row.ElementName || row.Name || 'No Name'}`);
-			
-			if (row.Definition) {
-				xLog.status(`   Definition: ${row.Definition}`);
-			}
-			if (row.Description) {
-				xLog.status(`   Description: ${row.Description}`);
-			}
-			if (row.XPath) {
-				xLog.status(`   XPath: ${row.XPath}`);
-			}
-			if (row.Format) {
-				xLog.status(`   Format: ${row.Format}`);
-			}
-			if (row.DataType) {
-				xLog.status(`   DataType: ${row.DataType}`);
-			}
-			if (row.factType) {
-				xLog.status(`   FactType: ${row.factType}`);
-			}
-			if (row.factText && showVectorDetails) {
-				xLog.status(`   FactText: ${row.factText}`);
-			}
-			if (row.semanticCategory) {
-				xLog.status(`   Category: ${row.semanticCategory}`);
-			}
-			if (row.conceptualDimension && showVectorDetails) {
-				xLog.status(`   ConceptualDimension: ${row.conceptualDimension}`);
-			}
-			
-			xLog.status(''); // Empty line between records
-		});
-	}
 
 	const directQueryTool = ({ config, vectorDb, queryOptions }) => {
 		const { queryType, whereClause, resultLimit } = queryOptions;
 
-		if (!validateInputs({ queryType, whereClause })) {
+		if (!validation.validateInputs({ queryType, whereClause, config, queryTypes, getCurrentSemanticMode, schemaRegistry })) {
 			return;
 		}
 
@@ -317,7 +65,7 @@ const moduleFunction = function (args = {}) {
 
 		try {
 			const results = vectorDb.prepare(sqlQuery).all();
-			formatResults(results, queryType);
+			formatters.formatResults(results, queryType);
 		} catch (err) {
 			xLog.error(`Database query failed: ${err.message}`);
 			process.exit(1);
@@ -325,15 +73,15 @@ const moduleFunction = function (args = {}) {
 	};
 
 	function showQueryInfo({ config }) {
-		const { commandLineParameters } = process.global;
-		const semanticAnalysisMode = commandLineParameters.qtGetSurePath('values.semanticAnalysisMode[0]', 'simpleVector');
+		const semanticMode = getCurrentSemanticMode();
+		const schema = schemaRegistry.getSchema(config.dataProfile, semanticMode);
 		
 		xLog.status('\n=== DIRECT QUERY TOOL - QUERY INFORMATION ===\n');
 		xLog.status(`Data Profile: ${config.dataProfile}`);
-		xLog.status(`Semantic Analysis Mode: ${semanticAnalysisMode}`);
-		xLog.status(`Source Table: ${config.sourceTableName}`);
-		xLog.status(`Vector Table: ${config.vectorTableName}${semanticAnalysisMode === 'atomicVector' ? '_atomic' : ''}`);
-		xLog.status(`Source Key Field: ${config.sourcePrivateKeyName}\n`);
+		xLog.status(`Semantic Analysis Mode: ${semanticMode}`);
+		xLog.status(`Source Table: ${schema.sourceTable}`);
+		xLog.status(`Vector Table: ${schema.vectorTable}`);
+		xLog.status(`Source Key Field: ${schema.keyFields.source}\n`);
 
 		// Show each query type and its compiled SQL
 		Object.keys(queryTypes).forEach(queryTypeName => {

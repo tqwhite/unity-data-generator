@@ -1,0 +1,14 @@
+{
+  "name": "udg-sqlite3",
+  "version": "1.0.0",
+  "description": "do things to an RDF file",
+  "main": "udgSqlite3.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TQ White II",
+  "license": "ISC",
+  "dependencies": {
+    "rdf-parse": "^4.0.0"
+  }
+}

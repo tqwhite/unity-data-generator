@@ -1,6 +1,6 @@
 {
   "name": "qtools-asynchronous-pipe-plus",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Asynchronous-pipe for the future. Includes taskListPlus and utility functions I have learned to like\"",
   "main": "qtools-asynchronous-pipe-plus.js",
   "scripts": {

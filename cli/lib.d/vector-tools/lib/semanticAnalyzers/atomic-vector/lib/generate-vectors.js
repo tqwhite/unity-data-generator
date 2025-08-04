@@ -24,10 +24,6 @@ const moduleFunction = function(args = {}) {
         const generatedVectors = [];
         const atomicTableName = `${tableName}_atomic`;
 
-console.log(`atomicTableName=${atomicTableName}`);
-
-console.log(' Debug Exit [generate-vectors.js.moduleFunction]', {depth:4, colors:true}); process.exit(); //tqDebug
-
         // Create atomic table
         const createTableSql = `CREATE TABLE IF NOT EXISTS ${atomicTableName} (
             refId TEXT PRIMARY KEY,
@@ -49,8 +45,18 @@ console.log(' Debug Exit [generate-vectors.js.moduleFunction]', {depth:4, colors
         // Process each source row
         for (let i = 0; i < sourceRowList.length; i++) {
             const sourceRow = sourceRowList[i];
-            const embeddableContent = sourceRow[sourceEmbeddableContentName];
             const privateKey = sourceRow[sourcePrivateKeyName];
+
+            // Build embeddable content from single field or multiple fields
+            let embeddableContent = '';
+            if (Array.isArray(sourceEmbeddableContentName)) {
+                embeddableContent = sourceEmbeddableContentName
+                    .map((field) => sourceRow[field] || '')
+                    .filter((value) => value)
+                    .join(' | ');
+            } else {
+                embeddableContent = sourceRow[sourceEmbeddableContentName] || '';
+            }
 
             if (!embeddableContent) {
                 xLog.verbose(`Skipping ${privateKey} - no embeddable content`);
@@ -102,10 +108,6 @@ console.log(' Debug Exit [generate-vectors.js.moduleFunction]', {depth:4, colors
                         content: embeddingData.text,
                         processed: true
                     });
-console.log(`\n=-=============   DEBUG PROCESSED ONE SET INTO DB SUCCESSFULLY  ========================= [generate-vectors.js.moduleFunction]\n`);
-
-
-console.log(' Debug Exit [generate-vectors.js.moduleFunction]', {depth:4, colors:true}); process.exit(); //tqDebug
 
                 }
 

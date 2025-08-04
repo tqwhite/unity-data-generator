@@ -10,6 +10,7 @@ asynchronous operations.
 There are two main functions:
 
 ```
+const asynchronousPipePlus=require('qtools-asynchronous-pipe-plus')(); // Note function execution
 const pipeRunner = asynchronousPipePlus.pipeRunner;
 const taskListPlus = asynchronousPipePlus.taskListPlus;
 ```
@@ -22,7 +23,6 @@ const taskList = new taskListPlus();
 taskList.push(someWorkListFunction);
 
 pipeRunner(taskList.getList(), initialValue, [callback])
-
 ```
 
 The parameters are:

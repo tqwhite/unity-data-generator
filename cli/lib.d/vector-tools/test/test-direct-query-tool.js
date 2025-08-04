@@ -122,7 +122,7 @@ test('Validation catches missing query parameter', () => {
 			config: testConfig,
 			vectorDb: testDb,
 			queryOptions: {
-				whereClause: 'createdAt > "2025-07-01"'
+				whereClause: 'GlobalID > "000001"'
 				// Missing queryType
 			}
 		});
@@ -179,7 +179,7 @@ test('Validation catches invalid query type', () => {
 			vectorDb: testDb,
 			queryOptions: {
 				queryType: 'invalidType',
-				whereClause: 'createdAt > "2025-07-01"'
+				whereClause: 'GlobalID > "000001"'
 			}
 		});
 		
@@ -234,7 +234,7 @@ test('Valid query executes successfully', () => {
 			if (!query.includes('_CEDSElements')) {
 				throw new Error('Query should reference source table');
 			}
-			if (!query.includes("createdAt > '2025-07-01'")) {
+			if (!query.includes("GlobalID > '000001'")) {
 				throw new Error('Query should include sanitized WHERE clause with single quotes');
 			}
 			
@@ -249,7 +249,7 @@ test('Valid query executes successfully', () => {
 		vectorDb: mockDb,
 		queryOptions: {
 			queryType: 'showAll',
-			whereClause: 'createdAt > "2025-07-01"',
+			whereClause: 'GlobalID > "000001"',
 			resultLimit: 10
 		}
 	});
@@ -282,7 +282,7 @@ test('Result limit is applied to query', () => {
 		vectorDb: mockDb,
 		queryOptions: {
 			queryType: 'sourceOnly',
-			whereClause: 'DataType = "Text"',
+			whereClause: 'Format = "Text"',
 			resultLimit: 5
 		}
 	});
@@ -292,38 +292,31 @@ test('Result limit is applied to query', () => {
 	}
 });
 
-// Test 9: VectorsOnly query excludes embedding column
-test('VectorsOnly query excludes embedding column', () => {
-	let queryExecuted = false;
+// Test 9: Column validation catches invalid vector column names
+test('Column validation catches invalid vector column names', () => {
+	const originalExit = process.exit;
+	let exitCalled = false;
 	
-	const mockDb = {
-		prepare: (query) => {
-			queryExecuted = true;
-			
-			if (query.includes('embedding')) {
-				throw new Error('VectorsOnly query should not include embedding column');
-			}
-			if (!query.includes('factType')) {
-				throw new Error('VectorsOnly query should include factType column');
-			}
-			
-			return {
-				all: () => []
-			};
-		}
+	process.exit = (code) => {
+		exitCalled = true;
+		if (code !== 1) throw new Error(`Expected exit code 1, got ${code}`);
 	};
 	
-	directQueryTool({
-		config: testConfig,
-		vectorDb: mockDb,
-		queryOptions: {
-			queryType: 'vectorsOnly',
-			whereClause: 'factType = "primary_context"'
+	try {
+		directQueryTool({
+			config: testConfig,
+			vectorDb: testDb,
+			queryOptions: {
+				queryType: 'vectorsOnly',
+				whereClause: 'factType = "primary_context"'
+			}
+		});
+		
+		if (!exitCalled) {
+			throw new Error('Should have called process.exit(1) for invalid column name');
 		}
-	});
-	
-	if (!queryExecuted) {
-		throw new Error('Query should have been executed');
+	} finally {
+		process.exit = originalExit;
 	}
 });
 
@@ -353,7 +346,7 @@ test('Database error handling works', () => {
 			vectorDb: mockDb,
 			queryOptions: {
 				queryType: 'showAll',
-				whereClause: 'createdAt > "2025-07-01"'
+				whereClause: 'GlobalID > "000001"'
 			}
 		});
 		
@@ -377,10 +370,10 @@ test('Quote conversion sanitizes double quotes', () => {
 			queryExecuted = true;
 			
 			// Verify that double quotes were converted to single quotes
-			if (query.includes('createdAt>"2025-07-01"')) {
+			if (query.includes('GlobalID>"000001"')) {
 				throw new Error('Double quotes should have been converted to single quotes');
 			}
-			if (!query.includes("createdAt>'2025-07-01'")) {
+			if (!query.includes("GlobalID>'000001'")) {
 				throw new Error('Query should contain single-quoted date value');
 			}
 			
@@ -395,7 +388,7 @@ test('Quote conversion sanitizes double quotes', () => {
 		vectorDb: mockDb,
 		queryOptions: {
 			queryType: 'sourceOnly',
-			whereClause: 'createdAt>"2025-07-01"',  // Double quotes that should be converted
+			whereClause: 'GlobalID>"000001"',  // Double quotes that should be converted
 			resultLimit: 5
 		}
 	});
