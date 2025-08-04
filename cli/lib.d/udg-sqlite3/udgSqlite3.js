@@ -11,15 +11,6 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 
-console.log(`HELLO FROM ${__dirname}/${moduleName}`);
-
-// npm i qtools-functional-library
-// npm i qtools-config-file-processor
-// npm i qtools-parse-command-line
-// npm i qtools-asynchronous-pipe-plus # often want this for later
-
-//
-const commandLineParser = require('qtools-parse-command-line');
 
 
 const { exec, execSync } = require('child_process');

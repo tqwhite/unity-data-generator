@@ -1,0 +1,9 @@
+{
+	"name": "framework-operation-router",
+	"version": "1.0.0",
+	"description": "Routes vectorTools operations between legacy direct API calls and qtools-ai-framework thought processes",
+	"main": "framework-operation-router.js",
+	"keywords": ["vectorTools", "qtools-ai-framework", "router", "operations"],
+	"author": "Claude Code",
+	"license": "Apache-2.0"
+}

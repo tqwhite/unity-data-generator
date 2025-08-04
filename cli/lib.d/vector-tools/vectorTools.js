@@ -47,6 +47,8 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'--whereClause',
 		'--resultLimit',
 		'-json',
+		'-useFramework',
+		'--thoughtProcess',
 	],
 });
 
@@ -65,6 +67,9 @@ const semanticAnalyzerLibrary =
 	require('./lib/semanticAnalyzers/semantic-analyzer-library')({});
 
 const { directQueryTool } = require('./lib/direct-query-tool/direct-query-tool')({});
+
+const frameworkOperationRouterGen = require('./lib/framework-operation-router/framework-operation-router');
+const frameworkOperationRouter = frameworkOperationRouterGen({});
 
 //START OF moduleFunction() ============================================================
 const moduleFunction =
@@ -86,132 +91,70 @@ const moduleFunction =
 			config.qtSelectProperties(['databaseFilePath', 'vectorTableName']),
 		);
 
-		const switches = commandLineParameters.switches;
-		const values = commandLineParameters.values;
-
-		if (switches.showStats && switches.rebuildDatabase) {
-			xLog.error(
-				`Cannot do (switches.showStats && switches.rebuildDatabase. Exiting.}`,
-			);
-			process.exit(1);
-		}
-
-		const progressTracker = require('./lib/progress-tracker')({});
-
-		// ====================================================================================
-		// MANAGEMENT UTILITY OPERATIONS
-
-		if (switches.showStats) {
-			databaseOperations.showDatabaseStats(vectorDb);
-		}
-
-		if (switches.showProgress) {
-			progressTracker.showProgress(vectorDb);
-		}
-
-		if (switches.dropTable) {
-			databaseOperations.validateAndExecuteDropTable(config, vectorDb, switches);
-		}
-
-		if (switches.purgeProgressTable) {
-			progressTracker.validateAndExecutePurgeProgressTable({
-				vectorDb,
-				config
-			});
-		}
-
-		// ====================================================================================
-		// DATABASE UPDATTE FUNCTIONS
-
-		if (switches.rebuildDatabase) {
-
-			replaceExistingDatabase(
-				config,
-				vectorDb,
-				openai,
-				semanticAnalyzer,
-				databaseOperations,
-				databaseOperations,
-				(err) => {
-					if (err) {
-						xLog.error(`Rebuild failed: ${err.message}`);
-					} else {
-						xLog.status('✓ Database rebuild completed successfully');
-					}
-				},
-			);
-		}
-
-		if (switches.resume) {
-			return await createVectorDatabase(progressTracker)(
-				config,
-				openai,
-				vectorDb,
-				semanticAnalyzer,
-			);
-		}
-
-		if (switches.writeVectorDatabase || values.writeVectorDatabase) {
-			return await createVectorDatabase(progressTracker)(
-				config,
-				openai,
-				vectorDb,
-				semanticAnalyzer,
-			);
-		}
-
-		// ====================================================================================
-		// LOOKUP BY VECTOR FUNCTION
-
-		if (values.queryString) {
-			return await queryVectorDatabase(prettyPrintAtomicExpansion)(
-				config,
-				openai,
-				vectorDb,
-				semanticAnalyzer,
-			);
-		}
-
-		// ====================================================================================
-		// DIRECT DATABASE QUERY FUNCTION
-
-		if (values.query) {
-			const queryType = values.query.qtLast();
-			
-			// showQueryInfo doesn't require whereClause
-			if (queryType === 'showQueryInfo') {
-				return directQueryTool({
+		// ================================================================================
+		// OPERATION ROUTING - Use framework-operation-router to determine path
+		
+		// Prepare legacy operations object for router
+		const legacyOperations = {
+			queryVectorDatabase: async () => {
+				return await queryVectorDatabase(prettyPrintAtomicExpansion)(
+					config,
+					openai,
+					vectorDb,
+					semanticAnalyzer,
+				);
+			},
+			createVectorDatabase: async () => {
+				const progressTracker = require('./lib/progress-tracker')({});
+				return await createVectorDatabase(progressTracker)(
+					config,
+					openai,
+					vectorDb,
+					semanticAnalyzer,
+				);
+			},
+			showDatabaseStats: async () => {
+				return await databaseOperations.showStats(
 					config,
 					vectorDb,
-					queryOptions: {
-						queryType,
-						whereClause: null,
-						resultLimit: null
-					}
-				});
-			}
-			
-			// Other queries require whereClause
-			if (values.whereClause) {
-				return directQueryTool({
+					semanticAnalyzer,
+				);
+			},
+			dropVectorTable: async () => {
+				return await databaseOperations.dropTable(
 					config,
 					vectorDb,
-					queryOptions: {
-						queryType,
-						whereClause: values.whereClause.qtLast(),
-						resultLimit: values.resultLimit ? values.resultLimit.qtLast() : null
-					}
-				});
-			} else {
-				xLog.error('--whereClause parameter is required for this query type');
-				process.exit(1);
+					semanticAnalyzer,
+				);
+			},
+			rebuildVectorDatabase: async () => {
+				return await replaceExistingDatabase(
+					config,
+					openai,
+					vectorDb,
+					semanticAnalyzer,
+				);
+			},
+			directQueryTool: async () => {
+				const queryType = commandLineParameters.values.query.qtLast();
+				const queryOptions = {
+					queryType,
+					whereClause: commandLineParameters.values.whereClause?.[0] || null,
+					resultLimit: commandLineParameters.values.resultLimit?.[0] || null
+				};
+				return directQueryTool({ config, vectorDb, queryOptions });
+			},
+			showHelp: () => {
+				console.log(helpText);
 			}
-		}
+		};
 
-		xLog.status(
-			'No operation specified. Use --help to see available commands.',
-		);
-		return { success: true, shouldExit: true };
+		// Use the router to determine and execute the appropriate operation
+		return await frameworkOperationRouter.routeOperation({
+			commandLineParameters,
+			initAtp,
+			legacyOperations
+		});
 	};
 
 //END OF moduleFunction() ============================================================

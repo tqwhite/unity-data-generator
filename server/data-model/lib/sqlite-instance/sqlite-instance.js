@@ -470,6 +470,20 @@ const moduleFunction = function ({ unused }) {
 			fileMustExist: false // Creates the database if it doesn't exist
 		});
 		
+		// Load sqlite-vec extension for vector operations
+		try {
+			const sqliteVec = require('sqlite-vec');
+			sqliteVec.load(db);
+			
+			// Test that vector extension loaded correctly
+			const vecVersion = db.prepare('SELECT vec_version() as version').get().version;
+			xLog.verbose(`sqlite-vec extension loaded successfully: ${vecVersion}`);
+		} catch (error) {
+			// Vector extension is optional - log warning but continue
+			xLog.warning(`sqlite-vec extension not loaded: ${error.message}`);
+			xLog.warning('Vector operations will not be available, but standard database operations will work');
+		}
+		
 		// Set pragmas for better performance
 		db.pragma('journal_mode = WAL');  // Write-Ahead Logging for better concurrency
 		db.pragma('synchronous = NORMAL'); // Synchronous NORMAL offers good safety with better performance

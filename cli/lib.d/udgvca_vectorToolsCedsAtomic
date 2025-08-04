@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# add -x to the shebang for debugging
+
+# set -e # die on error
+# trap 'echo "got an error"' ERR # or INT DEBUG TERM EXIT RETURN
+set -o nounset #error on access of uninitialized variable
+# set +o nounset #SUPPRESS error on access of uninitialized variable
+# When you want to access a variable that may or may not have been set, use "${VARNAME-}" "${FOO:-}" instead of "$VARNAME", and you’re good.
+# Use :- if you want to test variables that could be undeclared. For instance, with if [[ "${NAME:-}" = "Kevin" ]], $NAME will evaluate to Kevin if the variable is empty. The variable itself will remain unchanged. The syntax to assign a default value is ${NAME:=Kevin}.
+
+
+# ----------------------------------------------------------------------
+# colors
+
+BLK="\033[30m";
+BLU="\033[34m";
+GRN="\033[32m";
+CYA="\033[36m"; #cyan
+RED="\033[31m";
+PUR="\033[35m"; #purple
+BRN="\033[33m";
+BLU="\033[34m";
+WHI="\033[00;37m";
+RES="\033[00m"; #reset
+
+
+THISDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+#Indicates whether this assessment (form) is a standard administration or alternate.
+
+vectorTools --dataProfile=ceds --semanticAnalysisMode=atomicVector  --queryString="$1"

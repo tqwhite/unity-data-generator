@@ -9,6 +9,7 @@
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
-    "node-sql-parser": "^5.3.10"
+    "node-sql-parser": "^5.3.10",
+    "qtools-x-log": "^1.0.7"
   }
 }

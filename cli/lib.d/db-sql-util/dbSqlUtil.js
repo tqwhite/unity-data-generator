@@ -99,7 +99,7 @@ const moduleFunction =
 // prettier-ignore
 {
 	process.global = {};
-	process.global.xLog = require(path.join(projectRoot, 'code/lib/x-log'));
+	process.global.xLog = require('qtools-x-log');
 	process.global.getConfig=sectionName=>config[sectionName];
 	process.global.commandLineParameters=typeof(commandLineParameters)!='undefined'?commandLineParameters:undefined;;
 	process.global.rawConfig=config; //this should only be used for debugging, use getConfig(moduleName)
