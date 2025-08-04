@@ -27,7 +27,12 @@ const moduleFunction = function (args = {}) {
 
 		if (values.queryString) {
 			operation = 'query';
-			thoughtProcess = values.thoughtProcess?.[0] || 'Vector_Query_Thought_Process';
+			// Determine query thought process based on semanticAnalysisMode
+			const semanticMode = values.semanticAnalysisMode?.[0] || 'simpleVector';
+			const defaultThoughtProcess = semanticMode === 'atomicVector' 
+				? 'Vector_Query_Atomic_Thought_Process' 
+				: 'Vector_Query_Simple_Thought_Process';
+			thoughtProcess = values.thoughtProcess?.[0] || defaultThoughtProcess;
 		} else if (switches.writeVectorDatabase || values.writeVectorDatabase) {
 			operation = 'generateVectors';
 			// Determine vector generation type based on semanticAnalysisMode
@@ -109,9 +114,10 @@ const moduleFunction = function (args = {}) {
 			facilitators = parameterMapper.injectParametersIntoFacilitators(facilitators, mappedParameters);
 
 			// Prepare parameters for framework with mapped CLI parameters
+			const debugLogName = `vectorTools-${operation}-${Date.now()}_${process.pid}`;
 			const frameworkParams = {
 				facilitators,
-				debugLogName: `vectorTools-${operation}-${Date.now()}`,
+				debugLogName,
 				...mappedParameters
 			};
 
@@ -157,6 +163,12 @@ const moduleFunction = function (args = {}) {
 			// Record successful framework metrics
 			const endTime = Date.now();
 			featureFlags.recordFrameworkMetrics(operation, startTime, endTime, true);
+			
+			// Display process log directory path for easy navigation
+			const processLogDir = xLog.getProcessFilesDirectory();
+			if (processLogDir) {
+				console.log(`\nprocess log directory: ${processLogDir}`);
+			}
 			
 			return mappedResult;
 

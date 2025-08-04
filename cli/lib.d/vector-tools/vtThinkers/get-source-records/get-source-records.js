@@ -18,6 +18,20 @@ const moduleFunction = function(args = {}) {
         try {
             xLog.verbose(`${moduleName}: Getting source records for vector processing`);
 
+            // Log the input/prompt details
+            const promptData = {
+                operation: 'get-source-records',
+                thinkerParameters,
+                wisdomBus_keys: wisdomBus ? Object.keys(wisdomBus) : [],
+                timestamp: new Date().toISOString()
+            };
+
+            xLog.saveProcessFile(
+                `${moduleName}_promptList.log`,
+                `\n\n\n${moduleName}---------------------------------------------------\nDatabase Query Operation:\nOperation: Get source records for vector processing\nData Profile: ${thinkerParameters.dataProfile || 'default'}\nTable: Source records table\n----------------------------------------------------\n\n`,
+                { append: true },
+            );
+
             // TODO: In real implementation, this will:
             // 1. Get data profile from thinkerParameters or wisdomBus
             // 2. Query the appropriate source table (naDataModel, _CEDSElements, etc.)
@@ -45,6 +59,24 @@ const moduleFunction = function(args = {}) {
             const result = {
                 elementsToProcess: mockSourceRecords
             };
+
+            // Log the response details
+            const responseData = {
+                operation: 'get-source-records',
+                result,
+                records_count: mockSourceRecords.length,
+                processing_info: {
+                    status: 'mock_data',
+                    records_returned: mockSourceRecords.length,
+                    timestamp: new Date().toISOString()
+                }
+            };
+
+            xLog.saveProcessFile(
+                `${moduleName}_responseList.log`,
+                `\n\n\n${moduleName}---------------------------------------------------\nGet Source Records Response:\n${JSON.stringify(responseData, null, 2)}\n----------------------------------------------------\n\n`,
+                { append: true },
+            );
 
             xLog.verbose(`${moduleName}: Returning ${mockSourceRecords.length} source records`);
             

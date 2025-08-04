@@ -72,6 +72,22 @@ const moduleFunction = function (args = {}) {
 			const embeddingRecords = wisdomBus.qtGetSurePath('embeddingRecords');
 			const sourceRefId = wisdomBus.qtGetSurePath('sourceRefId');
 
+			// Log the input/prompt details
+			const promptData = {
+				operation: 'save-vector-data',
+				sourceRefId,
+				simpleEmbedding: !!simpleEmbedding,
+				embeddingRecords: embeddingRecords ? embeddingRecords.length : 0,
+				wisdomBus_keys: Object.keys(wisdomBus),
+				timestamp: new Date().toISOString()
+			};
+
+			xLog.saveProcessFile(
+				`${moduleName}_promptList.log`,
+				`\n\n\n${moduleName}---------------------------------------------------\nDatabase Save Operation:\nOperation: Save vector embeddings to database\nSource Element: ${sourceRefId}\nEmbedding Type: ${simpleEmbedding ? 'Simple' : 'Atomic'}\nRecord Count: ${embeddingRecords ? embeddingRecords.length : (simpleEmbedding ? 1 : 0)}\n----------------------------------------------------\n\n`,
+				{ append: true },
+			);
+
 			xLog.verbose(`${moduleName}: Processing vector data save for ${sourceRefId}`);
 
 			// Get prompts from prompt library (though save operations may not need prompts)
@@ -130,6 +146,26 @@ const moduleFunction = function (args = {}) {
 					recordsSaved: result.recordsSaved,
 					vectorTableName: result.tableName
 				};
+
+				// Log the response details
+				const responseData = {
+					operation: 'save-vector-data',
+					sourceRefId,
+					result,
+					updatedWisdom,
+					processing_info: {
+						status: 'mock_data',
+						records_saved: result.recordsSaved,
+						table_name: result.tableName,
+						timestamp: new Date().toISOString()
+					}
+				};
+
+				xLog.saveProcessFile(
+					`${moduleName}_responseList.log`,
+					`\n\n\n${moduleName}---------------------------------------------------\nSave Vector Data Response:\n${JSON.stringify(responseData, null, 2)}\n----------------------------------------------------\n\n`,
+					{ append: true },
+				);
 
 				callback('', updatedWisdom);
 			});

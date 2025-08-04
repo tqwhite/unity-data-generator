@@ -68,6 +68,23 @@ const moduleFunction = function (args = {}) {
 				return callback(new Error(`${moduleName}: currentElement not found in wisdom bus`));
 			}
 
+			// Log the input/prompt details
+			const promptData = {
+				operation: 'generate-simple-embeddings',
+				currentElement: {
+					refId: currentElement.refId || currentElement.GlobalID,
+					definition: currentElement.Definition || currentElement.Description || ''
+				},
+				wisdomBus_keys: Object.keys(wisdomBus),
+				timestamp: new Date().toISOString()
+			};
+
+			xLog.saveProcessFile(
+				`${moduleName}_promptList.log`,
+				`\n\n\n${moduleName}---------------------------------------------------\nOpenAI Embedding Request:\nModel: text-embedding-3-small\nElement: ${currentElement.refId || currentElement.GlobalID}\nContent: "${(currentElement.Definition || currentElement.Description || '').substring(0, 100)}..."\n----------------------------------------------------\n\n`,
+				{ append: true },
+			);
+
 			xLog.verbose(`${moduleName}: Processing simple embedding for element ${currentElement.refId || currentElement.GlobalID}`);
 
 			// Get prompts from prompt library (though simple embeddings may not need complex prompts)
@@ -107,6 +124,26 @@ const moduleFunction = function (args = {}) {
 					sourceRefId: currentElement.refId || currentElement.GlobalID,
 					embeddableContent
 				};
+
+				// Log the response details
+				const responseData = {
+					operation: 'generate-simple-embeddings',
+					sourceRefId: currentElement.refId || currentElement.GlobalID,
+					embeddableContent,
+					result,
+					updatedWisdom,
+					processing_info: {
+						status: 'mock_data',
+						embedding_generated: true,
+						timestamp: new Date().toISOString()
+					}
+				};
+
+				xLog.saveProcessFile(
+					`${moduleName}_responseList.log`,
+					`\n\n\n${moduleName}---------------------------------------------------\nGenerate Simple Embeddings Response:\n${JSON.stringify(responseData, null, 2)}\n----------------------------------------------------\n\n`,
+					{ append: true },
+				);
 
 				callback('', updatedWisdom);
 			});

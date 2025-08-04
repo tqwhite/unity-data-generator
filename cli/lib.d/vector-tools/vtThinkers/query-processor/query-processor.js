@@ -61,6 +61,24 @@ const moduleFunction = function (args = {}) {
 				apiKey: aiConfig.apiKey
 			});
 
+			// Log the prompt/request details
+			const promptData = {
+				queryString,
+				dataProfile,
+				semanticAnalysisMode,
+				resultCount,
+				vectorTableName,
+				sourceTableName,
+				model: 'text-embedding-3-small',
+				timestamp: new Date().toISOString()
+			};
+
+			xLog.saveProcessFile(
+				`${moduleName}_promptList.log`,
+				`\n\n\n${moduleName}---------------------------------------------------\nOpenAI Embedding Request:\nModel: text-embedding-3-small\nInput: "${queryString}"\n----------------------------------------------------\n\n`,
+				{ append: true },
+			);
+
 			// Generate embedding for query
 			xLog.status(`${moduleName}: Generating embedding for query`);
 			const response = await openai.embeddings.create({
@@ -143,7 +161,8 @@ const moduleFunction = function (args = {}) {
 
 			xLog.status(`${moduleName}: Found ${query_results.length} results using direct approach`);
 
-			return {
+			// Prepare response data for logging
+			const responseData = {
 				query_results,
 				search_metadata: {
 					queryString,
@@ -151,8 +170,25 @@ const moduleFunction = function (args = {}) {
 					semanticAnalysisMode,
 					resultCount: query_results.length,
 					totalMatches: query_results.length
+				},
+				processing_info: {
+					vectorTableName,
+					sourceTableName,
+					sourceKeyName,
+					embeddings_model: 'text-embedding-3-small',
+					results_found: query_results.length,
+					timestamp: new Date().toISOString()
 				}
 			};
+
+			// Log the detailed response
+			xLog.saveProcessFile(
+				`${moduleName}_responseList.log`,
+				`\n\n\n${moduleName}---------------------------------------------------\nQuery Processing Response:\n${JSON.stringify(responseData, null, 2)}\n----------------------------------------------------\n\n`,
+				{ append: true },
+			);
+
+			return responseData;
 
 		} catch (error) {
 			xLog.error(`${moduleName}: Direct vector search error: ${error.message}`);

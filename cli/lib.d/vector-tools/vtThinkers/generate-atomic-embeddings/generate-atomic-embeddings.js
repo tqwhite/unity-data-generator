@@ -74,6 +74,21 @@ const moduleFunction = function (args = {}) {
 				return callback(new Error(`${moduleName}: sourceRefId not found in wisdom bus`));
 			}
 
+			// Log the input/prompt details
+			const promptData = {
+				operation: 'generate-atomic-embeddings',
+				sourceRefId,
+				atomicFactsJson,
+				wisdomBus_keys: Object.keys(wisdomBus),
+				timestamp: new Date().toISOString()
+			};
+
+			xLog.saveProcessFile(
+				`${moduleName}_promptList.log`,
+				`\n\n\n${moduleName}---------------------------------------------------\nOpenAI Embedding Request (Atomic Facts):\nModel: text-embedding-3-small\nSource Element: ${sourceRefId}\nAtomic Facts: ${atomicFactsJson.substring(0, 200)}...\n----------------------------------------------------\n\n`,
+				{ append: true },
+			);
+
 			xLog.verbose(`${moduleName}: Processing atomic embeddings for ${sourceRefId}`);
 
 			// Parse atomic facts
@@ -155,6 +170,25 @@ const moduleFunction = function (args = {}) {
 					embeddingRecords,
 					totalAtomicEmbeddings: embeddingRecords.length
 				};
+
+				// Log the response details
+				const responseData = {
+					operation: 'generate-atomic-embeddings',
+					sourceRefId,
+					embeddingRecords,
+					updatedWisdom,
+					processing_info: {
+						status: 'mock_data',
+						embeddings_generated: embeddingRecords.length,
+						timestamp: new Date().toISOString()
+					}
+				};
+
+				xLog.saveProcessFile(
+					`${moduleName}_responseList.log`,
+					`\n\n\n${moduleName}---------------------------------------------------\nGenerate Atomic Embeddings Response:\n${JSON.stringify(responseData, null, 2)}\n----------------------------------------------------\n\n`,
+					{ append: true },
+				);
 
 				callback('', updatedWisdom);
 			};
