@@ -27,14 +27,21 @@ const moduleFunction = function (args = {}) {
 		// Generate the numbered results (like legacy format)
 		const numberedResults = queryResults.map((result, index) => {
 			const score = result.distance || result.score || result.similarity || 0.0;
-			const refId = result.refId || result.record?.GlobalID || `result${index + 1}`;
+			const refId = result.refId || result.record?.GlobalID || result.record?.refId || `result${index + 1}`;
 			
 			// Build description from record fields (same logic as legacy)
 			let definition = '';
 			if (result.record) {
 				const record = result.record;
 				if (record.Definition) {
+					// CEDS format
 					definition = record.Definition;
+				} else if (record.Description && record.XPath) {
+					// SIF format: Description | XPath
+					definition = `${record.Description} | ${record.XPath}`;
+				} else if (record.Description) {
+					// SIF format: Description only
+					definition = record.Description;
 				} else if (record.description) {
 					definition = record.description;
 				} else if (record.Element) {
