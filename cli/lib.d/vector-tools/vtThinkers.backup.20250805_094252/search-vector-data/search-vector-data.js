@@ -84,36 +84,26 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { wisdomBus, latestWisdom } = args;
+		const { wisdomBus } = args;
 
-		if (!wisdomBus && !latestWisdom) {
-			return callback(new Error(`${moduleName}: wisdom-bus or latestWisdom is required`));
+		if (!wisdomBus) {
+			return callback(new Error(`${moduleName}: wisdom-bus is required`));
 		}
 
 		try {
 			// Get search parameters
-			// Try wisdomBus accessor first, then fallback to latestWisdom object
-			let queryString, dataProfile, resultCount, simpleEmbedding, atomicEmbeddings;
-			
-			if (wisdomBus && typeof wisdomBus.qtGetSurePath === 'function') {
-				queryString = wisdomBus.qtGetSurePath('queryString');
-				dataProfile = wisdomBus.qtGetSurePath('dataProfile') || 'ceds';
-				resultCount = wisdomBus.qtGetSurePath('resultCount') || 3;
-				simpleEmbedding = wisdomBus.qtGetSurePath('simpleEmbedding');
-				atomicEmbeddings = wisdomBus.qtGetSurePath('atomicEmbeddings');
-			} else if (latestWisdom) {
-				queryString = latestWisdom.queryString;
-				dataProfile = latestWisdom.dataProfile || 'ceds';
-				resultCount = latestWisdom.resultCount || 3;
-				simpleEmbedding = latestWisdom.simpleEmbedding;
-				atomicEmbeddings = latestWisdom.atomicEmbeddings;
-			}
-			
+			const queryString = wisdomBus.qtGetSurePath('queryString');
+			const dataProfile = wisdomBus.qtGetSurePath('dataProfile') || 'ceds';
+			const resultCount = wisdomBus.qtGetSurePath('resultCount') || 3;
 			const databasePath = getConfig('vectorTools.databaseFilePath');
 			
 			if (!databasePath) {
 				return callback(new Error(`${moduleName}: Database path not configured`));
 			}
+
+			// Get embeddings from wisdom bus (either simple or atomic)
+			const simpleEmbedding = wisdomBus.qtGetSurePath('simpleEmbedding');
+			const atomicEmbeddings = wisdomBus.qtGetSurePath('atomicEmbeddings');
 			
 			let embeddings = [];
 			
@@ -145,17 +135,17 @@ const moduleFunction = function (args = {}) {
 			// Perform the vector search
 			performVectorSearch(embeddings, searchParams)
 				.then(searchResults => {
-					// Create wisdom object for migration helper
-					const wisdom = {
-						searchResults: searchResults,
+					// Add search results to wisdom bus
+					const updatedWisdom = {
+						...wisdomBus,
+						searchResults,
 						query_results: searchResults, // Legacy format compatibility
 						search_metadata: {
 							queryString,
 							dataProfile,
 							resultCount,
 							totalMatches: searchResults.length
-						},
-						searchOperation: 'completed'
+						}
 					};
 
 					// Log the response
@@ -163,7 +153,6 @@ const moduleFunction = function (args = {}) {
 						operation: 'search-vector-data',
 						queryString,
 						searchResults,
-						wisdom,
 						processing_info: {
 							embeddings_used: embeddings.length,
 							results_found: searchResults.length,
@@ -179,10 +168,7 @@ const moduleFunction = function (args = {}) {
 					);
 
 					xLog.verbose(`${moduleName}: Found ${searchResults.length} results`);
-					callback(null, {
-						wisdom,
-						message: `Found ${searchResults.length} search results`
-					});
+					callback('', updatedWisdom);
 				})
 				.catch(error => {
 					xLog.error(`${moduleName}: Vector search failed: ${error.message}`);

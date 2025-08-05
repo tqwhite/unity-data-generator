@@ -60,26 +60,17 @@ const moduleFunction = function (args = {}) {
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { wisdomBus, latestWisdom } = args;
+		const { wisdomBus } = args;
 
-		if (!wisdomBus && !latestWisdom) {
-			return callback(new Error(`${moduleName}: wisdom-bus or latestWisdom is required`));
+		if (!wisdomBus) {
+			return callback(new Error(`${moduleName}: wisdom-bus is required`));
 		}
 
 		try {
 			// Determine if we're saving simple or atomic embeddings
-			// Try wisdomBus accessor first, then fallback to latestWisdom object
-			let simpleEmbedding, embeddingRecords, sourceRefId;
-			
-			if (wisdomBus && typeof wisdomBus.qtGetSurePath === 'function') {
-				simpleEmbedding = wisdomBus.qtGetSurePath('simpleEmbedding');
-				embeddingRecords = wisdomBus.qtGetSurePath('atomicEmbeddings') || wisdomBus.qtGetSurePath('embeddingRecords');
-				sourceRefId = wisdomBus.qtGetSurePath('sourceRefId');
-			} else if (latestWisdom) {
-				simpleEmbedding = latestWisdom.simpleEmbedding;
-				embeddingRecords = latestWisdom.atomicEmbeddings || latestWisdom.embeddingRecords;
-				sourceRefId = latestWisdom.sourceRefId;
-			}
+			const simpleEmbedding = wisdomBus.qtGetSurePath('simpleEmbedding');
+			const embeddingRecords = wisdomBus.qtGetSurePath('atomicEmbeddings') || wisdomBus.qtGetSurePath('embeddingRecords');
+			const sourceRefId = wisdomBus.qtGetSurePath('sourceRefId');
 
 			// Log the input/prompt details
 			const promptData = {
@@ -148,22 +139,22 @@ const moduleFunction = function (args = {}) {
 
 				xLog.verbose(`${moduleName}: Saved ${result.recordsSaved} vector records to ${result.tableName}`);
 
-				// Create wisdom object for migration helper
-				const wisdom = {
+				// Add save results to wisdom bus
+				const updatedWisdom = {
+					...wisdomBus,
 					vectorSaveResult: result,
 					recordsSaved: result.recordsSaved,
-					vectorTableName: result.tableName,
-					saveOperation: 'completed'
+					vectorTableName: result.tableName
 				};
 
 				// Log the response details
 				const responseData = {
 					operation: 'save-vector-data',
-					sourceRefId: sourceRefId,
+					sourceRefId,
 					result,
-					wisdom,
+					updatedWisdom,
 					processing_info: {
-						status: 'framework_thinker',
+						status: 'mock_data',
 						records_saved: result.recordsSaved,
 						table_name: result.tableName,
 						timestamp: new Date().toISOString()
@@ -176,10 +167,7 @@ const moduleFunction = function (args = {}) {
 					{ append: true },
 				);
 
-				callback(null, {
-					wisdom,
-					message: `Saved ${result.recordsSaved} vector records to ${result.tableName}`
-				});
+				callback('', updatedWisdom);
 			});
 
 		} catch (error) {

@@ -33,69 +33,38 @@ const moduleFunction = function (args = {}) {
 		};
 
 	// ================================================================================
-	// REAL OPENAI EMBEDDING GENERATION
+	// GENERATE EMBEDDINGS (SKELETON - Mock for now)
 
-	const generateEmbedding = async (text, callback) => {
-		xLog.verbose(`${moduleName}: Generating real OpenAI embedding for atomic fact: ${text.substring(0, 100)}...`);
+	const generateEmbedding = (text, callback) => {
+		xLog.verbose(`${moduleName}: Would generate embedding for atomic fact: ${text.substring(0, 100)}...`);
 
-		try {
-			// Get OpenAI configuration
-			const aiConfig = getConfig('ai-operations');
-			if (!aiConfig || !aiConfig.apiKey) {
-				return callback(new Error(`${moduleName}: OpenAI API key not configured`));
-			}
-			
-			// Initialize OpenAI client
-			const OpenAI = require('openai');
-			const openai = new OpenAI({
-				apiKey: aiConfig.apiKey
+		// SKELETON: Return mock embedding (1536 dimensions like text-embedding-3-small)
+		const mockEmbedding = new Array(1536).fill(0).map(() => Math.random() * 2 - 1);
+
+		// Simulate async embedding generation
+		setTimeout(() => {
+			callback('', {
+				embedding: mockEmbedding,
+				model: 'text-embedding-3-small-mock',
+				usage: { prompt_tokens: text.length / 4, total_tokens: text.length / 4 }
 			});
-			
-			// Generate real embedding using OpenAI API
-			const response = await openai.embeddings.create({
-				model: 'text-embedding-3-small',
-				input: text
-			});
-			
-			const embedding = response.data[0].embedding;
-			
-			const result = {
-				embedding: embedding,
-				model: 'text-embedding-3-small',
-				usage: response.usage
-			};
-			
-			xLog.verbose(`${moduleName}: Generated real embedding (${embedding.length} dimensions)`);
-			callback(null, result);
-			
-		} catch (error) {
-			xLog.error(`${moduleName}: OpenAI embedding generation failed: ${error.message}`);
-			callback(error);
-		}
+		}, 50);
 	};
 
 	// ================================================================================
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { wisdomBus, latestWisdom } = args;
+		const { wisdomBus } = args;
 
-		if (!wisdomBus && !latestWisdom) {
-			return callback(new Error(`${moduleName}: wisdom-bus or latestWisdom is required`));
+		if (!wisdomBus) {
+			return callback(new Error(`${moduleName}: wisdom-bus is required`));
 		}
 
 		try {
 			// Get atomic facts from previous thinker (extract-atomic-facts)
-			// Try wisdomBus accessor first, then fallback to latestWisdom object
-			let atomicFactsJson, sourceRefId;
-			
-			if (wisdomBus && typeof wisdomBus.qtGetSurePath === 'function') {
-				atomicFactsJson = wisdomBus.qtGetSurePath('atomicFacts');
-				sourceRefId = wisdomBus.qtGetSurePath('sourceRefId');
-			} else if (latestWisdom) {
-				atomicFactsJson = latestWisdom.atomicFacts;
-				sourceRefId = latestWisdom.sourceRefId;
-			}
+			const atomicFactsJson = wisdomBus.qtGetSurePath('atomicFacts');
+			const sourceRefId = wisdomBus.qtGetSurePath('sourceRefId');
 			
 			if (!atomicFactsJson) {
 				return callback(new Error(`${moduleName}: atomicFacts not found in wisdom bus`));
@@ -165,7 +134,7 @@ const moduleFunction = function (args = {}) {
 						return;
 					}
 
-					// Generate real OpenAI embedding for this atomic fact
+					// Generate embedding for this atomic fact (mock for skeleton)
 					generateEmbedding(factText, (err, result) => {
 						if (err) {
 							xLog.error(`${moduleName}: Error generating embedding for fact: ${err.message}`);
@@ -195,24 +164,23 @@ const moduleFunction = function (args = {}) {
 			const finishProcessing = () => {
 				xLog.verbose(`${moduleName}: Generated ${embeddingRecords.length} atomic embeddings for ${sourceRefId}`);
 
-				// Create wisdom object for migration helper
-				const wisdom = {
+				// Add embedding records to wisdom bus
+				const updatedWisdom = {
+					...wisdomBus,
 					atomicEmbeddings: embeddingRecords, // Standard interface name
-					embeddingRecords: embeddingRecords, // Legacy compatibility  
-					totalAtomicEmbeddings: embeddingRecords.length,
-					sourceRefId: sourceRefId
+					embeddingRecords, // Legacy compatibility  
+					totalAtomicEmbeddings: embeddingRecords.length
 				};
 
 				// Log the response details
 				const responseData = {
 					operation: 'generate-atomic-embeddings',
 					sourceRefId,
-					result: embeddingRecords,
-					wisdom,
+					embeddingRecords,
+					updatedWisdom,
 					processing_info: {
-						status: 'real_openai',
+						status: 'mock_data',
 						embeddings_generated: embeddingRecords.length,
-						model: 'text-embedding-3-small',
 						timestamp: new Date().toISOString()
 					}
 				};
@@ -223,10 +191,7 @@ const moduleFunction = function (args = {}) {
 					{ append: true },
 				);
 
-				callback(null, {
-					wisdom,
-					message: `Generated ${embeddingRecords.length} atomic embeddings for ${sourceRefId}`
-				});
+				callback('', updatedWisdom);
 			};
 
 		} catch (error) {

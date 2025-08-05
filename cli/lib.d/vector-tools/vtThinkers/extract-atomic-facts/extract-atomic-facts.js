@@ -33,53 +33,124 @@ const moduleFunction = function (args = {}) {
 		};
 
 	// ================================================================================
-	// TALK TO AI (SKELETON - Mock for now)
+	// REAL OPENAI CHAT COMPLETION
 
-	const accessSmartyPants = (args, callback) => {
+	const accessSmartyPants = async (args, callback) => {
 		const { promptList, systemPrompt } = args;
 		
-		xLog.verbose(`${moduleName}: Would call AI with system prompt: ${systemPrompt.substring(0, 100)}...`);
-		xLog.verbose(`${moduleName}: Would call AI with prompts: ${JSON.stringify(promptList).substring(0, 200)}...`);
-
-		// SKELETON: Return mock atomic facts in correct format
-		const mockResponse = {
-			elements: [
-				{
-					element_id: "mock_element_1",
-					facts: [
-						{ text: "This is a mock atomic fact for testing" },
-						{ text: "Framework integration testing is in progress" }
-					],
-					semantic_categories: ["testing", "framework"],
-					functional_role: "validation testing",
-					conceptual_dimensions: [
-						{ dimension: "scope", position: "specific" },
-						{ dimension: "granularity", position: "atomic" }
-					]
-				}
-			]
-		};
-
-		// Simulate async AI call
-		setTimeout(() => {
-			callback('', { atomicFacts: JSON.stringify(mockResponse) });
-		}, 100);
+		xLog.verbose(`${moduleName}: Calling real OpenAI with system prompt: ${systemPrompt.substring(0, 100)}...`);
+		
+		try {
+			// Get OpenAI configuration
+			const aiConfig = getConfig('ai-operations');
+			if (!aiConfig || !aiConfig.apiKey) {
+				return callback(new Error(`${moduleName}: OpenAI API key not configured`));
+			}
+			
+			// Initialize OpenAI client
+			const OpenAI = require('openai');
+			const openai = new OpenAI({
+				apiKey: aiConfig.apiKey
+			});
+			
+			// Prepare messages for chat completion
+			const messages = [
+				{ role: 'system', content: systemPrompt },
+				...promptList
+			];
+			
+			// Log the complete prompt
+			xLog.saveProcessFile(
+				`${moduleName}_promptList.log`,
+				`\n\n\n${moduleName}---------------------------------------------------\nOpenAI Chat Completion Request:\nModel: gpt-4o-2024-08-06\nMessages:\n${JSON.stringify(messages, null, 2)}\n----------------------------------------------------\n\n`,
+				{ append: true },
+			);
+			
+			// Call OpenAI chat completion
+			const response = await openai.chat.completions.create({
+				model: 'gpt-4o-2024-08-06',
+				messages: messages,
+				temperature: 0.1,
+				max_tokens: 4000
+			});
+			
+			const aiResponse = response.choices[0].message.content;
+			
+			// Try to parse JSON response for atomic facts
+			let atomicFacts;
+			try {
+				atomicFacts = JSON.parse(aiResponse);
+			} catch (parseError) {
+				// If parsing fails, wrap the response as a simple fact
+				atomicFacts = {
+					elements: [{
+						element_id: "extracted_content",
+						facts: [{ text: aiResponse }],
+						semantic_categories: ["extracted"],
+						functional_role: "content analysis"
+					}]
+				};
+			}
+			
+			xLog.verbose(`${moduleName}: Generated real atomic facts from OpenAI`);
+			callback(null, { atomicFacts: JSON.stringify(atomicFacts) });
+			
+		} catch (error) {
+			xLog.error(`${moduleName}: OpenAI chat completion failed: ${error.message}`);
+			callback(error);
+		}
 	};
 
 	// ================================================================================
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { wisdomBus } = args;
+		const { wisdomBus, latestWisdom } = args;
 
-		if (!wisdomBus) {
-			return callback(new Error(`${moduleName}: wisdom-bus is required`));
+		if (!wisdomBus && !latestWisdom) {
+			return callback(new Error(`${moduleName}: wisdom-bus or latestWisdom is required`));
 		}
 
 		try {
+			// DEBUG: Log what we receive
+			xLog.verbose(`${moduleName}: DEBUG - args keys: [${Object.keys(args).join(', ')}]`);
+			xLog.verbose(`${moduleName}: DEBUG - wisdomBus type: ${typeof wisdomBus}`);
+			xLog.verbose(`${moduleName}: DEBUG - latestWisdom type: ${typeof latestWisdom}`);
+			
+			if (wisdomBus) {
+				xLog.verbose(`${moduleName}: DEBUG - wisdomBus methods: [${Object.getOwnPropertyNames(wisdomBus).join(', ')}]`);
+			}
+			if (latestWisdom) {
+				xLog.verbose(`${moduleName}: DEBUG - latestWisdom keys: [${Object.keys(latestWisdom).join(', ')}]`);
+			}
+			
 			// Handle both vector generation (currentElement) and query processing (queryString)
-			const currentElement = wisdomBus.qtGetSurePath('currentElement');
-			const queryString = wisdomBus.qtGetSurePath('queryString');
+			// For framework mode, get parameters from wisdom-bus
+			let currentElement, queryString;
+			
+			if (wisdomBus && typeof wisdomBus.getLatestWisdom === 'function') {
+				// Use wisdom-bus accessor (correct UDG pattern)
+				currentElement = wisdomBus.getLatestWisdom('currentElement');
+				queryString = wisdomBus.getLatestWisdom('queryString');
+				
+				xLog.verbose(`${moduleName}: DEBUG - from getLatestWisdom: currentElement=${currentElement}, queryString=${queryString}`);
+				
+				// If not found in wisdom-bus, check if they were passed as initial data
+				if (!queryString && !currentElement) {
+					// Get the consolidated wisdom view which includes initialThinkerData
+					const consolidatedWisdom = wisdomBus.consolidate ? wisdomBus.consolidate().wisdom : {};
+					currentElement = consolidatedWisdom.currentElement;
+					queryString = consolidatedWisdom.queryString;
+					
+					xLog.verbose(`${moduleName}: DEBUG - from consolidated: currentElement=${currentElement}, queryString=${queryString}`);
+				}
+			} else if (latestWisdom) {
+				// Fallback to latestWisdom object (legacy support)
+				currentElement = latestWisdom.currentElement;
+				queryString = latestWisdom.queryString;
+				
+				xLog.verbose(`${moduleName}: DEBUG - from latestWisdom: currentElement=${currentElement}, queryString=${queryString}`);
+			}
 			
 			let inputText, processingContext;
 			if (currentElement) {
@@ -134,7 +205,7 @@ const moduleFunction = function (args = {}) {
 				{ append: true },
 			);
 
-			// Call AI (mock for skeleton)
+			// Call real OpenAI API for atomic fact extraction
 			accessSmartyPants({ promptList, systemPrompt }, (err, result) => {
 				if (err) {
 					return callback(err);
@@ -142,24 +213,33 @@ const moduleFunction = function (args = {}) {
 
 				xLog.verbose(`${moduleName}: Extracted atomic facts for ${currentElement.refId || currentElement.GlobalID}`);
 
-				// Add atomic facts to wisdom bus
-				const updatedWisdom = {
-					...wisdomBus,
-					atomicFacts: result.atomicFacts,
-					sourceRefId: currentElement.refId || currentElement.GlobalID
-				};
+				// Save results to wisdom-bus (correct UDG pattern)
+				const sourceRefId = currentElement ? (currentElement.refId || currentElement.GlobalID) : refId;
+				
+				if (wisdomBus && typeof wisdomBus.saveWisdom === 'function') {
+					wisdomBus.saveWisdom('atomicFacts', result.atomicFacts);
+					wisdomBus.saveWisdom('sourceRefId', sourceRefId);
+					wisdomBus.saveWisdom('queryString', queryString || null);
+					wisdomBus.saveWisdom('processingContext', processingContext);
+				} else if (latestWisdom) {
+					// Fallback: modify latestWisdom object directly (for legacy support)
+					latestWisdom.atomicFacts = result.atomicFacts;
+					latestWisdom.sourceRefId = sourceRefId;
+					latestWisdom.queryString = queryString || null;
+					latestWisdom.processingContext = processingContext;
+				}
 
 				// Log the response details
 				const responseData = {
 					operation: 'extract-atomic-facts',
 					processingContext,
-					sourceRefId: currentElement ? (currentElement.refId || currentElement.GlobalID) : null,
-					queryString: queryString || null,
+					sourceRefId: sourceRefId,
+					queryString: queryString,
 					aiResponse: result,
-					updatedWisdom,
 					processing_info: {
-						status: 'mock_data',
+						status: 'real_openai',
 						facts_extracted: true,
+						model: 'gpt-4o-2024-08-06',
 						timestamp: new Date().toISOString()
 					}
 				};
@@ -170,7 +250,11 @@ const moduleFunction = function (args = {}) {
 					{ append: true },
 				);
 
-				callback('', updatedWisdom);
+				// Return success only (correct UDG pattern)
+				callback(null, {
+					success: true,
+					message: `Extracted atomic facts for ${processingContext}`
+				});
 			});
 
 		} catch (error) {

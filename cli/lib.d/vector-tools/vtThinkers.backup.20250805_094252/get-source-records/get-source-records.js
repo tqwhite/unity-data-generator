@@ -66,7 +66,7 @@ const moduleFunction = function(args = {}) {
                 result,
                 records_count: mockSourceRecords.length,
                 processing_info: {
-                    status: 'framework_thinker_placeholder',
+                    status: 'mock_data',
                     records_returned: mockSourceRecords.length,
                     timestamp: new Date().toISOString()
                 }

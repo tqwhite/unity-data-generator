@@ -33,76 +33,43 @@ const moduleFunction = function (args = {}) {
 		};
 
 	// ================================================================================
-	// REAL OPENAI EMBEDDING GENERATION
+	// EMBEDDING GENERATION (SKELETON - Mock for now)
 
-	const generateEmbedding = async (text, callback) => {
-		xLog.verbose(`${moduleName}: Generating real OpenAI embedding for: ${text.substring(0, 50)}...`);
+	const generateEmbedding = (text, callback) => {
+		xLog.verbose(`${moduleName}: Would generate embedding for: ${text.substring(0, 50)}...`);
 		
-		try {
-			// Get OpenAI configuration
-			const aiConfig = getConfig('ai-operations');
-			if (!aiConfig || !aiConfig.apiKey) {
-				return callback(new Error(`${moduleName}: OpenAI API key not configured`));
-			}
-			
-			// Initialize OpenAI client
-			const OpenAI = require('openai');
-			const openai = new OpenAI({
-				apiKey: aiConfig.apiKey
-			});
-			
-			// Log the embedding request
-			xLog.saveProcessFile(
-				`${moduleName}_promptList.log`,
-				`\n\n\n${moduleName}---------------------------------------------------\nOpenAI Embedding Request:\nModel: text-embedding-3-small\nInput: "${text}"\n----------------------------------------------------\n\n`,
-				{ append: true },
-			);
-			
-			// Generate real embedding using OpenAI API
-			const response = await openai.embeddings.create({
-				model: 'text-embedding-3-small',
-				input: text
-			});
-			
-			const embedding = response.data[0].embedding;
-			
-			const result = {
-				embedding: embedding,
+		// SKELETON: Mock embedding generation
+		const mockEmbedding = new Array(1536).fill(0).map(() => Math.random() - 0.5);
+		
+		// Simulate async embedding generation
+		setTimeout(() => {
+			const mockResult = {
+				embedding: mockEmbedding,
 				model: 'text-embedding-3-small',
 				success: true
 			};
-			
-			xLog.verbose(`${moduleName}: Generated real embedding (${embedding.length} dimensions)`);
-			callback(null, result);
-			
-		} catch (error) {
-			xLog.error(`${moduleName}: OpenAI embedding generation failed: ${error.message}`);
-			callback(error);
-		}
+			callback('', mockResult);
+		}, 100);
 	};
 
 	// ================================================================================
 	// DO THE JOB
 
 	const executeRequest = (args, callback) => {
-		const { wisdomBus, latestWisdom } = args;
+		const { wisdomBus } = args;
 
-		if (!wisdomBus && !latestWisdom) {
-			return callback(new Error(`${moduleName}: wisdom-bus or latestWisdom is required`));
+		if (!wisdomBus) {
+			return callback(new Error(`${moduleName}: wisdom-bus is required`));
 		}
 
 		try {
-			// Handle both vector generation (currentElement) and query processing (queryString)
-			// Try wisdomBus accessor first, then fallback to latestWisdom object
-			let currentElement, queryString;
+			// DEBUG: Log what's in the wisdomBus
+			xLog.verbose(`${moduleName}: wisdomBus keys: [${Object.keys(wisdomBus).join(', ')}]`);
+			xLog.verbose(`${moduleName}: wisdomBus content: ${JSON.stringify(wisdomBus, null, 2)}`);
 			
-			if (wisdomBus && typeof wisdomBus.qtGetSurePath === 'function') {
-				currentElement = wisdomBus.qtGetSurePath('currentElement');
-				queryString = wisdomBus.qtGetSurePath('queryString');
-			} else if (latestWisdom) {
-				currentElement = latestWisdom.currentElement;
-				queryString = latestWisdom.queryString;
-			}
+			// Handle both vector generation (currentElement) and query processing (queryString)
+			const currentElement = wisdomBus.qtGetSurePath('currentElement');
+			const queryString = wisdomBus.qtGetSurePath('queryString');
 			
 			let inputText, processingContext, refId;
 			if (currentElement) {
@@ -151,7 +118,7 @@ const moduleFunction = function (args = {}) {
 				return callback(new Error(`${moduleName}: No content to embed for ${processingContext}`));
 			}
 
-			// Generate real OpenAI embedding
+			// Generate embedding (mock for skeleton)
 			generateEmbedding(inputText, (err, result) => {
 				if (err) {
 					return callback(err);
@@ -159,13 +126,13 @@ const moduleFunction = function (args = {}) {
 
 				xLog.verbose(`${moduleName}: Generated simple embedding for ${processingContext}`);
 
-				// Create wisdom object for migration helper
-				const wisdom = {
+				// Add embedding to wisdom bus
+				const updatedWisdom = {
+					...wisdomBus,
 					simpleEmbedding: result.embedding,
 					embeddingModel: result.model,
 					sourceRefId: refId,
-					embeddableContent: inputText,
-					processingContext: processingContext
+					embeddableContent: inputText
 				};
 
 				// Log the response details
@@ -175,11 +142,10 @@ const moduleFunction = function (args = {}) {
 					sourceRefId: refId,
 					embeddableContent: inputText,
 					result,
-					wisdom,
+					updatedWisdom,
 					processing_info: {
-						status: 'real_openai',
+						status: 'mock_data',
 						embedding_generated: true,
-						model: result.model,
 						timestamp: new Date().toISOString()
 					}
 				};
@@ -190,10 +156,7 @@ const moduleFunction = function (args = {}) {
 					{ append: true },
 				);
 
-				callback(null, {
-					wisdom,
-					message: `Generated simple embedding for ${processingContext}`
-				});
+				callback('', updatedWisdom);
 			});
 
 		} catch (error) {
