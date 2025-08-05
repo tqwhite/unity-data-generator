@@ -65,7 +65,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'-showProgressMessages',
 		'--userConfigPath'
 	],
-}); // SIDE EFFECTS: Initializes xLog and getConfig in process.global
+}); // SIDE EFFECTS: Initializes xLog, including setProcessFilesDirectory(), and getConfig in process.global
 // =============================================================================
 // MAIN EXECUTION FUNCTION
 
@@ -251,6 +251,6 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 	);
 
 	// Log the output file path
-	xLog.status(`Detail logs path: ${xLog.getProcessFilesDirectory()}`);
+	xLog.status(`Detail logs path: ${xLog.getProcessFilesDirectory()}`); // setProcessFilesDirectory() is run by initAtp
 	xLog.status(`Output file path: ${batchSpecificDebugResultDirPath}`);
 })(); // End of main execution function

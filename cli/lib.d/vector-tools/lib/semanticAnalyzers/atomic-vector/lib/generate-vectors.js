@@ -24,6 +24,20 @@ const moduleFunction = function(args = {}) {
         const generatedVectors = [];
         const atomicTableName = `${tableName}_atomic`;
 
+        // Log batch processing parameters
+        const batchParams = {
+            sourceRowCount: sourceRowList.length,
+            tableName,
+            atomicTableName,
+            dataProfile,
+            sourceEmbeddableContentName,
+            sourcePrivateKeyName,
+            batchId,
+            alreadyProcessedCount
+        };
+        
+        xLog.saveProcessFile(`${moduleName}_promptList.log`, `Atomic Vector Batch Processing:\n${JSON.stringify(batchParams, null, 2)}`, {append:true});
+
         // Create atomic table
         const createTableSql = `CREATE TABLE IF NOT EXISTS ${atomicTableName} (
             refId TEXT PRIMARY KEY,
@@ -127,6 +141,19 @@ const moduleFunction = function(args = {}) {
         }
 
         xLog.status(`Generated ${generatedVectors.length} atomic vectors`);
+        
+        // Log completion results
+        const completionResults = {
+            totalAtomicVectors: generatedVectors.length,
+            successfulVectors: generatedVectors.filter(v => v.processed).length,
+            atomicTableName,
+            dataProfile,
+            batchId,
+            uniqueSourceRecords: new Set(generatedVectors.map(v => v.sourceRefId)).size
+        };
+        
+        xLog.saveProcessFile(`${moduleName}_responseList.log`, `Atomic Vector Generation Results:\n${JSON.stringify(completionResults, null, 2)}`, {append:true});
+        
         return generatedVectors;
     };
 

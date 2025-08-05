@@ -89,61 +89,7 @@ const moduleFunction = function (args = {}) {
 		return { useFramework: true, reason: 'feature_flags_enabled' };
 	};
 
-	// ================================================================================
-	// FALLBACK HANDLER
 
-	const handleFrameworkFailure = (error, operation, commandLineParameters, legacyOperations) => {
-		const flags = getFeatureFlagConfig();
-
-		if (!flags.enableFrameworkFallback) {
-			xLog.error(`${moduleName}: Framework failed and fallback disabled - throwing error`);
-			throw error;
-		}
-
-		xLog.status(`${moduleName}: Framework operation failed, falling back to legacy`);
-		xLog.status(`Framework error: ${error.message}`);
-
-		// Log framework failure for metrics
-		if (flags.enableFrameworkMetrics) {
-			xLog.saveProcessFile(
-				'framework-failures.log',
-				`${new Date().toISOString()} - Operation: ${operation} - Error: ${error.message}\n`,
-				{ append: true }
-			);
-		}
-
-		// Execute legacy fallback
-		return executeLegacyFallback(operation, legacyOperations, commandLineParameters);
-	};
-
-	const executeLegacyFallback = async (operation, legacyOperations, commandLineParameters) => {
-		xLog.status(`${moduleName}: Executing legacy fallback for ${operation}`);
-
-		if (!legacyOperations) {
-			throw new Error('Legacy operations not available for fallback');
-		}
-
-		// Use the same legacy operation logic from the router
-		switch (operation) {
-			case 'query':
-				return await legacyOperations.queryVectorDatabase();
-			case 'generateVectors':
-				return await legacyOperations.createVectorDatabase();
-			case 'showStats':
-				return await legacyOperations.showDatabaseStats();
-			case 'dropTable':
-				return await legacyOperations.dropVectorTable();
-			case 'rebuildDatabase':
-				return await legacyOperations.rebuildVectorDatabase();
-			case 'directQuery':
-				return await legacyOperations.directQueryTool();
-			default:
-				if (legacyOperations.showHelp) {
-					legacyOperations.showHelp();
-				}
-				return null;
-		}
-	};
 
 	// ================================================================================
 	// VALIDATION AND METRICS
@@ -206,7 +152,6 @@ const moduleFunction = function (args = {}) {
 	return {
 		getFeatureFlagConfig,
 		shouldUseFramework,
-		handleFrameworkFailure,
 		validateFrameworkResult,
 		recordFrameworkMetrics
 	};

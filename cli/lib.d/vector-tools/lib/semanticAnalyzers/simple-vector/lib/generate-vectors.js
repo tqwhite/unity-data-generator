@@ -51,6 +51,19 @@ const moduleFunction = function(args = {}) {
 
         const generatedVectors = [];
 
+        // Log batch processing parameters
+        const batchParams = {
+            sourceRowCount: sourceRowList.length,
+            tableName,
+            dataProfile,
+            sourceEmbeddableContentName,
+            sourcePrivateKeyName,
+            batchId,
+            alreadyProcessedCount
+        };
+        
+        xLog.saveProcessFile(`${moduleName}_promptList.log`, `Simple Vector Batch Processing:\n${JSON.stringify(batchParams, null, 2)}`, {append:true});
+
         // Ensure table exists - use vec0 format for backward compatibility
         const createTableSql = `CREATE VIRTUAL TABLE IF NOT EXISTS ${tableName} USING vec0(embedding float[1536])`;
         vectorDb.exec(createTableSql);
@@ -114,6 +127,18 @@ const moduleFunction = function(args = {}) {
         }
 
         xLog.status(`Generated ${generatedVectors.length} vectors`);
+        
+        // Log completion results
+        const completionResults = {
+            totalProcessed: generatedVectors.length,
+            successfulVectors: generatedVectors.filter(v => v.processed).length,
+            tableName,
+            dataProfile,
+            batchId
+        };
+        
+        xLog.saveProcessFile(`${moduleName}_responseList.log`, `Simple Vector Generation Results:\n${JSON.stringify(completionResults, null, 2)}`, {append:true});
+        
         return generatedVectors;
     };
 

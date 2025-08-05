@@ -44,6 +44,20 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		}
 		xLog.status(`Query: "${queryString}"`);
 
+		// Log query parameters
+		const queryParams = {
+			queryString,
+			resultCount,
+			dataProfile,
+			semanticAnalysisMode,
+			actualTableName,
+			sourceTableName,
+			sourcePrivateKeyName,
+			sourceEmbeddableContentName
+		};
+		
+		xLog.saveProcessFile(`${moduleName}_promptList.log`, `Query Parameters:\n${JSON.stringify(queryParams, null, 2)}`, {append:true});
+
 		try {
 			// Check if verbose mode is enabled
 			const isVerbose = commandLineParameters.switches.verbose;
@@ -65,10 +79,28 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			const results = scoringResult.results || scoringResult;
 			const verboseData = scoringResult.verboseData;
 
-			// Display verbose analysis if requested
-			if (isVerbose && verboseData) {
-				prettyPrintAtomicExpansion(xLog)(verboseData);
-			}
+			// Log the results
+			const resultSummary = {
+				queryString,
+				resultCount: results.length,
+				results: results.map(result => ({
+					rank: result.rank,
+					distance: result.distance,
+					refId: result.record[sourcePrivateKeyName],
+					content: Array.isArray(sourceEmbeddableContentName) 
+						? sourceEmbeddableContentName.map(field => result.record[field] || '').filter(v => v).join(' | ')
+						: result.record[sourceEmbeddableContentName] || ''
+				}))
+			};
+			
+			xLog.saveProcessFile(`${moduleName}_queryExpanasion.log`, resultSummary, {saveAsJson:true});
+
+			const scoringResultDisplayData=prettyPrintAtomicExpansion(verboseData);
+			xLog.saveProcessFile(`${moduleName}_scoringResultDisplayData.log`, scoringResultDisplayData);
+			
+			xLog.verbose(`Result Summary:\n${JSON.stringify(resultSummary, null, 2)}`);
+			xLog.verbose(scoringResultDisplayData)
+
 
 			// Format and output results
 			if (commandLineParameters.switches.json) {
@@ -92,7 +124,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 						description = result.record[sourceEmbeddableContentName] || '';
 					}
 
-					console.log(
+					xLog.status(
 						`${result.rank}. [score: ${distance}] ${refId} ${description}`,
 					);
 				});

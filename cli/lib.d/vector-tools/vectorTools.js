@@ -51,7 +51,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'-useLegacy',
 		'--thoughtProcess',
 	],
-});
+}); // SIDE EFFECTS: Initializes xLog, including setProcessFilesDirectory(), and getConfig in process.global
 
 const databaseOperationsGen = require('./lib/database-operations');
 const aiOperationsGen = require('./lib/ai-operations');
@@ -146,7 +146,7 @@ const moduleFunction =
 				return directQueryTool({ config, vectorDb, queryOptions });
 			},
 			showHelp: () => {
-				console.log(helpText);
+				xLog.status(helpText);
 			}
 		};
 

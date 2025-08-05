@@ -10,7 +10,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		
 		// Check if initialization is complete
 		if (!getConfig) {
-			console.error('Error: qtools-ai-framework not properly initialized. getConfig is not available.');
+			xLog.error('Error: qtools-ai-framework not properly initialized. getConfig is not available.');
 			process.exit(1)
 		}
 		

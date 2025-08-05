@@ -49,6 +49,8 @@ const moduleFunction = function(args = {}) {
         const extractedData = await extractAtomicFacts(queryString, openai);
         const embeddingStrings = generateEmbeddingStrings(extractedData, queryString);
 
+        xLog.saveProcessFile(`${moduleName}_atomicQueryParameters`, `QUERY STRING\n${queryString}\nATOMIC EXTRACTION\n${JSON.stringify(extractedData, '', '\t')}\n${'='.repeat(50)}\nEMBEDDING STRINGS\n${JSON.stringify(embeddingStrings, '', '\t')}`);
+
         // Generate embeddings for each query string
         const queryEmbeddings = [];
         for (const embeddingData of embeddingStrings) {

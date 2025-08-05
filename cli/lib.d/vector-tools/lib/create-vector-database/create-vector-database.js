@@ -94,6 +94,21 @@ const moduleFunction =
 						? `${vectorTableName}_atomic`
 						: vectorTableName;
 
+				// Log generation parameters
+				const generationParams = {
+					dataProfile,
+					sourceTableName,
+					vectorTableName,
+					actualTableName,
+					semanticAnalysisMode,
+					sourcePrivateKeyName,
+					sourceEmbeddableContentName,
+					resumeMode: !!resumeBatch,
+					batchId: resumeBatch?.batch_id || 'new'
+				};
+				
+				xLog.saveProcessFile(`${moduleName}_promptList.log`, `Vector Generation Parameters:\n${JSON.stringify(generationParams, null, 2)}`, {append:true});
+
 				try {
 					let sourceRowList,
 						batchId,
@@ -192,6 +207,18 @@ const moduleFunction =
 
 					// Mark batch as completed
 					progressTracker.completeBatch(vectorDb, batchId);
+
+					// Log completion results
+					const completionResult = {
+						success: true,
+						batchId,
+						totalRecords: sourceRowList.length,
+						semanticAnalysisMode,
+						actualTableName,
+						dataProfile
+					};
+					
+					xLog.saveProcessFile(`${moduleName}_responseList.log`, `Vector Generation Completed:\n${JSON.stringify(completionResult, null, 2)}`, {append:true});
 
 					return { success: true, shouldExit: true };
 				} catch (error) {

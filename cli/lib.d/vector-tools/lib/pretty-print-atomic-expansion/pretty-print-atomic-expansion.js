@@ -7,27 +7,23 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 	const moduleConfig = getConfig(moduleName);
 
 	// Helper function for verbose query analysis display
-	const prettyPrintAtomicExpansion = (xLog) => (verboseData) => {
+	const prettyPrintAtomicExpansion =  (verboseData) => {
 		if (!verboseData) return;
 
-		xLog.status(
-			'\n╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗',
-		);
-		xLog.status(
-			'║                                      QUERY EXPANSION ANALYSIS                                         ║',
-		);
-		xLog.status(
-			'╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝',
-		);
+		// Accumulate output into a string array
+		const outputLines = [];
 
-		xLog.status(`├─ Original Query: "${verboseData.originalQuery}"`);
-		xLog.status('│');
+		outputLines.push('\n╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗');
+		outputLines.push('║                                      QUERY EXPANSION ANALYSIS                                         ║');
+		outputLines.push('╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝');
+		outputLines.push(`├─ Original Query: "${verboseData.originalQuery}"`);
+		outputLines.push('│');
 
 		verboseData.enrichedStrings.forEach((enrichedData, index) => {
 			const isLast = index === verboseData.enrichedStrings.length - 1;
 			const connector = isLast ? '└─' : '├─';
 
-			xLog.status(
+			outputLines.push(
 				`${connector} Enriched String ${index + 1} [${enrichedData.type}]: "${enrichedData.enrichedString}"`,
 			);
 
@@ -45,19 +41,22 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 						matchDescription += ` (${match.factType}: "${match.factText}")`;
 					}
 
-					xLog.status(`${matchConnector} ${matchPrefix} ${matchDescription}`);
+					outputLines.push(`${matchConnector} ${matchPrefix} ${matchDescription}`);
 				});
 			} else {
 				const noMatchConnector = isLast ? '   ' : '│  ';
-				xLog.status(`${noMatchConnector} └─ (no matches found)`);
+				outputLines.push(`${noMatchConnector} └─ (no matches found)`);
 			}
 
 			if (!isLast) {
-				xLog.status('│');
+				outputLines.push('│');
 			}
 		});
 
-		xLog.status('');
+		outputLines.push('');
+
+		// Output accumulated string all at once
+		return outputLines.join('\n');
 	};
 
 	return { prettyPrintAtomicExpansion };

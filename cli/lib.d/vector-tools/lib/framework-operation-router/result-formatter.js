@@ -61,34 +61,7 @@ const moduleFunction = function (args = {}) {
 		return `${summary}\n${numberedResults}\n`;
 	};
 
-	const generateMockExpansionAnalysis = (query, results) => {
-		return `
 
-╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗
-║                                      QUERY EXPANSION ANALYSIS                                         ║
-╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝
-├─ Original Query: "${query}"
-│
-├─ Enriched String 1 [primary_context]: "${query} serves as Framework-generated query in AI Processing, qtools-ai-framework domain"
-│   ${results.slice(0, 3).map((result, index) => {
-		const score = result.similarity || (0.8 + Math.random() * 0.2);
-		const refId = result.refId || `mock${String(index + 1).padStart(3, '0')}`;
-		const definition = result.Definition || result.definition || 'Framework result';
-		return `├─ [${score.toFixed(4)}] RefID: ${refId} (primary_context: "${definition.substring(0, 80)}...")`;
-	}).join('\n│   ')}
-│
-├─ Enriched String 2 [framework_analysis]: "Query processed via qtools-ai-framework thought process"
-│   ├─ [0.9500] Framework: Successfully routed to Vector_Query_Thought_Process
-│   ├─ [0.9300] Integration: Parameter mapping working correctly  
-│   ├─ [0.9100] Results: Framework thinker returned structured data
-│   └─ [0.9000] Format: Converting framework wisdom to legacy display format
-│
-└─ Framework Metadata:
-    ├─ Thought Process: Vector_Query_Thought_Process
-    ├─ Processing Mode: ${results[0]?.factType || 'framework_mock'}
-    ├─ Results Format: Framework → Legacy Conversion
-    └─ Integration Status: ✓ Parameter mapping and result formatting successful`;
-	};
 
 	// ================================================================================
 	// VECTOR GENERATION RESULT FORMATTING
@@ -150,9 +123,9 @@ ${JSON.stringify(frameworkResult, null, 2)}`;
 
 	const printFormattedResult = (formattedResult) => {
 		if (formattedResult) {
-			console.log(formattedResult);
+			xLog.status(formattedResult);
 		} else {
-			console.log('No formatted output available');
+			xLog.status('No formatted output available');
 		}
 	};
 
