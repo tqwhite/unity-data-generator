@@ -167,7 +167,8 @@ const moduleFunction = function (args = {}) {
 				// Add embedding records to wisdom bus
 				const updatedWisdom = {
 					...wisdomBus,
-					embeddingRecords,
+					atomicEmbeddings: embeddingRecords, // Standard interface name
+					embeddingRecords, // Legacy compatibility  
 					totalAtomicEmbeddings: embeddingRecords.length
 				};
 

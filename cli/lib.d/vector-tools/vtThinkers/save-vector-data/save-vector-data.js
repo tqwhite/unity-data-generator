@@ -69,7 +69,7 @@ const moduleFunction = function (args = {}) {
 		try {
 			// Determine if we're saving simple or atomic embeddings
 			const simpleEmbedding = wisdomBus.qtGetSurePath('simpleEmbedding');
-			const embeddingRecords = wisdomBus.qtGetSurePath('embeddingRecords');
+			const embeddingRecords = wisdomBus.qtGetSurePath('atomicEmbeddings') || wisdomBus.qtGetSurePath('embeddingRecords');
 			const sourceRefId = wisdomBus.qtGetSurePath('sourceRefId');
 
 			// Log the input/prompt details

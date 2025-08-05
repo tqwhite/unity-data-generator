@@ -33,23 +33,22 @@ const moduleFunction = function (args = {}) {
 		};
 
 	// ================================================================================
-	// EMBEDDING GENERATION (SKELETON - Mock for now)
+	// GENERATE EMBEDDINGS (SKELETON - Mock for now)
 
 	const generateEmbedding = (text, callback) => {
-		xLog.verbose(`${moduleName}: Would generate embedding for: ${text.substring(0, 50)}...`);
-		
-		// SKELETON: Mock embedding generation
-		const mockEmbedding = new Array(1536).fill(0).map(() => Math.random() - 0.5);
-		
+		xLog.verbose(`${moduleName}: Would generate embedding for text: ${text.substring(0, 100)}...`);
+
+		// SKELETON: Return mock embedding (1536 dimensions like text-embedding-3-small)
+		const mockEmbedding = new Array(1536).fill(0).map(() => Math.random() * 2 - 1);
+
 		// Simulate async embedding generation
 		setTimeout(() => {
-			const mockResult = {
+			callback('', {
 				embedding: mockEmbedding,
-				model: 'text-embedding-3-small',
-				success: true
-			};
-			callback('', mockResult);
-		}, 100);
+				model: 'text-embedding-3-small-mock',
+				usage: { prompt_tokens: text.length / 4, total_tokens: text.length / 4 }
+			});
+		}, 50);
 	};
 
 	// ================================================================================
@@ -63,10 +62,6 @@ const moduleFunction = function (args = {}) {
 		}
 
 		try {
-			// DEBUG: Log what's in the wisdomBus
-			xLog.verbose(`${moduleName}: wisdomBus keys: [${Object.keys(wisdomBus).join(', ')}]`);
-			xLog.verbose(`${moduleName}: wisdomBus content: ${JSON.stringify(wisdomBus, null, 2)}`);
-			
 			// Handle both vector generation (currentElement) and query processing (queryString)
 			const currentElement = wisdomBus.qtGetSurePath('currentElement');
 			const queryString = wisdomBus.qtGetSurePath('queryString');
@@ -97,10 +92,9 @@ const moduleFunction = function (args = {}) {
 				timestamp: new Date().toISOString()
 			};
 
-			const contentPreview = inputText.substring(0, 100) + (inputText.length > 100 ? '...' : '');
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
-				`\n\n\n${moduleName}---------------------------------------------------\nProcessing: ${processingContext}\nOpenAI Embedding Request:\nModel: text-embedding-3-small\nContent: "${contentPreview}"\n----------------------------------------------------\n\n`,
+				`\n\n\n${moduleName}---------------------------------------------------\nProcessing: ${processingContext}\nOpenAI Embedding Request:\nModel: text-embedding-3-small\nContent: "${inputText.substring(0, 100)}${inputText.length > 100 ? '...' : '"}"\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
 

@@ -28,7 +28,7 @@ const moduleFunction = function (args = {}) {
 		if (values.queryString) {
 			operation = 'query';
 			// Determine query thought process based on semanticAnalysisMode
-			const semanticMode = values.semanticAnalysisMode?.[0] || 'simpleVector';
+			const semanticMode = values.semanticAnalysisMode?.[0] || 'atomicVector';
 			const defaultThoughtProcess = semanticMode === 'atomicVector' 
 				? 'Vector_Query_Atomic_Thought_Process' 
 				: 'Vector_Query_Simple_Thought_Process';
