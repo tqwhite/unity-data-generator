@@ -1,0 +1,22 @@
+{
+	"name": "score-distance-results",
+	"version": "1.0.0",
+	"description": "Atomic vector scoring for semantic search results in Unity Object Generator",
+	"main": "score-distance-results.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"vector",
+		"semantic",
+		"search",
+		"scoring",
+		"atomic",
+		"ceds",
+		"sif"
+	],
+	"author": "TQ White",
+	"license": "ISC",
+	"dependencies": {},
+	"devDependencies": {}
+}

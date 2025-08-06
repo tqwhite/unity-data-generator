@@ -2,11 +2,21 @@
 
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 
-const moduleFunction = function(args = {}) {
-    const { xLog, getConfig } = process.global;
+const moduleFunction = function (args = {}) {
+	const { xLog, getConfig } = process.global;
 
-    const extractAtomicFacts = async (definition, openai) => {
-        const systemPrompt = `You are an atomic-fact extractor with semantic categorization.
+	const personaMap = {
+		linguist:
+			'You are a computational linguist with knowledge graph/ontology experience, working in semantic parsing or knowledge representation. You are comfortable with both symbolic and vector semantics.',
+		extractor: 'You are an atomic-fact extractor with semantic categorization.',
+	};
+	const personaChoice = 'linguist';
+	
+
+	const extractAtomicFacts = async (definition, openai) => {
+		const systemPrompt = `
+${personaMap[personaChoice]}
+        
 Given any definition or user query, break it into its smallest self-contained semantic statements and identify the underlying conceptual dimensions.
 
 Each statement must:
@@ -45,88 +55,114 @@ Conceptual dimensions are semantic axes that distinguish related concepts. Ident
 - granularity: aggregate ↔ atomic
 
 Derive dimensions appropriate to your input's semantic domain.`;
+		// Call OpenAI chat completion
+const temperature=0;
+		try {
+			const response = await openai.chat.completions.create({
+				model: 'gpt-4o-2024-08-06',
+				messages: [
+					{ role: 'system', content: systemPrompt },
+					{ role: 'user', content: definition },
+				],
+				response_format: { type: 'json_object' },
+				temperature,
+				max_tokens: 4000,
+			});
 
-        try {
-            const response = await openai.chat.completions.create({
-                model: 'gpt-4o-2024-08-06',
-                messages: [
-                    { role: 'system', content: systemPrompt },
-                    { role: 'user', content: definition }
-                ],
-                response_format: { type: "json_object" }
-            });
+			const processFileData = {
+				systemPrompt,
+				definition,
+				response,
+			};
 
-            return JSON.parse(response.choices[0].message.content);
-        } catch (err) {
-            xLog.error(`Atomic fact extraction failed: ${err.message}`);
-            return {
-                elements: [{
-                    element_id: 'error',
-                    facts: [{ text: definition }],
-                    semantic_categories: ['unknown'],
-                    functional_role: 'unknown',
-                    conceptual_dimensions: []
-                }]
-            };
-        }
-    };
+			xLog.saveProcessFile(
+				`${moduleName}_fullAiPromptResponse.log`,
+				processFileData,
+				{ saveAsJson: true },
+			);
 
-    const generateEmbeddingStrings = (extractedData, originalDefinition) => {
-        const element = extractedData.elements[0];
-        const { facts, semantic_categories, functional_role, conceptual_dimensions } = element;
-        const embeddingStrings = [];
+			return {
+				personaChoice,
+				temperature,
+				...JSON.parse(response.choices[0].message.content),
+			};
+		} catch (err) {
+			xLog.error(`Atomic fact extraction failed: ${err.message}`);
+			return {
+				elements: [
+					{
+						element_id: 'error',
+						facts: [{ text: definition }],
+						semantic_categories: ['unknown'],
+						functional_role: 'unknown',
+						conceptual_dimensions: [],
+					},
+				],
+			};
+		}
+	};
 
-        // Pattern 1: Primary Context Formula
-        if (functional_role && semantic_categories.length > 0) {
-            const primaryContext = `${originalDefinition} serves as ${functional_role} in ${semantic_categories.join(', ')} domain`;
-            embeddingStrings.push({ 
-                type: 'primary_context', 
-                text: primaryContext 
-            });
-        }
+	const generateEmbeddingStrings = (extractedData, originalDefinition) => {
+		const element = extractedData.elements[0];
+		const {
+			facts,
+			semantic_categories,
+			functional_role,
+			conceptual_dimensions,
+		} = element;
+		const embeddingStrings = [];
 
-        // Pattern 2: Individual Facts
-        facts.forEach((fact, idx) => {
-            embeddingStrings.push({ 
-                type: 'individual_fact', 
-                text: fact.text, 
-                factIndex: idx 
-            });
-        });
+		// Pattern 1: Primary Context Formula
+		if (functional_role && semantic_categories.length > 0) {
+			const primaryContext = `${originalDefinition} serves as ${functional_role} in ${semantic_categories.join(', ')} domain`;
+			embeddingStrings.push({
+				type: 'primary_context',
+				text: primaryContext,
+			});
+		}
 
-        // Pattern 3: Functional Role Formula
-        if (functional_role) {
-            const functionalFormula = `${functional_role}: ${originalDefinition}`;
-            embeddingStrings.push({ 
-                type: 'functional_role', 
-                text: functionalFormula 
-            });
-        }
+		// Pattern 2: Individual Facts
+		facts.forEach((fact, idx) => {
+			embeddingStrings.push({
+				type: 'individual_fact',
+				text: fact.text,
+				factIndex: idx,
+			});
+		});
 
-        // Pattern 4: Conceptual Dimensions
-        conceptual_dimensions.forEach((dim, idx) => {
-            const dimText = `${dim.dimension} spectrum ${dim.position} characteristic`;
-            embeddingStrings.push({ 
-                type: 'conceptual_dimension', 
-                text: dimText, 
-                dimension: dim.dimension 
-            });
-        });
+		// Pattern 3: Functional Role Formula
+		if (functional_role) {
+			const functionalFormula = `${functional_role}: ${originalDefinition}`;
+			embeddingStrings.push({
+				type: 'functional_role',
+				text: functionalFormula,
+			});
+		}
 
-        // Pattern 5: Semantic Categories
-        semantic_categories.forEach(category => {
-            const categoryText = `${category}: ${facts.map(f => f.text).join(' ')}`;
-            embeddingStrings.push({ 
-                type: 'semantic_category', 
-                text: categoryText, 
-                category 
-            });
-        });
+		// Pattern 4: Conceptual Dimensions
+		conceptual_dimensions.forEach((dim, idx) => {
+			const dimText = `${dim.dimension} spectrum ${dim.position} characteristic`;
+			embeddingStrings.push({
+				type: 'conceptual_dimension',
+				text: dimText,
+				dimension: dim.dimension,
+			});
+		});
 
-        return embeddingStrings;
-    };
+		// Pattern 5: Semantic Categories
+		semantic_categories.forEach((category) => {
+			const categoryText = `${category}: ${facts.map((f) => f.text).join(' ')}`;
+			embeddingStrings.push({
+				type: 'semantic_category',
+				text: categoryText,
+				category,
+			});
+		});
 
-    return { extractAtomicFacts, generateEmbeddingStrings };
+		return embeddingStrings;
+	};
+
+	return { extractAtomicFacts, generateEmbeddingStrings };
 };
 
 module.exports = moduleFunction;

@@ -58,7 +58,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		
 		xLog.saveProcessFile(`${moduleName}_promptList.log`, `Query Parameters:\n${JSON.stringify(queryParams, null, 2)}`, {append:true});
 
-		try {
+
 			// Check if verbose mode is enabled
 			const isVerbose = commandLineParameters.switches.verbose;
 
@@ -78,7 +78,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			// Handle both formats (legacy array or new object with verbose data)
 			const results = scoringResult.results || scoringResult;
 			const verboseData = scoringResult.verboseData;
-
+			
 			// Log the results
 			const resultSummary = {
 				queryString,
@@ -93,13 +93,13 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 				}))
 			};
 			
-			xLog.saveProcessFile(`${moduleName}_queryExpanasion.log`, resultSummary, {saveAsJson:true});
+			xLog.saveProcessFile(`${moduleName}_finalResults.log`, resultSummary, {saveAsJson:true});
 
-			const scoringResultDisplayData=prettyPrintAtomicExpansion(verboseData);
-			xLog.saveProcessFile(`${moduleName}_scoringResultDisplayData.log`, scoringResultDisplayData);
+			const queryExpansion=prettyPrintAtomicExpansion(verboseData);
+			xLog.saveProcessFile(`${moduleName}_queryExpansion.log`, queryExpansion);
 			
 			xLog.verbose(`Result Summary:\n${JSON.stringify(resultSummary, null, 2)}`);
-			xLog.verbose(scoringResultDisplayData)
+			xLog.verbose(queryExpansion)
 
 
 			// Format and output results
@@ -131,10 +131,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			}
 
 			return { success: true, shouldExit: false };
-		} catch (error) {
-			xLog.error(`Vector similarity search failed: ${error.message}`);
-			return { success: false, shouldExit: false };
-		}
+		
 	};
 
 	return { queryVectorDatabase };
