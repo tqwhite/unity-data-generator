@@ -4,7 +4,7 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 
 const moduleFunction = function(args = {}) {
     const { xLog, getConfig } = process.global;
-    const { extractAtomicFacts, generateEmbeddingStrings } = require('./atomic-fact-extractor')();
+    const { extractAtomicFacts, convertAtomicFactsToEmbeddingStrings } = require('./atomic-fact-extractor')();
 
     const generateVectors = async (args) => {
         const { 
@@ -83,7 +83,7 @@ const moduleFunction = function(args = {}) {
                 const extractedData = await extractAtomicFacts(embeddableContent, openai);
 
                 // Generate embedding strings
-                const embeddingStrings = generateEmbeddingStrings(extractedData, embeddableContent);
+                const embeddingStrings = convertAtomicFactsToEmbeddingStrings(extractedData, embeddableContent);
                 xLog.verbose(`Generated ${embeddingStrings.length} embedding strings for ${privateKey}`);
 
                 // Create embeddings for each string

@@ -4,8 +4,9 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 
 const moduleFunction = function (args = {}) {
 	const { xLog, getConfig } = process.global;
-	const { extractAtomicFacts, generateEmbeddingStrings } =
-		require('../atomic-fact-extractor')();
+	const atomicFactExtractorGen=require('../atomic-fact-extractor')();
+	const { extractAtomicFacts, convertAtomicFactsToEmbeddingStrings } =
+		atomicFactExtractorGen;
 	const { scoreMatches } = require('./lib/score-matches')();
 
 	// ---------------------------------------------------------------------
@@ -50,7 +51,7 @@ const moduleFunction = function (args = {}) {
 		xLog.verbose(`Extracting atomic facts from query: ${queryString}`);
 		const extractedData = await extractAtomicFacts(queryString, openai);
 		
-		const embeddingStrings = generateEmbeddingStrings(
+		const embeddingStrings = convertAtomicFactsToEmbeddingStrings(
 			extractedData,
 			queryString,
 		);

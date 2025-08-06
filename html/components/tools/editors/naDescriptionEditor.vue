@@ -95,8 +95,9 @@ const fetchSemanticResults = async () => {
     // Fetch results using the Description field and XPath
     if (!namodelStore.isLoadingSemanticDistance && props.item) {
         // The XPath preprocessing is now handled in the fetchSemanticDistance function
-        const queryString = `${props.item.Description} ${props.item.XPath}`;
-        console.log(`Fetching semantic distance data for: "${queryString}"`);
+        //const queryString = `${props.item.Description} ${props.item.XPath}`;
+        const queryString = `${props.item.Description}`;
+        console.log(`Fetching semantic distance data for: "${queryString}" (no xpath)`);
         // Use the refId as the identifier for this query
         const refId = props.item.refId || props.item.XPath || "default";
         

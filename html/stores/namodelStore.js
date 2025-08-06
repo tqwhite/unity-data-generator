@@ -181,6 +181,11 @@ export const useNamodelStore = defineStore('namodel', {
 			this.isLoadingSemanticDistance = true;
 			this.semanticDistanceError = null;
 
+console.log(`\n=-=============   queryString  ========================= [namodelStore.js.actions]\n`);
+
+
+console.log(`queryString=${queryString}`);
+
 			// Import LoginStore to get auth token
 			const { useLoginStore } = await import('@/stores/loginStore');
 			const LoginStore = useLoginStore();
