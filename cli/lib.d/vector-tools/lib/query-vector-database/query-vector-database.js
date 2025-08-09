@@ -12,15 +12,23 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		vectorDb,
 		semanticAnalyzer,
 	) => {
-		// Get config from vectorDb
+		const { commandLineParameters } = process.global;
+		
+		// Get command line parameters directly
+		const dataProfile = commandLineParameters.values.dataProfile[0];
+		
+		// Get remaining database parameters from vectorDb (non-command-line values)
 		const config = vectorDb.getDatabaseParameters();
 		const {
-			dataProfile,
 			sourceTableName,
-			vectorTableName,
 			sourcePrivateKeyName,
 			sourceEmbeddableContentName,
+			vectorTableName: defaultVectorTableName,
+			defaultTargetTableName
 		} = config;
+		
+		// Get vectorTableName from command line or fall back to config
+		const vectorTableName = commandLineParameters.values.targetTableName?.[0] || defaultVectorTableName;
 
 		const queryString = commandLineParameters.values.queryString.qtLast();
 		const resultCount = commandLineParameters.values.resultCount

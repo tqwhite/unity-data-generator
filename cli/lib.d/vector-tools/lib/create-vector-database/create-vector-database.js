@@ -53,19 +53,27 @@ const moduleFunction =
 		const createVectorDatabase =
 			(progressTracker) =>
 			async (
-				config,
 				openai,
 				vectorDb,
 				semanticAnalyzer,
 				resumeBatch = null,
 			) => {
+				const { commandLineParameters } = process.global;
+				
+				// Get dataProfile directly from command line
+				const dataProfile = commandLineParameters.values.dataProfile[0];
+				
+				// Get remaining database parameters from vectorDb (non-command-line values)
+				const config = vectorDb.getDatabaseParameters();
 				const {
-					dataProfile,
 					sourceTableName,
-					vectorTableName,
+					vectorTableName: defaultVectorTableName,
 					sourcePrivateKeyName,
 					sourceEmbeddableContentName,
 				} = config;
+				
+				// Get vectorTableName from command line or fall back to config
+				const vectorTableName = commandLineParameters.values.targetTableName?.[0] || defaultVectorTableName;
 
 				// Validate and prepare batch for resume operations if no resumeBatch provided
 				if (resumeBatch === null && commandLineParameters.switches.resume) {

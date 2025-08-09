@@ -103,7 +103,6 @@ const moduleFunction =
 			createVectorDatabase: async () => {
 				const progressTracker = require('./lib/progress-tracker')({});
 				return await createVectorDatabase(progressTracker)(
-					config.qtSelectProperties(['dataProfile']),
 					openai,
 					vectorDb,
 					semanticAnalyzer,
@@ -124,17 +123,7 @@ const moduleFunction =
 				);
 			},
 			directQueryTool: async () => {
-				const queryType = commandLineParameters.values.query.qtLast();
-				const queryOptions = {
-					queryType,
-					whereClause: commandLineParameters.values.whereClause?.[0] || null,
-					resultLimit: commandLineParameters.values.resultLimit?.[0] || null
-				};
-				return directQueryTool({ 
-					config: config.qtSelectProperties(['dataProfile']), 
-					vectorDb, 
-					queryOptions 
-				});
+				return directQueryTool({ vectorDb });
 			},
 			showHelp: () => {
 				xLog.status(helpText);

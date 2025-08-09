@@ -46,8 +46,17 @@ const moduleFunction = function (args = {}) {
 
 
 
-	const directQueryTool = ({ config, vectorDb, queryOptions }) => {
-		const { queryType, whereClause, resultLimit } = queryOptions;
+	const directQueryTool = ({ vectorDb }) => {
+		const { commandLineParameters } = process.global;
+		
+		// Get parameters directly from command line
+		const queryType = commandLineParameters.values.query.qtLast();
+		const whereClause = commandLineParameters.values.whereClause?.[0] || null;
+		const resultLimit = commandLineParameters.values.resultLimit?.[0] || null;
+		const dataProfile = commandLineParameters.values.dataProfile[0];
+		
+		// Create config object with just dataProfile for compatibility
+		const config = { dataProfile };
 
 		if (!validation.validateInputs({ queryType, whereClause, config, queryTypes, getCurrentSemanticMode, schemaRegistry })) {
 			return;

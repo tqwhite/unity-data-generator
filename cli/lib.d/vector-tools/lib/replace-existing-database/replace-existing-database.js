@@ -12,13 +12,18 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		const asynchronousPipePlus = require('qtools-asynchronous-pipe-plus')();
 		const { pipeRunner, taskListPlus } = asynchronousPipePlus;
 		
-		// Get config from vectorDb
+		// Get command line parameters directly
+		const dataProfile = commandLineParameters.values.dataProfile[0];
+		
+		// Get remaining database parameters from vectorDb (non-command-line values)
 		const config = vectorDb.getDatabaseParameters();
 		const {
-			dataProfile,
 			sourceTableName,
-			vectorTableName: vectorTableNameRaw
+			vectorTableName: defaultVectorTableName
 		} = config;
+		
+		// Get vectorTableName from command line or fall back to config
+		const vectorTableNameRaw = commandLineParameters.values.targetTableName?.[0] || defaultVectorTableName;
 		
 		// Handle vectorTableName being an array (from command line params)
 		const vectorTableName = Array.isArray(vectorTableNameRaw) ? vectorTableNameRaw[0] : vectorTableNameRaw;
