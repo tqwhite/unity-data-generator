@@ -89,9 +89,12 @@ const moduleFunction = function (args = {}) {
 	const prettyPrintAtomicExpansion = 
 		systemPromptGen.prettyPrintAtomicExpansion;
 
+	const scoringMethod = 
+		systemPromptGen.scoringMethod;
+
 	// ===================================================================================
 
-	return { extractAtomicFacts, convertAtomicFactsToEmbeddingStrings, prettyPrintAtomicExpansion };
+	return { extractAtomicFacts, convertAtomicFactsToEmbeddingStrings, prettyPrintAtomicExpansion, scoringMethod };
 };
 
 module.exports = moduleFunction;

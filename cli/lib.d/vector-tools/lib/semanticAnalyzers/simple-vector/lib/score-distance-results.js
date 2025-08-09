@@ -4,27 +4,10 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 
 const moduleFunction = function(args = {}) {
     const { xLog, getConfig } = process.global;
-
-    // ---------------------------------------------------------------------
-    // processQueryString - transforms query strings for better search results
     
-    const processQueryString = (value) => {
-        if (!value) return '';
-        
-        // Apply the same transformations as we do for XPath fields
-        // Step 1: Replace slashes with spaces
-        let processed = value.replace(/\//g, ' ');
-        
-        // Step 2: Split words on camel case
-        processed = processed.replace(/([a-z])([A-Z])/g, '$1 $2');
-        
-        // Step 3: Remove leading 'x' or 'X' characters from each word
-        processed = processed.split(' ')
-            .map(word => word.replace(/^[xX](?=[a-zA-Z])/g, ''))
-            .join(' ');
-        
-        return processed;
-    };
+    // Import query processing methods from version-specific queryString
+    const queryProcessorGen = require('./query-processor')();
+    const { processQueryString, scoringMethod } = queryProcessorGen;
 
     // ---------------------------------------------------------------------
     // dataProfileStrategies - defines key formatting strategies for different data profiles
@@ -110,8 +93,8 @@ const moduleFunction = function(args = {}) {
             queryExpansionAnalysis: []
         } : null;
 
-        // Look up source records and format results
-        const scoredResults = [];
+        // Look up source records and prepare for scoring
+        const rawResults = [];
         
         rows.forEach((vectorChoice, index) => {
             const searchValue = vectorChoice[sourcePrivateKeyName];
@@ -132,14 +115,15 @@ const moduleFunction = function(args = {}) {
 
             xLog.verbose(`Found record using ${strategy.name} strategy`);
 
-            scoredResults.push({
-                rank: index + 1,
+            rawResults.push({
                 refId: record[sourcePrivateKeyName],
                 distance: vectorChoice.distance,
-                score: vectorChoice.distance, // For simple-vector, score equals distance
                 record
             });
         });
+
+        // Score results using version-specific scoring method
+        const scoredResults = scoringMethod(rawResults);
 
         xLog.verbose(`Found ${scoredResults.length} matches`);
         

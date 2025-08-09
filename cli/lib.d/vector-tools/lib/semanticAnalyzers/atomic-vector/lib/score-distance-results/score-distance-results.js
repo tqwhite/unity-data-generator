@@ -5,9 +5,8 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 const moduleFunction = function (args = {}) {
 	const { xLog, getConfig } = process.global;
 	const atomicFactExtractorGen=require('../atomic-fact-extractor')();
-	const { extractAtomicFacts, convertAtomicFactsToEmbeddingStrings } =
+	const { extractAtomicFacts, convertAtomicFactsToEmbeddingStrings, scoringMethod } =
 		atomicFactExtractorGen;
-	const { scoreMatches } = require('./lib/score-matches')();
 
 	// ---------------------------------------------------------------------
 	// dataProfileStrategies - defines key formatting strategies for different data profiles
@@ -159,8 +158,8 @@ const moduleFunction = function (args = {}) {
 			});
 		}
 
-		// Score and rank aggregated results using subordinate module
-		const scoredResults = scoreMatches(allMatches, { distanceWeight: 0.1 });
+		// Score and rank aggregated results using version-specific scoring method
+		const scoredResults = scoringMethod(allMatches, { distanceWeight: 0.1 });
 
 		// Look up source records and format final results
 		const finalResults = [];
