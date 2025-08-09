@@ -6,7 +6,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 	const { xLog, getConfig, rawConfig, commandLineParameters, projectRoot } = process.global;
 	const moduleConfig = getConfig(moduleName);
 
-	const replaceExistingDatabase = async (config, openai, vectorDb, semanticAnalyzer) => {
+	const replaceExistingDatabase = async (config, openai, vectorDb, semanticAnalyzer, databaseOperations) => {
 		const { xLog, commandLineParameters } = process.global;
 		const qt = require('qtools-functional-library');
 		const asynchronousPipePlus = require('qtools-asynchronous-pipe-plus')();
@@ -16,7 +16,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		const {
 			dataProfile,
 			sourceTableName,
-			vectorTableName,
+			vectorTableName: vectorTableNameRaw,
 			sourcePrivateKeyName,
 			sourceEmbeddableContentName
 		} = config.qtSelectProperties([
@@ -26,6 +26,9 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			'sourcePrivateKeyName',
 			'sourceEmbeddableContentName'
 		]);
+		
+		// Handle vectorTableName being an array (from command line params)
+		const vectorTableName = Array.isArray(vectorTableNameRaw) ? vectorTableNameRaw[0] : vectorTableNameRaw;
 		
 		xLog.status(
 			`Starting Complete Database Rebuild for ${dataProfile.toUpperCase()} profile...`,
@@ -93,10 +96,8 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			xLog.status('Dropping existing vector tables...');
 			
 			try {
-				const databaseOperations = require('../database-operations')({});
-				
-				// Call existing drop functionality (synchronous)
-				const dropResult = databaseOperations.dropTable(config, vectorDb);
+				// Use the databaseOperations passed as parameter
+				const dropResult = databaseOperations.dropTable();
 				
 				if (dropResult.qtGetSurePath('success', false)) {
 					xLog.status(`✓ Dropped vector table: ${vectorTableName}`);
@@ -157,6 +158,9 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 				const sourceCount = vectorDb.prepare(`SELECT COUNT(*) as count FROM ${sourceTableName}`).get().count;
 				
 				// Determine actual table name based on semantic analysis mode
+				// Debug commandLineParameters structure
+				xLog.status(`DEBUG: commandLineParameters.values = ${JSON.stringify(commandLineParameters.values, null, 2)}`);
+				
 				const semanticAnalysisMode = commandLineParameters.qtGetSurePath(
 					'values.semanticAnalysisMode[0]',
 					'simpleVector',
@@ -164,6 +168,9 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 				const actualVectorTableName = semanticAnalysisMode === 'atomicVector'
 					? `${vectorTableName}_atomic`
 					: vectorTableName;
+				
+				// Debug logging
+				xLog.status(`DEBUG VERIFICATION: vectorTableName=${vectorTableName}, semanticAnalysisMode=${semanticAnalysisMode}, actualVectorTableName=${actualVectorTableName}`);
 				
 				const vectorCount = vectorDb.prepare(`SELECT COUNT(*) as count FROM ${actualVectorTableName}`).get().count;
 				

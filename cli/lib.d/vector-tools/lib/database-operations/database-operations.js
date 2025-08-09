@@ -13,11 +13,12 @@ const fs = require('fs');
 
 
 //START OF moduleFunction() ============================================================
-const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
+const moduleFunction = ({ moduleName } = {}) => ({ config }={}) => {
 	const { xLog, getConfig, rawConfig, commandLineParameters, projectRoot } = process.global;
 	const localConfig = getConfig(moduleName);
 	
-
+	// Store passed config for use by all methods
+	const instanceConfig = config;
 	
 	// Import database modules
 	const { dropAllVectorTables, dropProductionVectorTables } = require('./lib/drop-all-vector-tables');
@@ -25,11 +26,21 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 	const { getTableCount, tableExists } = require('./lib/vector-database-operations');
 	const { initVectorDatabase } = require('./lib/init-vector-database');
 	
+	// Initialize vectorDb internally using the config (after imports)
+	const instanceVectorDb = config ? (() => {
+		const { databaseFilePath, vectorTableName: vectorTableNameRaw } = config.qtSelectProperties(['databaseFilePath', 'vectorTableName']);
+		const vectorTableName = Array.isArray(vectorTableNameRaw) ? vectorTableNameRaw[0] : vectorTableNameRaw;
+		return initVectorDatabase(databaseFilePath, vectorTableName);
+	})() : null;
+	
 	// ---------------------------------------------------------------------
 	// validateAndExecuteDropTable - validates and executes table drop operations
 	
 	const validateAndExecuteDropTable = (config, vectorDb, switches) => {
-		const { dataProfile, vectorTableName } = config;
+		const { dataProfile, vectorTableName: vectorTableNameRaw } = config;
+		
+		// Handle vectorTableName being an array (from command line params)
+		const vectorTableName = Array.isArray(vectorTableNameRaw) ? vectorTableNameRaw[0] : vectorTableNameRaw;
 
 		// Log drop table parameters
 		const dropParams = {
@@ -138,22 +149,22 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 	// ---------------------------------------------------------------------
 	// showStats - wrapper for showDatabaseStats with logging
 	
-	const showStats = (config, vectorDb) => {
-		const { dataProfile, vectorTableName } = config;
+	const showStats = () => {
+		const { dataProfile, vectorTableName } = instanceConfig;
 		
 		// Log show stats parameters
 		const statsParams = {
 			dataProfile,
 			vectorTableName,
 			operation: 'showStats',
-			databasePath: vectorDb.name || 'in-memory'
+			databasePath: instanceVectorDb.name || 'in-memory'
 		};
 		
 		xLog.saveProcessFile(`${moduleName}_promptList.log`, `Show Database Stats:\n${JSON.stringify(statsParams, null, 2)}`, {append:true});
 		
 		try {
 			// Call the actual showDatabaseStats function
-			const result = showDatabaseStats(vectorDb);
+			const result = showDatabaseStats(instanceVectorDb);
 			
 			// Log stats results
 			const statsResults = {
@@ -176,11 +187,11 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 	// ---------------------------------------------------------------------
 	// dropTable - wrapper for validateAndExecuteDropTable with better naming
 	
-	const dropTable = (config, vectorDb) => {
-		return validateAndExecuteDropTable(config, vectorDb, {});
+	const dropTable = () => {
+		return validateAndExecuteDropTable(instanceConfig, instanceVectorDb, {});
 	};
 
-	return { 
+	const databaseOperations = { 
 		initializeDatabase,
 		validateAndExecuteDropTable,
 		dropAllVectorTables,
@@ -191,6 +202,11 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 		getTableCount,
 		tableExists,
 		initVectorDatabase
+	};
+
+	return { 
+		databaseOperations,
+		vectorDb: instanceVectorDb
 	};
 };
 

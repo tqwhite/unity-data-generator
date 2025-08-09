@@ -85,11 +85,8 @@ const moduleFunction =
 		
 		const semanticAnalyzer = semanticAnalyzerLibrary.getAnalyzer(); // gets --semanticAnalysisMode from command line
 
-		const databaseOperations = databaseOperationsGen({});
-
-		const vectorDb = databaseOperations.initializeDatabase(
-			config.qtSelectProperties(['databaseFilePath', 'vectorTableName']),
-		);
+		// Get both database operations and vectorDb from single instantiation
+		const { databaseOperations, vectorDb } = databaseOperationsGen({ config });
 
 		// ================================================================================
 		// OPERATION ROUTING - Use framework-operation-router to determine path
@@ -114,16 +111,10 @@ const moduleFunction =
 				);
 			},
 			showDatabaseStats: async () => {
-				return await databaseOperations.showStats(
-					config,
-					vectorDb,
-				);
+				return await databaseOperations.showStats();
 			},
 			dropVectorTable: async () => {
-				return await databaseOperations.dropTable(
-					config,
-					vectorDb,
-				);
+				return await databaseOperations.dropTable();
 			},
 			rebuildVectorDatabase: async () => {
 				return await replaceExistingDatabase(
@@ -131,6 +122,7 @@ const moduleFunction =
 					openai,
 					vectorDb,
 					semanticAnalyzer,
+					databaseOperations,
 				);
 			},
 			directQueryTool: async () => {
