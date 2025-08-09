@@ -114,7 +114,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 		};
 		
 		// Generate vectors task
-		const generateVectors = (args, next) => {
+		const processFactsIntoDatabaseVectors = (args, next) => {
 			xLog.status('Generating fresh vectors with updated atomic facts extractor...');
 			
 			try {
@@ -199,7 +199,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			
 			taskList.push(confirmRebuild);
 			taskList.push(dropVectorTables);
-			taskList.push(generateVectors);
+			taskList.push(processFactsIntoDatabaseVectors);
 			taskList.push(verifyCompletion);
 			
 			// Initial pipeline data - use qtools for safe initialization

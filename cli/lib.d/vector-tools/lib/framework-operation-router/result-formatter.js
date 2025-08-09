@@ -103,7 +103,7 @@ Vector Generation Complete:
 			case 'query':
 				return formatQueryResultsAsLegacy(frameworkResult, originalParams.queryString || 'framework query');
 
-			case 'generateVectors':
+			case 'processFactsIntoDatabaseVectors':
 				return formatVectorGenerationResultsAsLegacy(frameworkResult);
 
 			default:

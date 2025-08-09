@@ -82,11 +82,19 @@ const moduleFunction = function(args = {}) {
         const queryEmbedding = response.data[0].embedding;
 
         // Find closest matches using vec0 format
-        const rows = vectorDb
-            .prepare(
-                `SELECT rowid as '${sourcePrivateKeyName}', distance FROM ${tableName} WHERE embedding MATCH ? ORDER BY distance LIMIT ${resultCount}`
-            )
-            .all(new Float32Array(queryEmbedding));
+        let rows;
+        try {
+            rows = vectorDb
+                .prepare(
+                    `SELECT rowid as '${sourcePrivateKeyName}', distance FROM ${tableName} WHERE embedding MATCH ? ORDER BY distance LIMIT ${resultCount}`
+                )
+                .all(new Float32Array(queryEmbedding));
+        } catch (error) {
+            if (error.message.includes('no such table')) {
+                throw new Error(`No simpleVectors found. Missing table ${tableName}. This probably is because you have not generated any simpleVectors. Use vectorTools --dataProfile=${dataProfile} -writeVectorDatabase --semanticAnalysisMode=simpleVector`);
+            }
+            throw error; // Re-throw other errors
+        }
 
         // Collect verbose data for simple vector (single enriched string)
         const verboseData = collectVerboseData ? {

@@ -242,7 +242,7 @@ The polymorphic architecture anticipates additional semantic analysis strategies
 - **Cross-Lingual**: Semantic analysis across multiple languages
 - **Ontology-Network:** Vector select starting nodes for tree structure analysis
 
-New analyzers can be added by implementing the standard interface (`generateVectors`, `scoreDistanceResults`) and registering in the semantic analyzer loader.
+New analyzers can be added by implementing the standard interface (`processFactsIntoDatabaseVectors`, `scoreDistanceResults`) and registering in the semantic analyzer loader.
 
 ## Database Management Commands
 

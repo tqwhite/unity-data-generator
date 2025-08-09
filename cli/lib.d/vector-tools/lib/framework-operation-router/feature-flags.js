@@ -66,7 +66,7 @@ const moduleFunction = function (args = {}) {
 				}
 				break;
 
-			case 'generateVectors':
+			case 'processFactsIntoDatabaseVectors':
 				if (!flags.enableFrameworkForVectorGeneration) {
 					return { useFramework: false, reason: 'vector_generation_disabled' };
 				}
@@ -114,7 +114,7 @@ const moduleFunction = function (args = {}) {
 				}
 				break;
 
-			case 'generateVectors':
+			case 'processFactsIntoDatabaseVectors':
 				if (typeof frameworkResult.recordsProcessed === 'undefined') {
 					return { valid: false, reason: 'missing_processing_stats' };
 				}

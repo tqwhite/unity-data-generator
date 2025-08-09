@@ -6,7 +6,7 @@ const moduleFunction = function(args = {}) {
     const { xLog, getConfig } = process.global;
     const { extractAtomicFacts, convertAtomicFactsToEmbeddingStrings } = require('./atomic-fact-extractor')();
 
-    const generateVectors = async (args) => {
+    const processFactsIntoDatabaseVectors = async (args) => {
         const { 
             sourceRowList, 
             sourceEmbeddableContentName, 
@@ -157,7 +157,7 @@ const moduleFunction = function(args = {}) {
         return generatedVectors;
     };
 
-    return { generateVectors };
+    return { processFactsIntoDatabaseVectors };
 };
 
 module.exports = moduleFunction;

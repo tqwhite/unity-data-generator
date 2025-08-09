@@ -191,7 +191,7 @@ const moduleFunction =
 					);
 
 					// Generate vectors with progress tracking
-					await semanticAnalyzer.generateVectors({
+					await semanticAnalyzer.processFactsIntoDatabaseVectors({
 						sourceRowList,
 						sourceEmbeddableContentName,
 						sourcePrivateKeyName,

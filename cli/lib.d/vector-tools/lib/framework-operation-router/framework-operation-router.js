@@ -37,7 +37,7 @@ const moduleFunction = function (args = {}) {
 					: 'Vector_Query_Simple_Thought_Process';
 			thoughtProcess = values.thoughtProcess?.[0] || defaultThoughtProcess;
 		} else if (switches.writeVectorDatabase || values.writeVectorDatabase) {
-			operation = 'generateVectors';
+			operation = 'processFactsIntoDatabaseVectors';
 			// Determine vector generation type based on semanticAnalysisMode
 			const semanticMode = values.semanticAnalysisMode?.[0] || 'simpleVector';
 			thoughtProcess =
@@ -250,7 +250,7 @@ const moduleFunction = function (args = {}) {
 			case 'query':
 				return await legacyOperations.queryVectorDatabase();
 
-			case 'generateVectors':
+			case 'processFactsIntoDatabaseVectors':
 				return await legacyOperations.createVectorDatabase();
 
 			case 'showStats':

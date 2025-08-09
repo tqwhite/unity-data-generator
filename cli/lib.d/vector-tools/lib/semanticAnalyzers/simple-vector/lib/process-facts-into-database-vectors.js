@@ -32,9 +32,9 @@ const moduleFunction = function(args = {}) {
     };
 
     // ---------------------------------------------------------------------
-    // generateVectors - main vector generation function
+    // processFactsIntoDatabaseVectors - main vector generation function
     
-    const generateVectors = async (args) => {
+    const processFactsIntoDatabaseVectors = async (args) => {
         const {
             sourceRowList,
             sourceEmbeddableContentName,
@@ -142,7 +142,7 @@ const moduleFunction = function(args = {}) {
         return generatedVectors;
     };
 
-    return { generateVectors };
+    return { processFactsIntoDatabaseVectors };
 };
 
 module.exports = moduleFunction;

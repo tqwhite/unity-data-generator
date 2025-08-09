@@ -42,7 +42,7 @@ const moduleFunction = function (args = {}) {
 					}
 				};
 
-			case 'generateVectors':
+			case 'processFactsIntoDatabaseVectors':
 				return {
 					...baseParams,
 					semanticAnalysisMode: values.semanticAnalysisMode?.[0] || 'simpleVector',
@@ -105,7 +105,7 @@ const moduleFunction = function (args = {}) {
 		};
 
 		// Operation-specific data enhancement
-		if (operation === 'generateVectors') {
+		if (operation === 'processFactsIntoDatabaseVectors') {
 			Object.assign(mappedResult, {
 				recordsProcessed: wisdom.recordsProcessed || 0,
 				vectorsGenerated: wisdom.vectorsGenerated || 0,
@@ -127,7 +127,7 @@ const moduleFunction = function (args = {}) {
 				}
 				break;
 
-			case 'generateVectors':
+			case 'processFactsIntoDatabaseVectors':
 				if (!parameters.dataProfile) {
 					throw new Error('dataProfile is required for vector generation operations');
 				}
