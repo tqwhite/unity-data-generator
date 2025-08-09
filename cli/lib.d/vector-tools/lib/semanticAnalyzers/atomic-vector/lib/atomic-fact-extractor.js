@@ -47,8 +47,10 @@ const moduleFunction = function (args = {}) {
 			const processFileData = {
 				systemPrompt,
 				definition,
+				atomicFacts:JSON.parse(response.qtGetSurePath('choices[0].message.content','')),
 				response,
 			};
+			
 
 			xLog.saveProcessFile(
 				`${moduleName}_fullAiPromptResponse.log`,
@@ -58,6 +60,7 @@ const moduleFunction = function (args = {}) {
 
 			return {
 				personaChoice,
+				queryChoice,
 				temperature,
 				...JSON.parse(response.choices[0].message.content),
 			};
@@ -82,10 +85,13 @@ const moduleFunction = function (args = {}) {
 
 	const convertAtomicFactsToEmbeddingStrings =
 		systemPromptGen.convertAtomicFactsToEmbeddingStrings;
+	
+	const prettyPrintAtomicExpansion = 
+		systemPromptGen.prettyPrintAtomicExpansion;
 
 	// ===================================================================================
 
-	return { extractAtomicFacts, convertAtomicFactsToEmbeddingStrings };
+	return { extractAtomicFacts, convertAtomicFactsToEmbeddingStrings, prettyPrintAtomicExpansion };
 };
 
 module.exports = moduleFunction;

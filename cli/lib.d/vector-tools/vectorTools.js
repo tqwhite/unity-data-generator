@@ -55,8 +55,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 
 const databaseOperationsGen = require('./lib/database-operations');
 const aiOperationsGen = require('./lib/ai-operations');
-const { prettyPrintAtomicExpansion } =
-	require('./lib/pretty-print-atomic-expansion')({});
+// Note: prettyPrintAtomicExpansion now provided by semantic analyzer
 const { queryVectorDatabase } = require('./lib/query-vector-database')({});
 const { reorganizeValidateConfig } = require('./lib/assemble-config')({});
 const { createVectorDatabase } = require('./lib/create-vector-database')({});
@@ -98,7 +97,7 @@ const moduleFunction =
 		// Prepare legacy operations object for router
 		const legacyOperations = {
 			queryVectorDatabase: async () => {
-				return await queryVectorDatabase(prettyPrintAtomicExpansion)(
+				return await queryVectorDatabase()(
 					config,
 					openai,
 					vectorDb,

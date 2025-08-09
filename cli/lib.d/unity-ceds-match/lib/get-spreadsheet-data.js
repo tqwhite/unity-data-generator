@@ -80,6 +80,10 @@ const moduleFunction = function (args = {}) {
 				);
 			}
 
+			if (!elementSpecWorksheetJson) {
+				return next(`Sheet '${targetObjectName}' not found. Available sheets: ${worksheetNames.join(', ')}`, null);
+			}
+
 			const sifObjectDefinition = JSON.parse(elementSpecWorksheetJson);
 
 			next('', {

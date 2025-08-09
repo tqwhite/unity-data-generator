@@ -45,6 +45,7 @@ DESCRIPTION
 	2. GENERATE EMBEDDINGS: Use -writeVectorDatabase for incremental updates
 	   vectorTools --dataProfile=sif -writeVectorDatabase
 	   This processes only records without embeddings, preserving existing ones.
+	   Use when source data is updated with additional records (e.g. CEDS v13 adds new elements).
 	   
 	3. COMPLETE REBUILD: Use -rebuildDatabase when source data changes significantly
 	   vectorTools --dataProfile=sif -rebuildDatabase -yesAll
@@ -52,6 +53,11 @@ DESCRIPTION
 	   
 	4. MONITOR PROGRESS: Use -verbose to see embedding generation progress
 	   Large datasets (15K+ SIF records) can take several minutes to process.
+	   
+	5. RECOVERY FROM INTERRUPTIONS: If -writeVectorDatabase is interrupted:
+	   - Use -showProgress to check status of incomplete embedding batches
+	   - Use -resume to continue vector generation from the last processed record
+	   - Use -purgeProgressTable if resume fails or progress tracking is corrupted
 	   
 	The system reads from source tables (naDataModel for SIF, _CEDSElements for CEDS)
 	and creates corresponding vector tables (sifElementVectors, cedsElementVectors)
@@ -87,7 +93,7 @@ SWITCHES
 	                    
 	-writeVectorDatabase: INCREMENTAL: Generates embeddings for records that don't have them.
 	                     Safe operation that preserves existing embeddings and only adds new ones.
-	                     Use for regular updates when new records are added to source tables.
+	                     Use when source data grows (e.g., CEDS updated from 1,905 to 2,100 records).
 	                     
 	-newDatabase:       SAFE: Creates new vector tables if they don't exist.
 	                    Will not overwrite existing data. Use for initial setup.
@@ -106,6 +112,18 @@ SWITCHES
 	                   
 	-verbose:          DEBUGGING: Shows detailed processing information including
 	                   embedding generation progress and database operations.
+	                   
+	-resume:           RECOVERY: Resumes interrupted -writeVectorDatabase operations from
+	                   the last processed record. Finds incomplete batches and continues
+	                   vector embedding generation where it left off after crashes.
+	                   
+	-showProgress:     MONITORING: Displays current progress of any running vector
+	                   generation batches, including processed record counts and
+	                   estimated completion times for active operations.
+	                   
+	-purgeProgressTable: MAINTENANCE: Cleans up stalled or corrupted progress tracking
+	                     entries from interrupted operations. Use when -resume fails
+	                     or when you need to force a fresh start after system crashes.
 
 <!frameworkHelpInfo!>
 
@@ -122,8 +140,14 @@ COMMON OPERATIONS
 	Database Management:
 	vectorTools --dataProfile=sif -rebuildDatabase    # Rebuild SIF vectors
 	vectorTools --dataProfile=ceds -rebuildDatabase   # Rebuild CEDS vectors
+	vectorTools --dataProfile=ceds -writeVectorDatabase # Add vectors for new CEDS records
 	vectorTools --dataProfile=sif -showStats          # Show database stats
 	vectorTools --dataProfile=sif -dropTable -yesAll # Drop SIF vector table
+	
+	Progress Recovery (after interruption):
+	vectorTools --dataProfile=ceds -showProgress      # Shows: "20/1905 records processed"
+	vectorTools --dataProfile=ceds -resume -verbose   # Resumes from record 21
+	vectorTools --dataProfile=ceds -purgeProgressTable -yesAll # If resume fails
 	
 	Semantic Search:
 	vectorTools --dataProfile=ceds --queryString="student enrollment" --resultCount=10

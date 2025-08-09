@@ -31,7 +31,7 @@ const moduleFunction = function (args = {}) {
 	});
 
 	const apostropheEscape = (str) => {
-		return str.replace(/'/g, "''");
+		return str.replace(/'/g, "''").replace(/,/g, " ");
 	};
 	// ================================================================================
 	// TALK TO AI
@@ -42,7 +42,7 @@ const moduleFunction = function (args = {}) {
 	) => {
 		const localCallback = (error, stdout, stderr) => {
 			const suggestionList = stdout.split('\n');
-
+			xLog.verbose(suggestionList);
 			if (error) {
 				xLog.status(`Error: ${error}  [${moduleName} FV7EAuI2e4HRG5hnNs4j]`);
 				// Note: embedVector tools uses stderr as main logging output
@@ -64,7 +64,9 @@ const moduleFunction = function (args = {}) {
 			modeFlag = ` --semanticAnalysisMode=${semanticAnalysisMode}`;
 		}
 
-		const shellString = `vectorTools --dataProfile=ceds --queryString='${apostropheEscape(elementDefinition.Description)} ${apostropheEscape(elementDefinition.XPath)}'${modeFlag}`;
+		const shellString = `vectorTools --dataProfile=ceds --queryString='${apostropheEscape(elementDefinition.Description)}'${modeFlag}`;
+
+	//	const shellString = `vectorTools --dataProfile=ceds --queryString='${apostropheEscape(elementDefinition.Description)} ${apostropheEscape(elementDefinition.XPath)}'${modeFlag}`;
 
 		exec(shellString, localCallback);
 	};

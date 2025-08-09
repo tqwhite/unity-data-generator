@@ -7,7 +7,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 	const moduleConfig = getConfig(moduleName);
 
 	// Helper function for query handling
-	const queryVectorDatabase = (prettyPrintAtomicExpansion) => async (
+	const queryVectorDatabase = () => async (
 		config,
 		openai,
 		vectorDb,
@@ -95,7 +95,9 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			
 			xLog.saveProcessFile(`${moduleName}_finalResults.log`, resultSummary, {saveAsJson:true});
 
-			const queryExpansion=prettyPrintAtomicExpansion(verboseData);
+			// Get pretty-print function from semantic analyzer
+			const prettyPrintFunction = semanticAnalyzer.getPrettyPrintFunction?.() || (() => 'Pretty print not available for this semantic analyzer');
+			const queryExpansion = prettyPrintFunction(verboseData);
 			xLog.saveProcessFile(`${moduleName}_queryExpansion.log`, queryExpansion);
 			
 			xLog.verbose(`Result Summary:\n${JSON.stringify(resultSummary, null, 2)}`);
@@ -124,8 +126,8 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 						description = result.record[sourceEmbeddableContentName] || '';
 					}
 
-					xLog.status(
-						`${result.rank}. [score: ${distance}] ${refId} ${description}`,
+					xLog.result(
+						`${result.rank}. [score: ${distance}] ${refId} ${description}\n`,
 					);
 				});
 			}

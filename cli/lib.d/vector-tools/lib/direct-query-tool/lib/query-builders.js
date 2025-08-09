@@ -75,8 +75,6 @@ const moduleFunction = function (args = {}) {
 		
 		if (resultLimit) {
 			query += ` LIMIT ${parseInt(resultLimit)}`;
-		} else {
-			query += ` LIMIT 10`; // Default limit for this specialized query
 		}
 		
 		return query;

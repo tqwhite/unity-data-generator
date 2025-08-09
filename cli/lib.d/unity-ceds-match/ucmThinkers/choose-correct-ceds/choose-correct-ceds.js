@@ -49,7 +49,6 @@ const moduleFunction = function (args = {}) {
 
 	const accessSmartyPants = (args, callback) => {
 		let { promptList, systemPrompt } = args;
-
 		const localCallback = (err, result) => {
 			callback('', result);
 		};

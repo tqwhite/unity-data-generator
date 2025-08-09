@@ -1,0 +1,22 @@
+{
+	"name": "atomic-vector-version1",
+	"version": "1.0.0",
+	"description": "Version1 atomic fact extraction and embedding string generation for semantic analysis",
+	"main": "version1.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"atomic",
+		"facts",
+		"semantic",
+		"embeddings",
+		"version1",
+		"ceds",
+		"sif"
+	],
+	"author": "TQ White",
+	"license": "ISC",
+	"dependencies": {},
+	"devDependencies": {}
+}

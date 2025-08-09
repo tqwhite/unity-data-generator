@@ -8,11 +8,13 @@ const moduleFunction = function(args = {}) {
     // Load sub-modules
     const { generateVectors } = require('./lib/generate-vectors')();
     const { scoreDistanceResults } = require('./lib/score-distance-results')();
+    const { prettyPrintAtomicExpansion } = require('./lib/atomic-fact-extractor')();
 
-    // Return the interface
+    // Return the interface including version-specific pretty-print
     return {
         generateVectors,
-        scoreDistanceResults
+        scoreDistanceResults,
+        getPrettyPrintFunction: () => prettyPrintAtomicExpansion
     };
 };
 

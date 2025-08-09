@@ -206,7 +206,17 @@ const moduleFunction = function(args = {}) {
 					initialThinkerData: sifElement,
 					debugLogName: targetObjectNamesString,
 				});
-				cedsRecommendationList.push(wisdom.cedsRecommentation);
+				
+				// Debug logging to see what structure we're getting
+				xLog.status(`DEBUG: wisdom keys for ${sifElement.Name}: ${Object.keys(wisdom).join(', ')}`);
+				xLog.status(`DEBUG: wisdom.cedsRecommentation exists: ${!!wisdom.cedsRecommentation}`);
+				
+				if (wisdom.cedsRecommentation) {
+					xLog.status(`DEBUG: Adding cedsRecommentation with keys: ${Object.keys(wisdom.cedsRecommentation).join(', ')}`);
+					cedsRecommendationList.push(wisdom.cedsRecommentation);
+				} else {
+					xLog.error(`No cedsRecommentation found for ${sifElement.Name}. Available keys: ${Object.keys(wisdom).join(', ')}`);
+				}
 			} catch (err) {
 				xLog.error(`Error: ${err.toString()}. Exit. No Output.`);
 				process.exit(1);

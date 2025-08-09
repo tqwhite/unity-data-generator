@@ -54,6 +54,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 				vectorDb,
 				vectorTableName,
 				{
+					dryRun: false,
 					skipConfirmation: true,
 				},
 			);

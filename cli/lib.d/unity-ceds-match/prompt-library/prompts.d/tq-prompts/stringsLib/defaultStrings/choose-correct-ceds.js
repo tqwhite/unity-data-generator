@@ -94,11 +94,11 @@ OR, if there is no viable CEDS definition, use this form:
 
 RESULT FORMATTING INSTRUCTIONS
 
-Always wrap the XML part of your response in delimiters like this:
+Always wrap the JSON part of your response in delimiters like this:
 
-<!frontDelimiter!>
+[START JSON SAMPLE]
  RESULT DATA HERE
-<!backDelimiter!>
+[END JSON SAMPLE]
 
 
 EXPLANATION GOES HERE AT THE END

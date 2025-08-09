@@ -48,11 +48,25 @@ const moduleFunction =
 				.prepare(`SELECT name, type FROM sqlite_master WHERE type='table' ORDER BY name`)
 				.all();
 			
-			// Find vector tables specifically
+			// Find vector tables specifically (both native vec0 and atomic vector tables)
 			const vecTables = allTables.filter(table => {
 				try {
 					const tableInfo = db.prepare(`SELECT sql FROM sqlite_master WHERE name = ?`).get(table.name);
-					return tableInfo?.sql?.includes('USING vec0') || false;
+					const sql = tableInfo?.sql || '';
+					
+					// Native sqlite-vec tables (USING vec0)
+					const isNativeVectorTable = sql.includes('USING vec0');
+					
+					// Atomic vector tables (have embedding BLOB and atomic-specific columns)
+					const hasEmbeddingBlob = sql.includes('embedding BLOB');
+					const hasAtomicColumns = sql.includes('factType') || sql.includes('factText');
+					const isAtomicVectorTable = hasEmbeddingBlob && hasAtomicColumns;
+					
+					// Vector-like table names (backup pattern)
+					const hasVectorName = table.name.includes('Vector') || table.name.includes('_atomic');
+					const isVectorNamedTable = hasVectorName && hasEmbeddingBlob;
+					
+					return isNativeVectorTable || isAtomicVectorTable || isVectorNamedTable;
 				} catch (error) {
 					return false;
 				}
@@ -67,9 +81,24 @@ const moduleFunction =
 					try {
 						const count = db.prepare(`SELECT COUNT(*) as count FROM "${table.name}"`).get().count;
 						const status = count > 0 ? 'READY' : 'EMPTY';
+						
+						// Determine vector table type for display
+						const tableInfo = db.prepare(`SELECT sql FROM sqlite_master WHERE name = ?`).get(table.name);
+						const sql = tableInfo?.sql || '';
+						let tableType = '';
+						
+						if (sql.includes('USING vec0')) {
+							tableType = '(native)';
+						} else if (sql.includes('factType') || sql.includes('factText')) {
+							tableType = '(atomic)';
+						} else if (sql.includes('embedding BLOB')) {
+							tableType = '(blob)';
+						}
+						
 						const paddedName = table.name.padEnd(25);
 						const paddedCount = count.toLocaleString().padStart(8);
-						vectorTablesSection += `${status.padEnd(6)} ${paddedName} ${paddedCount} records\n`;
+						const paddedType = tableType.padEnd(8);
+						vectorTablesSection += `${status.padEnd(6)} ${paddedName} ${paddedCount} records ${paddedType}\n`;
 					} catch (error) {
 						vectorTablesSection += `ERROR  ${table.name.padEnd(25)} (failed to query)\n`;
 					}
