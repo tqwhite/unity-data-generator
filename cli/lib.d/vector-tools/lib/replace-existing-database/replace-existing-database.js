@@ -6,26 +6,19 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 	const { xLog, getConfig, rawConfig, commandLineParameters, projectRoot } = process.global;
 	const moduleConfig = getConfig(moduleName);
 
-	const replaceExistingDatabase = async (config, openai, vectorDb, semanticAnalyzer, databaseOperations) => {
+	const replaceExistingDatabase = async (openai, vectorDb, semanticAnalyzer, databaseOperations) => {
 		const { xLog, commandLineParameters } = process.global;
 		const qt = require('qtools-functional-library');
 		const asynchronousPipePlus = require('qtools-asynchronous-pipe-plus')();
 		const { pipeRunner, taskListPlus } = asynchronousPipePlus;
 		
-		// Use qtools for safe config access
+		// Get config from vectorDb
+		const config = vectorDb.getDatabaseParameters();
 		const {
 			dataProfile,
 			sourceTableName,
-			vectorTableName: vectorTableNameRaw,
-			sourcePrivateKeyName,
-			sourceEmbeddableContentName
-		} = config.qtSelectProperties([
-			'dataProfile',
-			'sourceTableName',
-			'vectorTableName',
-			'sourcePrivateKeyName',
-			'sourceEmbeddableContentName'
-		]);
+			vectorTableName: vectorTableNameRaw
+		} = config;
 		
 		// Handle vectorTableName being an array (from command line params)
 		const vectorTableName = Array.isArray(vectorTableNameRaw) ? vectorTableNameRaw[0] : vectorTableNameRaw;
@@ -70,9 +63,12 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 					}
 				}
 				
-				// Estimate time based on actual records to process (roughly 1 second per record for atomic mode)
-				const estimatedMinutes = Math.max(1, Math.ceil(recordsToProcess / 60));
-				const timeEstimate = estimatedMinutes < 2 ? 'less than 2 minutes' : `approximately ${estimatedMinutes} minutes`;
+				// Estimate time based on actual records to process (roughly 6 seconds per record for atomic mode)
+				const estimatedSeconds = recordsToProcess * 6;
+				const estimatedMinutes = Math.ceil(estimatedSeconds / 60);
+				const timeEstimate = estimatedMinutes < 1 ? 'less than 1 minute' : 
+									estimatedMinutes === 1 ? 'approximately 1 minute' : 
+									`approximately ${estimatedMinutes} minutes`;
 				
 				// Check if vector table exists before querying it
 				let vectorCount = 0;

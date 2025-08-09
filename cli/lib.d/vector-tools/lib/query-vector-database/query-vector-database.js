@@ -8,11 +8,12 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 
 	// Helper function for query handling
 	const queryVectorDatabase = () => async (
-		config,
 		openai,
 		vectorDb,
 		semanticAnalyzer,
 	) => {
+		// Get config from vectorDb
+		const config = vectorDb.getDatabaseParameters();
 		const {
 			dataProfile,
 			sourceTableName,
@@ -71,7 +72,6 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 				dataProfile,
 				sourceTableName,
 				sourcePrivateKeyName,
-				sourceEmbeddableContentName,
 				collectVerboseData: isVerbose,
 			});
 

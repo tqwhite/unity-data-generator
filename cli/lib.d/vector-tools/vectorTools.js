@@ -95,7 +95,6 @@ const moduleFunction =
 		const legacyOperations = {
 			queryVectorDatabase: async () => {
 				return await queryVectorDatabase()(
-					config,
 					openai,
 					vectorDb,
 					semanticAnalyzer,
@@ -104,7 +103,7 @@ const moduleFunction =
 			createVectorDatabase: async () => {
 				const progressTracker = require('./lib/progress-tracker')({});
 				return await createVectorDatabase(progressTracker)(
-					config,
+					config.qtSelectProperties(['dataProfile']),
 					openai,
 					vectorDb,
 					semanticAnalyzer,
@@ -118,7 +117,6 @@ const moduleFunction =
 			},
 			rebuildVectorDatabase: async () => {
 				return await replaceExistingDatabase(
-					config,
 					openai,
 					vectorDb,
 					semanticAnalyzer,
@@ -132,7 +130,11 @@ const moduleFunction =
 					whereClause: commandLineParameters.values.whereClause?.[0] || null,
 					resultLimit: commandLineParameters.values.resultLimit?.[0] || null
 				};
-				return directQueryTool({ config, vectorDb, queryOptions });
+				return directQueryTool({ 
+					config: config.qtSelectProperties(['dataProfile']), 
+					vectorDb, 
+					queryOptions 
+				});
 			},
 			showHelp: () => {
 				xLog.status(helpText);

@@ -30,7 +30,12 @@ const moduleFunction = ({ moduleName } = {}) => ({ config }={}) => {
 	const instanceVectorDb = config ? (() => {
 		const { databaseFilePath, vectorTableName: vectorTableNameRaw } = config.qtSelectProperties(['databaseFilePath', 'vectorTableName']);
 		const vectorTableName = Array.isArray(vectorTableNameRaw) ? vectorTableNameRaw[0] : vectorTableNameRaw;
-		return initVectorDatabase(databaseFilePath, vectorTableName);
+		const db = initVectorDatabase(databaseFilePath, vectorTableName);
+		
+		// Add getDatabaseParameters method to vectorDb
+		db.getDatabaseParameters = () => instanceConfig;
+		
+		return db;
 	})() : null;
 	
 	// ---------------------------------------------------------------------
