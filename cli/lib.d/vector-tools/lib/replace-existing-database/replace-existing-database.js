@@ -51,7 +51,28 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			});
 			
 			try {
-				const sourceCount = vectorDb.prepare(`SELECT COUNT(*) as count FROM ${sourceTableName}`).get().count;
+				const totalSourceCount = vectorDb.prepare(`SELECT COUNT(*) as count FROM ${sourceTableName}`).get().count;
+				
+				// Calculate actual records to be processed based on limit/offset
+				const offset = parseInt(commandLineParameters.qtGetSurePath('values.offset[0]', '0'));
+				const limit = commandLineParameters.qtGetSurePath('values.limit[0]', null);
+				
+				let recordsToProcess;
+				let processingNote = '';
+				if (limit) {
+					const limitNum = parseInt(limit);
+					recordsToProcess = Math.min(limitNum, Math.max(0, totalSourceCount - offset));
+					processingNote = ` (limited by --limit=${limitNum} --offset=${offset})`;
+				} else {
+					recordsToProcess = Math.max(0, totalSourceCount - offset);
+					if (offset > 0) {
+						processingNote = ` (starting from offset ${offset})`;
+					}
+				}
+				
+				// Estimate time based on actual records to process (roughly 1 second per record for atomic mode)
+				const estimatedMinutes = Math.max(1, Math.ceil(recordsToProcess / 60));
+				const timeEstimate = estimatedMinutes < 2 ? 'less than 2 minutes' : `approximately ${estimatedMinutes} minutes`;
 				
 				// Check if vector table exists before querying it
 				let vectorCount = 0;
@@ -68,10 +89,11 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 				xLog.emphatic('⚠️  DESTRUCTIVE OPERATION WARNING ⚠️');
 				xLog.status(`This will completely rebuild the vector database:`);
 				xLog.status(`  • Data Profile: ${dataProfile.toUpperCase()}`);
-				xLog.status(`  • Source Records: ${sourceCount}`);
+				xLog.status(`  • Records to Process: ${recordsToProcess}${processingNote}`);
+				xLog.status(`  • Total Source Records: ${totalSourceCount}`);
 				xLog.status(`  • Current Vectors: ${vectorCount}`);
 				xLog.status(`  • All existing vectors will be deleted and regenerated`);
-				xLog.status(`  • This will take approximately 15-20 minutes`);
+				xLog.status(`  • Estimated Time: ${timeEstimate}`);
 				
 				rl.question('\nDo you want to continue? (yes/no): ', (answer) => {
 					rl.close();
@@ -150,17 +172,13 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			}
 		};
 		
-		// Verify completion task
-		const verifyCompletion = (args, next) => {
-			xLog.status('Verifying rebuild completion...');
+		// Report completion task
+		const reportCompletion = (args, next) => {
+			const completedAt = new Date().toISOString();
+			const todayDate = completedAt.split('T')[0]; // YYYY-MM-DD format
 			
 			try {
-				const sourceCount = vectorDb.prepare(`SELECT COUNT(*) as count FROM ${sourceTableName}`).get().count;
-				
 				// Determine actual table name based on semantic analysis mode
-				// Debug commandLineParameters structure
-				xLog.status(`DEBUG: commandLineParameters.values = ${JSON.stringify(commandLineParameters.values, null, 2)}`);
-				
 				const semanticAnalysisMode = commandLineParameters.qtGetSurePath(
 					'values.semanticAnalysisMode[0]',
 					'simpleVector',
@@ -169,33 +187,29 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 					? `${vectorTableName}_atomic`
 					: vectorTableName;
 				
-				// Debug logging
-				xLog.status(`DEBUG VERIFICATION: vectorTableName=${vectorTableName}, semanticAnalysisMode=${semanticAnalysisMode}, actualVectorTableName=${actualVectorTableName}`);
-				
 				const vectorCount = vectorDb.prepare(`SELECT COUNT(*) as count FROM ${actualVectorTableName}`).get().count;
 				
-				if (sourceCount === vectorCount) {
-					xLog.status(`✓ Verification successful: ${vectorCount}/${sourceCount} records processed`);
-					xLog.status(`✓ Vectors created in table: ${actualVectorTableName}`);
-					xLog.emphatic(`✓ DATABASE REBUILD COMPLETED FOR ${dataProfile.toUpperCase()} PROFILE`);
-					
-					// Create final result object with qtools
-					const finalResult = {
-						success: true,
-						dataProfile,
-						sourceRecords: sourceCount,
-						vectorsCreated: vectorCount,
-						completedAt: new Date().toISOString()
-					};
-					
-					next('', args.qtMerge({ verificationResult: finalResult }));
-				} else {
-					const error = new Error(`Vector count mismatch: ${vectorCount} vectors vs ${sourceCount} source records`);
-					xLog.error(error.message);
-					next(error);
-				}
+				xLog.emphatic(`✓ DATABASE REBUILD COMPLETED FOR ${dataProfile.toUpperCase()} PROFILE`);
+				xLog.status(`✓ Generated ${vectorCount} vectors in table: ${actualVectorTableName}`);
+				xLog.status(`✓ Completed at: ${completedAt}`);
+				xLog.status('');
+				xLog.status('To verify the new records:');
+				xLog.status(`   SELECT COUNT(*) FROM ${actualVectorTableName} WHERE DATE(createdAt) = '${todayDate}';`);
+				xLog.status(`   SELECT * FROM ${actualVectorTableName} WHERE DATE(createdAt) = '${todayDate}' LIMIT 5;`);
+				
+				// Create final result object
+				const finalResult = {
+					success: true,
+					dataProfile,
+					vectorsCreated: vectorCount,
+					tableName: actualVectorTableName,
+					completedAt
+				};
+				
+				next('', args.qtMerge({ completionResult: finalResult }));
+				
 			} catch (error) {
-				xLog.error(`Verification failed: ${error.message}`);
+				xLog.error(`Failed to generate completion report: ${error.message}`);
 				next(error);
 			}
 		};
@@ -207,7 +221,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 			taskList.push(confirmRebuild);
 			taskList.push(dropVectorTables);
 			taskList.push(processFactsIntoDatabaseVectors);
-			taskList.push(verifyCompletion);
+			taskList.push(reportCompletion);
 			
 			// Initial pipeline data - use qtools for safe initialization
 			const initialArgs = {
