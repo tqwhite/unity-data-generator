@@ -117,14 +117,12 @@ const moduleFunction =
 				return await databaseOperations.showStats(
 					config,
 					vectorDb,
-					semanticAnalyzer,
 				);
 			},
 			dropVectorTable: async () => {
 				return await databaseOperations.dropTable(
 					config,
 					vectorDb,
-					semanticAnalyzer,
 				);
 			},
 			rebuildVectorDatabase: async () => {

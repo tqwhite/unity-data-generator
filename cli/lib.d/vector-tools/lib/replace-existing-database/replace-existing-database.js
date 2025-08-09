@@ -96,7 +96,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused } = {}) => {
 				const databaseOperations = require('../database-operations')({});
 				
 				// Call existing drop functionality (synchronous)
-				const dropResult = databaseOperations.dropTable(config, vectorDb, semanticAnalyzer);
+				const dropResult = databaseOperations.dropTable(config, vectorDb);
 				
 				if (dropResult.qtGetSurePath('success', false)) {
 					xLog.status(`✓ Dropped vector table: ${vectorTableName}`);

@@ -138,7 +138,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 	// ---------------------------------------------------------------------
 	// showStats - wrapper for showDatabaseStats with logging
 	
-	const showStats = (config, vectorDb, semanticAnalyzer) => {
+	const showStats = (config, vectorDb) => {
 		const { dataProfile, vectorTableName } = config;
 		
 		// Log show stats parameters
@@ -176,7 +176,7 @@ const moduleFunction = ({ moduleName } = {}) => ({ unused }={}) => {
 	// ---------------------------------------------------------------------
 	// dropTable - wrapper for validateAndExecuteDropTable with better naming
 	
-	const dropTable = (config, vectorDb, semanticAnalyzer) => {
+	const dropTable = (config, vectorDb) => {
 		return validateAndExecuteDropTable(config, vectorDb, {});
 	};
 
