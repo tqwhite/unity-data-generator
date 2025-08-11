@@ -16,7 +16,7 @@ const moduleFunction = function (args = {}) {
 	
 
 	const personaChoice = 'linguist';
-	const queryChoice = 'version3';
+	const queryChoice = 'version2';
 	
 
 	const systemPromptGen = require(`./queryStrings/${queryChoice}/${queryChoice}`)();
