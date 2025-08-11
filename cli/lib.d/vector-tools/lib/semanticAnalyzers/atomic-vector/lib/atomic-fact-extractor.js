@@ -16,10 +16,10 @@ const moduleFunction = function (args = {}) {
 	
 
 	const personaChoice = 'linguist';
-	const queryChoice = 'version2';
+	const queryChoice = 'version3';
 	
 
-	const systemPromptGen = require(`./queryStrings/${queryChoice}`)();
+	const systemPromptGen = require(`./queryStrings/${queryChoice}/${queryChoice}`)();
 	
 	xLog.status(`Using promptString version: ${queryChoice}`);
 

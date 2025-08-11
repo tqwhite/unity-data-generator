@@ -14,6 +14,7 @@ const moduleFunction = function (args = {}) {
 		const showVectorDetails = queryType === 'showAll';
 		const isCompareAnalysis = queryType === 'compareAnalysis';
 		const isMatchDiscrepancies = queryType === 'matchDiscrepancies';
+		const isUnityCedsComparison = queryType === 'unityCedsComparison';
 		xLog.status(`\nFound ${results.length} records (query type: ${queryType})\n`);
 
 		results.forEach((row, index) => {
@@ -63,6 +64,19 @@ const moduleFunction = function (args = {}) {
 				xLog.status(`      ${row.Atomic_Match_Definition}`);
 				
 				xLog.status(''); // Extra spacing between discrepancy entries
+			} else if (isUnityCedsComparison) {
+				// Special formatting for unityCedsComparison
+				const modifiedDate = row.Unity_ModifiedAt ? new Date(row.Unity_ModifiedAt).toLocaleDateString() : 'N/A';
+				xLog.status(`${index + 1}. [${row.SIF_RefId}] ${row.SIF_Name} - ${row.SIF_XPath || 'N/A'} (${modifiedDate})`);
+				xLog.status(`   🔴 SIF DESCRIPTION:`);
+				xLog.status(`      ${row.SIF_Description || 'No description'}`);
+				
+				xLog.status(`   🟢 UNITY CEDS MATCH (${row.Unity_Confidence}):`);
+				xLog.status(`      [${row.Unity_CEDS_Match}] ${row.Unity_Match_Name}`);
+				xLog.status(`      ${row.Unity_Match_Definition}`);
+				
+				
+				xLog.status(''); // Extra spacing between comparison entries
 			} else {
 				// Standard formatting for other query types
 				xLog.status(`${index + 1}. [${row.GlobalID || row.refId}] ${row.ElementName || row.Name || 'No Name'}`);

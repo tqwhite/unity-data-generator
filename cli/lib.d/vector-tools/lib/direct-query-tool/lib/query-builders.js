@@ -122,13 +122,48 @@ const moduleFunction = function (args = {}) {
 		return null; // Will be handled specially in the main function
 	}
 
+	function buildUnityCedsComparisonQuery({ config, whereClause, resultLimit }) {
+		// This query shows unityCedsMatch AI recommendations compared to SIF descriptions
+		// Shows SIF element description and the Unity CEDS match AI recommendation only
+		
+		let query = `
+			SELECT 
+				sif.refId as SIF_RefId,
+				sif.Name as SIF_Name,
+				sif.Description as SIF_Description,
+				sif.XPath as SIF_XPath,
+				unity._CEDSElementsRefId as Unity_CEDS_Match,
+				unity.confidence as Unity_Confidence,
+				unity.updatedAt as Unity_ModifiedAt,
+				c_unity.ElementName as Unity_Match_Name,
+				c_unity.Definition as Unity_Match_Definition
+			FROM naDataModel sif
+			JOIN unityCedsMatches unity ON sif.refId = unity.naDataModelRefId
+			JOIN _CEDSElements c_unity ON unity._CEDSElementsRefId = c_unity.GlobalID
+			WHERE unity.semanticAnalysisMode = 'atomicVector'
+		`;
+		
+		// Add WHERE clause if provided
+		if (whereClause && whereClause.trim()) {
+			const sanitizedWhereClause = whereClause.replace(/"/g, "'");
+			query += ` AND (${sanitizedWhereClause})`;
+		}
+		
+		if (resultLimit) {
+			query += ` LIMIT ${parseInt(resultLimit)}`;
+		}
+		
+		return query;
+	}
+
 	return {
 		buildShowAllQuery,
 		buildVectorsOnlyQuery,
 		buildSourceOnlyQuery,
 		buildMatchDiscrepanciesQuery,
 		buildCompareAnalysisQuery,
-		buildShowQueryInfoQuery
+		buildShowQueryInfoQuery,
+		buildUnityCedsComparisonQuery
 	};
 };
 

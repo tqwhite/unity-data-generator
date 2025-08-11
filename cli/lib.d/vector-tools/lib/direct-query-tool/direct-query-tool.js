@@ -38,6 +38,10 @@ const moduleFunction = function (args = {}) {
 			description: 'Find SIF elements where simple and atomic vector matching produced different CEDS matches',
 			handler: queryBuilders.buildMatchDiscrepanciesQuery
 		},
+		unityCedsComparison: {
+			description: 'Show SIF descriptions with unityCedsMatch AI recommendations',
+			handler: queryBuilders.buildUnityCedsComparisonQuery
+		},
 		showQueryInfo: {
 			description: 'Show all query types and their compiled SQL statements',
 			handler: queryBuilders.buildShowQueryInfoQuery

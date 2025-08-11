@@ -5,9 +5,63 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 const moduleFunction = function (args = {}) {
 	const { xLog } = process.global;
 
+	function displayFieldHelp({ config, getCurrentSemanticMode, schemaRegistry, queryType }) {
+		const semanticMode = getCurrentSemanticMode();
+		const schema = schemaRegistry.getSchema(config.dataProfile, semanticMode);
+		
+		xLog.status('\n=== AVAILABLE FIELD NAMES FOR WHERE CLAUSE ===\n');
+		xLog.status(`Data Profile: ${config.dataProfile}`);
+		xLog.status(`Semantic Analysis Mode: ${semanticMode}`);
+		xLog.status(`Query Type: ${queryType}`);
+		xLog.status(`Source Table: ${schema.sourceTable}`);
+		if (schema.joinable) {
+			xLog.status(`Vector Table: ${schema.vectorTable}`);
+		}
+		xLog.status('');
+		
+		xLog.status('📋 SOURCE TABLE FIELDS:');
+		schema.sourceColumns.forEach(column => {
+			xLog.status(`   ${column}`);
+		});
+		
+		if (schema.joinable && schema.vectorColumns.length > 0) {
+			xLog.status('\n🔍 VECTOR TABLE FIELDS:');
+			schema.vectorColumns.forEach(column => {
+				xLog.status(`   ${column}`);
+			});
+		}
+		
+		xLog.status('\n💡 EXAMPLE WHERE CLAUSES:');
+		if (config.dataProfile === 'ceds') {
+			xLog.status(`   ElementName like '%student%'`);
+			xLog.status(`   Definition like '%assessment%'`);
+			xLog.status(`   GlobalID = '000123'`);
+			if (schema.joinable) {
+				xLog.status(`   factType = 'entity'`);
+				xLog.status(`   semanticCategory like '%academic%'`);
+			}
+		} else if (config.dataProfile === 'sif') {
+			xLog.status(`   Name like '%Student%'`);
+			xLog.status(`   Description like '%enrollment%'`);
+			xLog.status(`   XPath like '%/StudentPersonal%'`);
+			xLog.status(`   Type = 'element'`);
+			if (schema.joinable) {
+				xLog.status(`   factType = 'attribute'`);
+				xLog.status(`   semanticCategory like '%demographic%'`);
+			}
+		}
+		xLog.status('\n📚 USAGE: vectorTools --dataProfile=' + config.dataProfile + ' --query=' + queryType + ' --whereClause="FieldName like \'%searchterm%\'"\n');
+	}
+
 	function validateInputs({ queryType, whereClause, config, queryTypes, getCurrentSemanticMode, schemaRegistry }) {
+		// Check for special 'help' keyword in whereClause
+		if (whereClause === 'help') {
+			displayFieldHelp({ config, getCurrentSemanticMode, schemaRegistry, queryType });
+			process.exit(0);
+		}
+		
 		// Special query types that don't need a whereClause
-		if (queryType === 'showQueryInfo' || queryType === 'matchDiscrepancies') {
+		if (queryType === 'showQueryInfo' || queryType === 'matchDiscrepancies' || queryType === 'unityCedsComparison') {
 			if (!queryType) {
 				xLog.error('--query parameter is required');
 				process.exit(1);
@@ -26,7 +80,7 @@ const moduleFunction = function (args = {}) {
 		const cleanWhereClause = typeof whereClause === 'string' ? whereClause : String(whereClause || '');
 
 		// For queries that require whereClause, both parameters must have values
-		if (queryType !== 'showQueryInfo' && queryType !== 'matchDiscrepancies' && (!cleanQueryType || !cleanWhereClause)) {
+		if (queryType !== 'showQueryInfo' && queryType !== 'matchDiscrepancies' && queryType !== 'unityCedsComparison' && (!cleanQueryType || !cleanWhereClause)) {
 			xLog.error('Both --query and --whereClause parameters must have values');
 			process.exit(1);
 			return false;
@@ -52,7 +106,7 @@ const moduleFunction = function (args = {}) {
 		}
 
 		// Validate column names in WHERE clause using schema registry
-		if (queryType !== 'showQueryInfo' && queryType !== 'matchDiscrepancies' && config) {
+		if (queryType !== 'showQueryInfo' && queryType !== 'matchDiscrepancies' && queryType !== 'unityCedsComparison' && config) {
 			const semanticMode = getCurrentSemanticMode();
 			const schema = schemaRegistry.getSchema(config.dataProfile, semanticMode);
 			
@@ -147,7 +201,8 @@ const moduleFunction = function (args = {}) {
 
 	return {
 		validateInputs,
-		sanitizeWhereClause
+		sanitizeWhereClause,
+		displayFieldHelp
 	};
 };
 

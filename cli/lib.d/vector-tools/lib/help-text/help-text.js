@@ -36,6 +36,29 @@ DESCRIPTION
 	elements most semantically related to "LEA data" concepts, not just exact 
 	text matches.
 	
+	DIRECT DATABASE QUERIES:
+	The tool also supports direct SQL-like queries for precise data exploration:
+	
+	--query=QUERY_TYPE --whereClause="CONDITION":
+	  Available query types:
+	  • showAll: Join source data with vector metadata
+	  • sourceOnly: Show source table records only
+	  • vectorsOnly: Show vector table records only (where supported)
+	  • compareAnalysis: Compare original definitions with atomic analysis
+	  • matchDiscrepancies: Find SIF elements where simple/atomic vectors disagree
+	  • unityCedsComparison: Show SIF descriptions with unityCedsMatch AI recommendations
+	  • showQueryInfo: Display available query types and compiled SQL
+	
+	FIELD NAME DISCOVERY:
+	Use --whereClause=help to see all available field names for any query type:
+	  vectorTools --dataProfile=sif --query=showAll --whereClause=help
+	  Shows source table fields, vector fields (if available), and example WHERE clauses.
+	
+	Examples:
+	  vectorTools --dataProfile=sif --query=showAll --whereClause="Name like '%Student%'"
+	  vectorTools --dataProfile=ceds --query=unityCedsComparison --resultLimit=5
+	  vectorTools --dataProfile=sif --query=matchDiscrepancies
+	
 	DATABASE BUILDING AND UPDATING:
 	Vector embeddings must be generated before searching. The process involves:
 	
@@ -84,6 +107,18 @@ CONTROLS
 	                    
 	--targetTableName:  OVERRIDE: Custom table name instead of default profile tables.
 	                    Advanced option for testing or custom data sources.
+	                    
+	--query:            DIRECT QUERY: Specify query type for direct database access.
+	                    Types: showAll, sourceOnly, vectorsOnly, compareAnalysis,
+	                    matchDiscrepancies, unityCedsComparison, showQueryInfo.
+	                    Use with --whereClause for filtering (except special types).
+	                    
+	--whereClause:      FILTER: SQL WHERE clause for direct queries. Use "help" to
+	                    see available field names and example syntax for current
+	                    data profile. Example: "Name like '%Student%'" or "help".
+	                    
+	--resultLimit:      LIMIT: Maximum records to return from direct queries.
+	                    Useful for large result sets. Works with all query types.
 
 SWITCHES
 
@@ -152,6 +187,13 @@ COMMON OPERATIONS
 	Semantic Search:
 	vectorTools --dataProfile=ceds --queryString="student enrollment" --resultCount=10
 	vectorTools --dataProfile=sif --queryString="accountability reporting" -json
+	
+	Direct Database Queries:
+	vectorTools --dataProfile=sif --query=showAll --whereClause=help           # Show available fields
+	vectorTools --dataProfile=sif --query=showAll --whereClause="Name like '%Student%'"
+	vectorTools --dataProfile=ceds --query=unityCedsComparison --resultLimit=5
+	vectorTools --dataProfile=sif --query=matchDiscrepancies                   # Compare vector methods
+	vectorTools --dataProfile=ceds --query=compareAnalysis --whereClause="ElementName like '%assessment%'"
 
 EXAMPLES
 
@@ -159,6 +201,11 @@ EXAMPLES
 	vectorTools --dataProfile=ceds -rebuildDatabase -verbose    # Rebuild CEDS with details
 	vectorTools --dataProfile=sif --queryString="LEA data"      # Search SIF elements
 	vectorTools --dataProfile=ceds --queryString="assessment" --resultCount=15 -json
+	
+	Direct Query Examples:
+	vectorTools --dataProfile=sif --query=showAll --whereClause=help          # Get field help
+	vectorTools --dataProfile=sif --query=unityCedsComparison --resultLimit=3 # Compare matches
+	vectorTools --dataProfile=ceds --query=showAll --whereClause="ElementName like '%student%'"
 
 ============================================================
 ${errorMessage}
