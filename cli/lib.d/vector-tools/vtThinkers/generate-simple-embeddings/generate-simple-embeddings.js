@@ -159,13 +159,19 @@ const moduleFunction = function (args = {}) {
 
 				xLog.verbose(`${moduleName}: Generated simple embedding for ${processingContext}`);
 
+				// Get semantic analyzer version for version-aware vector operations
+				const { commandLineParameters } = process.global;
+				const semanticAnalysisMode = commandLineParameters.qtGetSurePath('values.semanticAnalysisMode[0]', 'simpleVector');
+				const semanticAnalyzerVersion = 'simple_version1'; // Simple vector always uses version 1
+				
 				// Create wisdom object for migration helper
 				const wisdom = {
 					simpleEmbedding: result.embedding,
 					embeddingModel: result.model,
 					sourceRefId: refId,
 					embeddableContent: inputText,
-					processingContext: processingContext
+					processingContext: processingContext,
+					semanticAnalyzerVersion: semanticAnalyzerVersion
 				};
 
 				// Log the response details

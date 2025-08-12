@@ -24,7 +24,7 @@ const moduleFunction = function (args = {}) {
 	// VECTOR SEARCH IMPLEMENTATION
 	
 	const performVectorSearch = async (embeddings, searchParams) => {
-		const { dataProfile, resultCount, databasePath } = searchParams;
+		const { dataProfile, resultCount, databasePath, semanticAnalyzerVersion } = searchParams;
 		
 		// Determine table and column names based on data profile
 		const vectorTableName = dataProfile === 'ceds' 
@@ -47,16 +47,35 @@ const moduleFunction = function (args = {}) {
 			const { embedding, factText, semanticCategory } = embeddings[i];
 			const queryBuffer = Buffer.from(new Float32Array(embedding).buffer);
 			
-			const sql = `
-				SELECT sourceRefId, factType, factText, 
-				       vec_distance_L2(embedding, ?) as distance
-				FROM ${vectorTableName}
-				WHERE embedding IS NOT NULL
-				ORDER BY distance
-				LIMIT ?
-			`;
+			// Build version-aware SQL query for optimal performance
+			let sql, queryParams;
 			
-			const searchResults = vectorDb.prepare(sql).all(queryBuffer, resultCount);
+			if (semanticAnalyzerVersion && vectorTableName === 'cedsElementVectors_atomic') {
+				// Version-aware query: filter by semanticAnalyzerVersion BEFORE expensive vector calculations
+				sql = `
+					SELECT sourceRefId, factType, factText, 
+					       vec_distance_L2(embedding, ?) as distance
+					FROM ${vectorTableName}
+					WHERE embedding IS NOT NULL 
+					      AND semanticAnalyzerVersion = ?
+					ORDER BY distance
+					LIMIT ?
+				`;
+				queryParams = [queryBuffer, semanticAnalyzerVersion, resultCount];
+			} else {
+				// Legacy query for non-versioned tables or when version not specified
+				sql = `
+					SELECT sourceRefId, factType, factText, 
+					       vec_distance_L2(embedding, ?) as distance
+					FROM ${vectorTableName}
+					WHERE embedding IS NOT NULL
+					ORDER BY distance
+					LIMIT ?
+				`;
+				queryParams = [queryBuffer, resultCount];
+			}
+			
+			const searchResults = vectorDb.prepare(sql).all(...queryParams);
 			
 			// Add metadata to results
 			searchResults.forEach((result, rank) => {
@@ -93,7 +112,7 @@ const moduleFunction = function (args = {}) {
 		try {
 			// Get search parameters
 			// Try wisdomBus accessor first, then fallback to latestWisdom object
-			let queryString, dataProfile, resultCount, simpleEmbedding, atomicEmbeddings;
+			let queryString, dataProfile, resultCount, simpleEmbedding, atomicEmbeddings, semanticAnalyzerVersion;
 			
 			if (wisdomBus && typeof wisdomBus.qtGetSurePath === 'function') {
 				queryString = wisdomBus.qtGetSurePath('queryString');
@@ -101,12 +120,14 @@ const moduleFunction = function (args = {}) {
 				resultCount = wisdomBus.qtGetSurePath('resultCount') || 3;
 				simpleEmbedding = wisdomBus.qtGetSurePath('simpleEmbedding');
 				atomicEmbeddings = wisdomBus.qtGetSurePath('atomicEmbeddings');
+				semanticAnalyzerVersion = wisdomBus.qtGetSurePath('semanticAnalyzerVersion');
 			} else if (latestWisdom) {
 				queryString = latestWisdom.queryString;
 				dataProfile = latestWisdom.dataProfile || 'ceds';
 				resultCount = latestWisdom.resultCount || 3;
 				simpleEmbedding = latestWisdom.simpleEmbedding;
 				atomicEmbeddings = latestWisdom.atomicEmbeddings;
+				semanticAnalyzerVersion = latestWisdom.semanticAnalyzerVersion;
 			}
 			
 			const databasePath = getConfig('vectorTools.databaseFilePath');
@@ -134,11 +155,11 @@ const moduleFunction = function (args = {}) {
 			}
 
 			// Log the search operation
-			const searchParams = { dataProfile, resultCount, databasePath };
+			const searchParams = { dataProfile, resultCount, databasePath, semanticAnalyzerVersion };
 			
 			xLog.saveProcessFile(
 				`${moduleName}_promptList.log`,
-				`\n\n\n${moduleName}---------------------------------------------------\nVector Search Operation:\nQuery: "${queryString}"\nData Profile: ${dataProfile}\nResult Count: ${resultCount}\nEmbeddings: ${embeddings.length}\nDatabase: ${databasePath}\n----------------------------------------------------\n\n`,
+				`\n\n\n${moduleName}---------------------------------------------------\nVector Search Operation:\nQuery: "${queryString}"\nData Profile: ${dataProfile}\nResult Count: ${resultCount}\nEmbeddings: ${embeddings.length}\nSemantic Version: ${semanticAnalyzerVersion || 'unspecified'}\nDatabase: ${databasePath}\n----------------------------------------------------\n\n`,
 				{ append: true },
 			);
 

@@ -216,17 +216,24 @@ const moduleFunction = function (args = {}) {
 				// Save results to wisdom-bus (correct UDG pattern)
 				const sourceRefId = currentElement ? (currentElement.refId || currentElement.GlobalID) : refId;
 				
+				// Get semantic analyzer version for version-aware vector operations
+				const { commandLineParameters } = process.global;
+				// Use explicit version parameter if provided, otherwise default to atomic_version2
+				const semanticAnalyzerVersion = commandLineParameters.qtGetSurePath('values.semanticAnalyzerVersion[0]', 'atomic_version2');
+				
 				if (wisdomBus && typeof wisdomBus.saveWisdom === 'function') {
 					wisdomBus.saveWisdom('atomicFacts', result.atomicFacts);
 					wisdomBus.saveWisdom('sourceRefId', sourceRefId);
 					wisdomBus.saveWisdom('queryString', queryString || null);
 					wisdomBus.saveWisdom('processingContext', processingContext);
+					wisdomBus.saveWisdom('semanticAnalyzerVersion', semanticAnalyzerVersion);
 				} else if (latestWisdom) {
 					// Fallback: modify latestWisdom object directly (for legacy support)
 					latestWisdom.atomicFacts = result.atomicFacts;
 					latestWisdom.sourceRefId = sourceRefId;
 					latestWisdom.queryString = queryString || null;
 					latestWisdom.processingContext = processingContext;
+					latestWisdom.semanticAnalyzerVersion = semanticAnalyzerVersion;
 				}
 
 				// Log the response details

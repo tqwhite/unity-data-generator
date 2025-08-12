@@ -1,8 +1,8 @@
 {
-	"name": "atomic-vector-version2",
+	"name": "atomic-vector-atomic_version2",
 	"version": "1.0.0",
-	"description": "Version2 atomic fact extraction and embedding string generation for educational data semantics",
-	"main": "version2.js",
+	"description": "atomic_version2 atomic fact extraction and embedding string generation for educational data semantics",
+	"main": "atomic_version2.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -11,7 +11,7 @@
 		"facts",
 		"semantic",
 		"embeddings",
-		"version2",
+		"atomic_version2",
 		"educational",
 		"ceds",
 		"sif",

@@ -108,6 +108,10 @@ CONTROLS
 	--targetTableName:  OVERRIDE: Custom table name instead of default profile tables.
 	                    Advanced option for testing or custom data sources.
 	                    
+	--semanticAnalyzerVersion: VERSION: Specify which analyzer version to use.
+	                    Options: atomic_version1, atomic_version2, simple_version1
+	                    Default: atomic_version2 for atomic, simple_version1 for simple
+	                    
 	--query:            DIRECT QUERY: Specify query type for direct database access.
 	                    Types: showAll, sourceOnly, vectorsOnly, compareAnalysis,
 	                    matchDiscrepancies, unityCedsComparison, showQueryInfo.

@@ -47,7 +47,7 @@ const moduleFunction = function (args = {}) {
 
 	function buildMatchDiscrepanciesQuery({ config, whereClause, resultLimit }) {
 		// This query finds SIF elements where simple and atomic vector analysis
-		// produced different CEDS element matches - ignoring whereClause and using static logic
+		// produced different CEDS element matches - now uses version-aware filtering
 		
 		let query = `
 			SELECT 
@@ -68,8 +68,8 @@ const moduleFunction = function (args = {}) {
 			JOIN unityCedsMatches atomic ON sif.refId = atomic.naDataModelRefId
 			JOIN _CEDSElements c1 ON simple._CEDSElementsRefId = c1.GlobalID
 			JOIN _CEDSElements c2 ON atomic._CEDSElementsRefId = c2.GlobalID
-			WHERE simple.semanticAnalysisMode = 'simpleVector'
-			  AND atomic.semanticAnalysisMode = 'atomicVector'
+			WHERE simple.semanticAnalyzerVersion = 'simple_version1'
+			  AND atomic.semanticAnalyzerVersion = 'atomic_version2'
 			  AND simple._CEDSElementsRefId != atomic._CEDSElementsRefId
 		`;
 		
@@ -97,8 +97,9 @@ const moduleFunction = function (args = {}) {
 					GROUP_CONCAT(a.factType, ', ') as FactTypes,
 					GROUP_CONCAT(a.semanticCategory, ', ') as Categories
 				FROM _CEDSElements s
-				LEFT JOIN cedsElementVectors_atomic a ON s.GlobalID = a.sourceRefId
+				LEFT JOIN cedsElementVectors_atomic a ON s.GlobalID = a.sourceRefId 
 				WHERE ${sanitizedWhereClause}
+				  AND (a.semanticAnalyzerVersion = 'atomic_version2' OR a.semanticAnalyzerVersion IS NULL)
 				GROUP BY s.GlobalID, s.ElementName, s.Definition
 			`;
 			
@@ -124,7 +125,7 @@ const moduleFunction = function (args = {}) {
 
 	function buildUnityCedsComparisonQuery({ config, whereClause, resultLimit }) {
 		// This query shows unityCedsMatch AI recommendations compared to SIF descriptions
-		// Shows SIF element description and the Unity CEDS match AI recommendation only
+		// Now uses version-aware filtering for consistent results
 		
 		let query = `
 			SELECT 
@@ -135,12 +136,13 @@ const moduleFunction = function (args = {}) {
 				unity._CEDSElementsRefId as Unity_CEDS_Match,
 				unity.confidence as Unity_Confidence,
 				unity.updatedAt as Unity_ModifiedAt,
+				unity.semanticAnalyzerVersion as Unity_Version,
 				c_unity.ElementName as Unity_Match_Name,
 				c_unity.Definition as Unity_Match_Definition
 			FROM naDataModel sif
 			JOIN unityCedsMatches unity ON sif.refId = unity.naDataModelRefId
 			JOIN _CEDSElements c_unity ON unity._CEDSElementsRefId = c_unity.GlobalID
-			WHERE unity.semanticAnalysisMode = 'atomicVector'
+			WHERE unity.semanticAnalyzerVersion = 'atomic_version2'
 		`;
 		
 		// Add WHERE clause if provided

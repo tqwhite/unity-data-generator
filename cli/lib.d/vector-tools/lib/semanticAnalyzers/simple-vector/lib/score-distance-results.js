@@ -74,7 +74,7 @@ const moduleFunction = function(args = {}) {
                 .all(new Float32Array(queryEmbedding));
         } catch (error) {
             if (error.message.includes('no such table')) {
-                throw new Error(`No simpleVectors found. Missing table ${tableName}. This probably is because you have not generated any simpleVectors. Use vectorTools --dataProfile=${dataProfile} -writeVectorDatabase --semanticAnalysisMode=simpleVector`);
+                throw new Error(`No simpleVectors found. Missing table ${tableName}. THIS PROBABLY IS BECAUSE YOU HAVE NOT GENERATED ANY SIMPLEVECTORS. Use vectorTools --dataProfile=${dataProfile} -writeVectorDatabase --semanticAnalysisMode=simpleVector`);
             }
             throw error; // Re-throw other errors
         }

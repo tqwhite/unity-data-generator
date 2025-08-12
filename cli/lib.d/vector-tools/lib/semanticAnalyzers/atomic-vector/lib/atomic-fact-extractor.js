@@ -3,8 +3,8 @@
 const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 
 const moduleFunction = function (args = {}) {
-	const { xLog, getConfig } = process.global;
-	
+	const { xLog, getConfig, commandLineParameters } = process.global;
+	const {defaultQueryChoice}=getConfig(moduleName);
 
 	// ===================================================================================
 
@@ -16,7 +16,8 @@ const moduleFunction = function (args = {}) {
 	
 
 	const personaChoice = 'linguist';
-	const queryChoice = 'version2';
+	// Get version from command line parameter, fall back to config default
+	const queryChoice = commandLineParameters?.qtGetSurePath('values.semanticAnalyzerVersion[0]') || defaultQueryChoice;
 	
 
 	const systemPromptGen = require(`./queryStrings/${queryChoice}/${queryChoice}`)();

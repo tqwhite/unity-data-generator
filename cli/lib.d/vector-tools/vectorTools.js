@@ -42,6 +42,7 @@ const initAtp = require('../../../lib/qtools-ai-framework/jina')({
 		'--targetTableName',
 		'--dataProfile',
 		'--semanticAnalysisMode',
+		'--semanticAnalyzerVersion',
 		'--batchId',
 		'--query',
 		'--whereClause',

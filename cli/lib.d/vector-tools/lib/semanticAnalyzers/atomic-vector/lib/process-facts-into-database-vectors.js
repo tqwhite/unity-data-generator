@@ -20,6 +20,11 @@ const moduleFunction = function(args = {}) {
             progressTracker = null,
             alreadyProcessedCount = 0
         } = args;
+        
+        // Determine semantic analyzer version for new records
+        const { commandLineParameters } = process.global;
+        // Check for explicit version parameter, otherwise default to atomic_version2
+        const semanticAnalyzerVersion = commandLineParameters.qtGetSurePath('values.semanticAnalyzerVersion[0]', 'atomic_version2');
 
         const generatedVectors = [];
         const atomicTableName = `${tableName}_atomic`;
@@ -32,13 +37,14 @@ const moduleFunction = function(args = {}) {
             dataProfile,
             sourceEmbeddableContentName,
             sourcePrivateKeyName,
+            semanticAnalyzerVersion,
             batchId,
             alreadyProcessedCount
         };
         
         xLog.saveProcessFile(`${moduleName}_promptList.log`, `Atomic Vector Batch Processing:\n${JSON.stringify(batchParams, null, 2)}`, {append:true});
 
-        // Create atomic table
+        // Create atomic table with version support
         const createTableSql = `CREATE TABLE IF NOT EXISTS ${atomicTableName} (
             refId TEXT PRIMARY KEY,
             sourceRefId TEXT,
@@ -48,13 +54,15 @@ const moduleFunction = function(args = {}) {
             semanticCategory TEXT,
             conceptualDimension TEXT,
             factIndex INTEGER,
+            semanticAnalyzerVersion TEXT DEFAULT 'atomic_version2',
             createdAt TEXT DEFAULT CURRENT_TIMESTAMP
         )`;
         vectorDb.exec(createTableSql);
 
-        // Create indexes
+        // Create indexes including version for performance
         vectorDb.exec(`CREATE INDEX IF NOT EXISTS idx_${atomicTableName}_sourceRefId ON ${atomicTableName}(sourceRefId)`);
         vectorDb.exec(`CREATE INDEX IF NOT EXISTS idx_${atomicTableName}_factType ON ${atomicTableName}(factType)`);
+        vectorDb.exec(`CREATE INDEX IF NOT EXISTS idx_${atomicTableName}_semanticAnalyzerVersion ON ${atomicTableName}(semanticAnalyzerVersion)`);
 
         // Process each source row
         for (let i = 0; i < sourceRowList.length; i++) {
@@ -96,10 +104,10 @@ const moduleFunction = function(args = {}) {
                     const embedding = response.data[0].embedding;
                     const atomicRefId = `${privateKey}_${embeddingData.type}_${embeddingData.factIndex || 0}`;
 
-                    // Store in atomic table
+                    // Store in atomic table with semanticAnalyzerVersion
                     const sql = `INSERT OR REPLACE INTO ${atomicTableName} 
-                        (refId, sourceRefId, factType, factText, embedding, semanticCategory, conceptualDimension, factIndex) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+                        (refId, sourceRefId, factType, factText, embedding, semanticCategory, conceptualDimension, factIndex, semanticAnalyzerVersion) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
                     const embeddingBuffer = Buffer.from(new Float32Array(embedding).buffer);
 
@@ -112,7 +120,8 @@ const moduleFunction = function(args = {}) {
                         embeddingBuffer,
                         embeddingData.category || null,
                         embeddingData.dimension || null,
-                        embeddingData.factIndex || null
+                        embeddingData.factIndex || null,
+                        semanticAnalyzerVersion
                     );
 
                     generatedVectors.push({

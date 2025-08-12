@@ -8,7 +8,7 @@ const moduleFunction = function (args = {}) {
 	// ===================================================================================
 	// Configuration for queryString version selection
 	
-	const queryChoice = 'version1'; // Simple vector currently only has version1
+	const queryChoice = 'simple_version1'; // Simple vector currently only has simple_version1
 	
 	const systemPromptGen = require(`./queryStrings/${queryChoice}/${queryChoice}`)();
 	

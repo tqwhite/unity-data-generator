@@ -1,0 +1,8 @@
+{
+    "name": "atomic-vector-querystring-atomic_version3",
+    "version": "1.0.0",
+    "description": "atomic_version3 queryString implementation for atomic-vector semantic analysis with canonical tags and semantic scoring",
+    "main": "atomic_version3.js",
+    "keywords": ["semantic", "vector", "nlp", "canonical", "tags"],
+    "dependencies": {}
+}
