@@ -206,6 +206,10 @@ EXAMPLES
 	vectorTools --dataProfile=sif --queryString="LEA data"      # Search SIF elements
 	vectorTools --dataProfile=ceds --queryString="assessment" --resultCount=15 -json
 	
+	Version-Specific Examples:
+	vectorTools --dataProfile=ceds --semanticAnalyzerVersion=atomic_version1 --queryString="test"
+	vectorTools --dataProfile=ceds --semanticAnalyzerVersion=atomic_version2 -writeVectorDatabase
+	
 	Direct Query Examples:
 	vectorTools --dataProfile=sif --query=showAll --whereClause=help          # Get field help
 	vectorTools --dataProfile=sif --query=unityCedsComparison --resultLimit=3 # Compare matches

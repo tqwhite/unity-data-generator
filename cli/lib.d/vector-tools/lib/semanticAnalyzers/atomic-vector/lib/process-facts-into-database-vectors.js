@@ -20,11 +20,6 @@ const moduleFunction = function(args = {}) {
             progressTracker = null,
             alreadyProcessedCount = 0
         } = args;
-        
-        // Determine semantic analyzer version for new records
-        const { commandLineParameters } = process.global;
-        // Check for explicit version parameter, otherwise default to atomic_version2
-        const semanticAnalyzerVersion = commandLineParameters.qtGetSurePath('values.semanticAnalyzerVersion[0]', 'atomic_version2');
 
         const generatedVectors = [];
         const atomicTableName = `${tableName}_atomic`;
@@ -37,7 +32,6 @@ const moduleFunction = function(args = {}) {
             dataProfile,
             sourceEmbeddableContentName,
             sourcePrivateKeyName,
-            semanticAnalyzerVersion,
             batchId,
             alreadyProcessedCount
         };
@@ -89,10 +83,13 @@ const moduleFunction = function(args = {}) {
                 // Extract atomic facts
                 xLog.verbose(`Extracting atomic facts for ${privateKey} [${moduleName}]`);
                 const extractedData = await extractAtomicFacts(embeddableContent, openai);
+                
+                // Get the semantic analyzer version from the extracted data
+                const { semanticAnalyzerVersion } = extractedData;
 
                 // Generate embedding strings
                 const embeddingStrings = convertAtomicFactsToEmbeddingStrings(extractedData, embeddableContent);
-                xLog.verbose(`Generated ${embeddingStrings.length} embedding strings for ${privateKey}`);
+                xLog.verbose(`Generated ${embeddingStrings.length} embedding strings for ${privateKey} using version ${semanticAnalyzerVersion}`);
 
                 // Create embeddings for each string
                 for (const embeddingData of embeddingStrings) {

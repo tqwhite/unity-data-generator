@@ -232,6 +232,33 @@ The atomic vector approach implements AI-powered semantic factorization, breakin
 vectorTools --dataProfile=ceds --semanticAnalysisMode=atomicVector --queryString="student assessment" -verbose
 ```
 
+### Semantic Analyzer Versions (`--semanticAnalyzerVersion`)
+
+The system supports multiple versions of semantic analyzers to coexist, enabling:
+- Testing new analysis algorithms without losing existing vectors
+- Gradual migration between versions
+- Comparison of results across different versions
+- Rollback capabilities if needed
+
+**Available Versions**:
+- `atomic_version1`: Legacy atomic analysis (formerly atomicVectorOld)
+- `atomic_version2`: Current atomic analysis (default)
+- `simple_version1`: Simple vector analysis (default for simpleVector)
+
+**Usage**:
+```bash
+# Use specific atomic version
+vectorTools --dataProfile=ceds --semanticAnalysisMode=atomicVector --semanticAnalyzerVersion=atomic_version1 --queryString="test"
+
+# Create vectors with specific version
+vectorTools --dataProfile=ceds --semanticAnalysisMode=atomicVector --semanticAnalyzerVersion=atomic_version2 -writeVectorDatabase
+
+# Default behavior (uses atomic_version2)
+vectorTools --dataProfile=ceds --semanticAnalysisMode=atomicVector --queryString="test"
+```
+
+**Version Coexistence**: Multiple versions can exist in the same database, with automatic filtering during searches to use only the appropriate version's vectors.
+
 ### Future Analysis Modes
 
 The polymorphic architecture anticipates additional semantic analysis strategies. Potential future approaches might include:

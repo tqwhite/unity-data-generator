@@ -62,12 +62,14 @@ const moduleFunction = function (args = {}) {
 			return {
 				personaChoice,
 				queryChoice,
+				semanticAnalyzerVersion: queryChoice, // Explicit property for version
 				temperature,
 				...JSON.parse(response.choices[0].message.content),
 			};
 		} catch (err) {
 			xLog.error(`Atomic fact extraction failed: ${err.message}`);
 			return {
+				semanticAnalyzerVersion: queryChoice, // Include version even on error
 				elements: [
 					{
 						element_id: 'error',
