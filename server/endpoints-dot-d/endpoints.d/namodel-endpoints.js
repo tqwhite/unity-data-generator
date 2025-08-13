@@ -134,6 +134,7 @@ const moduleFunction = function ({
 			const { accessPointsDotD } = args;
 			const refId = xReq.query.refId;
 			const semanticAnalysisMode = xReq.query.semanticAnalysisMode;
+			const semanticAnalyzerVersion = xReq.query.semanticAnalyzerVersion;
 
 			if (!refId) {
 				next('No refId provided (NAMODEL-fetchData-02)', args);
@@ -148,7 +149,7 @@ const moduleFunction = function ({
 				next(err, { ...args, data });
 			};
 
-			accessPointsDotD['namodel-fetch-data']({refId, semanticAnalysisMode}, localCallback);
+			accessPointsDotD['namodel-fetch-data']({refId, semanticAnalysisMode, semanticAnalyzerVersion}, localCallback);
 		});
 
 		// INIT AND EXECUTE THE PIPELINE

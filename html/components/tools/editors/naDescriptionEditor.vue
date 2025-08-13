@@ -46,8 +46,15 @@ const fetchCedsData = async () => {
         cedsData.value = null;
         
         try {
-            // Fetch CEDS data using the ID
-            await cedsStore.fetchData(props.item['CEDS ID']);
+            // Fetch CEDS data using the ID with the same semantic parameters used for NA model
+            console.log('Fetching CEDS data with params:', {
+                semanticAnalysisMode: namodelStore.currentSemanticParams.semanticAnalysisMode,
+                semanticAnalyzerVersion: namodelStore.currentSemanticParams.semanticAnalyzerVersion
+            });
+            await cedsStore.fetchData(props.item['CEDS ID'], {
+                semanticAnalysisMode: namodelStore.currentSemanticParams.semanticAnalysisMode,
+                semanticAnalyzerVersion: namodelStore.currentSemanticParams.semanticAnalyzerVersion
+            });
             
             // Find the specific CEDS object in the response
             if (cedsStore.combinedObject) {

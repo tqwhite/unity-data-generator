@@ -197,6 +197,8 @@ const moduleFunction = function ({
 		taskList.push((args, next) => {
 			const { accessPointsDotD } = args;
 			const refId = xReq.query.refId;
+			const semanticAnalysisMode = xReq.query.semanticAnalysisMode;
+			const semanticAnalyzerVersion = xReq.query.semanticAnalyzerVersion;
 			
 			if (!refId) {
 				next("No refId provided (CEDS-fetchData-02)", args);
@@ -211,7 +213,7 @@ const moduleFunction = function ({
 				next(err, { ...args, data });
 			};
 			
-			accessPointsDotD['ceds-fetch-object-data'](refId, localCallback);
+			accessPointsDotD['ceds-fetch-object-data']({refId, semanticAnalysisMode, semanticAnalyzerVersion}, localCallback);
 		});
 
 		// INIT AND EXECUTE THE PIPELINE

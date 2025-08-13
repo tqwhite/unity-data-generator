@@ -51,9 +51,19 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 			};
 
 			const queryString = xReq.query.queryString;
-			const shellCommand = escapeShellArg(
-				`${vectorToolsFilePath} --dataProfile=ceds -json --queryString='${apostropheEscape(queryString)}'`,
-			);
+			const semanticAnalysisMode = xReq.query.semanticAnalysisMode;
+			const semanticAnalyzerVersion = xReq.query.semanticAnalyzerVersion;
+			
+			// Build the shell command with optional semantic parameters
+			let shellCommandStr = `${vectorToolsFilePath} --dataProfile=ceds -json --queryString='${apostropheEscape(queryString)}'`;
+			if (semanticAnalysisMode) {
+				shellCommandStr += ` --semanticAnalysisMode=${semanticAnalysisMode}`;
+			}
+			if (semanticAnalyzerVersion) {
+				shellCommandStr += ` --semanticAnalyzerVersion=${semanticAnalyzerVersion}`;
+			}
+			
+			const shellCommand = escapeShellArg(shellCommandStr);
 
 			xLog.status(`shellCommand: ${shellCommand}`);
 

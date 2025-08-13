@@ -56,7 +56,7 @@ export const useCedsStore = defineStore('ceds', {
 				return;
 			}
 			
-			const { semanticAnalysisMode } = options;
+			const { semanticAnalysisMode, semanticAnalyzerVersion } = options;
 
 			// Import LoginStore to get auth token
 			const { useLoginStore } = await import('@/stores/loginStore');
@@ -69,10 +69,13 @@ export const useCedsStore = defineStore('ceds', {
 			this.isLoading = true;
 			this.error = null;
 			try {
-				// Build URL with optional semantic analysis mode parameter
+				// Build URL with optional semantic analysis parameters
 				let url = `/api/ceds/fetchData?refId=${encodeURIComponent(refId)}`;
 				if (semanticAnalysisMode) {
 					url += `&semanticAnalysisMode=${encodeURIComponent(semanticAnalysisMode)}`;
+				}
+				if (semanticAnalyzerVersion) {
+					url += `&semanticAnalyzerVersion=${encodeURIComponent(semanticAnalyzerVersion)}`;
 				}
 				
 				const response = await fetch(url, {

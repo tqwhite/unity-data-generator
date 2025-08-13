@@ -56,6 +56,18 @@
           <!-- Future modes can be added here -->
         </v-radio-group>
         
+        <!-- Version selector - shown when mode has multiple versions -->
+        <v-select
+          v-if="modeVersionConfigs[localSelectedMode]?.versions?.length > 1"
+          v-model="localSelectedVersion"
+          :items="modeVersionConfigs[localSelectedMode].versions"
+          label="Analyzer Version"
+          density="compact"
+          variant="outlined"
+          class="mt-4"
+          @update:modelValue="handleVersionChange"
+        ></v-select>
+        
         <v-alert 
           v-if="localSelectedMode === 'atomicVector'" 
           type="info" 
@@ -91,13 +103,41 @@ const props = defineProps({
   selectedMode: {
     type: String,
     default: 'simpleVector'
+  },
+  selectedVersion: {
+    type: String,
+    default: 'simple_version1'  // Default version for simpleVector mode
   }
 });
 
-const emit = defineEmits(['update:selectedMode']);
+const emit = defineEmits(['update:selection']);
 
 const showMenu = ref(false);
 const localSelectedMode = ref(props.selectedMode);
+const localSelectedVersion = ref(props.selectedVersion);
+
+// Version configurations for each mode
+const modeVersionConfigs = {
+  simpleVector: {
+    versions: [
+      { title: 'Version 1', value: 'simple_version1' }
+    ],
+    default: 'simple_version1'
+  },
+  atomicVector: {
+    versions: [
+      { title: 'Version 2 (Current)', value: 'atomic_version2' },
+      { title: 'Version 1 (Legacy)', value: 'atomic_version1' }
+    ],
+    default: 'atomic_version2'
+  }
+};
+
+// Store the last selected version for each mode
+const modeVersionMemory = ref({
+  simpleVector: 'simple_version1',
+  atomicVector: 'atomic_version2'
+});
 
 // Display names for modes
 const modeDisplayNames = {
@@ -106,18 +146,52 @@ const modeDisplayNames = {
 };
 
 const currentModeDisplay = computed(() => {
-  return modeDisplayNames[props.selectedMode] || 'Unknown Mode';
+  const modeText = modeDisplayNames[props.selectedMode] || 'Unknown Mode';
+  // Add version info for atomic mode
+  if (props.selectedMode === 'atomicVector') {
+    const versionText = props.selectedVersion === 'atomic_version1' ? 'v1' : 'v2';
+    return `${modeText} (${versionText})`;
+  }
+  return modeText;
 });
 
 // Handle mode changes
 const handleModeChange = (newMode) => {
-  emit('update:selectedMode', newMode);
+  // Get the appropriate version for the new mode
+  // First check if we have a stored version for this mode, otherwise use default
+  const config = modeVersionConfigs[newMode];
+  const semanticAnalyzerVersion = modeVersionMemory.value[newMode] || config.default;
+  
+  // Update the local selected version
+  localSelectedVersion.value = semanticAnalyzerVersion;
+  
+  emit('update:selection', {
+    semanticAnalysisMode: newMode,
+    semanticAnalyzerVersion: semanticAnalyzerVersion
+  });
   // Keep menu open so user can see the info alert if atomic mode is selected
+};
+
+// Handle version changes
+const handleVersionChange = (newVersion) => {
+  localSelectedVersion.value = newVersion;
+  // Remember this version for this mode
+  modeVersionMemory.value[localSelectedMode.value] = newVersion;
+  
+  emit('update:selection', {
+    semanticAnalysisMode: localSelectedMode.value,
+    semanticAnalyzerVersion: newVersion
+  });
 };
 
 // Watch for external changes to selectedMode
 watch(() => props.selectedMode, (newMode) => {
   localSelectedMode.value = newMode;
+});
+
+// Watch for external changes to selectedVersion
+watch(() => props.selectedVersion, (newVersion) => {
+  localSelectedVersion.value = newVersion;
 });
 </script>
 

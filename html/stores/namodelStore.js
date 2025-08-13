@@ -21,6 +21,11 @@ export const useNamodelStore = defineStore('namodel', {
 				key: 'cedsMatchesConfidence',
 				order: 'desc'
 			}
+		},
+		// Track the current semantic analysis parameters used for fetching
+		currentSemanticParams: {
+			semanticAnalysisMode: null,
+			semanticAnalyzerVersion: null
 		}
 	}),
 
@@ -63,7 +68,11 @@ export const useNamodelStore = defineStore('namodel', {
 				return;
 			}
 			
-			const { semanticAnalysisMode } = options;
+			const { semanticAnalysisMode, semanticAnalyzerVersion } = options;
+			
+			// Store the current semantic parameters
+			this.currentSemanticParams.semanticAnalysisMode = semanticAnalysisMode || null;
+			this.currentSemanticParams.semanticAnalyzerVersion = semanticAnalyzerVersion || null;
 
 			// Import LoginStore to get auth token
 			const { useLoginStore } = await import('@/stores/loginStore');
@@ -75,10 +84,13 @@ export const useNamodelStore = defineStore('namodel', {
 			this.isLoading = true;
 			this.error = null;
 			try {
-				// Build URL with optional semantic analysis mode parameter
+				// Build URL with optional semantic analysis parameters
 				let url = `/api/namodel/fetchData?refId=${encodeURIComponent(refId)}`;
 				if (semanticAnalysisMode) {
 					url += `&semanticAnalysisMode=${encodeURIComponent(semanticAnalysisMode)}`;
+				}
+				if (semanticAnalyzerVersion) {
+					url += `&semanticAnalyzerVersion=${encodeURIComponent(semanticAnalyzerVersion)}`;
 				}
 				
 				const response = await fetch(url, {
@@ -223,12 +235,18 @@ export const useNamodelStore = defineStore('namodel', {
 			const processedQueryString = [description, processedXPath].filter(Boolean).join(' ').trim();
 
 			try {
-				const response = await fetch(
-					`/api/ceds/semanticDistance?queryString=${encodeURIComponent(processedQueryString)}`,
-					{
-						headers: authHeader,
-					},
-				);
+				// Build URL with semantic parameters
+				let url = `/api/ceds/semanticDistance?queryString=${encodeURIComponent(processedQueryString)}`;
+				if (this.currentSemanticParams.semanticAnalysisMode) {
+					url += `&semanticAnalysisMode=${encodeURIComponent(this.currentSemanticParams.semanticAnalysisMode)}`;
+				}
+				if (this.currentSemanticParams.semanticAnalyzerVersion) {
+					url += `&semanticAnalyzerVersion=${encodeURIComponent(this.currentSemanticParams.semanticAnalyzerVersion)}`;
+				}
+				
+				const response = await fetch(url, {
+					headers: authHeader,
+				});
 
 				if (!response.ok) {
 					throw new Error(

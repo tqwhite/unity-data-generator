@@ -22,7 +22,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	// ================================================================================
 	// SERVICE FUNCTION
 
-	const serviceFunction = ({refId, semanticAnalysisMode}, callback) => {
+	const serviceFunction = ({refId, semanticAnalysisMode, semanticAnalyzerVersion}, callback) => {
 		const taskList = new taskListPlus();
 
 		// --------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 		});
 
 		taskList.push((args, next) => {
-			const { naModelTable, dataMapping, refId, semanticAnalysisMode } = args;
+			const { naModelTable, dataMapping, refId, semanticAnalysisMode, semanticAnalyzerVersion } = args;
 			const naModelMapper = dataMapping['na-data-model'];
 
 			const localCallback = (err, rawResult = []) => {
@@ -84,7 +84,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 				FROM naDataModel 
 				left join _CEDSElements on _CEDSElements.GlobalID=naDataModel.[CEDS ID]
 				left join unityCedsMatches on unityCedsMatches.naDataModelRefId=naDataModel.refId 
-					${semanticAnalysisMode ? `AND unityCedsMatches.semanticAnalysisMode='${semanticAnalysisMode}'` : ''}
+					${semanticAnalyzerVersion ? `AND unityCedsMatches.semanticAnalyzerVersion='${semanticAnalyzerVersion}'` : ''}
 				left join _CEDSElements as cedsMatches on cedsMatches.GlobalID=unityCedsMatches._CEDSElementsRefId
 				WHERE SheetName = '${refId}'
 			`;
@@ -96,7 +96,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 		// --------------------------------------------------------------------------------
 		// INIT AND EXECUTE THE PIPELINE
 
-		const initialData = { sqlDb, mapper, dataMapping, refId, semanticAnalysisMode };
+		const initialData = { sqlDb, mapper, dataMapping, refId, semanticAnalysisMode, semanticAnalyzerVersion };
 		pipeRunner(taskList.getList(), initialData, (err, args) => {
 			if (err) {
 				xLog.error(

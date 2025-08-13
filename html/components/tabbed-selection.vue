@@ -4,7 +4,8 @@
     <div class="semantic-mode-container pa-3">
       <SemanticAnalysisModeSelector 
         :selectedMode="semanticAnalysisMode"
-        @update:selectedMode="handleModeChange"
+        :selectedVersion="semanticAnalyzerVersion"
+        @update:selection="handleSelectionChange"
       />
     </div>
     
@@ -83,26 +84,31 @@ const activeTab = ref(props.initialTab);
 
 // Semantic analysis mode state
 const semanticAnalysisMode = ref('simpleVector');
+const semanticAnalyzerVersion = ref('simple_version1');  // Default version for simpleVector mode
 const currentlySelectedRefId = ref(null);
 
 // Centralized selectItem function - replaces individual implementations in child components
 const selectItem = async (refId) => {
-  console.log('selectItem called with refId:', refId, 'semantic mode:', semanticAnalysisMode.value);
+  console.log('selectItem called with refId:', refId, 'mode:', semanticAnalysisMode.value, 'version:', semanticAnalyzerVersion.value);
   currentlySelectedRefId.value = refId;
-  await props.store.fetchData(refId, { semanticAnalysisMode: semanticAnalysisMode.value });
+  await props.store.fetchData(refId, { 
+    semanticAnalysisMode: semanticAnalysisMode.value,
+    semanticAnalyzerVersion: semanticAnalyzerVersion.value 
+  });
   emit('select', refId);
 };
 
-// Handle semantic analysis mode changes
-const handleModeChange = async (newMode) => {
-  console.log('handleModeChange called with:', newMode, 'currently selected:', currentlySelectedRefId.value);
-  semanticAnalysisMode.value = newMode;
-  // If an item is currently selected, refresh it with the new mode
+// Handle semantic analysis selection changes (both mode and version)
+const handleSelectionChange = async (selection) => {
+  console.log('handleSelectionChange called with:', selection, 'currently selected:', currentlySelectedRefId.value);
+  semanticAnalysisMode.value = selection.semanticAnalysisMode;
+  semanticAnalyzerVersion.value = selection.semanticAnalyzerVersion;
+  // If an item is currently selected, refresh it with the new selection
   if (currentlySelectedRefId.value) {
-    console.log('Refreshing item with new mode:', newMode);
+    console.log('Refreshing item with new selection:', selection);
     await selectItem(currentlySelectedRefId.value);
   } else {
-    console.log('No item currently selected - mode change will apply to next selection');
+    console.log('No item currently selected - selection change will apply to next selection');
   }
 };
 
@@ -121,9 +127,9 @@ watch(() => props.initialTab, (newTabValue) => {
   activeTab.value = newTabValue;
 });
 
-// Watch for changes in semantic analysis mode
-watch(semanticAnalysisMode, (newMode, oldMode) => {
-  console.log('semanticAnalysisMode changed from', oldMode, 'to', newMode);
+// Watch for changes in semantic analysis mode and version
+watch([semanticAnalysisMode, semanticAnalyzerVersion], ([newMode, newVersion], [oldMode, oldVersion]) => {
+  console.log('Semantic analysis changed from', oldMode, '/', oldVersion, 'to', newMode, '/', newVersion);
 });
 
 onMounted(() => {
