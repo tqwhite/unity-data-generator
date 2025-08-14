@@ -4,7 +4,9 @@ const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
 
 const moduleFunction = function(args = {}) {
     const { xLog, getConfig } = process.global;
-    const { extractAtomicFacts, convertAtomicFactsToEmbeddingStrings } = require('./atomic-fact-extractor')();
+    // Accept atomicFactExtractor from parent module
+    const { atomicFactExtractor } = args;
+    const { extractAtomicFacts, convertAtomicFactsToEmbeddingStrings } = atomicFactExtractor || require('./atomic-fact-extractor')();
 
     const extractAtomicFactsAndGenerateEmbeddings = async (args) => {
         const { 

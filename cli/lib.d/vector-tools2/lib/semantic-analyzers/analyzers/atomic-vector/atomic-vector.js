@@ -24,9 +24,14 @@ class AtomicVectorAnalyzer {
         this.moduleConfig = getConfig(moduleName);
         
         // Load sub-modules following polyArch2 principles
+        // Create atomicFactExtractor once and pass to modules that need it
         this.atomicFactExtractor = require('./lib/atomic-fact-extractor')();
-        this.processFactsModule = require('./lib/process-facts-into-database-vectors')();
-        this.scoreResultsModule = require('./lib/score-distance-results')();
+        this.processFactsModule = require('./lib/process-facts-into-database-vectors')({
+            atomicFactExtractor: this.atomicFactExtractor
+        });
+        this.scoreResultsModule = require('./lib/score-distance-results')({
+            atomicFactExtractor: this.atomicFactExtractor
+        });
         
         this.xLog.verbose(`Initialized ${this.getAnalyzerType()} vector analyzer v${this.getVersion()}`);
     }
