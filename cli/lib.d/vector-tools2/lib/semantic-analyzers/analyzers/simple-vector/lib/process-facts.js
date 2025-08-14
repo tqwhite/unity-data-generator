@@ -95,13 +95,19 @@ const moduleFunction = function(args = {}) {
 
                 const embedding = response.data[0].embedding;
 
-                // Store in database using vec0 format
-                const deleteStmt = vectorDb.prepare(`DELETE FROM ${tableName} WHERE rowid = ?`);
-                const insertStmt = vectorDb.prepare(`INSERT INTO ${tableName}(rowid, embedding) VALUES (?, ?)`);
-                
-                // Delete existing record and insert new one
-                deleteStmt.run(BigInt(privateKey));
-                insertStmt.run(BigInt(privateKey), new Float32Array(embedding));
+                // DirectQueryUtility is REQUIRED - no fallbacks
+                if (!vectorDb.execute || typeof vectorDb.execute !== 'function') {
+                    throw new Error('DirectQueryUtility required - received invalid database interface');
+                }
+
+                // Insert using parameterized query for binary embedding
+                const insertSql = `INSERT INTO ${tableName} (embedding) VALUES (?)`;
+                await new Promise((resolve, reject) => {
+                    vectorDb.execute(insertSql, [new Float32Array(embedding)], (err, res) => {
+                        if (err) reject(err);
+                        else resolve(res);
+                    });
+                });
 
                 generatedVectors.push({
                     refId: privateKey,

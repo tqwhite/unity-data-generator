@@ -86,10 +86,11 @@ class DirectQueryUtility {
 	_executeQuery(sql, params, callback) {
 		const { xLog } = process.global;
 		
-		// Use getData for SELECT queries with noTableNameOk flag
+		// Use getData for SELECT queries with noTableNameOk flag and params
 		this._systemTable.getData(sql, { 
 			suppressStatementLog: true, 
-			noTableNameOk: true 
+			noTableNameOk: true,
+			params: params // Pass parameters for binary data support
 		}, (err, results) => {
 			if (err) {
 				const traceId = Math.floor(Math.random() * 1e9);
@@ -97,9 +98,6 @@ class DirectQueryUtility {
 				error.traceId = traceId;
 				xLog.error(`[${traceId}] SQL query failed: ${err.message}`);
 				xLog.error(`SQL: ${sql}`);
-				if (params.length > 0) {
-					xLog.error(`Note: Parameters not supported in sqlite-instance getData`);
-				}
 				callback(error);
 				return;
 			}
@@ -133,10 +131,11 @@ class DirectQueryUtility {
 				return;
 			}
 
-			// Execute statement using runStatement with noTableNameOk flag
+			// Execute statement using runStatement with noTableNameOk flag and params
 			table.runStatement(sql, { 
 				suppressStatementLog: true, 
-				noTableNameOk: true 
+				noTableNameOk: true,
+				params: params // Pass parameters for binary data support
 			}, (err, result) => {
 				if (err) {
 					const traceId = Math.floor(Math.random() * 1e9);

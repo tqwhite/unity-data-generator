@@ -120,23 +120,32 @@ const moduleFunction = function (args = {}) {
                 LIMIT ?
             `;
 
-			// Use query method if vectorDb is DirectQueryUtility, otherwise use prepare
-			let results;
-			if (vectorDb.query && typeof vectorDb.query === 'function') {
-				// Using DirectQueryUtility
-				results = await new Promise((resolve, reject) => {
-					vectorDb.query(sql, [queryBuffer, resultCount * 2], (err, res) => {
-						if (err) reject(err);
-						else resolve(res);
-					});
-				});
-			} else if (vectorDb.prepare) {
-				// Direct database access
-				results = vectorDb.prepare(sql).all(queryBuffer, resultCount * 2);
-			} else {
-				xLog.error('Invalid database interface provided');
-				return [];
+			// DirectQueryUtility is REQUIRED - no fallbacks
+			if (!vectorDb.query || typeof vectorDb.query !== 'function') {
+				throw new Error('DirectQueryUtility required - received invalid database interface');
 			}
+
+			// Log the SQL query for debugging
+			xLog.saveProcessFile(
+				`${moduleName}_vectorMatching.log`,
+				`\n=== Vector Matching Query ${queryEmb.type} ===\nSQL: ${sql}\nResult Count Requested: ${resultCount * 2}\nQuery Text: ${queryEmb.text}\n`,
+				{ append: true }
+			);
+
+			// Use parameterized query with binary embedding
+			const results = await new Promise((resolve, reject) => {
+				vectorDb.query(sql, [queryBuffer, resultCount * 2], (err, res) => {
+					if (err) reject(err);
+					else resolve(res);
+				});
+			});
+
+			// Log the raw results from vector search
+			xLog.saveProcessFile(
+				`${moduleName}_vectorMatching.log`,
+				`Results found: ${results.length}\n${JSON.stringify(results.slice(0, 10), null, 2)}\n`,
+				{ append: true }
+			);
 			
 
 			const enrichedStringData = {
@@ -174,8 +183,29 @@ const moduleFunction = function (args = {}) {
 			});
 		}
 
+		// Log aggregated matches before scoring
+		xLog.saveProcessFile(
+			`${moduleName}_vectorMatching.log`,
+			`\n=== Aggregated Matches (${allMatches.size} unique sources) ===\n${JSON.stringify(
+				Array.from(allMatches.entries()).slice(0, 10).map(([id, data]) => ({
+					refId: id,
+					distanceCount: data.distances.length,
+					avgDistance: data.distances.reduce((a, b) => a + b, 0) / data.distances.length,
+					factTypes: Array.from(data.factTypes)
+				}))
+			, null, 2)}\n`,
+			{ append: true }
+		);
+
 		// Score and rank aggregated results using version-specific scoring method
 		const scoredResults = scoringMethod(allMatches, { distanceWeight: 0.1 });
+
+		// Log scored results
+		xLog.saveProcessFile(
+			`${moduleName}_vectorMatching.log`,
+			`\n=== Scored Results (top 10) ===\n${JSON.stringify(scoredResults.slice(0, 10), null, 2)}\n`,
+			{ append: true }
+		);
 
 		// Look up source records and format final results
 		const finalResults = [];
@@ -193,22 +223,31 @@ const moduleFunction = function (args = {}) {
 			// Use the formatted key for lookup
 			let record;
 			if (vectorDb.query && typeof vectorDb.query === 'function') {
-				// Using DirectQueryUtility
-				const lookupSql = `select * from ${sourceTableName} where ${sourcePrivateKeyName}=?`;
+				// Using DirectQueryUtility with qtTemplateReplace
+				require('qtools-functional-library');
+				const lookupSql = `select * from <!tableName!> where <!keyName!>='<!keyValue!>'`.qtTemplateReplace({
+					tableName: sourceTableName,
+					keyName: sourcePrivateKeyName,
+					keyValue: formattedKey.replace(/'/g, "''")  // Escape single quotes
+				});
+				
+				// Log source record lookup
+				xLog.saveProcessFile(
+					`${moduleName}_sourceLookup.log`,
+					`Looking up source: ${lookupSql}\n`,
+					{ append: true }
+				);
+				
 				const records = await new Promise((resolve, reject) => {
-					vectorDb.query(lookupSql, [formattedKey], (err, res) => {
+					vectorDb.query(lookupSql, [], (err, res) => {
 						if (err) reject(err);
 						else resolve(res);
 					});
 				});
 				record = records && records[0];
-			} else if (vectorDb.prepare) {
-				// Direct database access
-				record = vectorDb
-					.prepare(
-						`select * from ${sourceTableName} where ${sourcePrivateKeyName}=?`,
-					)
-					.get(formattedKey);
+			} else {
+				// No fallback - DirectQueryUtility is required
+				throw new Error('DirectQueryUtility required - received invalid database interface');
 			}
 
 			if (!record) {

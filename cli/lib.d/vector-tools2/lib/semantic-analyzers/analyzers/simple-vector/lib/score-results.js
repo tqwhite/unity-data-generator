@@ -103,26 +103,34 @@ const moduleFunction = function(args = {}) {
         // Find closest matches using vec0 format
         let rows;
         try {
-            // Check if vectorDb is DirectQueryUtility or raw database
-            if (vectorDb.query && typeof vectorDb.query === 'function') {
-                // Using DirectQueryUtility
-                const sql = `SELECT rowid as '${sourcePrivateKeyName}', distance FROM ${tableName} WHERE embedding MATCH ? ORDER BY distance LIMIT ${resultCount}`;
-                rows = await new Promise((resolve, reject) => {
-                    vectorDb.query(sql, [new Float32Array(queryEmbedding)], (err, res) => {
-                        if (err) reject(err);
-                        else resolve(res);
-                    });
-                });
-            } else if (vectorDb.prepare) {
-                // Direct database access
-                rows = vectorDb
-                    .prepare(
-                        `SELECT rowid as '${sourcePrivateKeyName}', distance FROM ${tableName} WHERE embedding MATCH ? ORDER BY distance LIMIT ${resultCount}`
-                    )
-                    .all(new Float32Array(queryEmbedding));
-            } else {
-                throw new Error('Invalid database interface provided');
+            // Check if vectorDb is DirectQueryUtility
+            if (!vectorDb.query || typeof vectorDb.query !== 'function') {
+                throw new Error('DirectQueryUtility required - received invalid database interface');
             }
+            
+            // Using DirectQueryUtility with parameterized query for binary embedding
+            const sql = `SELECT rowid as '${sourcePrivateKeyName}', distance FROM ${tableName} WHERE embedding MATCH ? ORDER BY distance LIMIT ${resultCount}`;
+            
+            // Log the SQL query for debugging
+            xLog.saveProcessFile(
+                `${moduleName}_vectorMatching.log`,
+                `\n=== Simple Vector Matching ===\nSQL: ${sql}\nResult Count: ${resultCount}\nQuery: ${processedQueryString}\n`,
+                { append: true }
+            );
+            
+            rows = await new Promise((resolve, reject) => {
+                vectorDb.query(sql, [new Float32Array(queryEmbedding)], (err, res) => {
+                    if (err) reject(err);
+                    else resolve(res);
+                });
+            });
+            
+            // Log the raw vector search results
+            xLog.saveProcessFile(
+                `${moduleName}_vectorMatching.log`,
+                `Found ${rows.length} matches:\n${JSON.stringify(rows.slice(0, 10), null, 2)}\n`,
+                { append: true }
+            );
         } catch (error) {
             if (error.message.includes('no such table')) {
                 throw new Error(`No simpleVectors found. Missing table ${tableName}. THIS PROBABLY IS BECAUSE YOU HAVE NOT GENERATED ANY SIMPLEVECTORS. Use vectorTools --dataProfile=${dataProfile} -writeVectorDatabase --semanticAnalysisMode=simpleVector`);
@@ -130,9 +138,12 @@ const moduleFunction = function(args = {}) {
             throw error; // Re-throw other errors
         }
 
-        // Collect verbose data for simple vector (single enriched string)
+        // Initialize verbose data structure
         const verboseData = collectVerboseData ? {
             originalQuery: queryString,
+            processedQuery: processedQueryString,
+            sourcePrivateKeyName,
+            vectorMatches: rows,
             enrichedStrings: [{
                 enrichedString: processedQueryString,
                 type: 'processed_query',
@@ -141,7 +152,7 @@ const moduleFunction = function(args = {}) {
                     distance: row.distance
                 }))
             }],
-            queryExpansionAnalysis: []
+            results: [] // Will be populated after scoring
         } : null;
 
         // Look up source records and prepare for scoring
@@ -157,20 +168,39 @@ const moduleFunction = function(args = {}) {
             // Use the formatted key for lookup
             let record;
             if (vectorDb.query && typeof vectorDb.query === 'function') {
-                // Using DirectQueryUtility
-                const lookupSql = `select * from ${sourceTableName} where ${sourcePrivateKeyName}=?`;
+                // Using DirectQueryUtility with qtTemplateReplace
+                require('qtools-functional-library');
+                const lookupSql = `select * from <!tableName!> where <!keyName!>='<!keyValue!>'`.qtTemplateReplace({
+                    tableName: sourceTableName,
+                    keyName: sourcePrivateKeyName,
+                    keyValue: formattedKey.replace(/'/g, "''")  // Escape single quotes
+                });
+                
+                // Log source record lookup
+                xLog.saveProcessFile(
+                    `${moduleName}_sourceLookup.log`,
+                    `Looking up source: ${lookupSql}\n`,
+                    { append: true }
+                );
+                
                 const records = await new Promise((resolve, reject) => {
-                    vectorDb.query(lookupSql, [formattedKey], (err, res) => {
+                    vectorDb.query(lookupSql, [], (err, res) => {
                         if (err) reject(err);
                         else resolve(res);
                     });
                 });
                 record = records && records[0];
-            } else if (vectorDb.prepare) {
-                // Direct database access
-                record = vectorDb.prepare(
-                    `select * from ${sourceTableName} where ${sourcePrivateKeyName}=?`
-                ).get(formattedKey);
+                
+                if (record) {
+                    xLog.saveProcessFile(
+                        `${moduleName}_sourceLookup.log`,
+                        `Found: ${JSON.stringify(record).substring(0, 200)}...\n`,
+                        { append: true }
+                    );
+                }
+            } else {
+                // No fallback - DirectQueryUtility is required
+                throw new Error('DirectQueryUtility required - received invalid database interface');
             }
             
             if (!record) {
@@ -192,6 +222,11 @@ const moduleFunction = function(args = {}) {
 
         xLog.verbose(`Found ${scoredResults.length} matches`);
         
+        // Update verbose data with final results
+        if (verboseData) {
+            verboseData.results = scoredResults;
+        }
+        
         // Return results with optional verbose data
         if (collectVerboseData) {
             return {
@@ -204,31 +239,45 @@ const moduleFunction = function(args = {}) {
     };
 
     // ---------------------------------------------------------------------
-    // prettyPrintResults - Optional pretty print function for results display
+    // prettyPrintResults - Optional pretty print function for verbose data display
     
-    const prettyPrintResults = (results) => {
-        if (!results || results.length === 0) {
-            return 'No results found';
+    const prettyPrintResults = (verboseData) => {
+        if (!verboseData) {
+            return 'No verbose data available';
         }
 
-        let output = '\nSimple Vector Search Results:\n';
-        output += '═'.repeat(50) + '\n';
+        let output = '\n╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗\n';
+        output += '║                                    SIMPLE VECTOR SEARCH ANALYSIS                                     ║\n';
+        output += '╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝\n';
         
-        results.forEach((result, index) => {
-            output += `${index + 1}. [${result.refId}] Score: ${result.score.toFixed(4)}\n`;
-            
-            // Display key fields from the record
-            if (result.record) {
-                Object.keys(result.record).forEach(key => {
-                    if (key !== 'refId' && result.record[key]) {
-                        const value = result.record[key].toString();
-                        const truncated = value.length > 100 ? value.substring(0, 97) + '...' : value;
-                        output += `   ${key}: ${truncated}\n`;
-                    }
-                });
-            }
-            output += '\n';
-        });
+        if (verboseData.originalQuery) {
+            output += `├─ Original Query: "${verboseData.originalQuery}"\n`;
+        }
+        
+        if (verboseData.processedQuery) {
+            output += `├─ Processed Query: "${verboseData.processedQuery}"\n`;
+        }
+        
+        if (verboseData.vectorMatches && verboseData.vectorMatches.length > 0) {
+            output += `│\n├─ Vector Matches (${verboseData.vectorMatches.length} found):\n`;
+            verboseData.vectorMatches.forEach((match, index) => {
+                const prefix = index === verboseData.vectorMatches.length - 1 ? '└─' : '├─';
+                output += `│  ${prefix} [${match.distance.toFixed(4)}] RefID: ${match[verboseData.sourcePrivateKeyName || 'refId']}\n`;
+            });
+        }
+        
+        if (verboseData.results && verboseData.results.length > 0) {
+            output += `│\n├─ Final Results (${verboseData.results.length} records):\n`;
+            verboseData.results.forEach((result, index) => {
+                const prefix = index === verboseData.results.length - 1 ? '└─' : '├─';
+                // Get display content from various possible fields
+                const content = result.content || result.description || result.Description || 
+                               (result.record && (result.record.Description || result.record.description)) || 
+                               'No description available';
+                const truncated = content.length > 80 ? content.substring(0, 77) + '...' : content;
+                output += `│  ${prefix} [${result.score.toFixed(4)}] ${result.refId}: ${truncated}\n`;
+            });
+        }
         
         return output;
     };

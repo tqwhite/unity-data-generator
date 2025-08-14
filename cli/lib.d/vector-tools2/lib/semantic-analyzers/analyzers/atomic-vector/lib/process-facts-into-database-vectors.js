@@ -101,25 +101,34 @@ const moduleFunction = function(args = {}) {
                     const embedding = response.data[0].embedding;
                     const atomicRefId = `${privateKey}_${embeddingData.type}_${embeddingData.factIndex || 0}`;
 
-                    // Store in atomic table with semanticAnalyzerVersion
+                    // DirectQueryUtility is REQUIRED - no fallbacks
+                    if (!vectorDb.execute || typeof vectorDb.execute !== 'function') {
+                        throw new Error('DirectQueryUtility required - received invalid database interface');
+                    }
+
+                    // Store in atomic table with parameterized query for binary embedding
                     const sql = `INSERT OR REPLACE INTO ${atomicTableName} 
                         (refId, sourceRefId, factType, factText, embedding, semanticCategory, conceptualDimension, factIndex, semanticAnalyzerVersion) 
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
                     const embeddingBuffer = Buffer.from(new Float32Array(embedding).buffer);
-
-                    const insertStmt = vectorDb.prepare(sql);
-                    insertStmt.run(
-                        atomicRefId,
-                        privateKey,
-                        embeddingData.type,
-                        embeddingData.text,
-                        embeddingBuffer,
-                        embeddingData.category || null,
-                        embeddingData.dimension || null,
-                        embeddingData.factIndex || null,
-                        semanticAnalyzerVersion
-                    );
+                    
+                    await new Promise((resolve, reject) => {
+                        vectorDb.execute(sql, [
+                            atomicRefId,
+                            privateKey,
+                            embeddingData.type,
+                            embeddingData.text,
+                            embeddingBuffer,
+                            embeddingData.semanticCategory || null,
+                            embeddingData.conceptualDimension || null,
+                            embeddingData.factIndex || 0,
+                            semanticAnalyzerVersion
+                        ], (err, res) => {
+                            if (err) reject(err);
+                            else resolve(res);
+                        });
+                    });
 
                     generatedVectors.push({
                         refId: atomicRefId,

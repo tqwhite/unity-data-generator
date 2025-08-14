@@ -12,7 +12,51 @@ const fs = require('fs');
 
 // Initialize xLog in process.global before anything else
 const xLog = require('qtools-x-log');
-xLog.setProcessFilesDirectory(`/tmp/${moduleName}`);
+
+// Generate numbered directory for this run
+const generateNumberedDirectory = () => {
+	const parentDir = `/tmp/${moduleName}`;
+	let runNumber = 0;
+	
+	// Create parent directory if it doesn't exist
+	if (!fs.existsSync(parentDir)) {
+		fs.mkdirSync(parentDir, { recursive: true });
+	}
+	
+	// Find the highest existing run number in the parent directory
+	const dirs = fs.readdirSync(parentDir).filter(dir => 
+		dir.startsWith('vtLog_') && /^\d{4}$/.test(dir.slice('vtLog_'.length))
+	);
+	
+	if (dirs.length > 0) {
+		const numbers = dirs.map(dir => parseInt(dir.slice('vtLog_'.length)));
+		runNumber = Math.max(...numbers) + 1;
+	}
+	
+	// Format with leading zeros (4 digits)
+	const paddedNumber = String(runNumber).padStart(4, '0');
+	const numberedDir = path.join(parentDir, `vtLog_${paddedNumber}`);
+	
+	// Create the numbered directory
+	if (!fs.existsSync(numberedDir)) {
+		fs.mkdirSync(numberedDir, { recursive: true });
+	}
+	
+	return numberedDir;
+};
+
+const processFileDirectory = generateNumberedDirectory();
+xLog.setProcessFilesDirectory(processFileDirectory);
+
+// Log the calling command with all arguments
+xLog.saveProcessFile('callingCommand.log', {
+	command: process.argv[0],
+	script: process.argv[1],
+	arguments: process.argv.slice(2),
+	fullCommand: process.argv.join(' '),
+	timestamp: new Date().toISOString()
+}, { saveAsJson: true });
+
 if (!process.global) {
 	process.global = {};
 }

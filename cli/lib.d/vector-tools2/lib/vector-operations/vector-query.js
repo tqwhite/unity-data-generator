@@ -75,6 +75,7 @@ class VectorQuery {
 			}
 
 			// Perform semantic search using analyzer
+			// Always collect verbose data for queryExpansion.log
 			const searchConfig = {
 				queryString,
 				vectorDb: this.dbUtility, // Pass dbUtility as vectorDb for compatibility
@@ -84,7 +85,7 @@ class VectorQuery {
 				dataProfile,
 				sourceTableName,
 				sourcePrivateKeyName,
-				collectVerboseData: isVerbose
+				collectVerboseData: true  // Always collect for logging
 			};
 
 			const scoringResult = await analyzer.scoreDistanceResults(searchConfig);

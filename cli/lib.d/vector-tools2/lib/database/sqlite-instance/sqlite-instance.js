@@ -49,7 +49,7 @@ const moduleFunction = function ({ unused }) {
 	// DB ACCCESS FUNCTIONS
 
 	// --------------------------------------------------------------------------------
-	// EXEC STATTEMENT
+	// EXEC STATTEMENT - with support for parameterized queries
 
 	const runStatementActual =
 		(db, tableName, defaultOptions) =>
@@ -60,7 +60,7 @@ const moduleFunction = function ({ unused }) {
 			}
 			Object.assign(defaultOptions, options);
 
-			const { suppressStatementLog, noTableNameOk } = options;
+			const { suppressStatementLog, noTableNameOk, params = [] } = options;
 
 			if (!noTableNameOk && !statement.match(/<!tableName!>/)) {
 				const errorMessage = `SQL statement has no <!tableName!> substitution tag. This is not allowed. [runStatementActual]`;
@@ -76,11 +76,19 @@ const moduleFunction = function ({ unused }) {
 			suppressStatementLog || xLog.status(finalStatement);
 
 			try {
-				// In better-sqlite3, exec() runs statements but doesn't return anything
-				db.exec(finalStatement);
+				let result;
+				if (params && params.length > 0) {
+					// Use parameterized query for binary data support
+					const stmt = db.prepare(finalStatement);
+					result = stmt.run(...params);
+				} else {
+					// Use exec for backward compatibility with non-parameterized statements
+					db.exec(finalStatement);
+					result = {};
+				}
 				
 				if (typeof callback == 'function') {
-					callback(null, {});
+					callback(null, result);
 				}
 				return true;
 			} catch (err) {
@@ -99,7 +107,7 @@ const moduleFunction = function ({ unused }) {
 	// WORKING FUNCTIONS
 
 	// --------------------------------------------------------------------------------
-	// GET DATA
+	// GET DATA - with support for parameterized queries
 
 	const getDataActual =
 		(db, tableName, defaultOptions) =>
@@ -110,7 +118,7 @@ const moduleFunction = function ({ unused }) {
 			}
 			Object.assign(defaultOptions, options);
 
-			const { suppressStatementLog, noTableNameOk } = options;
+			const { suppressStatementLog, noTableNameOk, params = [] } = options;
 			if (!noTableNameOk && !statement.match(/<!tableName!>/)) {
 				const errorMessage = `SQL statement has no <!tableName!> substitution tag. This is not allowed. [getDataActual]`;
 				xLog.error(errorMessage);
@@ -125,8 +133,16 @@ const moduleFunction = function ({ unused }) {
 			suppressStatementLog || xLog.status(finalStatement);
 
 			try {
-				// In better-sqlite3, all() returns all rows from a query
-				const result = db.prepare(finalStatement).all();
+				// Support for parameterized queries
+				let result;
+				if (params && params.length > 0) {
+					// Use parameterized query for binary data support
+					const stmt = db.prepare(finalStatement);
+					result = stmt.all(...params);
+				} else {
+					// Use non-parameterized query for backward compatibility
+					result = db.prepare(finalStatement).all();
+				}
 				
 				if (typeof callback == 'function') {
 					callback(null, result);
