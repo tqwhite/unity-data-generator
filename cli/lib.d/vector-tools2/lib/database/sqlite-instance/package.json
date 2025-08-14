@@ -1,0 +1,13 @@
+{
+  "name": "sqlite-instance",
+  "version": "2.0.0",
+  "description": "SQLite database abstraction with vector support - copied from server/data-model/lib",
+  "main": "sqlite-instance.js",
+  "dependencies": {
+    "better-sqlite3": "^9.2.2",
+    "sqlite-vec": "^0.1.1",
+    "qtools-functional-library": "^2.0.0",
+    "qtools-asynchronous-pipe-plus": "^1.0.0",
+    "sqlstring-sqlite": "^0.1.1"
+  }
+}

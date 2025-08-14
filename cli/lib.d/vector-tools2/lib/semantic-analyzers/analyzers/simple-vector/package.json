@@ -1,0 +1,21 @@
+{
+  "name": "simple-vector-analyzer",
+  "version": "2.0.0",
+  "description": "Simple vector semantic analyzer for vector-tools2 - implements basic vector-based semantic analysis",
+  "main": "simple-vector.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vector",
+    "semantic",
+    "analysis",
+    "embeddings",
+    "polyArch2"
+  ],
+  "author": "TQ White II",
+  "license": "ISC"
+}

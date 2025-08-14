@@ -1,0 +1,48 @@
+{
+  "name": "vector-tools2",
+  "version": "2.0.0",
+  "description": "PolyArch2 reimplementation of vectorTools - semantic vector management for educational standards",
+  "main": "vectorTools2.js",
+  "bin": {
+    "vectorTools2": "./vectorTools2.js"
+  },
+  "scripts": {
+    "test": "mocha test/**/*.test.js",
+    "test:unit": "mocha test/unit/**/*.test.js",
+    "test:integration": "mocha test/integration/**/*.test.js",
+    "test:e2e": "mocha test/e2e/**/*.test.js",
+    "test:watch": "mocha test/**/*.test.js --watch",
+    "test:coverage": "nyc mocha test/**/*.test.js"
+  },
+  "keywords": [
+    "vector",
+    "embeddings",
+    "semantic-search",
+    "sqlite-vec",
+    "educational-standards",
+    "CEDS",
+    "SIF"
+  ],
+  "author": "TQ White II",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^9.2.2",
+    "sqlite-vec": "^0.1.1",
+    "qtools-functional-library": "*",
+    "qtools-asynchronous-pipe-plus": "*",
+    "qtools-parse-command-line": "*",
+    "qtools-config-file-processor": "*",
+    "qtools-x-log": "*",
+    "sqlstring-sqlite": "^0.1.1",
+    "openai": "^4.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "chai": "^4.3.10",
+    "sinon": "^17.0.1",
+    "nyc": "^15.1.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

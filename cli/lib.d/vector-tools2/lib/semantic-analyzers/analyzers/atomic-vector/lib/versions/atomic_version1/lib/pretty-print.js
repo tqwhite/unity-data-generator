@@ -1,0 +1,79 @@
+'use strict';
+
+const moduleName = __filename.replace(__dirname + '/', '').replace(/.js$/, '');
+
+const moduleFunction = function(args = {}) {
+    const { xLog, getConfig } = process.global;
+
+    /**
+     * Pretty print atomic expansion analysis for version1 verboseData structure
+     * Version1 uses: semantic_categories, functional_role, conceptual_dimensions
+     */
+    const prettyPrintAtomicExpansion = (verboseData) => {
+        if (!verboseData) return '';
+
+        // Accumulate output into a string array
+        const outputLines = [];
+
+        outputLines.push('\n╔═══════════════════════════════════════════════════════════════════════════════════════════════════════╗');
+        outputLines.push('║                                  VERSION1 QUERY EXPANSION ANALYSIS                                  ║');
+        outputLines.push('╚═══════════════════════════════════════════════════════════════════════════════════════════════════════╝');
+        outputLines.push(`├─ Original Query: "${verboseData.originalQuery}"`);
+        outputLines.push('│');
+
+        verboseData.enrichedStrings.forEach((enrichedData, index) => {
+            const isLast = index === verboseData.enrichedStrings.length - 1;
+            const connector = isLast ? '└─' : '├─';
+
+            // Version1 specific formatting - show type and semantic context
+            let typeDisplay = enrichedData.type || 'unknown';
+            if (enrichedData.dimension) {
+                typeDisplay += ` (${enrichedData.dimension})`;
+            }
+            if (enrichedData.category) {
+                typeDisplay += ` [${enrichedData.category}]`;
+            }
+
+            outputLines.push(
+                `${connector} Enriched String ${index + 1} [${typeDisplay}]: "${enrichedData.enrichedString}"`,
+            );
+
+            if (enrichedData.matches && enrichedData.matches.length > 0) {
+                enrichedData.matches.forEach((match, matchIndex) => {
+                    const isLastMatch = matchIndex === enrichedData.matches.length - 1;
+                    const matchConnector = isLast ? '   ' : '│  ';
+                    const matchPrefix = isLastMatch ? '└─' : '├─';
+
+                    const distance = match.distance ? match.distance.toFixed(4) : 'N/A';
+                    let matchDescription = `[${distance}] RefID: ${match.sourceRefId}`;
+
+                    // Add fact details for atomic results
+                    if (match.factType && match.factText) {
+                        matchDescription += ` (${match.factType}: "${match.factText}")`;
+                    }
+
+                    outputLines.push(`${matchConnector} ${matchPrefix} ${matchDescription}`);
+                });
+            } else {
+                const noMatchConnector = isLast ? '   ' : '│  ';
+                outputLines.push(`${noMatchConnector} └─ (no matches found)`);
+            }
+
+            if (!isLast) {
+                outputLines.push('│');
+            }
+        });
+
+        outputLines.push('');
+        outputLines.push('═'.repeat(100));
+        outputLines.push('Version1 Analysis: semantic_categories, functional_role, conceptual_dimensions');
+        outputLines.push('');
+
+        // Output accumulated string all at once
+        return outputLines.join('\n');
+    };
+
+    return { prettyPrintAtomicExpansion };
+};
+
+module.exports = moduleFunction;

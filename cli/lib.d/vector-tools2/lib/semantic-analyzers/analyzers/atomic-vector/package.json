@@ -1,0 +1,25 @@
+{
+	"name": "atomic-vector-analyzer",
+	"version": "2.0.0",
+	"description": "Atomic Vector Semantic Analyzer for vector-tools2 - decomposes definitions into semantic components and generates multiple embeddings per source record",
+	"main": "atomic-vector.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"atomic",
+		"vector",
+		"semantic",
+		"analyzer",
+		"embeddings",
+		"facts",
+		"decomposition",
+		"ceds",
+		"sif",
+		"polyArch2"
+	],
+	"author": "TQ White",
+	"license": "ISC",
+	"dependencies": {},
+	"devDependencies": {}
+}
