@@ -488,6 +488,7 @@ const moduleFunction = function ({ unused }) {
 		db.pragma('journal_mode = WAL');  // Write-Ahead Logging for better concurrency
 		db.pragma('synchronous = NORMAL'); // Synchronous NORMAL offers good safety with better performance
 		db.pragma('foreign_keys = ON');    // Enforce foreign key constraints
+		db.debugMarker="HELLO";
 		
 		const getTable = getTableActual(db, defaultOptions);
 

@@ -19,6 +19,27 @@ if (!process.global) {
 process.global.xLog = xLog;
 
 // =====================================================================
+// GLOBAL ERROR HANDLERS
+// =====================================================================
+
+// Catch uncaught exceptions
+process.on('uncaughtException', (error) => {
+	xLog.error(`UNCAUGHT EXCEPTION: ${error.message}`);
+	xLog.error(`Stack: ${error.stack}`);
+	process.exit(1);
+});
+
+// Catch unhandled promise rejections  
+process.on('unhandledRejection', (reason, promise) => {
+	xLog.error(`UNHANDLED REJECTION at: ${promise}`);
+	xLog.error(`Reason: ${reason}`);
+	if (reason && reason.stack) {
+		xLog.error(`Stack: ${reason.stack}`);
+	}
+	process.exit(1);
+});
+
+// =====================================================================
 // PROJECT ROOT FINDER
 // =====================================================================
 

@@ -62,27 +62,50 @@ class DirectQueryUtility {
 			return;
 		}
 
-		// For parameterized queries, we need direct database access
-		// Access the internal db object (better-sqlite3 instance)
-		try {
-			const db = this.sqliteInstance.db;
-			
-			// Prepare and execute the query with parameters
-			const stmt = db.prepare(sql);
-			const results = params.length > 0 ? stmt.all(...params) : stmt.all();
+		// Check if _systemTable is initialized
+		if (!this._systemTable) {
+			// Try to get it now
+			this.sqliteInstance.getTable('_system', { suppressStatementLog: true }, (err, table) => {
+				if (err) {
+					const traceId = Math.floor(Math.random() * 1e9);
+					const error = new Error(`Failed to get query interface: ${err.message} [trace:${traceId}]`);
+					error.traceId = traceId;
+					xLog.error(`[${traceId}] Query interface error: ${err.message}`);
+					callback(error);
+					return;
+				}
+				
+				this._systemTable = table;
+				this._executeQuery(sql, params, callback);
+			});
+		} else {
+			this._executeQuery(sql, params, callback);
+		}
+	}
+	
+	_executeQuery(sql, params, callback) {
+		const { xLog } = process.global;
+		
+		// Use getData for SELECT queries with noTableNameOk flag
+		this._systemTable.getData(sql, { 
+			suppressStatementLog: true, 
+			noTableNameOk: true 
+		}, (err, results) => {
+			if (err) {
+				const traceId = Math.floor(Math.random() * 1e9);
+				const error = new Error(`SQL query failed: ${err.message} [trace:${traceId}]`);
+				error.traceId = traceId;
+				xLog.error(`[${traceId}] SQL query failed: ${err.message}`);
+				xLog.error(`SQL: ${sql}`);
+				if (params.length > 0) {
+					xLog.error(`Note: Parameters not supported in sqlite-instance getData`);
+				}
+				callback(error);
+				return;
+			}
 			
 			callback(null, results);
-		} catch (err) {
-			const traceId = Math.floor(Math.random() * 1e9);
-			const error = new Error(`SQL query failed: ${err.message} [trace:${traceId}]`);
-			error.traceId = traceId;
-			xLog.error(`[${traceId}] SQL query failed: ${err.message}`);
-			xLog.error(`SQL: ${sql}`);
-			if (params.length > 0) {
-				xLog.error(`Parameters: ${params.length} params provided`);
-			}
-			callback(error);
-		}
+		});
 	}
 
 	// ---------------------------------------------------------------------

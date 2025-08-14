@@ -152,7 +152,7 @@ const moduleFunction = ({ dbUtility } = {}) => {
 
 		} catch (error) {
 			xLog.error(`[${traceId}] Failed to show database stats: ${error.message}`);
-			return { success: false, shouldExit: false };
+			throw error;
 		}
 	};
 
