@@ -15,99 +15,87 @@ const mainHelp = args => {
 
 NAME
 
-	RDF Tester - RDF/OWL ontology testing and validation for Unity Object Generator
+	RDF Tester - RDF/OWL ontology parser for Unity Object Generator
 
 DESCRIPTION
 
 	rdfTester [OPTIONS]
 	
-	Tests and validates RDF (Resource Description Framework) and OWL (Web Ontology Language)
-	files for the Unity Object Generator project. Provides ontology validation, class
-	analysis, and property relationship testing for educational data standards.
+	Parses RDF (Resource Description Framework) and OWL (Web Ontology Language)
+	files for the Unity Object Generator project. Extracts class hierarchies,
+	property relationships, and ontological structures from RDF/XML files.
 	
-	ONTOLOGY PROCESSING:
-	Reads RDF/OWL files and analyzes class hierarchies, property relationships,
-	and ontological constraints. Validates against educational data standards
-	and generates reports on ontology structure and compliance.
+	CURRENT FUNCTIONALITY:
+	Reads a configured RDF/OWL file path from the INI configuration and extracts
+	class definitions (both rdfs:Class and owl:Class) and property definitions
+	(rdf:Property and rdfs:Property). Outputs three JSON files with the extracted
+	data for further processing.
 	
-	CLASS AND PROPERTY ANALYSIS:
-	Extracts class definitions, object properties, and data properties from
-	ontology files. Stores analysis results in JSON format for further processing
-	and integration with other Unity Object Generator tools.
+	NOTE: Input file path is configured in rdfTester.ini, not via command line.
 
-CONTROLS
+CONFIGURATION
 
-	--inputFile:        REQUIRED: Path to RDF/OWL file to test and validate
-	                    Supports .rdf, .owl, .ttl (Turtle), and .xml formats
-	                    
-	--outputFile:       OUTPUT: Path for validation results and analysis report
-	                    Defaults to input filename with _analysis suffix
-	                    
-	--format:           FORMAT: Input file format specification (rdf, owl, turtle)
-	                    Auto-detected from file extension if not specified
-	                    
-	--namespace:        FILTER: Specific namespace URI to focus analysis on
-	                    Useful for large ontologies with multiple namespaces
-	                    
-	--configPath:       OVERRIDE: Custom configuration file path
-	                    Overrides default RDF testing configuration
+	The RDF file to process is specified in the configuration file:
+	system/configs/instanceSpecific/{instance}/rdfTester.ini
+	
+	Key configuration:
+	CEDS_OntologyFilePath = path to your RDF/OWL file
 
 SWITCHES
 
-	-validateOnly:      SAFE: Validate ontology syntax and structure without processing
-	                    Checks for RDF/OWL compliance and reports syntax errors
+	-help, --help:      Display this help message and exit
 	                    
-	-extractClasses:    ANALYSIS: Extract all class definitions from ontology
-	                    Generates classObjects.json with class hierarchy information
+	-verbose:           Show detailed processing information including
+	                    parsing steps and extraction progress
 	                    
-	-extractProperties: ANALYSIS: Extract property definitions (object and data properties)
-	                    Generates propertyObjects.json with property relationships
+	-debug:             Show all debugging messages for troubleshooting
 	                    
-	-generateReport:    REPORTING: Create comprehensive ontology analysis report
-	                    Includes class counts, property relationships, and validation results
+	-quiet:             Only show error messages
 	                    
-	-verbose:           DEBUGGING: Show detailed processing information including
-	                    parsing steps, validation checks, and extraction progress
+	-silent:            Suppress all output messages
 
 <!frameworkHelpInfo!>
 
-SUPPORTED FORMATS
+SUPPORTED FORMAT
 
-	RDF/XML (.rdf):     Standard RDF serialization format
-	                    Most common format for educational ontologies
-	                    
-	OWL (.owl):         Web Ontology Language format
-	                    Supports OWL DL and OWL Full profiles
-	                    
-	Turtle (.ttl):      Compact RDF serialization format
-	                    Human-readable alternative to RDF/XML
+	RDF/XML:            Currently only supports RDF/XML format
+	                    Input file must be valid XML with RDF namespace
 
 OUTPUT FILES
 
-	classObjects.json:      Class hierarchy and definitions
-	owlClassObjects.json:   OWL-specific class information  
-	propertyObjects.json:   Property definitions and relationships
-
-COMMON OPERATIONS
-
-	Validation:
-	rdfTester --inputFile=ontology.owl -validateOnly              # Syntax validation
-	rdfTester --inputFile=schema.rdf -generateReport -verbose     # Full analysis
+	classObjects.json:      Contains rdfs:Class elements with their properties
+	owlClassObjects.json:   Contains owl:Class elements  
+	propertyObjects.json:   Contains all property definitions and relationships
 	
-	Extraction:
-	rdfTester --inputFile=ontology.owl -extractClasses           # Class extraction
-	rdfTester --inputFile=ontology.owl -extractProperties        # Property extraction
+	All files are written to the current working directory.
+
+EXTRACTED DATA
+
+	Classes:
+	- URI, name, label, comment
+	- Additional metadata (prefLabel, notation, definition, description)
+	- Superclass relationships (owl:subClassOf)
+	- Equivalent classes (owl:equivalentClass)
+	- Associated properties
 	
-	Focused Analysis:
-	rdfTester --inputFile=large.owl --namespace="http://example.org/edu#"
-	rdfTester --inputFile=schema.rdf --format=rdf --outputFile=results.json
+	Properties:
+	- URI, name, label, comment, creator
+	- Domain and range specifications
+	- Support for multiple domain/range formats (rdfs, schema.org)
 
-EXAMPLES
+USAGE
 
-	rdfTester --inputFile=unity_ontology.owl -validateOnly                      # Quick validation
-	rdfTester --inputFile=ceds_schema.rdf -extractClasses -extractProperties   # Full extraction
-	rdfTester --inputFile=ontology.ttl --format=turtle -generateReport -verbose # Detailed analysis
-	rdfTester --inputFile=large_onto.owl --namespace="http://ceds.ed.gov#" -extractClasses
+	rdfTester                    # Process configured RDF file
+	rdfTester -verbose          # Process with detailed output
+	rdfTester -help             # Show this help message
+
+PROCESSING STATISTICS
+
+	The tool displays:
+	- Total classes and properties processed
+	- Breakdown by type (rdfs:Class vs owl:Class)
+	- Classes with superclass relationships
+	- Sample data from extracted elements
 
 ============================================================
 ${errorMessage}
