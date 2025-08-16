@@ -29,14 +29,21 @@ class VectorQuery {
 				semanticAnalysisMode,
 				sourceTableName,
 				vectorTableName,
+				atomicVectorTableName,
 				sourcePrivateKeyName,
 				sourceEmbeddableContentName
 			} = config;
 
+			// Handle command line override at point of use
+			const workingVectorTableName = commandLineParameters.qtGetSurePath('values.targetTableName[0]') || vectorTableName;
+			const workingAtomicTableName = commandLineParameters.qtGetSurePath('values.targetTableName[0]') 
+				? `${commandLineParameters.qtGetSurePath('values.targetTableName[0]')}_atomic`
+				: atomicVectorTableName;
+
 			// Determine actual table name based on semantic mode
 			const actualTableName = semanticAnalysisMode === 'atomicVector'
-				? `${vectorTableName}_atomic`
-				: vectorTableName;
+				? workingAtomicTableName
+				: workingVectorTableName;
 
 			this.xLog.status(`Starting Vector Similarity Search for ${dataProfile.toUpperCase()} profile...`);
 			this.xLog.status(`Target table: "${actualTableName}"`);
@@ -80,7 +87,8 @@ class VectorQuery {
 				queryString,
 				vectorDb: this.dbUtility, // Pass dbUtility as vectorDb for compatibility
 				openai,
-				tableName: vectorTableName,
+				tableName: workingVectorTableName,
+				atomicTableName: workingAtomicTableName,
 				resultCount,
 				dataProfile,
 				sourceTableName,
@@ -127,6 +135,8 @@ class VectorQuery {
 			} else {
 				this._formatAndDisplaySearchResults(results, queryString, sourcePrivateKeyName, sourceEmbeddableContentName);
 			}
+			
+			this.xLog.status(`Process log files directory: ${this.xLog.getProcessFilesDirectory()}`);
 
 			return { 
 				success: true, 
@@ -164,7 +174,7 @@ class VectorQuery {
 		this.xLog.status(`\n\nFound ${results.length} valid matches for "${queryString}"`);
 		
 		results.forEach((result) => {
-			const distance = result.distance.toFixed(6);
+			const distance = (result.distance || 0).toFixed(6);
 			const refId = result.record[sourcePrivateKeyName] || '';
 			const description = this._extractDisplayContentFromRecord(result.record, sourceEmbeddableContentName);
 
@@ -231,7 +241,7 @@ class VectorQuery {
 			
 			this.xLog.status('\nTop Results Summary:');
 			result.results.slice(0, 3).forEach(res => {
-				this.xLog.status(`  ${res.rank}. Distance: ${res.distance.toFixed(4)} - ${res.record[config.sourcePrivateKeyName]}`);
+				this.xLog.status(`  ${res.rank}. Distance: ${(res.distance || 0).toFixed(4)} - ${res.record[config.sourcePrivateKeyName]}`);
 			});
 			
 			return result;

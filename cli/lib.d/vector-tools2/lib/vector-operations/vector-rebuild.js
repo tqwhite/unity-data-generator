@@ -30,14 +30,21 @@ class VectorRebuild {
 				semanticAnalysisMode,
 				sourceTableName,
 				vectorTableName,
+				atomicVectorTableName,
 				sourcePrivateKeyName,
 				sourceEmbeddableContentName
 			} = config;
 
+			// Handle command line override at point of use
+			const workingVectorTableName = commandLineParameters.qtGetSurePath('values.targetTableName[0]') || vectorTableName;
+			const workingAtomicTableName = commandLineParameters.qtGetSurePath('values.targetTableName[0]') 
+				? `${commandLineParameters.qtGetSurePath('values.targetTableName[0]')}_atomic`
+				: atomicVectorTableName;
+
 			// Determine actual table name based on semantic mode
 			const actualTableName = semanticAnalysisMode === 'atomicVector'
-				? `${vectorTableName}_atomic`
-				: vectorTableName;
+				? workingAtomicTableName
+				: workingVectorTableName;
 
 			this.xLog.status(`Starting Vector Database Rebuild for ${dataProfile.toUpperCase()} profile...`);
 			this.xLog.status(`Semantic Mode: ${semanticAnalysisMode}`);
@@ -184,13 +191,25 @@ class VectorRebuild {
 
 		this.xLog.status(`Processing ${sourceRecords.length} records with ${config.semanticAnalysisMode} analyzer...`);
 
+		// Handle command line override at point of use  
+		const workingVectorTableName = commandLineParameters.qtGetSurePath('values.targetTableName[0]') || config.vectorTableName;
+		const workingAtomicTableName = commandLineParameters.qtGetSurePath('values.targetTableName[0]') 
+			? `${commandLineParameters.qtGetSurePath('values.targetTableName[0]')}_atomic`
+			: config.atomicVectorTableName;
+
+		// Debug logging to see what we have
+		this.xLog.status(`Debug: vectorTableName = ${config.vectorTableName}`);
+		this.xLog.status(`Debug: atomicVectorTableName = ${config.atomicVectorTableName}`);
+		this.xLog.status(`Debug: workingAtomicTableName = ${workingAtomicTableName}`);
+
 		// Process records using analyzer's method
 		const processingConfig = {
 			sourceRowList: sourceRecords,
 			sourceEmbeddableContentName: config.sourceEmbeddableContentName,
 			sourcePrivateKeyName: config.sourcePrivateKeyName,
 			vectorDb: this.dbUtility, // Pass dbUtility as vectorDb for compatibility
-			tableName: config.vectorTableName,
+			tableName: workingVectorTableName,
+			atomicTableName: workingAtomicTableName,
 			dataProfile: config.dataProfile,
 			batchId,
 			progressTracker: this.progressTracker,
@@ -238,7 +257,7 @@ class VectorRebuild {
 			
 			this.xLog.status('Database optimization completed');
 		} catch (error) {
-			this.xLog.warning(`Database optimization failed: ${error.message}`);
+			this.xLog.warn(`Database optimization failed: ${error.message}`);
 			// Don't fail the rebuild for optimization issues
 		}
 	}
@@ -276,13 +295,13 @@ class VectorRebuild {
 			if (verification.completionRate >= 95) {
 				this.xLog.status(`Verification passed: ${verification.completionRate}% completion rate`);
 			} else {
-				this.xLog.warning(`Verification warning: Only ${verification.completionRate}% completion rate`);
+				this.xLog.warn(`Verification warning: Only ${verification.completionRate}% completion rate`);
 			}
 
 			return verification;
 
 		} catch (error) {
-			this.xLog.warning(`Verification failed: ${error.message}`);
+			this.xLog.warn(`Verification failed: ${error.message}`);
 			return {
 				error: error.message,
 				vectorCount: 0,

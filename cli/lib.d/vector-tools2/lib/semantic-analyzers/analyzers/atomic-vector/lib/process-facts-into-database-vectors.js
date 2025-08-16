@@ -16,6 +16,7 @@ const moduleFunction = function(args = {}) {
             openai, 
             vectorDb, 
             tableName,
+            atomicTableName,
             dataProfile,
             // Progress tracking parameters
             batchId = null,
@@ -24,7 +25,7 @@ const moduleFunction = function(args = {}) {
         } = args;
 
         const generatedVectors = [];
-        const atomicTableName = `${tableName}_atomic`;
+        // atomicTableName now passed as parameter instead of constructed
 
         // Log batch processing parameters
         const batchParams = {
@@ -40,6 +41,8 @@ const moduleFunction = function(args = {}) {
         
         xLog.saveProcessFile(`${moduleName}_promptList.log`, `Atomic Vector Batch Processing:\n${JSON.stringify(batchParams, null, 2)}`, {append:true});
 
+        // Note: Individual transactions will be used for each source record
+
         // Create atomic table with version support
         const createTableSql = `CREATE TABLE IF NOT EXISTS ${atomicTableName} (
             refId TEXT PRIMARY KEY,
@@ -53,12 +56,33 @@ const moduleFunction = function(args = {}) {
             semanticAnalyzerVersion TEXT DEFAULT 'atomic_version2',
             createdAt TEXT DEFAULT CURRENT_TIMESTAMP
         )`;
-        vectorDb.exec(createTableSql);
+        // Execute table creation with proper callback handling
+        await new Promise((resolve, reject) => {
+            vectorDb.execute(createTableSql, [], (err) => {
+                if (err) reject(err);
+                else resolve();
+            });
+        });
 
         // Create indexes including version for performance
-        vectorDb.exec(`CREATE INDEX IF NOT EXISTS idx_${atomicTableName}_sourceRefId ON ${atomicTableName}(sourceRefId)`);
-        vectorDb.exec(`CREATE INDEX IF NOT EXISTS idx_${atomicTableName}_factType ON ${atomicTableName}(factType)`);
-        vectorDb.exec(`CREATE INDEX IF NOT EXISTS idx_${atomicTableName}_semanticAnalyzerVersion ON ${atomicTableName}(semanticAnalyzerVersion)`);
+        await new Promise((resolve, reject) => {
+            vectorDb.execute(`CREATE INDEX IF NOT EXISTS idx_${atomicTableName}_sourceRefId ON ${atomicTableName}(sourceRefId)`, [], (err) => {
+                if (err) reject(err);
+                else resolve();
+            });
+        });
+        await new Promise((resolve, reject) => {
+            vectorDb.execute(`CREATE INDEX IF NOT EXISTS idx_${atomicTableName}_factType ON ${atomicTableName}(factType)`, [], (err) => {
+                if (err) reject(err);
+                else resolve();
+            });
+        });
+        await new Promise((resolve, reject) => {
+            vectorDb.execute(`CREATE INDEX IF NOT EXISTS idx_${atomicTableName}_semanticAnalyzerVersion ON ${atomicTableName}(semanticAnalyzerVersion)`, [], (err) => {
+                if (err) reject(err);
+                else resolve();
+            });
+        });
 
         // Process each source row
         for (let i = 0; i < sourceRowList.length; i++) {
@@ -82,6 +106,14 @@ const moduleFunction = function(args = {}) {
             }
 
             try {
+                // Begin transaction for this source record
+                await new Promise((resolve, reject) => {
+                    vectorDb.execute('BEGIN TRANSACTION;', [], (err) => {
+                        if (err) reject(err);
+                        else resolve();
+                    });
+                });
+
                 // Extract atomic facts
                 xLog.verbose(`Extracting atomic facts for ${privateKey} [${moduleName}]`);
                 const extractedData = await extractAtomicFacts(embeddableContent, openai);
@@ -127,8 +159,13 @@ const moduleFunction = function(args = {}) {
                             embeddingData.factIndex || 0,
                             semanticAnalyzerVersion
                         ], (err, res) => {
-                            if (err) reject(err);
-                            else resolve(res);
+                            if (err) {
+                                xLog.error(`Failed to insert atomic vector ${atomicRefId}: ${err.message}`);
+                                reject(err);
+                            } else {
+                                xLog.verbose(`Successfully inserted atomic vector ${atomicRefId}`);
+                                resolve(res);
+                            }
                         });
                     });
 
@@ -145,17 +182,49 @@ const moduleFunction = function(args = {}) {
                 // Update progress tracking if available (after processing each source record)
                 if (batchId && progressTracker) {
                     const currentCount = alreadyProcessedCount + i + 1;
-                    progressTracker.updateProgress(vectorDb, batchId, currentCount, privateKey.toString());
+                    progressTracker.updateProgress(batchId, currentCount, privateKey.toString());
                     
                     // Log progress every 5 records for atomic (since it's more intensive)
                     if (currentCount % 5 === 0) {
                         xLog.status(`Progress: ${currentCount} records processed (atomic mode)`);
                     }
                 }
+
+                // Commit transaction for this source record
+                await new Promise((resolve, reject) => {
+                    vectorDb.execute('COMMIT;', [], (err) => {
+                        if (err) reject(err);
+                        else resolve();
+                    });
+                });
+
             } catch (err) {
+                // Rollback transaction on error
+                await new Promise((resolve, reject) => {
+                    vectorDb.execute('ROLLBACK;', [], (err) => {
+                        if (err) xLog.error(`Failed to rollback transaction: ${err.message}`);
+                        resolve(); // Continue even if rollback fails
+                    });
+                });
                 xLog.error(`Failed to process ${privateKey}: ${err.message}`);
             }
         }
+
+        // All transactions have been committed individually per source record
+
+        // Verify vectors were actually written
+        await new Promise((resolve, reject) => {
+            vectorDb.execute(`SELECT COUNT(*) as count FROM ${atomicTableName}`, [], (err, result) => {
+                if (err) {
+                    xLog.error(`Failed to verify vectors: ${err.message}`);
+                    reject(err);
+                } else {
+                    const count = result && result[0] ? result[0].count : 0;
+                    xLog.status(`Database verification: ${count} vectors found in ${atomicTableName}`);
+                    resolve();
+                }
+            });
+        });
 
         xLog.status(`Generated ${generatedVectors.length} atomic vectors`);
         

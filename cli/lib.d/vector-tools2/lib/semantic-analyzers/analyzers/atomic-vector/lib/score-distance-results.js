@@ -30,6 +30,7 @@ const moduleFunction = function (args = {}) {
 			vectorDb,
 			openai,
 			tableName,
+			atomicTableName,
 			resultCount = 5,
 			dataProfile,
 			sourceTableName,
@@ -37,7 +38,7 @@ const moduleFunction = function (args = {}) {
 			sourceEmbeddableContentName,
 		} = args;
 
-		const atomicTableName = `${tableName}_atomic`;
+		// atomicTableName now passed as parameter instead of constructed
 
 		// Get the strategy for this data profile
 		const strategy = dataProfileStrategies[dataProfile];
@@ -200,7 +201,10 @@ const moduleFunction = function (args = {}) {
 		);
 
 		// Score and rank aggregated results using version-specific scoring method
-		const scoredResults = scoringMethod(allMatches, { distanceWeight: 0.1 });
+		const scoredResults = scoringMethod(allMatches, { 
+			distanceWeight: 0.1,
+			queryElement: extractedData.elements && extractedData.elements[0] ? extractedData.elements[0] : null
+		});
 
 		// Log scored results
 		xLog.saveProcessFile(

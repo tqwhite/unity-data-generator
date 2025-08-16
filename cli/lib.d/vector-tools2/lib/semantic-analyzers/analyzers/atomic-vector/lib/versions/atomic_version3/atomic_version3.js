@@ -247,46 +247,14 @@ DECISION GUARDRAILS:
 	 * @returns {Array} Array of scored and sorted results with semantic verdicts or composite scores
 	 */
 	const scoringMethod = (allMatches, options = {}) => {
-		const { distanceWeight = 0.1 } = options;
-		
-		// Check if we have queryElement for full semantic analysis
-		if (options.queryElement) {
-			const { scoreMatches } = require('./lib/score-matches-v3')();
-			xLog.verbose(`Using version3 semantic scoring with canonical tag analysis`);
-			return scoreMatches(allMatches, options);
+		// Version3 REQUIRES queryElement - no fallbacks, no graceful degradation
+		if (!options.queryElement) {
+			throw new Error('atomic_version3 scoringMethod requires options.queryElement - missing required data indicates a bug that must be fixed');
 		}
 		
-		// Fallback to simple composite scoring for backward compatibility
-		xLog.verbose(`Using version3 fallback composite scoring (no queryElement provided)`);
-		
-		const scoredResults = Array.from(allMatches.values()).map(match => {
-			// Simple composite score: unique fact types - distance penalty
-			const uniqueFactTypesCount = match.factTypes ? match.factTypes.size : 0;
-			const avgDistance = match.distances && match.distances.length
-				? match.distances.reduce((a, b) => a + b, 0) / match.distances.length
-				: Number.POSITIVE_INFINITY;
-			
-			const compositeScore = uniqueFactTypesCount - (avgDistance * distanceWeight);
-
-			return {
-				refId: match.refId,
-				score: compositeScore,
-				distance: avgDistance,
-				factTypesMatched: uniqueFactTypesCount,
-				totalMatches: match.distances ? match.distances.length : 0,
-				// Version3 additional fields for consistency
-				verdict: 'SIMPLE_SCORING',
-				relation: null,
-				semanticScore: compositeScore,
-				finalScore: compositeScore,
-				reasons: ['fallback_composite_scoring']
-			};
-		});
-
-		// Sort by composite score (higher is better)
-		scoredResults.sort((a, b) => b.score - a.score);
-		
-		return scoredResults;
+		const { scoreMatches } = require('../../scoringUtilityLib/v3-canonical-semantic-analysis')();
+		xLog.verbose(`Using version3 semantic scoring with canonical tag analysis`);
+		return scoreMatches(allMatches, options);
 	};
 	
 	// ===================================================================================

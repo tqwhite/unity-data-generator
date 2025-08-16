@@ -69,9 +69,8 @@ const moduleFunction = ({ unused } = {}) => {
 			sourceEmbeddableContentName: profileConfig.sourceEmbeddableContentName && profileConfig.sourceEmbeddableContentName.includes(',')
 				? profileConfig.sourceEmbeddableContentName.split(',').map(field => field.trim())
 				: profileConfig.sourceEmbeddableContentName,
-			vectorTableName: commandLineParameters.qtGetSurePath('values.targetTableName[0]') 
-				|| profileConfig.defaultTargetTableName
-				|| baseConfig.defaultTargetTableName
+			vectorTableName: profileConfig.defaultTargetTableName,
+			atomicVectorTableName: profileConfig.atomicTargetTableName
 		};
 		
 		// Add semantic analysis mode

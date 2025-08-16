@@ -63,6 +63,7 @@ class VectorGenerator {
 			await this._completeBatch(batchId);
 
 			this.xLog.status(`Vector generation completed successfully`);
+			this.xLog.status(`Process log files: ${this.xLog.getProcessFilesDirectory()}`);
 			return { success: true, batchId, totalRecords: sourceRecords.length };
 
 		} catch (error) {
@@ -223,15 +224,15 @@ class VectorGenerator {
 	}
 
 	// ---------------------------------------------------------------------
-	// _fetchAlreadyProcessedSourceKeys - Get list of already processed keys
+	// _fetchAlreadyProcessedSourceKeys - Get list of already processed keys from atomic vectors
 	
 	async _fetchAlreadyProcessedSourceKeys(batchId) {
 		return new Promise((resolve, reject) => {
+			// Get processed keys from the actual atomic vectors table since we commit individually
 			const sql = `
-				SELECT DISTINCT last_processed_key 
-				FROM vectorTools_progress 
-				WHERE batch_id = '${batchId}' 
-				AND last_processed_key IS NOT NULL
+				SELECT DISTINCT sourceRefId 
+				FROM sifElementVectors_atomic 
+				WHERE sourceRefId IS NOT NULL
 			`;
 			
 			this.dbUtility.query(sql, [], (err, results) => {
@@ -239,7 +240,7 @@ class VectorGenerator {
 					reject(err);
 					return;
 				}
-				resolve(results.map(r => r.last_processed_key));
+				resolve(results.map(r => r.sourceRefId));
 			});
 		});
 	}
@@ -261,6 +262,7 @@ class VectorGenerator {
 			sourcePrivateKeyName: config.sourcePrivateKeyName,
 			vectorDb: this.dbUtility, // Pass dbUtility as vectorDb for compatibility
 			tableName: config.vectorTableName,
+			atomicTableName: config.atomicVectorTableName,
 			dataProfile: config.dataProfile,
 			batchId,
 			progressTracker: this.progressTracker,

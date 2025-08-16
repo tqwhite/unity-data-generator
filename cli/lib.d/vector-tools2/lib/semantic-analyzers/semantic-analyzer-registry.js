@@ -64,7 +64,7 @@ class SemanticAnalyzerRegistry {
 	
 	registerAnalyzer(name, analyzerModule) {
 		if (this.analyzers[name]) {
-			this.xLog.warning(`Overwriting existing analyzer: ${name}`);
+			this.xLog.warn(`Overwriting existing analyzer: ${name}`);
 		}
 		
 		this.analyzers[name] = analyzerModule;
