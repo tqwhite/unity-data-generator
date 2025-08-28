@@ -60,7 +60,9 @@ const moduleFunction =
 				files.forEach((file) => {
 					const filePath = path.join(fullPath, file);
 					const fileStats = fs.statSync(filePath);
-
+					
+					xLog.verbose(file);
+					
 					if (fileStats.isDirectory() || file.endsWith('.js')) {
 						return;
 					}
@@ -246,7 +248,7 @@ if (partOfSystem) {
 	// prettier-ignore
 	{
 	process.global = {};
-	process.global.xLog = fs.existsSync('./lib/x-log')?require('./lib/x-log'):{ status: console.error, error: console.error, result: console.log };
+	process.global.xLog = require('qtools-x-log');
 	process.global.getConfig=typeof(getConfig)!='undefined' ? getConfig : (moduleName => ({[moduleName]:`no configuration data for ${moduleName}`}[moduleName]));
 	process.global.commandLineParameters=typeof(commandLineParameters)!='undefined'?commandLineParameters:undefined;;
 	process.global.rawConfig={}; //this should only be used for debugging, use getConfig(moduleName)

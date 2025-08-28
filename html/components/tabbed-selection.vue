@@ -83,8 +83,8 @@ const emit = defineEmits(['select', 'tabChange']);
 const activeTab = ref(props.initialTab);
 
 // Semantic analysis mode state
-const semanticAnalysisMode = ref('simpleVector');
-const semanticAnalyzerVersion = ref('simple_version1');  // Default version for simpleVector mode
+const semanticAnalysisMode = ref('atomicVector');
+const semanticAnalyzerVersion = ref('atomic_version2');  // Default version for atomicVector mode
 const currentlySelectedRefId = ref(null);
 
 // Centralized selectItem function - replaces individual implementations in child components
