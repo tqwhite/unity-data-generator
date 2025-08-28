@@ -15,6 +15,7 @@ const readFileAsync = promisify(fs.readFile);
 const commandLineParser = require('qtools-parse-command-line');
 const configFileProcessor = require('qtools-config-file-processor');
 const xml2js = require('xml2js');
+const Database = require('better-sqlite3');
 
 // --------------------------------------------------------------------------------
 // FIND PROJECT ROOT
@@ -44,7 +45,7 @@ const moduleFunction =
 	async ({ unused }) => {
 		const { xLog, getConfig, rawConfig, commandLineParameters } =
 			process.global;
-		const { CEDS_OntologyFilePath } = getConfig(moduleName); //moduleName is closure
+		const { CEDS_OntologyFilePath, databaseFilePath } = getConfig(moduleName); //moduleName is closure
 
 		// Set up process file directory for error logging
 		xLog.setProcessFilesDirectory(`/tmp/${moduleName}`);
@@ -53,10 +54,122 @@ const moduleFunction =
 			applicationName: moduleName,
 			version: '1.0',
 			configPath: rawConfig._meta.configurationSourceFilePath,
-			databaseFilePath: 'n/a',
+			databaseFilePath: databaseFilePath,
 			errorMessage: '',
 		}); //shows help and then process.exit()
 
+		// =================================================================================
+		// DATABASE INITIALIZATION FUNCTIONS
+		
+		const initializeCategorizationTables = () => {
+			xLog.status('Initializing CEDS categorization tables...');
+			
+			if (!databaseFilePath) {
+				xLog.error('Database file path not configured');
+				return;
+			}
+			
+			try {
+				const db = new Database(databaseFilePath);
+				
+				// Enable foreign key constraints
+				db.pragma('foreign_keys = ON');
+				
+				// Create CEDS_Domains table
+				xLog.status('Creating CEDS_Domains table...');
+				db.exec(`
+					CREATE TABLE IF NOT EXISTS CEDS_Domains (
+						refId TEXT PRIMARY KEY,
+						domainName TEXT NOT NULL,
+						domainDescription TEXT,
+						displayOrder INTEGER,
+						createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+						updatedAt TEXT DEFAULT CURRENT_TIMESTAMP
+					)
+				`);
+				
+				// Create CEDS_FunctionalAreas table
+				xLog.status('Creating CEDS_FunctionalAreas table...');
+				db.exec(`
+					CREATE TABLE IF NOT EXISTS CEDS_FunctionalAreas (
+						refId TEXT PRIMARY KEY,
+						domainRefId TEXT NOT NULL,
+						areaName TEXT NOT NULL,
+						areaDescription TEXT,
+						displayOrder INTEGER,
+						createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+						updatedAt TEXT DEFAULT CURRENT_TIMESTAMP,
+						FOREIGN KEY (domainRefId) REFERENCES CEDS_Domains(refId)
+					)
+				`);
+				
+				// Create CEDS_ClassCategories table
+				xLog.status('Creating CEDS_ClassCategories table...');
+				db.exec(`
+					CREATE TABLE IF NOT EXISTS CEDS_ClassCategories (
+						refId TEXT PRIMARY KEY,
+						classRefId TEXT NOT NULL,
+						domainRefId TEXT NOT NULL,
+						functionalAreaRefId TEXT,
+						confidence REAL,
+						isPrimary INTEGER DEFAULT 0,
+						createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+						updatedAt TEXT DEFAULT CURRENT_TIMESTAMP,
+						FOREIGN KEY (classRefId) REFERENCES CEDS_Classes(refId),
+						FOREIGN KEY (domainRefId) REFERENCES CEDS_Domains(refId),
+						FOREIGN KEY (functionalAreaRefId) REFERENCES CEDS_FunctionalAreas(refId)
+					)
+				`);
+				
+				xLog.emphatic('Successfully created categorization tables');
+				
+				// Now populate the domains
+				populateDomains(db);
+				
+				db.close();
+				xLog.status('Database initialization complete');
+				
+			} catch (error) {
+				xLog.error(`Failed to initialize categorization tables: ${error.message}`);
+				throw error;
+			}
+		};
+		
+		const populateDomains = (db) => {
+			xLog.status('Populating CEDS_Domains table...');
+			
+			const domains = [
+				{ name: 'People & Demographics', description: 'Information about individuals, demographics, and personal characteristics', order: 1 },
+				{ name: 'Organizations & Institutions', description: 'Educational organizations, institutions, and their structures', order: 2 },
+				{ name: 'Academic Programs & Courses', description: 'Curriculum, courses, programs of study, and academic offerings', order: 3 },
+				{ name: 'Assessment & Evaluation', description: 'Testing, assessments, evaluations, and performance measurement', order: 4 },
+				{ name: 'Student Services & Support', description: 'Support services, interventions, and student welfare programs', order: 5 },
+				{ name: 'Facilities & Infrastructure', description: 'Buildings, facilities, technology infrastructure, and physical resources', order: 6 },
+				{ name: 'Finance & Administration', description: 'Financial management, funding, administrative processes, and governance', order: 7 },
+				{ name: 'Credentials & Recognition', description: 'Degrees, certificates, licenses, and other forms of recognition', order: 8 },
+				{ name: 'Uncategorized', description: 'Classes that have not been categorized into a specific domain', order: 9 }
+			];
+			
+			const insertStmt = db.prepare(`
+				INSERT OR REPLACE INTO CEDS_Domains (refId, domainName, domainDescription, displayOrder)
+				VALUES (?, ?, ?, ?)
+			`);
+			
+			domains.forEach(domain => {
+				const refId = `DOM_${domain.name.replace(/[&\s]/g, '_')}`;
+				insertStmt.run(refId, domain.name, domain.description, domain.order);
+				xLog.verbose(`Inserted domain: ${domain.name}`);
+			});
+			
+			xLog.emphatic(`Successfully populated ${domains.length} domains`);
+		};
+		
+		// Check if we should initialize tables
+		if (commandLineParameters.switches.initializeCategorizationTables) {
+			initializeCategorizationTables();
+			return; // Exit after initialization
+		}
+		
 		// =================================================================================
 		// ACTUAL APPLICATION
         
