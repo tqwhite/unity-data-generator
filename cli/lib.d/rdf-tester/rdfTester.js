@@ -16,6 +16,7 @@ const commandLineParser = require('qtools-parse-command-line');
 const configFileProcessor = require('qtools-config-file-processor');
 const xml2js = require('xml2js');
 const Database = require('better-sqlite3');
+const { categorizeClass, generateCategorizationReport } = require('./lib/categorization-engine');
 
 // --------------------------------------------------------------------------------
 // FIND PROJECT ROOT
@@ -168,6 +169,126 @@ const moduleFunction =
 		if (commandLineParameters.switches.initializeCategorizationTables) {
 			initializeCategorizationTables();
 			return; // Exit after initialization
+		}
+		
+		// =================================================================================
+		// CATEGORIZATION FUNCTIONS
+		
+		const categorizeAndStoreClasses = async (limit = null) => {
+			xLog.status('Starting CEDS class categorization...');
+			
+			if (!databaseFilePath) {
+				xLog.error('Database file path not configured');
+				return;
+			}
+			
+			try {
+				const db = new Database(databaseFilePath);
+				db.pragma('foreign_keys = ON');
+				
+				// Fetch classes from database
+				let query = 'SELECT refId, uri, name, label, comment, description FROM CEDS_Classes';
+				if (limit) {
+					query += ` LIMIT ${limit}`;
+				}
+				
+				const classes = db.prepare(query).all();
+				xLog.status(`Processing ${classes.length} classes for categorization...`);
+				
+				// Clear existing categorizations if doing full run
+				if (!limit) {
+					db.prepare('DELETE FROM CEDS_ClassCategories').run();
+					xLog.status('Cleared existing categorizations');
+				}
+				
+				// Prepare insert statement
+				const insertStmt = db.prepare(`
+					INSERT INTO CEDS_ClassCategories (
+						refId, classRefId, domainRefId, functionalAreaRefId, 
+						confidence, isPrimary
+					) VALUES (?, ?, ?, ?, ?, ?)
+				`);
+				
+				// Categorize each class
+				const categorizationResults = [];
+				let processedCount = 0;
+				
+				for (const classObj of classes) {
+					const categorizations = categorizeClass(classObj);
+					categorizationResults.push({ classObj, categorizations });
+					
+					// Store categorizations in database
+					categorizations.forEach((cat, index) => {
+						const refId = `CAT_${classObj.refId}_${cat.domainRefId}`;
+						insertStmt.run(
+							refId,
+							classObj.refId,
+							cat.domainRefId,
+							null, // functionalAreaRefId - not implemented yet
+							cat.confidence,
+							cat.isPrimary ? 1 : 0
+						);
+					});
+					
+					processedCount++;
+					if (processedCount % 100 === 0) {
+						xLog.progress(`Processed ${processedCount}/${classes.length} classes...`);
+					}
+				}
+				
+				xLog.emphatic(`Successfully categorized ${classes.length} classes`);
+				
+				// Generate and display report
+				const report = generateCategorizationReport(categorizationResults);
+				
+				xLog.status('\n========== CATEGORIZATION REPORT ==========');
+				xLog.result(`Total Classes Processed: ${report.totalClasses}`);
+				xLog.result(`Average Domains per Class: ${report.averageDomainsPerClass}`);
+				xLog.result(`Multi-domain Classes: ${report.multiDomainClasses.length} (${report.multiDomainPercentage}%)`);
+				xLog.result(`Uncategorized Classes: ${report.uncategorizedClasses.length} (${report.uncategorizedPercentage}%)`);
+				
+				xLog.status('\nDomain Distribution:');
+				Object.entries(report.domainCounts)
+					.sort((a, b) => b[1].count - a[1].count)
+					.forEach(([domainName, stats]) => {
+						xLog.result(`  ${domainName}: ${stats.count} classes (Primary: ${stats.asPrimary}, Secondary: ${stats.asSecondary})`);
+					});
+				
+				// Save detailed report to file
+				const reportPath = `/tmp/${moduleName}/categorization_report_${new Date().toISOString().replace(/:/g, '-')}.json`;
+				fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
+				xLog.status(`\nDetailed report saved to: ${reportPath}`);
+				
+				// Show sample multi-domain classes
+				if (report.multiDomainClasses.length > 0) {
+					xLog.status('\nSample Multi-domain Classes:');
+					report.multiDomainClasses.slice(0, 5).forEach(cls => {
+						xLog.verbose(`  ${cls.label}: ${cls.domains.join(', ')}`);
+					});
+				}
+				
+				// Show sample uncategorized classes if any
+				if (report.uncategorizedClasses.length > 0) {
+					xLog.status('\nSample Uncategorized Classes:');
+					report.uncategorizedClasses.slice(0, 5).forEach(cls => {
+						xLog.verbose(`  ${cls.label || cls.name}`);
+					});
+				}
+				
+				db.close();
+				return report;
+				
+			} catch (error) {
+				xLog.error(`Failed to categorize classes: ${error.message}`);
+				throw error;
+			}
+		};
+		
+		// Check if we should categorize
+		if (commandLineParameters.switches.categorize) {
+			const limit = commandLineParameters.values.limit ? commandLineParameters.values.limit[0] : null;
+			await categorizeAndStoreClasses(limit);
+			return;
 		}
 		
 		// =================================================================================
