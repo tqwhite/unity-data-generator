@@ -302,6 +302,213 @@ const moduleFunction = function ({
 	};
 
 	// ================================================================================
+	// ================================================================================
+	// NEW ONTOLOGY CATEGORIZATION SERVICE FUNCTIONS
+	
+	const fetchDomainsFunction = (permissionValidator) => (xReq, xRes, next) => {
+		const taskList = new taskListPlus();
+
+		taskList.push((args, next) =>
+			args.permissionValidator(
+				xReq.appValueGetter('authclaims'),
+				{ showDetails: false },
+				forwardArgs({ next, args }),
+			),
+		);
+
+		taskList.push((args, next) => {
+			const { accessTokenHeaderTools } = args;
+
+			const localCallback = (err) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-fetchDomains-01)`, args);
+					return;
+				}
+				next('', args);
+			};
+
+			accessTokenHeaderTools.refreshauthtoken(
+				{
+					xReq,
+					xRes,
+					payloadValues: {
+						source: 'ceds-fetchDomains',
+					},
+				},
+				localCallback,
+			);
+		});
+
+		taskList.push((args, next) => {
+			const { accessPointsDotD } = args;
+
+			const localCallback = (err, domainsData) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-fetchDomains-02)`, args);
+					return;
+				}
+				next(err, { ...args, domainsData });
+			};
+			
+			accessPointsDotD['fetch-ceds-domains']({}, localCallback);
+		});
+
+		// INIT AND EXECUTE THE PIPELINE
+		const initialData = {
+			accessPointsDotD,
+			permissionValidator,
+			accessTokenHeaderTools,
+		};
+		
+		pipeRunner(taskList.getList(), initialData, (err, args) => {
+			if (err) {
+				xRes.status(500).send(`${err.toString()}`);
+				return;
+			}
+
+			xRes.json(args.domainsData);
+		});
+	};
+	
+	const fetchFunctionalAreasFunction = (permissionValidator) => (xReq, xRes, next) => {
+		const taskList = new taskListPlus();
+		const domainRefId = xReq.query.domainRefId;
+
+		taskList.push((args, next) =>
+			args.permissionValidator(
+				xReq.appValueGetter('authclaims'),
+				{ showDetails: false },
+				forwardArgs({ next, args }),
+			),
+		);
+
+		taskList.push((args, next) => {
+			const { accessTokenHeaderTools } = args;
+
+			const localCallback = (err) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-fetchFunctionalAreas-01)`, args);
+					return;
+				}
+				next('', args);
+			};
+
+			accessTokenHeaderTools.refreshauthtoken(
+				{
+					xReq,
+					xRes,
+					payloadValues: {
+						source: 'ceds-fetchFunctionalAreas',
+					},
+				},
+				localCallback,
+			);
+		});
+
+		taskList.push((args, next) => {
+			const { accessPointsDotD } = args;
+
+			const localCallback = (err, areasData) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-fetchFunctionalAreas-02)`, args);
+					return;
+				}
+				next(err, { ...args, areasData });
+			};
+			
+			accessPointsDotD['fetch-ceds-functional-areas']({ domainRefId }, localCallback);
+		});
+
+		// INIT AND EXECUTE THE PIPELINE
+		const initialData = {
+			accessPointsDotD,
+			permissionValidator,
+			accessTokenHeaderTools,
+		};
+		
+		pipeRunner(taskList.getList(), initialData, (err, args) => {
+			if (err) {
+				xRes.status(500).send(`${err.toString()}`);
+				return;
+			}
+
+			xRes.json(args.areasData);
+		});
+	};
+	
+	const fetchClassesByCategoryFunction = (permissionValidator) => (xReq, xRes, next) => {
+		const taskList = new taskListPlus();
+		const { domainRefId, functionalAreaRefId, classRefId, includeProperties } = xReq.query;
+
+		taskList.push((args, next) =>
+			args.permissionValidator(
+				xReq.appValueGetter('authclaims'),
+				{ showDetails: false },
+				forwardArgs({ next, args }),
+			),
+		);
+
+		taskList.push((args, next) => {
+			const { accessTokenHeaderTools } = args;
+
+			const localCallback = (err) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-fetchClassesByCategory-01)`, args);
+					return;
+				}
+				next('', args);
+			};
+
+			accessTokenHeaderTools.refreshauthtoken(
+				{
+					xReq,
+					xRes,
+					payloadValues: {
+						source: 'ceds-fetchClassesByCategory',
+					},
+				},
+				localCallback,
+			);
+		});
+
+		taskList.push((args, next) => {
+			const { accessPointsDotD } = args;
+
+			const localCallback = (err, classesData) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-fetchClassesByCategory-02)`, args);
+					return;
+				}
+				next(err, { ...args, classesData });
+			};
+			
+			const params = {
+				domainRefId,
+				functionalAreaRefId,
+				classRefId,
+				includeProperties: includeProperties === 'true'
+			};
+			
+			accessPointsDotD['fetch-ceds-classes-by-category'](params, localCallback);
+		});
+
+		// INIT AND EXECUTE THE PIPELINE
+		const initialData = {
+			accessPointsDotD,
+			permissionValidator,
+			accessTokenHeaderTools,
+		};
+		
+		pipeRunner(taskList.getList(), initialData, (err, args) => {
+			if (err) {
+				xRes.status(500).send(`${err.toString()}`);
+				return;
+			}
+
+			xRes.json(args.classesData);
+		});
+	};
+
 	// Endpoint Constructor
 
 	const addEndpoint = ({
@@ -359,6 +566,44 @@ const moduleFunction = function ({
 		accessTokenHeaderTools,
 	});
 
+	// ================================================================================
+	// NEW ONTOLOGY CATEGORIZATION ENDPOINTS
+	
+	// Fetch all domains with class counts
+	addEndpoint({
+		name: 'ceds/FetchDomains',
+		method: 'get',
+		routePath: `${routingPrefix}ceds/fetchDomains`,
+		serviceFunction: fetchDomainsFunction,
+		expressApp,
+		endpointsDotD,
+		permissionValidator,
+		accessTokenHeaderTools,
+	});
+	
+	// Fetch functional areas (optionally by domain)
+	addEndpoint({
+		name: 'ceds/FetchFunctionalAreas',
+		method: 'get',
+		routePath: `${routingPrefix}ceds/fetchFunctionalAreas`,
+		serviceFunction: fetchFunctionalAreasFunction,
+		expressApp,
+		endpointsDotD,
+		permissionValidator,
+		accessTokenHeaderTools,
+	});
+	
+	// Fetch classes by category (domain and optional functional area)
+	addEndpoint({
+		name: 'ceds/FetchClassesByCategory',
+		method: 'get',
+		routePath: `${routingPrefix}ceds/fetchClassesByCategory`,
+		serviceFunction: fetchClassesByCategoryFunction,
+		expressApp,
+		endpointsDotD,
+		permissionValidator,
+		accessTokenHeaderTools,
+	});
 
 	return {};
 };
