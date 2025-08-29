@@ -180,7 +180,8 @@ const handleExport = () => {
 		
 		<!-- Error snackbar -->
 		<v-snackbar
-			v-model="ontologyStore.error"
+			:model-value="!!ontologyStore.error"
+			@update:model-value="ontologyStore.error = null"
 			color="error"
 			timeout="5000"
 		>

@@ -73,6 +73,7 @@ export const useOntologyStore = defineStore('ontology', () => {
 	};
 
 	const loadClasses = async (domainRefId, functionalAreaRefId = null) => {
+		console.log('Loading classes for domain:', domainRefId); // Debug log
 		isLoading.value = true;
 		error.value = null;
 		try {
@@ -82,27 +83,51 @@ export const useOntologyStore = defineStore('ontology', () => {
 				url += `&functionalAreaRefId=${functionalAreaRefId}`;
 			}
 			
+			console.log('Fetching from URL:', url); // Debug log
 			const response = await fetch(url, {
 				headers: authHeader
 			});
 			
+			const responseText = await response.text();
+			console.log('Response status:', response.status); // Debug log
+			
 			if (!response.ok) {
+				// Check for rate limiting
+				if (response.status === 429 || responseText.includes('Too many requests')) {
+					console.warn('API rate limited, waiting before retry...');
+					// Wait 2 seconds and retry once
+					await new Promise(resolve => setTimeout(resolve, 2000));
+					const retryResponse = await fetch(url, { headers: authHeader });
+					if (retryResponse.ok) {
+						const retryData = await retryResponse.json();
+						console.log('Retry successful, loaded classes:', retryData.length);
+						classes.value = retryData || [];
+						return;
+					}
+					throw new Error('API rate limited. Please wait a moment and try again.');
+				}
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
 			
-			const data = await response.json();
-			classes.value = data;
+			const data = JSON.parse(responseText);
+			console.log('Loaded classes:', data.length); // Debug log
+			classes.value = data || [];
 		} catch (err) {
 			error.value = err.message;
 			console.error('Error loading classes:', err);
+			classes.value = []; // Ensure empty array on error
 		} finally {
 			isLoading.value = false;
 		}
 	};
 
 	const selectDomain = async (domain) => {
+		console.log('Selecting domain:', domain.domainName); // Debug log
 		currentDomain.value = domain;
+		
+		// Add small delay between API calls to avoid rate limiting
 		await loadFunctionalAreas(domain.refId);
+		await new Promise(resolve => setTimeout(resolve, 100)); // Small delay
 		await loadClasses(domain.refId);
 		
 		// Restore last viewed class for this domain if exists
