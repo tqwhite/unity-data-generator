@@ -63,7 +63,7 @@ const extraDomains = computed(() => {
 </script>
 
 <template>
-	<v-container fluid class="domain-grid-container pa-2">
+	<v-container fluid class="domain-grid-container pa-2 mt-2">
 		<!-- 3x3 Grid of domain buttons -->
 		<v-row dense>
 			<v-col
