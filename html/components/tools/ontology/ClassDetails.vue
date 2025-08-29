@@ -145,39 +145,91 @@ const confidencePercent = computed(() => {
 					</v-card-text>
 				</v-card>
 				
-				<!-- Super classes -->
-				<v-card v-if="parsedMetadata.superClasses?.length > 0" variant="outlined" class="mb-3">
+				<!-- RDF Context -->
+				<v-card variant="outlined" class="mb-3">
 					<v-card-title class="text-subtitle-1 py-2">
-						<v-icon class="mr-2" size="small">mdi-family-tree</v-icon>
-						Super Classes
-						<v-chip size="small" class="ml-2">{{ parsedMetadata.superClasses.length }}</v-chip>
+						<v-icon class="mr-2" size="small">mdi-semantic-web</v-icon>
+						RDF Context & Linkages
 					</v-card-title>
 					<v-card-text class="pt-1">
-						<v-list density="compact">
-							<v-list-item
-								v-for="(superClass, index) in parsedMetadata.superClasses"
-								:key="index"
-								:title="superClass"
-							/>
-						</v-list>
-					</v-card-text>
-				</v-card>
-				
-				<!-- Equivalent classes -->
-				<v-card v-if="parsedMetadata.equivalentClasses?.length > 0" variant="outlined" class="mb-3">
-					<v-card-title class="text-subtitle-1 py-2">
-						<v-icon class="mr-2" size="small">mdi-equal</v-icon>
-						Equivalent Classes
-						<v-chip size="small" class="ml-2">{{ parsedMetadata.equivalentClasses.length }}</v-chip>
-					</v-card-title>
-					<v-card-text class="pt-1">
-						<v-list density="compact">
-							<v-list-item
-								v-for="(equivClass, index) in parsedMetadata.equivalentClasses"
-								:key="index"
-								:title="equivClass"
-							/>
-						</v-list>
+						<v-table density="compact">
+							<tbody>
+								<tr v-if="classData.uri">
+									<td class="font-weight-bold">URI</td>
+									<td>
+										<a :href="classData.uri" target="_blank" class="text-decoration-none">
+											{{ classData.uri }}
+											<v-icon size="x-small" class="ml-1">mdi-open-in-new</v-icon>
+										</a>
+									</td>
+								</tr>
+								<tr v-if="classData.classType">
+									<td class="font-weight-bold">RDF Type</td>
+									<td class="text-mono">{{ classData.classType }}</td>
+								</tr>
+								<tr v-if="classData.notation">
+									<td class="font-weight-bold">Notation</td>
+									<td class="text-mono">{{ classData.notation }}</td>
+								</tr>
+								<tr v-if="classData.name">
+									<td class="font-weight-bold">CEDS Code</td>
+									<td class="text-mono">{{ classData.name }}</td>
+								</tr>
+								<tr v-if="classData.prefLabel">
+									<td class="font-weight-bold">Preferred Label</td>
+									<td>{{ classData.prefLabel }}</td>
+								</tr>
+								<tr v-if="classData.label && classData.label !== classData.prefLabel">
+									<td class="font-weight-bold">Alternative Label</td>
+									<td>{{ classData.label }}</td>
+								</tr>
+							</tbody>
+						</v-table>
+						
+						<!-- Super Classes as RDF links -->
+						<div v-if="parsedMetadata.superClasses?.length > 0" class="mt-3">
+							<div class="text-caption font-weight-bold mb-1">RDF Super Classes:</div>
+							<v-chip-group>
+								<v-chip
+									v-for="(superClass, index) in parsedMetadata.superClasses"
+									:key="index"
+									size="small"
+									variant="outlined"
+								>
+									{{ superClass }}
+								</v-chip>
+							</v-chip-group>
+						</div>
+						
+						<!-- Equivalent Classes as RDF links -->
+						<div v-if="parsedMetadata.equivalentClasses?.length > 0" class="mt-3">
+							<div class="text-caption font-weight-bold mb-1">RDF Equivalent Classes:</div>
+							<v-chip-group>
+								<v-chip
+									v-for="(equivClass, index) in parsedMetadata.equivalentClasses"
+									:key="index"
+									size="small"
+									variant="outlined"
+								>
+									{{ equivClass }}
+								</v-chip>
+							</v-chip-group>
+						</div>
+						
+						<!-- Properties linkages -->
+						<div v-if="classData.properties?.length > 0" class="mt-3">
+							<div class="text-caption font-weight-bold mb-1">Property Linkages:</div>
+							<v-chip-group>
+								<v-chip
+									v-for="(prop, index) in classData.properties"
+									:key="index"
+									size="small"
+									variant="outlined"
+								>
+									{{ prop.name || prop.label || prop }}
+								</v-chip>
+							</v-chip-group>
+						</div>
 					</v-card-text>
 				</v-card>
 				
@@ -193,10 +245,6 @@ const confidencePercent = computed(() => {
 								<tr>
 									<td class="font-weight-bold">Reference ID</td>
 									<td class="text-mono">{{ classData.refId }}</td>
-								</tr>
-								<tr>
-									<td class="font-weight-bold">Class Code</td>
-									<td class="text-mono">{{ classData.notation || 'N/A' }}</td>
 								</tr>
 								<tr>
 									<td class="font-weight-bold">Domain</td>
