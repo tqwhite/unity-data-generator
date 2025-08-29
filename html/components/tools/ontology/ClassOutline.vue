@@ -1,0 +1,254 @@
+<script setup>
+import { ref, computed, watch } from 'vue';
+
+const props = defineProps({
+	classes: {
+		type: Array,
+		required: true,
+		default: () => []
+	},
+	functionalAreas: {
+		type: Array,
+		default: () => []
+	},
+	selectedClass: {
+		type: Object,
+		default: null
+	},
+	isLoading: {
+		type: Boolean,
+		default: false
+	}
+});
+
+const emit = defineEmits(['class-select']);
+
+const searchQuery = ref('');
+const expandedAreas = ref([]);
+
+// Filter classes based on search
+const filteredClasses = computed(() => {
+	if (!searchQuery.value) {
+		return props.classes;
+	}
+	
+	const query = searchQuery.value.toLowerCase();
+	return props.classes.filter(cls => 
+		cls.name?.toLowerCase().includes(query) ||
+		cls.description?.toLowerCase().includes(query)
+	);
+});
+
+// Group classes by functional area (if available)
+const groupedClasses = computed(() => {
+	// If we have functional areas, group by them
+	if (props.functionalAreas && props.functionalAreas.length > 0) {
+		const grouped = {};
+		props.functionalAreas.forEach(area => {
+			grouped[area.areaName] = filteredClasses.value.filter(
+				cls => cls.functionalAreaRefId === area.refId
+			);
+		});
+		
+		// Add ungrouped classes
+		const ungrouped = filteredClasses.value.filter(
+			cls => !cls.functionalAreaRefId
+		);
+		if (ungrouped.length > 0) {
+			grouped['Other'] = ungrouped;
+		}
+		
+		return grouped;
+	}
+	
+	// Otherwise just return all classes in one group
+	return {
+		'All Classes': filteredClasses.value
+	};
+});
+
+// Select a class
+const selectClass = (classObj) => {
+	emit('class-select', classObj);
+};
+
+// Auto-expand area containing selected class
+watch(() => props.selectedClass, (newClass) => {
+	if (newClass) {
+		// Find which area contains this class
+		Object.entries(groupedClasses.value).forEach(([areaName, classes]) => {
+			if (classes.some(c => c.refId === newClass.refId)) {
+				if (!expandedAreas.value.includes(areaName)) {
+					expandedAreas.value.push(areaName);
+				}
+			}
+		});
+	}
+});
+
+// Format class name for display
+const formatClassName = (cls) => {
+	// Show multi-domain indicator
+	if (cls.otherDomains && cls.otherDomains.length > 0) {
+		return `${cls.name || cls.label} *`;
+	}
+	return cls.name || cls.label;
+};
+
+// Get tooltip for class
+const getClassTooltip = (cls) => {
+	if (cls.otherDomains && cls.otherDomains.length > 0) {
+		const domainNames = cls.otherDomains.map(d => {
+			// Extract readable name from refId
+			return d.replace('DOM_', '').replace(/___/g, ' & ').replace(/_/g, ' ');
+		});
+		return `Also in: ${domainNames.join(', ')}`;
+	}
+	return cls.description || cls.name || cls.label;
+};
+</script>
+
+<template>
+	<v-container fluid class="pa-0">
+		<!-- Search bar -->
+		<v-text-field
+			v-model="searchQuery"
+			prepend-inner-icon="mdi-magnify"
+			placeholder="Filter classes..."
+			variant="solo"
+			density="compact"
+			hide-details
+			clearable
+			class="ma-2"
+		/>
+		
+		<!-- Loading indicator -->
+		<v-progress-linear
+			v-if="isLoading"
+			indeterminate
+			color="primary"
+			height="2"
+		/>
+		
+		<!-- Class tree -->
+		<v-list
+			v-if="!isLoading"
+			density="compact"
+			class="pa-0"
+		>
+			<template v-for="(classes, areaName) in groupedClasses" :key="areaName">
+				<!-- Area header (if we have multiple areas) -->
+				<v-list-group
+					v-if="Object.keys(groupedClasses).length > 1"
+					:value="areaName"
+				>
+					<template v-slot:activator="{ props }">
+						<v-list-item
+							v-bind="props"
+							:title="areaName"
+							density="compact"
+						>
+							<template v-slot:append>
+								<v-badge
+									:content="classes.length"
+									color="grey"
+									inline
+									class="ml-2"
+								/>
+							</template>
+						</v-list-item>
+					</template>
+					
+					<!-- Classes in area -->
+					<v-list-item
+						v-for="cls in classes"
+						:key="cls.refId"
+						:title="formatClassName(cls)"
+						:subtitle="cls.description"
+						:active="selectedClass?.refId === cls.refId"
+						@click="selectClass(cls)"
+						density="compact"
+						class="pl-8"
+					>
+						<v-tooltip
+							v-if="cls.otherDomains && cls.otherDomains.length > 0"
+							:text="getClassTooltip(cls)"
+							location="right"
+						>
+							<template v-slot:activator="{ props }">
+								<v-icon
+									v-bind="props"
+									size="small"
+									color="info"
+									class="ml-2"
+								>
+									mdi-information-outline
+								</v-icon>
+							</template>
+						</v-tooltip>
+					</v-list-item>
+				</v-list-group>
+				
+				<!-- Direct class list (if only one group) -->
+				<template v-else>
+					<v-list-item
+						v-for="cls in classes"
+						:key="cls.refId"
+						:title="formatClassName(cls)"
+						:subtitle="cls.description"
+						:active="selectedClass?.refId === cls.refId"
+						@click="selectClass(cls)"
+						density="compact"
+					>
+						<v-tooltip
+							v-if="cls.otherDomains && cls.otherDomains.length > 0"
+							:text="getClassTooltip(cls)"
+							location="right"
+						>
+							<template v-slot:activator="{ props }">
+								<v-icon
+									v-bind="props"
+									size="small"
+									color="info"
+									class="ml-2"
+								>
+									mdi-information-outline
+								</v-icon>
+							</template>
+						</v-tooltip>
+					</v-list-item>
+				</template>
+			</template>
+		</v-list>
+		
+		<!-- Empty state -->
+		<v-card
+			v-if="!isLoading && filteredClasses.length === 0"
+			flat
+			class="text-center pa-4 ma-2"
+		>
+			<v-icon size="48" color="grey-lighten-1">
+				mdi-file-search-outline
+			</v-icon>
+			<div class="text-body-2 mt-2">
+				{{ searchQuery ? 'No matching classes found' : 'No classes in this domain' }}
+			</div>
+		</v-card>
+	</v-container>
+</template>
+
+<style scoped>
+.v-list-item--active {
+	background-color: rgba(var(--v-theme-primary), 0.08);
+}
+
+.v-list-item:hover {
+	background-color: rgba(0, 0, 0, 0.04);
+}
+
+.v-list-item__subtitle {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+</style>

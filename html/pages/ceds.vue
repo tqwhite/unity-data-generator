@@ -55,7 +55,16 @@ const selectTool = (toolName) => {
 									@click="selectTool('browse')"
 									prepend-icon="mdi-file-tree"
 								>
-									Browse
+									Browse (Old)
+								</v-btn>
+								<v-btn 
+									class="mr-2" 
+									variant="outlined" 
+									color="primary"
+									to="/ontology"
+									prepend-icon="mdi-file-tree-outline"
+								>
+									Ontology Browser
 								</v-btn>
 							</v-toolbar>
 							
