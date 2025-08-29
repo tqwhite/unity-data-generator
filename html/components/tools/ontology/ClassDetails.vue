@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useOntologyStore } from '@/stores/ontologyStore';
+import { useCedsStore } from '@/stores/cedsStore';
 
 const props = defineProps({
 	classData: {
@@ -14,14 +15,61 @@ const props = defineProps({
 });
 
 const ontologyStore = useOntologyStore();
+const cedsStore = useCedsStore();
+
+// Full class details with RDF relationships
+const fullClassDetails = ref(null);
+const isLoadingDetails = ref(false);
+
+// Fetch full class details when class changes
+const fetchFullDetails = async () => {
+	if (!props.classData?.code) {
+		return;
+	}
+	
+	isLoadingDetails.value = true;
+	try {
+		// Fetch by code (like C200015) which is what the CEDS system expects
+		await cedsStore.fetchData(props.classDetails.code);
+		fullClassDetails.value = cedsStore.combinedObject;
+	} catch (error) {
+		console.error('Failed to fetch full class details:', error);
+		fullClassDetails.value = null;
+	} finally {
+		isLoadingDetails.value = false;
+	}
+};
+
+// Watch for class changes
+watch(() => props.classData?.refId, async (newRefId) => {
+	if (newRefId) {
+		await fetchFullDetails();
+	}
+}, { immediate: true });
+
+// Use full details if available, fallback to basic data
+const classDetails = computed(() => {
+	if (fullClassDetails.value) {
+		// Merge basic data with full details
+		return {
+			...props.classData,
+			...fullClassDetails.value,
+			description: fullClassDetails.value?.definition || 
+			            fullClassDetails.value?.comment || 
+			            props.classDetails.description ||
+			            props.classDetails.notation
+		};
+	}
+	return props.classData;
+});
 
 // Format other domains for display
 const otherDomainsFormatted = computed(() => {
-	if (!props.classData.otherDomains || props.classData.otherDomains.length === 0) {
+	if (!classDetails.value.otherDomains || classDetails.value.otherDomains.length === 0) {
 		return null;
 	}
 	
-	return props.classData.otherDomains.map(d => {
+	return classDetails.value.otherDomains.map(d => {
 		// Convert refId to readable name
 		return d.replace('DOM_', '').replace(/___/g, ' & ').replace(/_/g, ' ');
 	}).join(', ');
@@ -29,21 +77,21 @@ const otherDomainsFormatted = computed(() => {
 
 // Parse metadata from jsonString if available
 const parsedMetadata = computed(() => {
-	if (!props.classData.jsonString) {
+	if (!classDetails.value.jsonString) {
 		return {};
 	}
 	
 	try {
-		const parsed = JSON.parse(props.classData.jsonString);
+		const parsed = JSON.parse(classDetails.value.jsonString);
 		return {
 			superClasses: parsed.superClasses || [],
 			equivalentClasses: parsed.equivalentClasses || [],
-			comment: parsed.comment || props.classData.description
+			comment: parsed.comment || classDetails.value.description
 		};
 	} catch (e) {
 		console.error('Failed to parse jsonString:', e);
 		return {
-			comment: props.classData.description
+			comment: classDetails.value.description
 		};
 	}
 });
@@ -57,14 +105,14 @@ const rdfRelationships = computed(() => {
 	};
 	
 	// Add metadata triples
-	const classUri = props.classData.uri || `http://ceds.ed.gov/terms#${props.classData.name}`;
+	const classUri = classDetails.value.uri || `http://ceds.ed.gov/terms#${classDetails.value.name || classDetails.value.code}`;
 	
 	// Type triple
 	relationships.metadata.push({
 		subject: classUri,
 		predicate: 'rdf:type',
 		predicateLabel: 'Type',
-		object: props.classData.classType || 'owl:Class'
+		object: classDetails.value.classType || 'owl:Class'
 	});
 	
 	// SubClassOf (from jsonString or default)
@@ -87,28 +135,28 @@ const rdfRelationships = computed(() => {
 	}
 	
 	// Label triple
-	if (props.classData.label || props.classData.prefLabel) {
+	if (classDetails.value.label || classDetails.value.prefLabel) {
 		relationships.metadata.push({
 			subject: classUri,
 			predicate: 'rdfs:label',
 			predicateLabel: 'Label',
-			object: props.classData.label || props.classData.prefLabel
+			object: classDetails.value.label || classDetails.value.prefLabel
 		});
 	}
 	
 	// Notation
-	if (props.classData.notation) {
+	if (classDetails.value.notation) {
 		relationships.metadata.push({
 			subject: classUri,
 			predicate: 'skos:notation',
 			predicateLabel: 'Notation',
-			object: props.classData.notation
+			object: classDetails.value.notation
 		});
 	}
 	
 	// Parse outgoing properties (where this class is domain)
-	if (props.classData.properties && props.classData.properties.length > 0) {
-		props.classData.properties.forEach(prop => {
+	if (classDetails.value.properties && classDetails.value.properties.length > 0) {
+		classDetails.value.properties.forEach(prop => {
 			let propData = {};
 			if (prop.jsonString) {
 				try {
@@ -137,8 +185,8 @@ const rdfRelationships = computed(() => {
 	}
 	
 	// Parse incoming properties (where this class is range)
-	if (props.classData.incomingProperties && props.classData.incomingProperties.length > 0) {
-		props.classData.incomingProperties.forEach(prop => {
+	if (classDetails.value.incomingProperties && classDetails.value.incomingProperties.length > 0) {
+		classDetails.value.incomingProperties.forEach(prop => {
 			let propData = {};
 			if (prop.jsonString) {
 				try {
@@ -165,8 +213,8 @@ const rdfRelationships = computed(() => {
 
 // Get property counts
 const propertyCount = computed(() => {
-	const outgoing = props.classData.properties?.length || 0;
-	const incoming = props.classData.incomingProperties?.length || 0;
+	const outgoing = classDetails.value.properties?.length || 0;
+	const incoming = classDetails.value.incomingProperties?.length || 0;
 	return {
 		outgoing,
 		incoming,
@@ -176,7 +224,7 @@ const propertyCount = computed(() => {
 
 // Copy deep link to clipboard
 const copyDeepLink = () => {
-	const url = `${window.location.origin}/ontology/${props.domain.refId}/${props.classData.refId}`;
+	const url = `${window.location.origin}/ontology/${props.domain.refId}/${classDetails.value.refId}`;
 	navigator.clipboard.writeText(url).then(() => {
 		// Could show a snackbar here
 		console.log('Deep link copied:', url);
@@ -251,18 +299,28 @@ const selectLinkedClass = (classIdentifier) => {
 
 // Format confidence score
 const confidencePercent = computed(() => {
-	if (!props.classData.confidence) return null;
-	return Math.round(props.classData.confidence * 100);
+	if (!classDetails.value.confidence) return null;
+	return Math.round(classDetails.value.confidence * 100);
 });
 </script>
 
 <template>
 	<div class="class-details-wrapper">
+		<!-- Loading overlay -->
+		<v-overlay
+			:model-value="isLoadingDetails"
+			contained
+			persistent
+			class="align-center justify-center"
+		>
+			<v-progress-circular indeterminate />
+		</v-overlay>
+		
 		<!-- Header -->
 		<div class="text-h5 mb-2">
-			{{ classData.label || classData.prefLabel || classData.name }}
+			{{ classDetails.label || classDetails.prefLabel || classDetails.name || classDetails.code }}
 			<v-chip
-				v-if="classData.isPrimary"
+				v-if="classDetails.isPrimary"
 				size="small"
 				color="primary"
 				class="ml-2"
@@ -292,7 +350,7 @@ const confidencePercent = computed(() => {
 		
 		<!-- Class ID and deep link -->
 		<div class="text-subtitle-1 text-grey mb-3">
-			<span class="text-mono">{{ classData.notation || classData.refId }}</span>
+			<span class="text-mono">{{ classDetails.notation || classDetails.refId }}</span>
 			<v-btn
 				icon
 				size="x-small"
@@ -310,7 +368,7 @@ const confidencePercent = computed(() => {
 		<!-- Description -->
 		<div>
 			<div class="text-body-1 mb-4">
-				{{ classData.definition || parsedMetadata.comment || classData.description || 'No description available' }}
+				{{ classDetails.definition || parsedMetadata.comment || classDetails.description || 'No description available' }}
 			</div>
 			
 			<!-- Metadata sections -->
@@ -352,34 +410,34 @@ const confidencePercent = computed(() => {
 						<!-- Basic RDF Metadata -->
 						<v-table density="compact">
 							<tbody>
-								<tr v-if="classData.uri">
+								<tr v-if="classDetails.uri">
 									<td class="font-weight-bold">URI (Subject)</td>
 									<td>
-										<a :href="classData.uri" target="_blank" class="text-decoration-none">
-											{{ classData.uri }}
+										<a :href="classDetails.uri" target="_blank" class="text-decoration-none">
+											{{ classDetails.uri }}
 											<v-icon size="x-small" class="ml-1">mdi-open-in-new</v-icon>
 										</a>
 									</td>
 								</tr>
-								<tr v-if="classData.classType">
+								<tr v-if="classDetails.classType">
 									<td class="font-weight-bold">RDF Type</td>
-									<td class="text-mono">{{ classData.classType }}</td>
+									<td class="text-mono">{{ classDetails.classType }}</td>
 								</tr>
-								<tr v-if="classData.notation">
+								<tr v-if="classDetails.notation">
 									<td class="font-weight-bold">Notation</td>
-									<td class="text-mono">{{ classData.notation }}</td>
+									<td class="text-mono">{{ classDetails.notation }}</td>
 								</tr>
-								<tr v-if="classData.name">
+								<tr v-if="classDetails.name">
 									<td class="font-weight-bold">CEDS Code</td>
-									<td class="text-mono">{{ classData.name }}</td>
+									<td class="text-mono">{{ classDetails.name }}</td>
 								</tr>
-								<tr v-if="classData.prefLabel">
+								<tr v-if="classDetails.prefLabel">
 									<td class="font-weight-bold">Preferred Label</td>
-									<td>{{ classData.prefLabel }}</td>
+									<td>{{ classDetails.prefLabel }}</td>
 								</tr>
-								<tr v-if="classData.label && classData.label !== classData.prefLabel">
+								<tr v-if="classDetails.label && classDetails.label !== classDetails.prefLabel">
 									<td class="font-weight-bold">Alternative Label</td>
-									<td>{{ classData.label }}</td>
+									<td>{{ classDetails.label }}</td>
 								</tr>
 							</tbody>
 						</v-table>
@@ -444,7 +502,7 @@ const confidencePercent = computed(() => {
 										</td>
 										<td>
 											<div class="text-caption text-primary">
-												{{ classData.label || classData.name }}
+												{{ classDetails.label || classDetails.name }}
 											</div>
 										</td>
 									</tr>
@@ -473,7 +531,7 @@ const confidencePercent = computed(() => {
 									<tr v-for="(triple, index) in rdfRelationships.outgoing.slice(0, 10)" :key="`out-${index}`">
 										<td>
 											<div class="text-caption text-primary">
-												{{ classData.label || classData.name }}
+												{{ classDetails.label || classDetails.name }}
 											</div>
 										</td>
 										<td>
@@ -543,16 +601,16 @@ const confidencePercent = computed(() => {
 						</div>
 						
 						<!-- Property Summary -->
-						<div v-if="classData.properties?.length > 0" class="mt-4">
+						<div v-if="classDetails.properties?.length > 0" class="mt-4">
 							<div class="text-subtitle-2 font-weight-bold mb-2">
 								<v-icon size="small" class="mr-1">mdi-link-variant</v-icon>
 								Property Summary
 							</div>
 							<div class="text-body-2">
-								This class has <strong>{{ classData.properties.length }}</strong> RDF properties defining its relationships and attributes.
+								This class has <strong>{{ classDetails.properties.length }}</strong> RDF properties defining its relationships and attributes.
 							</div>
 							<div class="text-body-2 mt-2 property-names-list">
-								{{ classData.properties.map(p => p.label || p.comment || p.name).join(', ') }}
+								{{ classDetails.properties.map(p => p.label || p.comment || p.name).join(', ') }}
 							</div>
 						</div>
 					</v-card-text>
@@ -569,23 +627,23 @@ const confidencePercent = computed(() => {
 							<tbody>
 								<tr>
 									<td class="font-weight-bold">Reference ID</td>
-									<td class="text-mono">{{ classData.refId }}</td>
+									<td class="text-mono">{{ classDetails.refId }}</td>
 								</tr>
 								<tr>
 									<td class="font-weight-bold">Domain</td>
 									<td>{{ domain.domainName }}</td>
 								</tr>
-								<tr v-if="classData.confidence">
+								<tr v-if="classDetails.confidence">
 									<td class="font-weight-bold">Categorization Confidence</td>
 									<td>{{ confidencePercent }}%</td>
 								</tr>
-								<tr v-if="classData.createdAt">
+								<tr v-if="classDetails.createdAt">
 									<td class="font-weight-bold">Created</td>
-									<td>{{ new Date(classData.createdAt).toLocaleDateString() }}</td>
+									<td>{{ new Date(classDetails.createdAt).toLocaleDateString() }}</td>
 								</tr>
-								<tr v-if="classData.updatedAt">
+								<tr v-if="classDetails.updatedAt">
 									<td class="font-weight-bold">Updated</td>
-									<td>{{ new Date(classData.updatedAt).toLocaleDateString() }}</td>
+									<td>{{ new Date(classDetails.updatedAt).toLocaleDateString() }}</td>
 								</tr>
 							</tbody>
 						</v-table>
