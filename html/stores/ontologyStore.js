@@ -104,7 +104,10 @@ export const useOntologyStore = defineStore('ontology', () => {
 				functionalAreaRefId: c.functionalAreaRefId,
 				domainRefId: c.domainRefId,
 				isOptionSet: c.isOptionSet,
-				otherDomains: c.crossDomainList ? c.crossDomainList.split(',').filter(d => d !== domainRefId) : []
+				// crossDomainList is already an array from the API
+				otherDomains: Array.isArray(c.crossDomainList) 
+					? c.crossDomainList.filter(d => d !== domainRefId)
+					: []
 			}));
 		} catch (err) {
 			error.value = err.message;
