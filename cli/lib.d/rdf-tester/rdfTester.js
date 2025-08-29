@@ -172,6 +172,244 @@ const moduleFunction =
 		}
 		
 		// =================================================================================
+		// BUILD ENTITY LOOKUP TABLE FUNCTIONS
+		
+		const buildEntityLookupTable = () => {
+			xLog.status('Building CEDS_RDF_UI_SUPPORT_INDEX table...');
+			
+			if (!databaseFilePath) {
+				xLog.error('Database file path not configured');
+				return;
+			}
+			
+			try {
+				const db = new Database(databaseFilePath);
+				db.pragma('foreign_keys = ON');
+				
+				// Drop and recreate the table
+				xLog.status('Dropping existing CEDS_RDF_UI_SUPPORT_INDEX table if exists...');
+				db.exec('DROP TABLE IF EXISTS CEDS_RDF_UI_SUPPORT_INDEX');
+				
+				// Create the new table
+				xLog.status('Creating CEDS_RDF_UI_SUPPORT_INDEX table...');
+				db.exec(`
+					CREATE TABLE IF NOT EXISTS CEDS_RDF_UI_SUPPORT_INDEX (
+						refId TEXT PRIMARY KEY,
+						entityType TEXT NOT NULL,
+						code TEXT,
+						uri TEXT,
+						label TEXT,
+						prefLabel TEXT,
+						notation TEXT,
+						domainRefId TEXT,
+						functionalAreaRefId TEXT,
+						parentRefId TEXT,
+						isOptionSet INTEGER DEFAULT 0,
+						displayOrder INTEGER,
+						crossDomainList TEXT,
+						createdAt TEXT DEFAULT CURRENT_TIMESTAMP,
+						updatedAt TEXT DEFAULT CURRENT_TIMESTAMP
+					)
+				`);
+				
+				// Create indexes
+				xLog.status('Creating indexes...');
+				db.exec(`
+					CREATE INDEX IF NOT EXISTS idx_entity_type ON CEDS_RDF_UI_SUPPORT_INDEX(entityType);
+					CREATE INDEX IF NOT EXISTS idx_domain ON CEDS_RDF_UI_SUPPORT_INDEX(domainRefId);
+					CREATE INDEX IF NOT EXISTS idx_functional_area ON CEDS_RDF_UI_SUPPORT_INDEX(functionalAreaRefId);
+					CREATE INDEX IF NOT EXISTS idx_parent ON CEDS_RDF_UI_SUPPORT_INDEX(parentRefId);
+					CREATE INDEX IF NOT EXISTS idx_code ON CEDS_RDF_UI_SUPPORT_INDEX(code);
+				`);
+				
+				xLog.emphatic('Successfully created CEDS_RDF_UI_SUPPORT_INDEX table and indexes');
+				
+				// Function to extract first word from class name
+				const extractFirstWord = (className) => {
+					if (!className) return 'Uncategorized';
+					
+					// Simple extraction: everything before first camelCase boundary
+					// This handles: StudentRecord → Student, LEAAccountability → LEA, 123ABC → 123ABC
+					const match = className.match(/^[A-Z][a-z]+|^[A-Z]+(?=[A-Z][a-z])|^[a-z]+|^[0-9]+|^./);
+					return match ? match[0] : 'Other';
+				};
+				
+				// Step A: Insert all domains
+				xLog.status('Step A: Inserting domains...');
+				const domains = db.prepare('SELECT * FROM CEDS_Domains').all();
+				const insertDomain = db.prepare(`
+					INSERT INTO CEDS_RDF_UI_SUPPORT_INDEX (
+						refId, entityType, code, label, displayOrder
+					) VALUES (?, 'domain', ?, ?, ?)
+				`);
+				
+				domains.forEach(domain => {
+					insertDomain.run(
+						domain.refId,
+						domain.refId,
+						domain.domainName,
+						domain.displayOrder
+					);
+				});
+				xLog.verbose(`Inserted ${domains.length} domains`);
+				
+				// Step B: Create middle tier entries (functional areas)
+				xLog.status('Step B: Creating functional area entries...');
+				const classes = db.prepare('SELECT refId, name, label FROM CEDS_Classes').all();
+				const functionalAreaMap = new Map();
+				
+				classes.forEach(cls => {
+					// Prefer label over name (most classes have code names like C200001)
+					const nameToUse = cls.label || cls.name;
+					const firstWord = extractFirstWord(nameToUse);
+					if (!functionalAreaMap.has(firstWord)) {
+						functionalAreaMap.set(firstWord, {
+							refId: `FA_${firstWord}`,
+							label: firstWord,
+							count: 0
+						});
+					}
+					functionalAreaMap.get(firstWord).count++;
+				});
+				
+				const insertFunctionalArea = db.prepare(`
+					INSERT INTO CEDS_RDF_UI_SUPPORT_INDEX (
+						refId, entityType, code, label, displayOrder
+					) VALUES (?, 'functionalArea', ?, ?, ?)
+				`);
+				
+				let faOrder = 0;
+				functionalAreaMap.forEach((fa, key) => {
+					insertFunctionalArea.run(
+						fa.refId,
+						key,
+						fa.label,
+						faOrder++
+					);
+				});
+				xLog.verbose(`Created ${functionalAreaMap.size} functional areas`);
+				
+				// Step C: Insert all classes with proper hierarchy
+				xLog.status('Step C: Inserting classes...');
+				const insertClass = db.prepare(`
+					INSERT INTO CEDS_RDF_UI_SUPPORT_INDEX (
+						refId, entityType, code, uri, label, prefLabel, notation,
+						domainRefId, functionalAreaRefId, isOptionSet, crossDomainList
+					) VALUES (?, 'class', ?, ?, ?, ?, ?, ?, ?, ?, ?)
+				`);
+				
+				// Get class-to-domain mappings
+				const classDomainMappings = db.prepare(`
+					SELECT classRefId, domainRefId, isPrimary 
+					FROM CEDS_ClassCategories 
+					ORDER BY classRefId, isPrimary DESC
+				`).all();
+				
+				// Build a map of class to domains
+				const classToDomains = new Map();
+				classDomainMappings.forEach(mapping => {
+					if (!classToDomains.has(mapping.classRefId)) {
+						classToDomains.set(mapping.classRefId, {
+							primary: null,
+							all: []
+						});
+					}
+					const domains = classToDomains.get(mapping.classRefId);
+					domains.all.push(mapping.domainRefId);
+					if (mapping.isPrimary === 1 && !domains.primary) {
+						domains.primary = mapping.domainRefId;
+					}
+				});
+				
+				// Process each class
+				const fullClasses = db.prepare(`
+					SELECT refId, uri, name, label, prefLabel, notation, jsonString 
+					FROM CEDS_Classes
+				`).all();
+				
+				fullClasses.forEach(cls => {
+					// Prefer label over name (most classes have code names like C200001)
+					const nameToUse = cls.label || cls.name;
+					const firstWord = extractFirstWord(nameToUse);
+					const functionalAreaRefId = `FA_${firstWord}`;
+					
+					// Check if it's an option set (ConceptScheme)
+					const isOptionSet = cls.jsonString && cls.jsonString.includes('ConceptScheme') ? 1 : 0;
+					
+					// Get domain info
+					const domainInfo = classToDomains.get(cls.refId) || { primary: null, all: [] };
+					const primaryDomain = domainInfo.primary || domainInfo.all[0] || null;
+					const crossDomainList = domainInfo.all.length > 1 ? domainInfo.all.join(',') : null;
+					
+					insertClass.run(
+						cls.refId,
+						cls.name,
+						cls.uri,
+						cls.label || cls.name,
+						cls.prefLabel,
+						cls.notation,
+						primaryDomain,
+						functionalAreaRefId,
+						isOptionSet,
+						crossDomainList
+					);
+				});
+				xLog.verbose(`Inserted ${fullClasses.length} classes`);
+				
+				// Step D: Insert all properties for complete entity resolution
+				xLog.status('Step D: Inserting properties...');
+				const properties = db.prepare(`
+					SELECT refId, uri, name, label, comment 
+					FROM CEDS_Properties
+				`).all();
+				
+				const insertProperty = db.prepare(`
+					INSERT INTO CEDS_RDF_UI_SUPPORT_INDEX (
+						refId, entityType, code, uri, label
+					) VALUES (?, 'property', ?, ?, ?)
+				`);
+				
+				properties.forEach(prop => {
+					insertProperty.run(
+						prop.refId,
+						prop.name,
+						prop.uri,
+						prop.label || prop.name || prop.comment
+					);
+				});
+				xLog.verbose(`Inserted ${properties.length} properties`);
+				
+				// Summary report
+				const summary = db.prepare(`
+					SELECT entityType, COUNT(*) as count 
+					FROM CEDS_RDF_UI_SUPPORT_INDEX 
+					GROUP BY entityType
+				`).all();
+				
+				xLog.status('\n========== ENTITY LOOKUP TABLE SUMMARY ==========');
+				summary.forEach(row => {
+					xLog.result(`${row.entityType}: ${row.count} entries`);
+				});
+				
+				const totalCount = db.prepare('SELECT COUNT(*) as total FROM CEDS_RDF_UI_SUPPORT_INDEX').get();
+				xLog.emphatic(`Total entries in CEDS_RDF_UI_SUPPORT_INDEX: ${totalCount.total}`);
+				
+				db.close();
+				xLog.status('Entity lookup table build complete');
+				
+			} catch (error) {
+				xLog.error(`Failed to build entity lookup table: ${error.message}`);
+				throw error;
+			}
+		};
+		
+		// Check if we should build entity lookup
+		if (commandLineParameters.switches.buildEntityLookup) {
+			buildEntityLookupTable();
+			return; // Exit after building
+		}
+		
+		// =================================================================================
 		// CATEGORIZATION FUNCTIONS
 		
 		const categorizeAndStoreClasses = async (limit = null) => {

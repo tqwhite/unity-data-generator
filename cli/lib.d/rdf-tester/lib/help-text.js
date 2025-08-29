@@ -53,6 +53,19 @@ SWITCHES
 	-quiet:             Only show error messages
 	                    
 	-silent:            Suppress all output messages
+	
+	-buildEntityLookup: Build/rebuild the CEDS_RDF_UI_SUPPORT_INDEX table
+	                    for three-tier navigation support. This creates a
+	                    unified lookup table with domains, functional areas,
+	                    classes, and properties for fast name resolution.
+	                    Safe to run multiple times (drops and recreates).
+	
+	-initializeCategorizationTables: 
+	                    Initialize the categorization database tables
+	                    (CEDS_Domains, CEDS_FunctionalAreas, etc.)
+	
+	-categorize:        Run categorization on CEDS classes to assign
+	                    them to domains and functional areas
 
 <!frameworkHelpInfo!>
 
@@ -88,6 +101,9 @@ USAGE
 	rdfTester                    # Process configured RDF file
 	rdfTester -verbose          # Process with detailed output
 	rdfTester -help             # Show this help message
+	rdfTester -buildEntityLookup # Build UI support index table
+	rdfTester -initializeCategorizationTables # Initialize database
+	rdfTester -categorize       # Categorize classes into domains
 
 PROCESSING STATISTICS
 
