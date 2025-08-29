@@ -165,21 +165,27 @@ export const useOntologyStore = defineStore('ontology', () => {
 	};
 
 	const persistLastViewed = () => {
-		try {
-			localStorage.setItem('ontology-last-viewed', JSON.stringify(lastViewedByDomain.value));
-		} catch (e) {
-			console.error('Failed to persist last viewed:', e);
+		// Only access localStorage on client side
+		if (typeof window !== 'undefined' && window.localStorage) {
+			try {
+				localStorage.setItem('ontology-last-viewed', JSON.stringify(lastViewedByDomain.value));
+			} catch (e) {
+				console.error('Failed to persist last viewed:', e);
+			}
 		}
 	};
 
 	const loadPersistedState = () => {
-		try {
-			const stored = localStorage.getItem('ontology-last-viewed');
-			if (stored) {
-				lastViewedByDomain.value = JSON.parse(stored);
+		// Only access localStorage on client side
+		if (typeof window !== 'undefined' && window.localStorage) {
+			try {
+				const stored = localStorage.getItem('ontology-last-viewed');
+				if (stored) {
+					lastViewedByDomain.value = JSON.parse(stored);
+				}
+			} catch (e) {
+				console.error('Failed to load persisted state:', e);
 			}
-		} catch (e) {
-			console.error('Failed to load persisted state:', e);
 		}
 	};
 
