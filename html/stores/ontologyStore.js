@@ -12,6 +12,9 @@ export const useOntologyStore = defineStore('ontology', () => {
 	const lastViewedByDomain = ref({});
 	const isLoading = ref(false);
 	const error = ref(null);
+	
+	// Cache for loaded data to avoid repeated API calls
+	const domainDataCache = ref({});
 
 	// Auth header helper
 	const getAuthHeader = async () => {
@@ -125,10 +128,26 @@ export const useOntologyStore = defineStore('ontology', () => {
 		console.log('Selecting domain:', domain.domainName); // Debug log
 		currentDomain.value = domain;
 		
-		// Add small delay between API calls to avoid rate limiting
-		await loadFunctionalAreas(domain.refId);
-		await new Promise(resolve => setTimeout(resolve, 100)); // Small delay
-		await loadClasses(domain.refId);
+		// Check cache first
+		if (domainDataCache.value[domain.refId]) {
+			console.log('Using cached data for domain:', domain.domainName);
+			const cached = domainDataCache.value[domain.refId];
+			functionalAreas.value = cached.functionalAreas;
+			classes.value = cached.classes;
+		} else {
+			console.log('Loading fresh data for domain:', domain.domainName);
+			// Add small delay between API calls to avoid rate limiting
+			await loadFunctionalAreas(domain.refId);
+			await new Promise(resolve => setTimeout(resolve, 100)); // Small delay
+			await loadClasses(domain.refId);
+			
+			// Cache the loaded data
+			domainDataCache.value[domain.refId] = {
+				functionalAreas: functionalAreas.value,
+				classes: classes.value,
+				timestamp: Date.now()
+			};
+		}
 		
 		// Restore last viewed class for this domain if exists
 		if (lastViewedByDomain.value[domain.refId]) {
@@ -209,6 +228,17 @@ export const useOntologyStore = defineStore('ontology', () => {
 		classes.value.some(c => c.otherDomains && c.otherDomains.length > 0)
 	);
 
+	// Clear cache for a specific domain or all domains
+	const clearCache = (domainRefId = null) => {
+		if (domainRefId) {
+			delete domainDataCache.value[domainRefId];
+			console.log('Cleared cache for domain:', domainRefId);
+		} else {
+			domainDataCache.value = {};
+			console.log('Cleared all domain cache');
+		}
+	};
+
 	// Initialize persisted state
 	loadPersistedState();
 
@@ -237,6 +267,7 @@ export const useOntologyStore = defineStore('ontology', () => {
 		searchClasses,
 		exportData,
 		persistLastViewed,
-		loadPersistedState
+		loadPersistedState,
+		clearCache
 	};
 });

@@ -33,10 +33,9 @@ onMounted(async () => {
 				}
 			}
 		}
-	} else if (ontologyStore.domains.length > 0) {
-		// Select first domain if none specified
-		await ontologyStore.selectDomain(ontologyStore.domains[0]);
 	}
+	// Don't auto-load first domain to reduce initial API calls
+	// User will click a tab when ready
 });
 
 // Update URL when selection changes
