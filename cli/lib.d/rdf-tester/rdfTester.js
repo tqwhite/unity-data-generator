@@ -228,9 +228,9 @@ const moduleFunction =
 				const extractFirstWord = (className) => {
 					if (!className) return 'Uncategorized';
 					
-					// Simple extraction: everything before first camelCase boundary
-					// This handles: StudentRecord → Student, LEAAccountability → LEA, 123ABC → 123ABC
-					const match = className.match(/^[A-Z][a-z]+|^[A-Z]+(?=[A-Z][a-z])|^[a-z]+|^[0-9]+|^./);
+					// Extract everything up to the first space (or entire string if no space)
+					// This handles: "K12 Charter School" → "K12", "StudentRecord" → "StudentRecord"
+					const match = className.match(/^[^\s]+/);
 					return match ? match[0] : 'Other';
 				};
 				

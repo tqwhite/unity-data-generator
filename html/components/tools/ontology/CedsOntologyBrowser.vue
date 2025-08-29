@@ -203,6 +203,18 @@ const handleExport = () => {
 </template>
 
 <style scoped>
+
+.v-main {
+	flex: 1 0 auto;
+	max-width: 100%;
+	transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	padding-left: 10px; /* snuggles up against nav, looks great, incomprehensible*/
+	padding-right: var(--v-layout-right);
+	padding-top: 10px;
+	padding-bottom: var(--v-layout-bottom);
+}
+
+
 .ontology-browser {
 	height: calc(100vh - 64px);
 	display: flex;
