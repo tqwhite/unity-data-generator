@@ -41,9 +41,13 @@ onMounted(async () => {
 // Update URL when selection changes
 watch(() => ontologyStore.selectedClass, (newClass) => {
 	if (newClass && ontologyStore.currentDomain) {
-		router.push({
-			path: `/ontology/${ontologyStore.currentDomain.refId}/${newClass.refId}`
-		});
+		const newPath = `/ontology/${ontologyStore.currentDomain.refId}/${newClass.refId}`;
+		// Only update route if it's different from current path
+		if (route.path !== newPath) {
+			router.replace({
+				path: newPath
+			});
+		}
 	}
 });
 
@@ -136,7 +140,7 @@ const handleExport = () => {
 			
 			<!-- Main detail view -->
 			<v-main class="detail-area">
-				<v-container fluid class="pa-4">
+				<div class="detail-content">
 					<class-details
 						v-if="ontologyStore.selectedClass"
 						:class-data="ontologyStore.selectedClass"
@@ -154,7 +158,7 @@ const handleExport = () => {
 							Choose a class from the outline on the left to view its details
 						</v-card-text>
 					</v-card>
-				</v-container>
+				</div>
 			</v-main>
 		</v-row>
 		
@@ -214,11 +218,30 @@ const handleExport = () => {
 }
 
 .detail-area {
-	overflow-y: auto;
 	height: 100%;
+}
+
+.detail-content {
+	height: 100%;
+	overflow-y: auto;
 }
 
 .border-b {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/* Disable all transitions in the ontology browser */
+.ontology-browser * {
+	transition: none !important;
+	animation: none !important;
+}
+
+/* Specifically target Vuetify overlays */
+.v-overlay__scrim {
+	display: none !important;
+}
+
+.v-overlay {
+	transition: none !important;
 }
 </style>

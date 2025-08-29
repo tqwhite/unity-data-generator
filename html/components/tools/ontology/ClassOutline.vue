@@ -172,6 +172,7 @@ const getClassTooltip = (cls) => {
 						@click="selectClass(cls)"
 						density="compact"
 						class="pl-8"
+						:ripple="false"
 					>
 						<v-tooltip
 							v-if="cls.otherDomains && cls.otherDomains.length > 0"
@@ -202,6 +203,7 @@ const getClassTooltip = (cls) => {
 						:active="selectedClass?.refId === cls.refId"
 						@click="selectClass(cls)"
 						density="compact"
+						:ripple="false"
 					>
 						<v-tooltip
 							v-if="cls.otherDomains && cls.otherDomains.length > 0"
@@ -253,5 +255,34 @@ const getClassTooltip = (cls) => {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+
+/* Disable transitions to prevent flashing */
+.v-list-item,
+.v-list-item * {
+	transition: none !important;
+}
+
+.v-list-item::before,
+.v-list-item::after {
+	transition: none !important;
+	animation: none !important;
+}
+
+/* Disable focus and ripple effects */
+.v-list-item:focus::before,
+.v-list-item:focus-visible::before {
+	opacity: 0 !important;
+}
+
+.v-list-item .v-ripple__container {
+	display: none !important;
+}
+
+/* Prevent any overlay effects */
+.v-list-item__overlay {
+	display: none !important;
+	background: none !important;
+	opacity: 0 !important;
 }
 </style>

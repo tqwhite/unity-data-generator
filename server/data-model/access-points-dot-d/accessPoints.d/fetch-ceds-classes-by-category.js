@@ -82,13 +82,13 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 		});
 
 		// --------------------------------------------------------------------------------
-		// TASK: Fetch properties for each class (if requested)
+		// TASK: Fetch outgoing and incoming properties for each class (if requested)
 
 		taskList.push((args, next) => {
 			const { classesData, includeProperties } = args;
 			
-			// Skip if properties not requested
-			if (!includeProperties) {
+			// Skip if properties not requested or no classes found
+			if (!includeProperties || !classesData || classesData.length === 0) {
 				next('', args);
 				return;
 			}
@@ -101,26 +101,62 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 					return;
 				}
 
-				// For each class, fetch its properties
+				// For each class, fetch both outgoing and incoming properties
 				let completedCount = 0;
-				const totalCount = classesData.length;
+				const totalCount = classesData.length * 2; // Two queries per class
 
-				if (totalCount === 0) {
+				if (classesData.length === 0) {
 					next('', args);
 					return;
 				}
 
 				classesData.forEach((classObj, index) => {
-					const query = `SELECT * FROM CEDS_Properties WHERE CEDS_ClassesRefId = '${classObj.refId}'`;
+					// Get outgoing properties (where class is domain)
+					const outgoingQuery = `SELECT * FROM CEDS_Properties WHERE CEDS_ClassesRefId = '${classObj.refId}'`;
 					
 					propertiesTable.getData(
-						query,
+						outgoingQuery,
 						{ suppressStatementLog: true, noTableNameOk: true },
 						(err, properties) => {
 							if (!err && properties) {
 								classesData[index].properties = properties;
 							} else {
 								classesData[index].properties = [];
+							}
+
+							completedCount++;
+							if (completedCount === totalCount) {
+								next('', args);
+							}
+						}
+					);
+
+					// Get incoming properties (where class is in range)
+					const classUri = classObj.uri || `http://ceds.ed.gov/terms#${classObj.name}`;
+					const incomingQuery = `SELECT * FROM CEDS_Properties WHERE 
+						jsonString LIKE '%"rangeIncludes":%"${classObj.name}"%' OR
+						jsonString LIKE '%${classUri}%'`;
+					
+					propertiesTable.getData(
+						incomingQuery,
+						{ suppressStatementLog: true, noTableNameOk: true },
+						(err, properties) => {
+							if (!err && properties) {
+								// Filter to only properties that actually have this class in their range
+								const incomingProperties = properties.filter(prop => {
+									if (!prop.jsonString) return false;
+									try {
+										const jsonData = JSON.parse(prop.jsonString);
+										return jsonData.rangeIncludes && 
+											(jsonData.rangeIncludes.includes(classUri) ||
+											 jsonData.rangeIncludes.some(r => r.includes(classObj.name)));
+									} catch (e) {
+										return false;
+									}
+								});
+								classesData[index].incomingProperties = incomingProperties;
+							} else {
+								classesData[index].incomingProperties = [];
 							}
 
 							completedCount++;
