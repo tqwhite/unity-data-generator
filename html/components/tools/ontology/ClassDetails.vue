@@ -23,15 +23,27 @@ const isLoadingDetails = ref(false);
 
 // Fetch full class details when class changes
 const fetchFullDetails = async () => {
-	if (!props.classData?.code) {
+	if (!props.classData?.refId) {
 		return;
 	}
 	
 	isLoadingDetails.value = true;
 	try {
-		// Fetch by code (like C200015) which is what the CEDS system expects
-		await cedsStore.fetchData(props.classDetails.code);
-		fullClassDetails.value = cedsStore.combinedObject;
+		// Get auth header
+		const { useLoginStore } = await import('@/stores/loginStore');
+		const LoginStore = useLoginStore();
+		const authHeader = LoginStore.getAuthTokenProperty;
+		
+		// Fetch full class details including properties and relationships
+		const response = await fetch(`/api/ceds/fetchFullClassDetails/${props.classData.refId}`, {
+			headers: authHeader
+		});
+		
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+		
+		fullClassDetails.value = await response.json();
 	} catch (error) {
 		console.error('Failed to fetch full class details:', error);
 		fullClassDetails.value = null;

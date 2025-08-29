@@ -824,6 +824,77 @@ const moduleFunction = function ({
 		});
 	};
 
+	// Function to fetch full class details with properties and relationships
+	const fetchFullClassDetailsFunction = (permissionValidator) => (xReq, xRes, next) => {
+		const { refId } = xReq.params;
+		
+		if (!refId) {
+			xRes.status(400).send('refId parameter is required');
+			return;
+		}
+
+		const taskList = new taskListPlus();
+		
+		taskList.push((args, next) =>
+			args.permissionValidator(
+				xReq.appValueGetter('authclaims'),
+				{ showDetails: false },
+				forwardArgs({ next, args }),
+			),
+		);
+		
+		taskList.push((args, next) => {
+			const { accessTokenHeaderTools } = args;
+			const localCallback = (err) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-FullClassDetails-01)`, args);
+					return;
+				}
+				next('', args);
+			};
+			accessTokenHeaderTools.refreshauthtoken(
+				{
+					xReq,
+					xRes,
+					payloadValues: {
+						source: 'ceds-fetchFullClassDetails',
+					},
+				},
+				localCallback,
+			);
+		});
+		
+		taskList.push((args, next) => {
+			const { accessPointsDotD } = args;
+			
+			const localCallback = (err, classDetails) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-FullClassDetails-02)`, args);
+					return;
+				}
+				next(err, { ...args, classDetails });
+			};
+			
+			accessPointsDotD['fetch-full-class-details']({ refId }, localCallback);
+		});
+		
+		// INIT AND EXECUTE THE PIPELINE
+		const initialData = {
+			accessPointsDotD,
+			permissionValidator,
+			accessTokenHeaderTools,
+		};
+		
+		pipeRunner(taskList.getList(), initialData, (err, args) => {
+			if (err) {
+				xRes.status(500).send(`${err.toString()}`);
+				return;
+			}
+			
+			xRes.json(args.classDetails);
+		});
+	};
+
 	// Register the entity lookup endpoints
 	addEndpoint({
 		name: 'ceds/fetchEntityLookup',
@@ -852,6 +923,17 @@ const moduleFunction = function ({
 		method: 'get',
 		routePath: `${routingPrefix}ceds/fetchFunctionalAreasCounts/:domainId`,
 		serviceFunction: fetchFunctionalAreasWithCountsFunction,
+		expressApp,
+		endpointsDotD,
+		permissionValidator,
+		accessTokenHeaderTools,
+	});
+
+	addEndpoint({
+		name: 'ceds/fetchFullClassDetails',
+		method: 'get',
+		routePath: `${routingPrefix}ceds/fetchFullClassDetails/:refId`,
+		serviceFunction: fetchFullClassDetailsFunction,
 		expressApp,
 		endpointsDotD,
 		permissionValidator,

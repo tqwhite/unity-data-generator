@@ -264,6 +264,107 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	};
 
 	// ================================================================================
+	// SERVICE FUNCTION - fetchFullClassDetails
+
+	const fetchFullClassDetails = (data = {}, callback) => {
+		const taskList = new taskListPlus();
+		const { refId } = data;
+
+		if (!refId) {
+			callback('refId is required');
+			return;
+		}
+
+		// Get the class details from CEDS_Classes
+		taskList.push((args, next) => {
+			const { sqlDb } = args;
+			sqlDb.getTable('CEDS_Classes', mergeArgs(args, next, 'classesTable'));
+		});
+
+		taskList.push((args, next) => {
+			const { classesTable, refId } = args;
+			
+			const query = `SELECT * FROM <!tableName!> WHERE refId = '${refId}' OR name = '${refId}'`;
+			
+			classesTable.getData(
+				query,
+				{ suppressStatementLog: true, noTableNameOk: true },
+				(err, result) => {
+					if (err || !result || result.length === 0) {
+						next(err || 'Class not found', args);
+						return;
+					}
+					next(err, { ...args, classData: result[0] });
+				}
+			);
+		});
+
+		// Get properties table reference
+		taskList.push((args, next) => {
+			const { sqlDb } = args;
+			sqlDb.getTable('CEDS_Properties', mergeArgs(args, next, 'propertiesTable'));
+		});
+
+		// Get properties where this class is domain
+		taskList.push((args, next) => {
+			const { propertiesTable, classData } = args;
+			
+			const query = `SELECT * FROM <!tableName!> WHERE CEDS_ClassesRefId = '${classData.refId}'`;
+			
+			propertiesTable.getData(
+				query,
+				{ suppressStatementLog: true, noTableNameOk: true },
+				(err, result) => {
+					if (err) {
+						next(err, args);
+						return;
+					}
+					next(err, { ...args, properties: result || [] });
+				}
+			);
+		});
+
+		// Get incoming properties (where this class appears as range)
+		taskList.push((args, next) => {
+			const { propertiesTable, classData } = args;
+			const classUri = classData.uri || `http://ceds.ed.gov/terms#${classData.name}`;
+			
+			const query = `SELECT * FROM <!tableName!> WHERE jsonString LIKE '%"${classUri}"%' AND jsonString LIKE '%rangeIncludes%'`;
+			
+			propertiesTable.getData(
+				query,
+				{ suppressStatementLog: true, noTableNameOk: true },
+				(err, result) => {
+					if (err) {
+						next(err, args);
+						return;
+					}
+					next(err, { ...args, incomingProperties: result || [] });
+				}
+			);
+		});
+
+		// Execute pipeline and return combined result
+		const initialData = { sqlDb, mapper, dataMapping, refId };
+		pipeRunner(taskList.getList(), initialData, (err, args) => {
+			if (err) {
+				xLog.error(`fetchFullClassDetails FAILED: ${err} (${moduleName}.js)`);
+				callback(err);
+				return;
+			}
+
+			// Combine all data
+			const fullDetails = {
+				...args.classData,
+				properties: args.properties,
+				incomingProperties: args.incomingProperties
+			};
+
+			callback('', fullDetails);
+		});
+	};
+
+	// ================================================================================
 	// Access Point Constructor
 
 	const addEndpoint = ({ name, serviceFunction, dotD }) => {
@@ -278,6 +379,7 @@ const moduleFunction = function ({ dotD, passThroughParameters }) {
 	addEndpoint({ name: 'fetch-entities-by-domain', serviceFunction: fetchEntitiesByDomain, dotD });
 	addEndpoint({ name: 'fetch-entity-details', serviceFunction: fetchEntityDetails, dotD });
 	addEndpoint({ name: 'fetch-functional-areas-by-domain', serviceFunction: fetchFunctionalAreasByDomain, dotD });
+	addEndpoint({ name: 'fetch-full-class-details', serviceFunction: fetchFullClassDetails, dotD });
 
 	// ================================================================================
 	// RETURN EMPTY OBJECT (required pattern)
