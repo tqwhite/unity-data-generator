@@ -124,15 +124,15 @@ const confidencePercent = computed(() => {
 			</div>
 			
 			<!-- Metadata sections -->
-			<v-expansion-panels variant="accordion">
+			<div class="metadata-sections">
 				<!-- Properties -->
-				<v-expansion-panel>
-					<v-expansion-panel-title>
-						<v-icon class="mr-2">mdi-code-braces</v-icon>
+				<v-card variant="outlined" class="mb-3">
+					<v-card-title class="text-subtitle-1 py-2">
+						<v-icon class="mr-2" size="small">mdi-code-braces</v-icon>
 						Properties
 						<v-chip size="small" class="ml-2">{{ propertyCount }}</v-chip>
-					</v-expansion-panel-title>
-					<v-expansion-panel-text>
+					</v-card-title>
+					<v-card-text class="pt-1">
 						<div v-if="propertyCount > 0">
 							<p class="text-body-2">
 								This class has {{ propertyCount }} associated properties.
@@ -142,17 +142,17 @@ const confidencePercent = computed(() => {
 						<div v-else class="text-body-2 text-grey">
 							No properties defined for this class.
 						</div>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
+					</v-card-text>
+				</v-card>
 				
 				<!-- Super classes -->
-				<v-expansion-panel v-if="parsedMetadata.superClasses?.length > 0">
-					<v-expansion-panel-title>
-						<v-icon class="mr-2">mdi-family-tree</v-icon>
+				<v-card v-if="parsedMetadata.superClasses?.length > 0" variant="outlined" class="mb-3">
+					<v-card-title class="text-subtitle-1 py-2">
+						<v-icon class="mr-2" size="small">mdi-family-tree</v-icon>
 						Super Classes
 						<v-chip size="small" class="ml-2">{{ parsedMetadata.superClasses.length }}</v-chip>
-					</v-expansion-panel-title>
-					<v-expansion-panel-text>
+					</v-card-title>
+					<v-card-text class="pt-1">
 						<v-list density="compact">
 							<v-list-item
 								v-for="(superClass, index) in parsedMetadata.superClasses"
@@ -160,17 +160,17 @@ const confidencePercent = computed(() => {
 								:title="superClass"
 							/>
 						</v-list>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
+					</v-card-text>
+				</v-card>
 				
 				<!-- Equivalent classes -->
-				<v-expansion-panel v-if="parsedMetadata.equivalentClasses?.length > 0">
-					<v-expansion-panel-title>
-						<v-icon class="mr-2">mdi-equal</v-icon>
+				<v-card v-if="parsedMetadata.equivalentClasses?.length > 0" variant="outlined" class="mb-3">
+					<v-card-title class="text-subtitle-1 py-2">
+						<v-icon class="mr-2" size="small">mdi-equal</v-icon>
 						Equivalent Classes
 						<v-chip size="small" class="ml-2">{{ parsedMetadata.equivalentClasses.length }}</v-chip>
-					</v-expansion-panel-title>
-					<v-expansion-panel-text>
+					</v-card-title>
+					<v-card-text class="pt-1">
 						<v-list density="compact">
 							<v-list-item
 								v-for="(equivClass, index) in parsedMetadata.equivalentClasses"
@@ -178,16 +178,16 @@ const confidencePercent = computed(() => {
 								:title="equivClass"
 							/>
 						</v-list>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
+					</v-card-text>
+				</v-card>
 				
 				<!-- Technical details -->
-				<v-expansion-panel>
-					<v-expansion-panel-title>
-						<v-icon class="mr-2">mdi-information-outline</v-icon>
+				<v-card variant="outlined" class="mb-3">
+					<v-card-title class="text-subtitle-1 py-2">
+						<v-icon class="mr-2" size="small">mdi-information-outline</v-icon>
 						Technical Details
-					</v-expansion-panel-title>
-					<v-expansion-panel-text>
+					</v-card-title>
+					<v-card-text class="pt-1">
 						<v-table density="compact">
 							<tbody>
 								<tr>
@@ -216,9 +216,9 @@ const confidencePercent = computed(() => {
 								</tr>
 							</tbody>
 						</v-table>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-			</v-expansion-panels>
+					</v-card-text>
+				</v-card>
+			</div>
 		</v-card-text>
 	</v-card>
 </template>
@@ -228,7 +228,8 @@ const confidencePercent = computed(() => {
 	font-family: 'Courier New', Courier, monospace;
 }
 
-.v-expansion-panel-title {
+.metadata-sections .v-card-title {
+	background-color: rgba(0, 0, 0, 0.02);
 	font-weight: 500;
 }
 </style>
