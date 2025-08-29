@@ -115,6 +115,7 @@ export const useOntologyStore = defineStore('ontology', () => {
 	};
 
 	const selectClass = (classObj) => {
+		console.log('Selecting class:', classObj); // Debug log
 		selectedClass.value = classObj;
 		if (currentDomain.value && classObj) {
 			lastViewedByDomain.value[currentDomain.value.refId] = classObj.refId;

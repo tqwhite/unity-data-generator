@@ -139,7 +139,7 @@ const toggleScope = () => {
 					@click="selectResult(result)"
 				>
 					<v-list-item-title>
-						{{ result.name || result.label }}
+						{{ result.label || result.prefLabel || result.name }}
 					</v-list-item-title>
 					<v-list-item-subtitle>
 						<v-chip size="x-small" class="mr-2">

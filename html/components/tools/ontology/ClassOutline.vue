@@ -34,6 +34,8 @@ const filteredClasses = computed(() => {
 	
 	const query = searchQuery.value.toLowerCase();
 	return props.classes.filter(cls => 
+		cls.label?.toLowerCase().includes(query) ||
+		cls.prefLabel?.toLowerCase().includes(query) ||
 		cls.name?.toLowerCase().includes(query) ||
 		cls.description?.toLowerCase().includes(query)
 	);
@@ -89,10 +91,11 @@ watch(() => props.selectedClass, (newClass) => {
 // Format class name for display
 const formatClassName = (cls) => {
 	// Show multi-domain indicator
+	const displayName = cls.label || cls.prefLabel || cls.name;
 	if (cls.otherDomains && cls.otherDomains.length > 0) {
-		return `${cls.name || cls.label} *`;
+		return `${displayName} *`;
 	}
-	return cls.name || cls.label;
+	return displayName;
 };
 
 // Get tooltip for class

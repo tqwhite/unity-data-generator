@@ -43,11 +43,7 @@ onMounted(async () => {
 watch(() => ontologyStore.selectedClass, (newClass) => {
 	if (newClass && ontologyStore.currentDomain) {
 		router.push({
-			name: 'ontology',
-			params: {
-				domainId: ontologyStore.currentDomain.refId,
-				classId: newClass.refId
-			}
+			path: `/ontology/${ontologyStore.currentDomain.refId}/${newClass.refId}`
 		});
 	}
 });
@@ -56,10 +52,7 @@ watch(() => ontologyStore.selectedClass, (newClass) => {
 const onDomainChange = async (domain) => {
 	await ontologyStore.selectDomain(domain);
 	router.push({
-		name: 'ontology',
-		params: {
-			domainId: domain.refId
-		}
+		path: `/ontology/${domain.refId}`
 	});
 };
 

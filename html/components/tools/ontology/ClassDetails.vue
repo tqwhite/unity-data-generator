@@ -70,7 +70,7 @@ const confidencePercent = computed(() => {
 	<v-card flat>
 		<!-- Header -->
 		<v-card-title class="text-h5 pb-0">
-			{{ classData.name || classData.label }}
+			{{ classData.label || classData.prefLabel || classData.name }}
 			<v-chip
 				v-if="classData.isPrimary"
 				size="small"
