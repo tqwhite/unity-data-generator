@@ -56,20 +56,17 @@ export const useOntologyStore = defineStore('ontology', () => {
 		isLoading.value = true;
 		error.value = null;
 		try {
-			const authHeader = await getAuthHeader();
-			const response = await fetch(`/api/ceds/fetchFunctionalAreas?domainRefId=${domainRefId}`, {
-				headers: authHeader
-			});
+			// Use the new entity lookup system from cedsStore
+			const { useCedsStore } = await import('@/stores/cedsStore');
+			const cedsStore = useCedsStore();
 			
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-			
-			const data = await response.json();
-			functionalAreas.value = data;
+			// Fetch functional areas with counts using the new endpoint
+			const data = await cedsStore.fetchFunctionalAreasCounts(domainRefId);
+			functionalAreas.value = data || [];
 		} catch (err) {
 			error.value = err.message;
 			console.error('Error loading functional areas:', err);
+			functionalAreas.value = [];
 		} finally {
 			isLoading.value = false;
 		}
@@ -80,41 +77,35 @@ export const useOntologyStore = defineStore('ontology', () => {
 		isLoading.value = true;
 		error.value = null;
 		try {
-			const authHeader = await getAuthHeader();
-			let url = `/api/ceds/fetchClassesByCategory?domainRefId=${domainRefId}&includeProperties=true`;
+			// Use the new entity lookup system from cedsStore
+			const { useCedsStore } = await import('@/stores/cedsStore');
+			const cedsStore = useCedsStore();
+			
+			// Fetch entities by domain (includes classes and functional areas)
+			const entities = await cedsStore.fetchEntityLookup(domainRefId);
+			
+			// Filter to get just classes
+			let classEntities = entities.filter(e => e.entityType === 'class');
+			
+			// If functional area specified, filter by that
 			if (functionalAreaRefId) {
-				url += `&functionalAreaRefId=${functionalAreaRefId}`;
+				classEntities = classEntities.filter(c => c.functionalAreaRefId === functionalAreaRefId);
 			}
 			
-			console.log('Fetching from URL:', url); // Debug log
-			const response = await fetch(url, {
-				headers: authHeader
-			});
+			console.log('Loaded classes:', classEntities.length); // Debug log
 			
-			const responseText = await response.text();
-			console.log('Response status:', response.status); // Debug log
-			
-			if (!response.ok) {
-				// Check for rate limiting
-				if (response.status === 429 || responseText.includes('Too many requests')) {
-					console.warn('API rate limited, waiting before retry...');
-					// Wait 2 seconds and retry once
-					await new Promise(resolve => setTimeout(resolve, 2000));
-					const retryResponse = await fetch(url, { headers: authHeader });
-					if (retryResponse.ok) {
-						const retryData = await retryResponse.json();
-						console.log('Retry successful, loaded classes:', retryData.length);
-						classes.value = retryData || [];
-						return;
-					}
-					throw new Error('API rate limited. Please wait a moment and try again.');
-				}
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-			
-			const data = JSON.parse(responseText);
-			console.log('Loaded classes:', data.length); // Debug log
-			classes.value = data || [];
+			// Transform to match expected format
+			classes.value = classEntities.map(c => ({
+				refId: c.refId,
+				name: c.code || c.refId,
+				label: c.label,
+				prefLabel: c.prefLabel,
+				description: c.notation || '',
+				functionalAreaRefId: c.functionalAreaRefId,
+				domainRefId: c.domainRefId,
+				isOptionSet: c.isOptionSet,
+				otherDomains: c.crossDomainList ? c.crossDomainList.split(',').filter(d => d !== domainRefId) : []
+			}));
 		} catch (err) {
 			error.value = err.message;
 			console.error('Error loading classes:', err);

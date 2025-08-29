@@ -46,15 +46,34 @@ const groupedClasses = computed(() => {
 	// If we have functional areas, group by them
 	if (props.functionalAreas && props.functionalAreas.length > 0) {
 		const grouped = {};
-		props.functionalAreas.forEach(area => {
-			grouped[area.areaName] = filteredClasses.value.filter(
-				cls => cls.functionalAreaRefId === area.refId
+		
+		// Sort functional areas by label
+		const sortedAreas = [...props.functionalAreas].sort((a, b) => {
+			const labelA = a.label || a.areaName || '';
+			const labelB = b.label || b.areaName || '';
+			return labelA.localeCompare(labelB);
+		});
+		
+		sortedAreas.forEach(area => {
+			// Use the id or refId field as the key for matching
+			const areaId = area.id || area.refId;
+			const areaLabel = area.label || area.areaName || areaId;
+			
+			// Find classes that belong to this functional area
+			const areaClasses = filteredClasses.value.filter(
+				cls => cls.functionalAreaRefId === areaId
 			);
+			
+			// Only include areas that have classes after filtering
+			if (areaClasses.length > 0) {
+				grouped[areaLabel] = areaClasses;
+			}
 		});
 		
 		// Add ungrouped classes
+		const functionalAreaIds = props.functionalAreas.map(a => a.id || a.refId);
 		const ungrouped = filteredClasses.value.filter(
-			cls => !cls.functionalAreaRefId
+			cls => !functionalAreaIds.includes(cls.functionalAreaRefId)
 		);
 		if (ungrouped.length > 0) {
 			grouped['Other'] = ungrouped;
@@ -152,12 +171,14 @@ const getClassTooltip = (cls) => {
 							density="compact"
 						>
 							<template v-slot:append>
-								<v-badge
-									:content="classes.length"
-									color="grey"
-									inline
+								<v-chip
+									size="x-small"
+									variant="tonal"
+									color="primary"
 									class="ml-2"
-								/>
+								>
+									{{ classes.length }}
+								</v-chip>
 							</template>
 						</v-list-item>
 					</template>
