@@ -59,13 +59,13 @@ const moduleFunction =
 
 		const expressApp = express();
 
-			// Set up rate limiting
+			// Set up rate limiting (increased for development)
 			const apiLimiter = rateLimit({
-				windowMs: 15 * 60 * 1000, // 15 minutes
-				max: 30, // limit each IP to 30 requests per windowMs
+				windowMs: 1 * 60 * 1000, // 1 minute window
+				max: 200, // limit each IP to 200 requests per minute
 				standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
 				legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-				message: 'Too many requests from this IP, please try again after 15 minutes',
+				message: 'Too many requests from this IP, please try again in a moment',
 			});
 
 			// Apply rate limiting to all routes

@@ -130,9 +130,8 @@ export const useOntologyStore = defineStore('ontology', () => {
 			classes.value = cached.classes;
 		} else {
 			console.log('Loading fresh data for domain:', domain.domainName);
-			// Add small delay between API calls to avoid rate limiting
+			// Load data for the domain
 			await loadFunctionalAreas(domain.refId);
-			await new Promise(resolve => setTimeout(resolve, 100)); // Small delay
 			await loadClasses(domain.refId);
 			
 			// Cache the loaded data
