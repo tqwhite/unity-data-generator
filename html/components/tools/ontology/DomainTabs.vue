@@ -57,30 +57,38 @@ const getDomainColor = (index) => {
 </script>
 
 <template>
-	<v-tabs
-		v-model="tabIndex"
-		bg-color="white"
-		color="primary"
-		align-tabs="start"
-		show-arrows
-		class="domain-tabs"
-	>
-		<v-tab
-			v-for="(domain, index) in domains"
-			:key="domain.refId"
-			:value="index"
-			class="text-none"
+	<client-only>
+		<v-tabs
+			v-model="tabIndex"
+			bg-color="white"
+			color="primary"
+			align-tabs="start"
+			show-arrows
+			class="domain-tabs"
 		>
-			<v-badge
-				:content="domain.classCount || 0"
-				:color="getDomainColor(index)"
-				inline
-				class="mr-2"
+			<v-tab
+				v-for="(domain, index) in domains"
+				:key="domain.refId"
+				:value="index"
+				class="text-none"
+			>
+				<v-badge
+					:content="domain.classCount || 0"
+					:color="getDomainColor(index)"
+					inline
+					class="mr-2"
+				/>
+				<span class="d-none d-md-inline">{{ domain.domainName }}</span>
+				<span class="d-md-none">{{ formatDomainName(domain.domainName) }}</span>
+			</v-tab>
+		</v-tabs>
+		<template #fallback>
+			<v-skeleton-loader
+				type="tabs"
+				class="domain-tabs"
 			/>
-			<span class="d-none d-md-inline">{{ domain.domainName }}</span>
-			<span class="d-md-none">{{ formatDomainName(domain.domainName) }}</span>
-		</v-tab>
-	</v-tabs>
+		</template>
+	</client-only>
 </template>
 
 <style scoped>
