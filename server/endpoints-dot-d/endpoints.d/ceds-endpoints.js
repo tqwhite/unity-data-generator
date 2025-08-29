@@ -605,6 +605,259 @@ const moduleFunction = function ({
 		accessTokenHeaderTools,
 	});
 
+	// ================================================================================
+	// ENTITY LOOKUP ENDPOINTS FOR THREE-TIER NAVIGATION
+	
+	// Service function for fetching entity lookup (all or by domain)
+	const fetchEntityLookupFunction = (permissionValidator) => (xReq, xRes, next) => {
+		const taskList = new taskListPlus();
+		const { domain } = xReq.query;
+
+		taskList.push((args, next) =>
+			args.permissionValidator(
+				xReq.appValueGetter('authclaims'),
+				{ showDetails: false },
+				forwardArgs({ next, args }),
+			),
+		);
+
+		taskList.push((args, next) => {
+			const { accessTokenHeaderTools } = args;
+
+			const localCallback = (err) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-EntityLookup-01)`, args);
+					return;
+				}
+				next('', args);
+			};
+
+			accessTokenHeaderTools.refreshauthtoken(
+				{
+					xReq,
+					xRes,
+					payloadValues: {
+						source: 'ceds-fetchEntityLookup',
+					},
+				},
+				localCallback,
+			);
+		});
+
+		taskList.push((args, next) => {
+			const { accessPointsDotD } = args;
+
+			const localCallback = (err, entityData) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-EntityLookup-02)`, args);
+					return;
+				}
+				next(err, { ...args, entityData });
+			};
+			
+			// Call different access point based on whether domain is specified
+			if (domain) {
+				accessPointsDotD['fetch-entities-by-domain']({ domainRefId: domain }, localCallback);
+			} else {
+				accessPointsDotD['fetch-all-entities']({}, localCallback);
+			}
+		});
+
+		// INIT AND EXECUTE THE PIPELINE
+		const initialData = {
+			accessPointsDotD,
+			permissionValidator,
+			accessTokenHeaderTools,
+		};
+		
+		pipeRunner(taskList.getList(), initialData, (err, args) => {
+			if (err) {
+				xRes.status(500).send(`${err.toString()}`);
+				return;
+			}
+
+			xRes.json(args.entityData);
+		});
+	};
+
+	// Service function for fetching entity details
+	const fetchEntityDetailsFunction = (permissionValidator) => (xReq, xRes, next) => {
+		const taskList = new taskListPlus();
+		const { refId } = xReq.params;
+
+		if (!refId) {
+			xRes.status(400).send('refId is required');
+			return;
+		}
+
+		taskList.push((args, next) =>
+			args.permissionValidator(
+				xReq.appValueGetter('authclaims'),
+				{ showDetails: false },
+				forwardArgs({ next, args }),
+			),
+		);
+
+		taskList.push((args, next) => {
+			const { accessTokenHeaderTools } = args;
+
+			const localCallback = (err) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-EntityDetails-01)`, args);
+					return;
+				}
+				next('', args);
+			};
+
+			accessTokenHeaderTools.refreshauthtoken(
+				{
+					xReq,
+					xRes,
+					payloadValues: {
+						source: 'ceds-fetchEntityDetails',
+					},
+				},
+				localCallback,
+			);
+		});
+
+		taskList.push((args, next) => {
+			const { accessPointsDotD } = args;
+
+			const localCallback = (err, entityDetails) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-EntityDetails-02)`, args);
+					return;
+				}
+				next(err, { ...args, entityDetails });
+			};
+			
+			accessPointsDotD['fetch-entity-details']({ refId }, localCallback);
+		});
+
+		// INIT AND EXECUTE THE PIPELINE
+		const initialData = {
+			accessPointsDotD,
+			permissionValidator,
+			accessTokenHeaderTools,
+		};
+		
+		pipeRunner(taskList.getList(), initialData, (err, args) => {
+			if (err) {
+				xRes.status(500).send(`${err.toString()}`);
+				return;
+			}
+
+			xRes.json(args.entityDetails);
+		});
+	};
+
+	// Service function for fetching functional areas with counts for a domain
+	const fetchFunctionalAreasWithCountsFunction = (permissionValidator) => (xReq, xRes, next) => {
+		const taskList = new taskListPlus();
+		const { domainId } = xReq.params;
+
+		if (!domainId) {
+			xRes.status(400).send('domainId is required');
+			return;
+		}
+
+		taskList.push((args, next) =>
+			args.permissionValidator(
+				xReq.appValueGetter('authclaims'),
+				{ showDetails: false },
+				forwardArgs({ next, args }),
+			),
+		);
+
+		taskList.push((args, next) => {
+			const { accessTokenHeaderTools } = args;
+
+			const localCallback = (err) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-FunctionalAreasCounts-01)`, args);
+					return;
+				}
+				next('', args);
+			};
+
+			accessTokenHeaderTools.refreshauthtoken(
+				{
+					xReq,
+					xRes,
+					payloadValues: {
+						source: 'ceds-fetchFunctionalAreasCounts',
+					},
+				},
+				localCallback,
+			);
+		});
+
+		taskList.push((args, next) => {
+			const { accessPointsDotD } = args;
+
+			const localCallback = (err, functionalAreas) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-FunctionalAreasCounts-02)`, args);
+					return;
+				}
+				next(err, { ...args, functionalAreas });
+			};
+			
+			accessPointsDotD['fetch-functional-areas-by-domain']({ domainRefId: domainId }, localCallback);
+		});
+
+		// INIT AND EXECUTE THE PIPELINE
+		const initialData = {
+			accessPointsDotD,
+			permissionValidator,
+			accessTokenHeaderTools,
+		};
+		
+		pipeRunner(taskList.getList(), initialData, (err, args) => {
+			if (err) {
+				xRes.status(500).send(`${err.toString()}`);
+				return;
+			}
+
+			xRes.json(args.functionalAreas);
+		});
+	};
+
+	// Register the entity lookup endpoints
+	addEndpoint({
+		name: 'ceds/fetchEntityLookup',
+		method: 'get',
+		routePath: `${routingPrefix}ceds/fetchEntityLookup`,
+		serviceFunction: fetchEntityLookupFunction,
+		expressApp,
+		endpointsDotD,
+		permissionValidator,
+		accessTokenHeaderTools,
+	});
+
+	addEndpoint({
+		name: 'ceds/fetchEntityDetails',
+		method: 'get',
+		routePath: `${routingPrefix}ceds/fetchEntityDetails/:refId`,
+		serviceFunction: fetchEntityDetailsFunction,
+		expressApp,
+		endpointsDotD,
+		permissionValidator,
+		accessTokenHeaderTools,
+	});
+
+	addEndpoint({
+		name: 'ceds/fetchFunctionalAreasCounts',
+		method: 'get',
+		routePath: `${routingPrefix}ceds/fetchFunctionalAreasCounts/:domainId`,
+		serviceFunction: fetchFunctionalAreasWithCountsFunction,
+		expressApp,
+		endpointsDotD,
+		permissionValidator,
+		accessTokenHeaderTools,
+	});
+
 	return {};
 };
 
