@@ -128,6 +128,7 @@ const handleExport = () => {
 				permanent
 				width="350"
 				class="outline-drawer"
+				:mobile-breakpoint="0"
 			>
 				<class-outline
 					:classes="ontologyStore.classes"
