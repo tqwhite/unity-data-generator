@@ -55,7 +55,10 @@ onMounted(async () => {
 
 // Handle domain change with direct navigation
 const onDomainChange = async (domain) => {
-	// Just navigate - the page component will handle store updates
+	// Load the domain data first
+	await ontologyStore.selectDomain(domain);
+	
+	// Then navigate
 	if (ontologyStore.selectedClass) {
 		router.push(`/ceds/ontology/class/${ontologyStore.selectedClass.refId}?domain=${domain.refId}`);
 	} else {

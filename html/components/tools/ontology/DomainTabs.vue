@@ -46,7 +46,7 @@ const formatDomainName = (name) => {
 const getDomainColor = (index) => {
 	const colors = [
 		'blue', 'green', 'orange', 'purple', 
-		'teal', 'indigo', 'pink', 'brown', 'grey'
+		'teal', 'indigo', 'amber', 'brown', 'grey'
 	];
 	return colors[index % colors.length];
 };
