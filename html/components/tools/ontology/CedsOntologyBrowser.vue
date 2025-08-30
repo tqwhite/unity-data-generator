@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useOntologyStore } from '@/stores/ontologyStore';
 import DomainTabs from './DomainTabs.vue';
@@ -7,6 +7,22 @@ import ClassOutline from './ClassOutline.vue';
 import ClassDetails from './ClassDetails.vue';
 import CategorySearch from './CategorySearch.vue';
 import ExportDialog from './ExportDialog.vue';
+import DomainSelectorList from './DomainSelectorList.vue';
+
+const props = defineProps({
+	domainSelectionMode: {
+		type: Boolean,
+		default: false
+	},
+	availableDomainsForClass: {
+		type: Array,
+		default: () => []
+	},
+	initialClassId: {
+		type: String,
+		default: null
+	}
+});
 
 const route = useRoute();
 const router = useRouter();
@@ -16,6 +32,9 @@ const showExportDialog = ref(false);
 const showSearch = ref(false);
 const leftDrawerOpen = ref(true);
 
+// Computed property to determine if we're in domain selection mode
+const isInDomainSelectionMode = computed(() => props.domainSelectionMode);
+
 // Initialize data on mount
 onMounted(async () => {
 	// Only load domains if not already loaded
@@ -23,29 +42,32 @@ onMounted(async () => {
 		await ontologyStore.loadDomains();
 	}
 	
-	// Handle deep linking from route parameters
-	const classId = route.params.classId;
-	const domainQuery = route.query.domain;
-	
-	if (domainQuery) {
-		const domain = ontologyStore.domains.find(d => d.refId === domainQuery);
-		if (domain) {
-			// Load domain with preserveSelection option if we have a classId
-			await ontologyStore.selectDomain(domain, { preserveSelection: !!classId });
-			
-			// After domain is loaded, select the class if specified
-			if (classId) {
-				const classObj = ontologyStore.classes.find(c => c.refId === classId);
-				if (classObj) {
-					ontologyStore.selectClass(classObj);
-				} else {
-					console.warn(`Class ${classId} not found in domain ${domainQuery}`);
+	// If we're in domain selection mode, we need to load the class data
+	if (props.domainSelectionMode && props.initialClassId) {
+		// Load class data without domain context
+		await ontologyStore.loadClassWithoutDomain(props.initialClassId);
+	} else {
+		// Normal mode - handle deep linking from route parameters
+		const classId = route.params.classId;
+		const domainQuery = route.query.domain;
+		
+		if (domainQuery) {
+			const domain = ontologyStore.domains.find(d => d.refId === domainQuery);
+			if (domain) {
+				// Load domain with preserveSelection option if we have a classId
+				await ontologyStore.selectDomain(domain, { preserveSelection: !!classId });
+				
+				// After domain is loaded, select the class if specified
+				if (classId) {
+					const classObj = ontologyStore.classes.find(c => c.refId === classId);
+					if (classObj) {
+						ontologyStore.selectClass(classObj);
+					} else {
+						console.warn(`Class ${classId} not found in domain ${domainQuery}`);
+					}
 				}
 			}
 		}
-	} else if (classId && !domainQuery) {
-		// We have a class but no domain - this shouldn't happen as the route handler should redirect
-		console.warn('Class specified without domain context');
 	}
 	// Don't auto-load first domain to reduce initial API calls
 	// User will click a tab when ready
@@ -153,13 +175,23 @@ const handleExport = () => {
 			<!-- Left navigation drawer -->
 			<v-navigation-drawer
 				v-model="leftDrawerOpen"
-				:rail="!leftDrawerOpen"
+				:rail="!leftDrawerOpen && !isInDomainSelectionMode"
 				permanent
 				width="350"
 				class="outline-drawer"
 				:mobile-breakpoint="0"
 			>
+				<!-- Show DomainSelectorList when in domain selection mode -->
+				<domain-selector-list
+					v-if="isInDomainSelectionMode"
+					:domains="availableDomainsForClass"
+					:class-id="initialClassId"
+					:is-loading="ontologyStore.isLoading"
+				/>
+				
+				<!-- Show ClassOutline in normal mode -->
 				<class-outline
+					v-else
 					:classes="ontologyStore.classes"
 					:functional-areas="ontologyStore.functionalAreas"
 					:selected-class="ontologyStore.selectedClass"

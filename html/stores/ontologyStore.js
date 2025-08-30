@@ -165,6 +165,31 @@ export const useOntologyStore = defineStore('ontology', () => {
 			persistLastViewed();
 		}
 	};
+	
+	// Load class data without domain context (for domain selection mode)
+	const loadClassWithoutDomain = async (classId) => {
+		console.log('Loading class without domain context:', classId);
+		
+		// For now, create a basic class object with the ID
+		// In a real implementation, this would fetch class details from API
+		const classData = {
+			refId: classId,
+			name: classId, // Will be replaced with actual name from API
+			label: `Class: ${classId}`,
+			description: 'Class data loading...',
+			// Add other properties as needed
+		};
+		
+		selectedClass.value = classData;
+		selectedClassId.value = classId;
+		
+		// In Phase 4 complete implementation, this would:
+		// 1. Call API endpoint to get class details by ID only
+		// 2. Return full class object with all properties
+		// 3. Handle loading states appropriately
+		
+		return classData;
+	};
 
 	const searchClasses = async (searchTerm) => {
 		// This would call a search endpoint - to be implemented
@@ -305,6 +330,7 @@ export const useOntologyStore = defineStore('ontology', () => {
 		loadDomains,
 		loadFunctionalAreas,
 		loadClasses,
+		loadClassWithoutDomain,
 		selectDomain,
 		selectDomainById,
 		selectClass,

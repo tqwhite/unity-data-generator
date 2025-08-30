@@ -1,18 +1,20 @@
 <script setup>
 import CedsOntologyBrowser from '@/components/tools/ontology/CedsOntologyBrowser.vue';
-import ViewInDomainSelector from '@/components/tools/ontology/ViewInDomainSelector.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useOntologyStore } from '@/stores/ontologyStore';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 const route = useRoute();
 const router = useRouter();
 const ontologyStore = useOntologyStore();
 
-const showDomainSelector = ref(false);
-const availableDomains = ref([]);
+// States for domain selection mode
+const domainSelectionMode = ref(false);
+const availableDomainsForClass = ref([]);
+const isInitialMount = ref(true);
 
-onMounted(async () => {
+// Handle route changes (both initial mount and subsequent navigation)
+const handleRouteChange = async () => {
 	const classId = route.params.classId;
 	const domainQuery = route.query.domain;
 
@@ -27,31 +29,37 @@ onMounted(async () => {
 		await ontologyStore.loadDomains();
 	}
 
-	// Load class data - for now returns all domains as fallback
-	const classDomains = await ontologyStore.getClassDomains(classId);
-
 	if (!domainQuery) {
+		// No domain specified - determine what to do
+		const classDomains = await ontologyStore.getClassDomains(classId);
+
 		if (classDomains.length === 0) {
 			// No domains available, go to ontology home
 			console.error('No domains available for class:', classId);
 			router.push('/ceds/ontology');
 		} else if (classDomains.length === 1) {
-			// Single domain: auto-add domain query
+			// Single domain: auto-redirect with domain query
 			router.replace({
 				path: route.path,
 				query: { domain: classDomains[0].refId }
 			});
-		} else if (classDomains.length > 1) {
-			// Multiple domains: show selector
-			showDomainSelector.value = true;
-			availableDomains.value = classDomains;
+		} else {
+			// Multiple domains: enable domain selection mode
+			domainSelectionMode.value = true;
+			availableDomainsForClass.value = classDomains;
+			
+			// Still need to set class info for display
+			ontologyStore.selectedClassId = classId;
 		}
 	} else {
-		// Domain specified: load normally
+		// Domain specified: normal mode
+		domainSelectionMode.value = false;
+		availableDomainsForClass.value = [];
+		
 		ontologyStore.selectedClassId = classId;
 		ontologyStore.selectedDomainId = domainQuery;
 		
-		// Select the domain and load its classes, preserving selection for deep linking
+		// Select the domain and load its classes
 		const domain = ontologyStore.domains.find(d => d.refId === domainQuery);
 		if (domain) {
 			await ontologyStore.selectDomain(domain, { preserveSelection: true });
@@ -62,19 +70,29 @@ onMounted(async () => {
 				ontologyStore.selectClass(classObj);
 			} else {
 				console.warn(`Class ${classId} not found in domain ${domainQuery}`);
-				// The CedsOntologyBrowser will also try to select it
 			}
 		}
+	}
+};
+
+onMounted(async () => {
+	await handleRouteChange();
+	isInitialMount.value = false;
+});
+
+// Watch for route changes after initial mount
+watch(() => route.fullPath, async () => {
+	if (!isInitialMount.value) {
+		await handleRouteChange();
 	}
 });
 </script>
 
 <template>
-	<ViewInDomainSelector 
-		v-if="showDomainSelector"
-		:domains="availableDomains"
-		:class-id="route.params.classId"
+	<!-- Always show the browser, pass domain selection state as props -->
+	<CedsOntologyBrowser 
+		:domain-selection-mode="domainSelectionMode"
+		:available-domains-for-class="availableDomainsForClass"
+		:initial-class-id="route.params.classId"
 	/>
-
-	<CedsOntologyBrowser v-else />
 </template>
