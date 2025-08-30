@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useOntologyStore } from '@/stores/ontologyStore';
 import DomainTabs from './DomainTabs.vue';
@@ -20,48 +20,67 @@ const leftDrawerOpen = ref(true);
 onMounted(async () => {
 	await ontologyStore.loadDomains();
 	
-	// Handle deep linking
-	if (route.params.domainId) {
-		const domain = ontologyStore.domains.find(d => d.refId === route.params.domainId);
+	// Handle deep linking from route parameters
+	const classId = route.params.classId;
+	const domainQuery = route.query.domain;
+	
+	if (domainQuery) {
+		const domain = ontologyStore.domains.find(d => d.refId === domainQuery);
 		if (domain) {
 			await ontologyStore.selectDomain(domain);
-			
-			if (route.params.classId) {
-				const classObj = ontologyStore.classes.find(c => c.refId === route.params.classId);
-				if (classObj) {
-					ontologyStore.selectClass(classObj);
-				}
-			}
+		}
+	}
+	
+	if (classId) {
+		const classObj = ontologyStore.classes.find(c => c.refId === classId);
+		if (classObj) {
+			ontologyStore.selectClass(classObj);
 		}
 	}
 	// Don't auto-load first domain to reduce initial API calls
 	// User will click a tab when ready
 });
 
-// Update URL when selection changes
-watch(() => ontologyStore.selectedClass, (newClass) => {
-	if (newClass && ontologyStore.currentDomain) {
-		const newPath = `/ontology/${ontologyStore.currentDomain.refId}/${newClass.refId}`;
-		// Only update route if it's different from current path
-		if (route.path !== newPath) {
-			router.replace({
-				path: newPath
-			});
-		}
-	}
-});
+// Removed watcher - navigation now handled directly in event handlers
 
-// Handle domain change
+// Handle domain change with direct navigation
 const onDomainChange = async (domain) => {
 	await ontologyStore.selectDomain(domain);
-	router.push({
-		path: `/ontology/${domain.refId}`
-	});
+	
+	// Direct navigation with domain query
+	if (ontologyStore.selectedClass) {
+		router.push(`/ceds/ontology/class/${ontologyStore.selectedClass.refId}?domain=${domain.refId}`);
+	} else {
+		router.push(`/ceds/ontology?domain=${domain.refId}`);
+	}
 };
 
-// Handle class selection from outline
-const onClassSelect = (classObj) => {
+// Handle class selection with direct navigation
+const onClassSelect = async (classObj) => {
 	ontologyStore.selectClass(classObj);
+	
+	// Check if we have a domain context
+	if (ontologyStore.currentDomain) {
+		// Navigate with domain
+		router.push({
+			path: `/ceds/ontology/class/${classObj.refId}`,
+			query: { domain: ontologyStore.currentDomain.refId }
+		});
+	} else {
+		// Check how many domains this class belongs to
+		const domains = await ontologyStore.getClassDomains(classObj.refId);
+		
+		if (domains.length === 1) {
+			// Auto-navigate with single domain
+			router.push({
+				path: `/ceds/ontology/class/${classObj.refId}`,
+				query: { domain: domains[0].refId }
+			});
+		} else {
+			// Navigate without domain (will show selector)
+			router.push(`/ceds/ontology/class/${classObj.refId}`);
+		}
+	}
 };
 
 // Toggle search

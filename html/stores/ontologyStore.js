@@ -8,6 +8,8 @@ export const useOntologyStore = defineStore('ontology', () => {
 	const functionalAreas = ref([]);
 	const classes = ref([]);
 	const selectedClass = ref(null);
+	const selectedClassId = ref(null);
+	const selectedDomainId = ref(null);
 	const searchScope = ref('domain'); // 'domain' or 'global'
 	const lastViewedByDomain = ref({});
 	const isLoading = ref(false);
@@ -165,6 +167,43 @@ export const useOntologyStore = defineStore('ontology', () => {
 		// This would call a search endpoint - to be implemented
 		console.log('Search not yet implemented:', searchTerm, searchScope.value);
 	};
+	
+	// Get all domains that contain a specific class
+	const getClassDomains = async (classId) => {
+		try {
+			const authHeader = await getAuthHeader();
+			const response = await fetch(`/api/ceds/getClassDomains/${classId}`, {
+				headers: authHeader
+			});
+			
+			if (!response.ok) {
+				// If endpoint doesn't exist, return mock data for now
+				console.warn('getClassDomains endpoint not yet implemented, returning mock data');
+				// Return all domains as a fallback
+				return domains.value || [];
+			}
+			
+			const data = await response.json();
+			return data;
+		} catch (err) {
+			console.error('Error fetching class domains:', err);
+			// Return all domains as a fallback
+			return domains.value || [];
+		}
+	};
+	
+	// Select domain by ID (for deep linking)
+	const selectDomainById = async (domainId) => {
+		// Ensure domains are loaded
+		if (domains.value.length === 0) {
+			await loadDomains();
+		}
+		
+		const domain = domains.value.find(d => d.refId === domainId);
+		if (domain) {
+			await selectDomain(domain);
+		}
+	};
 
 	const persistLastViewed = () => {
 		// Only access localStorage on client side
@@ -248,6 +287,8 @@ export const useOntologyStore = defineStore('ontology', () => {
 		functionalAreas,
 		classes,
 		selectedClass,
+		selectedClassId,
+		selectedDomainId,
 		searchScope,
 		lastViewedByDomain,
 		isLoading,
@@ -262,8 +303,10 @@ export const useOntologyStore = defineStore('ontology', () => {
 		loadFunctionalAreas,
 		loadClasses,
 		selectDomain,
+		selectDomainById,
 		selectClass,
 		searchClasses,
+		getClassDomains,
 		exportData,
 		persistLastViewed,
 		loadPersistedState,
