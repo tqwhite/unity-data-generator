@@ -305,6 +305,80 @@ const moduleFunction = function ({
 	// ================================================================================
 	// NEW ONTOLOGY CATEGORIZATION SERVICE FUNCTIONS
 	
+	// Get all domains that contain a specific class
+	const getClassDomainsFunction = (permissionValidator) => (xReq, xRes, next) => {
+		const taskList = new taskListPlus();
+		const classId = xReq.params.classId;
+		
+		taskList.push((args, next) =>
+			args.permissionValidator(
+				xReq.appValueGetter('authclaims'),
+				{ showDetails: false },
+				forwardArgs({ next, args }),
+			),
+		);
+		
+		taskList.push((args, next) => {
+			const { accessTokenHeaderTools } = args;
+			const localCallback = (err) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-getClassDomains-01)`, args);
+					return;
+				}
+				next('', args);
+			};
+			accessTokenHeaderTools.refreshauthtoken(
+				{
+					xReq,
+					xRes,
+					payloadValues: {
+						source: 'ceds-getClassDomains',
+					},
+				},
+				localCallback,
+			);
+		});
+		
+		taskList.push((args, next) => {
+			const { accessPointsDotD } = args;
+			const localCallback = (err, classDomainsData) => {
+				if (err) {
+					next(`${err.toString()}  (CEDS-getClassDomains-02)`, args);
+					return;
+				}
+				next(err, { ...args, classDomainsData });
+			};
+			
+			// Call access point to get domains for this class
+			// For now, return all domains as a fallback since the access point doesn't exist yet
+			accessPointsDotD['fetch-ceds-domains']({}, (err, domainsData) => {
+				if (err) {
+					localCallback(err);
+					return;
+				}
+				// In a real implementation, this would filter domains by class
+				// For now, return all domains
+				localCallback(null, domainsData);
+			});
+		});
+		
+		// INIT AND EXECUTE THE PIPELINE
+		const initialData = {
+			accessPointsDotD,
+			permissionValidator,
+			accessTokenHeaderTools,
+			classId,
+		};
+		
+		pipeRunner(taskList.getList(), initialData, (err, args) => {
+			if (err) {
+				xRes.status(500).send(`${err.toString()}`);
+				return;
+			}
+			xRes.send(args.classDomainsData);
+		});
+	};
+	
 	const fetchDomainsFunction = (permissionValidator) => (xReq, xRes, next) => {
 		const taskList = new taskListPlus();
 
@@ -599,6 +673,18 @@ const moduleFunction = function ({
 		method: 'get',
 		routePath: `${routingPrefix}ceds/fetchClassesByCategory`,
 		serviceFunction: fetchClassesByCategoryFunction,
+		expressApp,
+		endpointsDotD,
+		permissionValidator,
+		accessTokenHeaderTools,
+	});
+	
+	// Get domains that contain a specific class
+	addEndpoint({
+		name: 'ceds/GetClassDomains',
+		method: 'get',
+		routePath: `${routingPrefix}ceds/getClassDomains/:classId`,
+		serviceFunction: getClassDomainsFunction,
 		expressApp,
 		endpointsDotD,
 		permissionValidator,
