@@ -1,29 +1,43 @@
 <script setup>
+import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useLoginStore } from '@/stores/loginStore';
-import { useCedsStore } from '@/stores/cedsStore';
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 
-import JsonTool from '@/components/tools/json-tool.vue';
-import SpreadsheetTool from '@/components/tools/spreadsheet-tool.vue';
-import OutlineTool from '@/components/tools/outline-tool.vue';
-import CedsSearch from '@/components/tools/ceds-search.vue';
-import CedsBrowse from '@/components/tools/ceds-browse.vue';
-
-const LoginStore = useLoginStore();
-const cedsStore = useCedsStore();
+const route = useRoute();
 const router = useRouter();
+const LoginStore = useLoginStore();
 
+// Handle logout query parameter
 if (router?.currentRoute.value.query.logout) {
 	LoginStore.logout();
 }
 
-// Selected tool - default to Search tool
-const selectedTool = ref('search');
+// Tool configuration
+const tools = [
+	{ 
+		name: 'ontology',
+		path: '/ceds/ontology',
+		label: 'Ontology Browser',
+		icon: 'mdi-file-tree-outline'
+	},
+	{ 
+		name: 'search',
+		path: '/ceds/search',
+		label: 'Semantic Search',
+		icon: 'mdi-magnify'
+	}
+];
 
-// Handle tool selection
-const selectTool = (toolName) => {
-	selectedTool.value = toolName;
+// Determine active tool from current route
+const activeTool = computed(() => {
+	const path = route.path;
+	if (path.includes('/search')) return 'search';
+	return 'ontology';
+});
+
+// Direct navigation to tools
+const navigateToTool = (tool) => {
+	router.push(tool.path);
 };
 </script>
 
@@ -32,66 +46,26 @@ const selectTool = (toolName) => {
 		<generalNavSub />
 		<v-main style="padding-top: 65px;">
 			<v-container fluid class="fill-height">
-				<v-row no-gutters class="fill-height">
-					<!-- Main content area -->
-					<v-col style="flex: 1;">
-						<v-card flat class="h-100">
-							<!-- Control buttons -->
-							<v-toolbar flat density="compact" color="white">
-								<v-spacer></v-spacer>
-								<v-btn 
-									class="mr-2" 
-									variant="outlined" 
-									:disabled="selectedTool === 'search'"
-									@click="selectTool('search')"
-									prepend-icon="mdi-magnify"
-								>
-									Search
-								</v-btn>
-								<v-btn 
-									class="mr-2" 
-									variant="outlined" 
-									:disabled="selectedTool === 'browse'"
-									@click="selectTool('browse')"
-									prepend-icon="mdi-file-tree"
-								>
-									Browse (Old)
-								</v-btn>
-								<v-btn 
-									class="mr-2" 
-									variant="outlined" 
-									color="primary"
-									to="/ontology"
-									prepend-icon="mdi-file-tree-outline"
-								>
-									Ontology Browser
-								</v-btn>
-							</v-toolbar>
-							
-							<!-- Tool area -->
-							<v-card-text class="d-flex justify-center align-center text-subtitle-1 text-medium-emphasis tool-area">
-								<json-tool 
-									v-if="selectedTool === 'json'"
-									:workingData="cedsStore.combinedObject"
-									:is-loading="cedsStore.isLoading"
-									:error="cedsStore.error"
-								/>
-								<ceds-search 
-									v-else-if="selectedTool === 'search'"
-									:workingData="cedsStore.listOfProperties"
-									:is-loading="cedsStore.isLoading"
-									:error="cedsStore.error"
-								/>
-								<ceds-browse 
-									v-else-if="selectedTool === 'browse'"
-									:workingData="cedsStore.combinedObject"
-									:is-loading="cedsStore.isLoading"
-									:error="cedsStore.error"
-								/>
-							</v-card-text>
-						</v-card>
-					</v-col>
-				</v-row>
+				<v-card flat class="h-100">
+					<v-toolbar flat density="compact">
+						<v-spacer />
+						<v-btn
+							v-for="tool in tools"
+							:key="tool.name"
+							:variant="activeTool === tool.name ? 'flat' : 'outlined'"
+							:color="activeTool === tool.name ? 'primary' : ''"
+							:prepend-icon="tool.icon"
+							@click="navigateToTool(tool)"
+							class="mr-2"
+						>
+							{{ tool.label }}
+						</v-btn>
+					</v-toolbar>
+
+					<v-card-text class="pa-0">
+						<NuxtPage /> <!-- Child routes render here -->
+					</v-card-text>
+				</v-card>
 			</v-container>
 		</v-main>
 	</v-app>
@@ -105,8 +79,4 @@ const selectTool = (toolName) => {
 :deep(.v-container) {
 	padding: 0;
 }
-.tool-area {
-	min-height: calc(100vh - 180px);
-}
-/* Styling now handled by the json-tool component */
 </style>

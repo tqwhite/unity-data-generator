@@ -27,6 +27,7 @@ const LoginStore = useLoginStore();
                 </p>
 
                 <ul class="mb-5">
+                  <li style='font-weight:bold;'>NEW: Explore the latest version of the CEDS ONTOLOGY</li>
                   <li>Browse and search CEDS elements</li>
                 </ul>
               <v-card-actions class="justify-center gap-3">
@@ -44,7 +45,6 @@ const LoginStore = useLoginStore();
                   <li>View NA data model elements and relationships</li>
                   <li>Generate mappings between CEDS and NA data models</li>
                   <li>Analyze semantic similarities between data elements</li>
-                  <li style='font-weight:bold;font-size:105%;'>NEW: Vote for quality of AI CEDS definition proposals!!</li>
                 </ul>
               <v-card-actions class="justify-center gap-3">
       
