@@ -131,6 +131,7 @@ const handleExport = () => {
 		<!-- Top toolbar with domain tabs -->
 		<v-app-bar flat density="compact" color="white" class="border-b">
 			<v-app-bar-nav-icon 
+				v-if="!isInDomainSelectionMode"
 				@click="leftDrawerOpen = !leftDrawerOpen"
 				class="d-lg-none"
 			/>
@@ -164,7 +165,12 @@ const handleExport = () => {
 		/>
 		
 		<!-- Domain tabs -->
+		<div v-if="isInDomainSelectionMode" class="domain-selection-hint pa-2 text-center grey lighten-4">
+			<v-icon small class="mr-1">mdi-information-outline</v-icon>
+			<span class="text-caption">Select a domain from the list below to view this class in context</span>
+		</div>
 		<domain-tabs 
+			v-else
 			:domains="ontologyStore.domains"
 			:current-domain="ontologyStore.currentDomain"
 			@domain-change="onDomainChange"
@@ -175,7 +181,7 @@ const handleExport = () => {
 			<!-- Left navigation drawer -->
 			<v-navigation-drawer
 				v-model="leftDrawerOpen"
-				:rail="!leftDrawerOpen && !isInDomainSelectionMode"
+				:rail="isInDomainSelectionMode ? false : !leftDrawerOpen"
 				permanent
 				width="350"
 				class="outline-drawer"
