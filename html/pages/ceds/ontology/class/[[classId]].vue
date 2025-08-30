@@ -22,11 +22,20 @@ onMounted(async () => {
 		return;
 	}
 
-	// Load class data
+	// Ensure domains are loaded first
+	if (ontologyStore.domains.length === 0) {
+		await ontologyStore.loadDomains();
+	}
+
+	// Load class data - for now returns all domains as fallback
 	const classDomains = await ontologyStore.getClassDomains(classId);
 
 	if (!domainQuery) {
-		if (classDomains.length === 1) {
+		if (classDomains.length === 0) {
+			// No domains available, go to ontology home
+			console.error('No domains available for class:', classId);
+			router.push('/ceds/ontology');
+		} else if (classDomains.length === 1) {
 			// Single domain: auto-add domain query
 			router.replace({
 				path: route.path,
@@ -41,6 +50,12 @@ onMounted(async () => {
 		// Domain specified: load normally
 		ontologyStore.selectedClassId = classId;
 		ontologyStore.selectedDomainId = domainQuery;
+		
+		// Also select the domain in the store
+		const domain = ontologyStore.domains.find(d => d.refId === domainQuery);
+		if (domain) {
+			await ontologyStore.selectDomain(domain);
+		}
 	}
 });
 </script>

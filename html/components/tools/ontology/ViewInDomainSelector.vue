@@ -27,7 +27,20 @@ const goBack = () => {
 
 <template>
 	<v-container class="d-flex align-center justify-center fill-height">
-		<v-card max-width="600" width="100%">
+		<!-- Loading state -->
+		<v-card max-width="600" width="100%" v-if="!domains || domains.length === 0">
+			<v-card-text class="text-center pa-8">
+				<v-progress-circular
+					indeterminate
+					size="64"
+					color="primary"
+				/>
+				<div class="mt-4">Loading domains...</div>
+			</v-card-text>
+		</v-card>
+		
+		<!-- Domain selector -->
+		<v-card max-width="600" width="100%" v-else>
 			<v-card-title class="text-h5">
 				Select Domain Context
 			</v-card-title>
@@ -43,8 +56,8 @@ const goBack = () => {
 					v-for="domain in domains" 
 					:key="domain.refId"
 					@click="selectDomain(domain)"
-					:title="domain.label || domain.name"
-					:subtitle="domain.description"
+					:title="domain.domainName || domain.label || domain.name || domain.refId"
+					:subtitle="domain.description || `Domain: ${domain.refId}`"
 					lines="two"
 				>
 					<template v-slot:prepend>
