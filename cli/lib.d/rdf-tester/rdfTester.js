@@ -224,12 +224,37 @@ const moduleFunction =
 				
 				xLog.emphatic('Successfully created CEDS_RDF_UI_SUPPORT_INDEX table and indexes');
 				
-				// Function to extract first word from class name
-				const extractFirstWord = (className) => {
+				// Function to intelligently extract functional area from class names
+				const extractFunctionalArea = (className, prefixCounts = null) => {
 					if (!className) return 'Uncategorized';
 					
-					// Extract everything up to the first space (or entire string if no space)
-					// This handles: "K12 Charter School" → "K12", "StudentRecord" → "StudentRecord"
+					// If we have prefix counts, use intelligent grouping
+					if (prefixCounts) {
+						const words = className.split(/\s+/);
+						
+						// Check three-word prefix first (longest match)
+						if (words.length >= 3) {
+							const threeWord = `${words[0]} ${words[1]} ${words[2]}`;
+							if (prefixCounts[threeWord] && prefixCounts[threeWord] >= 5) {
+								return threeWord;
+							}
+						}
+						
+						// Check two-word prefix
+						if (words.length >= 2) {
+							const twoWord = `${words[0]} ${words[1]}`;
+							if (prefixCounts[twoWord] && prefixCounts[twoWord] >= 5) {
+								return twoWord;
+							}
+						}
+						
+						// Default to single word
+						if (words[0]) {
+							return words[0];
+						}
+					}
+					
+					// Default extraction - just first word
 					const match = className.match(/^[^\s]+/);
 					return match ? match[0] : 'Other';
 				};
@@ -258,18 +283,45 @@ const moduleFunction =
 				const classes = db.prepare('SELECT refId, name, label FROM CEDS_Classes').all();
 				const functionalAreaMap = new Map();
 				
+				// First pass: Count all prefixes
+				const prefixCounts = {};
 				classes.forEach(cls => {
-					// Prefer label over name (most classes have code names like C200001)
 					const nameToUse = cls.label || cls.name;
-					const firstWord = extractFirstWord(nameToUse);
-					if (!functionalAreaMap.has(firstWord)) {
-						functionalAreaMap.set(firstWord, {
-							refId: `FA_${firstWord}`,
-							label: firstWord,
+					if (!nameToUse) return;
+					
+					const words = nameToUse.split(/\s+/);
+					
+					// Count one-word prefix
+					if (words[0]) {
+						const oneWord = words[0];
+						prefixCounts[oneWord] = (prefixCounts[oneWord] || 0) + 1;
+					}
+					
+					// Count two-word prefix
+					if (words[0] && words[1]) {
+						const twoWord = `${words[0]} ${words[1]}`;
+						prefixCounts[twoWord] = (prefixCounts[twoWord] || 0) + 1;
+					}
+					
+					// Count three-word prefix
+					if (words[0] && words[1] && words[2]) {
+						const threeWord = `${words[0]} ${words[1]} ${words[2]}`;
+						prefixCounts[threeWord] = (prefixCounts[threeWord] || 0) + 1;
+					}
+				});
+				
+				// Second pass: Determine functional areas using the counts
+				classes.forEach(cls => {
+					const nameToUse = cls.label || cls.name;
+					const functionalArea = extractFunctionalArea(nameToUse, prefixCounts);
+					if (!functionalAreaMap.has(functionalArea)) {
+						functionalAreaMap.set(functionalArea, {
+							refId: `FA_${functionalArea.replace(/\s+/g, '_')}`,
+							label: functionalArea,
 							count: 0
 						});
 					}
-					functionalAreaMap.get(firstWord).count++;
+					functionalAreaMap.get(functionalArea).count++;
 				});
 				
 				const insertFunctionalArea = db.prepare(`
@@ -327,11 +379,13 @@ const moduleFunction =
 					FROM CEDS_Classes
 				`).all();
 				
+				// Use the prefixCounts from Step B for consistency
+				// Insert with intelligent functional area extraction
 				fullClasses.forEach(cls => {
 					// Prefer label over name (most classes have code names like C200001)
 					const nameToUse = cls.label || cls.name;
-					const firstWord = extractFirstWord(nameToUse);
-					const functionalAreaRefId = `FA_${firstWord}`;
+					const functionalArea = extractFunctionalArea(nameToUse, prefixCounts);
+					const functionalAreaRefId = `FA_${functionalArea.replace(/\s+/g, '_')}`;
 					
 					// Check if it's an option set (ConceptScheme)
 					const isOptionSet = cls.jsonString && cls.jsonString.includes('ConceptScheme') ? 1 : 0;

@@ -3,7 +3,7 @@ import vuetify from 'vite-plugin-vuetify';
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
 
-  ssr: true, // Disable server-side rendering for an SPA
+  ssr: false, // Disable server-side rendering for an SPA
   target: 'static', // Set target to 'static' for static site generation
 
   modules: [
@@ -52,6 +52,7 @@ export default defineNuxtConfig({
         prependPath: true,
       },
     },
+    preset: 'static',
     prerender: {
       routes: ['/'], // Add more routes if needed
     }
