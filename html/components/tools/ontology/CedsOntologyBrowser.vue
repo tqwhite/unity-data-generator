@@ -18,7 +18,10 @@ const leftDrawerOpen = ref(true);
 
 // Initialize data on mount
 onMounted(async () => {
-	await ontologyStore.loadDomains();
+	// Only load domains if not already loaded
+	if (ontologyStore.domains.length === 0) {
+		await ontologyStore.loadDomains();
+	}
 	
 	// Handle deep linking from route parameters
 	const classId = route.params.classId;
@@ -27,15 +30,22 @@ onMounted(async () => {
 	if (domainQuery) {
 		const domain = ontologyStore.domains.find(d => d.refId === domainQuery);
 		if (domain) {
-			await ontologyStore.selectDomain(domain);
+			// Load domain with preserveSelection option if we have a classId
+			await ontologyStore.selectDomain(domain, { preserveSelection: !!classId });
+			
+			// After domain is loaded, select the class if specified
+			if (classId) {
+				const classObj = ontologyStore.classes.find(c => c.refId === classId);
+				if (classObj) {
+					ontologyStore.selectClass(classObj);
+				} else {
+					console.warn(`Class ${classId} not found in domain ${domainQuery}`);
+				}
+			}
 		}
-	}
-	
-	if (classId) {
-		const classObj = ontologyStore.classes.find(c => c.refId === classId);
-		if (classObj) {
-			ontologyStore.selectClass(classObj);
-		}
+	} else if (classId && !domainQuery) {
+		// We have a class but no domain - this shouldn't happen as the route handler should redirect
+		console.warn('Class specified without domain context');
 	}
 	// Don't auto-load first domain to reduce initial API calls
 	// User will click a tab when ready

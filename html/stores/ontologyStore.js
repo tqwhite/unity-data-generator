@@ -120,7 +120,7 @@ export const useOntologyStore = defineStore('ontology', () => {
 		}
 	};
 
-	const selectDomain = async (domain) => {
+	const selectDomain = async (domain, options = {}) => {
 		console.log('Selecting domain:', domain.domainName); // Debug log
 		currentDomain.value = domain;
 		
@@ -144,12 +144,15 @@ export const useOntologyStore = defineStore('ontology', () => {
 			};
 		}
 		
-		// Restore last viewed class for this domain if exists
-		if (lastViewedByDomain.value[domain.refId]) {
-			const classRefId = lastViewedByDomain.value[domain.refId];
-			selectedClass.value = classes.value.find(c => c.refId === classRefId);
-		} else {
-			selectedClass.value = null;
+		// Only restore last viewed class if not preserving current selection
+		if (!options.preserveSelection) {
+			// Restore last viewed class for this domain if exists
+			if (lastViewedByDomain.value[domain.refId]) {
+				const classRefId = lastViewedByDomain.value[domain.refId];
+				selectedClass.value = classes.value.find(c => c.refId === classRefId);
+			} else {
+				selectedClass.value = null;
+			}
 		}
 	};
 

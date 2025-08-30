@@ -51,10 +51,19 @@ onMounted(async () => {
 		ontologyStore.selectedClassId = classId;
 		ontologyStore.selectedDomainId = domainQuery;
 		
-		// Also select the domain in the store
+		// Select the domain and load its classes, preserving selection for deep linking
 		const domain = ontologyStore.domains.find(d => d.refId === domainQuery);
 		if (domain) {
-			await ontologyStore.selectDomain(domain);
+			await ontologyStore.selectDomain(domain, { preserveSelection: true });
+			
+			// After domain is selected and classes are loaded, select the class
+			const classObj = ontologyStore.classes.find(c => c.refId === classId);
+			if (classObj) {
+				ontologyStore.selectClass(classObj);
+			} else {
+				console.warn(`Class ${classId} not found in domain ${domainQuery}`);
+				// The CedsOntologyBrowser will also try to select it
+			}
 		}
 	}
 });
