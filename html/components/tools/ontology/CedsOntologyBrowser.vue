@@ -35,6 +35,11 @@ const leftDrawerOpen = ref(true);
 // Computed property to determine if we're in domain selection mode
 const isInDomainSelectionMode = computed(() => props.domainSelectionMode);
 
+// Computed property to determine if we should show class details
+const shouldShowClassDetails = computed(() => {
+	return !!ontologyStore.selectedClass;
+});
+
 // Initialize data on mount
 onMounted(async () => {
 	// Only load domains if not already loaded
@@ -42,44 +47,15 @@ onMounted(async () => {
 		await ontologyStore.loadDomains();
 	}
 	
-	// If we're in domain selection mode, we need to load the class data
-	if (props.domainSelectionMode && props.initialClassId) {
-		// Load class data without domain context
-		await ontologyStore.loadClassWithoutDomain(props.initialClassId);
-	} else {
-		// Normal mode - handle deep linking from route parameters
-		const classId = route.params.classId;
-		const domainQuery = route.query.domain;
-		
-		if (domainQuery) {
-			const domain = ontologyStore.domains.find(d => d.refId === domainQuery);
-			if (domain) {
-				// Load domain with preserveSelection option if we have a classId
-				await ontologyStore.selectDomain(domain, { preserveSelection: !!classId });
-				
-				// After domain is loaded, select the class if specified
-				if (classId) {
-					const classObj = ontologyStore.classes.find(c => c.refId === classId);
-					if (classObj) {
-						ontologyStore.selectClass(classObj);
-					} else {
-						console.warn(`Class ${classId} not found in domain ${domainQuery}`);
-					}
-				}
-			}
-		}
-	}
-	// Don't auto-load first domain to reduce initial API calls
-	// User will click a tab when ready
+	// The page component handles loading class data, so we don't need to do it here
+	// This component just displays what's in the store
 });
 
 // Removed watcher - navigation now handled directly in event handlers
 
 // Handle domain change with direct navigation
 const onDomainChange = async (domain) => {
-	await ontologyStore.selectDomain(domain);
-	
-	// Direct navigation with domain query
+	// Just navigate - the page component will handle store updates
 	if (ontologyStore.selectedClass) {
 		router.push(`/ceds/ontology/class/${ontologyStore.selectedClass.refId}?domain=${domain.refId}`);
 	} else {
@@ -89,9 +65,7 @@ const onDomainChange = async (domain) => {
 
 // Handle class selection with direct navigation
 const onClassSelect = async (classObj) => {
-	ontologyStore.selectClass(classObj);
-	
-	// Check if we have a domain context
+	// Just navigate - the page component will handle everything
 	if (ontologyStore.currentDomain) {
 		// Navigate with domain
 		router.push({
@@ -99,19 +73,8 @@ const onClassSelect = async (classObj) => {
 			query: { domain: ontologyStore.currentDomain.refId }
 		});
 	} else {
-		// Check how many domains this class belongs to
-		const domains = await ontologyStore.getClassDomains(classObj.refId);
-		
-		if (domains.length === 1) {
-			// Auto-navigate with single domain
-			router.push({
-				path: `/ceds/ontology/class/${classObj.refId}`,
-				query: { domain: domains[0].refId }
-			});
-		} else {
-			// Navigate without domain (will show selector)
-			router.push(`/ceds/ontology/class/${classObj.refId}`);
-		}
+		// Navigate without domain - page component will determine what to do
+		router.push(`/ceds/ontology/class/${classObj.refId}`);
 	}
 };
 
@@ -123,6 +86,17 @@ const toggleSearch = () => {
 // Handle export
 const handleExport = () => {
 	showExportDialog.value = true;
+};
+
+// Handle linked class selection from ClassDetails
+const handleLinkedClassSelection = (refId) => {
+	// Find the class in the current domain's classes
+	const classObj = ontologyStore.classes.find(c => c.refId === refId);
+	if (classObj) {
+		onClassSelect(classObj);
+	} else {
+		console.warn(`Linked class ${refId} not found in current domain`);
+	}
 };
 </script>
 
@@ -165,12 +139,8 @@ const handleExport = () => {
 		/>
 		
 		<!-- Domain tabs -->
-		<div v-if="isInDomainSelectionMode" class="domain-selection-hint pa-2 text-center grey lighten-4">
-			<v-icon small class="mr-1">mdi-information-outline</v-icon>
-			<span class="text-caption">Select a domain from the list below to view this class in context</span>
-		</div>
+		<!-- Always show domain tabs, even in selection mode -->
 		<domain-tabs 
-			v-else
 			:domains="ontologyStore.domains"
 			:current-domain="ontologyStore.currentDomain"
 			@domain-change="onDomainChange"
@@ -192,7 +162,6 @@ const handleExport = () => {
 					v-if="isInDomainSelectionMode"
 					:domains="availableDomainsForClass"
 					:class-id="initialClassId"
-					:is-loading="ontologyStore.isLoading"
 				/>
 				
 				<!-- Show ClassOutline in normal mode -->
@@ -201,7 +170,6 @@ const handleExport = () => {
 					:classes="ontologyStore.classes"
 					:functional-areas="ontologyStore.functionalAreas"
 					:selected-class="ontologyStore.selectedClass"
-					:is-loading="ontologyStore.isLoading"
 					@class-select="onClassSelect"
 				/>
 			</v-navigation-drawer>
@@ -209,10 +177,16 @@ const handleExport = () => {
 			<!-- Main detail view -->
 			<v-main class="detail-area">
 				<div class="detail-content">
+					<!-- ClassDetails is now a pure display component -->
 					<class-details
-						v-if="ontologyStore.selectedClass"
+						v-if="shouldShowClassDetails"
 						:class-data="ontologyStore.selectedClass"
-						:domain="ontologyStore.currentDomain"
+						:domain="isInDomainSelectionMode ? { 
+							refId: availableDomainsForClass[0]?.refId, 
+							domainName: availableDomainsForClass[0]?.domainName 
+						} : ontologyStore.currentDomain"
+						:available-classes="ontologyStore.classes"
+						@select-linked-class="handleLinkedClassSelection"
 					/>
 					
 					<v-card v-else flat class="text-center pa-8">
@@ -235,37 +209,6 @@ const handleExport = () => {
 			v-model="showExportDialog"
 			@export="(format) => ontologyStore.exportData(format)"
 		/>
-		
-		<!-- Loading overlay -->
-		<v-overlay
-			:model-value="ontologyStore.isLoading"
-			persistent
-			class="align-center justify-center"
-		>
-			<v-progress-circular
-				indeterminate
-				size="64"
-				color="primary"
-			/>
-		</v-overlay>
-		
-		<!-- Error snackbar -->
-		<v-snackbar
-			:model-value="!!ontologyStore.error"
-			@update:model-value="ontologyStore.error = null"
-			color="error"
-			timeout="5000"
-		>
-			{{ ontologyStore.error }}
-			<template v-slot:actions>
-				<v-btn
-					variant="text"
-					@click="ontologyStore.error = null"
-				>
-					Close
-				</v-btn>
-			</template>
-		</v-snackbar>
 	</v-container>
 </template>
 
@@ -314,14 +257,5 @@ const handleExport = () => {
 .ontology-browser * {
 	transition: none !important;
 	animation: none !important;
-}
-
-/* Specifically target Vuetify overlays */
-.v-overlay__scrim {
-	display: none !important;
-}
-
-.v-overlay {
-	transition: none !important;
 }
 </style>

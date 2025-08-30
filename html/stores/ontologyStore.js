@@ -168,27 +168,66 @@ export const useOntologyStore = defineStore('ontology', () => {
 	
 	// Load class data without domain context (for domain selection mode)
 	const loadClassWithoutDomain = async (classId) => {
-		console.log('Loading class without domain context:', classId);
+		isLoading.value = true;
 		
-		// For now, create a basic class object with the ID
-		// In a real implementation, this would fetch class details from API
-		const classData = {
-			refId: classId,
-			name: classId, // Will be replaced with actual name from API
-			label: `Class: ${classId}`,
-			description: 'Class data loading...',
-			// Add other properties as needed
-		};
-		
-		selectedClass.value = classData;
-		selectedClassId.value = classId;
-		
-		// In Phase 4 complete implementation, this would:
-		// 1. Call API endpoint to get class details by ID only
-		// 2. Return full class object with all properties
-		// 3. Handle loading states appropriately
-		
-		return classData;
+		try {
+			// Use the cedsStore to fetch entity details
+			const { useCedsStore } = await import('@/stores/cedsStore');
+			const cedsStore = useCedsStore();
+			
+			// Try to fetch the entity details
+			const classData = await cedsStore.fetchEntityDetails(classId);
+			
+			if (classData) {
+				// Transform the entity data to match our expected format
+				const transformedData = {
+					refId: classData.refId,
+					name: classData.code || classData.refId,
+					label: classData.label || classData.prefLabel,
+					prefLabel: classData.prefLabel,
+					description: classData.definition || classData.notation || '',
+					definition: classData.definition || '',
+					notation: classData.notation || '',
+					// Include cross-domain information if available
+					crossDomainList: classData.crossDomainList || [],
+					domainRefId: classData.domainRefId,
+					functionalAreaRefId: classData.functionalAreaRefId,
+					isOptionSet: classData.isOptionSet || false
+				};
+				
+				selectedClass.value = transformedData;
+				selectedClassId.value = classId;
+				
+				return transformedData;
+			} else {
+				// Fallback to basic data if API doesn't return anything
+				const fallbackData = {
+					refId: classId,
+					name: classId,
+					label: `Class ${classId}`,
+					description: 'Loading class details...',
+					definition: 'This class exists in multiple domains. Select a domain to view full details.'
+				};
+				selectedClass.value = fallbackData;
+				selectedClassId.value = classId;
+				return fallbackData;
+			}
+		} catch (err) {
+			console.error('Error loading class without domain:', err);
+			// Return basic fallback
+			const fallbackData = {
+				refId: classId,
+				name: classId,
+				label: `Class ${classId}`,
+				description: 'Unable to load class details',
+				definition: 'This class exists in multiple domains. Select a domain to view full details.'
+			};
+			selectedClass.value = fallbackData;
+			selectedClassId.value = classId;
+			return fallbackData;
+		} finally {
+			isLoading.value = false;
+		}
 	};
 
 	const searchClasses = async (searchTerm) => {
@@ -199,24 +238,35 @@ export const useOntologyStore = defineStore('ontology', () => {
 	// Get all domains that contain a specific class
 	const getClassDomains = async (classId) => {
 		try {
-			const authHeader = await getAuthHeader();
-			const response = await fetch(`/api/ceds/getClassDomains/${classId}`, {
-				headers: authHeader
-			});
+			// First, fetch the entity details to get its crossDomainList
+			const { useCedsStore } = await import('@/stores/cedsStore');
+			const cedsStore = useCedsStore();
 			
-			if (!response.ok) {
-				// If endpoint doesn't exist, return mock data for now
-				console.warn('getClassDomains endpoint not yet implemented, returning mock data');
-				// Return all domains as a fallback
-				return domains.value || [];
+			const classData = await cedsStore.fetchEntityDetails(classId);
+			
+			if (classData && classData.crossDomainList && Array.isArray(classData.crossDomainList)) {
+				// Filter domains to only those in the crossDomainList
+				const relevantDomains = domains.value.filter(domain => 
+					classData.crossDomainList.includes(domain.refId)
+				);
+				
+				return relevantDomains;
+			} else {
+				// If no crossDomainList, try to determine from the class's primary domain
+				if (classData && classData.domainRefId) {
+					const primaryDomain = domains.value.find(d => d.refId === classData.domainRefId);
+					if (primaryDomain) {
+						return [primaryDomain];
+					}
+				}
+				
+				// As a last resort, return empty array (no domains found)
+				return [];
 			}
-			
-			const data = await response.json();
-			return data;
 		} catch (err) {
 			console.error('Error fetching class domains:', err);
-			// Return all domains as a fallback
-			return domains.value || [];
+			// Return empty array on error
+			return [];
 		}
 	};
 	

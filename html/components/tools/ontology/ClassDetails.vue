@@ -1,7 +1,5 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
-import { useOntologyStore } from '@/stores/ontologyStore';
-import { useCedsStore } from '@/stores/cedsStore';
 
 const props = defineProps({
 	classData: {
@@ -11,11 +9,14 @@ const props = defineProps({
 	domain: {
 		type: Object,
 		required: true
+	},
+	availableClasses: {
+		type: Array,
+		default: () => []
 	}
 });
 
-const ontologyStore = useOntologyStore();
-const cedsStore = useCedsStore();
+const emit = defineEmits(['select-linked-class']);
 
 // Full class details with RDF relationships
 const fullClassDetails = ref(null);
@@ -24,6 +25,7 @@ const isLoadingDetails = ref(false);
 // Fetch full class details when class changes
 const fetchFullDetails = async () => {
 	if (!props.classData?.refId) {
+		isLoadingDetails.value = false; // Ensure loading is off if no class
 		return;
 	}
 	
@@ -40,22 +42,33 @@ const fetchFullDetails = async () => {
 		});
 		
 		if (!response.ok) {
-			throw new Error(`HTTP error! status: ${response.status}`);
+			// Don't throw for 404s, just continue gracefully
+			fullClassDetails.value = null;
+			return;
 		}
 		
 		fullClassDetails.value = await response.json();
 	} catch (error) {
-		console.error('Failed to fetch full class details:', error);
+		// Silently handle errors - component still works with basic data
 		fullClassDetails.value = null;
 	} finally {
 		isLoadingDetails.value = false;
 	}
 };
 
+// Computed to ensure reactivity
+const showLoadingOverlay = computed(() => {
+	return isLoadingDetails.value;
+});
+
 // Watch for class changes
 watch(() => props.classData?.refId, async (newRefId) => {
 	if (newRefId) {
 		await fetchFullDetails();
+	} else {
+		// If refId becomes null/undefined, ensure loading is off
+		isLoadingDetails.value = false;
+		fullClassDetails.value = null;
 	}
 }, { immediate: true });
 
@@ -77,14 +90,34 @@ const classDetails = computed(() => {
 
 // Format other domains for display
 const otherDomainsFormatted = computed(() => {
-	if (!classDetails.value.otherDomains || classDetails.value.otherDomains.length === 0) {
+	// Check both otherDomains and crossDomainList
+	const domainList = classDetails.value.otherDomains || classDetails.value.crossDomainList || [];
+	
+	if (domainList.length === 0) {
 		return null;
 	}
 	
-	return classDetails.value.otherDomains.map(d => {
+	// Filter out the current domain if present
+	const otherDomains = domainList.filter(d => d !== props.domain?.refId);
+	
+	if (otherDomains.length === 0) {
+		return null;
+	}
+	
+	return otherDomains.map(d => {
 		// Convert refId to readable name
 		return d.replace('DOM_', '').replace(/___/g, ' & ').replace(/_/g, ' ');
 	}).join(', ');
+});
+
+// Format current domain for display
+const currentDomainFormatted = computed(() => {
+	if (!props.domain?.refId) {
+		return 'No Domain Selected';
+	}
+	// Check if domain has a domainName property (full domain object) or just refId
+	const domainName = props.domain.domainName || props.domain.refId;
+	return domainName.replace('DOM_', '').replace(/___/g, ' & ').replace(/_/g, ' ');
 });
 
 // Parse metadata from jsonString if available
@@ -255,8 +288,8 @@ const getClassName = (classIdentifier) => {
 		refId = classIdentifier.split('/').pop();
 	}
 	
-	// Look up the class in the loaded classes for current domain
-	const classObj = ontologyStore.classes.find(c => 
+	// Look up the class in the available classes passed as prop
+	const classObj = props.availableClasses.find(c => 
 		c.refId === refId || 
 		c.name === refId ||
 		c.uri === classIdentifier
@@ -266,7 +299,7 @@ const getClassName = (classIdentifier) => {
 		return classObj.label || classObj.prefLabel || classObj.name;
 	}
 	
-	// If not found in current domain, try to get a friendly name from the refId
+	// If not found in available classes, try to get a friendly name from the refId
 	// Common CEDS class patterns we can recognize
 	const classNames = {
 		'C200015': 'Course',
@@ -296,17 +329,8 @@ const selectLinkedClass = (classIdentifier) => {
 		refId = classIdentifier.split('/').pop();
 	}
 	
-	// Find the class object
-	const classObj = ontologyStore.classes.find(c => 
-		c.refId === refId || 
-		c.name === refId ||
-		c.uri === classIdentifier
-	);
-	
-	if (classObj) {
-		// Select the class (this will also update the URL)
-		ontologyStore.selectClass(classObj);
-	}
+	// Emit event to parent to handle the selection
+	emit('select-linked-class', refId);
 };
 
 // Format confidence score
@@ -318,16 +342,13 @@ const confidencePercent = computed(() => {
 
 <template>
 	<div class="class-details-wrapper">
-		<!-- Loading overlay -->
-		<v-overlay
-			:model-value="isLoadingDetails"
-			contained
-			persistent
-			class="align-center justify-center"
-		>
-			<v-progress-circular indeterminate />
-		</v-overlay>
+		<!-- Simple loading indicator -->
+		<div v-if="showLoadingOverlay" class="loading-container">
+			<v-progress-circular indeterminate color="primary" size="64" />
+		</div>
 		
+		<!-- Main content -->
+		<div v-show="!showLoadingOverlay">
 		<!-- Header -->
 		<div class="text-h5 mb-2">
 			{{ classDetails.label || classDetails.prefLabel || classDetails.name || classDetails.code }}
@@ -349,19 +370,39 @@ const confidencePercent = computed(() => {
 			</v-chip>
 		</div>
 		
-		<!-- Multi-domain indicator -->
-		<v-alert
-			v-if="otherDomainsFormatted"
-			type="info"
-			variant="tonal"
-			density="compact"
-			class="ma-4 mb-0"
-		>
-			<strong>Also categorized in:</strong> {{ otherDomainsFormatted }}
-		</v-alert>
+		<!-- Domain information card -->
+		<v-card variant="outlined" class="ma-4 mb-3">
+			<v-card-text class="py-2">
+				<div class="d-flex align-center">
+					<v-icon size="small" class="mr-2" color="primary">mdi-domain</v-icon>
+					<span class="text-subtitle-2 font-weight-medium">
+						{{ props.domain ? 'Current Domain:' : 'Domain Context (Select from left):' }}
+					</span>
+					<v-chip size="small" color="primary" variant="tonal" class="ml-2">
+						{{ currentDomainFormatted }}
+					</v-chip>
+				</div>
+				<div v-if="otherDomainsFormatted" class="mt-2 d-flex align-center">
+					<v-icon size="small" class="mr-2" color="info">mdi-share-variant</v-icon>
+					<span class="text-subtitle-2 font-weight-medium">Also in:</span>
+					<div class="ml-2">
+						<v-chip 
+							v-for="domain in otherDomainsFormatted.split(', ')" 
+							:key="domain"
+							size="small" 
+							variant="outlined"
+							color="info"
+							class="mr-1"
+						>
+							{{ domain }}
+						</v-chip>
+					</div>
+				</div>
+			</v-card-text>
+		</v-card>
 		
 		<!-- Class ID and deep link -->
-		<div class="text-subtitle-1 text-grey mb-3">
+		<div class="text-subtitle-1 text-grey mb-3 mx-4">
 			<span class="text-mono">{{ classDetails.notation || classDetails.refId }}</span>
 			<v-btn
 				icon
@@ -450,6 +491,25 @@ const confidencePercent = computed(() => {
 								<tr v-if="classDetails.label && classDetails.label !== classDetails.prefLabel">
 									<td class="font-weight-bold">Alternative Label</td>
 									<td>{{ classDetails.label }}</td>
+								</tr>
+								<tr v-if="props.domain">
+									<td class="font-weight-bold">Primary Domain</td>
+									<td>{{ currentDomainFormatted }}</td>
+								</tr>
+								<tr v-if="classDetails.crossDomainList && classDetails.crossDomainList.length > 1">
+									<td class="font-weight-bold">Cross-Domain List</td>
+									<td>
+										<v-chip 
+											v-for="domainId in classDetails.crossDomainList" 
+											:key="domainId"
+											size="x-small" 
+											:color="domainId === props.domain?.refId ? 'primary' : 'default'"
+											:variant="domainId === props.domain?.refId ? 'tonal' : 'outlined'"
+											class="mr-1 mb-1"
+										>
+											{{ domainId.replace('DOM_', '').replace(/___/g, ' & ').replace(/_/g, ' ') }}
+										</v-chip>
+									</td>
 								</tr>
 							</tbody>
 						</v-table>
@@ -663,10 +723,18 @@ const confidencePercent = computed(() => {
 				</v-card>
 			</div>
 		</div>
+		</div> <!-- End of v-show wrapper -->
 	</div>
 </template>
 
 <style scoped>
+.loading-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 400px;
+}
+
 .class-details-wrapper {
 	padding: 12px;
 }

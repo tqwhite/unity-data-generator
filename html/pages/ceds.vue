@@ -44,7 +44,7 @@ const navigateToTool = (tool) => {
 <template>
 	<v-app>
 		<generalNavSub />
-		<v-main style="padding-top: 65px;">
+		<v-main style="padding-top: 72px;">
 			<v-container fluid class="fill-height">
 				<v-card flat class="h-100">
 					<v-toolbar flat density="compact">

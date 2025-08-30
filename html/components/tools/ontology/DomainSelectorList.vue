@@ -38,7 +38,7 @@ const selectDomain = (domain) => {
 			class="px-4"
 		>
 			<v-toolbar-title class="text-subtitle-2 font-weight-bold">
-				Select Domain Context
+				Used in These Domains
 			</v-toolbar-title>
 		</v-toolbar>
 		

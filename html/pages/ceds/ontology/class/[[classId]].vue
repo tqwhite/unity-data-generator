@@ -48,8 +48,8 @@ const handleRouteChange = async () => {
 			domainSelectionMode.value = true;
 			availableDomainsForClass.value = classDomains;
 			
-			// Still need to set class info for display
-			ontologyStore.selectedClassId = classId;
+			// Load the class data without domain context for display
+			await ontologyStore.loadClassWithoutDomain(classId);
 		}
 	} else {
 		// Domain specified: normal mode
