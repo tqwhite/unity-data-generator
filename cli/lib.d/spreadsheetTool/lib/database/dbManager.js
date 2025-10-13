@@ -81,11 +81,12 @@ async function saveData(
 		// Create the table schema using the processed data that includes the timestamp fields
 		schemaManager.createTableSchema(db, tableName, processedData);
 
-		// Perform batch insert as a transaction
-		insertDataTransaction(db, tableName, processedData);
+		// Perform batch insert with duplicate handling
+		const stats = insertDataTransaction(db, tableName, processedData);
 
 		xLog.status(
-			`Database updated successfully with ${processedData.length} records`,
+			`\nDatabase updated successfully: ${stats.inserted} records inserted` +
+			(stats.skipped > 0 ? `, ${stats.skipped} duplicates skipped` : ''),
 		);
 	} finally {
 		// Always close the database connection
@@ -248,42 +249,95 @@ function generateRefId(record, refIdSourceNames = 'XPath') {
 	// Generate a SHA-256 hash of the unique value
 	const hash = crypto.createHash('sha256').update(uniqueValue).digest('hex');
 
-	// Convert the first 12 characters of the hash to a numeric refId
+	// Convert the first 16 characters of the hash to a numeric refId (64 bits)
+	// Using 16 chars instead of 12 to reduce birthday paradox collisions
+	// With 64 bits, collision probability is negligible for datasets < 1M records
 	// Using BigInt ensures it can represent large integers precisely
 	// Converting to string for storage compatibility
-	return BigInt('0x' + hash.substring(0, 12)).toString();
+	return BigInt('0x' + hash.substring(0, 16)).toString();
 }
 
 /**
- * Insert data into a table as a transaction
+ * Insert data into a table, gracefully handling duplicates
  * @param {Object} db - Database connection
  * @param {string} tableName - Name of the table
  * @param {Array} records - Records to insert
+ * @returns {Object} Statistics about the insertion (inserted, skipped, duplicates)
  */
 function insertDataTransaction(db, tableName, records) {
-	// Start a transaction for faster inserts
-	const insertTransaction = db.transaction((records) => {
-		// Get all property names (columns) from all records
-		const allProperties = new Set();
-		records.forEach((record) => {
-			Object.keys(record).forEach((key) => allProperties.add(key));
-		});
+	const { xLog } = process.global;
 
-		// Create a prepared statement for insertion
-		const props = Array.from(allProperties);
-		const placeholders = props.map(() => '?').join(',');
-		const insertSQL = `INSERT INTO "${tableName}" (${props.map((p) => `"${p}"`).join(',')}) VALUES (${placeholders})`;
-		const insertStmt = db.prepare(insertSQL);
-
-		// Insert each record
-		records.forEach((record) => {
-			const values = props.map((prop) => record[prop] || null);
-			insertStmt.run(values);
-		});
+	// Get all property names (columns) from all records
+	const allProperties = new Set();
+	records.forEach((record) => {
+		Object.keys(record).forEach((key) => allProperties.add(key));
 	});
 
-	// Execute the transaction with all records
-	insertTransaction(records);
+	// Create a prepared statement for insertion
+	const props = Array.from(allProperties);
+	const placeholders = props.map(() => '?').join(',');
+	const insertSQL = `INSERT INTO "${tableName}" (${props.map((p) => `"${p}"`).join(',')}) VALUES (${placeholders})`;
+	const insertStmt = db.prepare(insertSQL);
+
+	// Track statistics
+	const stats = {
+		total: records.length,
+		inserted: 0,
+		skipped: 0,
+		duplicates: []
+	};
+
+	// Insert each record with error handling for duplicates
+	records.forEach((record, index) => {
+		try {
+			const values = props.map((prop) => record[prop] || null);
+			insertStmt.run(values);
+			stats.inserted++;
+		} catch (error) {
+			// Check if it's a UNIQUE constraint violation
+			// better-sqlite3 uses code: 'SQLITE_CONSTRAINT_UNIQUE' for unique violations
+			if (error.code && (error.code.includes('CONSTRAINT') || error.message.includes('UNIQUE'))) {
+				stats.skipped++;
+				// Store info about the duplicate for reporting
+				const duplicateInfo = {
+					rowNumber: index + 1,
+					refId: record.refId,
+					sample: {
+						'Global ID': record['Global ID'],
+						'Element Name': record['Element Name'],
+						'Domain': record['Domain'],
+						'Entity': record['Entity']
+					}
+				};
+				stats.duplicates.push(duplicateInfo);
+			} else {
+				// Re-throw other errors
+				xLog.error(`Unexpected database error (code: ${error.code}): ${error.message}`);
+				throw error;
+			}
+		}
+	});
+
+	// Report duplicate statistics
+	if (stats.skipped > 0) {
+		xLog.status(`\nSkipped ${stats.skipped} duplicate record(s) during insertion`);
+		if (stats.duplicates.length <= 10) {
+			// Show all duplicates if 10 or fewer
+			xLog.status('Duplicate records:');
+			stats.duplicates.forEach(dup => {
+				xLog.status(`  Row ${dup.rowNumber}: GlobalID=${dup.sample['Global ID']}, Element="${dup.sample['Element Name']}", Domain="${dup.sample['Domain']}"`);
+			});
+		} else {
+			// Show first 5 if more than 10
+			xLog.status('Sample of duplicate records (first 5):');
+			stats.duplicates.slice(0, 5).forEach(dup => {
+				xLog.status(`  Row ${dup.rowNumber}: GlobalID=${dup.sample['Global ID']}, Element="${dup.sample['Element Name']}", Domain="${dup.sample['Domain']}"`);
+			});
+			xLog.status(`  ... and ${stats.duplicates.length - 5} more duplicates`);
+		}
+	}
+
+	return stats;
 }
 
 module.exports = {

@@ -38,34 +38,43 @@ async function listSheets(spreadsheetFile) {
 /**
  * Read a spreadsheet file into a structured format
  * @param {string} spreadsheetFile - Path to the spreadsheet file
+ * @param {string} targetSheetName - Optional: specific sheet name to read. If not provided, reads all sheets.
  * @returns {Promise<Object>} The structured spreadsheet data
  */
-async function readSpreadsheet(spreadsheetFile) {
+async function readSpreadsheet(spreadsheetFile, targetSheetName = null) {
   const { xLog } = process.global;
-  
+
   // Check if the spreadsheet file exists
   if (!fs.existsSync(spreadsheetFile)) {
     throw new Error(`Spreadsheet file not found: ${spreadsheetFile}`);
   }
-  
+
   xLog.status(`Processing spreadsheet: ${spreadsheetFile}`);
-  
+
   // Read the spreadsheet
   const workbook = xlsx.readFile(spreadsheetFile);
   const sheetNames = workbook.SheetNames;
-  
+
+  // If a specific sheet is requested, verify it exists
+  if (targetSheetName && !sheetNames.includes(targetSheetName)) {
+    throw new Error(`Sheet '${targetSheetName}' not found. Available sheets: ${sheetNames.join(', ')}`);
+  }
+
+  // Determine which sheets to process
+  const sheetsToProcess = targetSheetName ? [targetSheetName] : sheetNames;
+
   // Process each sheet in the workbook
   const allColumns = new Set();
   const allData = [];
-  
-  // First pass - collect all unique column names across all sheets
-  sheetNames.forEach(sheetName => {
+
+  // First pass - collect all unique column names across selected sheets
+  sheetsToProcess.forEach(sheetName => {
     const sheet = workbook.Sheets[sheetName];
     const sheetData = xlsx.utils.sheet_to_json(sheet, { header: 'A' });
-    
+
     // Skip empty sheets
     if (sheetData.length === 0) return;
-    
+
     // Get headers from the first row
     const headers = sheetData[0];
     Object.values(headers).forEach(header => {
@@ -74,35 +83,35 @@ async function readSpreadsheet(spreadsheetFile) {
       }
     });
   });
-  
+
   // Second pass - process each sheet's data
-  sheetNames.forEach(sheetName => {
+  sheetsToProcess.forEach(sheetName => {
     const sheet = workbook.Sheets[sheetName];
     const sheetData = xlsx.utils.sheet_to_json(sheet);
-    
+
     // Skip empty sheets
     if (sheetData.length === 0) return;
-    
+
     // Add sheet name to each row
     sheetData.forEach(row => {
       row.SheetName = sheetName;
       allData.push(row);
     });
-    
+
     xLog.verbose(`Processed sheet: ${sheetName} (${sheetData.length} rows)`);
   });
-  
+
   // Create result data structure
   const resultData = {
     metadata: {
       fileName: path.basename(spreadsheetFile),
-      totalSheets: sheetNames.length,
+      totalSheets: sheetsToProcess.length,
       totalRows: allData.length,
       columns: Array.from(allColumns)
     },
     data: allData
   };
-  
+
   return resultData;
 }
 
