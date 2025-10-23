@@ -480,8 +480,8 @@ const moduleFunction = function ({ unused }) {
 			xLog.verbose(`sqlite-vec extension loaded successfully: ${vecVersion}`);
 		} catch (error) {
 			// Vector extension is optional - log warning but continue
-			xLog.warning(`sqlite-vec extension not loaded: ${error.message}`);
-			xLog.warning('Vector operations will not be available, but standard database operations will work');
+			xLog.status(`sqlite-vec extension not loaded: ${error.message}`);
+			xLog.status('Vector operations will not be available, but standard database operations will work');
 		}
 		
 		// Set pragmas for better performance

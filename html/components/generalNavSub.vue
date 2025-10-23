@@ -67,7 +67,7 @@
 			v-if="!isCedsPage"
 			prepend-icon="mdi-database-search"
 			title="CEDS Tools"
-			:to="{ path: 'ceds' }"
+			:to="{ path: '/ceds' }"
 		>
 			CEDS
 		</v-btn>
@@ -77,7 +77,7 @@
 			v-if="!isNaModelPage"
 			prepend-icon="mdi-database-search"
 			title="NA Model Tools"
-			:to="{ path: 'namodel' }"
+			:to="{ path: '/namodel' }"
 		>
 			NA Model
 		</v-btn>
@@ -97,7 +97,7 @@
 			v-if="LoginStore.validUser"
 			prepend-icon="mdi-account"
 			title="Profile"
-			:to="{ path: 'utility', query: { purpose: 'profile' } }"
+			:to="{ path: '/utility', query: { purpose: 'profile' } }"
 		>
 			<span v-if="LoginStore.loggedInUser.last">
 				{{ LoginStore.loggedInUser.first }} {{ LoginStore.loggedInUser.last }}
@@ -120,7 +120,7 @@
 			v-if="!isAboutPage"
 			prepend-icon="mdi-information-outline"
 			title="About"
-			:to="{ path: 'about' }"
+			:to="{ path: '/about' }"
 		>
 		</v-btn>
 	</v-app-bar>

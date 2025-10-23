@@ -101,7 +101,7 @@ There should be *nothing* except well-formed XML between those delimiters.
 			afterAiProcess: (wisdom) => {
 				const { xLog } = process.global;
 				if (!wisdom || !wisdom.generatedSynthData) {
-					xLog.warning('UDG SD-Maker Tools: No generatedSynthData found in wisdom');
+					xLog.status('UDG SD-Maker Tools: No generatedSynthData found in wisdom');
 					return wisdom;
 				}
 				

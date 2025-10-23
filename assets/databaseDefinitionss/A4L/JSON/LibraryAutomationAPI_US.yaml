@@ -1,0 +1,924 @@
+# // Open API file for:
+# // Locale: US
+# // SIF Datamodel Version: 4.3
+# // Limited to Objects: LibraryPatronStatus
+# // Limited to Groups: Library Automation
+# // Include all HTTP Headers: true
+# // Include Admin Directive Endpoints: false
+# // File Generated on: 2022-10-04T13:11:28.043-07:00
+
+openapi: 3.0.2
+info:
+  version: v4.3
+  title: "Library Automation"
+  description: "Access 4 Learning® Community Unity Data Model"
+  host: "apihost.example.com"
+  basePath: "v3"
+# /////////////////////////////////////////////////////////////
+
+x-tagGroups:
+# /////////////////////////////////////////////////////////////
+
+tags:
+# /////////////////////////////////////////////////////////////
+
+paths:
+  # //////////////////////////////////////////////
+  # // LibraryPatronStatuss Endpoints 
+  # //////////////////////////////////////////////
+  /LibraryPatronStatuss:
+    get:
+      tags:
+      - "LibraryPatronStatus"
+      summary: Default operation to get a list of all available LibraryPatronStatuss
+      description: Default operation to get a list of all available LibraryPatronStatuss
+      operationId: getLibraryPatronStatuss
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/changesSinceMarker'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/order'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/where'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/ETag'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPage'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPageSize'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queryIntention'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createLibraryPatronStatuss'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '410':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/410'
+        '413':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    head:
+      tags:
+      - "LibraryPatronStatus"
+      summary: Get HEAD info for LibraryPatronStatuss.
+      description: Get HEAD info for LibraryPatronStatuss. Returns all HTTP Headers but no payload, otherwise it works like HTTP GET. 
+      operationId: headLibraryPatronStatuss
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/ETag'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPage'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPageSize'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queryIntention'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          description: Operation succeeded. No payload returned for HTTP HEAD.
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'changesSinceMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/changesSinceMarkerHead'
+            'dataPrivacyMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'navigationCount':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+            'navigationId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+            'navigationLastPage':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+            'navigationPage':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+            'navigationPageSize':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+        '401':
+          description: Authorisation failed.
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'dataPrivacyMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+    put:
+      tags:
+      - "LibraryPatronStatus"
+      summary: Default operation to update or delete multiple LibraryPatronStatus
+      description: Default operation to update or delete multiple LibraryPatronStatus
+      operationId: updateLibraryPatronStatuss
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/updateLibraryPatronStatuss'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerBatchPutRequest'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/methodOverridePut'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/replacement'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/batchPutResponse'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    post:
+      tags:
+      - "LibraryPatronStatus"
+      summary: Default operation to create multiple LibraryPatronStatuss or query by example (QBE).
+      description: Default operation to create multiple LibraryPatronStatuss or query by example (QBE).
+      operationId: createLibraryPatronStatuss
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/createLibraryPatronStatuss'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/methodOverridePost'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createLibraryPatronStatussQBE'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '409':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+  /LibraryPatronStatuss/LibraryPatronStatus:
+    post:
+      tags:
+      - "LibraryPatronStatus"
+      summary: Default operation to create a single LibraryPatronStatus
+      description: Default operation to create a single LibraryPatronStatus
+      operationId: createLibraryPatronStatus
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/createLibraryPatronStatus'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '201':
+          $ref: '#/components/schemas/responsePayloads/createLibraryPatronStatus'
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '409':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+  /LibraryPatronStatuss/{SIF_RefId}:
+    put:
+      tags:
+      - "LibraryPatronStatus"
+      summary: Default operation to update a single LibraryPatronStatus
+      description: Default operation to update a single LibraryPatronStatus
+      parameters:
+      - name: SIF_RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/replacement'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      operationId: updateLibraryPatronStatus
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/updateLibraryPatronStatus'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/updateLibraryPatronStatus'
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    get:
+      tags:
+      - "LibraryPatronStatus"
+      summary: Default operation to get a single LibraryPatronStatus
+      description: Default operation to get a single LibraryPatronStatus
+      operationId: getLibraryPatronStatus
+      parameters:
+      - name: SIF_RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createLibraryPatronStatus'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '405':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/405'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    delete:
+      tags:
+      - "LibraryPatronStatus"
+      summary: Default operation to delete a single LibraryPatronStatus
+      description: Default operation to delete a single LibraryPatronStatus
+      operationId: deleteLibraryPatronStatus
+      parameters:
+      - name: SIF_RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '204':
+          description: successful operation
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'serviceSubType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceSubType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+
+components:
+  schemas:
+
+    # /////////////////////////////////
+    # // Request Payload Definitions //
+    # /////////////////////////////////
+    requestPayloads:
+      #//
+      #// LibraryPatronStatus
+      #//
+      createLibraryPatronStatus:
+        description: Payload for LibraryPatronStatus
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaLibraryPatronStatus'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatus/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatus/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaLibraryPatronStatus'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatus/xml'
+
+      updateLibraryPatronStatus:
+        description: Payload for LibraryPatronStatus
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaLibraryPatronStatus'
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatus/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatus/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaLibraryPatronStatus'
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatus/xml'
+
+      createLibraryPatronStatuss:
+        description: Payload for LibraryPatronStatuss
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaLibraryPatronStatuss'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatuss/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatuss/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaLibraryPatronStatuss'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatuss/xml'
+
+      updateLibraryPatronStatuss:
+        description: Payload for LibraryPatronStatuss
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/updateSchemaLibraryPatronStatuss'
+                  title: LibraryPatronStatuss
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiSchema'
+                  title: deleteRequest
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatuss/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatuss/goessner'
+              deletePESC:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/pesc'
+              deleteGoessner:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/goessner'
+          application/xml:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/updateSchemaLibraryPatronStatuss'
+                  title: LibraryPatronStatuss
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiSchema'
+                  title: deleteRequest
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatuss/xml'
+              deleteXML:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/xml'
+
+
+    # //////////////////////////////////
+    # // Response Payload Definitions //
+    # //////////////////////////////////
+    responsePayloads:
+      #//
+      #// LibraryPatronStatus
+      #//
+      createLibraryPatronStatus:
+        description: Payload for LibraryPatronStatus
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaLibraryPatronStatus'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatus/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatus/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaLibraryPatronStatus'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatus/xml'
+        headers:
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      updateLibraryPatronStatus:
+        description: Payload for LibraryPatronStatus
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaLibraryPatronStatus'
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatus/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatus/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaLibraryPatronStatus'
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatus/xml'
+        headers:
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      createLibraryPatronStatuss:
+        description: Payload for LibraryPatronStatuss
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaLibraryPatronStatuss'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatuss/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatuss/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaLibraryPatronStatuss'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatuss/xml'
+        headers:
+          'accept':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'changesSinceMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/changesSinceMarkerGet'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'ETag':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'navigationCount':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+          'navigationId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+          'navigationLastPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+          'navigationPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+          'navigationPageSize':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      createLibraryPatronStatussQBE:
+        description: Payload for Multiple POST request for LibraryPatronStatuss
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/createSchemaLibraryPatronStatuss'
+                  title: LibraryPatronStatuss
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiSchema'
+                  title: createRequest
+            examples:
+              qbePESC:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/pesc'
+              qbeGoessner:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/goessner'
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatuss/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatuss/goessner'
+          application/xml:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/createSchemaLibraryPatronStatuss'
+                  title: LibraryPatronStatuss
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiSchema'
+                  title: createRequest
+            examples:
+              qbeXML:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/xml'
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/LibraryPatronStatuss/xml'
+        headers:
+          'accept':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'ETag':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'navigationCount':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+          'navigationId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+          'navigationLastPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+          'navigationPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+          'navigationPageSize':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+
+    # ////////////////////////
+    # // Schema Definitions //
+    # ////////////////////////
+    schemaDefinitions:
+      #//
+      #// LibraryPatronStatus
+      #//
+      updateSchemaLibraryPatronStatus:
+        properties:
+          LibraryPatronStatus:
+            type: object
+            description: >-
+              Payload definition for LibraryPatronStatus
+            $ref: 'jsonSchemaUpdate_US.yaml#/definitions/LibraryPatronStatus'
+
+      createSchemaLibraryPatronStatus:
+        properties:
+          LibraryPatronStatus:
+            type: object
+            description: >-
+              Payload definition for LibraryPatronStatus
+            $ref: 'jsonSchemaCreate_US.yaml#/definitions/LibraryPatronStatus'
+
+      updateSchemaLibraryPatronStatuss:
+        properties:
+          LibraryPatronStatuss:
+            type: object
+            description: >-
+              A Collection of LibraryPatronStatus objects
+            properties:
+              LibraryPatronStatus:
+                type: array
+                items:
+                  $ref: 'jsonSchemaUpdate_US.yaml#/definitions/LibraryPatronStatus'
+
+      createSchemaLibraryPatronStatuss:
+        properties:
+          LibraryPatronStatuss:
+            type: object
+            description: >-
+              A Collection of LibraryPatronStatus objects
+            properties:
+              LibraryPatronStatus:
+                type: array
+                items:
+                  $ref: 'jsonSchemaCreate_US.yaml#/definitions/LibraryPatronStatus'
+

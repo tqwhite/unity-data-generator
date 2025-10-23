@@ -1,0 +1,924 @@
+# // Open API file for:
+# // Locale: US
+# // SIF Datamodel Version: 4.3
+# // Limited to Objects: PersonPrivacyObligationDocument
+# // Limited to Groups: Privacy
+# // Include all HTTP Headers: true
+# // Include Admin Directive Endpoints: false
+# // File Generated on: 2022-10-04T13:11:29.34-07:00
+
+openapi: 3.0.2
+info:
+  version: v4.3
+  title: "Privacy"
+  description: "Access 4 Learning® Community Unity Data Model"
+  host: "apihost.example.com"
+  basePath: "v3"
+# /////////////////////////////////////////////////////////////
+
+x-tagGroups:
+# /////////////////////////////////////////////////////////////
+
+tags:
+# /////////////////////////////////////////////////////////////
+
+paths:
+  # //////////////////////////////////////////////
+  # // PersonPrivacyObligationDocuments Endpoints 
+  # //////////////////////////////////////////////
+  /PersonPrivacyObligationDocuments:
+    get:
+      tags:
+      - "PersonPrivacyObligationDocument"
+      summary: Default operation to get a list of all available PersonPrivacyObligationDocuments
+      description: Default operation to get a list of all available PersonPrivacyObligationDocuments
+      operationId: getPersonPrivacyObligationDocuments
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/changesSinceMarker'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/order'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/where'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/ETag'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPage'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPageSize'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queryIntention'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createPersonPrivacyObligationDocuments'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '410':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/410'
+        '413':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    head:
+      tags:
+      - "PersonPrivacyObligationDocument"
+      summary: Get HEAD info for PersonPrivacyObligationDocuments.
+      description: Get HEAD info for PersonPrivacyObligationDocuments. Returns all HTTP Headers but no payload, otherwise it works like HTTP GET. 
+      operationId: headPersonPrivacyObligationDocuments
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/ETag'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPage'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPageSize'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queryIntention'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          description: Operation succeeded. No payload returned for HTTP HEAD.
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'changesSinceMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/changesSinceMarkerHead'
+            'dataPrivacyMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'navigationCount':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+            'navigationId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+            'navigationLastPage':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+            'navigationPage':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+            'navigationPageSize':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+        '401':
+          description: Authorisation failed.
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'dataPrivacyMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+    put:
+      tags:
+      - "PersonPrivacyObligationDocument"
+      summary: Default operation to update or delete multiple PersonPrivacyObligationDocument
+      description: Default operation to update or delete multiple PersonPrivacyObligationDocument
+      operationId: updatePersonPrivacyObligationDocuments
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/updatePersonPrivacyObligationDocuments'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerBatchPutRequest'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/methodOverridePut'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/replacement'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/batchPutResponse'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    post:
+      tags:
+      - "PersonPrivacyObligationDocument"
+      summary: Default operation to create multiple PersonPrivacyObligationDocuments or query by example (QBE).
+      description: Default operation to create multiple PersonPrivacyObligationDocuments or query by example (QBE).
+      operationId: createPersonPrivacyObligationDocuments
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/createPersonPrivacyObligationDocuments'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/methodOverridePost'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createPersonPrivacyObligationDocumentsQBE'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '409':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+  /PersonPrivacyObligationDocuments/PersonPrivacyObligationDocument:
+    post:
+      tags:
+      - "PersonPrivacyObligationDocument"
+      summary: Default operation to create a single PersonPrivacyObligationDocument
+      description: Default operation to create a single PersonPrivacyObligationDocument
+      operationId: createPersonPrivacyObligationDocument
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/createPersonPrivacyObligationDocument'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '201':
+          $ref: '#/components/schemas/responsePayloads/createPersonPrivacyObligationDocument'
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '409':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+  /PersonPrivacyObligationDocuments/{RefId}:
+    put:
+      tags:
+      - "PersonPrivacyObligationDocument"
+      summary: Default operation to update a single PersonPrivacyObligationDocument
+      description: Default operation to update a single PersonPrivacyObligationDocument
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/replacement'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      operationId: updatePersonPrivacyObligationDocument
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/updatePersonPrivacyObligationDocument'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/updatePersonPrivacyObligationDocument'
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    get:
+      tags:
+      - "PersonPrivacyObligationDocument"
+      summary: Default operation to get a single PersonPrivacyObligationDocument
+      description: Default operation to get a single PersonPrivacyObligationDocument
+      operationId: getPersonPrivacyObligationDocument
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createPersonPrivacyObligationDocument'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '405':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/405'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    delete:
+      tags:
+      - "PersonPrivacyObligationDocument"
+      summary: Default operation to delete a single PersonPrivacyObligationDocument
+      description: Default operation to delete a single PersonPrivacyObligationDocument
+      operationId: deletePersonPrivacyObligationDocument
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '204':
+          description: successful operation
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'serviceSubType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceSubType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+
+components:
+  schemas:
+
+    # /////////////////////////////////
+    # // Request Payload Definitions //
+    # /////////////////////////////////
+    requestPayloads:
+      #//
+      #// PersonPrivacyObligationDocument
+      #//
+      createPersonPrivacyObligationDocument:
+        description: Payload for PersonPrivacyObligationDocument
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaPersonPrivacyObligationDocument'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocument/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocument/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaPersonPrivacyObligationDocument'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocument/xml'
+
+      updatePersonPrivacyObligationDocument:
+        description: Payload for PersonPrivacyObligationDocument
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaPersonPrivacyObligationDocument'
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocument/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocument/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaPersonPrivacyObligationDocument'
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocument/xml'
+
+      createPersonPrivacyObligationDocuments:
+        description: Payload for PersonPrivacyObligationDocuments
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaPersonPrivacyObligationDocuments'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocuments/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocuments/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaPersonPrivacyObligationDocuments'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocuments/xml'
+
+      updatePersonPrivacyObligationDocuments:
+        description: Payload for PersonPrivacyObligationDocuments
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/updateSchemaPersonPrivacyObligationDocuments'
+                  title: PersonPrivacyObligationDocuments
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiSchema'
+                  title: deleteRequest
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocuments/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocuments/goessner'
+              deletePESC:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/pesc'
+              deleteGoessner:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/goessner'
+          application/xml:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/updateSchemaPersonPrivacyObligationDocuments'
+                  title: PersonPrivacyObligationDocuments
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiSchema'
+                  title: deleteRequest
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocuments/xml'
+              deleteXML:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/xml'
+
+
+    # //////////////////////////////////
+    # // Response Payload Definitions //
+    # //////////////////////////////////
+    responsePayloads:
+      #//
+      #// PersonPrivacyObligationDocument
+      #//
+      createPersonPrivacyObligationDocument:
+        description: Payload for PersonPrivacyObligationDocument
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaPersonPrivacyObligationDocument'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocument/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocument/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaPersonPrivacyObligationDocument'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocument/xml'
+        headers:
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      updatePersonPrivacyObligationDocument:
+        description: Payload for PersonPrivacyObligationDocument
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaPersonPrivacyObligationDocument'
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocument/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocument/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaPersonPrivacyObligationDocument'
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocument/xml'
+        headers:
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      createPersonPrivacyObligationDocuments:
+        description: Payload for PersonPrivacyObligationDocuments
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaPersonPrivacyObligationDocuments'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocuments/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocuments/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaPersonPrivacyObligationDocuments'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocuments/xml'
+        headers:
+          'accept':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'changesSinceMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/changesSinceMarkerGet'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'ETag':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'navigationCount':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+          'navigationId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+          'navigationLastPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+          'navigationPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+          'navigationPageSize':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      createPersonPrivacyObligationDocumentsQBE:
+        description: Payload for Multiple POST request for PersonPrivacyObligationDocuments
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/createSchemaPersonPrivacyObligationDocuments'
+                  title: PersonPrivacyObligationDocuments
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiSchema'
+                  title: createRequest
+            examples:
+              qbePESC:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/pesc'
+              qbeGoessner:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/goessner'
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocuments/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocuments/goessner'
+          application/xml:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/createSchemaPersonPrivacyObligationDocuments'
+                  title: PersonPrivacyObligationDocuments
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiSchema'
+                  title: createRequest
+            examples:
+              qbeXML:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/xml'
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/PersonPrivacyObligationDocuments/xml'
+        headers:
+          'accept':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'ETag':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'navigationCount':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+          'navigationId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+          'navigationLastPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+          'navigationPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+          'navigationPageSize':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+
+    # ////////////////////////
+    # // Schema Definitions //
+    # ////////////////////////
+    schemaDefinitions:
+      #//
+      #// PersonPrivacyObligationDocument
+      #//
+      updateSchemaPersonPrivacyObligationDocument:
+        properties:
+          PersonPrivacyObligationDocument:
+            type: object
+            description: >-
+              Payload definition for PersonPrivacyObligationDocument
+            $ref: 'jsonSchemaUpdate_US.yaml#/definitions/PersonPrivacyObligationDocument'
+
+      createSchemaPersonPrivacyObligationDocument:
+        properties:
+          PersonPrivacyObligationDocument:
+            type: object
+            description: >-
+              Payload definition for PersonPrivacyObligationDocument
+            $ref: 'jsonSchemaCreate_US.yaml#/definitions/PersonPrivacyObligationDocument'
+
+      updateSchemaPersonPrivacyObligationDocuments:
+        properties:
+          PersonPrivacyObligationDocuments:
+            type: object
+            description: >-
+              A Collection of PersonPrivacyObligationDocument objects
+            properties:
+              PersonPrivacyObligationDocument:
+                type: array
+                items:
+                  $ref: 'jsonSchemaUpdate_US.yaml#/definitions/PersonPrivacyObligationDocument'
+
+      createSchemaPersonPrivacyObligationDocuments:
+        properties:
+          PersonPrivacyObligationDocuments:
+            type: object
+            description: >-
+              A Collection of PersonPrivacyObligationDocument objects
+            properties:
+              PersonPrivacyObligationDocument:
+                type: array
+                items:
+                  $ref: 'jsonSchemaCreate_US.yaml#/definitions/PersonPrivacyObligationDocument'
+

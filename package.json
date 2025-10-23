@@ -12,7 +12,7 @@
   "author": "TQ White II",
   "license": "ISC",
   "dependencies": {
-    "better-sqlite3": "^12.2.0",
+    "better-sqlite3": "^12.4.1",
     "express-rate-limit": "^8.0.1",
     "qtools-asynchronous-pipe-plus": "^1.0.5",
     "qtools-config-file-processor": "^1.0.18",

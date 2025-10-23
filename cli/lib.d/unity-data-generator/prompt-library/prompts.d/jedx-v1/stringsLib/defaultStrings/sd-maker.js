@@ -112,7 +112,7 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 				const { xLog } = process.global;
 
 				if (!wisdom || !wisdom.generatedSynthData) {
-					xLog.warning('SD-Maker Tools: No generatedSynthData found in wisdom');
+					xLog.status('SD-Maker Tools: No generatedSynthData found in wisdom');
 					return wisdom;
 				}
 
@@ -142,7 +142,7 @@ There should be *nothing* except well-formed, valid JSON between those delimiter
 							generatedSynthData: updatedData,
 						};
 					} else {
-						xLog.warning(
+						xLog.status(
 							`SD-Maker Tools: No ${refIdReplacementToken} tokens found`,
 						);
 						return wisdom;

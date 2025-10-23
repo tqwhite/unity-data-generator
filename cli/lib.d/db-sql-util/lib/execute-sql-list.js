@@ -42,7 +42,7 @@ const moduleFunction =
 		// Check if the database file exists and is accessible
 		try {
 			if (!fs.existsSync(workingDatabasePath)) {
-				xLog.warn(
+				xLog.status(
 					`Database file does not exist at ${workingDatabasePath}. A new one will be created.`,
 				);
 			}

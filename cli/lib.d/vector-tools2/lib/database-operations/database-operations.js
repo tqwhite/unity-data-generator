@@ -341,8 +341,8 @@ const moduleFunction = ({ dbUtility } = {}) => {
 				} catch (error) {
 					// Check if it's a vector extension issue
 					if (error.message.includes('sqlite-vec extension not available')) {
-						xLog.warning(`Cannot create vector table ${tableName}: sqlite-vec extension not available`);
-						xLog.warning('Vector similarity search will not be available');
+						xLog.status(`Cannot create vector table ${tableName}: sqlite-vec extension not available`);
+						xLog.status('Vector similarity search will not be available');
 						continue;
 					}
 					xLog.error(`✗ Failed to create ${tableName}: ${error.message}`);
@@ -360,7 +360,7 @@ const moduleFunction = ({ dbUtility } = {}) => {
 				});
 				xLog.status(`✓ Created progress tracking table`);
 			} catch (error) {
-				xLog.warning(`Failed to create progress table: ${error.message}`);
+				xLog.status(`Failed to create progress table: ${error.message}`);
 			}
 
 			xLog.status('');

@@ -131,7 +131,7 @@ const moduleFunction = ({ unused } = {}) => {
 	const checkVectorExtension = (dbUtility, callback) => {
 		dbUtility.query('SELECT vec_version() as version', [], (err, result) => {
 			if (err) {
-				xLog.warning('sqlite-vec extension not available - vector operations limited');
+				xLog.status('sqlite-vec extension not available - vector operations limited');
 				callback(null, false);
 				return;
 			}

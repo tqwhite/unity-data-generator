@@ -165,7 +165,7 @@ const moduleFunction = function (args = {}) {
 		tables.forEach(tableName => {
 			dbUtility.getTableSchema(tableName, (err, schema) => {
 				if (err) {
-					xLog.warning(`Could not get schema for table: ${tableName}`);
+					xLog.status(`Could not get schema for table: ${tableName}`);
 					return;
 				}
 				

@@ -28,7 +28,7 @@ class ProgressTracker {
 		
 		this.dbUtility.execute(sql, [], (err) => {
 			if (err) {
-				this.xLog.warn(`Progress table initialization warning: ${err.message}`);
+				this.xLog.status(`Progress table initialization warning: ${err.message}`);
 			}
 		});
 	}
@@ -90,7 +90,7 @@ class ProgressTracker {
 		
 		this.dbUtility.execute(sql, [], (err) => {
 			if (err) {
-				this.xLog.warn(`Failed to update progress: ${err.message}`);
+				this.xLog.status(`Failed to update progress: ${err.message}`);
 			}
 			if (callback) callback(err);
 		});
@@ -104,7 +104,7 @@ class ProgressTracker {
 		
 		this.dbUtility.execute(sql, [], (err) => {
 			if (err) {
-				this.xLog.warn(`Failed to complete batch: ${err.message}`);
+				this.xLog.status(`Failed to complete batch: ${err.message}`);
 			} else {
 				this.xLog.status(`Completed batch: ${batchId}`);
 			}

@@ -1,0 +1,2688 @@
+# // Open API file for:
+# // Locale: US
+# // SIF Datamodel Version: 4.3
+# // Limited to Objects: AggregateStatisticInfo,AggregateCharacteristicInfo,AggregateStatisticFact
+# // Limited to Groups: Data Warehouse
+# // Include all HTTP Headers: true
+# // Include Admin Directive Endpoints: false
+# // File Generated on: 2022-10-04T13:11:09.23-07:00
+
+openapi: 3.0.2
+info:
+  version: v4.3
+  title: "Data Warehouse"
+  description: "Access 4 Learning® Community Unity Data Model"
+  host: "apihost.example.com"
+  basePath: "v3"
+# /////////////////////////////////////////////////////////////
+
+x-tagGroups:
+# /////////////////////////////////////////////////////////////
+
+tags:
+# /////////////////////////////////////////////////////////////
+
+paths:
+  # //////////////////////////////////////////////
+  # // AggregateStatisticInfos Endpoints 
+  # //////////////////////////////////////////////
+  /AggregateStatisticInfos:
+    get:
+      tags:
+      - "AggregateStatisticInfo"
+      summary: Default operation to get a list of all available AggregateStatisticInfos
+      description: Default operation to get a list of all available AggregateStatisticInfos
+      operationId: getAggregateStatisticInfos
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/changesSinceMarker'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/order'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/where'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/ETag'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPage'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPageSize'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queryIntention'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createAggregateStatisticInfos'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '410':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/410'
+        '413':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    head:
+      tags:
+      - "AggregateStatisticInfo"
+      summary: Get HEAD info for AggregateStatisticInfos.
+      description: Get HEAD info for AggregateStatisticInfos. Returns all HTTP Headers but no payload, otherwise it works like HTTP GET. 
+      operationId: headAggregateStatisticInfos
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/ETag'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPage'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPageSize'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queryIntention'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          description: Operation succeeded. No payload returned for HTTP HEAD.
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'changesSinceMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/changesSinceMarkerHead'
+            'dataPrivacyMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'navigationCount':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+            'navigationId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+            'navigationLastPage':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+            'navigationPage':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+            'navigationPageSize':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+        '401':
+          description: Authorisation failed.
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'dataPrivacyMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+    put:
+      tags:
+      - "AggregateStatisticInfo"
+      summary: Default operation to update or delete multiple AggregateStatisticInfo
+      description: Default operation to update or delete multiple AggregateStatisticInfo
+      operationId: updateAggregateStatisticInfos
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/updateAggregateStatisticInfos'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerBatchPutRequest'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/methodOverridePut'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/replacement'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/batchPutResponse'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    post:
+      tags:
+      - "AggregateStatisticInfo"
+      summary: Default operation to create multiple AggregateStatisticInfos or query by example (QBE).
+      description: Default operation to create multiple AggregateStatisticInfos or query by example (QBE).
+      operationId: createAggregateStatisticInfos
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/createAggregateStatisticInfos'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/methodOverridePost'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createAggregateStatisticInfosQBE'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '409':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+  /AggregateStatisticInfos/AggregateStatisticInfo:
+    post:
+      tags:
+      - "AggregateStatisticInfo"
+      summary: Default operation to create a single AggregateStatisticInfo
+      description: Default operation to create a single AggregateStatisticInfo
+      operationId: createAggregateStatisticInfo
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/createAggregateStatisticInfo'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '201':
+          $ref: '#/components/schemas/responsePayloads/createAggregateStatisticInfo'
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '409':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+  /AggregateStatisticInfos/{RefId}:
+    put:
+      tags:
+      - "AggregateStatisticInfo"
+      summary: Default operation to update a single AggregateStatisticInfo
+      description: Default operation to update a single AggregateStatisticInfo
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/replacement'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      operationId: updateAggregateStatisticInfo
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/updateAggregateStatisticInfo'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/updateAggregateStatisticInfo'
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    get:
+      tags:
+      - "AggregateStatisticInfo"
+      summary: Default operation to get a single AggregateStatisticInfo
+      description: Default operation to get a single AggregateStatisticInfo
+      operationId: getAggregateStatisticInfo
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createAggregateStatisticInfo'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '405':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/405'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    delete:
+      tags:
+      - "AggregateStatisticInfo"
+      summary: Default operation to delete a single AggregateStatisticInfo
+      description: Default operation to delete a single AggregateStatisticInfo
+      operationId: deleteAggregateStatisticInfo
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '204':
+          description: successful operation
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'serviceSubType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceSubType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+
+  # //////////////////////////////////////////////
+  # // AggregateCharacteristicInfos Endpoints 
+  # //////////////////////////////////////////////
+  /AggregateCharacteristicInfos:
+    get:
+      tags:
+      - "AggregateCharacteristicInfo"
+      summary: Default operation to get a list of all available AggregateCharacteristicInfos
+      description: Default operation to get a list of all available AggregateCharacteristicInfos
+      operationId: getAggregateCharacteristicInfos
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/changesSinceMarker'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/order'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/where'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/ETag'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPage'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPageSize'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queryIntention'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createAggregateCharacteristicInfos'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '410':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/410'
+        '413':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    head:
+      tags:
+      - "AggregateCharacteristicInfo"
+      summary: Get HEAD info for AggregateCharacteristicInfos.
+      description: Get HEAD info for AggregateCharacteristicInfos. Returns all HTTP Headers but no payload, otherwise it works like HTTP GET. 
+      operationId: headAggregateCharacteristicInfos
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/ETag'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPage'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPageSize'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queryIntention'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          description: Operation succeeded. No payload returned for HTTP HEAD.
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'changesSinceMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/changesSinceMarkerHead'
+            'dataPrivacyMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'navigationCount':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+            'navigationId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+            'navigationLastPage':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+            'navigationPage':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+            'navigationPageSize':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+        '401':
+          description: Authorisation failed.
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'dataPrivacyMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+    put:
+      tags:
+      - "AggregateCharacteristicInfo"
+      summary: Default operation to update or delete multiple AggregateCharacteristicInfo
+      description: Default operation to update or delete multiple AggregateCharacteristicInfo
+      operationId: updateAggregateCharacteristicInfos
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/updateAggregateCharacteristicInfos'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerBatchPutRequest'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/methodOverridePut'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/replacement'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/batchPutResponse'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    post:
+      tags:
+      - "AggregateCharacteristicInfo"
+      summary: Default operation to create multiple AggregateCharacteristicInfos or query by example (QBE).
+      description: Default operation to create multiple AggregateCharacteristicInfos or query by example (QBE).
+      operationId: createAggregateCharacteristicInfos
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/createAggregateCharacteristicInfos'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/methodOverridePost'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createAggregateCharacteristicInfosQBE'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '409':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+  /AggregateCharacteristicInfos/AggregateCharacteristicInfo:
+    post:
+      tags:
+      - "AggregateCharacteristicInfo"
+      summary: Default operation to create a single AggregateCharacteristicInfo
+      description: Default operation to create a single AggregateCharacteristicInfo
+      operationId: createAggregateCharacteristicInfo
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/createAggregateCharacteristicInfo'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '201':
+          $ref: '#/components/schemas/responsePayloads/createAggregateCharacteristicInfo'
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '409':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+  /AggregateCharacteristicInfos/{RefId}:
+    put:
+      tags:
+      - "AggregateCharacteristicInfo"
+      summary: Default operation to update a single AggregateCharacteristicInfo
+      description: Default operation to update a single AggregateCharacteristicInfo
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/replacement'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      operationId: updateAggregateCharacteristicInfo
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/updateAggregateCharacteristicInfo'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/updateAggregateCharacteristicInfo'
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    get:
+      tags:
+      - "AggregateCharacteristicInfo"
+      summary: Default operation to get a single AggregateCharacteristicInfo
+      description: Default operation to get a single AggregateCharacteristicInfo
+      operationId: getAggregateCharacteristicInfo
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createAggregateCharacteristicInfo'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '405':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/405'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    delete:
+      tags:
+      - "AggregateCharacteristicInfo"
+      summary: Default operation to delete a single AggregateCharacteristicInfo
+      description: Default operation to delete a single AggregateCharacteristicInfo
+      operationId: deleteAggregateCharacteristicInfo
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '204':
+          description: successful operation
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'serviceSubType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceSubType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+
+  # //////////////////////////////////////////////
+  # // AggregateStatisticFacts Endpoints 
+  # //////////////////////////////////////////////
+  /AggregateStatisticFacts:
+    get:
+      tags:
+      - "AggregateStatisticFact"
+      summary: Default operation to get a list of all available AggregateStatisticFacts
+      description: Default operation to get a list of all available AggregateStatisticFacts
+      operationId: getAggregateStatisticFacts
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/changesSinceMarker'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/order'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/where'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/ETag'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPage'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPageSize'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queryIntention'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createAggregateStatisticFacts'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '410':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/410'
+        '413':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    head:
+      tags:
+      - "AggregateStatisticFact"
+      summary: Get HEAD info for AggregateStatisticFacts.
+      description: Get HEAD info for AggregateStatisticFacts. Returns all HTTP Headers but no payload, otherwise it works like HTTP GET. 
+      operationId: headAggregateStatisticFacts
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/ETag'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPage'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPageSize'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queryIntention'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          description: Operation succeeded. No payload returned for HTTP HEAD.
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'changesSinceMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/changesSinceMarkerHead'
+            'dataPrivacyMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'navigationCount':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+            'navigationId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+            'navigationLastPage':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+            'navigationPage':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+            'navigationPageSize':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+        '401':
+          description: Authorisation failed.
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'dataPrivacyMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+    put:
+      tags:
+      - "AggregateStatisticFact"
+      summary: Default operation to update or delete multiple AggregateStatisticFact
+      description: Default operation to update or delete multiple AggregateStatisticFact
+      operationId: updateAggregateStatisticFacts
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/updateAggregateStatisticFacts'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerBatchPutRequest'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/methodOverridePut'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/replacement'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/batchPutResponse'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    post:
+      tags:
+      - "AggregateStatisticFact"
+      summary: Default operation to create multiple AggregateStatisticFacts or query by example (QBE).
+      description: Default operation to create multiple AggregateStatisticFacts or query by example (QBE).
+      operationId: createAggregateStatisticFacts
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/createAggregateStatisticFacts'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/methodOverridePost'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createAggregateStatisticFactsQBE'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '409':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+  /AggregateStatisticFacts/AggregateStatisticFact:
+    post:
+      tags:
+      - "AggregateStatisticFact"
+      summary: Default operation to create a single AggregateStatisticFact
+      description: Default operation to create a single AggregateStatisticFact
+      operationId: createAggregateStatisticFact
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/createAggregateStatisticFact'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '201':
+          $ref: '#/components/schemas/responsePayloads/createAggregateStatisticFact'
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '409':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+  /AggregateStatisticFacts/{RefId}:
+    put:
+      tags:
+      - "AggregateStatisticFact"
+      summary: Default operation to update a single AggregateStatisticFact
+      description: Default operation to update a single AggregateStatisticFact
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/replacement'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      operationId: updateAggregateStatisticFact
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/updateAggregateStatisticFact'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/updateAggregateStatisticFact'
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    get:
+      tags:
+      - "AggregateStatisticFact"
+      summary: Default operation to get a single AggregateStatisticFact
+      description: Default operation to get a single AggregateStatisticFact
+      operationId: getAggregateStatisticFact
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createAggregateStatisticFact'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '405':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/405'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    delete:
+      tags:
+      - "AggregateStatisticFact"
+      summary: Default operation to delete a single AggregateStatisticFact
+      description: Default operation to delete a single AggregateStatisticFact
+      operationId: deleteAggregateStatisticFact
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '204':
+          description: successful operation
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'serviceSubType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceSubType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+
+components:
+  schemas:
+
+    # /////////////////////////////////
+    # // Request Payload Definitions //
+    # /////////////////////////////////
+    requestPayloads:
+      #//
+      #// AggregateStatisticInfo
+      #//
+      createAggregateStatisticInfo:
+        description: Payload for AggregateStatisticInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticInfo'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfo/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfo/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticInfo'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfo/xml'
+
+      updateAggregateStatisticInfo:
+        description: Payload for AggregateStatisticInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateStatisticInfo'
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfo/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfo/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateStatisticInfo'
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfo/xml'
+
+      createAggregateStatisticInfos:
+        description: Payload for AggregateStatisticInfos
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticInfos'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfos/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfos/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticInfos'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfos/xml'
+
+      updateAggregateStatisticInfos:
+        description: Payload for AggregateStatisticInfos
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateStatisticInfos'
+                  title: AggregateStatisticInfos
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiSchema'
+                  title: deleteRequest
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfos/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfos/goessner'
+              deletePESC:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/pesc'
+              deleteGoessner:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/goessner'
+          application/xml:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateStatisticInfos'
+                  title: AggregateStatisticInfos
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiSchema'
+                  title: deleteRequest
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfos/xml'
+              deleteXML:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/xml'
+
+      #//
+      #// AggregateCharacteristicInfo
+      #//
+      createAggregateCharacteristicInfo:
+        description: Payload for AggregateCharacteristicInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateCharacteristicInfo'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfo/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfo/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateCharacteristicInfo'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfo/xml'
+
+      updateAggregateCharacteristicInfo:
+        description: Payload for AggregateCharacteristicInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateCharacteristicInfo'
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfo/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfo/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateCharacteristicInfo'
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfo/xml'
+
+      createAggregateCharacteristicInfos:
+        description: Payload for AggregateCharacteristicInfos
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateCharacteristicInfos'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfos/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfos/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateCharacteristicInfos'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfos/xml'
+
+      updateAggregateCharacteristicInfos:
+        description: Payload for AggregateCharacteristicInfos
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateCharacteristicInfos'
+                  title: AggregateCharacteristicInfos
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiSchema'
+                  title: deleteRequest
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfos/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfos/goessner'
+              deletePESC:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/pesc'
+              deleteGoessner:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/goessner'
+          application/xml:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateCharacteristicInfos'
+                  title: AggregateCharacteristicInfos
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiSchema'
+                  title: deleteRequest
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfos/xml'
+              deleteXML:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/xml'
+
+      #//
+      #// AggregateStatisticFact
+      #//
+      createAggregateStatisticFact:
+        description: Payload for AggregateStatisticFact
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticFact'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFact/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFact/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticFact'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFact/xml'
+
+      updateAggregateStatisticFact:
+        description: Payload for AggregateStatisticFact
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateStatisticFact'
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFact/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFact/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateStatisticFact'
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFact/xml'
+
+      createAggregateStatisticFacts:
+        description: Payload for AggregateStatisticFacts
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticFacts'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFacts/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFacts/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticFacts'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFacts/xml'
+
+      updateAggregateStatisticFacts:
+        description: Payload for AggregateStatisticFacts
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateStatisticFacts'
+                  title: AggregateStatisticFacts
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiSchema'
+                  title: deleteRequest
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFacts/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFacts/goessner'
+              deletePESC:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/pesc'
+              deleteGoessner:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/goessner'
+          application/xml:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateStatisticFacts'
+                  title: AggregateStatisticFacts
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiSchema'
+                  title: deleteRequest
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFacts/xml'
+              deleteXML:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/xml'
+
+
+    # //////////////////////////////////
+    # // Response Payload Definitions //
+    # //////////////////////////////////
+    responsePayloads:
+      #//
+      #// AggregateStatisticInfo
+      #//
+      createAggregateStatisticInfo:
+        description: Payload for AggregateStatisticInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticInfo'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfo/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfo/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticInfo'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfo/xml'
+        headers:
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      updateAggregateStatisticInfo:
+        description: Payload for AggregateStatisticInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateStatisticInfo'
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfo/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfo/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateStatisticInfo'
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfo/xml'
+        headers:
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      createAggregateStatisticInfos:
+        description: Payload for AggregateStatisticInfos
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticInfos'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfos/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfos/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticInfos'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfos/xml'
+        headers:
+          'accept':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'changesSinceMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/changesSinceMarkerGet'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'ETag':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'navigationCount':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+          'navigationId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+          'navigationLastPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+          'navigationPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+          'navigationPageSize':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      createAggregateStatisticInfosQBE:
+        description: Payload for Multiple POST request for AggregateStatisticInfos
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticInfos'
+                  title: AggregateStatisticInfos
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiSchema'
+                  title: createRequest
+            examples:
+              qbePESC:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/pesc'
+              qbeGoessner:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/goessner'
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfos/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfos/goessner'
+          application/xml:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticInfos'
+                  title: AggregateStatisticInfos
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiSchema'
+                  title: createRequest
+            examples:
+              qbeXML:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/xml'
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticInfos/xml'
+        headers:
+          'accept':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'ETag':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'navigationCount':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+          'navigationId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+          'navigationLastPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+          'navigationPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+          'navigationPageSize':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      #//
+      #// AggregateCharacteristicInfo
+      #//
+      createAggregateCharacteristicInfo:
+        description: Payload for AggregateCharacteristicInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateCharacteristicInfo'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfo/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfo/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateCharacteristicInfo'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfo/xml'
+        headers:
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      updateAggregateCharacteristicInfo:
+        description: Payload for AggregateCharacteristicInfo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateCharacteristicInfo'
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfo/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfo/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateCharacteristicInfo'
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfo/xml'
+        headers:
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      createAggregateCharacteristicInfos:
+        description: Payload for AggregateCharacteristicInfos
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateCharacteristicInfos'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfos/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfos/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateCharacteristicInfos'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfos/xml'
+        headers:
+          'accept':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'changesSinceMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/changesSinceMarkerGet'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'ETag':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'navigationCount':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+          'navigationId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+          'navigationLastPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+          'navigationPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+          'navigationPageSize':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      createAggregateCharacteristicInfosQBE:
+        description: Payload for Multiple POST request for AggregateCharacteristicInfos
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateCharacteristicInfos'
+                  title: AggregateCharacteristicInfos
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiSchema'
+                  title: createRequest
+            examples:
+              qbePESC:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/pesc'
+              qbeGoessner:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/goessner'
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfos/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfos/goessner'
+          application/xml:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateCharacteristicInfos'
+                  title: AggregateCharacteristicInfos
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiSchema'
+                  title: createRequest
+            examples:
+              qbeXML:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/xml'
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateCharacteristicInfos/xml'
+        headers:
+          'accept':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'ETag':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'navigationCount':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+          'navigationId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+          'navigationLastPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+          'navigationPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+          'navigationPageSize':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      #//
+      #// AggregateStatisticFact
+      #//
+      createAggregateStatisticFact:
+        description: Payload for AggregateStatisticFact
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticFact'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFact/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFact/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticFact'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFact/xml'
+        headers:
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      updateAggregateStatisticFact:
+        description: Payload for AggregateStatisticFact
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateStatisticFact'
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFact/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFact/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAggregateStatisticFact'
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFact/xml'
+        headers:
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      createAggregateStatisticFacts:
+        description: Payload for AggregateStatisticFacts
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticFacts'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFacts/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFacts/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticFacts'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFacts/xml'
+        headers:
+          'accept':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'changesSinceMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/changesSinceMarkerGet'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'ETag':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'navigationCount':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+          'navigationId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+          'navigationLastPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+          'navigationPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+          'navigationPageSize':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      createAggregateStatisticFactsQBE:
+        description: Payload for Multiple POST request for AggregateStatisticFacts
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticFacts'
+                  title: AggregateStatisticFacts
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiSchema'
+                  title: createRequest
+            examples:
+              qbePESC:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/pesc'
+              qbeGoessner:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/goessner'
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFacts/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFacts/goessner'
+          application/xml:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/createSchemaAggregateStatisticFacts'
+                  title: AggregateStatisticFacts
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiSchema'
+                  title: createRequest
+            examples:
+              qbeXML:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/xml'
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/AggregateStatisticFacts/xml'
+        headers:
+          'accept':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'ETag':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'navigationCount':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+          'navigationId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+          'navigationLastPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+          'navigationPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+          'navigationPageSize':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+
+    # ////////////////////////
+    # // Schema Definitions //
+    # ////////////////////////
+    schemaDefinitions:
+      #//
+      #// AggregateStatisticInfo
+      #//
+      updateSchemaAggregateStatisticInfo:
+        properties:
+          AggregateStatisticInfo:
+            type: object
+            description: >-
+              Payload definition for AggregateStatisticInfo
+            $ref: 'jsonSchemaUpdate_US.yaml#/definitions/AggregateStatisticInfo'
+
+      createSchemaAggregateStatisticInfo:
+        properties:
+          AggregateStatisticInfo:
+            type: object
+            description: >-
+              Payload definition for AggregateStatisticInfo
+            $ref: 'jsonSchemaCreate_US.yaml#/definitions/AggregateStatisticInfo'
+
+      updateSchemaAggregateStatisticInfos:
+        properties:
+          AggregateStatisticInfos:
+            type: object
+            description: >-
+              A Collection of AggregateStatisticInfo objects
+            properties:
+              AggregateStatisticInfo:
+                type: array
+                items:
+                  $ref: 'jsonSchemaUpdate_US.yaml#/definitions/AggregateStatisticInfo'
+
+      createSchemaAggregateStatisticInfos:
+        properties:
+          AggregateStatisticInfos:
+            type: object
+            description: >-
+              A Collection of AggregateStatisticInfo objects
+            properties:
+              AggregateStatisticInfo:
+                type: array
+                items:
+                  $ref: 'jsonSchemaCreate_US.yaml#/definitions/AggregateStatisticInfo'
+
+      #//
+      #// AggregateCharacteristicInfo
+      #//
+      updateSchemaAggregateCharacteristicInfo:
+        properties:
+          AggregateCharacteristicInfo:
+            type: object
+            description: >-
+              Payload definition for AggregateCharacteristicInfo
+            $ref: 'jsonSchemaUpdate_US.yaml#/definitions/AggregateCharacteristicInfo'
+
+      createSchemaAggregateCharacteristicInfo:
+        properties:
+          AggregateCharacteristicInfo:
+            type: object
+            description: >-
+              Payload definition for AggregateCharacteristicInfo
+            $ref: 'jsonSchemaCreate_US.yaml#/definitions/AggregateCharacteristicInfo'
+
+      updateSchemaAggregateCharacteristicInfos:
+        properties:
+          AggregateCharacteristicInfos:
+            type: object
+            description: >-
+              A Collection of AggregateCharacteristicInfo objects
+            properties:
+              AggregateCharacteristicInfo:
+                type: array
+                items:
+                  $ref: 'jsonSchemaUpdate_US.yaml#/definitions/AggregateCharacteristicInfo'
+
+      createSchemaAggregateCharacteristicInfos:
+        properties:
+          AggregateCharacteristicInfos:
+            type: object
+            description: >-
+              A Collection of AggregateCharacteristicInfo objects
+            properties:
+              AggregateCharacteristicInfo:
+                type: array
+                items:
+                  $ref: 'jsonSchemaCreate_US.yaml#/definitions/AggregateCharacteristicInfo'
+
+      #//
+      #// AggregateStatisticFact
+      #//
+      updateSchemaAggregateStatisticFact:
+        properties:
+          AggregateStatisticFact:
+            type: object
+            description: >-
+              Payload definition for AggregateStatisticFact
+            $ref: 'jsonSchemaUpdate_US.yaml#/definitions/AggregateStatisticFact'
+
+      createSchemaAggregateStatisticFact:
+        properties:
+          AggregateStatisticFact:
+            type: object
+            description: >-
+              Payload definition for AggregateStatisticFact
+            $ref: 'jsonSchemaCreate_US.yaml#/definitions/AggregateStatisticFact'
+
+      updateSchemaAggregateStatisticFacts:
+        properties:
+          AggregateStatisticFacts:
+            type: object
+            description: >-
+              A Collection of AggregateStatisticFact objects
+            properties:
+              AggregateStatisticFact:
+                type: array
+                items:
+                  $ref: 'jsonSchemaUpdate_US.yaml#/definitions/AggregateStatisticFact'
+
+      createSchemaAggregateStatisticFacts:
+        properties:
+          AggregateStatisticFacts:
+            type: object
+            description: >-
+              A Collection of AggregateStatisticFact objects
+            properties:
+              AggregateStatisticFact:
+                type: array
+                items:
+                  $ref: 'jsonSchemaCreate_US.yaml#/definitions/AggregateStatisticFact'
+

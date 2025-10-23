@@ -1,0 +1,924 @@
+# // Open API file for:
+# // Locale: US
+# // SIF Datamodel Version: 4.3
+# // Limited to Objects: Authentication
+# // Limited to Groups: Infrastructure
+# // Include all HTTP Headers: true
+# // Include Admin Directive Endpoints: false
+# // File Generated on: 2022-10-04T13:11:24.012-07:00
+
+openapi: 3.0.2
+info:
+  version: v4.3
+  title: "Infrastructure"
+  description: "Access 4 Learning® Community Unity Data Model"
+  host: "apihost.example.com"
+  basePath: "v3"
+# /////////////////////////////////////////////////////////////
+
+x-tagGroups:
+# /////////////////////////////////////////////////////////////
+
+tags:
+# /////////////////////////////////////////////////////////////
+
+paths:
+  # //////////////////////////////////////////////
+  # // Authentications Endpoints 
+  # //////////////////////////////////////////////
+  /Authentications:
+    get:
+      tags:
+      - "Authentication"
+      summary: Default operation to get a list of all available Authentications
+      description: Default operation to get a list of all available Authentications
+      operationId: getAuthentications
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/changesSinceMarker'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/order'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/queryParameters/where'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/ETag'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPage'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPageSize'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queryIntention'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createAuthentications'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '410':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/410'
+        '413':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/413'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    head:
+      tags:
+      - "Authentication"
+      summary: Get HEAD info for Authentications.
+      description: Get HEAD info for Authentications. Returns all HTTP Headers but no payload, otherwise it works like HTTP GET. 
+      operationId: headAuthentications
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/ETag'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPage'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/navigationPageSize'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queryIntention'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          description: Operation succeeded. No payload returned for HTTP HEAD.
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'changesSinceMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/changesSinceMarkerHead'
+            'dataPrivacyMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'navigationCount':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+            'navigationId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+            'navigationLastPage':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+            'navigationPage':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+            'navigationPageSize':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+        '401':
+          description: Authorisation failed.
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'dataPrivacyMarker':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+    put:
+      tags:
+      - "Authentication"
+      summary: Default operation to update or delete multiple Authentication
+      description: Default operation to update or delete multiple Authentication
+      operationId: updateAuthentications
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/updateAuthentications'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerBatchPutRequest'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/methodOverridePut'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/replacement'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/batchPutResponse'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    post:
+      tags:
+      - "Authentication"
+      summary: Default operation to create multiple Authentications or query by example (QBE).
+      description: Default operation to create multiple Authentications or query by example (QBE).
+      operationId: createAuthentications
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/createAuthentications'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/methodOverridePost'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/queueId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createAuthenticationsQBE'
+        '202':
+          description: Accepted. Returned for DELAYED requests. No payload.
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '409':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+  /Authentications/Authentication:
+    post:
+      tags:
+      - "Authentication"
+      summary: Default operation to create a single Authentication
+      description: Default operation to create a single Authentication
+      operationId: createAuthentication
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/createAuthentication'
+      parameters:
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/mustUseAdvisory'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '201':
+          $ref: '#/components/schemas/responsePayloads/createAuthentication'
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '409':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/409'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+  /Authentications/{RefId}:
+    put:
+      tags:
+      - "Authentication"
+      summary: Default operation to update a single Authentication
+      description: Default operation to update a single Authentication
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-type'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/content-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/replacement'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      operationId: updateAuthentication
+      requestBody:
+        $ref: '#/components/schemas/requestPayloads/updateAuthentication'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/updateAuthentication'
+        '400':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/400'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '412':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/412'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    get:
+      tags:
+      - "Authentication"
+      summary: Default operation to get a single Authentication
+      description: Default operation to get a single Authentication
+      operationId: getAuthentication
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/dataPrivacyMarkerStd'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '200':
+          $ref: '#/components/schemas/responsePayloads/createAuthentication'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '405':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/405'
+        '415':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/415'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+    delete:
+      tags:
+      - "Authentication"
+      summary: Default operation to delete a single Authentication
+      description: Default operation to delete a single Authentication
+      operationId: deleteAuthentication
+      parameters:
+      - name: RefId
+        in: path
+        description: >-
+          
+        required: true
+        schema:
+          type: string
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authorization'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-encoding'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/accept-profile'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/applicationKey'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/authenticatedUser'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/fingerprint'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/generatorId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/messageType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestId'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/requestAction'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/serviceType'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/sourceName'
+      - $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/request/timestamp'
+      responses:
+        '204':
+          description: successful operation
+          headers:
+            'accept':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+            'content-type':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+            'content-encoding':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+            'content-profile':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+            'environmentURI':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+            'ETag':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+            'fingerprint':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+            'messageId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+            'messageType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+            'relativeServicePath':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+            'requestId':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+            'responseAction':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+            'serviceType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+            'serviceSubType':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceSubType'
+            'timestamp':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+            'vary':
+              $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+        '401':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/401'
+        '403':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/403'
+        '404':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/404'
+        '500':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/500'
+        '501':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/501'
+        '503':
+          $ref: 'commonDefs-all-headers.yaml#/components/schemas/errorResponses/responses/503'
+
+components:
+  schemas:
+
+    # /////////////////////////////////
+    # // Request Payload Definitions //
+    # /////////////////////////////////
+    requestPayloads:
+      #//
+      #// Authentication
+      #//
+      createAuthentication:
+        description: Payload for Authentication
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAuthentication'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentication/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentication/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAuthentication'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentication/xml'
+
+      updateAuthentication:
+        description: Payload for Authentication
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAuthentication'
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentication/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentication/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAuthentication'
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentication/xml'
+
+      createAuthentications:
+        description: Payload for Authentications
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAuthentications'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentications/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentications/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAuthentications'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentications/xml'
+
+      updateAuthentications:
+        description: Payload for Authentications
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/updateSchemaAuthentications'
+                  title: Authentications
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiSchema'
+                  title: deleteRequest
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentications/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentications/goessner'
+              deletePESC:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/pesc'
+              deleteGoessner:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/goessner'
+          application/xml:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/updateSchemaAuthentications'
+                  title: Authentications
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiSchema'
+                  title: deleteRequest
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentications/xml'
+              deleteXML:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleRequests/deleteMultiExamples/xml'
+
+
+    # //////////////////////////////////
+    # // Response Payload Definitions //
+    # //////////////////////////////////
+    responsePayloads:
+      #//
+      #// Authentication
+      #//
+      createAuthentication:
+        description: Payload for Authentication
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAuthentication'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentication/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentication/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAuthentication'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentication/xml'
+        headers:
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      updateAuthentication:
+        description: Payload for Authentication
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAuthentication'
+            examples:
+              updatePESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentication/pesc'
+              updateGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentication/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/updateSchemaAuthentication'
+            examples:
+              updateXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentication/xml'
+        headers:
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      createAuthentications:
+        description: Payload for Authentications
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAuthentications'
+            examples:
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentications/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentications/goessner'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/schemaDefinitions/createSchemaAuthentications'
+            examples:
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentications/xml'
+        headers:
+          'accept':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'changesSinceMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/changesSinceMarkerGet'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'ETag':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'navigationCount':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+          'navigationId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+          'navigationLastPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+          'navigationPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+          'navigationPageSize':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+      createAuthenticationsQBE:
+        description: Payload for Multiple POST request for Authentications
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/createSchemaAuthentications'
+                  title: Authentications
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiSchema'
+                  title: createRequest
+            examples:
+              qbePESC:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/pesc'
+              qbeGoessner:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/goessner'
+              createPESC:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentications/pesc'
+              createGoessner:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentications/goessner'
+          application/xml:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/schemaDefinitions/createSchemaAuthentications'
+                  title: Authentications
+                - $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiSchema'
+                  title: createRequest
+            examples:
+              qbeXML:
+                $ref: 'commonDefs-all-headers.yaml#/components/schemas/multipleResponses/createMultiExamples/xml'
+              createXML:
+                $ref: 'examples_US_4.3.yaml#/objectExamples/Authentications/xml'
+        headers:
+          'accept':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/accept'
+          'content-type':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-type'
+          'content-encoding':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-encoding'
+          'content-profile':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/content-profile'
+          'dataPrivacyMarker':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/dataPrivacyMarkerStd'
+          'environmentURI':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/environmentURI'
+          'ETag':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/ETag'
+          'fingerprint':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/fingerprint'
+          'messageId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageId'
+          'messageType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/messageType'
+          'navigationCount':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationCount'
+          'navigationId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationId'
+          'navigationLastPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationLastPage'
+          'navigationPage':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPage'
+          'navigationPageSize':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/navigationPageSize'
+          'relativeServicePath':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/relativeServicePath'
+          'requestId':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/requestId'
+          'responseAction':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/responseAction'
+          'serviceType':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/serviceType'
+          'timestamp':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/timestamp'
+          'vary':
+            $ref: 'commonDefs-all-headers.yaml#/components/schemas/httpHeaders/response/vary'
+
+
+    # ////////////////////////
+    # // Schema Definitions //
+    # ////////////////////////
+    schemaDefinitions:
+      #//
+      #// Authentication
+      #//
+      updateSchemaAuthentication:
+        properties:
+          Authentication:
+            type: object
+            description: >-
+              Payload definition for Authentication
+            $ref: 'jsonSchemaUpdate_US.yaml#/definitions/Authentication'
+
+      createSchemaAuthentication:
+        properties:
+          Authentication:
+            type: object
+            description: >-
+              Payload definition for Authentication
+            $ref: 'jsonSchemaCreate_US.yaml#/definitions/Authentication'
+
+      updateSchemaAuthentications:
+        properties:
+          Authentications:
+            type: object
+            description: >-
+              A Collection of Authentication objects
+            properties:
+              Authentication:
+                type: array
+                items:
+                  $ref: 'jsonSchemaUpdate_US.yaml#/definitions/Authentication'
+
+      createSchemaAuthentications:
+        properties:
+          Authentications:
+            type: object
+            description: >-
+              A Collection of Authentication objects
+            properties:
+              Authentication:
+                type: array
+                items:
+                  $ref: 'jsonSchemaCreate_US.yaml#/definitions/Authentication'
+

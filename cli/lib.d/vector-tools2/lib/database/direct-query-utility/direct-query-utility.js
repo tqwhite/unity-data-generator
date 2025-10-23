@@ -208,7 +208,7 @@ class DirectQueryUtility {
 					const traceId = Math.floor(Math.random() * 1e9);
 					const vecError = new Error(`sqlite-vec extension not available [trace:${traceId}]`);
 					vecError.traceId = traceId;
-					xLog.warning(`[${traceId}] Vector extension not available - vector operations disabled`);
+					xLog.status(`[${traceId}] Vector extension not available - vector operations disabled`);
 					callback(vecError);
 					return;
 				}

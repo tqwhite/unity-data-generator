@@ -130,7 +130,7 @@ const initializeApplication = async () => {
 		process.global.openai = new OpenAI({ apiKey });
 		xLog.verbose('OpenAI initialized successfully');
 	} else {
-		xLog.warn('OpenAI API key not found - vector operations will not be available');
+		xLog.status('OpenAI API key not found - vector operations will not be available');
 	}
 	
 	// Validate required configuration

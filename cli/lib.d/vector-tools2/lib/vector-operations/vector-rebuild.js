@@ -257,7 +257,7 @@ class VectorRebuild {
 			
 			this.xLog.status('Database optimization completed');
 		} catch (error) {
-			this.xLog.warn(`Database optimization failed: ${error.message}`);
+			this.xLog.status(`Database optimization failed: ${error.message}`);
 			// Don't fail the rebuild for optimization issues
 		}
 	}
@@ -295,13 +295,13 @@ class VectorRebuild {
 			if (verification.completionRate >= 95) {
 				this.xLog.status(`Verification passed: ${verification.completionRate}% completion rate`);
 			} else {
-				this.xLog.warn(`Verification warning: Only ${verification.completionRate}% completion rate`);
+				this.xLog.status(`Verification warning: Only ${verification.completionRate}% completion rate`);
 			}
 
 			return verification;
 
 		} catch (error) {
-			this.xLog.warn(`Verification failed: ${error.message}`);
+			this.xLog.status(`Verification failed: ${error.message}`);
 			return {
 				error: error.message,
 				vectorCount: 0,
