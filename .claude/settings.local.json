@@ -79,5 +79,6 @@
       "Bash(./unityCedsMatch.js --elements=Payments -loadDatabase --semanticAnalysisMode=atomicVector)"
     ],
     "deny": []
-  }
+  },
+  "outputStyle": "Milo"
 }
