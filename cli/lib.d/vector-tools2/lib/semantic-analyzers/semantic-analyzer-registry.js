@@ -28,7 +28,8 @@ class SemanticAnalyzerRegistry {
 		// Initialize analyzer implementations registry
 		this.analyzers = {
 			simpleVector: require('./analyzers/simple-vector/simple-vector'),
-			atomicVector: require('./analyzers/atomic-vector/atomic-vector')
+			atomicVector: require('./analyzers/atomic-vector/atomic-vector'),
+			pureIntelligence: require('./analyzers/pure-intelligence/pure-intelligence')
 		};
 	}
 

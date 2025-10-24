@@ -39,7 +39,7 @@
             </template>
           </v-radio>
           
-          <v-radio 
+          <v-radio
             value="atomicVector"
             class="mb-3"
           >
@@ -52,7 +52,21 @@
               </div>
             </template>
           </v-radio>
-          
+
+          <v-radio
+            value="pureIntelligence"
+            class="mb-3"
+          >
+            <template v-slot:label>
+              <div>
+                <div class="font-weight-medium text-body-1">Pure Intelligence</div>
+                <div class="text-caption text-medium-emphasis mt-1">
+                  Hierarchical LLM matching (Domain→Entity→Element). Experimental stub.
+                </div>
+              </div>
+            </template>
+          </v-radio>
+
           <!-- Future modes can be added here -->
         </v-radio-group>
         
@@ -130,28 +144,43 @@ const modeVersionConfigs = {
       { title: 'Version 1 (Grammar Based Deconstruction)', value: 'atomic_version1' }
     ],
     default: 'atomic_version2'
+  },
+  pureIntelligence: {
+    versions: [
+      { title: 'Version 1 (Hierarchical LLM - STUB)', value: 'pure_intelligence_v1' }
+    ],
+    default: 'pure_intelligence_v1'
   }
 };
 
 // Store the last selected version for each mode
 const modeVersionMemory = ref({
   simpleVector: 'simple_version1',
-  atomicVector: 'atomic_version2'
+  atomicVector: 'atomic_version2',
+  pureIntelligence: 'pure_intelligence_v1'
 });
 
 // Display names for modes
 const modeDisplayNames = {
   simpleVector: 'Simple Vector',
-  atomicVector: 'Atomic Vector'
+  atomicVector: 'Atomic Vector',
+  pureIntelligence: 'Pure Intelligence'
 };
 
 const currentModeDisplay = computed(() => {
   const modeText = modeDisplayNames[props.selectedMode] || 'Unknown Mode';
-  // Add version info for atomic mode
+  // Add version info for atomic mode and pure intelligence
   if (props.selectedMode === 'atomicVector') {
     const versionMap = {
       'atomic_version1': 'v1',
       'atomic_version2': 'v2'
+    };
+    const versionText = versionMap[props.selectedVersion] || 'v?';
+    return `${modeText} (${versionText})`;
+  }
+  if (props.selectedMode === 'pureIntelligence') {
+    const versionMap = {
+      'pure_intelligence_v1': 'v1'
     };
     const versionText = versionMap[props.selectedVersion] || 'v?';
     return `${modeText} (${versionText})`;

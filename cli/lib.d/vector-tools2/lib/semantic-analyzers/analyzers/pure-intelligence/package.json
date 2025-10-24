@@ -1,0 +1,8 @@
+{
+  "name": "pure-intelligence-analyzer",
+  "version": "1.0.0-stub",
+  "description": "Hierarchical LLM-based semantic analyzer using three-step domain→entity→element matching",
+  "main": "pure-intelligence.js",
+  "author": "TQ White II",
+  "license": "ISC"
+}
