@@ -87,7 +87,7 @@ CONTROLS
 	--resultCount:      Number of search results (default: 5)
 	--targetTableName:  Override default vector table name
 	--semanticAnalysisMode: simpleVector or atomicVector
-	--semanticAnalyzerVersion: atomic_version1, atomic_version2, or atomic_version3
+	--semanticAnalyzerVersion: atomic_version1 or atomic_version2
 	--query:            Direct database query type
 	--whereClause:      SQL WHERE condition for queries
 	--resultLimit:      Max results for direct queries

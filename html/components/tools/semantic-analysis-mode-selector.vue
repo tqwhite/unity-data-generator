@@ -126,8 +126,6 @@ const modeVersionConfigs = {
   },
   atomicVector: {
     versions: [
-      { title: 'Version 4 (Education Domain with Path Context)', value: 'atomic_version4' },
-      { title: 'Version 3 (Semantic Analysis with Weighted Scoring)', value: 'atomic_version3' },
       { title: 'Version 2 (Education Domain Categories)', value: 'atomic_version2' },
       { title: 'Version 1 (Grammar Based Deconstruction)', value: 'atomic_version1' }
     ],
@@ -153,9 +151,7 @@ const currentModeDisplay = computed(() => {
   if (props.selectedMode === 'atomicVector') {
     const versionMap = {
       'atomic_version1': 'v1',
-      'atomic_version2': 'v2',
-      'atomic_version3': 'v3',
-      'atomic_version4': 'v4'
+      'atomic_version2': 'v2'
     };
     const versionText = versionMap[props.selectedVersion] || 'v?';
     return `${modeText} (${versionText})`;

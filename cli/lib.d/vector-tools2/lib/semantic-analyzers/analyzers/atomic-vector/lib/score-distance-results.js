@@ -135,13 +135,20 @@ const moduleFunction = function (args = {}) {
 				{ append: true }
 			);
 
-			// Use parameterized query with binary embedding
-			const results = await new Promise((resolve, reject) => {
-				vectorDb.query(sql, [queryBuffer, resultCount * 2], (err, res) => {
-					if (err) reject(err);
-					else resolve(res);
+			// Use parameterized query with binary embedding - with error handling
+			let results;
+			try {
+				results = await new Promise((resolve, reject) => {
+					vectorDb.query(sql, [queryBuffer, resultCount * 2], (err, res) => {
+						if (err) reject(err);
+						else resolve(res);
+					});
 				});
-			});
+			} catch (err) {
+				xLog.error(`Vector query failed: ${err.message}`);
+				// Continue with next query embedding instead of failing completely
+				continue;
+			}
 
 			// Log the raw results from vector search
 			xLog.saveProcessFile(

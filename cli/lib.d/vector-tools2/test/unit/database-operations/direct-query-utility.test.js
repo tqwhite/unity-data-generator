@@ -176,13 +176,24 @@ describe('DirectQueryUtility', () => {
 
 		it('should get table statistics', (done) => {
 			const sql = 'CREATE TABLE stats_test (id INTEGER, data TEXT)';
-			
-			queryUtil.execute(sql, [], () => {
+
+			queryUtil.execute(sql, [], (err1) => {
+				if (err1) {
+					return done(err1);
+				}
 				// Insert some test data
-				queryUtil.execute('INSERT INTO stats_test VALUES (1, "test1")', [], () => {
-					queryUtil.execute('INSERT INTO stats_test VALUES (2, "test2")', [], () => {
+				queryUtil.execute("INSERT INTO stats_test VALUES (1, 'test1')", [], (err2) => {
+					if (err2) {
+						return done(err2);
+					}
+					queryUtil.execute("INSERT INTO stats_test VALUES (2, 'test2')", [], (err3) => {
+						if (err3) {
+							return done(err3);
+						}
 						queryUtil.getTableStats('stats_test', (err, stats) => {
-							expect(err).to.be.null;
+							if (err) {
+								return done(err);
+							}
 							expect(stats).to.be.an('object');
 							expect(stats.rowCount).to.equal(2);
 							expect(stats.tableName).to.equal('stats_test');

@@ -111,12 +111,23 @@ class DirectQueryUtility {
 
 	execute(sql, params = [], callback) {
 		const { xLog } = process.global;
-		
+
+		// Prevent callback from being called multiple times
+		let callbackCalled = false;
+		const safeCallback = (err, result) => {
+			if (callbackCalled) {
+				xLog.warning('execute: Attempted to call callback multiple times - prevented');
+				return;
+			}
+			callbackCalled = true;
+			callback(err, result);
+		};
+
 		if (!this.sqliteInstance) {
 			const traceId = Math.floor(Math.random() * 1e9);
 			const error = new Error(`Database not initialized [trace:${traceId}]`);
 			error.traceId = traceId;
-			callback(error);
+			safeCallback(error);
 			return;
 		}
 
@@ -127,13 +138,13 @@ class DirectQueryUtility {
 				const error = new Error(`Failed to get query interface: ${err.message} [trace:${traceId}]`);
 				error.traceId = traceId;
 				xLog.error(`[${traceId}] Execute interface error: ${err.message}`);
-				callback(error);
+				safeCallback(error);
 				return;
 			}
 
 			// Execute statement using runStatement with noTableNameOk flag and params
-			table.runStatement(sql, { 
-				suppressStatementLog: true, 
+			table.runStatement(sql, {
+				suppressStatementLog: true,
 				noTableNameOk: true,
 				params: params // Pass parameters for binary data support
 			}, (err, result) => {
@@ -142,11 +153,11 @@ class DirectQueryUtility {
 					const error = new Error(`${err.message} [trace:${traceId}]`);
 					error.traceId = traceId;
 					xLog.error(`[${traceId}] SQL execute failed: ${err.message}`);
-					callback(error);
+					safeCallback(error);
 					return;
 				}
-				
-				callback(null, result);
+
+				safeCallback(null, result);
 			});
 		});
 	}
