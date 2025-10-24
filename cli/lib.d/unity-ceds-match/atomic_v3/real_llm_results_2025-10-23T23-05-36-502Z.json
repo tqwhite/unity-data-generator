@@ -1,0 +1,235 @@
+{
+  "summary": {
+    "total": 20,
+    "correct": 14,
+    "accuracy": 0.7,
+    "api_costs": {
+      "inputTokens": 14068,
+      "outputTokens": 200,
+      "calls": 20
+    },
+    "estimated_cost": 0.0022302
+  },
+  "results": [
+    {
+      "test_number": 1,
+      "sif_id": "241923654244892",
+      "sif_name": "Title",
+      "sif_description": "Descriptive name of the activity.",
+      "correct_ceds_id": "000009",
+      "correct_ceds_name": "Activity Title",
+      "llm_prediction": "000009",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 2,
+      "sif_id": "262759322622774",
+      "sif_name": "type",
+      "sif_description": " The specific accommodation necessary for assessment or instruction. ",
+      "correct_ceds_id": "000385",
+      "correct_ceds_name": "Accommodation Type",
+      "llm_prediction": "000385",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 3,
+      "sif_id": "49779522657668",
+      "sif_name": "Name",
+      "sif_description": " Contains a human-readable description of the value in ",
+      "correct_ceds_id": "001966",
+      "correct_ceds_name": "Data Collection Name",
+      "llm_prediction": "001966",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 4,
+      "sif_id": "179272296493288",
+      "sif_name": "Amount",
+      "sif_description": "Summarized amount.",
+      "correct_ceds_id": "001959",
+      "correct_ceds_name": "Staff Compensation Annual Supplement",
+      "llm_prediction": "000753",
+      "is_correct": false,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 5,
+      "sif_id": "71789777712279",
+      "sif_name": "number",
+      "sif_description": "The telephone number including the area code, and extension, if applicable.",
+      "correct_ceds_id": "000279",
+      "correct_ceds_name": "Telephone Number",
+      "llm_prediction": "000279",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 6,
+      "sif_id": "62712510573056",
+      "sif_name": "birthDate",
+      "sif_description": "The year, month and day on which a person was born.",
+      "correct_ceds_id": "000033",
+      "correct_ceds_name": "Birthdate",
+      "llm_prediction": "000033",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 7,
+      "sif_id": "152291172815708",
+      "sif_name": "Name",
+      "sif_description": " Human-readable name of the data's creator. If the object contains system-generated data, the name should identify the creating service or application. ",
+      "correct_ceds_id": "000917",
+      "correct_ceds_name": "Learning Resource Creator",
+      "llm_prediction": "000915",
+      "is_correct": false,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 8,
+      "sif_id": "171122568917126",
+      "sif_name": "By",
+      "sif_description": "Identifier of the system or person that modified the data.",
+      "correct_ceds_id": "001173",
+      "correct_ceds_name": "Authorization Application Name",
+      "llm_prediction": "001173",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 9,
+      "sif_id": "124790311670884",
+      "sif_name": "Name",
+      "sif_description": " Human-readable name of the data's creator. If the object contains system-generated data, the name should identify the creating service or application. ",
+      "correct_ceds_id": "000917",
+      "correct_ceds_name": "Learning Resource Creator",
+      "llm_prediction": "000917",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 10,
+      "sif_id": "120946631381308",
+      "sif_name": "Value",
+      "sif_description": "Contains the human-readable value.",
+      "correct_ceds_id": "001966",
+      "correct_ceds_name": "Data Collection Name",
+      "llm_prediction": "001966",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 11,
+      "sif_id": "246697721230393",
+      "sif_name": "Prerequisite",
+      "sif_description": "Skill or competency the student must have to engage in activity or assignment.",
+      "correct_ceds_id": "000941",
+      "correct_ceds_name": "Learner Activity Prerequisite",
+      "llm_prediction": "000941",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 12,
+      "sif_id": "77247140342416",
+      "sif_name": "SettingBodyName",
+      "sif_description": "The text version of the organization's name.",
+      "correct_ceds_id": "001487",
+      "correct_ceds_name": "Short Name of Organization",
+      "llm_prediction": "000808",
+      "is_correct": false,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 13,
+      "sif_id": "70747607064244",
+      "sif_name": "Type",
+      "sif_description": " This element is designed to contain the time period attached to an object. Very long periods (school year, quarter, etc.) and very small periods (second, millisecond, etc.) can be defined. This element provides a scoping description of the time metadata enclosed. ",
+      "correct_ceds_id": "000403",
+      "correct_ceds_name": "Assessment Item Allotted Time",
+      "llm_prediction": "NONE",
+      "is_correct": false,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 14,
+      "sif_id": "161315493330703",
+      "sif_name": "intrinsicRole",
+      "sif_description": "Role of the person (eg, teacher, parent, principal, student, etc).",
+      "correct_ceds_id": "001602",
+      "correct_ceds_name": "Early Learning Education Staff Classification",
+      "llm_prediction": "001602",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 15,
+      "sif_id": "103435580290260",
+      "sif_name": "DateTime",
+      "sif_description": "The date/time the modification occurred.",
+      "correct_ceds_id": "001542",
+      "correct_ceds_name": "Assessment Registration Completion Status Date Time",
+      "llm_prediction": "000963",
+      "is_correct": false,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 16,
+      "sif_id": "196887859981187",
+      "sif_name": "Description",
+      "sif_description": "Human readable description of the data modifications.",
+      "correct_ceds_id": "001689",
+      "correct_ceds_name": "Individualized Program Service Plan Amendment Description",
+      "llm_prediction": "001689",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 17,
+      "sif_id": "52943058106428",
+      "sif_name": "DateTime",
+      "sif_description": "The date/time the modification occurred.",
+      "correct_ceds_id": "000937",
+      "correct_ceds_name": "Learner Action Date Time",
+      "llm_prediction": "000937",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 18,
+      "sif_id": "173150871908289",
+      "sif_name": "StartDate",
+      "sif_description": "Start date of the fiscal year.",
+      "correct_ceds_id": "001642",
+      "correct_ceds_name": "Fiscal Period Begin Date",
+      "llm_prediction": "001640",
+      "is_correct": false,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 19,
+      "sif_id": "8230680113184",
+      "sif_name": "emergencyContactIndicator",
+      "sif_description": "Indicates whether or not the person is a designated emergency contact for the learner.",
+      "correct_ceds_id": "001341",
+      "correct_ceds_name": "Emergency Contact Indicator",
+      "llm_prediction": "001341",
+      "is_correct": true,
+      "num_candidates": 16
+    },
+    {
+      "test_number": 20,
+      "sif_id": "270957088331326",
+      "sif_name": "Prerequisite",
+      "sif_description": "Skill or competency the student must have to engage in activity or assignment.",
+      "correct_ceds_id": "000941",
+      "correct_ceds_name": "Learner Activity Prerequisite",
+      "llm_prediction": "000941",
+      "is_correct": true,
+      "num_candidates": 16
+    }
+  ]
+}

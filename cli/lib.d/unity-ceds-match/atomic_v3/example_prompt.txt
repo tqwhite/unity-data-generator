@@ -1,0 +1,128 @@
+You are an expert in educational data standards. Your task is to match a SIF (Schools Interoperability Framework) data element to the most appropriate CEDS (Common Education Data Standards) element.
+
+SIF ELEMENT TO MATCH:
+- Path: /xTransferIeps/xTransferIep/iep/iepPlan/annualGoalsList/annualGoal/goalType/category
+- Name: category
+- Description:  Legal category for an IEP annual goal or short-term objectives. 
+- Data Type: string
+
+CEDS CANDIDATES (choose the best match):
+
+1. [ID: 000565]
+   Path: K12/K12 Student/Title III English Learner Participation Status
+   Definition: An indication that an English Learner student is served by an English language instruction educational program supported with Title III of ESEA funds.
+
+
+2. [ID: 000333]
+   Path: Early Learning/Early Learning Family/Source of Family Income
+   Definition: Sources of total family income.
+
+
+3. [ID: 001687]
+   Path: null
+   Definition: A statement of whyó (A) The child cannot participate in the regular assessment; and (B) The particular alternate assessment selected is appropriate for the child.
+   Format: Alphanumeric
+
+
+4. [ID: 001871]
+   Path: null
+   Definition: The type of abnormal and urgent circumstances that disrupt the normal operation of the building, threaten the health and safety of the occupants, or require an emergency response.
+
+
+5. [ID: 001698]
+   Path: K12/K12 Student/IEP Goal Type
+   Definition: Legal category for an IEP annual goal or short-term objectives.
+
+
+6. [ID: 001944]
+   Path: Workforce/Workforce Program Participant/Federal Race and Ethnicity Declined
+   Definition: A parent, guardian, or student declined to report sufficient information for identifying a student's federal race and/or ethnicity.
+
+
+7. [ID: 000519]
+   Path: Adult Education/Course Section/Class Beginning Time
+   Definition: An indication of the time of day the class begins.
+   Format: HH:MM:SS
+
+
+8. [ID: 000149]
+   Path: Postsecondary/PS Student/Homelessness Status
+   Definition: Children and youth who lack a fixed, regular, and adequate nighttime residence. Homeless children and youth include: 1) children and youth who are sharing the housing of other persons due to loss of housing, economic hardship, or a similar reason; are living in motels, hotels, trailer parks, or camping grounds due to the lack of alternative adequate accommodations; are living in emergency or transitional shelters; are abandoned in hospitals; or are awaiting foster care placement; 2) children and youth who have a primary nighttime residence that is a public or private place not designed for or originally used as a regular sleeping accommodation for human beings; or 3) children and youths who are living in cars, parks, public spaces, abandoned buildings, substandard housing, bus or train stations, or similar settings. 4) migratory children who qualify as homeless because the children are living in circumstances described in the above. (See Section 103 of the McKinney Act for a more detailed description of this data element).
+
+
+9. [ID: 000113]
+   Path: Postsecondary/PS Student/Financial Aid Award Type
+   Definition: The classification of financial aid awarded to a person for the academic term/year.
+
+
+10. [ID: 000418]
+   Path: Assessments/Assessment Performance Level/Assessment Performance Level Lower Cut Score
+   Definition: Lowest possible score for the performance level.
+   Format: Alphanumeric - 30 characters maximum
+
+
+11. [ID: 001649]
+   Path: Adult Education/Course Section/Attendance Event Date
+   Definition: The date on which an attendance event takes place.
+   Format: YYYY-MM-DD
+
+
+12. [ID: 000807]
+   Path: Postsecondary/PS Staff/Professional Association Membership Status
+   Definition: An indication of whether the person is a member of a professional organization or association.
+
+
+13. [ID: 000835]
+   Path: Early Learning/Early Learning Organization/Number of Early Learning Fatalities
+   Definition: Number of child fatalities at the program in the past year, as defined by the State
+   Format: Integer - greater than or equal to 0
+
+
+14. [ID: 001019]
+   Path: Assessments/Assessment Session/Assessment Session Scheduled Start Date Time
+   Definition: Date and time the assessment is scheduled to begin.
+   Format: YYYY-MM-DDTHH:MM:SS
+
+
+15. [ID: 001252]
+   Path: Assessments/Assessment Item/Assessment Item Response Theory Parameter B
+   Definition: The Item Response Theory value representing the difficulty of the item.   It is the Theta value for the location of the inflection point of the item characteristic curve.
+   Format: Numeric
+
+
+16. [ID: 000495]
+   Path: K12/Calendar/Calendar Description
+   Definition: A description or identification of the calendar.
+   Format: Alphanumeric - 60 characters maximum
+
+
+17. [ID: 000698]
+   Path: Competencies/Competency Framework/Competency Framework Publication Status
+   Definition: The publication status of the competency framework.
+
+
+18. [ID: 000756]
+   Path: Postsecondary/PS Applicant/Admitted Student
+   Definition: Applicant who has been granted an official offer to enroll in a postsecondary institution. Admitted applicants should include wait-listed students who were subsequently offered admission.
+
+
+19. [ID: 000962]
+   Path: Assessments/Assessment Administration/Assessment Administration Start Date
+   Definition: The start date of the time period designated for the assessment administration.
+   Format: YYYY-MM-DD
+
+
+20. [ID: 001623]
+   Path: Early Learning/Early Learning Child/Scheduled Well Child Screening
+   Definition: The individual well child visit scheduled according to the AAP recommended periodicity schedule.
+
+
+INSTRUCTIONS:
+1. Consider the semantic meaning, not just word matching
+2. The SIF path is XML navigation (e.g., /Container/Object/Property)
+3. The CEDS path is Domain/Entity/Property classification
+4. Choose the CEDS element that represents the same concept
+
+Return ONLY the ID of the best match (e.g., "CEDS001"), or "NONE" if no suitable match exists.
+
+ANSWER:
