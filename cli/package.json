@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "better-sqlite3": "^12.4.1",
-    "openai": "^5.10.2",
+    "openai": "^6.7.0",
     "qtools-asynchronous-pipe-plus": "^1.0.5",
     "qtools-config-file-processor": "^1.0.18",
     "qtools-functional-library": "^2.0.4",

@@ -42,7 +42,13 @@ const moduleFunction = function(args = {}) {
     // performHierarchicalMatch - Main orchestration function
     // ===================================================================================
 
-    const performHierarchicalMatch = function(sifObject, callback) {
+    const performHierarchicalMatch = function(sifObject, sessionHeader, callback) {
+        // Handle optional sessionHeader parameter
+        if (typeof sessionHeader === 'function') {
+            callback = sessionHeader;
+            sessionHeader = '';
+        }
+
         const startTime = Date.now();
 
         xLog.status('\n🔄 Performing Hierarchical Matching (3-step LLM process)...');
@@ -56,7 +62,7 @@ const moduleFunction = function(args = {}) {
 
         // Step 1: Domain Classification
         xLog.status('\nStep 1/3: Domain Classification...');
-        domainClassifier.classifyDomain(sifObject.XPath, (err, domain) => {
+        domainClassifier.classifyDomain(sifObject.XPath, sessionHeader, (err, domain) => {
             if (err) {
                 xLog.error(`Domain classification failed: ${err.message}`);
                 callback(err);
@@ -73,7 +79,7 @@ const moduleFunction = function(args = {}) {
                 elementName: sifObject.ElementName
             };
 
-            entitySelector.selectEntity(entityContext, (err, entity) => {
+            entitySelector.selectEntity(entityContext, sessionHeader, (err, entity) => {
                 if (err) {
                     xLog.error(`Entity selection failed: ${err.message}`);
                     callback(err);
@@ -90,7 +96,7 @@ const moduleFunction = function(args = {}) {
                     entity: entity
                 };
 
-                elementMatcher.matchElement(elementContext, (err, elementMatch) => {
+                elementMatcher.matchElement(elementContext, sessionHeader, (err, elementMatch) => {
                     if (err) {
                         xLog.error(`Element matching failed: ${err.message}`);
                         callback(err);

@@ -134,13 +134,31 @@ Return ONLY the entity name from the list above, nothing else.`;
     // askLLMForEntity - Query OpenAI for entity selection
     // ===================================================================================
 
-    const askLLMForEntity = function(context, entities, callback) {
+    const askLLMForEntity = function(context, entities, sessionHeader, callback) {
         if (!openai) {
             callback(new Error('OpenAI client not provided'));
             return;
         }
 
         const prompt = buildEntityPrompt(context, entities);
+
+        // Log prompt to process file
+        if (sessionHeader) {
+            const promptLogEntry = sessionHeader + [
+                '====================================================================',
+                'ENTITY SELECTOR - PROMPT',
+                '====================================================================',
+                `Timestamp: ${new Date().toISOString()}`,
+                `SIF XPath: ${context.xpath}`,
+                `Domain: ${context.domain}`,
+                `Model: ${llmModel}`,
+                `Available Entities: ${entities.length}`,
+                '',
+                prompt,
+                ''
+            ].join('\n');
+            xLog.saveProcessFile('entity-selector.log', promptLogEntry, { suppressLogNotification: true });
+        }
 
         const params = {
             model: llmModel,
@@ -152,8 +170,10 @@ Return ONLY the entity name from the list above, nothing else.`;
             max_tokens: 50
         };
 
+        const callStartTime = Date.now();
         openai.chat.completions.create(params)
             .then((response) => {
+                const processingTime = Date.now() - callStartTime;
                 const entity = response.choices[0].message.content.trim();
 
                 // Validate entity - fail hard if invalid (pure intelligence approach)
@@ -161,6 +181,23 @@ Return ONLY the entity name from the list above, nothing else.`;
                     const error = new Error(`LLM returned invalid entity: "${entity}". Valid entities for ${context.domain}: ${entities.join(', ')}`);
                     callback(error);
                     return;
+                }
+
+                // Log response to process file
+                if (sessionHeader) {
+                    const responseLogEntry = [
+                        '====================================================================',
+                        'ENTITY SELECTOR - RESPONSE',
+                        '====================================================================',
+                        `Timestamp: ${new Date().toISOString()}`,
+                        `Source: LLM (${llmModel})`,
+                        `Processing Time: ${processingTime}ms`,
+                        '',
+                        entity,
+                        '',
+                        ''
+                    ].join('\n');
+                    xLog.saveProcessFile('entity-selector.log', responseLogEntry, { append: true, suppressLogNotification: true });
                 }
 
                 callback(null, entity);
@@ -175,7 +212,13 @@ Return ONLY the entity name from the list above, nothing else.`;
     // selectEntity - Main function: Select entity within domain
     // ===================================================================================
 
-    const selectEntity = function(context, callback) {
+    const selectEntity = function(context, sessionHeader, callback) {
+        // Handle optional sessionHeader parameter
+        if (typeof sessionHeader === 'function') {
+            callback = sessionHeader;
+            sessionHeader = '';
+        }
+
         const { domain } = context;
 
         xLog.verbose(`Selecting entity for xpath: ${context.xpath} in domain: ${domain}`);
@@ -189,7 +232,7 @@ Return ONLY the entity name from the list above, nothing else.`;
             }
 
             // Ask LLM
-            askLLMForEntity(context, entities, (err, entity) => {
+            askLLMForEntity(context, entities, sessionHeader, (err, entity) => {
                 if (err) {
                     callback(err);
                     return;

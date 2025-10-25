@@ -1,0 +1,38 @@
+{
+  "queryInfo": {
+    "sifRefId": "172776328255745",
+    "sifElement": "givenName",
+    "sifXPath": "/xStudents/xStudent/otherNames/name/givenName",
+    "sifDescription": "The full legal first name given to a person at birth, baptism, or through legal change.",
+    "sifType": "normalizedString",
+    "sifMandatory": "N/A",
+    "requestedResultCount": "5",
+    "semanticAnalysisMode": "pureIntelligence"
+  },
+  "hierarchicalPath": {
+    "domain": "K12",
+    "entity": "K12 Student",
+    "element": "First Entry Date into a US School"
+  },
+  "matchResults": [
+    {
+      "rank": 1,
+      "cedsRefId": "CEDS_000529",
+      "cedsElement": "First Entry Date into a US School",
+      "cedsDefinition": "The year, month and day of a person's initial enrollment into a United States school.",
+      "distance": 0.050000000000000044,
+      "score": 0.95,
+      "confidence": 0.95,
+      "reasoning": "The SIF element 'givenName' refers to the legal first name of a person, which aligns with the CEDS element 'First Entry Date into a US School' as both pertain to personal identification details of a student. The context of K12 and the entity being a K12 student further supports this match, as both elements are relevant to student records. The data type compatibility and the focus on personal information make this an exact or near-exact match.",
+      "domain": "K12",
+      "entity": "K12 Student",
+      "hierarchicalPath": "K12 → K12 Student → First Entry Date into a US School"
+    }
+  ],
+  "metadata": {
+    "timestamp": "2025-10-25T16:27:20.938Z",
+    "totalProcessingTime": 4223,
+    "method": "hierarchical_llm",
+    "success": true
+  }
+}

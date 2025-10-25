@@ -128,13 +128,33 @@ Confidence scale:
     // askLLMForMatch - Query OpenAI for element matching
     // ===================================================================================
 
-    const askLLMForMatch = function(sifElement, cedsElements, domain, entity, callback) {
+    const askLLMForMatch = function(sifElement, cedsElements, domain, entity, sessionHeader, callback) {
         if (!openai) {
             callback(new Error('OpenAI client not provided'));
             return;
         }
 
         const prompt = buildElementPrompt(sifElement, cedsElements, domain, entity);
+
+        // Log prompt to process file
+        if (sessionHeader) {
+            const promptLogEntry = sessionHeader + [
+                '====================================================================',
+                'ELEMENT MATCHER - PROMPT',
+                '====================================================================',
+                `Timestamp: ${new Date().toISOString()}`,
+                `SIF Element: ${sifElement.ElementName}`,
+                `SIF XPath: ${sifElement.XPath}`,
+                `Domain: ${domain}`,
+                `Entity: ${entity}`,
+                `Model: ${llmModel}`,
+                `CEDS Elements to Consider: ${cedsElements.length}`,
+                '',
+                prompt,
+                ''
+            ].join('\n');
+            xLog.saveProcessFile('element-matcher.log', promptLogEntry, { suppressLogNotification: true });
+        }
 
         const params = {
             model: llmModel,
@@ -147,8 +167,10 @@ Confidence scale:
             response_format: { type: "json_object" }
         };
 
+        const callStartTime = Date.now();
         openai.chat.completions.create(params)
             .then((response) => {
+                const processingTime = Date.now() - callStartTime;
                 const content = response.choices[0].message.content.trim();
 
                 let matchResult;
@@ -167,6 +189,23 @@ Confidence scale:
                     return;
                 }
 
+                // Log response to process file
+                if (sessionHeader) {
+                    const responseLogEntry = [
+                        '====================================================================',
+                        'ELEMENT MATCHER - RESPONSE',
+                        '====================================================================',
+                        `Timestamp: ${new Date().toISOString()}`,
+                        `Source: LLM (${llmModel})`,
+                        `Processing Time: ${processingTime}ms`,
+                        '',
+                        JSON.stringify(matchResult, null, 2),
+                        '',
+                        ''
+                    ].join('\n');
+                    xLog.saveProcessFile('element-matcher.log', responseLogEntry, { append: true, suppressLogNotification: true });
+                }
+
                 callback(null, matchResult);
             })
             .catch((error) => {
@@ -179,7 +218,13 @@ Confidence scale:
     // matchElement - Main function: Match SIF element to CEDS element
     // ===================================================================================
 
-    const matchElement = function(context, callback) {
+    const matchElement = function(context, sessionHeader, callback) {
+        // Handle optional sessionHeader parameter
+        if (typeof sessionHeader === 'function') {
+            callback = sessionHeader;
+            sessionHeader = '';
+        }
+
         const { sifElement, domain, entity } = context;
 
         xLog.verbose(`Matching element: ${sifElement.ElementName} in ${domain} / ${entity}`);
@@ -192,7 +237,7 @@ Confidence scale:
             }
 
             // Step 2: Ask LLM to find best match
-            askLLMForMatch(sifElement, cedsElements, domain, entity, (err, matchResult) => {
+            askLLMForMatch(sifElement, cedsElements, domain, entity, sessionHeader, (err, matchResult) => {
                 if (err) {
                     callback(err);
                     return;

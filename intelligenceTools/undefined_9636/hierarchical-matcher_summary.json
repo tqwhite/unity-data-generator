@@ -1,0 +1,15 @@
+{
+  "metadata": {
+    "success": true,
+    "sifElement": "givenName",
+    "sifXPath": "/xStudents/xStudent/otherNames/name/givenName",
+    "duration": 4223,
+    "timestamp": "2025-10-25T16:27:20.939Z"
+  },
+  "matchResult": {
+    "domain": "K12",
+    "entity": "K12 Student",
+    "cedsElement": "First Entry Date into a US School",
+    "confidence": 0.95
+  }
+}

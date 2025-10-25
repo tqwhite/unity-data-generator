@@ -172,13 +172,30 @@ Return ONLY the domain name, nothing else.`;
     // askLLMForDomain - Query OpenAI for domain classification
     // ===================================================================================
 
-    const askLLMForDomain = function(xpath, callback) {
+    const askLLMForDomain = function(xpath, sessionHeader, callback) {
         if (!openai) {
             callback(new Error('OpenAI client not provided'));
             return;
         }
 
         const prompt = buildDomainPrompt(xpath);
+
+        // Log prompt to process file
+        if (sessionHeader) {
+            const promptLogEntry = sessionHeader + [
+                '====================================================================',
+                'DOMAIN CLASSIFIER - PROMPT',
+                '====================================================================',
+                `Timestamp: ${new Date().toISOString()}`,
+                `SIF XPath: ${xpath}`,
+                `Cache Status: MISS`,
+                `Model: ${llmModel}`,
+                '',
+                prompt,
+                ''
+            ].join('\n');
+            xLog.saveProcessFile('domain-classifier.log', promptLogEntry, { suppressLogNotification: true });
+        }
 
         const params = {
             model: llmModel,
@@ -190,8 +207,10 @@ Return ONLY the domain name, nothing else.`;
             max_tokens: 50
         };
 
+        const callStartTime = Date.now();
         openai.chat.completions.create(params)
             .then((response) => {
+                const processingTime = Date.now() - callStartTime;
                 const domain = response.choices[0].message.content.trim();
 
                 // Validate domain - fail hard if invalid (pure intelligence approach)
@@ -199,6 +218,23 @@ Return ONLY the domain name, nothing else.`;
                     const error = new Error(`LLM returned invalid domain: "${domain}". Valid domains: ${cedsDomains.join(', ')}`);
                     callback(error);
                     return;
+                }
+
+                // Log response to process file
+                if (sessionHeader) {
+                    const responseLogEntry = [
+                        '====================================================================',
+                        'DOMAIN CLASSIFIER - RESPONSE',
+                        '====================================================================',
+                        `Timestamp: ${new Date().toISOString()}`,
+                        `Source: LLM (${llmModel})`,
+                        `Processing Time: ${processingTime}ms`,
+                        '',
+                        domain,
+                        '',
+                        ''
+                    ].join('\n');
+                    xLog.saveProcessFile('domain-classifier.log', responseLogEntry, { append: true, suppressLogNotification: true });
                 }
 
                 callback(null, domain);
@@ -213,20 +249,47 @@ Return ONLY the domain name, nothing else.`;
     // classifyDomain - Main function: Classify xpath into CEDS domain
     // ===================================================================================
 
-    const classifyDomain = function(xpath, callback) {
+    const classifyDomain = function(xpath, sessionHeader, callback) {
+        // Handle optional sessionHeader parameter
+        if (typeof sessionHeader === 'function') {
+            callback = sessionHeader;
+            sessionHeader = '';
+        }
+
         xLog.verbose(`Classifying domain for xpath: ${xpath}`);
 
         // Step 1: Check cache
+        const checkTime = Date.now();
         checkCache(xpath, (cacheErr, cached) => {
             // Continue even if cache fails
             if (!cacheErr && cached && cached.confidence > 0.8) {
                 xLog.verbose(`Using cached domain: ${cached.domain}`);
+
+                // Log cache hit to process file
+                if (sessionHeader) {
+                    const cacheLogEntry = sessionHeader + [
+                        '====================================================================',
+                        'DOMAIN CLASSIFIER - CACHE HIT',
+                        '====================================================================',
+                        `Timestamp: ${new Date().toISOString()}`,
+                        `XPath Pattern: ${extractPattern(xpath)}`,
+                        `Cached Domain: ${cached.domain}`,
+                        `Confidence: ${cached.confidence}`,
+                        '',
+                        ''
+                    ].join('\n');
+                    xLog.saveProcessFile('domain-classifier.log', cacheLogEntry, { suppressLogNotification: true });
+                }
+
                 callback(null, cached.domain);
                 return;
             }
 
             // Step 2: Ask LLM
-            askLLMForDomain(xpath, (err, domain) => {
+            const llmStartTime = Date.now();
+            askLLMForDomain(xpath, sessionHeader, (err, domain) => {
+                const processingTime = Date.now() - llmStartTime;
+
                 if (err) {
                     callback(err);
                     return;

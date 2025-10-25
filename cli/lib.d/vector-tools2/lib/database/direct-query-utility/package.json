@@ -4,6 +4,6 @@
   "description": "Primary database interface and statement library for vector-tools2",
   "main": "direct-query-utility.js",
   "dependencies": {
-    "qtools-functional-library": "^2.0.0"
+    "qtools-functional-library": "^2.0.4"
   }
 }

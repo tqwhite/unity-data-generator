@@ -26,21 +26,21 @@
   "author": "TQ White II",
   "license": "MIT",
   "dependencies": {
-    "better-sqlite3": "^9.2.2",
-    "sqlite-vec": "^0.1.1",
+    "better-sqlite3": "^12.4.1",
+    "sqlite-vec": "^0.1.6",
     "qtools-functional-library": "*",
     "qtools-asynchronous-pipe-plus": "*",
     "qtools-parse-command-line": "*",
     "qtools-config-file-processor": "*",
     "qtools-x-log": "*",
     "sqlstring-sqlite": "^0.1.1",
-    "openai": "^4.0.0"
+    "openai": "^6.7.0"
   },
   "devDependencies": {
-    "mocha": "^10.2.0",
-    "chai": "^4.3.10",
-    "sinon": "^17.0.1",
-    "nyc": "^15.1.0"
+    "mocha": "^11.7.4",
+    "chai": "^6.2.0",
+    "sinon": "^21.0.0",
+    "nyc": "^17.1.0"
   },
   "engines": {
     "node": ">=16.0.0"

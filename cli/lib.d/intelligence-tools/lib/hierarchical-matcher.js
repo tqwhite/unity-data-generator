@@ -28,7 +28,13 @@ const moduleFunction = function(args = {}) {
     // match - Perform hierarchical LLM matching
     // ===================================================================================
 
-    const match = function(sifObject, callback) {
+    const match = function(sifObject, sessionHeader, callback) {
+        // Handle optional sessionHeader parameter
+        if (typeof sessionHeader === 'function') {
+            callback = sessionHeader;
+            sessionHeader = '';
+        }
+
         // Validate inputs
         if (!openai) {
             callback(new Error('OpenAI client not initialized - check API key in config'));
@@ -44,7 +50,7 @@ const moduleFunction = function(args = {}) {
         const orchestrator = HierarchicalOrchestrator({ openai, database });
 
         // Perform the 3-step hierarchical match
-        orchestrator.performHierarchicalMatch(sifObject, (err, result) => {
+        orchestrator.performHierarchicalMatch(sifObject, sessionHeader, (err, result) => {
             if (err) {
                 xLog.error(`Hierarchical matching failed: ${err.message}`);
                 callback(err);
