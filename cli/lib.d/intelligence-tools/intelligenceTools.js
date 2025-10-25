@@ -29,88 +29,102 @@ const moduleFunction = function(args = {}) {
     // Get database connection
     const databaseFetcher = require('./lib/database-fetcher')();
 
-    // Get hierarchical matcher
-    const hierarchicalMatcher = require('./lib/hierarchical-matcher')();
-
-    // Get output formatter
-    const outputFormatter = require('./lib/output-formatter')();
-
-    // Fetch SIF object from database
-    let sifObject;
-    const fetchCallback = (err, result) => {
+    // Initialize database and hierarchical matcher
+    databaseFetcher.getDatabase((err, database) => {
         if (err) {
-            xLog.error(`Failed to fetch SIF object: ${err.message}`);
+            xLog.error(`Failed to initialize database: ${err.message}`);
             process.exit(1);
         }
 
-        sifObject = result;
+        // Get hierarchical matcher with database instance
+        const hierarchicalMatcher = require('./lib/hierarchical-matcher')({ database });
 
-        xLog.verbose(`Fetched SIF object: ${sifObject.ElementName}`);
-        xLog.verbose(`XPath: ${sifObject.XPath}`);
-        xLog.verbose(`Type: ${sifObject.Type}`);
-        xLog.verbose(`Mandatory: ${sifObject.Mandatory}`);
+        // Get output formatter
+        const outputFormatter = require('./lib/output-formatter')();
 
-        // Perform hierarchical matching
-        hierarchicalMatcher.match(sifObject, (err, cedsMatches) => {
+        // Fetch SIF object from database
+        let sifObject;
+        const fetchCallback = (err, result) => {
             if (err) {
-                xLog.error(`Hierarchical matching failed: ${err.message}`);
+                xLog.error(`Failed to fetch SIF object: ${err.message}`);
                 process.exit(1);
             }
 
-            // Format output
-            const formattedResults = outputFormatter.format({
-                sifObject,
-                cedsMatches,
-                resultCount,
-                mode: 'pureIntelligence'
-            });
+            sifObject = result;
 
-            // Output results
-            xLog.result('\n📊 CEDS MATCH RESULTS:');
-            xLog.result('=' .repeat(50));
-            formattedResults.forEach((match, index) => {
-                xLog.result(`\nRank ${index + 1}:`);
-                xLog.result(`  CEDS Element: ${match.cedsElement}`);
-                xLog.result(`  Distance: ${match.distance}`);
-                xLog.result(`  Score: ${match.score}`);
-                xLog.result(`  Confidence: ${match.confidence}`);
-                xLog.result(`  Reasoning: ${match.reasoning}`);
-            });
+            xLog.verbose(`Fetched SIF object: ${sifObject.ElementName}`);
+            xLog.verbose(`XPath: ${sifObject.XPath}`);
+            xLog.verbose(`Type: ${sifObject.Type}`);
+            xLog.verbose(`Mandatory: ${sifObject.Mandatory}`);
 
-            // Save to database if requested
-            if (loadDatabase) {
-                xLog.status('\n💾 Saving to unityCedsMatches database...');
+            // Perform hierarchical matching
+            hierarchicalMatcher.match(sifObject, (err, cedsMatches) => {
+                if (err) {
+                    xLog.error(`Hierarchical matching failed: ${err.message}`);
+                    process.exit(1);
+                }
 
-                databaseFetcher.saveMatches({
+                // Format output
+                const formattedResults = outputFormatter.format({
                     sifObject,
-                    cedsMatches: formattedResults,
-                    semanticAnalysisMode: 'pureIntelligence'
-                }, (err, savedCount) => {
-                    if (err) {
-                        xLog.error(`Failed to save matches: ${err.message}`);
-                        process.exit(1);
-                    }
-
-                    xLog.result(`✅ Saved ${savedCount} matches to database`);
-                    xLog.status('\n🧠 Intelligence Tools Complete');
+                    cedsMatches,
+                    resultCount,
+                    mode: 'pureIntelligence'
                 });
-            } else {
-                xLog.status('\n🧠 Intelligence Tools Complete');
-            }
-        });
-    };
 
-    // Determine which fetch method to use
-    if (refId) {
-        xLog.status(`Fetching SIF object by refId: ${refId}`);
-        databaseFetcher.fetchByRefId(refId, fetchCallback);
-    } else if (xPath) {
-        xLog.status(`Fetching SIF object by XPath: ${xPath}`);
-        databaseFetcher.fetchByXPath(xPath, fetchCallback);
-    } else if (element) {
-        xLog.status(`Fetching SIF object by element name: ${element}`);
-        databaseFetcher.fetchByElementName(element, fetchCallback);
-    }
+                // Output results
+                xLog.status('\n📊 CEDS MATCH RESULTS:');
+                xLog.status('=' .repeat(50));
+                formattedResults.forEach((match, index) => {
+                    xLog.status(`\nRank ${index + 1}:`);
+                    xLog.status(`  CEDS Element: ${match.cedsElement}`);
+                    xLog.status(`  Distance: ${match.distance}`);
+                    xLog.status(`  Score: ${match.score}`);
+                    xLog.status(`  Confidence: ${match.confidence}`);
+                    xLog.status(`  Reasoning: ${match.reasoning}`);
+                    xLog.status(`\n  SIF XPath: ${sifObject.XPath}`);
+                    xLog.status(`  SIF Description: ${sifObject.Description || '(no description)'}`);
+                    xLog.status(`\n  CEDS Path: ${match.domain} → ${match.entity} → ${match.cedsElement}`);
+                    xLog.status(`  CEDS Definition: ${match.cedsDefinition || '(no definition available)'}`);
+                });
+
+                xLog.status('\n');
+
+                // Save to database if requested
+                if (loadDatabase) {
+                    xLog.status('\n💾 Saving to unityCedsMatches database...');
+
+                    databaseFetcher.saveMatches({
+                        sifObject,
+                        cedsMatches: formattedResults,
+                        semanticAnalysisMode: 'pureIntelligence'
+                    }, (err, savedCount) => {
+                        if (err) {
+                            xLog.error(`Failed to save matches: ${err.message}`);
+                            process.exit(1);
+                        }
+
+                        xLog.status(`✅ Saved ${savedCount} matches to database`);
+                        xLog.status('\n🧠 Intelligence Tools Complete');
+                    });
+                } else {
+                    xLog.status('\n🧠 Intelligence Tools Complete');
+                }
+            });
+        };
+
+        // Determine which fetch method to use
+        if (refId) {
+            xLog.status(`Fetching SIF object by refId: ${refId}`);
+            databaseFetcher.fetchByRefId(refId, fetchCallback);
+        } else if (xPath) {
+            xLog.status(`Fetching SIF object by XPath: ${xPath}`);
+            databaseFetcher.fetchByXPath(xPath, fetchCallback);
+        } else if (element) {
+            xLog.status(`Fetching SIF object by element name: ${element}`);
+            databaseFetcher.fetchByElementName(element, fetchCallback);
+        }
+    });
 };
 
 //END OF moduleFunction() ============================================================

@@ -86,8 +86,8 @@ CONTROLS
 	--limit:            Batch size limit
 	--resultCount:      Number of search results (default: 5)
 	--targetTableName:  Override default vector table name
-	--semanticAnalysisMode: simpleVector or atomicVector
-	--semanticAnalyzerVersion: atomic_version1 or atomic_version2
+	--semanticAnalysisMode: simpleVector, atomicVector, or pureIntelligence
+	--semanticAnalyzerVersion: atomic_version1, atomic_version2, or pure_intelligence_v1
 	--query:            Direct database query type
 	--whereClause:      SQL WHERE condition for queries
 	--resultLimit:      Max results for direct queries

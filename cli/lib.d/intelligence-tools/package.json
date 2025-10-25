@@ -1,0 +1,44 @@
+{
+  "name": "intelligence-tools",
+  "version": "1.0.0",
+  "description": "Hierarchical LLM-based semantic matching for SIF to CEDS without embeddings",
+  "main": "intelligenceTools.js",
+  "bin": {
+    "intelligenceTools": "./intelligenceTools.js"
+  },
+  "scripts": {
+    "test": "mocha",
+    "test:unit": "mocha test/unit/**/*.test.js",
+    "test:integration": "mocha test/integration/**/*.test.js",
+    "test:e2e": "mocha test/e2e/**/*.test.js",
+    "test:watch": "mocha --watch",
+    "test:coverage": "nyc mocha"
+  },
+  "keywords": [
+    "LLM",
+    "hierarchical-matching",
+    "semantic-analysis",
+    "CEDS",
+    "SIF",
+    "educational-standards"
+  ],
+  "author": "TQ White II",
+  "license": "MIT",
+  "dependencies": {
+    "qtools-functional-library": "*",
+    "qtools-asynchronous-pipe-plus": "*",
+    "qtools-parse-command-line": "*",
+    "qtools-config-file-processor": "*",
+    "qtools-x-log": "*",
+    "openai": "^4.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "chai": "^4.3.10",
+    "sinon": "^17.0.1",
+    "nyc": "^15.1.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

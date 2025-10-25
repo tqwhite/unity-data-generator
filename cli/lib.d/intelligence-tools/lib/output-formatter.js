@@ -28,6 +28,7 @@ const moduleFunction = function(args = {}) {
                 refId: match.cedsRefId,
                 cedsRefId: match.cedsRefId,
                 cedsElement: match.cedsElement,
+                cedsDefinition: match.cedsDefinition,
 
                 // Distance/scoring fields
                 distance: match.distance,

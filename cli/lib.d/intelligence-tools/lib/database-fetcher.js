@@ -355,13 +355,22 @@ const moduleFunction = function(args = {}) {
     };
 
     // ===================================================================================
+    // getDatabase - Get initialized database instance
+    // ===================================================================================
+
+    const getDatabase = function(callback) {
+        initDatabase(callback);
+    };
+
+    // ===================================================================================
 
     return {
         fetchByRefId,
         fetchByXPath,
         fetchByElementName,
         fetchCEDSElements,
-        saveMatches
+        saveMatches,
+        getDatabase
     };
 };
 
