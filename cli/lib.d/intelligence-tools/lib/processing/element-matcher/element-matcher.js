@@ -84,23 +84,13 @@ const moduleFunction = function(args = {}) {
    Definition: ${elem.Definition || elem.Description || 'N/A'}`;
         }).join('\n\n');
 
-        return `You are a CEDS (Common Education Data Standards) element matcher.
+        return `You are an experienced administrator in a school district IT department. You have seen many school district database schemas and know the language and jargon of the education business.
 
-Match this SIF element to the best CEDS element:
+The task at hand is to read the provided xPath and figure out where it fits in the CEDS (Common Education Data Standards) domain entity classification.
 
-SIF Element:
-- Name: ${sifElement.ElementName}
-- XPath: ${sifElement.XPath}
-- Type: ${sifElement.Type || 'N/A'}
-- Description: ${sifElement.Description || 'N/A'}
-- Mandatory: ${sifElement.Mandatory || 'N/A'}
+We are trying to identify the CEDS definition of a data element represented by an xPath in the CES domain entity system. 
 
-Context:
-- Domain: ${domain}
-- Entity: ${entity}
-
-Available CEDS Elements (choose the best match):
-${cedsElementsText}
+Please examine the information about the SIF Element below. Consider all of the SIF Element data below but especially read the xPath word by word and carefully read the SIF Description to decide which of the available CEDS elements listed below is most likely to match the definition.
 
 Analyze the semantic meaning and purpose of both elements. Consider:
 - Name similarity (exact, partial, synonym)
@@ -108,6 +98,21 @@ Analyze the semantic meaning and purpose of both elements. Consider:
 - Data type compatibility
 - Context within domain and entity
 
+SIF ELEMENT:
+- Name: ${sifElement.ElementName}
+- XPath: ${sifElement.XPath}
+- Type: ${sifElement.Type || 'N/A'}
+- Description: ${sifElement.Description || 'N/A'}
+- Mandatory: ${sifElement.Mandatory || 'N/A'}
+
+CEDS CONTEXT:
+- Domain: ${domain}
+- Entity: ${entity}
+
+CEDS ELEMENTS (choose the best match):
+${cedsElementsText}
+
+OUTPUT INSTRUCTIONS:
 Return ONLY a JSON object with this exact structure:
 {
   "cedsRefId": "CEDS_XXXXXX",

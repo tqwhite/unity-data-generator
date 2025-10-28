@@ -106,18 +106,25 @@ const moduleFunction = function(args = {}) {
     const buildEntityPrompt = function(context, entities) {
         const { xpath, domain, elementName } = context;
 
-        return `You are a CEDS (Common Education Data Standards) entity selector.
+        return `You are an experienced administrator in a school district IT department. You have seen many school district database schemas and know the language and jargon of the education business.
+
+The task at hand is to read the provided xPath and figure out where it fits in the CEDS (Common Education Data Standards) domain entity classification.
+
+We are trying to identify the CEDS definition of a data element represented by an xPath in the CES domain entity system. 
+
+Please examine the information about the SIF Element below. Consider the name and domain but especially read the xPath word by word to decide which of the entities listed below is most likely to contain the definition.
 
 Within the ${domain} domain, identify the correct entity type for this SIF element.
 
-SIF Element:
+SIF ELEMENT:
 - XPath: ${xpath}
 - Element Name: ${elementName}
 - Domain: ${domain}
 
-Available entities in ${domain} domain:
+ENTITIES (${domain} domain):
 ${entities.map(e => `- ${e}`).join('\n')}
 
+EXAMPLES:
 Analyze the xpath structure to determine the entity type:
 - /xStudents/xStudent/* → K12 Student
 - /xStaffs/xStaff/* → K12 Staff
@@ -125,6 +132,7 @@ Analyze the xpath structure to determine the entity type:
 - /Assessments/Assessment/* → Assessment
 - /xCourses/xCourse/* → K12 Course
 
+OUTPUT INSTRUCTIONS:
 Return ONLY the entity name from the list above, nothing else.`;
     };
 

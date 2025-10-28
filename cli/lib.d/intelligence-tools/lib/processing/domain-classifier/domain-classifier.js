@@ -139,11 +139,16 @@ const moduleFunction = function(args = {}) {
     // ===================================================================================
 
     const buildDomainPrompt = function(xpath) {
-        return `You are a CEDS (Common Education Data Standards) domain classifier.
+        return `You are an experienced administrator in a school district IT department. You have seen many school district database schemas and know the language and jargon of the education business.
 
-Given this xPath from a SIF (Schools Interoperability Framework) object:
+The task at hand is to read the provided xPath and figure out where it fits in the CEDS (Common Education Data Standards) domain entity classification.
+
+We are trying to identify the CEDS definition of a data element represented by an xPath in the CES domain entity system. Please examine the following xPath word by word to decide which of the domains below is most likely to contain the definition.
+
+THE xPATH:
 ${xpath}
 
+DOMAIN LIST:
 Classify it into ONE of these CEDS domains:
 - K12: Elementary and secondary education
 - Postsecondary: Higher education
@@ -153,6 +158,7 @@ Classify it into ONE of these CEDS domains:
 - Assessments: Testing and evaluation
 - Learning Resources: Educational materials
 
+EXAMPLES:
 Consider these patterns:
 - xStudent, StudentPersonal, xStudents → K12
 - xStaff, StaffPersonal, EmployeePersonal → K12
@@ -163,6 +169,7 @@ Consider these patterns:
 - EarlyLearning*, PreK* → Early Learning
 - LearningResource*, LearningStandard* → Learning Resources
 
+OUTPUT INSTRUCTIONS:
 Return ONLY the domain name, nothing else.`;
     };
 
